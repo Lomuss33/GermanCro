@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>GermanCro</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="de-flag" id="deFlag"></div>
+
+<div class="toast" id="toast"></div>
+
+<div class="site-title">
+  <span class="t-w">Ger</span><span class="t-r">man</span><span class="t-g">cro</span>
+</div>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-value"><span class="flame">🔥</span><span id="streakNum">0</span></div>
+    <div class="stat-label">Streak</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-value" id="correctVal">0</div>
+    <div class="stat-label">Richtig</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-value" id="totalVal">0</div>
+    <div class="stat-label">Gesamt</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-value" id="accuracyVal">—</div>
+    <div class="stat-label">Genauigkeit</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <div class="stat-value" id="wpmVal">—</div>
+    <div class="stat-label">WPM</div>
+  </div>
+</div>
+
+<div class="card" id="mainCard">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="category-badge" id="categoryBadge"></span>
+
+  <div id="gameArea">
+    <div class="prompt-label">Übersetze ins Deutsche</div>
+    <div class="prompt-text" id="promptText"></div>
+    <div class="prompt-sub" id="promptSub"></div>
+    <input id="answer" type="text" autocomplete="off" spellcheck="false" placeholder="Tippe hier…" />
+    <div class="word-grid" id="wordGrid"></div>
+    <div class="solution" id="solution"></div>
+    <div class="action-row">
+      <button class="hint-btn" id="hintBtn">💡 Tipp</button>
+      <div class="enter-hint"><span class="key-badge">Enter</span> zum Prüfen</div>
+    </div>
+    <div class="combo-pop" id="comboPop"></div>
+  </div>
+
+  <div class="session-end" id="sessionEnd">
+    <div class="score-label">Sitzung beendet</div>
+    <div class="big-score" id="finalScore"></div>
+    <div style="color:var(--muted);font-size:13px;margin-top:4px" id="finalDetails"></div>
+    <div style="margin-top:16px;font-size:26px" id="finalEmoji"></div>
+    <button class="restart-btn" onclick="startSession()">Neue Runde ↻</button>
+  </div>
+</div>
+
+<div class="cat-panel">
+  <div class="cat-panel-title">Kategorien auswählen</div>
+  <div class="cat-buttons" id="catButtons"></div>
+  <div class="cat-panel-footer">
+    <div class="cat-count" id="catCount"></div>
+    <button class="new-game-btn" id="newGameBtn" onclick="startSession()">Neues Spiel starten ↻</button>
+  </div>
+</div>
+
+<div class="search-panel">
+  <div class="search-panel-title">🔍 Aktuelles Wort nachschlagen</div>
+  <div class="search-links" id="searchLinks"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

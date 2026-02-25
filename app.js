@@ -1,308 +1,4 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<title>Blitz Deutsch</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0d0d0f;
-    --surface: #161618;
-    --border: #2a2a2e;
-    --accent: #e8ff47;
-    --accent2: #ff4757;
-    --text: #f0f0f0;
-    --muted: #555;
-    --green: #4ade80;
-  }
-
-  body {
-    font-family: 'Syne', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px 20px 40px;
-    gap: 20px;
-    position: relative;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(ellipse at 30% 20%, rgba(232,255,71,0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(255,71,87,0.03) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  /* ── Stats bar ───────────────────────────────────────────── */
-  .stats-bar {
-    display: flex;
-    gap: 24px;
-    align-items: center;
-  }
-  .stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .stat-value { font-size: 26px; font-weight: 800; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
-  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); font-weight: 700; }
-  .stat-divider { width: 1px; height: 32px; background: var(--border); }
-
-  .flame { font-size: 20px; animation: flicker 1.5s infinite alternate; display: inline-block; }
-  @keyframes flicker { 0%{transform:scaleY(1) rotate(-2deg)} 100%{transform:scaleY(1.08) rotate(2deg)} }
-
-  /* ── Game card ───────────────────────────────────────────── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px 38px;
-    width: 100%; max-width: 660px;
-    position: relative; overflow: hidden;
-  }
-  .card::after {
-    content: ''; position: absolute;
-    top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0; transition: opacity 0.3s;
-  }
-  .card.active::after { opacity: 1; }
-
-  .progress-track { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 24px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
-
-  .category-badge {
-    display: inline-block; font-size: 11px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.1em;
-    padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; border: 1px solid;
-  }
-
-  .prompt-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted); margin-bottom: 7px; font-weight: 700; }
-  .prompt-text { font-size: 22px; font-weight: 700; line-height: 1.4; margin-bottom: 5px; color: var(--text); }
-  .prompt-sub { font-size: 14px; color: #4a4a4a; margin-bottom: 20px; }
-
-  input {
-    width: 100%; font-size: 18px;
-    font-family: 'JetBrains Mono', monospace;
-    padding: 13px 15px; border-radius: 10px;
-    border: 2px solid var(--border);
-    background: var(--bg); color: var(--text);
-    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  input:focus { border-color: rgba(232,255,71,0.35); box-shadow: 0 0 0 3px rgba(232,255,71,0.06); }
-  input.correct { border-color: var(--green); box-shadow: 0 0 0 3px rgba(74,222,128,0.1); }
-  input.wrong { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(255,71,87,0.1); animation: shake 0.28s ease; }
-  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
-
-  /* ── Word grid ───────────────────────────────────────────── */
-  .word-grid { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 14px; font-family: 'JetBrains Mono', monospace; }
-  .word-group { display: flex; gap: 3px; align-items: flex-end; }
-  .wchar { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-  .wchar-letter { font-size: 15px; font-weight: 600; line-height: 1; min-width: 11px; text-align: center; }
-  .wchar-line { height: 2px; width: 100%; min-width: 10px; border-radius: 1px; }
-
-  /* Neutral underline — no category color */
-  .wchar.state-hidden .wchar-letter { color: transparent; }
-  .wchar.state-hidden .wchar-line   { background: #333; }
-  .wchar.state-hint .wchar-letter   { color: rgba(232,255,71,0.55); }
-  .wchar.state-hint .wchar-line     { background: rgba(232,255,71,0.25); }
-  .wchar.state-ok .wchar-letter     { color: var(--green); }
-  .wchar.state-ok .wchar-line       { background: var(--green); }
-  .wchar.state-bad .wchar-letter    { color: var(--accent2); }
-  .wchar.state-bad .wchar-line      { background: var(--accent2); }
-  .wchar.state-auto .wchar-letter   { color: #2e5538; }
-  .wchar.state-auto .wchar-line     { background: #2e5538; }
-
-  .solution {
-    margin-top: 14px; padding: 11px 14px;
-    background: rgba(255,71,87,0.07); border: 1px solid rgba(255,71,87,0.2);
-    border-radius: 8px; font-size: 14px; color: #ff8a95;
-    display: none; line-height: 1.5;
-  }
-  .solution strong { color: var(--accent2); }
-
-  .action-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
-  .hint-btn {
-    font-size: 12px; color: var(--muted); background: none;
-    border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px;
-    cursor: pointer; font-family: 'Syne', sans-serif; font-weight: 700;
-    letter-spacing: 0.05em; transition: all 0.15s;
-  }
-  .hint-btn:hover { color: var(--text); border-color: #444; }
-  .enter-hint { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-  .key-badge { padding: 2px 8px; border: 1px solid var(--border); border-radius: 5px; font-size: 11px; font-family: 'JetBrains Mono', monospace; background: #1e1e20; }
-
-  /* ── Session end ─────────────────────────────────────────── */
-  .session-end { display: none; text-align: center; }
-  .big-score { font-size: 76px; font-weight: 800; color: var(--accent); line-height: 1; margin: 10px 0; }
-  .score-label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
-  .restart-btn {
-    margin-top: 22px; padding: 13px 32px; background: var(--accent); color: #000;
-    border: none; border-radius: 10px; font-size: 15px;
-    font-family: 'Syne', sans-serif; font-weight: 800; cursor: pointer;
-    letter-spacing: 0.05em; transition: transform 0.15s, box-shadow 0.15s;
-  }
-  .restart-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,255,71,0.3); }
-
-  /* ── Category selector ───────────────────────────────────── */
-  .cat-panel {
-    width: 100%; max-width: 660px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 22px 28px;
-  }
-  .cat-panel-title {
-    font-size: 11px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.15em; color: var(--muted); margin-bottom: 14px;
-  }
-  .cat-buttons {
-    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;
-  }
-  .cat-btn {
-    font-family: 'Syne', sans-serif;
-    font-size: 12px; font-weight: 700;
-    padding: 6px 14px; border-radius: 20px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    letter-spacing: 0.06em;
-    transition: all 0.15s;
-    text-transform: uppercase;
-  }
-  .cat-btn:hover { color: var(--text); border-color: #555; }
-  .cat-btn.active {
-    color: #000 !important;
-    border-color: transparent !important;
-  }
-  .cat-btn.mixed {
-    border-color: rgba(232,255,71,0.3);
-    color: rgba(232,255,71,0.7);
-  }
-  .cat-btn.mixed.active {
-    background: var(--accent);
-    color: #000;
-  }
-  .cat-panel-footer {
-    display: flex; justify-content: space-between; align-items: center;
-    border-top: 1px solid var(--border); padding-top: 14px; margin-top: 4px;
-  }
-  .cat-count { font-size: 12px; color: var(--muted); }
-  .new-game-btn {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; font-weight: 800;
-    padding: 8px 20px; border-radius: 10px;
-    background: var(--accent); color: #000;
-    border: none; cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-  .new-game-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,255,71,0.3); }
-  .new-game-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
-
-  /* ── Toast / Combo ───────────────────────────────────────── */
-  .toast {
-    position: fixed; top: 24px; left: 50%;
-    transform: translateX(-50%) translateY(-60px);
-    background: var(--accent); color: #000;
-    padding: 9px 20px; border-radius: 30px;
-    font-weight: 800; font-size: 13px; letter-spacing: 0.05em;
-    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    z-index: 99; pointer-events: none;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
-  .combo-pop {
-    position: absolute; right: 38px; top: 18px;
-    font-size: 12px; font-weight: 800; color: var(--accent);
-    opacity: 0; pointer-events: none;
-    text-transform: uppercase; letter-spacing: 0.08em;
-  }
-  .combo-pop.animate { animation: popUp 0.8s ease forwards; }
-  @keyframes popUp { 0%{opacity:1;transform:translateY(0)} 100%{opacity:0;transform:translateY(-28px)} }
-</style>
-</head>
-<body>
-
-<div class="toast" id="toast"></div>
-
-<!-- Stats -->
-<div class="stats-bar">
-  <div class="stat">
-    <div class="stat-value"><span class="flame">🔥</span><span id="streakNum">0</span></div>
-    <div class="stat-label">Streak</div>
-  </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
-    <div class="stat-value" id="correctVal">0</div>
-    <div class="stat-label">Richtig</div>
-  </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
-    <div class="stat-value" id="totalVal">0</div>
-    <div class="stat-label">Gesamt</div>
-  </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
-    <div class="stat-value" id="accuracyVal">—</div>
-    <div class="stat-label">Genauigkeit</div>
-  </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
-    <div class="stat-value" id="wpmVal">—</div>
-    <div class="stat-label">WPM</div>
-  </div>
-</div>
-
-<!-- Game card -->
-<div class="card" id="mainCard">
-  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-  <span class="category-badge" id="categoryBadge"></span>
-
-  <div id="gameArea">
-    <div class="prompt-label">Übersetze ins Deutsche</div>
-    <div class="prompt-text" id="promptText"></div>
-    <div class="prompt-sub" id="promptSub"></div>
-
-    <input id="answer" type="text" autocomplete="off" spellcheck="false" placeholder="Tippe hier…" />
-
-    <div class="word-grid" id="wordGrid"></div>
-    <div class="solution" id="solution"></div>
-
-    <div class="action-row">
-      <button class="hint-btn" id="hintBtn">💡 Tipp</button>
-      <div class="enter-hint"><span class="key-badge">Enter</span> zum Prüfen</div>
-    </div>
-    <div class="combo-pop" id="comboPop"></div>
-  </div>
-
-  <div class="session-end" id="sessionEnd">
-    <div class="score-label">Sitzung beendet</div>
-    <div class="big-score" id="finalScore"></div>
-    <div style="color:var(--muted);font-size:13px;margin-top:4px" id="finalDetails"></div>
-    <div style="margin-top:16px;font-size:26px" id="finalEmoji"></div>
-    <button class="restart-btn" onclick="startSession()">Neue Runde ↻</button>
-  </div>
-</div>
-
-<!-- Category selector -->
-<div class="cat-panel">
-  <div class="cat-panel-title">Kategorien auswählen</div>
-  <div class="cat-buttons" id="catButtons"></div>
-  <div class="cat-panel-footer">
-    <div class="cat-count" id="catCount"></div>
-    <button class="new-game-btn" id="newGameBtn" onclick="startSession()">Neues Spiel starten ↻</button>
-  </div>
-</div>
-
-<script>
-// ─── Category colors (separate from card data) ────────────────────
+// ─── Category colors ──────────────────────────────────────────────
 const catColors = {
   "Ingenieurwesen": "#60a5fa",
   "Argumentation":  "#f472b6",
@@ -548,51 +244,54 @@ const allCards = [
   { source: "trustworthy", croatian: "pouzdan", target: "vertrauenswürdig", cat: "Soft Skills" },
 ];
 
+// ─── State ────────────────────────────────────────────────────────
 const SESSION_SIZE = 10;
 const allCats = Object.keys(catColors);
+let selectedCats = null;
 
-// selectedCats: null means "Gemischt" (all), otherwise Set of cat names
-let selectedCats = null; // start with Gemischt
-
-// ─── State ────────────────────────────────────────────────────────
 let sessionCards = [], sessionIndex = 0;
 let streak = 0, bestStreak = 0;
 let totalCorrect = 0, totalAttempts = 0;
 let forceCorrection = false, hintCount = 0;
 let sessionStart = 0, totalCharsTyped = 0;
 
-// ─── DOM ─────────────────────────────────────────────────────────
-const promptEl    = document.getElementById("promptText");
-const promptSub   = document.getElementById("promptSub");
-const inputEl     = document.getElementById("answer");
-const solutionEl  = document.getElementById("solution");
-const wordGrid    = document.getElementById("wordGrid");
-const progFill    = document.getElementById("progressFill");
-const categoryEl  = document.getElementById("categoryBadge");
-const comboPop    = document.getElementById("comboPop");
-const gameArea    = document.getElementById("gameArea");
-const sessionEndEl= document.getElementById("sessionEnd");
-const mainCard    = document.getElementById("mainCard");
-const catCountEl  = document.getElementById("catCount");
-const newGameBtn  = document.getElementById("newGameBtn");
+// ─── DOM refs ─────────────────────────────────────────────────────
+const promptEl    = document.getElementById('promptText');
+const promptSub   = document.getElementById('promptSub');
+const inputEl     = document.getElementById('answer');
+const solutionEl  = document.getElementById('solution');
+const wordGrid    = document.getElementById('wordGrid');
+const progFill    = document.getElementById('progressFill');
+const categoryEl  = document.getElementById('categoryBadge');
+const comboPop    = document.getElementById('comboPop');
+const gameArea    = document.getElementById('gameArea');
+const sessionEndEl = document.getElementById('sessionEnd');
+const mainCard    = document.getElementById('mainCard');
+const catCountEl  = document.getElementById('catCount');
+const newGameBtn  = document.getElementById('newGameBtn');
 
-// ─── Build category buttons ───────────────────────────────────────
+// ─── Animated flag ────────────────────────────────────────────────
+const flagEl = document.getElementById('deFlag');
+for (let i = 0; i < 20; i++) {
+  const col = document.createElement('div');
+  col.className = 'de-flag-col';
+  col.style.animationDelay = -(i / 20) * 3 + 's';
+  col.style.setProperty('--billow', (i / 2) * 16 + 4 + 'px');
+  flagEl.appendChild(col);
+}
+
+// ─── Category panel ───────────────────────────────────────────────
 function buildCatPanel() {
-  const container = document.getElementById("catButtons");
+  const container = document.getElementById('catButtons');
   container.innerHTML = '';
 
-  // "Gemischt" button
   const mixBtn = document.createElement('button');
   mixBtn.className = 'cat-btn mixed' + (selectedCats === null ? ' active' : '');
-  mixBtn.textContent = '⚡ Gemischt';
   if (selectedCats === null) mixBtn.style.background = '#e8ff47';
-  mixBtn.onclick = () => {
-    selectedCats = null;
-    buildCatPanel();
-  };
+  mixBtn.textContent = '⚡ Gemischt';
+  mixBtn.onclick = () => { selectedCats = null; buildCatPanel(); };
   container.appendChild(mixBtn);
 
-  // Individual category buttons
   allCats.forEach(cat => {
     const color = catColors[cat];
     const isActive = selectedCats !== null && selectedCats.has(cat);
@@ -615,19 +314,43 @@ function buildCatPanel() {
     container.appendChild(btn);
   });
 
-  // Update count & button state
   const pool = getPool();
   catCountEl.textContent = pool.length + ' Karten verfügbar';
   newGameBtn.disabled = pool.length === 0;
 }
 
-// ─── Get filtered card pool ───────────────────────────────────────
 function getPool() {
   if (selectedCats === null) return allCards;
   return allCards.filter(c => selectedCats.has(c.cat));
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────
+// ─── Search links ─────────────────────────────────────────────────
+const searchSites = [
+  { name: "Duden",     icon: "📖", url: w => `https://www.duden.de/suchen/dudenonline/${encodeURIComponent(w)}` },
+  { name: "DWDS",      icon: "🔤", url: w => `https://www.dwds.de/?q=${encodeURIComponent(w)}` },
+  { name: "dict.cc",   icon: "🌐", url: w => `https://www.dict.cc/?s=${encodeURIComponent(w)}` },
+  { name: "Wikipedia", icon: "📚", url: w => `https://de.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(w)}` },
+  { name: "Google",    icon: "🔍", url: w => `https://www.google.com/search?q=${encodeURIComponent(w + ' auf Deutsch')}` },
+  { name: "Linguee",   icon: "🗣️", url: w => `https://www.linguee.de/deutsch-englisch/search?query=${encodeURIComponent(w)}` },
+  { name: "Leo",       icon: "🦁", url: w => `https://dict.leo.org/german-english/${encodeURIComponent(w)}` },
+];
+
+function updateSearchLinks(card) {
+  const container = document.getElementById('searchLinks');
+  container.innerHTML = '';
+  const word = (card.target || card.source).replace(/^(der|die|das)\s+/i, '');
+  searchSites.forEach(site => {
+    const a = document.createElement('a');
+    a.className = 'search-link';
+    a.href = site.url(word);
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML = `<span>${site.icon}</span><span>${site.name}</span>`;
+    container.appendChild(a);
+  });
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────
 const PUNCT = /[.,!?:;]/;
 
 function normalize(t) {
@@ -636,9 +359,8 @@ function normalize(t) {
 
 function getCharMeta(target) {
   const hints = new Set(), autofill = new Set();
-  const words = target.split(' ');
   let pos = 0;
-  words.forEach(word => {
+  target.split(' ').forEach(word => {
     if (!word.length) { pos++; return; }
     hints.add(pos);
     let t = word.length - 1;
@@ -648,7 +370,6 @@ function getCharMeta(target) {
   return { hints, autofill };
 }
 
-// ─── Word grid ────────────────────────────────────────────────────
 function buildWordGrid(target, typed) {
   wordGrid.innerHTML = '';
   const { hints, autofill } = getCharMeta(target);
@@ -658,41 +379,26 @@ function buildWordGrid(target, typed) {
   words.forEach((word, wi) => {
     const group = document.createElement('div');
     group.className = 'word-group';
-
     for (let ci = 0; ci < word.length; ci++) {
       const idx = pos + ci;
-      const tChar = target[idx];
-      const uChar = typed[idx];
-
-      const wrap   = document.createElement('div');
-      wrap.className = 'wchar';
-      const letter = document.createElement('div');
-      letter.className = 'wchar-letter';
-      const line   = document.createElement('div');
-      line.className = 'wchar-line';
-
+      const tChar = target[idx], uChar = typed[idx];
+      const wrap   = document.createElement('div'); wrap.className = 'wchar';
+      const letter = document.createElement('div'); letter.className = 'wchar-letter';
+      const line   = document.createElement('div'); line.className = 'wchar-line';
       if (autofill.has(idx)) {
-        letter.textContent = tChar;
-        wrap.classList.add('state-auto');
+        letter.textContent = tChar; wrap.classList.add('state-auto');
       } else if (uChar !== undefined) {
         letter.textContent = tChar;
         wrap.classList.add(uChar.toLowerCase() === tChar.toLowerCase() ? 'state-ok' : 'state-bad');
       } else if (hints.has(idx)) {
-        letter.textContent = tChar;
-        wrap.classList.add('state-hint');
+        letter.textContent = tChar; wrap.classList.add('state-hint');
       } else {
-        letter.textContent = '_';
-        wrap.classList.add('state-hidden');
+        letter.textContent = '_'; wrap.classList.add('state-hidden');
       }
-
-      wrap.appendChild(letter);
-      wrap.appendChild(line);
-      group.appendChild(wrap);
+      wrap.appendChild(letter); wrap.appendChild(line); group.appendChild(wrap);
     }
-
     pos += word.length + 1;
     wordGrid.appendChild(group);
-
     if (wi < words.length - 1) {
       const sp = document.createElement('div');
       sp.style.cssText = 'width:5px;flex-shrink:0';
@@ -701,7 +407,7 @@ function buildWordGrid(target, typed) {
   });
 }
 
-// ─── Session ─────────────────────────────────────────────────────
+// ─── Session ──────────────────────────────────────────────────────
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -723,34 +429,31 @@ function startSession() {
   gameArea.style.display = 'block';
   sessionEndEl.style.display = 'none';
   loadCard();
-  // Scroll to card
   mainCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function loadCard() {
   const card = sessionCards[sessionIndex];
-  promptEl.textContent = card.croatian;
-  promptSub.textContent = card.source || '';
+  promptEl.textContent = card.source;
+  promptSub.textContent = card.croatian || '';
   inputEl.value = '';
   inputEl.className = '';
   solutionEl.style.display = 'none';
   forceCorrection = false;
   hintCount = 0;
   progFill.style.width = (sessionIndex / sessionCards.length * 100) + '%';
-
-  // Category badge uses color from catColors
   const color = catColors[card.cat] || '#888';
   categoryEl.textContent = card.cat;
   categoryEl.style.color = color;
   categoryEl.style.borderColor = color + '55';
-  categoryEl.style.background   = color + '14';
-
+  categoryEl.style.background = color + '14';
   mainCard.classList.add('active');
   buildWordGrid(card.target, '');
+  updateSearchLinks(card);
   inputEl.focus();
 }
 
-// ─── Input events ─────────────────────────────────────────────────
+// ─── Events ───────────────────────────────────────────────────────
 inputEl.addEventListener('input', () => {
   buildWordGrid(sessionCards[sessionIndex].target, inputEl.value);
 });
@@ -764,10 +467,9 @@ document.getElementById('hintBtn').addEventListener('click', () => {
   inputEl.focus();
 });
 
-inputEl.addEventListener('keydown', (e) => {
+inputEl.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
   const card = sessionCards[sessionIndex];
-
   if (normalize(inputEl.value) === normalize(card.target)) {
     totalCharsTyped += card.target.length;
     if (!forceCorrection) {
@@ -828,10 +530,10 @@ function showToast(msg) {
 }
 
 function getEncouragement(s) {
-  if (s === 3)  return "🔥 3 in a row!";
-  if (s === 5)  return "⚡ Fünf! Weiter so!";
-  if (s === 7)  return "💪 Perfekt!";
-  if (s === 10) return "🌟 Legende!";
+  if (s === 3)  return '🔥 3 in a row!';
+  if (s === 5)  return '⚡ Fünf! Weiter so!';
+  if (s === 7)  return '💪 Perfekt!';
+  if (s === 10) return '🌟 Legende!';
   return null;
 }
 
@@ -840,13 +542,12 @@ function showSessionEnd() {
   progFill.style.width = '100%';
   gameArea.style.display = 'none';
   sessionEndEl.style.display = 'block';
-  const total = sessionCards.length;
-  const pct = Math.round(totalCorrect / total * 100);
+  const pct = Math.round(totalCorrect / sessionCards.length * 100);
   document.getElementById('finalScore').textContent = pct + '%';
   const secs = Math.round((Date.now() - sessionStart) / 1000);
   const wpm  = secs > 0 ? Math.round((totalCharsTyped / 5) / (secs / 60)) : 0;
   document.getElementById('finalDetails').textContent =
-    totalCorrect + '/' + total + ' richtig · Streak: ' + bestStreak + ' · ' + wpm + ' WPM · ' + secs + 's';
+    totalCorrect + '/' + sessionCards.length + ' richtig · Streak: ' + bestStreak + ' · ' + wpm + ' WPM · ' + secs + 's';
   document.getElementById('finalEmoji').textContent =
     pct === 100 ? '🏆🥇🔥' : pct >= 80 ? '🌟💪' : pct >= 60 ? '👍📚' : '💡 Weiterüben!';
 }
@@ -854,6 +555,3 @@ function showSessionEnd() {
 // ─── Init ─────────────────────────────────────────────────────────
 buildCatPanel();
 startSession();
-</script>
-</body>
-</html>
