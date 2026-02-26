@@ -1,13 +1,13 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:      #0d0d0f;
+  --bg:      #000000;
   --surface: #161618;
-  --border:  #2a2a2e;
+  --border:  #ffffff;
   --accent:  #e8ff47;
   --accent2: #ff4757;
   --text:    #f0f0f0;
-  --muted:   #555;
+  --muted:   #b1b1b1;
   --green:   #4ade80;
   --de-red:  #cc0000;
   --de-gold: #ffce00;
@@ -34,28 +34,31 @@ body {
   display: flex;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.98;
+  opacity: 0.92;
 }
 .de-flag-col {
   flex: 1;
   background: linear-gradient(
     to bottom,
-    #000     0%    33.3%,
+    #000000     0%    33.3%,
     #cc0000  33.3% 66.6%,
     #ffce00  66.6% 100%
   );
-  animation: wave 3s ease-in-out infinite alternate;
+  background-size: 100% 150%;       /* gradient is 3x taller than element */
+  background-position: 0% 50%;      /* start centered */
+  animation: wave 5s ease-in-out infinite alternate;
 }
 @keyframes wave {
-  from { transform: translateY(calc(-1 * var(--billow, 12px))); }
-  to   { transform: translateY(var(--billow, 12px)); }
+  from { background-position: 0% calc(50% - var(--billow, 4px)); }
+  to   { background-position: 0% calc(50% + var(--billow, 4px)); }
 }
+
 
 /* Dark overlay + color glows on top of flag */
 body::before {
   content: '';
   position: fixed; inset: 0;
-  background: rgba(10,10,10,0.82);
+  background: rgba(255, 255, 255, 0.82);
   pointer-events: none; z-index: 0;
 }
 body::after {

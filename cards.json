@@ -1,0 +1,1400 @@
+[
+  {
+    "source": "engineer",
+    "croatian": "inženjer",
+    "target": "der Ingenieur",
+    "cat": "Ingenieurwesen"
+  },
+  {
+    "source": "engineering",
+    "croatian": "inženjerstvo",
+    "target": "das Ingenieurwesen",
+    "cat": "Ingenieurwesen"
+  },
+  {
+    "source": "lunch break",
+    "croatian": "pauza za ručak",
+    "target": "die Mittagspause",
+    "cat": "Ingenieurwesen"
+  },
+  {
+    "source": "raised / increased",
+    "croatian": "povećan / podignut",
+    "target": "angehoben",
+    "cat": "Ingenieurwesen"
+  },
+  {
+    "source": "analysis",
+    "croatian": "analiza",
+    "target": "die Analyse",
+    "cat": "Methodik"
+  },
+  {
+    "source": "assumption",
+    "croatian": "pretpostavka",
+    "target": "die Annahme",
+    "cat": "Methodik"
+  },
+  {
+    "source": "requirement",
+    "croatian": "zahtjev",
+    "target": "die Anforderung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "solution",
+    "croatian": "rješenje",
+    "target": "die Lösung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "approach",
+    "croatian": "pristup",
+    "target": "der Ansatz",
+    "cat": "Methodik"
+  },
+  {
+    "source": "constraint",
+    "croatian": "ograničenje",
+    "target": "die Einschränkung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "implementation",
+    "croatian": "provedba",
+    "target": "die Umsetzung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "evaluation",
+    "croatian": "vrednovanje",
+    "target": "die Auswertung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "efficiency",
+    "croatian": "učinkovitost",
+    "target": "die Effizienz",
+    "cat": "Methodik"
+  },
+  {
+    "source": "optimization",
+    "croatian": "optimizacija",
+    "target": "die Optimierung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "data",
+    "croatian": "podaci",
+    "target": "die Daten",
+    "cat": "Methodik"
+  },
+  {
+    "source": "evidence",
+    "croatian": "dokaz",
+    "target": "der Nachweis",
+    "cat": "Methodik"
+  },
+  {
+    "source": "feasible",
+    "croatian": "izvedivo",
+    "target": "realisierbar",
+    "cat": "Methodik"
+  },
+  {
+    "source": "robust",
+    "croatian": "robustan",
+    "target": "robust",
+    "cat": "Methodik"
+  },
+  {
+    "source": "scalable",
+    "croatian": "skalabilno",
+    "target": "skalierbar",
+    "cat": "Methodik"
+  },
+  {
+    "source": "method",
+    "croatian": "metoda",
+    "target": "die Methode",
+    "cat": "Methodik"
+  },
+  {
+    "source": "procedure",
+    "croatian": "postupak",
+    "target": "das Verfahren",
+    "cat": "Methodik"
+  },
+  {
+    "source": "structure",
+    "croatian": "struktura",
+    "target": "die Struktur",
+    "cat": "Methodik"
+  },
+  {
+    "source": "model",
+    "croatian": "model",
+    "target": "das Modell",
+    "cat": "Methodik"
+  },
+  {
+    "source": "simulation",
+    "croatian": "simulacija",
+    "target": "die Simulation",
+    "cat": "Methodik"
+  },
+  {
+    "source": "measurement",
+    "croatian": "mjerenje",
+    "target": "die Messung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "accuracy",
+    "croatian": "točnost",
+    "target": "die Genauigkeit",
+    "cat": "Methodik"
+  },
+  {
+    "source": "approximation",
+    "croatian": "aproksimacija",
+    "target": "die Näherung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "parameter",
+    "croatian": "parametar",
+    "target": "der Parameter",
+    "cat": "Methodik"
+  },
+  {
+    "source": "boundary condition",
+    "croatian": "rubni uvjet",
+    "target": "die Randbedingung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "proof",
+    "croatian": "dokaz",
+    "target": "der Beweis",
+    "cat": "Methodik"
+  },
+  {
+    "source": "hypothesis",
+    "croatian": "hipoteza",
+    "target": "die Hypothese",
+    "cat": "Methodik"
+  },
+  {
+    "source": "verification",
+    "croatian": "verifikacija",
+    "target": "die Verifikation",
+    "cat": "Methodik"
+  },
+  {
+    "source": "validation",
+    "croatian": "validacija",
+    "target": "die Validierung",
+    "cat": "Methodik"
+  },
+  {
+    "source": "result",
+    "croatian": "rezultat",
+    "target": "das Ergebnis",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to assume",
+    "croatian": "pretpostaviti",
+    "target": "annehmen",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to conclude",
+    "croatian": "zaključiti",
+    "target": "schlussfolgern",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to emphasize",
+    "croatian": "naglasiti",
+    "target": "hervorheben",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to clarify",
+    "croatian": "razjasniti",
+    "target": "klarstellen",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to evaluate",
+    "croatian": "procijeniti",
+    "target": "bewerten",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to verify",
+    "croatian": "provjeriti",
+    "target": "überprüfen",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to derive",
+    "croatian": "izvesti",
+    "target": "ableiten",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to observe",
+    "croatian": "promatrati",
+    "target": "beobachten",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to quantify",
+    "croatian": "kvantificirati",
+    "target": "quantifizieren",
+    "cat": "Methodik"
+  },
+  {
+    "source": "to generalize",
+    "croatian": "generalizirati",
+    "target": "verallgemeinern",
+    "cat": "Methodik"
+  },
+  {
+    "source": "completely",
+    "croatian": "potpuno",
+    "target": "vollkommen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "conviction",
+    "croatian": "uvjerenje",
+    "target": "die Überzeugung",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "objection",
+    "croatian": "prigovor",
+    "target": "der Einwand",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "empirical",
+    "croatian": "empirijski",
+    "target": "empirisch",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "based on",
+    "croatian": "na temelju",
+    "target": "aufbauend auf",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to specify",
+    "croatian": "precizirati",
+    "target": "präzisieren",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "discussion",
+    "croatian": "rasprava",
+    "target": "die Diskussion",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "conclusion",
+    "croatian": "zaključak",
+    "target": "die Schlussfolgerung",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "trade-off",
+    "croatian": "kompromis ciljeva",
+    "target": "der Zielkonflikt",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "risk",
+    "croatian": "rizik",
+    "target": "das Risiko",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "uncertainty",
+    "croatian": "neizvjesnost",
+    "target": "die Unsicherheit",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "argument",
+    "croatian": "argument",
+    "target": "das Argument",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "counterargument",
+    "croatian": "protuargument",
+    "target": "das Gegenargument",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "justification",
+    "croatian": "obrazloženje",
+    "target": "die Begründung",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "reasoning",
+    "croatian": "argumentacija",
+    "target": "die Argumentation",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "statement",
+    "croatian": "izjava",
+    "target": "die Aussage",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "claim",
+    "croatian": "tvrdnja",
+    "target": "die Behauptung",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "position",
+    "croatian": "stav",
+    "target": "die Position",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "standpoint",
+    "croatian": "stajalište",
+    "target": "der Standpunkt",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "assessment",
+    "croatian": "procjena",
+    "target": "die Einschätzung",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "consideration",
+    "croatian": "razmatranje",
+    "target": "die Abwägung",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to justify",
+    "croatian": "opravdati",
+    "target": "begründen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to question",
+    "croatian": "preispitati",
+    "target": "hinterfragen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to support",
+    "croatian": "potkrijepiti",
+    "target": "untermauern",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to contradict",
+    "croatian": "proturječiti",
+    "target": "widersprechen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to refute",
+    "croatian": "opovrgnuti",
+    "target": "widerlegen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to illustrate",
+    "croatian": "ilustrirati",
+    "target": "veranschaulichen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "relevant",
+    "croatian": "relevantno",
+    "target": "relevant",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "significant",
+    "croatian": "značajno",
+    "target": "signifikant",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "negligible",
+    "croatian": "zanemarivo",
+    "target": "vernachlässigbar",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "substantial",
+    "croatian": "znatno",
+    "target": "substanziell",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "coherent",
+    "croatian": "koherentno",
+    "target": "kohärent",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "consistent",
+    "croatian": "dosljedno",
+    "target": "konsistent",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "plausible",
+    "croatian": "uvjerljivo",
+    "target": "plausibel",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "questionable",
+    "croatian": "upitno",
+    "target": "fragwürdig",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "conclusive",
+    "croatian": "odlučujuće",
+    "target": "ausschlaggebend",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "tentative",
+    "croatian": "preliminarno",
+    "target": "vorläufig",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "framework",
+    "croatian": "okvir",
+    "target": "der Rahmen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "context",
+    "croatian": "kontekst",
+    "target": "der Kontext",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "scope",
+    "croatian": "opseg",
+    "target": "der Umfang",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "perspective",
+    "croatian": "perspektiva",
+    "target": "die Perspektive",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "objective",
+    "croatian": "cilj",
+    "target": "das Ziel",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "criterion",
+    "croatian": "kriterij",
+    "target": "das Kriterium",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "priority",
+    "croatian": "prioritet",
+    "target": "die Priorität",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "dependency",
+    "croatian": "ovisnost",
+    "target": "die Abhängigkeit",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "interaction",
+    "croatian": "međudjelovanje",
+    "target": "die Wechselwirkung",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "implication",
+    "croatian": "posljedica",
+    "target": "die Auswirkung",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "advantage",
+    "croatian": "prednost",
+    "target": "der Vorteil",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "disadvantage",
+    "croatian": "nedostatak",
+    "target": "der Nachteil",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "limitation",
+    "croatian": "ograničenje",
+    "target": "die Begrenzung",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "potential",
+    "croatian": "potencijal",
+    "target": "das Potenzial",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "feasibility",
+    "croatian": "izvedivost",
+    "target": "die Machbarkeit",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "reliability",
+    "croatian": "pouzdanost",
+    "target": "die Zuverlässigkeit",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "complexity",
+    "croatian": "složenost",
+    "target": "die Komplexität",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "effort",
+    "croatian": "napor / trud",
+    "target": "der Aufwand",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "benefit",
+    "croatian": "korist",
+    "target": "der Nutzen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "tradeoff",
+    "croatian": "kompromis",
+    "target": "der Kompromiss",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "in principle",
+    "croatian": "načelno",
+    "target": "grundsätzlich",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "in practice",
+    "croatian": "u praksi",
+    "target": "in der Praxis",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "in contrast",
+    "croatian": "za razliku",
+    "target": "im Gegensatz",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "on the one hand",
+    "croatian": "s jedne strane",
+    "target": "einerseits",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "on the other hand",
+    "croatian": "s druge strane",
+    "target": "andererseits",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "with respect to",
+    "croatian": "s obzirom na",
+    "target": "hinsichtlich",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to a certain extent",
+    "croatian": "u određenoj mjeri",
+    "target": "in gewissem Maße",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "as a result",
+    "croatian": "kao posljedica toga",
+    "target": "infolgedessen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "therefore",
+    "croatian": "stoga",
+    "target": "daher",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "nevertheless",
+    "croatian": "ipak",
+    "target": "dennoch",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to increase",
+    "croatian": "povećati",
+    "target": "steigern",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to reduce",
+    "croatian": "smanjiti",
+    "target": "reduzieren",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to maintain",
+    "croatian": "održavati",
+    "target": "aufrechterhalten",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "to adjust",
+    "croatian": "prilagoditi",
+    "target": "anpassen",
+    "cat": "Argumentation"
+  },
+  {
+    "source": "located",
+    "croatian": "smješten",
+    "target": "gelegen",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "positioned",
+    "croatian": "pozicioniran",
+    "target": "positioniert",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "aligned",
+    "croatian": "poravnat",
+    "target": "ausgerichtet",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "offset",
+    "croatian": "pomaknut",
+    "target": "versetzt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "adjacent",
+    "croatian": "susjedan",
+    "target": "angrenzend",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "overlapping",
+    "croatian": "preklapajući",
+    "target": "überlappend",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "embedded",
+    "croatian": "ugrađen",
+    "target": "eingebettet",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "exposed",
+    "croatian": "izložen",
+    "target": "freigelegt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "central",
+    "croatian": "središnji",
+    "target": "zentral",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "peripheral",
+    "croatian": "periferni",
+    "target": "peripher",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "horizontal",
+    "croatian": "vodoravno",
+    "target": "horizontal",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "vertical",
+    "croatian": "okomito",
+    "target": "vertikal",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "diagonal",
+    "croatian": "dijagonalno",
+    "target": "diagonal",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "symmetrical",
+    "croatian": "simetrično",
+    "target": "symmetrisch",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "asymmetrical",
+    "croatian": "asimetrično",
+    "target": "asymmetrisch",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "layered",
+    "croatian": "slojevito",
+    "target": "geschichtet",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "compact",
+    "croatian": "kompaktno",
+    "target": "kompakt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "elongated",
+    "croatian": "izduženo",
+    "target": "langgestreckt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "bulky",
+    "croatian": "masivno",
+    "target": "massiv",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "slender",
+    "croatian": "vitko",
+    "target": "schlank",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "surface",
+    "croatian": "površina",
+    "target": "die Oberfläche",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "edge",
+    "croatian": "rub",
+    "target": "die Kante",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "corner",
+    "croatian": "kut",
+    "target": "die Ecke",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "interior",
+    "croatian": "unutrašnjost",
+    "target": "das Innere",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "exterior",
+    "croatian": "vanjština",
+    "target": "das Äußere",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "transition",
+    "croatian": "prijelaz",
+    "target": "der Übergang",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "junction",
+    "croatian": "spoj",
+    "target": "die Verbindung",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "gap",
+    "croatian": "razmak",
+    "target": "der Spalt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "alignment",
+    "croatian": "poravnanje",
+    "target": "die Ausrichtung",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "orientation",
+    "croatian": "orijentacija",
+    "target": "die Orientierung",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "slightly",
+    "croatian": "blago",
+    "target": "leicht",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "moderately",
+    "croatian": "umjereno",
+    "target": "mäßig",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "considerably",
+    "croatian": "znatno",
+    "target": "erheblich",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "barely",
+    "croatian": "jedva",
+    "target": "kaum",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "predominantly",
+    "croatian": "pretežno",
+    "target": "überwiegend",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "partially",
+    "croatian": "djelomično",
+    "target": "teilweise",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "fully",
+    "croatian": "potpuno",
+    "target": "vollständig",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "evenly",
+    "croatian": "ravnomjerno",
+    "target": "gleichmäßig",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "unevenly",
+    "croatian": "neravnomjerno",
+    "target": "ungleichmäßig",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "irregular",
+    "croatian": "nepravilan",
+    "target": "unregelmäßig",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "appearance",
+    "croatian": "izgled",
+    "target": "das Erscheinungsbild",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "condition",
+    "croatian": "stanje",
+    "target": "der Zustand",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "well-maintained",
+    "croatian": "dobro održavan",
+    "target": "gepflegt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "worn",
+    "croatian": "istrošen",
+    "target": "abgenutzt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "damaged",
+    "croatian": "oštećen",
+    "target": "beschädigt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "intact",
+    "croatian": "netaknut",
+    "target": "intakt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "smooth",
+    "croatian": "glatko",
+    "target": "glatt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "rough",
+    "croatian": "grubo",
+    "target": "rau",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "matte",
+    "croatian": "mat",
+    "target": "matt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "glossy",
+    "croatian": "sjajno",
+    "target": "glänzend",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "transparent",
+    "croatian": "prozirno",
+    "target": "transparent",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "opaque",
+    "croatian": "neprozirno",
+    "target": "blickdicht",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "solid",
+    "croatian": "čvrsto",
+    "target": "massiv",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "fragile",
+    "croatian": "krhko",
+    "target": "fragil",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "stable",
+    "croatian": "stabilno",
+    "target": "stabil",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "flexible",
+    "croatian": "fleksibilno",
+    "target": "flexibel",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "rigid",
+    "croatian": "kruto",
+    "target": "starr",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "lightweight",
+    "croatian": "lagano",
+    "target": "leichtgewichtig",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "heavy",
+    "croatian": "teško",
+    "target": "schwer",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "balanced",
+    "croatian": "uravnoteženo",
+    "target": "ausgewogen",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "impression",
+    "croatian": "dojam",
+    "target": "der Eindruck",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "noticeable",
+    "croatian": "uočljivo",
+    "target": "auffällig",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "subtle",
+    "croatian": "suptilno",
+    "target": "dezent",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "dominant",
+    "croatian": "dominantno",
+    "target": "dominant",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "restrained",
+    "croatian": "suzdržano",
+    "target": "zurückhaltend",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "elegant",
+    "croatian": "elegantno",
+    "target": "elegant",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "functional",
+    "croatian": "funkcionalno",
+    "target": "funktional",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "practical",
+    "croatian": "praktično",
+    "target": "praktisch",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "aesthetic",
+    "croatian": "estetski",
+    "target": "ästhetisch",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "unobtrusive",
+    "croatian": "neupadljivo",
+    "target": "unaufdringlich",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "visually",
+    "croatian": "vizualno",
+    "target": "optisch",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "tactile",
+    "croatian": "taktilno",
+    "target": "haptisch",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "perceptible",
+    "croatian": "zamjetljivo",
+    "target": "wahrnehmbar",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "distinct",
+    "croatian": "jasno",
+    "target": "deutlich",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "faint",
+    "croatian": "slabo",
+    "target": "schwach",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "prominent",
+    "croatian": "istaknuto",
+    "target": "markant",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "uniform",
+    "croatian": "ujednačeno",
+    "target": "einheitlich",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "varied",
+    "croatian": "raznovrsno",
+    "target": "abwechslungsreich",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "consistent look",
+    "croatian": "skladna cjelina",
+    "target": "stimmiges Gesamtbild",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "overall",
+    "croatian": "ukupno",
+    "target": "insgesamt",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "experience",
+    "croatian": "iskustvo",
+    "target": "die Erfahrung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "memory",
+    "croatian": "sjećanje",
+    "target": "die Erinnerung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "moment",
+    "croatian": "trenutak",
+    "target": "der Moment",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "situation",
+    "croatian": "situacija",
+    "target": "die Situation",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "encounter",
+    "croatian": "susret",
+    "target": "die Begegnung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "routine",
+    "croatian": "rutina",
+    "target": "die Routine",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "change",
+    "croatian": "promjena",
+    "target": "die Veränderung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "development",
+    "croatian": "razvoj",
+    "target": "die Entwicklung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "phase",
+    "croatian": "faza",
+    "target": "die Phase",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to notice",
+    "croatian": "primijetiti",
+    "target": "bemerken",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to realize",
+    "croatian": "shvatiti",
+    "target": "erkennen",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to recall",
+    "croatian": "prisjetiti se",
+    "target": "sich erinnern",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to reflect",
+    "croatian": "razmišljati",
+    "target": "reflektieren",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to appreciate",
+    "croatian": "cijeniti",
+    "target": "schätzen",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to enjoy",
+    "croatian": "uživati",
+    "target": "genießen",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to struggle",
+    "croatian": "teško se nositi",
+    "target": "sich schwertun",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to manage",
+    "croatian": "savladati",
+    "target": "bewältigen",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to adapt",
+    "croatian": "prilagoditi se",
+    "target": "sich anpassen",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "to improve",
+    "croatian": "poboljšati se",
+    "target": "sich verbessern",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "conversation",
+    "croatian": "razgovor",
+    "target": "das Gespräch",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "exchange",
+    "croatian": "razmjena",
+    "target": "der Austausch",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "feedback",
+    "croatian": "povratna informacija",
+    "target": "die Rückmeldung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "coordination",
+    "croatian": "usklađivanje",
+    "target": "die Abstimmung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "agreement",
+    "croatian": "dogovor",
+    "target": "die Einigung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "misunderstanding",
+    "croatian": "nesporazum",
+    "target": "das Missverständnis",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "clarification",
+    "croatian": "pojašnjenje",
+    "target": "die Klärung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "support",
+    "croatian": "podrška",
+    "target": "die Unterstützung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "collaboration",
+    "croatian": "suradnja",
+    "target": "die Zusammenarbeit",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "responsibility",
+    "croatian": "odgovornost",
+    "target": "die Verantwortung",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "reliable",
+    "croatian": "pouzdan",
+    "target": "verlässlich",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "approachable",
+    "croatian": "pristupačan",
+    "target": "zugänglich",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "cooperative",
+    "croatian": "suradljiv",
+    "target": "kooperativ",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "considerate",
+    "croatian": "obziran",
+    "target": "rücksichtsvoll",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "direct",
+    "croatian": "direktan",
+    "target": "direkt",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "open",
+    "croatian": "otvoren",
+    "target": "offen",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "constructive",
+    "croatian": "konstruktivan",
+    "target": "konstruktiv",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "objective",
+    "croatian": "objektivan",
+    "target": "sachlich",
+    "cat": "Soft Skills"
+  },
+  {
+    "source": "trustworthy",
+    "croatian": "pouzdan",
+    "target": "vertrauenswürdig",
+    "cat": "Soft Skills"
+  }
+]
