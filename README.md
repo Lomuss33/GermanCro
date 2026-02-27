@@ -30,7 +30,7 @@ This helps reduce ambiguity and improves retention.
 
 ---
 
-![App screenshot, with app.js/loadCard() switched "source" and "croatian"](images/image.png)
+![App screenshot, with app.js/loadCard() switched "source" and "croatian"](image.png)
 
 ---
 
