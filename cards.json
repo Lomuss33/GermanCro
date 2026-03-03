@@ -1,4 +1,196 @@
 [
+    {
+    "source": "contemplation",
+    "croatian": "razmišljanje",
+    "target": "das Ertrachten",
+    "cat": "Philosophie/Reflexion"
+  },
+  {
+    "source": "perception",
+    "croatian": "shvaćanje",
+    "target": "die Auffassung",
+    "cat": "Philosophie/Reflexion"
+  },
+  {
+    "source": "view",
+    "croatian": "pogled",
+    "target": "die Ansicht",
+    "cat": "Philosophie/Reflexion"
+  },
+  {
+    "source": "differentiated",
+    "croatian": "diferencirano",
+    "target": "differenziert",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "to connect",
+    "croatian": "povezati",
+    "target": "anschließen",
+    "cat": "Aktion/Verbindung"
+  },
+  {
+    "source": "perfect",
+    "croatian": "savršen",
+    "target": "vollkommen",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "assessment",
+    "croatian": "procjena",
+    "target": "die Einschätzung",
+    "cat": "Analyse"
+  },
+  {
+    "source": "sentence",
+    "croatian": "rečenica",
+    "target": "der Satz",
+    "cat": "Sprache"
+  },
+  {
+    "source": "convincing",
+    "croatian": "uvjerljiv",
+    "target": "überzeugend",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "also",
+    "croatian": "također",
+    "target": "ebenfalls",
+    "cat": "Konjunktion"
+  },
+  {
+    "source": "center",
+    "croatian": "centar",
+    "target": "die Zentrale",
+    "cat": "Ort"
+  },
+  {
+    "source": "however",
+    "croatian": "međutim",
+    "target": "allerdings",
+    "cat": "Konjunktion"
+  },
+  {
+    "source": "while",
+    "croatian": "pri čemu",
+    "target": "wobei",
+    "cat": "Konjunktion"
+  },
+  {
+    "source": "principle",
+    "croatian": "princip",
+    "target": "das Prinzip",
+    "cat": "Konzept"
+  },
+  {
+    "source": "prerequisite",
+    "croatian": "preduvjet",
+    "target": "die Voraussetzung",
+    "cat": "Konzept"
+  },
+  {
+    "source": "conclusion",
+    "croatian": "zaključak",
+    "target": "die Schlussfolgerung",
+    "cat": "Analyse"
+  },
+  {
+    "source": "blanket",
+    "croatian": "općenit",
+    "target": "pauschal",
+    "cat": "Beschreibung"
+  },
+  {
+    "source": "to doubt",
+    "croatian": "sumnjati",
+    "target": "bezweifeln",
+    "cat": "Aktion"
+  },
+  {
+    "source": "objection",
+    "croatian": "primjedba",
+    "target": "der Einwand",
+    "cat": "Kommunikation"
+  },
+  {
+    "source": "empirical",
+    "croatian": "empirijski",
+    "target": "empirisch",
+    "cat": "Wissenschaft"
+  },
+  {
+    "source": "to generalize",
+    "croatian": "generalizirati",
+    "target": "verallgemeinern",
+    "cat": "Analyse"
+  },
+  {
+    "source": "to return",
+    "croatian": "vratiti se",
+    "target": "zurückkommen",
+    "cat": "Aktion"
+  },
+  {
+    "source": "link",
+    "croatian": "poveznica",
+    "target": "die Anknüpfung",
+    "cat": "Verbindung"
+  },
+  {
+    "source": "building on",
+    "croatian": "gradeći na",
+    "target": "aufbauend",
+    "cat": "Verbindung"
+  },
+  {
+    "source": "to pick up",
+    "croatian": "preuzeti",
+    "target": "aufgreifen",
+    "cat": "Aktion"
+  },
+  {
+    "source": "to specify",
+    "croatian": "precizirati",
+    "target": "präzisieren",
+    "cat": "Aktion"
+  },
+  {
+    "source": "to hook in",
+    "croatian": "uključiti se",
+    "target": "einhaken",
+    "cat": "Aktion"
+  },
+  {
+    "source": "to complement",
+    "croatian": "dopuniti",
+    "target": "ergänzen",
+    "cat": "Aktion"
+  },
+  {
+    "source": "inauguration",
+    "croatian": "otvaranje",
+    "target": "die Einweihung",
+    "cat": "Ereignis"
+  },
+  {
+    "source": "snow accumulation",
+    "croatian": "nagomilavanje snijega",
+    "target": "Schneezutrag",
+    "cat": "Natur"
+  },
+  {
+    "source": "to support",
+    "croatian": "poduprijeti",
+    "target": "stützen",
+    "cat": "Aktion"
+  },
+  {
+    "source": "conclusion",
+    "croatian": "završetak",
+    "target": "der Abschluss",
+    "cat": "Ereignis"
+  },
   {
     "source": "engineer",
     "croatian": "inženjer",
