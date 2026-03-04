@@ -246,10 +246,11 @@ function shuffle(arr) {
   return a;
 }
 
-function startSession() {
+function startSession(size) {
   const pool = getPool();
   if (!pool.length) return;
-  sessionCards = shuffle(pool).slice(0, Math.min(SESSION_SIZE, pool.length));
+  const count = Math.min(size || SESSION_SIZE, pool.length);
+  sessionCards = shuffle(pool).slice(0, count);
   sessionIndex = 0;
   streak = 0; bestStreak = 0;
   totalCorrect = 0; totalAttempts = 0; totalCharsTyped = 0;
@@ -330,7 +331,9 @@ inputEl.addEventListener('keydown', e => {
 function updateStats() {
   document.getElementById('streakNum').textContent = streak;
   document.getElementById('correctVal').textContent = totalCorrect;
-  document.getElementById('totalVal').textContent = totalAttempts;
+  document.getElementById('remainingVal').textContent = sessionCards.length > 0 
+    ? sessionCards.length - sessionIndex 
+    : '—';
   const acc = totalAttempts ? Math.round(totalCorrect / totalAttempts * 100) : null;
   document.getElementById('accuracyVal').textContent = acc !== null ? acc + '%' : '—';
   const mins = (Date.now() - sessionStart) / 60000;

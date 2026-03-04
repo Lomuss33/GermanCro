@@ -1,164 +1,1814 @@
 [
-  { "de": "de", "hr": "razmišljanje", "en": "en", "cat": "Nomen" },
-  { "de": "die Auffassung", "hr": "shvaćanje", "en": "perception / view", "cat": "Nomen" },
-  { "de": "die Ansicht", "hr": "pogled / mišljenje", "en": "view / opinion", "cat": "Nomen" },
-  { "de": "die Einschätzung", "hr": "procjena", "en": "assessment", "cat": "Nomen" },
-  { "de": "der Einwand", "hr": "prigovor", "en": "objection", "cat": "Nomen" },
-  { "de": "die Überzeugung", "hr": "uvjerenje", "en": "conviction", "cat": "Nomen" },
-  { "de": "das Argument", "hr": "argument", "en": "argument", "cat": "Nomen" },
-  { "de": "das Gegenargument", "hr": "protuargument", "en": "counterargument", "cat": "Nomen" },
-  { "de": "die Begründung", "hr": "obrazloženje", "en": "justification", "cat": "Nomen" },
-  { "de": "die Aussage", "hr": "izjava", "en": "statement", "cat": "Nomen" },
-  { "de": "die Behauptung", "hr": "tvrdnja", "en": "claim", "cat": "Nomen" },
-  { "de": "die Schlussfolgerung", "hr": "zaključak", "en": "conclusion", "cat": "Nomen" },
-  { "de": "die Hypothese", "hr": "hipoteza", "en": "hypothesis", "cat": "Nomen" },
-  { "de": "der Beweis", "hr": "dokaz", "en": "proof / evidence", "cat": "Nomen" },
-  { "de": "die Annahme", "hr": "pretpostavka", "en": "assumption", "cat": "Nomen" },
-  { "de": "die Anforderung", "hr": "zahtjev", "en": "requirement", "cat": "Nomen" },
-  { "de": "die Lösung", "hr": "rješenje", "en": "solution", "cat": "Nomen" },
-  { "de": "der Ansatz", "hr": "pristup", "en": "approach", "cat": "Nomen" },
-  { "de": "die Methode", "hr": "metoda", "en": "method", "cat": "Nomen" },
-  { "de": "das Verfahren", "hr": "postupak", "en": "procedure", "cat": "Nomen" },
-  { "de": "das Ergebnis", "hr": "rezultat", "en": "result", "cat": "Nomen" },
-  { "de": "die Auswirkung", "hr": "posljedica", "en": "implication / impact", "cat": "Nomen" },
-  { "de": "der Vorteil", "hr": "prednost", "en": "advantage", "cat": "Nomen" },
-  { "de": "der Nachteil", "hr": "nedostatak", "en": "disadvantage", "cat": "Nomen" },
-  { "de": "der Aufwand", "hr": "napor / trud", "en": "effort", "cat": "Nomen" },
-  { "de": "der Nutzen", "hr": "korist", "en": "benefit", "cat": "Nomen" },
-  { "de": "die Zusammenarbeit", "hr": "suradnja", "en": "collaboration", "cat": "Nomen" },
-  { "de": "die Verantwortung", "hr": "odgovornost", "en": "responsibility", "cat": "Nomen" },
-  { "de": "das Missverständnis", "hr": "nesporazum", "en": "misunderstanding", "cat": "Nomen" },
-  { "de": "die Rückmeldung", "hr": "povratna informacija", "en": "feedback", "cat": "Nomen" },
-
-  { "de": "annehmen", "hr": "pretpostaviti", "en": "to assume", "cat": "Verb" },
-  { "de": "schlussfolgern", "hr": "zaključiti", "en": "to conclude", "cat": "Verb" },
-  { "de": "hervorheben", "hr": "naglasiti", "en": "to emphasize", "cat": "Verb" },
-  { "de": "klarstellen", "hr": "razjasniti", "en": "to clarify", "cat": "Verb" },
-  { "de": "bewerten", "hr": "procijeniti", "en": "to evaluate", "cat": "Verb" },
-  { "de": "überprüfen", "hr": "provjeriti", "en": "to verify", "cat": "Verb" },
-  { "de": "ableiten", "hr": "izvesti", "en": "to derive", "cat": "Verb" },
-  { "de": "beobachten", "hr": "promatrati", "en": "to observe", "cat": "Verb" },
-  { "de": "begründen", "hr": "opravdati", "en": "to justify", "cat": "Verb" },
-  { "de": "hinterfragen", "hr": "preispitati", "en": "to question", "cat": "Verb" },
-  { "de": "untermauern", "hr": "potkrijepiti", "en": "to support / substantiate", "cat": "Verb" },
-  { "de": "widersprechen", "hr": "proturječiti", "en": "to contradict", "cat": "Verb" },
-  { "de": "widerlegen", "hr": "opovrgnuti", "en": "to refute", "cat": "Verb" },
-  { "de": "veranschaulichen", "hr": "ilustrirati", "en": "to illustrate", "cat": "Verb" },
-  { "de": "verallgemeinern", "hr": "generalizirati", "en": "to generalize", "cat": "Verb" },
-  { "de": "präzisieren", "hr": "precizirati", "en": "to specify / refine", "cat": "Verb" },
-  { "de": "ergänzen", "hr": "dopuniti", "en": "to complement / add", "cat": "Verb" },
-  { "de": "aufgreifen", "hr": "preuzeti / nadovezati se", "en": "to pick up / take up", "cat": "Verb" },
-  { "de": "steigern", "hr": "povećati", "en": "to increase", "cat": "Verb" },
-  { "de": "reduzieren", "hr": "smanjiti", "en": "to reduce", "cat": "Verb" },
-  { "de": "anpassen", "hr": "prilagoditi", "en": "to adjust / adapt", "cat": "Verb" },
-  { "de": "aufrechterhalten", "hr": "održavati", "en": "to maintain", "cat": "Verb" },
-  { "de": "bemerken", "hr": "primijetiti", "en": "to notice", "cat": "Verb" },
-  { "de": "erkennen", "hr": "prepoznati / shvatiti", "en": "to recognize / realize", "cat": "Verb" },
-  { "de": "reflektieren", "hr": "razmišljati / promišljati", "en": "to reflect", "cat": "Verb" },
-  { "de": "schätzen", "hr": "cijeniti", "en": "to appreciate / value", "cat": "Verb" },
-  { "de": "bewältigen", "hr": "savladati", "en": "to manage / cope with", "cat": "Verb" },
-  { "de": "sich anpassen", "hr": "prilagoditi se", "en": "to adapt (oneself)", "cat": "Verb" },
-  { "de": "sich Verbessern", "hr": "poboljšati se", "en": "to improve (oneself)", "cat": "Verb" },
-  { "de": "bezweifeln", "hr": "sumnjati", "en": "to doubt", "cat": "Verb" },
-
-  { "de": "differenziert", "hr": "diferencirano", "en": "differentiated / nuanced", "cat": "Adjektiv" },
-  { "de": "überzeugend", "hr": "uvjerljiv", "en": "convincing", "cat": "Adjektiv" },
-  { "de": "vollkommen", "hr": "savršen / potpun", "en": "perfect / complete", "cat": "Adjektiv" },
-  { "de": "empirisch", "hr": "empirijski", "en": "empirical", "cat": "Adjektiv" },
-  { "de": "relevant", "hr": "relevantno", "en": "relevant", "cat": "Adjektiv" },
-  { "de": "signifikant", "hr": "značajno", "en": "significant", "cat": "Adjektiv" },
-  { "de": "vernachlässigbar", "hr": "zanemarivo", "en": "negligible", "cat": "Adjektiv" },
-  { "de": "kohärent", "hr": "koherentno", "en": "coherent", "cat": "Adjektiv" },
-  { "de": "konsistent", "hr": "dosljedno", "en": "consistent", "cat": "Adjektiv" },
-  { "de": "plausibel", "hr": "uvjerljivo", "en": "plausible", "cat": "Adjektiv" },
-  { "de": "fragwürdig", "hr": "upitno", "en": "questionable", "cat": "Adjektiv" },
-  { "de": "vorläufig", "hr": "preliminarno", "en": "tentative / preliminary", "cat": "Adjektiv" },
-  { "de": "realisierbar", "hr": "izvedivo", "en": "feasible", "cat": "Adjektiv" },
-  { "de": "robust", "hr": "robustan", "en": "robust", "cat": "Adjektiv" },
-  { "de": "skalierbar", "hr": "skalabilno", "en": "scalable", "cat": "Adjektiv" },
-  { "de": "pauschal", "hr": "općenit / paušalan", "en": "blanket / sweeping", "cat": "Adjektiv" },
-  { "de": "substanziell", "hr": "znatno", "en": "substantial", "cat": "Adjektiv" },
-  { "de": "ausschlaggebend", "hr": "odlučujuće", "en": "conclusive / decisive", "cat": "Adjektiv" },
-  { "de": "verlässlich", "hr": "pouzdan", "en": "reliable", "cat": "Adjektiv" },
-  { "de": "kooperativ", "hr": "suradljiv", "en": "cooperative", "cat": "Adjektiv" },
-  { "de": "konstruktiv", "hr": "konstruktivan", "en": "constructive", "cat": "Adjektiv" },
-  { "de": "sachlich", "hr": "objektivan", "en": "objective / factual", "cat": "Adjektiv" },
-  { "de": "rücksichtsvoll", "hr": "obziran", "en": "considerate", "cat": "Adjektiv" },
-  { "de": "zugänglich", "hr": "pristupačan", "en": "approachable / accessible", "cat": "Adjektiv" },
-  { "de": "auffällig", "hr": "uočljivo", "en": "noticeable / striking", "cat": "Adjektiv" },
-  { "de": "dezent", "hr": "suptilno", "en": "subtle / understated", "cat": "Adjektiv" },
-  { "de": "markant", "hr": "istaknuto", "en": "prominent / distinctive", "cat": "Adjektiv" },
-  { "de": "einheitlich", "hr": "ujednačeno", "en": "uniform / consistent", "cat": "Adjektiv" },
-  { "de": "gepflegt", "hr": "dobro održavan", "en": "well-maintained / neat", "cat": "Adjektiv" },
-  { "de": "symmetrisch", "hr": "simetrično", "en": "symmetrical", "cat": "Adjektiv" },
-
-  { "de": "grundsätzlich", "hr": "načelno", "en": "in principle / fundamentally", "cat": "Adverb" },
-  { "de": "dennoch", "hr": "ipak", "en": "nevertheless", "cat": "Adverb" },
-  { "de": "daher", "hr": "stoga", "en": "therefore", "cat": "Adverb" },
-  { "de": "infolgedessen", "hr": "kao posljedica toga", "en": "as a result", "cat": "Adverb" },
-  { "de": "ebenfalls", "hr": "također", "en": "also / likewise", "cat": "Adverb" },
-  { "de": "allerdings", "hr": "međutim / doduše", "en": "however / admittedly", "cat": "Adverb" },
-  { "de": "überwiegend", "hr": "pretežno", "en": "predominantly", "cat": "Adverb" },
-  { "de": "teilweise", "hr": "djelomično", "en": "partially", "cat": "Adverb" },
-  { "de": "vollständig", "hr": "potpuno", "en": "fully / completely", "cat": "Adverb" },
-  { "de": "erheblich", "hr": "znatno", "en": "considerably", "cat": "Adverb" },
-  { "de": "kaum", "hr": "jedva", "en": "barely / hardly", "cat": "Adverb" },
-  { "de": "insgesamt", "hr": "ukupno / sveukupno", "en": "overall / in total", "cat": "Adverb" },
-  { "de": "leicht", "hr": "blago / lagano", "en": "slightly / easily", "cat": "Adverb" },
-  { "de": "mäßig", "hr": "umjereno", "en": "moderately", "cat": "Adverb" },
-  { "de": "gleichmäßig", "hr": "ravnomjerno", "en": "evenly / uniformly", "cat": "Adverb" },
-
-  { "de": "hinsichtlich", "hr": "s obzirom na", "en": "with respect to / regarding", "cat": "Präposition" },
-  { "de": "aufbauend auf", "hr": "na temelju / gradeći na", "en": "based on / building on", "cat": "Präposition" },
-  { "de": "im Gegensatz zu", "hr": "za razliku od", "en": "in contrast to", "cat": "Präposition" },
-  { "de": "in Bezug auf", "hr": "u pogledu", "en": "with regard to", "cat": "Präposition" },
-  { "de": "anstelle von", "hr": "umjesto", "en": "instead of", "cat": "Präposition" },
-  { "de": "aufgrund von", "hr": "zbog", "en": "due to / because of", "cat": "Präposition" },
-  { "de": "im Rahmen von", "hr": "u okviru", "en": "within the scope of", "cat": "Präposition" },
-  { "de": "im Hinblick auf", "hr": "s obzirom na", "en": "in view of", "cat": "Präposition" },
-  { "de": "mithilfe von", "hr": "uz pomoć", "en": "with the help of", "cat": "Präposition" },
-  { "de": "unabhängig von", "hr": "neovisno o", "en": "regardless of", "cat": "Präposition" },
-
-  { "de": "wobei", "hr": "pri čemu", "en": "whereby / while", "cat": "Konjunktion" },
-  { "de": "sodass", "hr": "tako da", "en": "so that", "cat": "Konjunktion" },
-  { "de": "obwohl", "hr": "iako", "en": "although / even though", "cat": "Konjunktion" },
-  { "de": "sofern", "hr": "pod uvjetom da", "en": "provided that / as long as", "cat": "Konjunktion" },
-  { "de": "einerseits … andererseits", "hr": "s jedne strane … s druge strane", "en": "on the one hand … on the other hand", "cat": "Konjunktion" },
-  { "de": "sowohl … als auch", "hr": "kako … tako i", "en": "both … and", "cat": "Konjunktion" },
-  { "de": "weder … noch", "hr": "ni … ni", "en": "neither … nor", "cat": "Konjunktion" },
-  { "de": "entweder … oder", "hr": "ili … ili", "en": "either … or", "cat": "Konjunktion" },
-  { "de": "je … desto", "hr": "što … to", "en": "the more … the more", "cat": "Konjunktion" },
-  { "de": "zwar … aber", "hr": "doduše … ali", "en": "admittedly … but", "cat": "Konjunktion" },
-
-  { "de": "in gewissem Maße", "hr": "u određenoj mjeri", "en": "to a certain extent", "cat": "Ausdruck" },
-  { "de": "in der Praxis", "hr": "u praksi", "en": "in practice", "cat": "Ausdruck" },
-  { "de": "im Großen und Ganzen", "hr": "uglavnom / općenito", "en": "by and large / overall", "cat": "Ausdruck" },
-  { "de": "auf den Punkt gebracht", "hr": "ukratko rečeno", "en": "to put it briefly / in a nutshell", "cat": "Ausdruck" },
-  { "de": "das ist eine zweischneidige Sache", "hr": "to je dvosjekli mač", "en": "that's a double-edged sword", "cat": "Ausdruck" },
-  { "de": "den Nagel auf den Kopf treffen", "hr": "pogoditi u srž stvari", "en": "to hit the nail on the head", "cat": "Ausdruck" },
-  { "de": "ins Schwarze treffen", "hr": "pogoditi točno u metu", "en": "to hit the bullseye / be spot on", "cat": "Ausdruck" },
-  { "de": "unter einem Dach", "hr": "pod jednim krovom", "en": "under one roof", "cat": "Ausdruck" },
-  { "de": "das Zünglein an der Waage sein", "hr": "biti presudan faktor", "en": "to be the deciding factor (tip the scales)", "cat": "Ausdruck" },
-  { "de": "Licht ins Dunkel bringen", "hr": "donijeti jasnoću u mrak", "en": "to shed light on something", "cat": "Ausdruck" },
-  { "de": "Hand in Hand gehen", "hr": "ići ruku pod ruku", "en": "to go hand in hand", "cat": "Ausdruck" },
-  { "de": "den Faden verlieren", "hr": "izgubiti nit", "en": "to lose the thread", "cat": "Ausdruck" },
-  { "de": "einen Schritt weiter denken", "hr": "misliti korak dalje", "en": "to think one step further", "cat": "Ausdruck" },
-  { "de": "auf Augenhöhe", "hr": "na ravnoj nozi / ravnopravno", "en": "at eye level / as equals", "cat": "Ausdruck" },
-  { "de": "das Steuer in der Hand haben", "hr": "imati krmilo u ruci", "en": "to be in control / at the helm", "cat": "Ausdruck" },
-
-  { "de": "Ich möchte kurz auf einen wichtigen Punkt eingehen.", "hr": "Želio bih se ukratko osvrnuti na jednu važnu točku.", "en": "I'd like to briefly address an important point.", "cat": "Satz" },
-  { "de": "Das lässt sich so nicht verallgemeinern.", "hr": "To se ne može tako generalizirati.", "en": "That cannot be generalized in this way.", "cat": "Satz" },
-  { "de": "Ich sehe das etwas differenzierter.", "hr": "Ja to vidim nešto diferenciranije.", "en": "I see that in a somewhat more nuanced way.", "cat": "Satz" },
-  { "de": "Daran lässt sich gut anknüpfen.", "hr": "Na to se dobro može nadovezati.", "en": "That's a good point to build on.", "cat": "Satz" },
-  { "de": "Das hängt stark vom Kontext ab.", "hr": "To jako ovisi o kontekstu.", "en": "That depends heavily on the context.", "cat": "Satz" },
-  { "de": "Ich teile Ihre Einschätzung nur bedingt.", "hr": "Samo djelomično dijelim vaše mišljenje.", "en": "I only partially share your assessment.", "cat": "Satz" },
-  { "de": "Das ist ein klassischer Zielkonflikt.", "hr": "To je klasičan sukob ciljeva.", "en": "That is a classic trade-off.", "cat": "Satz" },
-  { "de": "Könnten Sie das etwas präzisieren?", "hr": "Biste li to mogli malo precizirati?", "en": "Could you elaborate on that a bit?", "cat": "Satz" },
-  { "de": "Daraus lässt sich ableiten, dass …", "hr": "Iz toga se može zaključiti da …", "en": "From this it can be derived that …", "cat": "Satz" },
-  { "de": "Das setzt allerdings voraus, dass …", "hr": "To međutim pretpostavlja da …", "en": "That assumes, however, that …", "cat": "Satz" },
-  { "de": "Unter dem Strich überwiegen die Vorteile.", "hr": "Na kraju, prednosti prevladavaju.", "en": "On balance, the advantages outweigh the disadvantages.", "cat": "Satz" },
-  { "de": "Das führt unweigerlich zu der Frage, ob …", "hr": "To neizbježno dovodi do pitanja je li …", "en": "That inevitably leads to the question of whether …", "cat": "Satz" },
-  { "de": "Ich würde hier eher vorsichtig formulieren.", "hr": "Ovdje bih bio oprezniji u formulaciji.", "en": "I would Ausdruck that more carefully here.", "cat": "Satz" },
-  { "de": "Das ist nicht von der Hand zu weisen.", "hr": "To se ne može odbaciti.", "en": "That cannot be dismissed out of hand.", "cat": "Satz" },
-  { "de": "Es kommt ganz darauf an, wie man das bewertet.", "hr": "Sve ovisi o tome kako se to ocjenjuje.", "en": "It all depends on how you evaluate it.", "cat": "Satz" }
+  {
+    "de": "das Ertrachten",
+    "hr": "razmišljanje / težnja",
+    "en": "contemplation / aspiration",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Auffassung",
+    "hr": "shvaćanje",
+    "en": "perception / view",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Ansicht",
+    "hr": "pogled / mišljenje",
+    "en": "view / opinion",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Einschätzung",
+    "hr": "procjena",
+    "en": "assessment",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Einwand",
+    "hr": "prigovor",
+    "en": "objection",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Überzeugung",
+    "hr": "uvjerenje",
+    "en": "conviction",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Argument",
+    "hr": "argument",
+    "en": "argument",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Gegenargument",
+    "hr": "protuargument",
+    "en": "counterargument",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Begründung",
+    "hr": "obrazloženje",
+    "en": "justification / reasoning",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Aussage",
+    "hr": "izjava",
+    "en": "statement",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Behauptung",
+    "hr": "tvrdnja",
+    "en": "claim",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Schlussfolgerung",
+    "hr": "zaključak",
+    "en": "conclusion",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Hypothese",
+    "hr": "hipoteza",
+    "en": "hypothesis",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Beweis",
+    "hr": "dokaz",
+    "en": "proof / evidence",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Annahme",
+    "hr": "pretpostavka",
+    "en": "assumption",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Anforderung",
+    "hr": "zahtjev",
+    "en": "requirement",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Lösung",
+    "hr": "rješenje",
+    "en": "solution",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Ansatz",
+    "hr": "pristup",
+    "en": "approach",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Methode",
+    "hr": "metoda",
+    "en": "method",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Verfahren",
+    "hr": "postupak",
+    "en": "procedure",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Ergebnis",
+    "hr": "rezultat",
+    "en": "result",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Auswirkung",
+    "hr": "posljedica",
+    "en": "implication / impact",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Vorteil",
+    "hr": "prednost",
+    "en": "advantage",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Nachteil",
+    "hr": "nedostatak",
+    "en": "disadvantage",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Aufwand",
+    "hr": "napor / trud",
+    "en": "effort / expenditure",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Nutzen",
+    "hr": "korist",
+    "en": "benefit / use",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Zusammenarbeit",
+    "hr": "suradnja",
+    "en": "collaboration",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Verantwortung",
+    "hr": "odgovornost",
+    "en": "responsibility",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Missverständnis",
+    "hr": "nesporazum",
+    "en": "misunderstanding",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Rückmeldung",
+    "hr": "povratna informacija",
+    "en": "feedback",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Scheitern",
+    "hr": "neuspjeh / propadanje",
+    "en": "failure / the act of failing",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Gelingen",
+    "hr": "uspjeh / uspijevanje",
+    "en": "success / the act of succeeding",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Auseinandersetzung",
+    "hr": "rasprava / sukob",
+    "en": "dispute / confrontation / engagement",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Eigenverantwortung",
+    "hr": "osobna odgovornost",
+    "en": "personal responsibility / self-accountability",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Abwägung",
+    "hr": "odmjeravanje / razmatranje",
+    "en": "weighing up / consideration",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Errungenschaft",
+    "hr": "dostignuće",
+    "en": "achievement / accomplishment",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Eigeninitiative",
+    "hr": "vlastita inicijativa",
+    "en": "own initiative / self-starter attitude",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Spannungsfeld",
+    "hr": "polje napetosti",
+    "en": "field of tension / conflicting area",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Tragweite",
+    "hr": "doseg / važnost",
+    "en": "scope / significance / far-reaching impact",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Rückhalt",
+    "hr": "podrška / oslonac",
+    "en": "backing / support / foothold",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Hochsaison",
+    "hr": "vrh sezone / gužva",
+    "en": "busy season / peak season",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Konkurrenz",
+    "hr": "konkurencija",
+    "en": "competition / competitors",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Wohlbefinden",
+    "hr": "dobrobit",
+    "en": "well-being / wellness",
+    "cat": "Nomen"
+  },
+  {
+    "de": "das Umfeld",
+    "hr": "okruženje / sredina",
+    "en": "environment / surroundings",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Faszination",
+    "hr": "fascinacija",
+    "en": "fascination",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Hustle",
+    "hr": "naporna borba / gužva",
+    "en": "the hustle / the grind",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Ausrüstung",
+    "hr": "oprema",
+    "en": "equipment / gear",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Versorgung",
+    "hr": "opskrba / skrb",
+    "en": "supply / provision / care",
+    "cat": "Nomen"
+  },
+  {
+    "de": "der Spielraum",
+    "hr": "prostor za manevar",
+    "en": "room to maneuver / leeway / scope",
+    "cat": "Nomen"
+  },
+  {
+    "de": "die Einschränkung",
+    "hr": "ograničenje",
+    "en": "restriction / limitation",
+    "cat": "Nomen"
+  },
+  {
+    "de": "annehmen",
+    "hr": "pretpostaviti",
+    "en": "to assume",
+    "cat": "Verb"
+  },
+  {
+    "de": "schlussfolgern",
+    "hr": "zaključiti",
+    "en": "to conclude",
+    "cat": "Verb"
+  },
+  {
+    "de": "hervorheben",
+    "hr": "naglasiti",
+    "en": "to emphasize",
+    "cat": "Verb"
+  },
+  {
+    "de": "klarstellen",
+    "hr": "razjasniti",
+    "en": "to clarify",
+    "cat": "Verb"
+  },
+  {
+    "de": "bewerten",
+    "hr": "procijeniti",
+    "en": "to evaluate",
+    "cat": "Verb"
+  },
+  {
+    "de": "überprüfen",
+    "hr": "provjeriti",
+    "en": "to verify",
+    "cat": "Verb"
+  },
+  {
+    "de": "ableiten",
+    "hr": "izvesti",
+    "en": "to derive",
+    "cat": "Verb"
+  },
+  {
+    "de": "beobachten",
+    "hr": "promatrati",
+    "en": "to observe",
+    "cat": "Verb"
+  },
+  {
+    "de": "begründen",
+    "hr": "opravdati / obrazložiti",
+    "en": "to justify / to reason",
+    "cat": "Verb"
+  },
+  {
+    "de": "hinterfragen",
+    "hr": "preispitati",
+    "en": "to question / to scrutinize",
+    "cat": "Verb"
+  },
+  {
+    "de": "untermauern",
+    "hr": "potkrijepiti",
+    "en": "to substantiate / to back up",
+    "cat": "Verb"
+  },
+  {
+    "de": "widersprechen",
+    "hr": "proturječiti",
+    "en": "to contradict",
+    "cat": "Verb"
+  },
+  {
+    "de": "widerlegen",
+    "hr": "opovrgnuti",
+    "en": "to refute",
+    "cat": "Verb"
+  },
+  {
+    "de": "veranschaulichen",
+    "hr": "ilustrirati",
+    "en": "to illustrate / to make vivid",
+    "cat": "Verb"
+  },
+  {
+    "de": "verallgemeinern",
+    "hr": "generalizirati",
+    "en": "to generalize",
+    "cat": "Verb"
+  },
+  {
+    "de": "präzisieren",
+    "hr": "precizirati",
+    "en": "to specify / to refine",
+    "cat": "Verb"
+  },
+  {
+    "de": "ergänzen",
+    "hr": "dopuniti",
+    "en": "to complement / to add",
+    "cat": "Verb"
+  },
+  {
+    "de": "aufgreifen",
+    "hr": "nadovezati se / preuzeti",
+    "en": "to pick up / to take up",
+    "cat": "Verb"
+  },
+  {
+    "de": "steigern",
+    "hr": "povećati / pojačati",
+    "en": "to increase / to intensify",
+    "cat": "Verb"
+  },
+  {
+    "de": "reduzieren",
+    "hr": "smanjiti",
+    "en": "to reduce",
+    "cat": "Verb"
+  },
+  {
+    "de": "anpassen",
+    "hr": "prilagoditi",
+    "en": "to adjust / to adapt",
+    "cat": "Verb"
+  },
+  {
+    "de": "aufrechterhalten",
+    "hr": "održavati",
+    "en": "to maintain / to uphold",
+    "cat": "Verb"
+  },
+  {
+    "de": "bemerken",
+    "hr": "primijetiti",
+    "en": "to notice",
+    "cat": "Verb"
+  },
+  {
+    "de": "erkennen",
+    "hr": "prepoznati / shvatiti",
+    "en": "to recognize / to realize",
+    "cat": "Verb"
+  },
+  {
+    "de": "reflektieren",
+    "hr": "promišljati",
+    "en": "to reflect",
+    "cat": "Verb"
+  },
+  {
+    "de": "schätzen",
+    "hr": "cijeniti",
+    "en": "to appreciate / to value",
+    "cat": "Verb"
+  },
+  {
+    "de": "bewältigen",
+    "hr": "savladati",
+    "en": "to manage / to cope with",
+    "cat": "Verb"
+  },
+  {
+    "de": "sich anpassen",
+    "hr": "prilagoditi se",
+    "en": "to adapt (oneself)",
+    "cat": "Verb"
+  },
+  {
+    "de": "sich verbessern",
+    "hr": "poboljšati se",
+    "en": "to improve (oneself)",
+    "cat": "Verb"
+  },
+  {
+    "de": "bezweifeln",
+    "hr": "sumnjati / dovoditi u pitanje",
+    "en": "to doubt / to question",
+    "cat": "Verb"
+  },
+  {
+    "de": "stecken bleiben",
+    "hr": "zapeti / zaglaviti",
+    "en": "to get stuck",
+    "cat": "Verb"
+  },
+  {
+    "de": "sich kümmern um",
+    "hr": "brinuti se o",
+    "en": "to take care of",
+    "cat": "Verb"
+  },
+  {
+    "de": "auf etwas hinarbeiten",
+    "hr": "raditi prema nečemu",
+    "en": "to work towards something",
+    "cat": "Verb"
+  },
+  {
+    "de": "abnehmen",
+    "hr": "smršavjeti / gubiti težinu",
+    "en": "to lose weight",
+    "cat": "Verb"
+  },
+  {
+    "de": "nachkommen",
+    "hr": "ispuniti / pridržavati se",
+    "en": "to comply with / to meet (an obligation)",
+    "cat": "Verb"
+  },
+  {
+    "de": "abwägen",
+    "hr": "odmjeriti / razmotriti",
+    "en": "to weigh up / to consider pros and cons",
+    "cat": "Verb"
+  },
+  {
+    "de": "einräumen",
+    "hr": "priznati / dopustiti",
+    "en": "to admit / to concede / to grant",
+    "cat": "Verb"
+  },
+  {
+    "de": "nachvollziehen",
+    "hr": "razumjeti / pratiti logiku",
+    "en": "to understand / to follow the reasoning",
+    "cat": "Verb"
+  },
+  {
+    "de": "sich auswirken auf",
+    "hr": "utjecati na",
+    "en": "to have an effect on / to impact",
+    "cat": "Verb"
+  },
+  {
+    "de": "voraussetzen",
+    "hr": "pretpostavljati / zahtijevati",
+    "en": "to presuppose / to require as a precondition",
+    "cat": "Verb"
+  },
+  {
+    "de": "berücksichtigen",
+    "hr": "uzeti u obzir",
+    "en": "to take into account / to consider",
+    "cat": "Verb"
+  },
+  {
+    "de": "sich beziehen auf",
+    "hr": "odnositi se na",
+    "en": "to refer to / to relate to",
+    "cat": "Verb"
+  },
+  {
+    "de": "überwiegen",
+    "hr": "prevladavati",
+    "en": "to predominate / to outweigh",
+    "cat": "Verb"
+  },
+  {
+    "de": "zuschreiben",
+    "hr": "pripisati",
+    "en": "to attribute (to) / to ascribe",
+    "cat": "Verb"
+  },
+  {
+    "de": "einschränken",
+    "hr": "ograničiti",
+    "en": "to restrict / to limit",
+    "cat": "Verb"
+  },
+  {
+    "de": "differenzieren",
+    "hr": "razlikovati / diferencirati",
+    "en": "to differentiate / to make distinctions",
+    "cat": "Verb"
+  },
+  {
+    "de": "gegenüberstellen",
+    "hr": "suprotstaviti / usporediti",
+    "en": "to contrast / to juxtapose",
+    "cat": "Verb"
+  },
+  {
+    "de": "vernachlässigen",
+    "hr": "zanemariti",
+    "en": "to neglect / to disregard",
+    "cat": "Verb"
+  },
+  {
+    "de": "sich durchsetzen",
+    "hr": "probiti se / nametnuti se",
+    "en": "to assert oneself / to prevail",
+    "cat": "Verb"
+  },
+  {
+    "de": "in Frage stellen",
+    "hr": "dovesti u pitanje",
+    "en": "to call into question / to challenge",
+    "cat": "Verb"
+  },
+  {
+    "de": "differenziert",
+    "hr": "diferencirano / nijansiran",
+    "en": "nuanced / differentiated",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "überzeugend",
+    "hr": "uvjerljiv",
+    "en": "convincing",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "vollkommen",
+    "hr": "savršen / potpun",
+    "en": "perfect / complete",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "empirisch",
+    "hr": "empirijski",
+    "en": "empirical",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "relevant",
+    "hr": "relevantno",
+    "en": "relevant",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "signifikant",
+    "hr": "značajno",
+    "en": "significant",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "vernachlässigbar",
+    "hr": "zanemarivo",
+    "en": "negligible",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "kohärent",
+    "hr": "koherentno",
+    "en": "coherent",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "konsistent",
+    "hr": "dosljedno",
+    "en": "consistent",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "plausibel",
+    "hr": "uvjerljivo / plauzibilno",
+    "en": "plausible",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "fragwürdig",
+    "hr": "upitno / dvojbeno",
+    "en": "questionable / dubious",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "vorläufig",
+    "hr": "preliminarno / privremeno",
+    "en": "tentative / preliminary",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "realisierbar",
+    "hr": "izvedivo",
+    "en": "feasible / realizable",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "robust",
+    "hr": "robustan",
+    "en": "robust",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "skalierbar",
+    "hr": "skalabilno",
+    "en": "scalable",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "pauschal",
+    "hr": "općenit / paušalan",
+    "en": "blanket / sweeping / across-the-board",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "substanziell",
+    "hr": "suštinski / znatan",
+    "en": "substantial",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "ausschlaggebend",
+    "hr": "odlučujuće",
+    "en": "decisive / determining",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "verlässlich",
+    "hr": "pouzdan",
+    "en": "reliable / dependable",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "kooperativ",
+    "hr": "suradljiv",
+    "en": "cooperative",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "konstruktiv",
+    "hr": "konstruktivan",
+    "en": "constructive",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "sachlich",
+    "hr": "objektivno / věcno",
+    "en": "objective / factual / matter-of-fact",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "rücksichtsvoll",
+    "hr": "obziran",
+    "en": "considerate / thoughtful",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "zugänglich",
+    "hr": "pristupačan",
+    "en": "approachable / accessible",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "auffällig",
+    "hr": "uočljivo / upečatljivo",
+    "en": "noticeable / striking",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "dezent",
+    "hr": "suptilno / nenametljivo",
+    "en": "subtle / understated / discreet",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "markant",
+    "hr": "istaknuto / prepoznatljivo",
+    "en": "distinctive / prominent",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "einheitlich",
+    "hr": "ujednačeno",
+    "en": "uniform / consistent",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "gepflegt",
+    "hr": "dotjerano / uredno",
+    "en": "well-maintained / polished",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "symmetrisch",
+    "hr": "simetrično",
+    "en": "symmetrical",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "weitreichend",
+    "hr": "dalekosežno",
+    "en": "far-reaching / wide-ranging",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "maßgeblich",
+    "hr": "mjerodavno / odlučujuće",
+    "en": "authoritative / decisive / relevant",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "nachhaltig",
+    "hr": "održivo / dugotrajno",
+    "en": "sustainable / lasting",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "widersprüchlich",
+    "hr": "proturječno",
+    "en": "contradictory / inconsistent",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "eigenständig",
+    "hr": "samostalno / neovisno",
+    "en": "independent / autonomous",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "strukturiert",
+    "hr": "strukturirano",
+    "en": "structured / organized",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "kontinuierlich",
+    "hr": "kontinuirano",
+    "en": "continuous / ongoing",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "verhältnismäßig",
+    "hr": "razmjerno / proporcionalno",
+    "en": "proportionate / relatively",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "treffend",
+    "hr": "prikladno / točno",
+    "en": "apt / accurate / spot-on",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "stichhaltig",
+    "hr": "uvjerljivo / utemeljeno",
+    "en": "valid / sound / well-founded",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "folgerichtig",
+    "hr": "logično / dosljedan",
+    "en": "logical / consistent / consequential",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "tiefgreifend",
+    "hr": "duboko / temeljito",
+    "en": "profound / deep-rooted / far-reaching",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "schlüssig",
+    "hr": "logično / uvjerljivo",
+    "en": "conclusive / logically sound",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "einschlägig",
+    "hr": "relevantan / mjerodavan",
+    "en": "relevant / pertinent / applicable",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "breit gefächert",
+    "hr": "široko rasprostranjeno",
+    "en": "wide-ranging / broad-based",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "wechselseitig",
+    "hr": "uzajamno / obostrano",
+    "en": "mutual / reciprocal",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "übergeordnet",
+    "hr": "nadređeno / višeg reda",
+    "en": "superordinate / higher-level / overarching",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "vielschichtig",
+    "hr": "višeslojno / složeno",
+    "en": "multi-layered / complex",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "ergebnisoffen",
+    "hr": "bez unaprijed određenog ishoda",
+    "en": "open-ended / without a predetermined outcome",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "zielführend",
+    "hr": "svrhovito / učinkovito",
+    "en": "conducive to the goal / effective",
+    "cat": "Adjektiv"
+  },
+  {
+    "de": "grundsätzlich",
+    "hr": "načelno / u osnovi",
+    "en": "in principle / fundamentally",
+    "cat": "Adverb"
+  },
+  {
+    "de": "dennoch",
+    "hr": "ipak / unatoč tome",
+    "en": "nevertheless / nonetheless",
+    "cat": "Adverb"
+  },
+  {
+    "de": "daher",
+    "hr": "stoga / zato",
+    "en": "therefore / hence",
+    "cat": "Adverb"
+  },
+  {
+    "de": "infolgedessen",
+    "hr": "kao posljedica toga",
+    "en": "as a result / consequently",
+    "cat": "Adverb"
+  },
+  {
+    "de": "ebenfalls",
+    "hr": "također / isto tako",
+    "en": "also / likewise",
+    "cat": "Adverb"
+  },
+  {
+    "de": "allerdings",
+    "hr": "međutim / doduše",
+    "en": "however / admittedly",
+    "cat": "Adverb"
+  },
+  {
+    "de": "überwiegend",
+    "hr": "pretežno / uglavnom",
+    "en": "predominantly / mostly",
+    "cat": "Adverb"
+  },
+  {
+    "de": "teilweise",
+    "hr": "djelomično",
+    "en": "partially / to some extent",
+    "cat": "Adverb"
+  },
+  {
+    "de": "vollständig",
+    "hr": "potpuno / u cijelosti",
+    "en": "fully / completely",
+    "cat": "Adverb"
+  },
+  {
+    "de": "erheblich",
+    "hr": "znatno / značajno",
+    "en": "considerably / substantially",
+    "cat": "Adverb"
+  },
+  {
+    "de": "kaum",
+    "hr": "jedva / gotovo ne",
+    "en": "barely / hardly",
+    "cat": "Adverb"
+  },
+  {
+    "de": "insgesamt",
+    "hr": "ukupno / sveukupno",
+    "en": "overall / in total",
+    "cat": "Adverb"
+  },
+  {
+    "de": "leicht",
+    "hr": "blago / lagano",
+    "en": "slightly / easily",
+    "cat": "Adverb"
+  },
+  {
+    "de": "mäßig",
+    "hr": "umjereno",
+    "en": "moderately",
+    "cat": "Adverb"
+  },
+  {
+    "de": "gleichmäßig",
+    "hr": "ravnomjerno / jednolično",
+    "en": "evenly / uniformly",
+    "cat": "Adverb"
+  },
+  {
+    "de": "nichtsdestotrotz",
+    "hr": "unatoč svemu / svejedno",
+    "en": "nonetheless / despite all that",
+    "cat": "Adverb"
+  },
+  {
+    "de": "gleichwohl",
+    "hr": "svejedno / ipak",
+    "en": "nonetheless / yet (formal)",
+    "cat": "Adverb"
+  },
+  {
+    "de": "insofern",
+    "hr": "utoliko / u tom pogledu",
+    "en": "in that respect / to that extent",
+    "cat": "Adverb"
+  },
+  {
+    "de": "mitunter",
+    "hr": "ponekad / s vremena na vrijeme",
+    "en": "sometimes / at times / occasionally",
+    "cat": "Adverb"
+  },
+  {
+    "de": "keineswegs",
+    "hr": "ni u kom slučaju",
+    "en": "by no means / not at all",
+    "cat": "Adverb"
+  },
+  {
+    "de": "im Nachhinein",
+    "hr": "naknadno / gledajući unatrag",
+    "en": "in retrospect / afterwards",
+    "cat": "Adverb"
+  },
+  {
+    "de": "im Vorhinein",
+    "hr": "unaprijed",
+    "en": "in advance / beforehand",
+    "cat": "Adverb"
+  },
+  {
+    "de": "letztendlich",
+    "hr": "na kraju krajeva",
+    "en": "ultimately / in the end",
+    "cat": "Adverb"
+  },
+  {
+    "de": "zwangsläufig",
+    "hr": "neizbježno / nužno",
+    "en": "inevitably / necessarily",
+    "cat": "Adverb"
+  },
+  {
+    "de": "vergleichsweise",
+    "hr": "uspoređujući / relativno",
+    "en": "comparatively / relatively speaking",
+    "cat": "Adverb"
+  },
+  {
+    "de": "hinsichtlich",
+    "hr": "s obzirom na / glede",
+    "en": "with respect to / regarding",
+    "cat": "Präposition"
+  },
+  {
+    "de": "aufbauend auf",
+    "hr": "na temelju / gradeći na",
+    "en": "based on / building on",
+    "cat": "Präposition"
+  },
+  {
+    "de": "im Gegensatz zu",
+    "hr": "za razliku od",
+    "en": "in contrast to",
+    "cat": "Präposition"
+  },
+  {
+    "de": "in Bezug auf",
+    "hr": "u pogledu / što se tiče",
+    "en": "with regard to",
+    "cat": "Präposition"
+  },
+  {
+    "de": "anstelle von",
+    "hr": "umjesto",
+    "en": "instead of",
+    "cat": "Präposition"
+  },
+  {
+    "de": "aufgrund von",
+    "hr": "zbog / uslijed",
+    "en": "due to / because of",
+    "cat": "Präposition"
+  },
+  {
+    "de": "im Rahmen von",
+    "hr": "u okviru",
+    "en": "within the scope of",
+    "cat": "Präposition"
+  },
+  {
+    "de": "im Hinblick auf",
+    "hr": "s obzirom na / u vidu",
+    "en": "in view of / with a view to",
+    "cat": "Präposition"
+  },
+  {
+    "de": "mithilfe von",
+    "hr": "uz pomoć",
+    "en": "with the help of",
+    "cat": "Präposition"
+  },
+  {
+    "de": "unabhängig von",
+    "hr": "neovisno o",
+    "en": "regardless of / independent of",
+    "cat": "Präposition"
+  },
+  {
+    "de": "abgesehen von",
+    "hr": "osim / ne uzimajući u obzir",
+    "en": "apart from / aside from",
+    "cat": "Präposition"
+  },
+  {
+    "de": "in Anbetracht",
+    "hr": "s obzirom na / uzimajući u obzir",
+    "en": "in view of / considering",
+    "cat": "Präposition"
+  },
+  {
+    "de": "entgegen",
+    "hr": "nasuprot / protivno",
+    "en": "contrary to / against",
+    "cat": "Präposition"
+  },
+  {
+    "de": "zugunsten von",
+    "hr": "u korist",
+    "en": "in favor of / for the benefit of",
+    "cat": "Präposition"
+  },
+  {
+    "de": "zulasten von",
+    "hr": "na teret / na štetu",
+    "en": "at the expense of / to the detriment of",
+    "cat": "Präposition"
+  },
+  {
+    "de": "wobei",
+    "hr": "pri čemu / s tim da",
+    "en": "whereby / while / with the difference that",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "sodass",
+    "hr": "tako da",
+    "en": "so that / with the result that",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "obwohl",
+    "hr": "iako / premda",
+    "en": "although / even though",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "sofern",
+    "hr": "pod uvjetom da / ako",
+    "en": "provided that / as long as",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "einerseits - andererseits",
+    "hr": "s jedne strane - s druge strane",
+    "en": "on the one hand - on the other hand",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "sowohl - als auch",
+    "hr": "kako - tako i",
+    "en": "both - and",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "weder - noch",
+    "hr": "ni - ni",
+    "en": "neither - nor",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "entweder - oder",
+    "hr": "ili - ili",
+    "en": "either - or",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "je - desto",
+    "hr": "što - to",
+    "en": "the more - the more",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "zwar - aber",
+    "hr": "doduše - ali",
+    "en": "admittedly - but / true - yet",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "wenngleich",
+    "hr": "premda / makar",
+    "en": "even though / albeit (formal)",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "insofern als",
+    "hr": "utoliko što",
+    "en": "insofar as / to the extent that",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "während",
+    "hr": "dok / za razliku od toga",
+    "en": "while / whereas",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "indem",
+    "hr": "time što / tako što",
+    "en": "by (doing) / in that",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "es sei denn",
+    "hr": "osim ako ne / jedino ako",
+    "en": "unless / except that",
+    "cat": "Konjunktion"
+  },
+  {
+    "de": "in gewissem Maße",
+    "hr": "u određenoj mjeri",
+    "en": "to a certain extent",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "in der Praxis",
+    "hr": "u praksi",
+    "en": "in practice",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "im Großen und Ganzen",
+    "hr": "uglavnom / općenito",
+    "en": "by and large / overall",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "auf den Punkt gebracht",
+    "hr": "ukratko rečeno",
+    "en": "to put it briefly / in a nutshell",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "eine zweischneidige Sache",
+    "hr": "dvosjekli mač",
+    "en": "a double-edged sword",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "den Nagel auf den Kopf treffen",
+    "hr": "pogoditi u srž stvari",
+    "en": "to hit the nail on the head",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "ins Schwarze treffen",
+    "hr": "pogoditi točno u metu",
+    "en": "to hit the bullseye / be spot on",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "unter einem Dach",
+    "hr": "pod jednim krovom",
+    "en": "under one roof",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "das Zünglein an der Waage sein",
+    "hr": "biti presudan faktor",
+    "en": "to tip the scales / to be the deciding factor",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "Licht ins Dunkel bringen",
+    "hr": "rasvijetliti stvar / unijeti jasnoću",
+    "en": "to shed light on something",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "Hand in Hand gehen",
+    "hr": "ići ruku pod ruku",
+    "en": "to go hand in hand",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "den Faden verlieren",
+    "hr": "izgubiti nit",
+    "en": "to lose the thread",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "einen Schritt weiter denken",
+    "hr": "misliti korak dalje",
+    "en": "to think one step further",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "auf Augenhöhe",
+    "hr": "ravnopravno / na jednakoj razini",
+    "en": "at eye level / as equals",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "das Steuer in der Hand haben",
+    "hr": "imati krmilo u ruci",
+    "en": "to be in control / at the helm",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "mich begeistert",
+    "hr": "oduševljava me",
+    "en": "excites me / I'm fascinated by",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "vor allem",
+    "hr": "prije svega",
+    "en": "above all / especially",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "der Einfluss auf die Welt",
+    "hr": "utjecaj na svijet",
+    "en": "impact on the world",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "Einfluss nehmen auf",
+    "hr": "utjecati na",
+    "en": "to have an impact on",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "Konkurrenz erleben",
+    "hr": "iskusiti konkurenciju",
+    "en": "to experience competition",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "so bin ich",
+    "hr": "takav sam / takva sam",
+    "en": "that's just how I am",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "davon berichten",
+    "hr": "izvijestiti o tome",
+    "en": "to report on that / tell about that",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "mir war es egal",
+    "hr": "bilo mi je svejedno",
+    "en": "I didn't care / it was all the same to me",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "eine Faszination für etwas entwickeln",
+    "hr": "razviti fascinaciju za nešto",
+    "en": "to develop a fascination for something",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "auf das Wohlbefinden achten",
+    "hr": "paziti na dobrobit",
+    "en": "to pay attention to well-being",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "sich als jemanden verstehen",
+    "hr": "smatrati sebe nekim",
+    "en": "to see oneself as / to identify as",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "Augen für etwas haben",
+    "hr": "imati oko za nešto",
+    "en": "to have an eye for something",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "strukturiert vorgehen",
+    "hr": "pristupiti strukturirano",
+    "en": "to approach something in a structured way",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "eigenständig arbeiten",
+    "hr": "raditi samostalno",
+    "en": "to work independently",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "verhältnismäßig kurz",
+    "hr": "relativno kratko",
+    "en": "relatively short / comparatively brief",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "so ein Umfeld",
+    "hr": "takvo okruženje",
+    "en": "such an environment / that kind of setting",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "hilft mir aufzusteigen",
+    "hr": "pomaže mi da napredujam",
+    "en": "helps me to advance / move up",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "mehr teilnehmen",
+    "hr": "više sudjelovati",
+    "en": "to participate more",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "um sich zu kümmern",
+    "hr": "kako bi se pobrinuo/la",
+    "en": "to take care of / to look after",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "ehrlich bestehen",
+    "hr": "pošteno proći / iskren prolaz",
+    "en": "to succeed honestly",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "auf etwas eingehen",
+    "hr": "osvrnuti se na nešto",
+    "en": "to address / to go into something",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "auf den Punkt kommen",
+    "hr": "doći do suštine",
+    "en": "to get to the point",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "das macht den Unterschied",
+    "hr": "to čini razliku",
+    "en": "that makes the difference",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "unter dem Strich",
+    "hr": "na kraju / u konačnici",
+    "en": "at the end of the day / bottom line",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "auf Anhieb",
+    "hr": "odmah / iz prvog pokušaja",
+    "en": "straight away / at the first attempt",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "im Großen und Ganzen gesehen",
+    "hr": "gledano u cjelini",
+    "en": "seen as a whole / broadly speaking",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "eine Rolle spielen",
+    "hr": "igrati ulogu",
+    "en": "to play a role / to matter",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "in vielerlei Hinsicht",
+    "hr": "u mnogo pogleda",
+    "en": "in many respects",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "zur Sprache bringen",
+    "hr": "pokrenuti temu / staviti na dnevni red",
+    "en": "to bring up / to raise (a topic)",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "zum Ausdruck bringen",
+    "hr": "izraziti / dati do znanja",
+    "en": "to express / to convey",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "in den Vordergrund rücken",
+    "hr": "staviti u prvi plan",
+    "en": "to bring to the fore / to highlight",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "außer Frage stehen",
+    "hr": "biti neupitno",
+    "en": "to be beyond question / to be unquestionable",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "Rechnung tragen",
+    "hr": "uzeti u obzir / voditi računa",
+    "en": "to take into account / to allow for",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "auf der Hand liegen",
+    "hr": "biti očito / ležati na dlanu",
+    "en": "to be obvious / to be self-evident",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "im Zuge von",
+    "hr": "u sklopu / u tijeku",
+    "en": "in the course of / as part of",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "das hängt davon ab",
+    "hr": "to ovisi o tome",
+    "en": "that depends on it",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "in erster Linie",
+    "hr": "prije svega / primarno",
+    "en": "first and foremost / primarily",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "sich in Grenzen halten",
+    "hr": "biti u razumnim granicama",
+    "en": "to be within limits / to be moderate",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "nicht von der Hand zu weisen",
+    "hr": "ne može se odbaciti",
+    "en": "not to be dismissed / undeniable",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "über den Tellerrand schauen",
+    "hr": "gledati šire od okvira",
+    "en": "to think outside the box / to broaden one's horizon",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "im Einklang mit",
+    "hr": "u skladu s",
+    "en": "in line with / in accordance with",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "auf dem Vormarsch",
+    "hr": "u porastu / na napredovanju",
+    "en": "on the rise / gaining ground",
+    "cat": "Ausdruck"
+  },
+  {
+    "de": "Ich möchte kurz auf einen wichtigen Punkt eingehen.",
+    "hr": "Želio/la bih se ukratko osvrnuti na jednu važnu točku.",
+    "en": "I'd like to briefly address an important point.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das lässt sich so nicht verallgemeinern.",
+    "hr": "To se ne može tako generalizirati.",
+    "en": "That cannot be generalized in this way.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich sehe das etwas differenzierter.",
+    "hr": "Ja to vidim nešto nijansiranije.",
+    "en": "I see that in a somewhat more nuanced way.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Daran lässt sich gut anknüpfen.",
+    "hr": "Na to se dobro može nadovezati.",
+    "en": "That's a good point to build on.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das hängt stark vom Kontext ab.",
+    "hr": "To jako ovisi o kontekstu.",
+    "en": "That depends heavily on the context.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich teile Ihre Einschätzung nur bedingt.",
+    "hr": "Samo djelomično dijelim vaše mišljenje.",
+    "en": "I only partially share your assessment.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das ist ein klassischer Zielkonflikt.",
+    "hr": "To je klasičan sukob ciljeva.",
+    "en": "That is a classic trade-off.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Könnten Sie das etwas präzisieren?",
+    "hr": "Biste li to mogli malo precizirati?",
+    "en": "Could you elaborate on that a bit?",
+    "cat": "Satz"
+  },
+  {
+    "de": "Daraus lässt sich ableiten, dass -",
+    "hr": "Iz toga se može zaključiti da -",
+    "en": "From this it can be derived that -",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das setzt allerdings voraus, dass -",
+    "hr": "To međutim pretpostavlja da -",
+    "en": "That assumes, however, that -",
+    "cat": "Satz"
+  },
+  {
+    "de": "Unter dem Strich überwiegen die Vorteile.",
+    "hr": "Na kraju, prednosti prevladavaju.",
+    "en": "On balance, the advantages outweigh the disadvantages.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das führt unweigerlich zu der Frage, ob -",
+    "hr": "To neizbježno dovodi do pitanja je li -",
+    "en": "That inevitably leads to the question of whether -",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich würde hier eher vorsichtig formulieren.",
+    "hr": "Ovdje bih bio/la oprezniji/a u formulaciji.",
+    "en": "I would phrase that more carefully here.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das ist nicht von der Hand zu weisen.",
+    "hr": "To se ne može odbaciti.",
+    "en": "That cannot be dismissed out of hand.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Es kommt ganz darauf an, wie man das bewertet.",
+    "hr": "Sve ovisi o tome kako se to ocjenjuje.",
+    "en": "It all depends on how you evaluate it.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das begeistert mich wirklich.",
+    "hr": "To me stvarno oduševljava.",
+    "en": "That really excites me.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich bin stecken geblieben.",
+    "hr": "Zaglavila/o sam se.",
+    "en": "I got stuck.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich hätte mehr teilgenommen.",
+    "hr": "Bio/la bih više sudjelovao/la.",
+    "en": "I would have participated more.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das ist mir egal.",
+    "hr": "Svejedno mi je.",
+    "en": "I don't care about that.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich arbeite darauf hin.",
+    "hr": "Radim prema tome.",
+    "en": "I'm working towards that.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich klappe den Laptop zu.",
+    "hr": "Zatvarám laptop.",
+    "en": "I'm closing the laptop / calling it a day.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich verstehe mich als Teamplayer.",
+    "hr": "Smatram se timskim igračem.",
+    "en": "I consider myself a team player.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das sieht im Nachhinein anders aus.",
+    "hr": "To naknadno izgleda drugačije.",
+    "en": "That looks different in retrospect.",
+    "cat": "Satz"
+  },
+  {
+    "de": "ob ich abnehmen könnte",
+    "hr": "mogu li smršavjeti",
+    "en": "whether I could lose weight",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das war verhältnismäßig kurz, kann ich im Nachhinein sagen.",
+    "hr": "To je bilo relativno kratko, mogu reći naknadno.",
+    "en": "That was relatively short, I can say in retrospect.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das lässt sich kaum rechtfertigen.",
+    "hr": "To se jedva može opravdati.",
+    "en": "That can hardly be justified.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das greift meiner Meinung nach zu kurz.",
+    "hr": "To je, po mom mišljenju, previše površno.",
+    "en": "In my view, that doesn't go far enough.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das muss man im Zusammenhang sehen.",
+    "hr": "To treba gledati u kontekstu.",
+    "en": "That needs to be seen in context.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich räume ein, dass das nicht einfach ist.",
+    "hr": "Priznajem da to nije jednostavno.",
+    "en": "I admit that it's not easy.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Da bin ich anderer Meinung.",
+    "hr": "Tu se razilazimo / tu imam drugačije mišljenje.",
+    "en": "I beg to differ / I see that differently.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das wirft eine grundsätzliche Frage auf.",
+    "hr": "To postavlja temeljno pitanje.",
+    "en": "That raises a fundamental question.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das lässt sich nicht so einfach abtun.",
+    "hr": "To se ne može tako lako odbaciti.",
+    "en": "That can't just be brushed aside.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich sehe das differenzierter als Sie.",
+    "hr": "Vidim to nijansiranije nego vi.",
+    "en": "I see that in a more nuanced way than you.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das ist zwar richtig, aber -",
+    "hr": "To je doduše točno, ali -",
+    "en": "That is true, but -",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich kann dem nur bedingt zustimmen.",
+    "hr": "Mogu se s tim samo djelomično složiti.",
+    "en": "I can only partially agree with that.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das muss man von Fall zu Fall entscheiden.",
+    "hr": "To se mora odlučivati od slučaja do slučaja.",
+    "en": "That must be decided on a case-by-case basis.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Da scheiden sich die Geister.",
+    "hr": "Tu se mišljenja dijele.",
+    "en": "Opinions are divided on that.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das liegt auf der Hand.",
+    "hr": "To je očito / to leži na dlanu.",
+    "en": "That's obvious / that goes without saying.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Das bleibt abzuwarten.",
+    "hr": "To ostaje za vidjeti.",
+    "en": "That remains to be seen.",
+    "cat": "Satz"
+  },
+  {
+    "de": "Ich nehme das zum Anlass, um -",
+    "hr": "Koristim to kao povod da -",
+    "en": "I take this as an opportunity to -",
+    "cat": "Satz"
+  }
 ]

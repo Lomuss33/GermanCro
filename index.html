@@ -28,8 +28,8 @@
   </div>
   <div class="stat-divider"></div>
   <div class="stat">
-    <div class="stat-value" id="totalVal">0</div>
-    <div class="stat-label">Gesamt</div>
+    <div class="stat-value" id="remainingVal">-</div>
+    <div class="stat-label">Übrig</div>
   </div>
   <div class="stat-divider"></div>
   <div class="stat">
@@ -80,7 +80,24 @@
   <div class="cat-buttons" id="catButtons"></div>
   <div class="cat-panel-footer">
     <div class="cat-count" id="catCount"></div>
-    <button class="new-game-btn" id="newGameBtn" onclick="startSession()">Neues Spiel starten ↻</button>
+    <div class="new-game-row">
+      <div class="session-slider-wrap">
+        <input
+          type="range"
+          id="sessionSizeSlider"
+          min="5"
+          max="50"
+          step="5"
+          value="20"
+          oninput="document.getElementById('sliderLabel').textContent = this.value"
+        />
+        <span class="slider-label"><span id="sliderLabel">20</span> Karten</span>
+      </div>
+      <button class="new-game-btn" id="newGameBtn"
+        onclick="startSession(+document.getElementById('sessionSizeSlider').value)">
+        Neues Spiel ↻
+      </button>
+    </div>
   </div>
 </div>
 
