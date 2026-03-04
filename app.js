@@ -1,10 +1,13 @@
 // ─── Category colors ──────────────────────────────────────────────
 const catColors = {
-  "Ingenieurwesen": "#60a5fa",
-  "Argumentation":  "#f472b6",
-  "Methodik":       "#4ade80",
-  "Beschreibung":   "#fb923c",
-  "Soft Skills":    "#a78bfa",
+  "Nomen":          "#60a5fa",
+  "Verb":           "#f472b6",
+  "Adjektiv":       "#4ade80",
+  "Adverb":         "#dbfa60",
+  "Präposition":    "#f47272",
+  "Konjunktion":    "#884ade",
+  "Ausdruck":       "#fb923c",
+  "Satz":           "#a78bfa",
 };
 
 // ─── Card data ────────────────────────────────────────────────────
@@ -20,7 +23,7 @@ fetch('cards.json')
   });
 
 // ─── State ────────────────────────────────────────────────────────
-const SESSION_SIZE = 10;
+const SESSION_SIZE = 20;
 const allCats = Object.keys(catColors);
 let selectedCats = null;
 
@@ -29,6 +32,8 @@ let streak = 0, bestStreak = 0;
 let totalCorrect = 0, totalAttempts = 0;
 let forceCorrection = false, hintCount = 0;
 let sessionStart = 0, totalCharsTyped = 0;
+
+let difficulty = 'medium'; // 'easy' | 'medium' | 'hard'
 
 // ─── DOM refs ─────────────────────────────────────────────────────
 const promptEl    = document.getElementById('promptText');
@@ -113,7 +118,7 @@ const searchSites = [
 function updateSearchLinks(card) {
   const container = document.getElementById('searchLinks');
   container.innerHTML = '';
-  const word = (card.target || card.source).replace(/^(der|die|das)\s+/i, '');
+  const word = (card.de || card.en).replace(/^(der|die|das)\s+/i, '');
   searchSites.forEach(site => {
     const a = document.createElement('a');
     a.className = 'search-link';
@@ -132,25 +137,67 @@ function normalize(t) {
   return t.trim().replace(/\s+/g, ' ').replace(/[.,!?:;]+$/, '').toLowerCase();
 }
 
+function getCorrectPrefixLength(target, typed) {
+  let i = 0;
+  while (
+    i < typed.length &&
+    i < target.length &&
+    typed[i].toLowerCase() === target[i].toLowerCase()
+  ) {
+    i++;
+  }
+  return i;
+}
+
 function getCharMeta(target) {
   const hints = new Set(), autofill = new Set();
+  const hintCountPerWord =
+    difficulty === 'easy'   ? 3 :
+    difficulty === 'medium' ? 1 :
+    0;
   let pos = 0;
   target.split(' ').forEach(word => {
     if (!word.length) { pos++; return; }
-    hints.add(pos);
+    // Mehrere Anfangsbuchstaben je nach Difficulty
+    for (let i = 0; i < hintCountPerWord && i < word.length; i++) {
+      hints.add(pos + i);
+    }
     let t = word.length - 1;
-    while (t > 0 && PUNCT.test(word[t])) { autofill.add(pos + t); t--; }
+    while (t > 0 && PUNCT.test(word[t])) {
+      autofill.add(pos + t);
+      t--;
+    }
     pos += word.length + 1;
   });
   return { hints, autofill };
 }
 
+function initDifficultyControls() {
+  document.querySelectorAll('.difficulty-panel button')
+    .forEach(btn => {
+      btn.addEventListener('click', () => {
+        difficulty = btn.dataset.diff;
+
+        document.querySelectorAll('.difficulty-panel button')
+          .forEach(b => b.classList.remove('active'));
+
+        btn.classList.add('active');
+
+        buildWordGrid(
+          sessionCards[sessionIndex].de,
+          inputEl.value
+        );
+      });
+    });
+}
+
 function buildWordGrid(target, typed) {
   wordGrid.innerHTML = '';
   const { hints, autofill } = getCharMeta(target);
+  const correctPrefixLen = getCorrectPrefixLength(target, typed);
   const words = target.split(' ');
   let pos = 0;
-
+  
   words.forEach((word, wi) => {
     const group = document.createElement('div');
     group.className = 'word-group';
@@ -165,8 +212,15 @@ function buildWordGrid(target, typed) {
       } else if (uChar !== undefined) {
         letter.textContent = tChar;
         wrap.classList.add(uChar.toLowerCase() === tChar.toLowerCase() ? 'state-ok' : 'state-bad');
-      } else if (hints.has(idx)) {
-        letter.textContent = tChar; wrap.classList.add('state-hint');
+      } else if (difficulty === 'easy' && idx >= correctPrefixLen && idx < correctPrefixLen + 3) {
+        letter.textContent = tChar;
+        wrap.classList.add('state-hint');
+      } else if (hints.has(idx)) {          // ← das war weg
+        letter.textContent = tChar;
+        wrap.classList.add('state-hint');
+      } else if (difficulty !== 'hard' && idx === correctPrefixLen) {
+        letter.textContent = tChar;
+        wrap.classList.add('state-next');
       } else {
         letter.textContent = '_'; wrap.classList.add('state-hidden');
       }
@@ -209,8 +263,8 @@ function startSession() {
 
 function loadCard() {
   const card = sessionCards[sessionIndex];
-  promptEl.textContent = card.croatian;
-  promptSub.textContent = card.source || '';
+  promptEl.textContent = card.hr;
+  promptSub.textContent = card.en || '';
   inputEl.value = '';
   inputEl.className = '';
   solutionEl.style.display = 'none';
@@ -223,18 +277,18 @@ function loadCard() {
   categoryEl.style.borderColor = color + '55';
   categoryEl.style.background = color + '14';
   mainCard.classList.add('active');
-  buildWordGrid(card.target, '');
+  buildWordGrid(card.de, '');
   updateSearchLinks(card);
   inputEl.focus();
 }
 
 // ─── Events ───────────────────────────────────────────────────────
 inputEl.addEventListener('input', () => {
-  buildWordGrid(sessionCards[sessionIndex].target, inputEl.value);
+  buildWordGrid(sessionCards[sessionIndex].de, inputEl.value);
 });
 
 document.getElementById('hintBtn').addEventListener('click', () => {
-  const target = sessionCards[sessionIndex].target;
+  const target = sessionCards[sessionIndex].de;
   hintCount++;
   const reveal = target.slice(0, hintCount * 3);
   inputEl.value = reveal;
@@ -245,8 +299,8 @@ document.getElementById('hintBtn').addEventListener('click', () => {
 inputEl.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
   const card = sessionCards[sessionIndex];
-  if (normalize(inputEl.value) === normalize(card.target)) {
-    totalCharsTyped += card.target.length;
+  if (normalize(inputEl.value) === normalize(card.de)) {
+    totalCharsTyped += card.de.length;
     if (!forceCorrection) {
       totalCorrect++;
       streak++;
@@ -265,7 +319,7 @@ inputEl.addEventListener('keydown', e => {
   } else {
     if (!forceCorrection) { totalAttempts++; streak = 0; }
     inputEl.className = 'wrong';
-    solutionEl.innerHTML = '<strong>Richtig:</strong> ' + card.target;
+    solutionEl.innerHTML = '<strong>Richtig:</strong> ' + card.de;
     solutionEl.style.display = 'block';
     forceCorrection = true;
     updateStats();
@@ -330,3 +384,4 @@ function showSessionEnd() {
 // ─── Init ─────────────────────────────────────────────────────────
 buildCatPanel();
 startSession();
+initDifficultyControls()

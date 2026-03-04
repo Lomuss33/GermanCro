@@ -138,14 +138,38 @@ input.wrong   { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(255,71,
 
 .wchar.state-hidden .wchar-letter { color: transparent; }
 .wchar.state-hidden .wchar-line   { background: #333; }
-.wchar.state-hint   .wchar-letter { color: rgba(232,255,71,0.55); }
-.wchar.state-hint   .wchar-line   { background: rgba(232,255,71,0.25); }
+.wchar.state-hint   .wchar-letter { color: rgba(232,255,71,0.35); }
+.wchar.state-hint   .wchar-line   { background: rgba(232,255,71,0.18); }
 .wchar.state-ok     .wchar-letter { color: var(--green); }
 .wchar.state-ok     .wchar-line   { background: var(--green); }
 .wchar.state-bad    .wchar-letter { color: var(--accent2); }
 .wchar.state-bad    .wchar-line   { background: var(--accent2); }
 .wchar.state-auto   .wchar-letter { color: #2e5538; }
 .wchar.state-auto   .wchar-line   { background: #2e5538; }
+
+/* ── Next intelligent hint ─────────────────────────── */
+.wchar.state-next .wchar-letter {
+  color: var(--accent);
+  opacity: 0.45;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.wchar.state-next .wchar-line {
+  background: var(--accent);
+  opacity: 0.25;
+  transition: opacity 0.2s ease;
+}
+
+.wchar.state-next {
+  animation: nextPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes nextPulse {
+  from { opacity: 0.35; transform: translateY(0); }
+  to   { opacity: 0.75; transform: translateY(-2px); }
+}
+/* ───────────────────────────── */
+
+
 
 .solution {
   margin-top: 14px; padding: 11px 14px; display: none;
@@ -251,3 +275,27 @@ input.wrong   { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(255,71,
   z-index: 99; pointer-events: none;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── difficulty-panel ──────────────────────────────── */
+
+.difficulty-panel {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.difficulty-panel button {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.difficulty-panel button.active {
+  background: var(--accent);
+  color: #000;
+  border-color: transparent;
+}
