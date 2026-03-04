@@ -7,6 +7,8 @@ You see the Croatian word, the English translation below it as a hint, and type 
 
 ---
 
+![Screenshot](image.png)
+
 ## 🧠 How It Works
 
 1. You see a **Croatian word or phrase** as the main prompt
