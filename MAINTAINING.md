@@ -35,6 +35,9 @@ If you run the app with `npx serve .`, the add-card panel still works:
 - `app.js`: session flow, grading, hints, stats, category filtering, and search links
 - `cards.json`: vocabulary source of truth
 - `cards.user.json`: optional locally saved cards written by `server.js`
+- `germany-facts.json`: data source for the Germany facts explorer
+- `assets/facts/country/deutschland.webp`: country image shown in the facts header
+- `assets/facts/states/*.webp`: state images keyed by the stable state `id`
 - `server.js`: local static server plus save API for the authoring bubble
 
 ## Card data rules
@@ -44,6 +47,19 @@ If you run the app with `npx serve .`, the add-card panel still works:
 - Valid `cat` values are `Nomen`, `Verb`, `Adjektiv`, `Adverb`, `Praeposition` or `Präposition`, `Konjunktion`, `Ausdruck`, and `Satz`.
 - If you add, rename, or remove a category, update both `cards.json` and `catColors` in `app.js`.
 - Session-only cards are stored in browser `sessionStorage` when no local API is available.
+
+## Germany facts module
+
+The `Deutschland kennenlernen` panel is backed by `germany-facts.json`.
+
+Rules:
+
+- keep the file valid JSON and UTF-8 encoded
+- keep `country` as a single object and `states` as an array
+- keep state `id` values unique and stable
+- store display-ready values as strings unless a simple number is clearly better
+- if a field is missing, the UI hides it rather than rendering placeholders
+- if you replace a flag image, keep the same filename and use `.webp`
 
 ## Adding cards through the UI
 
@@ -81,6 +97,7 @@ Recommended maintainer workflow:
 
 - Content-only change: edit `cards.json`, then confirm category counts and a few sample answers in the browser.
 - Authoring-bubble change: test `npx serve .` export flow and `npm start` direct-save flow.
+- Germany-facts change: test country view, state picker view, and missing-field rendering.
 - UI copy or layout change: update `index.html` and `style.css` together if spacing or labels shift.
 - Gameplay change: update `app.js`, then manually retest difficulty modes, hints, answer checking, and session completion.
 
@@ -94,8 +111,10 @@ Recommended maintainer workflow:
 6. In `npx serve .` mode, export `cards.user.json` and confirm the file downloads.
 7. In static mode without export, reload and confirm the added card does not persist beyond the session.
 8. In `npm start` mode, add a card and confirm it is written to `cards.user.json`.
-9. Finish a session and confirm the final score screen appears.
-10. Open one search link for the active word and confirm it is populated.
+9. Check the `Deutschland kennenlernen` panel and confirm Germany facts load by default.
+10. Open `Bundeslander`, choose multiple states, and confirm the displayed facts change.
+11. Finish a session and confirm the final score screen appears.
+12. Open one search link for the active word and confirm it is populated.
 
 ## Notes
 

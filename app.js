@@ -27,6 +27,7 @@ const searchSites = [
 const SESSION_SIZE = 20;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const PUNCT = /[.,!?:;]/;
+const FACTS_IMAGE_ROOT = "assets/facts";
 
 let allCards = [];
 let persistentCards = [];
@@ -46,6 +47,9 @@ let sessionStart = 0;
 let totalCharsTyped = 0;
 let difficulty = "medium";
 let previousTypedValue = "";
+let germanyFacts = null;
+let factsMode = "country";
+let selectedStateId = null;
 
 const promptEl = document.getElementById("promptText");
 const promptSub = document.getElementById("promptSub");
@@ -71,6 +75,11 @@ const addCardSaveBtn = document.getElementById("addCardSaveBtn");
 const exportCardsBtn = document.getElementById("exportCardsBtn");
 const addCardStatusEl = document.getElementById("addCardStatus");
 const authorModeEl = document.getElementById("authorMode");
+const factsCountryBtn = document.getElementById("factsCountryBtn");
+const factsStatesBtn = document.getElementById("factsStatesBtn");
+const statePickerWrap = document.getElementById("statePickerWrap");
+const statePickerEl = document.getElementById("statePicker");
+const factsContentEl = document.getElementById("factsContent");
 
 function normalizeCategory(cat) {
   return CATEGORY_ALIASES[cat] || cat;
@@ -288,6 +297,381 @@ function updateSearchLinks(card) {
     link.innerHTML = `<span class="search-link-icon">${site.icon}</span><span>${site.name}</span>`;
     searchLinksEl.appendChild(link);
   });
+}
+
+function isNonEmptyValue(value) {
+  if (value === null || value === undefined) {
+    return false;
+  }
+  if (Array.isArray(value)) {
+    return value.length > 0;
+  }
+  if (typeof value === "string") {
+    return value.trim().length > 0;
+  }
+  return true;
+}
+
+function normalizeFactsCollection(raw) {
+  if (!raw || typeof raw !== "object") {
+    return null;
+  }
+
+  const country = raw.country && typeof raw.country === "object" ? raw.country : null;
+  const states = Array.isArray(raw.states) ? raw.states.filter((state) => state && typeof state === "object") : [];
+
+  if (!country || !isNonEmptyValue(country.name) || states.length === 0) {
+    return null;
+  }
+
+  const validStates = states.filter((state) => isNonEmptyValue(state.id) && isNonEmptyValue(state.name));
+  if (!validStates.length) {
+    return null;
+  }
+
+  return {
+    country,
+    states: validStates,
+  };
+}
+
+async function loadGermanyFacts() {
+  const raw = await fetchJson("germany-facts.json", null);
+  return normalizeFactsCollection(raw);
+}
+
+function getFactsImagePath(type, stateId) {
+  if (type === "country") {
+    return `${FACTS_IMAGE_ROOT}/country/deutschland.webp`;
+  }
+
+  if (type === "state" && isNonEmptyValue(stateId)) {
+    return `${FACTS_IMAGE_ROOT}/states/${stateId}.webp`;
+  }
+
+  return "";
+}
+
+function normalizeFactsField(field) {
+  if (Array.isArray(field)) {
+    return {
+      label: field[0],
+      value: field[1],
+      featured: false,
+    };
+  }
+
+  if (field && typeof field === "object") {
+    return {
+      label: field.label,
+      value: field.value,
+      featured: Boolean(field.featured),
+    };
+  }
+
+  return null;
+}
+
+function createFactsField(field) {
+  const normalized = normalizeFactsField(field);
+  if (!normalized) {
+    return null;
+  }
+
+  const { label, value, featured } = normalized;
+  if (!isNonEmptyValue(value)) {
+    return null;
+  }
+
+  const card = document.createElement("div");
+  card.className = "facts-card";
+  if (featured) {
+    card.classList.add("featured");
+  }
+
+  const cardLabel = document.createElement("div");
+  cardLabel.className = "facts-card-label";
+  cardLabel.textContent = label;
+
+  const cardValue = document.createElement("div");
+  cardValue.className = "facts-card-value";
+  cardValue.textContent = String(value);
+
+  card.appendChild(cardLabel);
+  card.appendChild(cardValue);
+  return card;
+}
+
+function createFactsList(label, items) {
+  if (!Array.isArray(items) || !items.length) {
+    return null;
+  }
+
+  const section = document.createElement("section");
+  section.className = "facts-list-section";
+
+  const title = document.createElement("div");
+  title.className = "facts-list-title";
+  title.textContent = label;
+
+  const list = document.createElement("div");
+  list.className = "facts-chip-list";
+
+  items
+    .filter((item) => isNonEmptyValue(item))
+    .forEach((item) => {
+      const chip = document.createElement("span");
+      chip.className = "facts-chip";
+      chip.textContent = String(item);
+      list.appendChild(chip);
+    });
+
+  if (!list.children.length) {
+    return null;
+  }
+
+  section.appendChild(title);
+  section.appendChild(list);
+  return section;
+}
+
+function renderFactsView(title, subtitle, imageSrc, fields, lists) {
+  factsContentEl.innerHTML = "";
+
+  const view = document.createElement("div");
+  view.className = "facts-view";
+
+  const head = document.createElement("div");
+  head.className = "facts-view-head";
+
+  const titleRow = document.createElement("div");
+  titleRow.className = "facts-title-row";
+
+  const flagWrap = document.createElement("div");
+  flagWrap.className = "facts-flag-wrap";
+
+  const flagEl = document.createElement("img");
+  flagEl.className = "facts-flag";
+  flagEl.alt = `${title} Flagge`;
+  flagEl.loading = "lazy";
+  flagEl.decoding = "async";
+  flagEl.src = imageSrc || "";
+  flagEl.addEventListener("error", () => {
+    flagWrap.classList.add("is-fallback");
+    flagEl.hidden = true;
+  });
+  flagWrap.appendChild(flagEl);
+  titleRow.appendChild(flagWrap);
+
+  const titleCopy = document.createElement("div");
+  titleCopy.className = "facts-title-copy";
+
+  const nameEl = document.createElement("div");
+  nameEl.className = "facts-view-name";
+  nameEl.textContent = title;
+  titleCopy.appendChild(nameEl);
+
+  if (isNonEmptyValue(subtitle)) {
+    const subtitleEl = document.createElement("div");
+    subtitleEl.className = "facts-view-subtitle";
+    subtitleEl.textContent = String(subtitle);
+    titleCopy.appendChild(subtitleEl);
+  }
+
+  titleRow.appendChild(titleCopy);
+  head.appendChild(titleRow);
+  view.appendChild(head);
+
+  const grid = document.createElement("div");
+  grid.className = "facts-grid";
+  fields.forEach((fieldData) => {
+    const field = createFactsField(fieldData);
+    if (field) {
+      grid.appendChild(field);
+    }
+  });
+
+  if (grid.children.length) {
+    view.appendChild(grid);
+  }
+
+  lists.forEach(([label, values]) => {
+    const list = createFactsList(label, values);
+    if (list) {
+      view.appendChild(list);
+    }
+  });
+
+  factsContentEl.appendChild(view);
+}
+
+function renderCountryFacts(countryData) {
+  renderFactsView(
+    countryData.name || "Deutschland",
+    countryData.official_name || "",
+    getFactsImagePath("country"),
+    [
+      ["Hauptstadt", countryData.capital],
+      ["Gr\u00f6\u00dfte Stadt", countryData.largest_city],
+      ["Hymne", countryData.anthem],
+      ["Gegr\u00fcndet", countryData.founded],
+      ["Staatsform", countryData.state_form],
+      ["Nationalfeiertag", countryData.national_day],
+      ["Einwohnerzahl", countryData.population],
+      ["Fl\u00e4che", countryData.area_km2],
+      ["Anzahl Bundesl\u00e4nder", countryData.states_count],
+      ["W\u00e4hrung", countryData.currency],
+      ["Sprache", countryData.language],
+      ["Zeitzone", countryData.time_zone],
+      ["Telefonvorwahl", countryData.calling_code],
+      ["Internet-Domain", countryData.internet_tld],
+      ["Nachbarl\u00e4nder", countryData.bordering_countries_count],
+      ["BIP nominal", countryData.gdp_nominal],
+      ["EU seit", countryData.eu_member_since],
+      {
+        label: "Deutschland im \u00dcberblick",
+        value: countryData.overview,
+        featured: true,
+      },
+    ],
+    [
+      ["Nachbarl\u00e4nder", countryData.neighboring_countries],
+      ["Bekannte Orte", countryData.highlights],
+      ["Natur und Landschaft", countryData.nature],
+    ]
+  );
+}
+
+function renderStateFacts(stateData) {
+  renderFactsView(
+    stateData.name || "Bundesland",
+    "",
+    getFactsImagePath("state", stateData.id),
+    [
+      ["K\u00fcrzel", stateData.abbreviation],
+      ["Landestyp", stateData.state_type],
+      ["Region", stateData.region],
+      ["Hauptstadt", stateData.capital],
+      ["Gr\u00f6\u00dfte Stadt", stateData.largest_city],
+      ["Einwohnerzahl", stateData.population],
+      ["Fl\u00e4che", stateData.area_km2],
+      ["Gegr\u00fcndet / in heutiger Form", stateData.joined_or_founded],
+      ["Regierungschef", stateData.minister_president || stateData.state_head],
+      {
+        label: "Lage und Raum",
+        value: stateData.location_summary,
+        featured: true,
+      },
+      {
+        label: "Kurzprofil",
+        value: stateData.identity_summary,
+        featured: true,
+      },
+    ],
+    [
+      ["Nachbar-Bundesl\u00e4nder", stateData.neighboring_states],
+      ["Grenzt an", stateData.bordering_countries],
+      ["Bekannt f\u00fcr", stateData.known_for],
+      ["Natur und Landschaft", stateData.nature],
+    ]
+  );
+}
+
+function renderFactsError() {
+  factsContentEl.innerHTML = "";
+  const error = document.createElement("div");
+  error.className = "facts-error";
+  error.textContent = "Fakten konnten nicht geladen werden.";
+  factsContentEl.appendChild(error);
+}
+
+function updateFactsModeButtons() {
+  factsCountryBtn.classList.toggle("active", factsMode === "country");
+  factsStatesBtn.classList.toggle("active", factsMode === "state");
+}
+
+function updateStatePickerVisibility() {
+  statePickerWrap.classList.toggle("is-open", factsMode === "state" && Boolean(germanyFacts));
+}
+
+function renderFactsSelection() {
+  if (!germanyFacts) {
+    renderFactsError();
+    return;
+  }
+
+  if (factsMode === "state") {
+    const activeState = germanyFacts.states.find((state) => state.id === selectedStateId) || germanyFacts.states[0];
+    if (!activeState) {
+      renderFactsError();
+      return;
+    }
+    selectedStateId = activeState.id;
+    renderStateFacts(activeState);
+  } else {
+    renderCountryFacts(germanyFacts.country);
+  }
+
+  updateFactsModeButtons();
+  updateStatePickerVisibility();
+}
+
+function buildStatePicker(states) {
+  statePickerEl.innerHTML = "";
+
+  states.forEach((state) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "state-picker-btn";
+    button.textContent = state.name;
+    button.classList.toggle("active", state.id === selectedStateId);
+    button.addEventListener("click", () => {
+      factsMode = "state";
+      selectedStateId = state.id;
+      buildStatePicker(states);
+      renderFactsSelection();
+    });
+    statePickerEl.appendChild(button);
+  });
+}
+
+function initFactsPanel() {
+  updateFactsModeButtons();
+  updateStatePickerVisibility();
+
+  factsCountryBtn.addEventListener("click", () => {
+    factsMode = "country";
+    selectedStateId = null;
+    renderFactsSelection();
+  });
+
+  factsStatesBtn.addEventListener("click", () => {
+    if (!germanyFacts || !germanyFacts.states.length) {
+      renderFactsError();
+      return;
+    }
+
+    factsMode = "state";
+    if (!selectedStateId) {
+      selectedStateId = germanyFacts.states[0].id;
+    }
+    buildStatePicker(germanyFacts.states);
+    renderFactsSelection();
+  });
+
+  if (!germanyFacts) {
+    factsCountryBtn.disabled = true;
+    factsStatesBtn.disabled = true;
+    renderFactsError();
+    return;
+  }
+
+  if (germanyFacts.states.length) {
+    selectedStateId = germanyFacts.states[0].id;
+    buildStatePicker(germanyFacts.states);
+  }
+
+  renderFactsSelection();
 }
 
 function getCorrectPrefixLength(target, typed) {
@@ -760,13 +1144,15 @@ async function initApp() {
   initAuthoringForm();
   buildCatPanel();
 
-  const [baseCards, loadedPersistentCards, currentCapabilities] = await Promise.all([
+  const [baseCards, loadedPersistentCards, currentCapabilities, loadedFacts] = await Promise.all([
     fetchJson("cards.json", []),
     fetchJson("cards.user.json", []),
     detectCapabilities(),
+    loadGermanyFacts(),
   ]);
 
   capabilities = currentCapabilities;
+  germanyFacts = loadedFacts;
   persistentCards = Array.isArray(loadedPersistentCards)
     ? loadedPersistentCards.map(sanitizeCard).filter(Boolean)
     : [];
@@ -774,6 +1160,7 @@ async function initApp() {
   allCards = mergeCards(baseCards, persistentCards, sessionOnlyCards);
 
   renderAuthoringMode();
+  initFactsPanel();
   buildCatPanel();
   startSession();
 }

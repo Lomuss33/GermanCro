@@ -13,6 +13,7 @@ GermanCro is a browser-based German vocabulary trainer with Croatian prompts and
 - Hint reveal button and automatic punctuation fill
 - Session stats for streak, accuracy, remaining cards, and WPM
 - Search shortcuts for the active word
+- "Deutschland kennenlernen" facts panel for Germany and all 16 states
 
 ## Quick start
 
@@ -48,6 +49,8 @@ cards.json      Vocabulary dataset
 image.png       README screenshot
 MAINTAINING.md  Maintainer workflow and smoke-test checklist
 USER_GUIDE.md   End-user guide for controls and clickable UI sections
+germany-facts.json Germany and Bundeslander facts dataset
+assets/facts/... Placeholder or real WebP flags for Germany and the states
 server.js       Local editable server with persistent card saves
 cards.user.json Local extension dataset written by server.js
 ```
@@ -97,6 +100,23 @@ Use [USER_GUIDE.md](USER_GUIDE.md) for:
 - what each clickable interface section does
 - how sessions, filters, and lookup links work
 - how to use the `Neue Karte hinzufügen` panel
+
+## Deutschland kennenlernen
+
+The UI now includes a facts panel at the bottom of the page.
+
+- `Deutschland` shows country-level quick facts such as capital, anthem, population, area, GDP, and highlights.
+- `Bundeslander` opens a picker for all 16 states.
+- Choosing a state shows its basic data and short highlight lists.
+
+The module is fully static and GitHub Pages-safe because it loads data from `germany-facts.json`.
+
+Flag images for this panel are loaded from:
+
+- `assets/facts/country/deutschland.webp`
+- `assets/facts/states/<state-id>.webp`
+
+You can replace the placeholder files with your own WebP flags without changing the code.
 
 ## Add-card bubble behavior
 

@@ -142,3 +142,55 @@ When a session finishes, the app shows a summary.
 - Total session time
 
 Use `Neue Runde` to start again.
+
+## Deutschland kennenlernen
+
+This panel is a small facts explorer at the bottom of the page.
+
+### Deutschland button
+
+Click `Deutschland` to show quick facts for the country.
+
+The title area also shows the image from `assets/facts/country/deutschland.webp`.
+
+Typical facts shown here:
+
+- capital
+- largest city
+- anthem
+- founding year
+- population
+- area
+- number of states
+- currency
+- language
+- time zone
+- GDP
+- well-known places and nature highlights
+
+### Bundeslander button
+
+Click `Bundeslander` to open the state selector.
+
+- A list of all 16 German states appears.
+- Click any state button to load that state's facts.
+- The selected state button is highlighted.
+- The image next to the state name is loaded from `assets/facts/states/<state-id>.webp`.
+
+### What you can expect in a state view
+
+Depending on the available data, the panel can show:
+
+- capital
+- largest city
+- population
+- area
+- founding or current-form year
+- what the state is known for
+- nature and landscape highlights
+
+### Notes
+
+- This panel is for quick orientation and browsing, not for scored quiz rounds.
+- If the facts file is missing or broken, the main learning app still works.
+- The shipped WebP files are placeholders and can be replaced with your own proper flag images.
