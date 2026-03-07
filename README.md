@@ -24,13 +24,19 @@ npx serve .
 
 Open the local URL shown by the server, usually `http://localhost:3000`.
 
-If you want the add-card bubble to write permanently to a local file, run the built-in local server instead:
+If you want direct file writes from the UI, run the built-in local server instead:
 
 ```bash
 npm start
 ```
 
 That enables persistent saves to `cards.user.json`. GitHub Pages stays read-only because it cannot run `server.js`.
+
+If you prefer `npx serve .`, that also works for adding cards:
+
+- cards are added to the current session in the browser
+- you can then export them as `cards.user.json`
+- place that file in the repo root so it will load the next time you start the app
 
 ## How the repo is organized
 
@@ -41,6 +47,7 @@ app.js          Session flow, scoring, hints, filters, and search links
 cards.json      Vocabulary dataset
 image.png       README screenshot
 MAINTAINING.md  Maintainer workflow and smoke-test checklist
+USER_GUIDE.md   End-user guide for controls and clickable UI sections
 server.js       Local editable server with persistent card saves
 cards.user.json Local extension dataset written by server.js
 ```
@@ -85,13 +92,49 @@ Use [MAINTAINING.md](MAINTAINING.md) for:
 - coordinated code/data changes
 - manual smoke testing after edits
 
+Use [USER_GUIDE.md](USER_GUIDE.md) for:
+
+- what each clickable interface section does
+- how sessions, filters, and lookup links work
+- how to use the `Neue Karte hinzufügen` panel
+
 ## Add-card bubble behavior
 
-The UI now includes a bubble below "Aktuelles Wort nachschlagen".
+The UI now includes a separate "Neue Karte hinzufügen" panel below the lookup panel.
 
 - On GitHub Pages or any static host, saving stores the new card only for the current browser session.
-- On a local repo copy started with `npm start`, saving writes permanently to `cards.user.json`.
-- If you want to publish those locally added cards, commit `cards.user.json` or merge its entries into `cards.json`.
+- On a local repo copy started with `npm start`, saving writes directly to `cards.user.json`.
+- On a local repo copy started with `npx serve .`, saving stays in-session but you can export `cards.user.json` from the UI.
+- If you want to publish locally added cards, commit `cards.user.json` or merge its entries into `cards.json`.
+
+## Adding cards
+
+Use the "Neue Karte hinzufügen" panel and fill in:
+
+- `Deutsch`: the exact German answer users should type
+- `Kategorie`: one of the supported grammar categories
+- `Kroatisch`: the main prompt shown on the card
+- `Englisch`: the support gloss shown under the prompt
+
+Save behavior:
+
+- Static hosting mode: the card is added only for the current browser session and is not written to the repo.
+- Local static mode with `npx serve .`: the card is added for the current session and can be exported as `cards.user.json`.
+- Local editable mode with `npm start`: the card is appended to `cards.user.json` and becomes available after saving.
+
+Rules:
+
+- All four fields are required.
+- Duplicate cards are blocked based on German answer plus Croatian prompt.
+- The category must match one of the existing supported categories.
+
+Publishing new cards:
+
+1. Run the app locally with either `npx serve .` or `npm start`.
+2. Add cards through the panel.
+3. If you used `npx serve .`, export `cards.user.json` from the panel and place it in the repo root.
+4. Review the saved entries in `cards.user.json`.
+5. Commit `cards.user.json`, or move the entries into `cards.json` if you want them in the main dataset.
 
 ## Notes
 

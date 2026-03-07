@@ -29,6 +29,7 @@ const SESSION_STORAGE_KEY = "germancro-session-cards";
 const PUNCT = /[.,!?:;]/;
 
 let allCards = [];
+let persistentCards = [];
 let sessionOnlyCards = [];
 let selectedCats = null;
 let capabilities = { persistentSave: false };
@@ -44,6 +45,7 @@ let hintCount = 0;
 let sessionStart = 0;
 let totalCharsTyped = 0;
 let difficulty = "medium";
+let previousTypedValue = "";
 
 const promptEl = document.getElementById("promptText");
 const promptSub = document.getElementById("promptSub");
@@ -66,6 +68,7 @@ const addCardHrEl = document.getElementById("newCardHr");
 const addCardEnEl = document.getElementById("newCardEn");
 const addCardCatEl = document.getElementById("newCardCat");
 const addCardSaveBtn = document.getElementById("addCardSaveBtn");
+const exportCardsBtn = document.getElementById("exportCardsBtn");
 const addCardStatusEl = document.getElementById("addCardStatus");
 const authorModeEl = document.getElementById("authorMode");
 
@@ -175,6 +178,10 @@ function saveSessionCards() {
   sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(sessionOnlyCards, null, 2));
 }
 
+function getExtraCardsForExport() {
+  return mergeCards(persistentCards, sessionOnlyCards);
+}
+
 function setAuthoringFeedback(message, isError) {
   addCardStatusEl.textContent = message;
   addCardStatusEl.classList.toggle("is-error", Boolean(isError));
@@ -182,22 +189,21 @@ function setAuthoringFeedback(message, isError) {
 
 function setAuthoringBusy(isBusy) {
   addCardSaveBtn.disabled = isBusy;
+  exportCardsBtn.disabled = isBusy;
   addCardSaveBtn.textContent = isBusy
     ? "Speichert..."
     : capabilities.persistentSave
       ? "Dauerhaft speichern"
-      : "Nur Sitzung speichern";
+      : "Zur Sitzung speichern";
 }
 
 function renderAuthoringMode() {
   if (capabilities.persistentSave) {
-    authorModeEl.textContent = "Lokaler Modus: schreibt nach cards.user.json";
     authorModeEl.classList.add("persistent");
-    setAuthoringFeedback("Neue Einträge werden dauerhaft lokal gespeichert.", false);
+    setAuthoringFeedback("Direktes Speichern ist aktiv. Export bleibt als Backup verfügbar.", false);
   } else {
-    authorModeEl.textContent = "Statischer Modus: speichert nur für diese Sitzung";
     authorModeEl.classList.remove("persistent");
-    setAuthoringFeedback("Auf GitHub Pages und anderen statischen Hosts bleibt es bei Sitzungsspeicherung.", false);
+    setAuthoringFeedback("Mit npx serve . kannst du Karten lokal anlegen und danach als cards.user.json herunterladen.", false);
   }
   setAuthoringBusy(false);
 }
@@ -345,7 +351,31 @@ function initDifficultyControls() {
   });
 }
 
-function buildWordGrid(target, typed) {
+function getFreshCorrectIndexes(target, previousTyped, currentTyped) {
+  const freshIndexes = new Set();
+  const maxLen = Math.max(previousTyped.length, currentTyped.length);
+
+  for (let idx = 0; idx < maxLen; idx += 1) {
+    const prevChar = previousTyped[idx];
+    const currentChar = currentTyped[idx];
+    const targetChar = target[idx];
+
+    if (currentChar === undefined || targetChar === undefined) {
+      continue;
+    }
+
+    const wasCorrect = prevChar !== undefined && prevChar.toLowerCase() === targetChar.toLowerCase();
+    const isCorrect = currentChar.toLowerCase() === targetChar.toLowerCase();
+
+    if (!wasCorrect && isCorrect) {
+      freshIndexes.add(idx);
+    }
+  }
+
+  return freshIndexes;
+}
+
+function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
   wordGrid.innerHTML = "";
   const { hints, autofill } = getCharMeta(target);
   const correctPrefixLen = getCorrectPrefixLength(target, typed);
@@ -376,6 +406,9 @@ function buildWordGrid(target, typed) {
         wrap.classList.add(
           typedChar.toLowerCase() === targetChar.toLowerCase() ? "state-ok" : "state-bad"
         );
+        if (freshCorrectIndexes.has(idx)) {
+          wrap.classList.add("state-hit");
+        }
       } else if (difficulty === "easy" && idx >= correctPrefixLen && idx < correctPrefixLen + 3) {
         letter.textContent = targetChar;
         wrap.classList.add("state-hint");
@@ -447,6 +480,7 @@ function loadCard() {
   promptSub.textContent = card.en || "";
   inputEl.value = "";
   inputEl.className = "";
+  previousTypedValue = "";
   solutionEl.style.display = "none";
   forceCorrection = false;
   hintCount = 0;
@@ -551,6 +585,28 @@ function addCardToRuntime(card) {
   buildCatPanel();
 }
 
+function downloadCardsUserJson() {
+  const cards = getExtraCardsForExport();
+  if (!cards.length) {
+    setAuthoringFeedback("Noch keine Zusatzkarten zum Exportieren vorhanden.", true);
+    return;
+  }
+
+  const blob = new Blob([`${JSON.stringify(cards, null, 2)}\n`], {
+    type: "application/json",
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "cards.user.json";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+
+  setAuthoringFeedback("cards.user.json wurde heruntergeladen. Lege die Datei ins Repo, damit sie beim nächsten Start geladen wird.", false);
+}
+
 async function handleAddCardSubmit(event) {
   event.preventDefault();
 
@@ -586,7 +642,9 @@ async function handleAddCardSubmit(event) {
         throw new Error(payload.error || "Speichern fehlgeschlagen.");
       }
 
-      addCardToRuntime(payload.card || card);
+      const savedCard = payload.card || card;
+      persistentCards = mergeCards(persistentCards, [savedCard]);
+      addCardToRuntime(savedCard);
       setAuthoringFeedback("Dauerhaft lokal gespeichert. Ein neues Spiel nimmt die Karte in die Auswahl auf.", false);
     } else {
       sessionOnlyCards = mergeCards(sessionOnlyCards, [card]);
@@ -608,6 +666,7 @@ async function handleAddCardSubmit(event) {
 function initAuthoringForm() {
   fillCategorySelect();
   addCardForm.addEventListener("submit", handleAddCardSubmit);
+  exportCardsBtn.addEventListener("click", downloadCardsUserJson);
 }
 
 function initInputEvents() {
@@ -615,7 +674,16 @@ function initInputEvents() {
     if (!sessionCards.length) {
       return;
     }
-    buildWordGrid(sessionCards[sessionIndex].de, inputEl.value);
+
+    const typedValue = inputEl.value;
+    const freshCorrectIndexes = getFreshCorrectIndexes(
+      sessionCards[sessionIndex].de,
+      previousTypedValue,
+      typedValue
+    );
+
+    buildWordGrid(sessionCards[sessionIndex].de, typedValue, freshCorrectIndexes);
+    previousTypedValue = typedValue;
   });
 
   document.getElementById("hintBtn").addEventListener("click", () => {
@@ -628,6 +696,7 @@ function initInputEvents() {
     const reveal = target.slice(0, hintCount * 3);
     inputEl.value = reveal;
     buildWordGrid(target, reveal);
+    previousTypedValue = reveal;
     inputEl.focus();
   });
 
@@ -691,13 +760,16 @@ async function initApp() {
   initAuthoringForm();
   buildCatPanel();
 
-  const [baseCards, persistentCards, currentCapabilities] = await Promise.all([
+  const [baseCards, loadedPersistentCards, currentCapabilities] = await Promise.all([
     fetchJson("cards.json", []),
     fetchJson("cards.user.json", []),
     detectCapabilities(),
   ]);
 
   capabilities = currentCapabilities;
+  persistentCards = Array.isArray(loadedPersistentCards)
+    ? loadedPersistentCards.map(sanitizeCard).filter(Boolean)
+    : [];
   sessionOnlyCards = capabilities.persistentSave ? [] : loadSessionCards();
   allCards = mergeCards(baseCards, persistentCards, sessionOnlyCards);
 
