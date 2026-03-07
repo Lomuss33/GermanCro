@@ -24,6 +24,14 @@ npx serve .
 
 Open the local URL shown by the server, usually `http://localhost:3000`.
 
+If you want the add-card bubble to write permanently to a local file, run the built-in local server instead:
+
+```bash
+npm start
+```
+
+That enables persistent saves to `cards.user.json`. GitHub Pages stays read-only because it cannot run `server.js`.
+
 ## How the repo is organized
 
 ```text
@@ -33,6 +41,8 @@ app.js          Session flow, scoring, hints, filters, and search links
 cards.json      Vocabulary dataset
 image.png       README screenshot
 MAINTAINING.md  Maintainer workflow and smoke-test checklist
+server.js       Local editable server with persistent card saves
+cards.user.json Local extension dataset written by server.js
 ```
 
 ## Data model
@@ -75,8 +85,16 @@ Use [MAINTAINING.md](MAINTAINING.md) for:
 - coordinated code/data changes
 - manual smoke testing after edits
 
+## Add-card bubble behavior
+
+The UI now includes a bubble below "Aktuelles Wort nachschlagen".
+
+- On GitHub Pages or any static host, saving stores the new card only for the current browser session.
+- On a local repo copy started with `npm start`, saving writes permanently to `cards.user.json`.
+- If you want to publish those locally added cards, commit `cards.user.json` or merge its entries into `cards.json`.
+
 ## Notes
 
-- The project is fully client-side. There is no backend, build step, or package manifest in the repo.
+- The app remains GitHub Pages-safe because persistent writes require a local Node server that static hosting does not provide.
 - There is currently no automated test suite or CI.
 - If text renders incorrectly after editing, verify the file encoding before changing content.

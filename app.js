@@ -1,390 +1,710 @@
-// ─── Category colors ──────────────────────────────────────────────
-const catColors = {
-  "Nomen":          "#60a5fa",
-  "Verb":           "#f472b6",
-  "Adjektiv":       "#4ade80",
-  "Adverb":         "#dbfa60",
-  "Präposition":    "#f47272",
-  "Konjunktion":    "#884ade",
-  "Ausdruck":       "#fb923c",
-  "Satz":           "#a78bfa",
+const CATEGORY_ALIASES = {
+  "PrÃ¤position": "Präposition",
 };
 
-// ─── Card data ────────────────────────────────────────────────────
-// remove the whole allCards = [...] block and replace with:
-let allCards = [];
+const catColors = {
+  Nomen: "#60a5fa",
+  Verb: "#f472b6",
+  Adjektiv: "#4ade80",
+  Adverb: "#dbfa60",
+  Präposition: "#f47272",
+  Konjunktion: "#884ade",
+  Ausdruck: "#fb923c",
+  Satz: "#a78bfa",
+};
 
-fetch('cards.json')
-  .then(r => r.json())
-  .then(data => {
-    allCards = data;
-    buildCatPanel();
-    startSession();
-  });
-
-// ─── State ────────────────────────────────────────────────────────
-const SESSION_SIZE = 20;
 const allCats = Object.keys(catColors);
+const searchSites = [
+  { name: "Duden", icon: "D", url: (w) => `https://www.duden.de/suchen/dudenonline/${encodeURIComponent(w)}` },
+  { name: "DWDS", icon: "W", url: (w) => `https://www.dwds.de/?q=${encodeURIComponent(w)}` },
+  { name: "dict.cc", icon: "C", url: (w) => `https://www.dict.cc/?s=${encodeURIComponent(w)}` },
+  { name: "Wikipedia", icon: "W", url: (w) => `https://de.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(w)}` },
+  { name: "Google", icon: "G", url: (w) => `https://www.google.com/search?q=${encodeURIComponent(`${w} auf Deutsch`)}` },
+  { name: "Linguee", icon: "L", url: (w) => `https://www.linguee.de/deutsch-englisch/search?query=${encodeURIComponent(w)}` },
+  { name: "Leo", icon: "L", url: (w) => `https://dict.leo.org/german-english/${encodeURIComponent(w)}` },
+];
+
+const SESSION_SIZE = 20;
+const SESSION_STORAGE_KEY = "germancro-session-cards";
+const PUNCT = /[.,!?:;]/;
+
+let allCards = [];
+let sessionOnlyCards = [];
 let selectedCats = null;
+let capabilities = { persistentSave: false };
 
-let sessionCards = [], sessionIndex = 0;
-let streak = 0, bestStreak = 0;
-let totalCorrect = 0, totalAttempts = 0;
-let forceCorrection = false, hintCount = 0;
-let sessionStart = 0, totalCharsTyped = 0;
+let sessionCards = [];
+let sessionIndex = 0;
+let streak = 0;
+let bestStreak = 0;
+let totalCorrect = 0;
+let totalAttempts = 0;
+let forceCorrection = false;
+let hintCount = 0;
+let sessionStart = 0;
+let totalCharsTyped = 0;
+let difficulty = "medium";
 
-let difficulty = 'medium'; // 'easy' | 'medium' | 'hard'
+const promptEl = document.getElementById("promptText");
+const promptSub = document.getElementById("promptSub");
+const inputEl = document.getElementById("answer");
+const solutionEl = document.getElementById("solution");
+const wordGrid = document.getElementById("wordGrid");
+const progFill = document.getElementById("progressFill");
+const categoryEl = document.getElementById("categoryBadge");
+const comboPop = document.getElementById("comboPop");
+const gameArea = document.getElementById("gameArea");
+const sessionEndEl = document.getElementById("sessionEnd");
+const mainCard = document.getElementById("mainCard");
+const catCountEl = document.getElementById("catCount");
+const newGameBtn = document.getElementById("newGameBtn");
+const searchLinksEl = document.getElementById("searchLinks");
 
-// ─── DOM refs ─────────────────────────────────────────────────────
-const promptEl    = document.getElementById('promptText');
-const promptSub   = document.getElementById('promptSub');
-const inputEl     = document.getElementById('answer');
-const solutionEl  = document.getElementById('solution');
-const wordGrid    = document.getElementById('wordGrid');
-const progFill    = document.getElementById('progressFill');
-const categoryEl  = document.getElementById('categoryBadge');
-const comboPop    = document.getElementById('comboPop');
-const gameArea    = document.getElementById('gameArea');
-const sessionEndEl = document.getElementById('sessionEnd');
-const mainCard    = document.getElementById('mainCard');
-const catCountEl  = document.getElementById('catCount');
-const newGameBtn  = document.getElementById('newGameBtn');
+const addCardForm = document.getElementById("addCardForm");
+const addCardDeEl = document.getElementById("newCardDe");
+const addCardHrEl = document.getElementById("newCardHr");
+const addCardEnEl = document.getElementById("newCardEn");
+const addCardCatEl = document.getElementById("newCardCat");
+const addCardSaveBtn = document.getElementById("addCardSaveBtn");
+const addCardStatusEl = document.getElementById("addCardStatus");
+const authorModeEl = document.getElementById("authorMode");
 
-// ─── Animated flag ────────────────────────────────────────────────
-const flagEl = document.getElementById('deFlag');
-for (let i = 0; i < 50; i++) {
-  const col = document.createElement('div');
-  col.className = 'de-flag-col';
-  col.style.animationDelay = -(i / 20) * 3 + 's';
-  col.style.setProperty('--billow', (i / 4) * 16 + 4 + 'px');
-  flagEl.appendChild(col);
+function normalizeCategory(cat) {
+  return CATEGORY_ALIASES[cat] || cat;
 }
 
-// ─── Category panel ───────────────────────────────────────────────
-function buildCatPanel() {
-  const container = document.getElementById('catButtons');
-  container.innerHTML = '';
+function normalizeField(value) {
+  return String(value || "").trim().replace(/\s+/g, " ");
+}
 
-  const mixBtn = document.createElement('button');
-  mixBtn.className = 'cat-btn mixed' + (selectedCats === null ? ' active' : '');
-  if (selectedCats === null) mixBtn.style.background = '#e8ff47';
-  mixBtn.textContent = '⚡ Gemischt';
-  mixBtn.onclick = () => { selectedCats = null; buildCatPanel(); };
+function normalizeAnswer(value) {
+  return normalizeField(value).replace(/[.,!?:;]+$/, "").toLowerCase();
+}
+
+function cardKey(card) {
+  return [
+    normalizeAnswer(card.de),
+    normalizeAnswer(card.hr),
+    normalizeCategory(card.cat),
+  ].join("::");
+}
+
+function sanitizeCard(raw) {
+  if (!raw || typeof raw !== "object") {
+    return null;
+  }
+
+  const card = {
+    de: normalizeField(raw.de),
+    hr: normalizeField(raw.hr),
+    en: normalizeField(raw.en),
+    cat: normalizeCategory(normalizeField(raw.cat)),
+  };
+
+  if (!card.de || !card.hr || !card.en || !allCats.includes(card.cat)) {
+    return null;
+  }
+
+  return card;
+}
+
+function mergeCards(...groups) {
+  const seen = new Set();
+  const merged = [];
+
+  groups.flat().forEach((item) => {
+    const card = sanitizeCard(item);
+    if (!card) {
+      return;
+    }
+
+    const key = cardKey(card);
+    if (seen.has(key)) {
+      return;
+    }
+
+    seen.add(key);
+    merged.push(card);
+  });
+
+  return merged;
+}
+
+async function fetchJson(url, fallback) {
+  try {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) {
+      return fallback;
+    }
+    return await response.json();
+  } catch (error) {
+    return fallback;
+  }
+}
+
+async function detectCapabilities() {
+  try {
+    const response = await fetch("/api/capabilities", { cache: "no-store" });
+    if (!response.ok) {
+      return { persistentSave: false };
+    }
+    const data = await response.json();
+    return {
+      persistentSave: Boolean(data && data.persistentSave),
+      storageFile: data && data.storageFile ? data.storageFile : null,
+    };
+  } catch (error) {
+    return { persistentSave: false };
+  }
+}
+
+function loadSessionCards() {
+  try {
+    const raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
+    if (!raw) {
+      return [];
+    }
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.map(sanitizeCard).filter(Boolean) : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveSessionCards() {
+  sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(sessionOnlyCards, null, 2));
+}
+
+function setAuthoringFeedback(message, isError) {
+  addCardStatusEl.textContent = message;
+  addCardStatusEl.classList.toggle("is-error", Boolean(isError));
+}
+
+function setAuthoringBusy(isBusy) {
+  addCardSaveBtn.disabled = isBusy;
+  addCardSaveBtn.textContent = isBusy
+    ? "Speichert..."
+    : capabilities.persistentSave
+      ? "Dauerhaft speichern"
+      : "Nur Sitzung speichern";
+}
+
+function renderAuthoringMode() {
+  if (capabilities.persistentSave) {
+    authorModeEl.textContent = "Lokaler Modus: schreibt nach cards.user.json";
+    authorModeEl.classList.add("persistent");
+    setAuthoringFeedback("Neue Einträge werden dauerhaft lokal gespeichert.", false);
+  } else {
+    authorModeEl.textContent = "Statischer Modus: speichert nur für diese Sitzung";
+    authorModeEl.classList.remove("persistent");
+    setAuthoringFeedback("Auf GitHub Pages und anderen statischen Hosts bleibt es bei Sitzungsspeicherung.", false);
+  }
+  setAuthoringBusy(false);
+}
+
+function fillCategorySelect() {
+  addCardCatEl.innerHTML = "";
+  allCats.forEach((cat) => {
+    const option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat;
+    addCardCatEl.appendChild(option);
+  });
+}
+
+function buildCatPanel() {
+  const container = document.getElementById("catButtons");
+  container.innerHTML = "";
+
+  const mixBtn = document.createElement("button");
+  mixBtn.className = `cat-btn mixed${selectedCats === null ? " active" : ""}`;
+  if (selectedCats === null) {
+    mixBtn.style.background = "#e8ff47";
+  }
+  mixBtn.textContent = "Gemischt";
+  mixBtn.onclick = () => {
+    selectedCats = null;
+    buildCatPanel();
+  };
   container.appendChild(mixBtn);
 
-  allCats.forEach(cat => {
+  allCats.forEach((cat) => {
     const color = catColors[cat];
     const isActive = selectedCats !== null && selectedCats.has(cat);
-    const btn = document.createElement('button');
-    btn.className = 'cat-btn' + (isActive ? ' active' : '');
+    const btn = document.createElement("button");
+    btn.className = `cat-btn${isActive ? " active" : ""}`;
     btn.textContent = cat;
-    btn.style.borderColor = color + '55';
-    btn.style.color = isActive ? '#000' : color;
-    if (isActive) btn.style.background = color;
+    btn.style.borderColor = `${color}55`;
+    btn.style.color = isActive ? "#000" : color;
+    if (isActive) {
+      btn.style.background = color;
+    }
     btn.onclick = () => {
-      if (selectedCats === null) selectedCats = new Set();
+      if (selectedCats === null) {
+        selectedCats = new Set();
+      }
+
       if (selectedCats.has(cat)) {
         selectedCats.delete(cat);
-        if (selectedCats.size === 0) selectedCats = null;
+        if (selectedCats.size === 0) {
+          selectedCats = null;
+        }
       } else {
         selectedCats.add(cat);
       }
+
       buildCatPanel();
     };
     container.appendChild(btn);
   });
 
   const pool = getPool();
-  catCountEl.textContent = pool.length + ' Karten verfügbar';
+  catCountEl.textContent = `${pool.length} Karten verfügbar`;
   newGameBtn.disabled = pool.length === 0;
 }
 
 function getPool() {
-  if (selectedCats === null) return allCards;
-  return allCards.filter(c => selectedCats.has(c.cat));
+  if (selectedCats === null) {
+    return allCards;
+  }
+  return allCards.filter((card) => selectedCats.has(card.cat));
 }
-
-// ─── Search links ─────────────────────────────────────────────────
-const searchSites = [
-  { name: "Duden",     icon: "📖", url: w => `https://www.duden.de/suchen/dudenonline/${encodeURIComponent(w)}` },
-  { name: "DWDS",      icon: "🔤", url: w => `https://www.dwds.de/?q=${encodeURIComponent(w)}` },
-  { name: "dict.cc",   icon: "🌐", url: w => `https://www.dict.cc/?s=${encodeURIComponent(w)}` },
-  { name: "Wikipedia", icon: "📚", url: w => `https://de.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(w)}` },
-  { name: "Google",    icon: "🔍", url: w => `https://www.google.com/search?q=${encodeURIComponent(w + ' auf Deutsch')}` },
-  { name: "Linguee",   icon: "🗣️", url: w => `https://www.linguee.de/deutsch-englisch/search?query=${encodeURIComponent(w)}` },
-  { name: "Leo",       icon: "🦁", url: w => `https://dict.leo.org/german-english/${encodeURIComponent(w)}` },
-];
 
 function updateSearchLinks(card) {
-  const container = document.getElementById('searchLinks');
-  container.innerHTML = '';
-  const word = (card.de || card.en).replace(/^(der|die|das)\s+/i, '');
-  searchSites.forEach(site => {
-    const a = document.createElement('a');
-    a.className = 'search-link';
-    a.href = site.url(word);
-    a.target = '_blank';
-    a.rel = 'noopener';
-    a.innerHTML = `<span>${site.icon}</span><span>${site.name}</span>`;
-    container.appendChild(a);
+  searchLinksEl.innerHTML = "";
+  const word = (card.de || card.en).replace(/^(der|die|das)\s+/i, "");
+  searchSites.forEach((site) => {
+    const link = document.createElement("a");
+    link.className = "search-link";
+    link.href = site.url(word);
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.innerHTML = `<span class="search-link-icon">${site.icon}</span><span>${site.name}</span>`;
+    searchLinksEl.appendChild(link);
   });
-}
-
-// ─── Helpers ──────────────────────────────────────────────────────
-const PUNCT = /[.,!?:;]/;
-
-function normalize(t) {
-  return t.trim().replace(/\s+/g, ' ').replace(/[.,!?:;]+$/, '').toLowerCase();
 }
 
 function getCorrectPrefixLength(target, typed) {
-  let i = 0;
+  let index = 0;
   while (
-    i < typed.length &&
-    i < target.length &&
-    typed[i].toLowerCase() === target[i].toLowerCase()
+    index < typed.length &&
+    index < target.length &&
+    typed[index].toLowerCase() === target[index].toLowerCase()
   ) {
-    i++;
+    index += 1;
   }
-  return i;
+  return index;
 }
 
 function getCharMeta(target) {
-  const hints = new Set(), autofill = new Set();
+  const hints = new Set();
+  const autofill = new Set();
   const hintCountPerWord =
-    difficulty === 'easy'   ? 3 :
-    difficulty === 'medium' ? 1 :
+    difficulty === "easy" ? 3 :
+    difficulty === "medium" ? 1 :
     0;
   let pos = 0;
-  target.split(' ').forEach(word => {
-    if (!word.length) { pos++; return; }
-    // Mehrere Anfangsbuchstaben je nach Difficulty
-    for (let i = 0; i < hintCountPerWord && i < word.length; i++) {
+
+  target.split(" ").forEach((word) => {
+    if (!word.length) {
+      pos += 1;
+      return;
+    }
+
+    for (let i = 0; i < hintCountPerWord && i < word.length; i += 1) {
       hints.add(pos + i);
     }
-    let t = word.length - 1;
-    while (t > 0 && PUNCT.test(word[t])) {
-      autofill.add(pos + t);
-      t--;
+
+    let tail = word.length - 1;
+    while (tail > 0 && PUNCT.test(word[tail])) {
+      autofill.add(pos + tail);
+      tail -= 1;
     }
+
     pos += word.length + 1;
   });
+
   return { hints, autofill };
 }
 
 function initDifficultyControls() {
-  document.querySelectorAll('.difficulty-panel button')
-    .forEach(btn => {
-      btn.addEventListener('click', () => {
-        difficulty = btn.dataset.diff;
+  document.querySelectorAll(".difficulty-panel button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      difficulty = btn.dataset.diff;
 
-        document.querySelectorAll('.difficulty-panel button')
-          .forEach(b => b.classList.remove('active'));
-
-        btn.classList.add('active');
-
-        buildWordGrid(
-          sessionCards[sessionIndex].de,
-          inputEl.value
-        );
+      document.querySelectorAll(".difficulty-panel button").forEach((button) => {
+        button.classList.remove("active");
       });
+
+      btn.classList.add("active");
+
+      if (sessionCards.length) {
+        buildWordGrid(sessionCards[sessionIndex].de, inputEl.value);
+      }
     });
+  });
 }
 
 function buildWordGrid(target, typed) {
-  wordGrid.innerHTML = '';
+  wordGrid.innerHTML = "";
   const { hints, autofill } = getCharMeta(target);
   const correctPrefixLen = getCorrectPrefixLength(target, typed);
-  const words = target.split(' ');
+  const words = target.split(" ");
   let pos = 0;
-  
-  words.forEach((word, wi) => {
-    const group = document.createElement('div');
-    group.className = 'word-group';
-    for (let ci = 0; ci < word.length; ci++) {
-      const idx = pos + ci;
-      const tChar = target[idx], uChar = typed[idx];
-      const wrap   = document.createElement('div'); wrap.className = 'wchar';
-      const letter = document.createElement('div'); letter.className = 'wchar-letter';
-      const line   = document.createElement('div'); line.className = 'wchar-line';
+
+  words.forEach((word, wordIndex) => {
+    const group = document.createElement("div");
+    group.className = "word-group";
+
+    for (let charIndex = 0; charIndex < word.length; charIndex += 1) {
+      const idx = pos + charIndex;
+      const targetChar = target[idx];
+      const typedChar = typed[idx];
+      const wrap = document.createElement("div");
+      const letter = document.createElement("div");
+      const line = document.createElement("div");
+
+      wrap.className = "wchar";
+      letter.className = "wchar-letter";
+      line.className = "wchar-line";
+
       if (autofill.has(idx)) {
-        letter.textContent = tChar; wrap.classList.add('state-auto');
-      } else if (uChar !== undefined) {
-        letter.textContent = tChar;
-        wrap.classList.add(uChar.toLowerCase() === tChar.toLowerCase() ? 'state-ok' : 'state-bad');
-      } else if (difficulty === 'easy' && idx >= correctPrefixLen && idx < correctPrefixLen + 3) {
-        letter.textContent = tChar;
-        wrap.classList.add('state-hint');
-      } else if (hints.has(idx)) {          // ← das war weg
-        letter.textContent = tChar;
-        wrap.classList.add('state-hint');
-      } else if (difficulty !== 'hard' && idx === correctPrefixLen) {
-        letter.textContent = tChar;
-        wrap.classList.add('state-next');
+        letter.textContent = targetChar;
+        wrap.classList.add("state-auto");
+      } else if (typedChar !== undefined) {
+        letter.textContent = targetChar;
+        wrap.classList.add(
+          typedChar.toLowerCase() === targetChar.toLowerCase() ? "state-ok" : "state-bad"
+        );
+      } else if (difficulty === "easy" && idx >= correctPrefixLen && idx < correctPrefixLen + 3) {
+        letter.textContent = targetChar;
+        wrap.classList.add("state-hint");
+      } else if (hints.has(idx)) {
+        letter.textContent = targetChar;
+        wrap.classList.add("state-hint");
+      } else if (difficulty !== "hard" && idx === correctPrefixLen) {
+        letter.textContent = targetChar;
+        wrap.classList.add("state-next");
       } else {
-        letter.textContent = '_'; wrap.classList.add('state-hidden');
+        letter.textContent = "_";
+        wrap.classList.add("state-hidden");
       }
-      wrap.appendChild(letter); wrap.appendChild(line); group.appendChild(wrap);
+
+      wrap.appendChild(letter);
+      wrap.appendChild(line);
+      group.appendChild(wrap);
     }
+
     pos += word.length + 1;
     wordGrid.appendChild(group);
-    if (wi < words.length - 1) {
-      const sp = document.createElement('div');
-      sp.style.cssText = 'width:5px;flex-shrink:0';
-      wordGrid.appendChild(sp);
+
+    if (wordIndex < words.length - 1) {
+      const spacer = document.createElement("div");
+      spacer.style.cssText = "width:5px;flex-shrink:0";
+      wordGrid.appendChild(spacer);
     }
   });
 }
 
-// ─── Session ──────────────────────────────────────────────────────
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
+function shuffle(cards) {
+  const shuffled = [...cards];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  return a;
+  return shuffled;
 }
 
 function startSession(size) {
   const pool = getPool();
-  if (!pool.length) return;
+  if (!pool.length) {
+    return;
+  }
+
   const count = Math.min(size || SESSION_SIZE, pool.length);
   sessionCards = shuffle(pool).slice(0, count);
   sessionIndex = 0;
-  streak = 0; bestStreak = 0;
-  totalCorrect = 0; totalAttempts = 0; totalCharsTyped = 0;
+  streak = 0;
+  bestStreak = 0;
+  totalCorrect = 0;
+  totalAttempts = 0;
+  totalCharsTyped = 0;
   sessionStart = Date.now();
   updateStats();
-  gameArea.style.display = 'block';
-  sessionEndEl.style.display = 'none';
+  gameArea.style.display = "block";
+  sessionEndEl.style.display = "none";
   loadCard();
-  mainCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  mainCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 function loadCard() {
   const card = sessionCards[sessionIndex];
+  if (!card) {
+    return;
+  }
+
   promptEl.textContent = card.hr;
-  promptSub.textContent = card.en || '';
-  inputEl.value = '';
-  inputEl.className = '';
-  solutionEl.style.display = 'none';
+  promptSub.textContent = card.en || "";
+  inputEl.value = "";
+  inputEl.className = "";
+  solutionEl.style.display = "none";
   forceCorrection = false;
   hintCount = 0;
-  progFill.style.width = (sessionIndex / sessionCards.length * 100) + '%';
-  const color = catColors[card.cat] || '#888';
+  progFill.style.width = `${(sessionIndex / sessionCards.length) * 100}%`;
+
+  const color = catColors[card.cat] || "#888";
   categoryEl.textContent = card.cat;
   categoryEl.style.color = color;
-  categoryEl.style.borderColor = color + '55';
-  categoryEl.style.background = color + '14';
-  mainCard.classList.add('active');
-  buildWordGrid(card.de, '');
+  categoryEl.style.borderColor = `${color}55`;
+  categoryEl.style.background = `${color}14`;
+
+  mainCard.classList.add("active");
+  buildWordGrid(card.de, "");
   updateSearchLinks(card);
   inputEl.focus();
 }
 
-// ─── Events ───────────────────────────────────────────────────────
-inputEl.addEventListener('input', () => {
-  buildWordGrid(sessionCards[sessionIndex].de, inputEl.value);
-});
-
-document.getElementById('hintBtn').addEventListener('click', () => {
-  const target = sessionCards[sessionIndex].de;
-  hintCount++;
-  const reveal = target.slice(0, hintCount * 3);
-  inputEl.value = reveal;
-  buildWordGrid(target, reveal);
-  inputEl.focus();
-});
-
-inputEl.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return;
-  const card = sessionCards[sessionIndex];
-  if (normalize(inputEl.value) === normalize(card.de)) {
-    totalCharsTyped += card.de.length;
-    if (!forceCorrection) {
-      totalCorrect++;
-      streak++;
-      if (streak > bestStreak) bestStreak = streak;
-      showCombo();
-      showToast(getEncouragement(streak));
-    }
-    totalAttempts++;
-    inputEl.className = 'correct';
-    updateStats();
-    setTimeout(() => {
-      sessionIndex++;
-      if (sessionIndex >= sessionCards.length) showSessionEnd();
-      else loadCard();
-    }, 140);
-  } else {
-    if (!forceCorrection) { totalAttempts++; streak = 0; }
-    inputEl.className = 'wrong';
-    solutionEl.innerHTML = '<strong>Richtig:</strong> ' + card.de;
-    solutionEl.style.display = 'block';
-    forceCorrection = true;
-    updateStats();
-  }
-});
-
-// ─── Stats ────────────────────────────────────────────────────────
 function updateStats() {
-  document.getElementById('streakNum').textContent = streak;
-  document.getElementById('correctVal').textContent = totalCorrect;
-  document.getElementById('remainingVal').textContent = sessionCards.length > 0 
-    ? sessionCards.length - sessionIndex 
-    : '—';
-  const acc = totalAttempts ? Math.round(totalCorrect / totalAttempts * 100) : null;
-  document.getElementById('accuracyVal').textContent = acc !== null ? acc + '%' : '—';
-  const mins = (Date.now() - sessionStart) / 60000;
-  const wpm = mins > 0 && totalCharsTyped > 0 ? Math.round((totalCharsTyped / 5) / mins) : null;
-  document.getElementById('wpmVal').textContent = wpm || '—';
+  document.getElementById("streakNum").textContent = streak;
+  document.getElementById("correctVal").textContent = totalCorrect;
+  document.getElementById("remainingVal").textContent = sessionCards.length
+    ? String(sessionCards.length - sessionIndex)
+    : "—";
+
+  const accuracy = totalAttempts ? Math.round((totalCorrect / totalAttempts) * 100) : null;
+  document.getElementById("accuracyVal").textContent = accuracy !== null ? `${accuracy}%` : "—";
+
+  const minutes = (Date.now() - sessionStart) / 60000;
+  const wpm = minutes > 0 && totalCharsTyped > 0
+    ? Math.round((totalCharsTyped / 5) / minutes)
+    : null;
+  document.getElementById("wpmVal").textContent = wpm || "—";
 }
 
-// ─── Combo / Toast ────────────────────────────────────────────────
 function showCombo() {
-  if (streak < 3) return;
-  const labels = ['','','','🔥 Gut!','⚡ Stark!','💥 Super!','🌟 Mega!','🚀 Wahnsinn!','👑 Unschlagbar!'];
-  comboPop.textContent = labels[Math.min(streak, labels.length - 1)] || ('🔥 x' + streak);
-  comboPop.classList.remove('animate');
+  if (streak < 3) {
+    return;
+  }
+
+  const labels = ["", "", "", "Gut!", "Stark!", "Super!", "Mega!", "Wahnsinn!", "Unschlagbar!"];
+  comboPop.textContent = labels[Math.min(streak, labels.length - 1)] || `x${streak}`;
+  comboPop.classList.remove("animate");
   void comboPop.offsetWidth;
-  comboPop.classList.add('animate');
+  comboPop.classList.add("animate");
 }
 
 let toastTimer;
-function showToast(msg) {
-  if (!msg) return;
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+function showToast(message) {
+  if (!message) {
+    return;
+  }
+
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 1400);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 1400);
 }
 
-function getEncouragement(s) {
-  if (s === 3)  return '🔥 Drei in Reihe!';
-  if (s === 5)  return '⚡ Fünf! Weiter so!';
-  if (s === 7)  return '💪 Perfekt!';
-  if (s === 10) return '🌟 Legende!';
+function getEncouragement(currentStreak) {
+  if (currentStreak === 3) {
+    return "Drei in Reihe!";
+  }
+  if (currentStreak === 5) {
+    return "Fünf! Weiter so!";
+  }
+  if (currentStreak === 7) {
+    return "Perfekt!";
+  }
+  if (currentStreak === 10) {
+    return "Legende!";
+  }
   return null;
 }
 
-// ─── Session end ──────────────────────────────────────────────────
 function showSessionEnd() {
-  progFill.style.width = '100%';
-  gameArea.style.display = 'none';
-  sessionEndEl.style.display = 'block';
-  const pct = Math.round(totalCorrect / sessionCards.length * 100);
-  document.getElementById('finalScore').textContent = pct + '%';
+  progFill.style.width = "100%";
+  gameArea.style.display = "none";
+  sessionEndEl.style.display = "block";
+
+  const pct = Math.round((totalCorrect / sessionCards.length) * 100);
+  document.getElementById("finalScore").textContent = `${pct}%`;
+
   const secs = Math.round((Date.now() - sessionStart) / 1000);
-  const wpm  = secs > 0 ? Math.round((totalCharsTyped / 5) / (secs / 60)) : 0;
-  document.getElementById('finalDetails').textContent =
-    totalCorrect + '/' + sessionCards.length + ' richtig · Streak: ' + bestStreak + ' · ' + wpm + ' WPM · ' + secs + 's';
-  document.getElementById('finalEmoji').textContent =
-    pct === 100 ? '🏆🥇🔥' : pct >= 80 ? '🌟💪' : pct >= 60 ? '👍📚' : '💡 Weiterüben!';
+  const wpm = secs > 0 ? Math.round((totalCharsTyped / 5) / (secs / 60)) : 0;
+  document.getElementById("finalDetails").textContent =
+    `${totalCorrect}/${sessionCards.length} richtig · Streak: ${bestStreak} · ${wpm} WPM · ${secs}s`;
+  document.getElementById("finalEmoji").textContent =
+    pct === 100 ? "Topscore" :
+    pct >= 80 ? "Sehr stark" :
+    pct >= 60 ? "Guter Lauf" :
+    "Weiterüben";
 }
 
-// ─── Init ─────────────────────────────────────────────────────────
-buildCatPanel();
-startSession();
-initDifficultyControls()
+function hasDuplicate(card) {
+  const key = cardKey(card);
+  return allCards.some((existing) => cardKey(existing) === key);
+}
+
+function addCardToRuntime(card) {
+  allCards = mergeCards(allCards, [card]);
+  buildCatPanel();
+}
+
+async function handleAddCardSubmit(event) {
+  event.preventDefault();
+
+  const card = sanitizeCard({
+    de: addCardDeEl.value,
+    hr: addCardHrEl.value,
+    en: addCardEnEl.value,
+    cat: addCardCatEl.value,
+  });
+
+  if (!card) {
+    setAuthoringFeedback("Bitte Deutsch, Kroatisch, Englisch und eine gültige Kategorie ausfüllen.", true);
+    return;
+  }
+
+  if (hasDuplicate(card)) {
+    setAuthoringFeedback("Diese Karte existiert bereits.", true);
+    return;
+  }
+
+  setAuthoringBusy(true);
+
+  try {
+    if (capabilities.persistentSave) {
+      const response = await fetch("/api/cards", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(card),
+      });
+
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(payload.error || "Speichern fehlgeschlagen.");
+      }
+
+      addCardToRuntime(payload.card || card);
+      setAuthoringFeedback("Dauerhaft lokal gespeichert. Ein neues Spiel nimmt die Karte in die Auswahl auf.", false);
+    } else {
+      sessionOnlyCards = mergeCards(sessionOnlyCards, [card]);
+      saveSessionCards();
+      addCardToRuntime(card);
+      setAuthoringFeedback("Nur für diese Sitzung gespeichert. Beim Neuladen ohne lokale API bleibt die Datenbank unverändert.", false);
+    }
+
+    addCardForm.reset();
+    addCardCatEl.value = allCats[0];
+    showToast("Neue Karte gespeichert");
+  } catch (error) {
+    setAuthoringFeedback(error.message || "Speichern fehlgeschlagen.", true);
+  } finally {
+    setAuthoringBusy(false);
+  }
+}
+
+function initAuthoringForm() {
+  fillCategorySelect();
+  addCardForm.addEventListener("submit", handleAddCardSubmit);
+}
+
+function initInputEvents() {
+  inputEl.addEventListener("input", () => {
+    if (!sessionCards.length) {
+      return;
+    }
+    buildWordGrid(sessionCards[sessionIndex].de, inputEl.value);
+  });
+
+  document.getElementById("hintBtn").addEventListener("click", () => {
+    if (!sessionCards.length) {
+      return;
+    }
+
+    const target = sessionCards[sessionIndex].de;
+    hintCount += 1;
+    const reveal = target.slice(0, hintCount * 3);
+    inputEl.value = reveal;
+    buildWordGrid(target, reveal);
+    inputEl.focus();
+  });
+
+  inputEl.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" || !sessionCards.length) {
+      return;
+    }
+
+    const card = sessionCards[sessionIndex];
+    if (normalizeAnswer(inputEl.value) === normalizeAnswer(card.de)) {
+      totalCharsTyped += card.de.length;
+      if (!forceCorrection) {
+        totalCorrect += 1;
+        streak += 1;
+        if (streak > bestStreak) {
+          bestStreak = streak;
+        }
+        showCombo();
+        showToast(getEncouragement(streak));
+      }
+      totalAttempts += 1;
+      inputEl.className = "correct";
+      updateStats();
+      setTimeout(() => {
+        sessionIndex += 1;
+        if (sessionIndex >= sessionCards.length) {
+          showSessionEnd();
+        } else {
+          loadCard();
+        }
+      }, 140);
+    } else {
+      if (!forceCorrection) {
+        totalAttempts += 1;
+        streak = 0;
+      }
+      inputEl.className = "wrong";
+      solutionEl.innerHTML = `<strong>Richtig:</strong> ${card.de}`;
+      solutionEl.style.display = "block";
+      forceCorrection = true;
+      updateStats();
+    }
+  });
+}
+
+function createFlagColumns() {
+  const flagEl = document.getElementById("deFlag");
+  for (let i = 0; i < 50; i += 1) {
+    const col = document.createElement("div");
+    col.className = "de-flag-col";
+    col.style.animationDelay = `${-(i / 20) * 3}s`;
+    col.style.setProperty("--billow", `${(i / 4) * 16 + 4}px`);
+    flagEl.appendChild(col);
+  }
+}
+
+async function initApp() {
+  createFlagColumns();
+  initDifficultyControls();
+  initInputEvents();
+  initAuthoringForm();
+  buildCatPanel();
+
+  const [baseCards, persistentCards, currentCapabilities] = await Promise.all([
+    fetchJson("cards.json", []),
+    fetchJson("cards.user.json", []),
+    detectCapabilities(),
+  ]);
+
+  capabilities = currentCapabilities;
+  sessionOnlyCards = capabilities.persistentSave ? [] : loadSessionCards();
+  allCards = mergeCards(baseCards, persistentCards, sessionOnlyCards);
+
+  renderAuthoringMode();
+  buildCatPanel();
+  startSession();
+}
+
+window.startSession = startSession;
+initApp();

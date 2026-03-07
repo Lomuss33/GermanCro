@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GermanCro</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -18,7 +19,7 @@
 
 <div class="stats-bar">
   <div class="stat">
-    <div class="stat-value"><span class="flame">🔥</span><span id="streakNum">0</span></div>
+    <div class="stat-value"><span class="flame">&#128293;</span><span id="streakNum">0</span></div>
     <div class="stat-label">Streak</div>
   </div>
   <div class="stat-divider"></div>
@@ -48,7 +49,6 @@
   <span class="category-badge" id="categoryBadge"></span>
 
   <div id="gameArea">
-    <!--<div class="prompt-label">Übersetze ins Deutsche</div>-->
     <div class="prompt-text" id="promptText"></div>
     <div class="prompt-sub" id="promptSub"></div>
     <div class="difficulty-panel">
@@ -56,11 +56,11 @@
       <button data-diff="medium" class="active">Medium</button>
       <button data-diff="easy">Easy</button>
     </div>
-    <input id="answer" type="text" autocomplete="off" spellcheck="false" placeholder="Tippe hier…" />
+    <input id="answer" type="text" autocomplete="off" spellcheck="false" placeholder="Tippe hier..." />
     <div class="word-grid" id="wordGrid"></div>
     <div class="solution" id="solution"></div>
     <div class="action-row">
-      <button class="hint-btn" id="hintBtn">💡 Tipp</button>
+      <button class="hint-btn" id="hintBtn">Tipp</button>
       <div class="enter-hint"><span class="key-badge">Enter</span> zum Prüfen</div>
     </div>
     <div class="combo-pop" id="comboPop"></div>
@@ -71,7 +71,7 @@
     <div class="big-score" id="finalScore"></div>
     <div style="color:var(--muted);font-size:13px;margin-top:4px" id="finalDetails"></div>
     <div style="margin-top:16px;font-size:26px" id="finalEmoji"></div>
-    <button class="restart-btn" onclick="startSession()">Neue Runde ↻</button>
+    <button class="restart-btn" onclick="startSession()">Neue Runde</button>
   </div>
 </div>
 
@@ -95,15 +95,48 @@
       </div>
       <button class="new-game-btn" id="newGameBtn"
         onclick="startSession(+document.getElementById('sessionSizeSlider').value)">
-        Neues Spiel ↻
+        Neues Spiel
       </button>
     </div>
   </div>
 </div>
 
 <div class="search-panel">
-  <div class="search-panel-title">🔍 Aktuelles Wort nachschlagen</div>
+  <div class="search-panel-title">Aktuelles Wort nachschlagen</div>
   <div class="search-links" id="searchLinks"></div>
+</div>
+
+<div class="author-panel">
+  <div class="author-panel-head">
+    <div class="author-panel-title">Neue Karte hinzufügen</div>
+    <div class="author-mode" id="authorMode"></div>
+  </div>
+
+  <form class="add-card-form" id="addCardForm">
+    <div class="add-card-grid">
+      <label class="author-field">
+        <span>Deutsch</span>
+        <input id="newCardDe" type="text" placeholder="z. B. die Entscheidung" required>
+      </label>
+      <label class="author-field">
+        <span>Kategorie</span>
+        <select id="newCardCat" required></select>
+      </label>
+      <label class="author-field">
+        <span>Kroatisch</span>
+        <input id="newCardHr" type="text" placeholder="z. B. odluka" required>
+      </label>
+      <label class="author-field">
+        <span>Englisch</span>
+        <input id="newCardEn" type="text" placeholder="z. B. decision" required>
+      </label>
+    </div>
+
+    <div class="author-actions">
+      <button class="author-save-btn" id="addCardSaveBtn" type="submit">Nur Sitzung speichern</button>
+      <div class="author-status" id="addCardStatus"></div>
+    </div>
+  </form>
 </div>
 
 <script src="app.js"></script>
