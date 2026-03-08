@@ -1442,21 +1442,39 @@ input.wrong {
   }
 
   .stats-bar {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 12px;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    justify-items: stretch;
+    gap: 8px;
     margin-bottom: 12px;
   }
 
   .stat-streak,
-  .stat-remaining,
-  .stats-right {
-    justify-self: center;
+  .stat-remaining {
     align-items: center;
   }
 
+  .stat-streak {
+    justify-self: start;
+    align-items: flex-start;
+  }
+
+  .stat-remaining {
+    justify-self: center;
+  }
+
   .stats-right {
-    gap: 14px;
+    justify-self: end;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .stat-value {
+    font-size: 21px;
+  }
+
+  .stat-label {
+    font-size: 9px;
   }
 
   .cat-panel-toolbar,
