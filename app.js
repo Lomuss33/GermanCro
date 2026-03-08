@@ -28,6 +28,88 @@ const SESSION_SIZE = 20;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const PUNCT = /[.,!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
+const STATE_NOTABLE_PEOPLE = {
+  "baden-wuerttemberg": {
+    science: ["Albert Einstein", "Johannes Kepler", "Carl Benz"],
+    politics: ["Theodor Heuss", "Carlo Schmid", "Winfried Kretschmann"],
+    art: ["Friedrich Schiller", "Hermann Hesse", "Otto Dix"],
+  },
+  bayern: {
+    science: ["Werner Heisenberg", "Carl von Linde", "Rudolf Diesel"],
+    politics: ["Franz Josef Strauss", "Kurt Eisner", "Markus Soeder"],
+    art: ["Richard Wagner", "Franz Marc", "Oskar Maria Graf"],
+  },
+  berlin: {
+    science: ["Albert Einstein", "Max Planck", "Rudolf Virchow"],
+    politics: ["Willy Brandt", "Angela Merkel", "Walter Rathenau"],
+    art: ["Marlene Dietrich", "Kaethe Kollwitz", "Bertolt Brecht"],
+  },
+  brandenburg: {
+    science: ["Hermann von Helmholtz", "Hasso Plattner", "Karl Foerster"],
+    politics: ["Matthias Platzeck", "Dietmar Woidke", "Manfred Stolpe"],
+    art: ["Heinrich von Kleist", "Theodor Fontane", "Wolfgang Joop"],
+  },
+  bremen: {
+    science: ["Heinrich Wilhelm Olbers", "Adolf Bastian"],
+    politics: ["Hans Koschnick", "Henning Scherf", "Karl Carstens"],
+    art: ["Paula Modersohn-Becker", "Loriot", "Wilhelm Wagenfeld"],
+  },
+  hamburg: {
+    science: ["Otto Stern", "Ernst Ruska", "Klaus Hasselmann"],
+    politics: ["Helmut Schmidt", "Olaf Scholz", "Peter Tschentscher"],
+    art: ["Johannes Brahms", "Udo Lindenberg", "Wolfgang Borchert"],
+  },
+  hessen: {
+    science: ["Paul Ehrlich", "Robert Bunsen", "Otto Hahn"],
+    politics: ["Joschka Fischer", "Georg-August Zinn", "Volker Bouffier"],
+    art: ["Johann Wolfgang von Goethe", "Brueder Grimm", "Anne Frank"],
+  },
+  "mecklenburg-vorpommern": {
+    science: ["Heinrich Schliemann", "Albrecht Kossel", "Otto Lilienthal"],
+    politics: ["Angela Merkel", "Manuela Schwesig", "Joachim Gauck"],
+    art: ["Caspar David Friedrich", "Fritz Reuter", "Uwe Johnson"],
+  },
+  niedersachsen: {
+    science: ["Carl Friedrich Gauss", "Wilhelm Weber", "David Hilbert"],
+    politics: ["Gerhard Schroeder", "Christian Wulff", "Ernst Albrecht"],
+    art: ["Wilhelm Busch", "Kurt Schwitters", "Niki de Saint Phalle"],
+  },
+  "nordrhein-westfalen": {
+    science: ["Harald zur Hausen", "Max Born", "Julius Pluecker"],
+    politics: ["Konrad Adenauer", "Johannes Rau", "Armin Laschet"],
+    art: ["Ludwig van Beethoven", "Heinrich Boell", "Joseph Beuys"],
+  },
+  "rheinland-pfalz": {
+    science: ["Johannes Gutenberg", "Hermann Staudinger", "Julius Richard Petri"],
+    politics: ["Helmut Kohl", "Malu Dreyer", "Kurt Beck"],
+    art: ["Hildegard von Bingen", "Max Slevogt", "Thomas Nast"],
+  },
+  saarland: {
+    science: ["Peter Gruenberg", "Wolfgang Wahlster"],
+    politics: ["Oskar Lafontaine", "Heiko Maas", "Annegret Kramp-Karrenbauer"],
+    art: ["Max Ophuels", "Nicole", "Gerd Dudenhoeffer"],
+  },
+  sachsen: {
+    science: ["Gottfried Wilhelm Leibniz", "Wilhelm Ostwald", "Manfred von Ardenne"],
+    politics: ["August Bebel", "Kurt Biedenkopf", "Stanislaw Tillich"],
+    art: ["Richard Wagner", "Erich Kaestner", "Caspar David Friedrich"],
+  },
+  "sachsen-anhalt": {
+    science: ["Otto von Guericke", "Dorothea Erxleben", "Georg Cantor"],
+    politics: ["Hans-Dietrich Genscher", "Reiner Haseloff", "Wolfgang Boehmer"],
+    art: ["Georg Friedrich Haendel", "Lyonel Feininger", "Johann Joachim Winckelmann"],
+  },
+  "schleswig-holstein": {
+    science: ["Max Planck", "Otto Diels", "Ferdinand Toennies"],
+    politics: ["Willy Brandt", "Heide Simonis", "Daniel Guenther"],
+    art: ["Thomas Mann", "Guenter Grass", "Emil Nolde"],
+  },
+  thueringen: {
+    science: ["Carl Zeiss", "Ernst Abbe", "Johann Wolfgang Doebereiner"],
+    politics: ["Bodo Ramelow", "Christine Lieberknecht", "Bernhard Vogel"],
+    art: ["Johann Sebastian Bach", "Johann Wolfgang von Goethe", "Friedrich Schiller"],
+  },
+};
 
 let allCards = [];
 let persistentCards = [];
@@ -435,6 +517,15 @@ function createFactsList(label, items) {
   return section;
 }
 
+function getStatePeopleLists(stateId) {
+  const notablePeople = STATE_NOTABLE_PEOPLE[stateId] || {};
+  return [
+    ["Bekannte Personen: Wissenschaft", notablePeople.science],
+    ["Bekannte Personen: Politik", notablePeople.politics],
+    ["Bekannte Personen: Kunst", notablePeople.art],
+  ];
+}
+
 function renderFactsView(title, subtitle, imageSrc, fields, lists) {
   factsContentEl.innerHTML = "";
 
@@ -573,6 +664,7 @@ function renderStateFacts(stateData) {
       ["Grenzt an", stateData.bordering_countries],
       ["Bekannt f\u00fcr", stateData.known_for],
       ["Natur und Landschaft", stateData.nature],
+      ...getStatePeopleLists(stateData.id),
     ]
   );
 }
@@ -618,6 +710,7 @@ function renderFactsSelection() {
 
 function buildStatePicker(states) {
   statePickerEl.innerHTML = "";
+  statePickerEl.setAttribute("aria-label", "Bundesländer auswählen");
 
   states.forEach((state) => {
     const button = document.createElement("button");
@@ -625,6 +718,8 @@ function buildStatePicker(states) {
     button.className = "state-picker-btn";
     button.textContent = state.name;
     button.classList.toggle("active", state.id === selectedStateId);
+    button.setAttribute("aria-pressed", String(state.id === selectedStateId));
+    button.setAttribute("aria-label", `Bundesland ${state.name} auswählen`);
     button.addEventListener("click", () => {
       factsMode = "state";
       selectedStateId = state.id;
