@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GermanCro</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -13,34 +14,36 @@
 
 <div class="toast" id="toast"></div>
 
-<div class="site-title">
-  <span class="t-w">Ger</span><span class="t-r">man</span><span class="t-g">cro</span>
+<div class="site-title" aria-label="Germancro">
+  <span class="site-title-letter t-w">G</span>
+  <span class="site-title-letter t-w">e</span>
+  <span class="site-title-letter t-w">r</span>
+  <span class="site-title-letter t-r">m</span>
+  <span class="site-title-letter t-r">a</span>
+  <span class="site-title-letter t-r">n</span>
+  <span class="site-title-letter t-g">c</span>
+  <span class="site-title-letter t-g">r</span>
+  <span class="site-title-letter t-g">o</span>
 </div>
 
 <div class="stats-bar">
-  <div class="stat">
+  <div class="stat stat-streak">
     <div class="stat-value"><span class="flame">&#128293;</span><span id="streakNum">0</span></div>
     <div class="stat-label">Streak</div>
   </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
-    <div class="stat-value" id="correctVal">0</div>
-    <div class="stat-label">Richtig</div>
-  </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
+  <div class="stat stat-remaining">
     <div class="stat-value" id="remainingVal">-</div>
     <div class="stat-label">Übrig</div>
   </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
+  <div class="stats-right">
+    <div class="stat stat-accuracy">
     <div class="stat-value" id="accuracyVal">—</div>
     <div class="stat-label">Genauigkeit</div>
   </div>
-  <div class="stat-divider"></div>
-  <div class="stat">
+    <div class="stat stat-wpm">
     <div class="stat-value" id="wpmVal">—</div>
     <div class="stat-label">WPM</div>
+    </div>
   </div>
 </div>
 
@@ -51,11 +54,6 @@
   <div id="gameArea">
     <div class="prompt-text" id="promptText"></div>
     <div class="prompt-sub" id="promptSub"></div>
-    <div class="difficulty-panel">
-      <button data-diff="hard">Hard</button>
-      <button data-diff="medium" class="active">Medium</button>
-      <button data-diff="easy">Easy</button>
-    </div>
     <input id="answer" type="text" autocomplete="off" spellcheck="false" placeholder="Tippe hier..." />
     <div class="word-grid" id="wordGrid"></div>
     <div class="solution" id="solution"></div>
@@ -76,37 +74,127 @@
 </div>
 
 <div class="cat-panel">
+  <div class="cat-panel-head">
   <div class="cat-panel-title">Kategorien auswählen</div>
-  <div class="cat-buttons" id="catButtons"></div>
-  <div class="cat-panel-footer">
     <div class="cat-count" id="catCount"></div>
-    <div class="new-game-row">
-      <div class="session-slider-wrap">
-        <input
-          type="range"
-          id="sessionSizeSlider"
-          min="5"
-          max="50"
-          step="5"
-          value="20"
-          oninput="document.getElementById('sliderLabel').textContent = this.value"
-        />
-        <span class="slider-label"><span id="sliderLabel">20</span> Karten</span>
+  </div>
+  <div class="cat-panel-toolbar">
+    <div class="difficulty-panel">
+      <button data-diff="hard">Hard</button>
+      <button data-diff="medium" class="active">Medium</button>
+      <button data-diff="easy">Easy</button>
+    </div>
+    <div class="cat-panel-meta">
+      <div class="new-game-row">
+        <div class="session-slider-wrap">
+          <input
+            type="range"
+            id="sessionSizeSlider"
+            min="5"
+            max="50"
+            step="5"
+            value="20"
+            oninput="document.getElementById('sliderLabel').textContent = this.value"
+          />
+          <span class="slider-label"><span id="sliderLabel">20</span> Karten</span>
+        </div>
+        <button class="new-game-btn" id="newGameBtn"
+          onclick="startSession(+document.getElementById('sessionSizeSlider').value)">
+          Neues Spiel
+        </button>
       </div>
-      <button class="new-game-btn" id="newGameBtn"
-        onclick="startSession(+document.getElementById('sessionSizeSlider').value)">
-        Neues Spiel
-      </button>
+    </div>
+  </div>
+  <div class="cat-buttons" id="catButtons"></div>
+</div>
+
+<div class="search-panel" id="searchPanel">
+  <div class="search-panel-head">
+    <div class="search-panel-title">Deutschen Ausdruck nachschlagen</div>
+    <button class="author-toggle-btn" id="authorToggleBtn" type="button" aria-expanded="false">Add new cards</button>
+  </div>
+  <div class="search-panel-subtitle">F&uuml;r W&ouml;rter, Wendungen oder ganze S&auml;tze.</div>
+  <div class="search-links" id="searchLinks"></div>
+  <div class="grammar-section">
+    <div class="grammar-section-title">Lerntipps</div>
+    <div class="grammar-grid">
+      <section class="grammar-card">
+        <div class="grammar-card-title">Zeitformen: sagen</div>
+        <div class="grammar-table-wrap">
+          <table class="grammar-table">
+            <thead>
+              <tr>
+                <th>Person</th>
+                <th>Futur</th>
+                <th>Pr&auml;sens</th>
+                <th>Pr&auml;teritum</th>
+                <th>Perfekt</th>
+                <th>Plusquamperfekt</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th>ich</th><td>werde sagen</td><td>sage</td><td>sagte</td><td>habe gesagt</td><td>hatte gesagt</td></tr>
+              <tr><th>du</th><td>wirst sagen</td><td>sagst</td><td>sagtest</td><td>hast gesagt</td><td>hattest gesagt</td></tr>
+              <tr><th>er/sie/es</th><td>wird sagen</td><td>sagt</td><td>sagte</td><td>hat gesagt</td><td>hatte gesagt</td></tr>
+              <tr><th>wir</th><td>werden sagen</td><td>sagen</td><td>sagten</td><td>haben gesagt</td><td>hatten gesagt</td></tr>
+              <tr><th>ihr</th><td>werdet sagen</td><td>sagt</td><td>sagtet</td><td>habt gesagt</td><td>hattet gesagt</td></tr>
+              <tr><th>sie</th><td>werden sagen</td><td>sagen</td><td>sagten</td><td>haben gesagt</td><td>hatten gesagt</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="grammar-card">
+        <div class="grammar-card-title">Aktiv und Passiv: tragen</div>
+        <div class="grammar-table-wrap">
+          <table class="grammar-table">
+            <thead>
+              <tr>
+                <th>Person</th>
+                <th>Aktiv Pr&auml;sens</th>
+                <th>Passiv Pr&auml;sens</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th>ich</th><td>trage</td><td>werde getragen</td></tr>
+              <tr><th>du</th><td>tr&auml;gst</td><td>wirst getragen</td></tr>
+              <tr><th>er/sie/es</th><td>tr&auml;gt</td><td>wird getragen</td></tr>
+              <tr><th>wir</th><td>tragen</td><td>werden getragen</td></tr>
+              <tr><th>ihr</th><td>tragt</td><td>werdet getragen</td></tr>
+              <tr><th>sie</th><td>tragen</td><td>werden getragen</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="grammar-card">
+        <div class="grammar-card-title">F&auml;lle: Nomen und Pronomen</div>
+        <div class="grammar-table-wrap">
+          <table class="grammar-table">
+            <thead>
+              <tr>
+                <th>Fall</th>
+                <th>M&auml;nnlich</th>
+                <th>Weiblich</th>
+                <th>S&auml;chlich</th>
+                <th>Plural</th>
+                <th>Personalpronomen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th>Nominativ</th><td>der Fisch</td><td>die Wand</td><td>das Heft</td><td>die Hefte</td><td>ich / wir</td></tr>
+              <tr><th>Genitiv</th><td>des Fisch(e)s</td><td>der Wand</td><td>des Heft(e)s</td><td>der Hefte</td><td>meiner / unser</td></tr>
+              <tr><th>Dativ</th><td>dem Fisch</td><td>der Wand</td><td>dem Heft</td><td>den Heften</td><td>mir / uns</td></tr>
+              <tr><th>Akkusativ</th><td>den Fisch</td><td>die Wand</td><td>das Heft</td><td>die Hefte</td><td>mich / uns</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   </div>
 </div>
 
-<div class="search-panel">
-  <div class="search-panel-title">Aktuelles Wort nachschlagen</div>
-  <div class="search-links" id="searchLinks"></div>
-</div>
-
-<div class="author-panel">
+<div class="author-panel is-hidden" id="authorPanel">
   <div class="author-panel-head">
     <div class="author-panel-title">Neue Karte hinzufügen</div>
     <div class="author-mode" id="authorMode"></div>
@@ -142,14 +230,14 @@
 
 <div class="facts-panel">
   <div class="facts-panel-head">
-    <div class="facts-panel-title">Deutschland kennenlernen</div>
-    <div class="facts-panel-subtitle">Schnelle Fakten zu Deutschland und den Bundesl&auml;ndern.</div>
+    <div class="facts-panel-title">Deutsche Geographie</div>
+    <div class="facts-panel-subtitle">Deutschland, Bundesl&auml;nder und Europa im &Uuml;berblick.</div>
   </div>
 
   <div class="facts-controls">
     <div class="facts-mode-switch">
       <button class="facts-switch-btn active" id="factsCountryBtn" type="button">Deutschland</button>
-      <button class="facts-switch-btn" id="factsStatesBtn" type="button">Bundesl&auml;nder</button>
+      <button class="facts-switch-btn" id="factsStatesBtn" type="button">Europa</button>
     </div>
 
     <div class="state-picker-wrap" id="statePickerWrap">
@@ -159,6 +247,10 @@
 
   <div class="facts-content" id="factsContent"></div>
 </div>
+
+<footer class="site-footer">
+  <a href="http://www.lovro-music.de" target="_blank" rel="noopener noreferrer">made by Lovro Musi&#263;, in Gie&#223;en 2026, with &#9829;</a>
+</footer>
 
 <script src="app.js"></script>
 </body>

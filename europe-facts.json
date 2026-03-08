@@ -1,0 +1,986 @@
+{
+  "union": {
+    "name": "Europa",
+    "official_name": "Europaeische Union und europaeischer Raum",
+    "capital": "Bruessel",
+    "largest_city": "Istanbul",
+    "anthem": "Ode an die Freude",
+    "founded": "1993 (Europaeische Union)",
+    "state_form": "Staatenverbund",
+    "national_day": "9. Mai",
+    "population": "ca. 449 Mio. in der EU",
+    "area_km2": "ca. 4.233.000 km2 in der EU",
+    "states_count": "27 EU-Mitgliedstaaten",
+    "currency": "Euro und weitere Landeswaehrungen",
+    "language": "24 Amtssprachen in der EU",
+    "time_zone": "UTC+00:00 bis UTC+02:00",
+    "internet_tld": ".eu",
+    "gdp_nominal": "ca. 17 Billionen EUR",
+    "overview": "Europa verbindet sehr unterschiedliche Sprachraeume, Landschaften und politische Traditionen. Die Europaeische Union bildet dabei einen zentralen politischen und wirtschaftlichen Rahmen fuer grosse Teile des Kontinents.",
+    "neighboring_countries": [
+      "Atlantik",
+      "Mittelmeer",
+      "Nordsee",
+      "Ostsee",
+      "Schwarzes Meer"
+    ],
+    "highlights": [
+      "Bruessel",
+      "Strassburg",
+      "Alpenraum",
+      "Mittelmeerraum"
+    ],
+    "nature": [
+      "Skandinavien",
+      "Mittelmeerkuesten",
+      "Mittelgebirge",
+      "Alpen"
+    ],
+    "institutions": [
+      "Europaeisches Parlament",
+      "Europaeische Kommission",
+      "Europaeischer Rat"
+    ]
+  },
+  "countries": [
+    {
+      "id": "frankreich",
+      "name": "Frankreich",
+      "official_name": "Französische Republik",
+      "capital": "Paris",
+      "region": "Westeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "66.351.959",
+      "area_km2": "543.908 km2",
+      "currency": "euro (EUR)",
+      "language": "Französisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+33",
+      "internet_tld": ".fr",
+      "landlocked": "Nein",
+      "overview": "Frankreich liegt in Westeuropa. Die Hauptstadt ist Paris. Es grenzt an Andorra, Belgien, Deutschland, Italien, Luxemburg, Monaco, Spanien, Schweiz.",
+      "neighboring_countries": [
+        "Andorra",
+        "Belgien",
+        "Deutschland",
+        "Italien",
+        "Luxemburg",
+        "Monaco",
+        "Spanien",
+        "Schweiz"
+      ],
+      "languages_list": [
+        "Französisch"
+      ],
+      "timezones_list": [
+        "UTC-10:00",
+        "UTC-09:30",
+        "UTC-09:00",
+        "UTC-08:00",
+        "UTC-04:00",
+        "UTC-03:00",
+        "UTC+01:00",
+        "UTC+02:00",
+        "UTC+03:00",
+        "UTC+04:00",
+        "UTC+05:00",
+        "UTC+10:00",
+        "UTC+11:00",
+        "UTC+12:00"
+      ],
+      "flag_image": "https://flagcdn.com/fr.svg"
+    },
+    {
+      "id": "spanien",
+      "name": "Spanien",
+      "official_name": "Königreich Spanien",
+      "capital": "Madrid",
+      "region": "Suedeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "49.315.949",
+      "area_km2": "505.992 km2",
+      "currency": "euro (EUR)",
+      "language": "Spanisch, Katalanisch, Baskisch, Galicisch",
+      "time_zone": "UTC, UTC+01:00",
+      "calling_code": "+34",
+      "internet_tld": ".es",
+      "landlocked": "Nein",
+      "overview": "Spanien liegt in Suedeuropa. Die Hauptstadt ist Madrid. Es grenzt an Andorra, Frankreich, Gibraltar, Portugal, Marokko.",
+      "neighboring_countries": [
+        "Andorra",
+        "Frankreich",
+        "Gibraltar",
+        "Portugal",
+        "Marokko"
+      ],
+      "languages_list": [
+        "Spanisch",
+        "Katalanisch",
+        "Baskisch",
+        "Galicisch"
+      ],
+      "timezones_list": [
+        "UTC",
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/es.svg"
+    },
+    {
+      "id": "england",
+      "name": "England",
+      "official_name": "Landesteil des Vereinigten Koenigreichs",
+      "capital": "London",
+      "region": "Westeuropa",
+      "state_form": "Landesteil des Vereinigten Koenigreichs",
+      "population": "",
+      "area_km2": "",
+      "currency": "Pfund Sterling (GBP)",
+      "language": "Englisch",
+      "time_zone": "UTC+00:00",
+      "calling_code": "+44",
+      "internet_tld": ".uk",
+      "landlocked": "Nein",
+      "overview": "England ist der bevoelkerungsreichste Landesteil des Vereinigten Koenigreichs. London ist Hauptstadt Englands und zugleich politisches und wirtschaftliches Zentrum des Vereinigten Koenigreichs.",
+      "neighboring_countries": [
+        "Schottland",
+        "Wales"
+      ],
+      "languages_list": [
+        "Englisch"
+      ],
+      "timezones_list": [
+        "UTC+00:00"
+      ],
+      "flag_image": "https://flagcdn.com/gb.svg"
+    },
+    {
+      "id": "schweden",
+      "name": "Schweden",
+      "official_name": "Königreich Schweden",
+      "capital": "Stockholm",
+      "region": "Nordeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "10.605.098",
+      "area_km2": "450.295 km2",
+      "currency": "Swedish krona (SEK)",
+      "language": "Schwedisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+46",
+      "internet_tld": ".se",
+      "landlocked": "Nein",
+      "overview": "Schweden liegt in Nordeuropa. Die Hauptstadt ist Stockholm. Es grenzt an Finnland, Norwegen.",
+      "neighboring_countries": [
+        "Finnland",
+        "Norwegen"
+      ],
+      "languages_list": [
+        "Schwedisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/se.svg"
+    },
+    {
+      "id": "polen",
+      "name": "Polen",
+      "official_name": "Republik Polen",
+      "capital": "Warschau",
+      "region": "Mitteleuropa",
+      "state_form": "Souveraener Staat",
+      "population": "37.392.000",
+      "area_km2": "312.679 km2",
+      "currency": "Polish złoty (PLN)",
+      "language": "Polnisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+48",
+      "internet_tld": ".pl",
+      "landlocked": "Nein",
+      "overview": "Polen liegt in Mitteleuropa. Die Hauptstadt ist Warschau. Es grenzt an Weißrussland, Tschechien, Deutschland, Litauen, Russland, Slowakei, Ukraine.",
+      "neighboring_countries": [
+        "Weißrussland",
+        "Tschechien",
+        "Deutschland",
+        "Litauen",
+        "Russland",
+        "Slowakei",
+        "Ukraine"
+      ],
+      "languages_list": [
+        "Polnisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/pl.svg"
+    },
+    {
+      "id": "oesterreich",
+      "name": "Österreich",
+      "official_name": "Republik Österreich",
+      "capital": "Wien",
+      "region": "Mitteleuropa",
+      "state_form": "Souveraener Staat",
+      "population": "9.200.931",
+      "area_km2": "83.871 km2",
+      "currency": "euro (EUR)",
+      "language": "Deutsch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+43",
+      "internet_tld": ".at",
+      "landlocked": "Ja",
+      "overview": "Österreich liegt in Mitteleuropa. Die Hauptstadt ist Wien. Es grenzt an Tschechien, Deutschland, Ungarn, Italien, Liechtenstein, Slowakei, Slowenien, Schweiz.",
+      "neighboring_countries": [
+        "Tschechien",
+        "Deutschland",
+        "Ungarn",
+        "Italien",
+        "Liechtenstein",
+        "Slowakei",
+        "Slowenien",
+        "Schweiz"
+      ],
+      "languages_list": [
+        "Deutsch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/at.svg"
+    },
+    {
+      "id": "ungarn",
+      "name": "Ungarn",
+      "official_name": "Ungarn",
+      "capital": "Budapest",
+      "region": "Mitteleuropa",
+      "state_form": "Souveraener Staat",
+      "population": "9.539.502",
+      "area_km2": "93.028 km2",
+      "currency": "Hungarian forint (HUF)",
+      "language": "Ungarisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+36",
+      "internet_tld": ".hu",
+      "landlocked": "Ja",
+      "overview": "Ungarn liegt in Mitteleuropa. Die Hauptstadt ist Budapest. Es grenzt an Österreich, Kroatien, Rumänien, Serbien, Slowakei, Slowenien, Ukraine.",
+      "neighboring_countries": [
+        "Österreich",
+        "Kroatien",
+        "Rumänien",
+        "Serbien",
+        "Slowakei",
+        "Slowenien",
+        "Ukraine"
+      ],
+      "languages_list": [
+        "Ungarisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/hu.svg"
+    },
+    {
+      "id": "kroatien",
+      "name": "Kroatien",
+      "official_name": "Republik Kroatien",
+      "capital": "Zagreb",
+      "region": "Suedosteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "3.866.233",
+      "area_km2": "56.594 km2",
+      "currency": "euro (EUR)",
+      "language": "Kroatisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+385",
+      "internet_tld": ".hr",
+      "landlocked": "Nein",
+      "overview": "Kroatien liegt in Suedosteuropa. Die Hauptstadt ist Zagreb. Es grenzt an Bosnien und Herzegowina, Ungarn, Montenegro, Serbien, Slowenien.",
+      "neighboring_countries": [
+        "Bosnien und Herzegowina",
+        "Ungarn",
+        "Montenegro",
+        "Serbien",
+        "Slowenien"
+      ],
+      "languages_list": [
+        "Kroatisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/hr.svg"
+    },
+    {
+      "id": "bosnien-herzegowina",
+      "name": "Bosnien und Herzegowina",
+      "official_name": "Bosnien und Herzegowina",
+      "capital": "Sarajevo",
+      "region": "Suedosteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "3.422.000",
+      "area_km2": "51.209 km2",
+      "currency": "Bosnia and Herzegovina convertible mark (BAM)",
+      "language": "Bosnisch, Kroatisch, Serbisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+387",
+      "internet_tld": ".ba",
+      "landlocked": "Nein",
+      "overview": "Bosnien und Herzegowina liegt in Suedosteuropa. Die Hauptstadt ist Sarajevo. Es grenzt an Kroatien, Montenegro, Serbien.",
+      "neighboring_countries": [
+        "Kroatien",
+        "Montenegro",
+        "Serbien"
+      ],
+      "languages_list": [
+        "Bosnisch",
+        "Kroatisch",
+        "Serbisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/ba.svg"
+    },
+    {
+      "id": "serbien",
+      "name": "Serbien",
+      "official_name": "Republik Serbien",
+      "capital": "Belgrad",
+      "region": "Suedosteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "6.567.783",
+      "area_km2": "77.589 km2",
+      "currency": "Serbian dinar (RSD)",
+      "language": "Serbisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+381",
+      "internet_tld": ".rs, .срб",
+      "landlocked": "Ja",
+      "overview": "Serbien liegt in Suedosteuropa. Die Hauptstadt ist Belgrad. Es grenzt an Bosnien und Herzegowina, Bulgarien, Kroatien, Ungarn, Kosovo, Nordmazedonien, Montenegro, Rumänien.",
+      "neighboring_countries": [
+        "Bosnien und Herzegowina",
+        "Bulgarien",
+        "Kroatien",
+        "Ungarn",
+        "Kosovo",
+        "Nordmazedonien",
+        "Montenegro",
+        "Rumänien"
+      ],
+      "languages_list": [
+        "Serbisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/rs.svg"
+    },
+    {
+      "id": "nordmazedonien",
+      "name": "Nordmazedonien",
+      "official_name": "Republik Nordmazedonien",
+      "capital": "Skopje",
+      "region": "Suedosteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "1.822.612",
+      "area_km2": "25.713 km2",
+      "currency": "denar (MKD)",
+      "language": "Mazedonisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+389",
+      "internet_tld": ".mk",
+      "landlocked": "Ja",
+      "overview": "Nordmazedonien liegt in Suedosteuropa. Die Hauptstadt ist Skopje. Es grenzt an Albanien, Bulgarien, Griechenland, Kosovo, Serbien.",
+      "neighboring_countries": [
+        "Albanien",
+        "Bulgarien",
+        "Griechenland",
+        "Kosovo",
+        "Serbien"
+      ],
+      "languages_list": [
+        "Mazedonisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/mk.svg"
+    },
+    {
+      "id": "albanien",
+      "name": "Albanien",
+      "official_name": "Republik Albanien",
+      "capital": "Tirana",
+      "region": "Suedosteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "2.363.314",
+      "area_km2": "28.748 km2",
+      "currency": "Albanian lek (ALL)",
+      "language": "Albanisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+355",
+      "internet_tld": ".al",
+      "landlocked": "Nein",
+      "overview": "Albanien liegt in Suedosteuropa. Die Hauptstadt ist Tirana. Es grenzt an Montenegro, Griechenland, Nordmazedonien, Kosovo.",
+      "neighboring_countries": [
+        "Montenegro",
+        "Griechenland",
+        "Nordmazedonien",
+        "Kosovo"
+      ],
+      "languages_list": [
+        "Albanisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/al.svg"
+    },
+    {
+      "id": "griechenland",
+      "name": "Griechenland",
+      "official_name": "Hellenische Republik",
+      "capital": "Athen",
+      "region": "Suedeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "10.400.720",
+      "area_km2": "131.990 km2",
+      "currency": "euro (EUR)",
+      "language": "Griechisch",
+      "time_zone": "UTC+02:00",
+      "calling_code": "+30",
+      "internet_tld": ".gr",
+      "landlocked": "Nein",
+      "overview": "Griechenland liegt in Suedeuropa. Die Hauptstadt ist Athen. Es grenzt an Albanien, Bulgarien, Türkei, Nordmazedonien.",
+      "neighboring_countries": [
+        "Albanien",
+        "Bulgarien",
+        "Türkei",
+        "Nordmazedonien"
+      ],
+      "languages_list": [
+        "Griechisch"
+      ],
+      "timezones_list": [
+        "UTC+02:00"
+      ],
+      "flag_image": "https://flagcdn.com/gr.svg"
+    },
+    {
+      "id": "bulgarien",
+      "name": "Bulgarien",
+      "official_name": "Republik Bulgarien",
+      "capital": "Sofia",
+      "region": "Suedosteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "6.437.360",
+      "area_km2": "110.879 km2",
+      "currency": "Bulgarian lev (BGN)",
+      "language": "Bulgarisch",
+      "time_zone": "UTC+02:00",
+      "calling_code": "+359",
+      "internet_tld": ".bg",
+      "landlocked": "Nein",
+      "overview": "Bulgarien liegt in Suedosteuropa. Die Hauptstadt ist Sofia. Es grenzt an Griechenland, Nordmazedonien, Rumänien, Serbien, Türkei.",
+      "neighboring_countries": [
+        "Griechenland",
+        "Nordmazedonien",
+        "Rumänien",
+        "Serbien",
+        "Türkei"
+      ],
+      "languages_list": [
+        "Bulgarisch"
+      ],
+      "timezones_list": [
+        "UTC+02:00"
+      ],
+      "flag_image": "https://flagcdn.com/bg.svg"
+    },
+    {
+      "id": "tuerkei",
+      "name": "Türkei",
+      "official_name": "Republik Türkei",
+      "capital": "Ankara",
+      "region": "Suedosteuropa und Vorderasien",
+      "state_form": "Souveraener Staat",
+      "population": "85.664.944",
+      "area_km2": "783.562 km2",
+      "currency": "Turkish lira (TRY)",
+      "language": "Türkisch",
+      "time_zone": "UTC+03:00",
+      "calling_code": "+90",
+      "internet_tld": ".tr",
+      "landlocked": "Nein",
+      "overview": "Türkei liegt in Suedosteuropa und Vorderasien. Die Hauptstadt ist Ankara. Es grenzt an Armenien, Aserbaidschan, Bulgarien, Georgien, Griechenland, Iran, Irak, Syrien.",
+      "neighboring_countries": [
+        "Armenien",
+        "Aserbaidschan",
+        "Bulgarien",
+        "Georgien",
+        "Griechenland",
+        "Iran",
+        "Irak",
+        "Syrien"
+      ],
+      "languages_list": [
+        "Türkisch"
+      ],
+      "timezones_list": [
+        "UTC+03:00"
+      ],
+      "flag_image": "https://flagcdn.com/tr.svg"
+    },
+    {
+      "id": "rumaenien",
+      "name": "Rumänien",
+      "official_name": "Rumänien",
+      "capital": "Bukarest",
+      "region": "Suedosteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "19.036.031",
+      "area_km2": "238.391 km2",
+      "currency": "Romanian leu (RON)",
+      "language": "Rumänisch",
+      "time_zone": "UTC+02:00",
+      "calling_code": "+40",
+      "internet_tld": ".ro",
+      "landlocked": "Nein",
+      "overview": "Rumänien liegt in Suedosteuropa. Die Hauptstadt ist Bukarest. Es grenzt an Bulgarien, Ungarn, Moldawien, Serbien, Ukraine.",
+      "neighboring_countries": [
+        "Bulgarien",
+        "Ungarn",
+        "Moldawien",
+        "Serbien",
+        "Ukraine"
+      ],
+      "languages_list": [
+        "Rumänisch"
+      ],
+      "timezones_list": [
+        "UTC+02:00"
+      ],
+      "flag_image": "https://flagcdn.com/ro.svg"
+    },
+    {
+      "id": "ukraine",
+      "name": "Ukraine",
+      "official_name": "Ukraine",
+      "capital": "Kyiv",
+      "region": "Osteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "32.862.000",
+      "area_km2": "603.550 km2",
+      "currency": "Ukrainian hryvnia (UAH)",
+      "language": "Ukrainisch",
+      "time_zone": "UTC+02:00",
+      "calling_code": "+380",
+      "internet_tld": ".ua, .укр",
+      "landlocked": "Nein",
+      "overview": "Ukraine liegt in Osteuropa. Die Hauptstadt ist Kyiv. Es grenzt an Weißrussland, Ungarn, Moldawien, Polen, Rumänien, Russland, Slowakei.",
+      "neighboring_countries": [
+        "Weißrussland",
+        "Ungarn",
+        "Moldawien",
+        "Polen",
+        "Rumänien",
+        "Russland",
+        "Slowakei"
+      ],
+      "languages_list": [
+        "Ukrainisch"
+      ],
+      "timezones_list": [
+        "UTC+02:00"
+      ],
+      "flag_image": "https://flagcdn.com/ua.svg"
+    },
+    {
+      "id": "russland",
+      "name": "Russland",
+      "official_name": "Russische Föderation",
+      "capital": "Moskau",
+      "region": "Osteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "146.028.325",
+      "area_km2": "17.098.246 km2",
+      "currency": "Russian ruble (RUB)",
+      "language": "Russisch",
+      "time_zone": "UTC+03:00, UTC+04:00, UTC+06:00, UTC+07:00, UTC+08:00, UTC+09:00, UTC+10:00, UTC+11:00, UTC+12:00",
+      "calling_code": "+7",
+      "internet_tld": ".ru, .su, .рф",
+      "landlocked": "Nein",
+      "overview": "Russland liegt in Osteuropa. Die Hauptstadt ist Moskau. Es grenzt an Aserbaidschan, Weißrussland, China, Estland, Finnland, Georgien, Kasachstan, Nordkorea, Lettland, Litauen, Mongolei, Norwegen, Polen, Ukraine.",
+      "neighboring_countries": [
+        "Aserbaidschan",
+        "Weißrussland",
+        "China",
+        "Estland",
+        "Finnland",
+        "Georgien",
+        "Kasachstan",
+        "Nordkorea",
+        "Lettland",
+        "Litauen",
+        "Mongolei",
+        "Norwegen",
+        "Polen",
+        "Ukraine"
+      ],
+      "languages_list": [
+        "Russisch"
+      ],
+      "timezones_list": [
+        "UTC+03:00",
+        "UTC+04:00",
+        "UTC+06:00",
+        "UTC+07:00",
+        "UTC+08:00",
+        "UTC+09:00",
+        "UTC+10:00",
+        "UTC+11:00",
+        "UTC+12:00"
+      ],
+      "flag_image": "https://flagcdn.com/ru.svg"
+    },
+    {
+      "id": "weissrussland",
+      "name": "Weißrussland",
+      "official_name": "Republik Belarus",
+      "capital": "Minsk",
+      "region": "Osteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "9.109.280",
+      "area_km2": "207.600 km2",
+      "currency": "Belarusian ruble (BYN)",
+      "language": "Belarussisch, Russisch",
+      "time_zone": "UTC+03:00",
+      "calling_code": "+375",
+      "internet_tld": ".by",
+      "landlocked": "Ja",
+      "overview": "Weißrussland liegt in Osteuropa. Die Hauptstadt ist Minsk. Es grenzt an Lettland, Litauen, Polen, Russland, Ukraine.",
+      "neighboring_countries": [
+        "Lettland",
+        "Litauen",
+        "Polen",
+        "Russland",
+        "Ukraine"
+      ],
+      "languages_list": [
+        "Belarussisch",
+        "Russisch"
+      ],
+      "timezones_list": [
+        "UTC+03:00"
+      ],
+      "flag_image": "https://flagcdn.com/by.svg"
+    },
+    {
+      "id": "tschechien",
+      "name": "Tschechien",
+      "official_name": "Tschechische Republik",
+      "capital": "Prague",
+      "region": "Mitteleuropa",
+      "state_form": "Souveraener Staat",
+      "population": "10.882.341",
+      "area_km2": "78.865 km2",
+      "currency": "Czech koruna (CZK)",
+      "language": "Tschechisch, Slowakisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+420",
+      "internet_tld": ".cz",
+      "landlocked": "Ja",
+      "overview": "Tschechien liegt in Mitteleuropa. Die Hauptstadt ist Prague. Es grenzt an Österreich, Deutschland, Polen, Slowakei.",
+      "neighboring_countries": [
+        "Österreich",
+        "Deutschland",
+        "Polen",
+        "Slowakei"
+      ],
+      "languages_list": [
+        "Tschechisch",
+        "Slowakisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/cz.svg"
+    },
+    {
+      "id": "slowakei",
+      "name": "Slowakei",
+      "official_name": "Slowakische Republik",
+      "capital": "Bratislava",
+      "region": "Mitteleuropa",
+      "state_form": "Souveraener Staat",
+      "population": "5.413.813",
+      "area_km2": "49.037 km2",
+      "currency": "euro (EUR)",
+      "language": "Slowakisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+421",
+      "internet_tld": ".sk",
+      "landlocked": "Ja",
+      "overview": "Slowakei liegt in Mitteleuropa. Die Hauptstadt ist Bratislava. Es grenzt an Österreich, Tschechien, Ungarn, Polen, Ukraine.",
+      "neighboring_countries": [
+        "Österreich",
+        "Tschechien",
+        "Ungarn",
+        "Polen",
+        "Ukraine"
+      ],
+      "languages_list": [
+        "Slowakisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/sk.svg"
+    },
+    {
+      "id": "slowenien",
+      "name": "Slowenien",
+      "official_name": "Republik Slowenien",
+      "capital": "Ljubljana",
+      "region": "Mitteleuropa",
+      "state_form": "Souveraener Staat",
+      "population": "2.130.638",
+      "area_km2": "20.273 km2",
+      "currency": "euro (EUR)",
+      "language": "Slowenisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+386",
+      "internet_tld": ".si",
+      "landlocked": "Nein",
+      "overview": "Slowenien liegt in Mitteleuropa. Die Hauptstadt ist Ljubljana. Es grenzt an Österreich, Kroatien, Italien, Ungarn.",
+      "neighboring_countries": [
+        "Österreich",
+        "Kroatien",
+        "Italien",
+        "Ungarn"
+      ],
+      "languages_list": [
+        "Slowenisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/si.svg"
+    },
+    {
+      "id": "italien",
+      "name": "Italien",
+      "official_name": "Italienische Republik",
+      "capital": "Rome",
+      "region": "Suedeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "58.927.633",
+      "area_km2": "301.336 km2",
+      "currency": "euro (EUR)",
+      "language": "Italienisch, Katalanisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+39",
+      "internet_tld": ".it",
+      "landlocked": "Nein",
+      "overview": "Italien liegt in Suedeuropa. Die Hauptstadt ist Rome. Es grenzt an Österreich, Frankreich, San Marino, Slowenien, Schweiz, Vatikanstadt.",
+      "neighboring_countries": [
+        "Österreich",
+        "Frankreich",
+        "San Marino",
+        "Slowenien",
+        "Schweiz",
+        "Vatikanstadt"
+      ],
+      "languages_list": [
+        "Italienisch",
+        "Katalanisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/it.svg"
+    },
+    {
+      "id": "niederlande",
+      "name": "Niederlande",
+      "official_name": "Niederlande",
+      "capital": "Amsterdam",
+      "region": "Westeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "18.100.436",
+      "area_km2": "41.865 km2",
+      "currency": "euro (EUR)",
+      "language": "Niederländisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+31",
+      "internet_tld": ".nl",
+      "landlocked": "Nein",
+      "overview": "Niederlande liegt in Westeuropa. Die Hauptstadt ist Amsterdam. Es grenzt an Belgien, Deutschland.",
+      "neighboring_countries": [
+        "Belgien",
+        "Deutschland"
+      ],
+      "languages_list": [
+        "Niederländisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/nl.svg"
+    },
+    {
+      "id": "belgien",
+      "name": "Belgien",
+      "official_name": "Königreich Belgien",
+      "capital": "Brussels",
+      "region": "Westeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "11.825.551",
+      "area_km2": "30.528 km2",
+      "currency": "euro (EUR)",
+      "language": "Deutsch, Französisch, Niederländisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+32",
+      "internet_tld": ".be",
+      "landlocked": "Nein",
+      "overview": "Belgien liegt in Westeuropa. Die Hauptstadt ist Brussels. Es grenzt an Frankreich, Deutschland, Luxemburg, Niederlande.",
+      "neighboring_countries": [
+        "Frankreich",
+        "Deutschland",
+        "Luxemburg",
+        "Niederlande"
+      ],
+      "languages_list": [
+        "Deutsch",
+        "Französisch",
+        "Niederländisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/be.svg"
+    },
+    {
+      "id": "daenemark",
+      "name": "Dänemark",
+      "official_name": "Königreich Dänemark",
+      "capital": "Copenhagen",
+      "region": "Nordeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "6.011.488",
+      "area_km2": "43.094 km2",
+      "currency": "Danish krone (DKK)",
+      "language": "Dänisch",
+      "time_zone": "UTC-04:00, UTC-03:00, UTC-01:00, UTC, UTC+01:00",
+      "calling_code": "+45",
+      "internet_tld": ".dk",
+      "landlocked": "Nein",
+      "overview": "Dänemark liegt in Nordeuropa. Die Hauptstadt ist Copenhagen. Es grenzt an Deutschland.",
+      "neighboring_countries": [
+        "Deutschland"
+      ],
+      "languages_list": [
+        "Dänisch"
+      ],
+      "timezones_list": [
+        "UTC-04:00",
+        "UTC-03:00",
+        "UTC-01:00",
+        "UTC",
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/dk.svg"
+    },
+    {
+      "id": "finnland",
+      "name": "Finnland",
+      "official_name": "Republik Finnland",
+      "capital": "Helsinki",
+      "region": "Nordeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "5.650.325",
+      "area_km2": "338.455 km2",
+      "currency": "euro (EUR)",
+      "language": "Finnisch, Schwedisch",
+      "time_zone": "UTC+02:00",
+      "calling_code": "+358",
+      "internet_tld": ".fi",
+      "landlocked": "Nein",
+      "overview": "Finnland liegt in Nordeuropa. Die Hauptstadt ist Helsinki. Es grenzt an Norwegen, Schweden, Russland.",
+      "neighboring_countries": [
+        "Norwegen",
+        "Schweden",
+        "Russland"
+      ],
+      "languages_list": [
+        "Finnisch",
+        "Schwedisch"
+      ],
+      "timezones_list": [
+        "UTC+02:00"
+      ],
+      "flag_image": "https://flagcdn.com/fi.svg"
+    },
+    {
+      "id": "norwegen",
+      "name": "Norwegen",
+      "official_name": "Königreich Norwegen",
+      "capital": "Oslo",
+      "region": "Nordeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "5.606.944",
+      "area_km2": "386.224 km2",
+      "currency": "Norwegian krone (NOK)",
+      "language": "Norwegisch (Nynorsk), Norwegisch (Bokmål), smi",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+47",
+      "internet_tld": ".no",
+      "landlocked": "Nein",
+      "overview": "Norwegen liegt in Nordeuropa. Die Hauptstadt ist Oslo. Es grenzt an Finnland, Schweden, Russland.",
+      "neighboring_countries": [
+        "Finnland",
+        "Schweden",
+        "Russland"
+      ],
+      "languages_list": [
+        "Norwegisch (Nynorsk)",
+        "Norwegisch (Bokmål)",
+        "smi"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/no.svg"
+    },
+    {
+      "id": "irland",
+      "name": "Irland",
+      "official_name": "Republik Irland",
+      "capital": "Dublin",
+      "region": "Nordeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "5.458.600",
+      "area_km2": "70.273 km2",
+      "currency": "euro (EUR)",
+      "language": "Englisch, Irisch",
+      "time_zone": "UTC",
+      "calling_code": "+353",
+      "internet_tld": ".ie",
+      "landlocked": "Nein",
+      "overview": "Irland liegt in Nordeuropa. Die Hauptstadt ist Dublin. Es grenzt an Vereinigtes Königreich.",
+      "neighboring_countries": [
+        "Vereinigtes Königreich"
+      ],
+      "languages_list": [
+        "Englisch",
+        "Irisch"
+      ],
+      "timezones_list": [
+        "UTC"
+      ],
+      "flag_image": "https://flagcdn.com/ie.svg"
+    }
+  ]
+}

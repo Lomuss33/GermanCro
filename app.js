@@ -15,10 +15,7 @@ const catColors = {
 
 const allCats = Object.keys(catColors);
 const searchSites = [
-  { name: "Duden", icon: "D", url: (w) => `https://www.duden.de/suchen/dudenonline/${encodeURIComponent(w)}` },
-  { name: "DWDS", icon: "W", url: (w) => `https://www.dwds.de/?q=${encodeURIComponent(w)}` },
   { name: "dict.cc", icon: "C", url: (w) => `https://www.dict.cc/?s=${encodeURIComponent(w)}` },
-  { name: "Wikipedia", icon: "W", url: (w) => `https://de.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(w)}` },
   { name: "Google", icon: "G", url: (w) => `https://www.google.com/search?q=${encodeURIComponent(`${w} auf Deutsch`)}` },
   { name: "Linguee", icon: "L", url: (w) => `https://www.linguee.de/deutsch-englisch/search?query=${encodeURIComponent(w)}` },
   { name: "Leo", icon: "L", url: (w) => `https://dict.leo.org/german-english/${encodeURIComponent(w)}` },
@@ -28,6 +25,77 @@ const SESSION_SIZE = 20;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const PUNCT = /[.,!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
+const TOURISM_LINKS = {
+  germany: "https://www.germany.travel/",
+  states: {
+    "baden-wuerttemberg": "https://www.tourismus-bw.de/",
+    "bayern": "https://www.bayern.by/",
+    "berlin": "https://www.visitberlin.de/",
+    "brandenburg": "https://www.reiseland-brandenburg.de/",
+    "bremen": "https://www.bremen-tourism.de/",
+    "hamburg": "https://www.hamburg-tourism.de/",
+    "hessen": "https://www.hessen-tourismus.de/",
+    "mecklenburg-vorpommern": "https://www.auf-nach-mv.de/",
+    "niedersachsen": "https://www.reiseland-niedersachsen.de/",
+    "nordrhein-westfalen": "https://www.nrw-tourismus.de/",
+    "rheinland-pfalz": "https://www.rlp-tourismus.com/",
+    "saarland": "https://www.urlaub.saarland/",
+    "sachsen": "https://www.sachsen-tourismus.de/",
+    "sachsen-anhalt": "https://www.sachsen-anhalt-tourismus.de/",
+    "schleswig-holstein": "https://www.sh-tourismus.de/",
+    "thueringen": "https://www.thueringen-entdecken.de/",
+  },
+  countries: {
+    "frankreich": "https://www.france.fr/",
+    "spanien": "https://www.spain.info/",
+    "england": "https://www.visitengland.com/",
+    "schweden": "https://visitsweden.com/",
+    "polen": "https://www.polen.travel/de/",
+    "oesterreich": "https://www.austria.info/",
+    "ungarn": "https://visithungary.com/",
+    "kroatien": "https://croatia.hr/",
+    "bosnien-herzegowina": "https://www.tourismbih.com/",
+    "serbien": "https://www.serbia.travel/en",
+    "nordmazedonien": "https://northmacedonia-timeless.com/",
+    "albanien": "https://albania.al/",
+    "griechenland": "https://www.visitgreece.gr/",
+    "bulgarien": "https://bulgariatravel.org/en/",
+    "tuerkei": "https://goturkiye.com/",
+    "rumaenien": "https://www.romania.travel/",
+    "ukraine": "https://ukraine.ua/visit/",
+    "russland": "https://visitrussia.org.uk/",
+    "weissrussland": "https://www.belarus.by/en/travel/",
+    "tschechien": "https://www.visitczechia.com/",
+    "slowakei": "https://slovakia.travel/en",
+    "slowenien": "https://www.slovenia.info/en",
+    "italien": "https://www.italia.it/en",
+    "niederlande": "https://www.holland.com/global/tourism/discover-the-netherlands.htm",
+    "belgien": "https://visitbelgium.com/",
+    "daenemark": "https://www.visitdenmark.com/",
+    "finnland": "https://www.visitfinland.com/",
+    "norwegen": "https://www.visitnorway.com/",
+    "irland": "https://www.ireland.com/",
+  },
+};
+const EUROPE_FLAG_IMAGE = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 90" role="img" aria-label="Flagge Europas">
+    <rect width="150" height="90" fill="#003399"/>
+    <g fill="#ffcc00">
+      <circle cx="75" cy="19" r="3.2"/>
+      <circle cx="89" cy="22.8" r="3.2"/>
+      <circle cx="99.2" cy="33" r="3.2"/>
+      <circle cx="103" cy="45" r="3.2"/>
+      <circle cx="99.2" cy="57" r="3.2"/>
+      <circle cx="89" cy="67.2" r="3.2"/>
+      <circle cx="75" cy="71" r="3.2"/>
+      <circle cx="61" cy="67.2" r="3.2"/>
+      <circle cx="50.8" cy="57" r="3.2"/>
+      <circle cx="47" cy="45" r="3.2"/>
+      <circle cx="50.8" cy="33" r="3.2"/>
+      <circle cx="61" cy="22.8" r="3.2"/>
+    </g>
+  </svg>`
+)}`;
 const STATE_NOTABLE_PEOPLE = {
   "baden-wuerttemberg": {
     science: ["Albert Einstein", "Johannes Kepler", "Carl Benz"],
@@ -130,8 +198,10 @@ let totalCharsTyped = 0;
 let difficulty = "medium";
 let previousTypedValue = "";
 let germanyFacts = null;
-let factsMode = "country";
+let europeFacts = null;
+let factsMode = "germany";
 let selectedStateId = null;
+let selectedEuropeCountryId = null;
 
 const promptEl = document.getElementById("promptText");
 const promptSub = document.getElementById("promptSub");
@@ -144,9 +214,14 @@ const comboPop = document.getElementById("comboPop");
 const gameArea = document.getElementById("gameArea");
 const sessionEndEl = document.getElementById("sessionEnd");
 const mainCard = document.getElementById("mainCard");
+const progressTrackEl = document.querySelector(".progress-track");
+const statsBarEl = document.querySelector(".stats-bar");
 const catCountEl = document.getElementById("catCount");
 const newGameBtn = document.getElementById("newGameBtn");
+const searchPanelEl = document.getElementById("searchPanel");
 const searchLinksEl = document.getElementById("searchLinks");
+const authorPanelEl = document.getElementById("authorPanel");
+const authorToggleBtn = document.getElementById("authorToggleBtn");
 
 const addCardForm = document.getElementById("addCardForm");
 const addCardDeEl = document.getElementById("newCardDe");
@@ -162,6 +237,14 @@ const factsStatesBtn = document.getElementById("factsStatesBtn");
 const statePickerWrap = document.getElementById("statePickerWrap");
 const statePickerEl = document.getElementById("statePicker");
 const factsContentEl = document.getElementById("factsContent");
+
+if (statsBarEl && mainCard && progressTrackEl) {
+  mainCard.insertBefore(statsBarEl, progressTrackEl);
+}
+
+if (authorPanelEl && searchPanelEl && searchPanelEl.parentNode) {
+  searchPanelEl.parentNode.insertBefore(authorPanelEl, searchPanelEl);
+}
 
 function normalizeCategory(cat) {
   return CATEGORY_ALIASES[cat] || cat;
@@ -369,11 +452,12 @@ function getPool() {
 
 function updateSearchLinks(card) {
   searchLinksEl.innerHTML = "";
-  const word = (card.de || card.en).replace(/^(der|die|das)\s+/i, "");
+  const query = String(card.de || card.en || "").trim();
+
   searchSites.forEach((site) => {
     const link = document.createElement("a");
     link.className = "search-link";
-    link.href = site.url(word);
+    link.href = site.url(query);
     link.target = "_blank";
     link.rel = "noopener";
     link.innerHTML = `<span class="search-link-icon">${site.icon}</span><span>${site.name}</span>`;
@@ -420,6 +504,36 @@ function normalizeFactsCollection(raw) {
 async function loadGermanyFacts() {
   const raw = await fetchJson("germany-facts.json", null);
   return normalizeFactsCollection(raw);
+}
+
+function normalizeEuropeFacts(raw) {
+  if (!raw || typeof raw !== "object") {
+    return null;
+  }
+
+  const union = raw.union && typeof raw.union === "object" ? raw.union : null;
+  const countries = Array.isArray(raw.countries)
+    ? raw.countries.filter((country) => country && typeof country === "object")
+    : [];
+
+  if (!union || !isNonEmptyValue(union.name) || !countries.length) {
+    return null;
+  }
+
+  const validCountries = countries.filter((country) => isNonEmptyValue(country.id) && isNonEmptyValue(country.name));
+  if (!validCountries.length) {
+    return null;
+  }
+
+  return {
+    union,
+    countries: validCountries,
+  };
+}
+
+async function loadEuropeFacts() {
+  const raw = await fetchJson("europe-facts.json", null);
+  return normalizeEuropeFacts(raw);
 }
 
 function getFactsImagePath(type, stateId) {
@@ -526,7 +640,7 @@ function getStatePeopleLists(stateId) {
   ];
 }
 
-function renderFactsView(title, subtitle, imageSrc, fields, lists) {
+function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = "") {
   factsContentEl.innerHTML = "";
 
   const view = document.createElement("div");
@@ -546,20 +660,34 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists) {
   flagEl.alt = `${title} Flagge`;
   flagEl.loading = "lazy";
   flagEl.decoding = "async";
-  flagEl.src = imageSrc || "";
   flagEl.addEventListener("error", () => {
     flagWrap.classList.add("is-fallback");
     flagEl.hidden = true;
   });
+
+  if (isNonEmptyValue(imageSrc)) {
+    flagEl.src = imageSrc;
+  } else {
+    flagWrap.classList.add("is-fallback");
+    flagEl.hidden = true;
+  }
+
   flagWrap.appendChild(flagEl);
   titleRow.appendChild(flagWrap);
 
   const titleCopy = document.createElement("div");
   titleCopy.className = "facts-title-copy";
 
-  const nameEl = document.createElement("div");
+  const nameEl = document.createElement(isNonEmptyValue(tourismUrl) ? "a" : "div");
   nameEl.className = "facts-view-name";
   nameEl.textContent = title;
+  if (isNonEmptyValue(tourismUrl)) {
+    nameEl.href = tourismUrl;
+    nameEl.target = "_blank";
+    nameEl.rel = "noopener noreferrer";
+    nameEl.title = `${title} Tourismus`;
+    nameEl.setAttribute("aria-label", `${title} Tourismus in neuem Tab öffnen`);
+  }
   titleCopy.appendChild(nameEl);
 
   if (isNonEmptyValue(subtitle)) {
@@ -598,9 +726,9 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists) {
 
 function renderCountryFacts(countryData) {
   renderFactsView(
-    countryData.name || "Deutschland",
-    countryData.official_name || "",
-    getFactsImagePath("country"),
+      countryData.name || "Deutschland",
+      countryData.official_name || "",
+      getFactsImagePath("country"),
     [
       ["Hauptstadt", countryData.capital],
       ["Gr\u00f6\u00dfte Stadt", countryData.largest_city],
@@ -629,15 +757,51 @@ function renderCountryFacts(countryData) {
       ["Nachbarl\u00e4nder", countryData.neighboring_countries],
       ["Bekannte Orte", countryData.highlights],
       ["Natur und Landschaft", countryData.nature],
-    ]
-  );
-}
+      ],
+      TOURISM_LINKS.germany
+    );
+  }
+
+function renderEuropeOverview(unionData) {
+  renderFactsView(
+      unionData.name || "Europa",
+      unionData.official_name || "",
+      EUROPE_FLAG_IMAGE,
+    [
+      ["Hauptstadt", unionData.capital],
+      ["Groesste Stadt", unionData.largest_city],
+      ["Hymne", unionData.anthem],
+      ["Gegruendet", unionData.founded],
+      ["Staatsform", unionData.state_form],
+      ["Europatag", unionData.national_day],
+      ["Bevoelkerung", unionData.population],
+      ["Flaeche", unionData.area_km2],
+      ["Mitgliedstaaten", unionData.states_count],
+      ["Waehrung", unionData.currency],
+      ["Sprachen", unionData.language],
+      ["Zeitzonen", unionData.time_zone],
+      ["Internet-Domain", unionData.internet_tld],
+      ["BIP nominal", unionData.gdp_nominal],
+      {
+        label: "Europa im Ueberblick",
+        value: unionData.overview,
+        featured: true,
+      },
+    ],
+    [
+      ["Institutionen", unionData.institutions],
+      ["Ausgewaehlte Orte", unionData.highlights],
+      ["Natur und Grossraeume", unionData.nature],
+      ["Meere und Verbindungen", unionData.neighboring_countries],
+      ]
+    );
+  }
 
 function renderStateFacts(stateData) {
   renderFactsView(
-    stateData.name || "Bundesland",
-    "",
-    getFactsImagePath("state", stateData.id),
+      stateData.name || "Bundesland",
+      "",
+      getFactsImagePath("state", stateData.id),
     [
       ["K\u00fcrzel", stateData.abbreviation],
       ["Landestyp", stateData.state_type],
@@ -665,9 +829,42 @@ function renderStateFacts(stateData) {
       ["Bekannt f\u00fcr", stateData.known_for],
       ["Natur und Landschaft", stateData.nature],
       ...getStatePeopleLists(stateData.id),
-    ]
-  );
-}
+      ],
+      TOURISM_LINKS.states[stateData.id] || ""
+    );
+  }
+
+function renderEuropeanCountryFacts(countryData) {
+  renderFactsView(
+      countryData.name || "Land",
+      countryData.official_name || "",
+      countryData.flag_image || "",
+    [
+      ["Hauptstadt", countryData.capital],
+      ["Region", countryData.region],
+      ["Staatsform", countryData.state_form],
+      ["Einwohnerzahl", countryData.population],
+      ["Flaeche", countryData.area_km2],
+      ["Waehrung", countryData.currency],
+      ["Sprache", countryData.language],
+      ["Zeitzone", countryData.time_zone],
+      ["Telefonvorwahl", countryData.calling_code],
+      ["Internet-Domain", countryData.internet_tld],
+      ["Binnenland", countryData.landlocked],
+      {
+        label: "Kurzprofil",
+        value: countryData.overview,
+        featured: true,
+      },
+    ],
+    [
+      ["Nachbarlaender", countryData.neighboring_countries],
+      ["Sprachen", countryData.languages_list],
+      ["Zeitzonen", countryData.timezones_list],
+      ],
+      TOURISM_LINKS.countries[countryData.id] || ""
+    );
+  }
 
 function renderFactsError() {
   factsContentEl.innerHTML = "";
@@ -678,56 +875,96 @@ function renderFactsError() {
 }
 
 function updateFactsModeButtons() {
-  factsCountryBtn.classList.toggle("active", factsMode === "country");
-  factsStatesBtn.classList.toggle("active", factsMode === "state");
+  const isGermanyMode = factsMode === "germany" || factsMode === "state";
+  const isEuropeMode = factsMode === "europe" || factsMode === "europe-country";
+  factsCountryBtn.classList.toggle("active", isGermanyMode);
+  factsStatesBtn.classList.toggle("active", isEuropeMode);
 }
 
 function updateStatePickerVisibility() {
-  statePickerWrap.classList.toggle("is-open", factsMode === "state" && Boolean(germanyFacts));
+  const showGermanyPicker = (factsMode === "germany" || factsMode === "state") && Boolean(germanyFacts);
+  const showEuropePicker = (factsMode === "europe" || factsMode === "europe-country") && Boolean(europeFacts);
+  statePickerWrap.classList.toggle("is-open", showGermanyPicker || showEuropePicker);
 }
 
-function renderFactsSelection() {
-  if (!germanyFacts) {
-    renderFactsError();
-    return;
-  }
-
-  if (factsMode === "state") {
-    const activeState = germanyFacts.states.find((state) => state.id === selectedStateId) || germanyFacts.states[0];
-    if (!activeState) {
-      renderFactsError();
-      return;
-    }
-    selectedStateId = activeState.id;
-    renderStateFacts(activeState);
-  } else {
-    renderCountryFacts(germanyFacts.country);
-  }
-
-  updateFactsModeButtons();
-  updateStatePickerVisibility();
-}
-
-function buildStatePicker(states) {
+function buildFactsPicker() {
   statePickerEl.innerHTML = "";
-  statePickerEl.setAttribute("aria-label", "Bundesländer auswählen");
 
-  states.forEach((state) => {
+  const isGermanyMode = factsMode === "germany" || factsMode === "state";
+  const items = isGermanyMode
+    ? (germanyFacts?.states || []).map((state) => ({
+        id: state.id,
+        label: state.name,
+        active: state.id === selectedStateId,
+        ariaLabel: `Bundesland ${state.name} auswaehlen`,
+        onClick: () => {
+          factsMode = "state";
+          selectedStateId = state.id;
+          renderFactsSelection();
+        },
+      }))
+    : (europeFacts?.countries || []).map((country) => ({
+        id: country.id,
+        label: country.name,
+        active: country.id === selectedEuropeCountryId,
+        ariaLabel: `Land ${country.name} auswaehlen`,
+        onClick: () => {
+          factsMode = "europe-country";
+          selectedEuropeCountryId = country.id;
+          renderFactsSelection();
+        },
+      }));
+
+  statePickerEl.setAttribute(
+    "aria-label",
+    isGermanyMode ? "Bundeslaender auswaehlen" : "Europaeische Laender auswaehlen"
+  );
+
+  items.forEach((item) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "state-picker-btn";
-    button.textContent = state.name;
-    button.classList.toggle("active", state.id === selectedStateId);
-    button.setAttribute("aria-pressed", String(state.id === selectedStateId));
-    button.setAttribute("aria-label", `Bundesland ${state.name} auswählen`);
-    button.addEventListener("click", () => {
-      factsMode = "state";
-      selectedStateId = state.id;
-      buildStatePicker(states);
-      renderFactsSelection();
-    });
+    button.textContent = item.label;
+    button.classList.toggle("active", item.active);
+    button.setAttribute("aria-pressed", String(item.active));
+    button.setAttribute("aria-label", item.ariaLabel);
+    button.addEventListener("click", item.onClick);
     statePickerEl.appendChild(button);
   });
+}
+
+function renderFactsSelection() {
+  const isGermanyMode = factsMode === "germany" || factsMode === "state";
+
+  if (isGermanyMode) {
+    if (!germanyFacts) {
+      renderFactsError();
+      return;
+    }
+
+    const activeState = germanyFacts.states.find((state) => state.id === selectedStateId) || null;
+    if (factsMode === "state" && activeState) {
+      renderStateFacts(activeState);
+    } else {
+      renderCountryFacts(germanyFacts.country);
+    }
+  } else {
+    if (!europeFacts) {
+      renderFactsError();
+      return;
+    }
+
+    const activeCountry = europeFacts.countries.find((country) => country.id === selectedEuropeCountryId) || null;
+    if (factsMode === "europe-country" && activeCountry) {
+      renderEuropeanCountryFacts(activeCountry);
+    } else {
+      renderEuropeOverview(europeFacts.union);
+    }
+  }
+
+  updateFactsModeButtons();
+  buildFactsPicker();
+  updateStatePickerVisibility();
 }
 
 function initFactsPanel() {
@@ -735,35 +972,35 @@ function initFactsPanel() {
   updateStatePickerVisibility();
 
   factsCountryBtn.addEventListener("click", () => {
-    factsMode = "country";
+    factsMode = "germany";
     selectedStateId = null;
     renderFactsSelection();
   });
 
   factsStatesBtn.addEventListener("click", () => {
-    if (!germanyFacts || !germanyFacts.states.length) {
+    if (!europeFacts || !europeFacts.countries.length) {
       renderFactsError();
       return;
     }
 
-    factsMode = "state";
-    if (!selectedStateId) {
-      selectedStateId = germanyFacts.states[0].id;
-    }
-    buildStatePicker(germanyFacts.states);
+    factsMode = "europe";
+    selectedEuropeCountryId = null;
     renderFactsSelection();
   });
 
-  if (!germanyFacts) {
+  if (!germanyFacts && !europeFacts) {
     factsCountryBtn.disabled = true;
     factsStatesBtn.disabled = true;
     renderFactsError();
     return;
   }
 
-  if (germanyFacts.states.length) {
-    selectedStateId = germanyFacts.states[0].id;
-    buildStatePicker(germanyFacts.states);
+  if (!germanyFacts && europeFacts) {
+    factsMode = "europe";
+  }
+
+  if (germanyFacts && !europeFacts) {
+    factsStatesBtn.disabled = true;
   }
 
   renderFactsSelection();
@@ -978,20 +1215,36 @@ function loadCard() {
 }
 
 function updateStats() {
-  document.getElementById("streakNum").textContent = streak;
-  document.getElementById("correctVal").textContent = totalCorrect;
-  document.getElementById("remainingVal").textContent = sessionCards.length
-    ? String(sessionCards.length - sessionIndex)
-    : "—";
+  const streakEl = document.getElementById("streakNum");
+  const correctEl = document.getElementById("correctVal");
+  const remainingEl = document.getElementById("remainingVal");
+  const accuracyEl = document.getElementById("accuracyVal");
+  const wpmEl = document.getElementById("wpmVal");
+
+  if (streakEl) {
+    streakEl.textContent = streak;
+  }
+  if (correctEl) {
+    correctEl.textContent = totalCorrect;
+  }
+  if (remainingEl) {
+    remainingEl.textContent = sessionCards.length
+      ? String(sessionCards.length - sessionIndex)
+      : "—";
+  }
 
   const accuracy = totalAttempts ? Math.round((totalCorrect / totalAttempts) * 100) : null;
-  document.getElementById("accuracyVal").textContent = accuracy !== null ? `${accuracy}%` : "—";
+  if (accuracyEl) {
+    accuracyEl.textContent = accuracy !== null ? `${accuracy}%` : "—";
+  }
 
   const minutes = (Date.now() - sessionStart) / 60000;
   const wpm = minutes > 0 && totalCharsTyped > 0
     ? Math.round((totalCharsTyped / 5) / minutes)
     : null;
-  document.getElementById("wpmVal").textContent = wpm || "—";
+  if (wpmEl) {
+    wpmEl.textContent = wpm || "—";
+  }
 }
 
 function showCombo() {
@@ -1146,6 +1399,15 @@ function initAuthoringForm() {
   fillCategorySelect();
   addCardForm.addEventListener("submit", handleAddCardSubmit);
   exportCardsBtn.addEventListener("click", downloadCardsUserJson);
+
+  if (authorToggleBtn && authorPanelEl) {
+    authorToggleBtn.addEventListener("click", () => {
+      const isOpen = !authorPanelEl.classList.contains("is-hidden");
+      authorPanelEl.classList.toggle("is-hidden", isOpen);
+      authorToggleBtn.classList.toggle("active", !isOpen);
+      authorToggleBtn.setAttribute("aria-expanded", String(!isOpen));
+    });
+  }
 }
 
 function initInputEvents() {
@@ -1239,15 +1501,17 @@ async function initApp() {
   initAuthoringForm();
   buildCatPanel();
 
-  const [baseCards, loadedPersistentCards, currentCapabilities, loadedFacts] = await Promise.all([
+  const [baseCards, loadedPersistentCards, currentCapabilities, loadedFacts, loadedEuropeFacts] = await Promise.all([
     fetchJson("cards.json", []),
     fetchJson("cards.user.json", []),
     detectCapabilities(),
     loadGermanyFacts(),
+    loadEuropeFacts(),
   ]);
 
   capabilities = currentCapabilities;
   germanyFacts = loadedFacts;
+  europeFacts = loadedEuropeFacts;
   persistentCards = Array.isArray(loadedPersistentCards)
     ? loadedPersistentCards.map(sanitizeCard).filter(Boolean)
     : [];
