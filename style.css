@@ -12,10 +12,12 @@
   --green: #4ade80;
   --de-red: #cc0000;
   --de-gold: #ffce00;
+  --font-body: "Manrope", sans-serif;
+  --font-display: "Outfit", sans-serif;
 }
 
 body {
-  font-family: "Syne", sans-serif;
+  font-family: var(--font-body);
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -80,9 +82,10 @@ body::after {
 body > * { position: relative; z-index: 1; }
 
 .site-title {
+  font-family: var(--font-display);
   font-size: 38px;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
   line-height: 1;
   user-select: none;
 }
@@ -117,7 +120,7 @@ body > * { position: relative; z-index: 1; }
 .stat-label {
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: var(--muted);
   font-weight: 700;
 }
@@ -215,7 +218,8 @@ input,
 select {
   width: 100%;
   font-size: 18px;
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-body);
+  font-weight: 600;
   padding: 13px 15px;
   border-radius: 10px;
   border: 2px solid var(--border);
@@ -253,7 +257,7 @@ input.wrong {
   display: flex;
   flex-wrap: wrap;
   gap: 8px 14px;
-  font-family: Tahoma, sans-serif;
+  font-family: var(--font-body);
 }
 
 .word-group {
@@ -366,9 +370,9 @@ input.wrong {
 .author-secondary-btn {
   font-size: 12px;
   border-radius: 20px;
-  font-family: "Syne", sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   transition: all 0.15s;
   cursor: pointer;
 }
@@ -395,7 +399,8 @@ input.wrong {
   border: 1px solid var(--border);
   border-radius: 5px;
   font-size: 11px;
-  font-family: Tahoma, sans-serif;
+  font-family: var(--font-body);
+  font-weight: 700;
   background: #1e1e20;
 }
 
@@ -442,10 +447,10 @@ input.wrong {
   padding: 13px 32px;
   border-radius: 10px;
   font-size: 15px;
-  font-family: "Syne", sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
   cursor: pointer;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   transition: transform 0.15s, box-shadow 0.15s;
 }
 
@@ -516,10 +521,11 @@ input.wrong {
 .search-panel-title,
 .author-panel-title,
 .facts-panel-title {
+  font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   color: var(--muted);
   margin-bottom: 12px;
 }
@@ -536,7 +542,7 @@ input.wrong {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: "Syne", sans-serif;
+  font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
   padding: 7px 14px;
@@ -545,7 +551,7 @@ input.wrong {
   background: transparent;
   color: var(--muted);
   text-decoration: none;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   transition: all 0.15s;
 }
@@ -598,13 +604,13 @@ input.wrong {
 }
 
 .new-game-btn {
-  font-family: "Syne", sans-serif;
+  font-family: var(--font-display);
   font-size: 13px;
   font-weight: 800;
   padding: 8px 20px;
   border-radius: 10px;
   cursor: pointer;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   transition: transform 0.15s, box-shadow 0.15s;
 }
 
@@ -721,10 +727,10 @@ input.wrong {
 
 .facts-switch-btn,
 .state-picker-btn {
-  font-family: "Syne", sans-serif;
+  font-family: var(--font-display);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.015em;
   color: var(--muted);
   background: transparent;
   border: 1px solid var(--border);
