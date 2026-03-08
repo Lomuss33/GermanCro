@@ -539,7 +539,7 @@ input.wrong {
 .site-footer a,
 .site-footer a:visited {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 7px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: rgba(34, 34, 34, 0.82);
@@ -1121,6 +1121,15 @@ input.wrong {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  flex: 1 1 auto;
+}
+
+.facts-title-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
 }
 
 .facts-view-name {
@@ -1128,37 +1137,41 @@ input.wrong {
   font-weight: 800;
   line-height: 1.1;
   color: var(--text);
-  text-decoration: none;
-  width: fit-content;
   max-width: 100%;
-  transition: color 0.18s ease, text-shadow 0.18s ease, transform 0.18s ease;
+  min-width: 0;
 }
 
-a.facts-view-name:visited {
-  color: var(--text);
+.facts-title-links {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-top: 1px;
 }
 
-a.facts-view-name:hover {
-  color: #ffffff;
-  text-shadow: 0 0 18px rgba(255, 206, 0, 0.2);
-  transform: translateY(-1px);
-}
-
-a.facts-view-name::after {
-  content: "Tourismus";
+.facts-title-link,
+.facts-title-link:visited {
   display: inline-flex;
   align-items: center;
-  margin-left: 10px;
-  padding: 3px 8px;
+  padding: 3px 7px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.08);
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(240, 240, 240, 0.86);
-  vertical-align: middle;
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.facts-title-link:hover {
+  color: #ffffff;
+  border-color: rgba(255, 206, 0, 0.34);
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
 }
 
 .facts-view-subtitle {

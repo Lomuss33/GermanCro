@@ -77,6 +77,58 @@ const TOURISM_LINKS = {
     "irland": "https://www.ireland.com/",
   },
 };
+const OFFICIAL_LINKS = {
+  germany: "https://www.deutschland.de/",
+  states: {
+    "baden-wuerttemberg": "https://www.baden-wuerttemberg.de/",
+    "bayern": "https://www.bayern.de/",
+    "berlin": "https://www.berlin.de/",
+    "brandenburg": "https://www.brandenburg.de/",
+    "bremen": "https://www.bremen.de/",
+    "hamburg": "https://www.hamburg.de/",
+    "hessen": "https://www.hessen.de/",
+    "mecklenburg-vorpommern": "https://www.regierung-mv.de/",
+    "niedersachsen": "https://www.niedersachsen.de/",
+    "nordrhein-westfalen": "https://www.land.nrw/",
+    "rheinland-pfalz": "https://www.rlp.de/",
+    "saarland": "https://www.saarland.de/",
+    "sachsen": "https://www.sachsen.de/",
+    "sachsen-anhalt": "https://www.sachsen-anhalt.de/",
+    "schleswig-holstein": "https://www.schleswig-holstein.de/",
+    "thueringen": "https://thueringen.de/",
+  },
+  countries: {
+    "frankreich": "https://www.gouvernement.fr/en",
+    "spanien": "https://administracion.gob.es/",
+    "england": "https://www.gov.uk/",
+    "schweden": "https://sweden.se/",
+    "polen": "https://www.gov.pl/web/gov",
+    "oesterreich": "https://www.oesterreich.gv.at/en/",
+    "ungarn": "https://abouthungary.hu/",
+    "kroatien": "https://vlada.gov.hr/?lang=en",
+    "bosnien-herzegowina": "https://bih.gov.ba/?lang=en",
+    "serbien": "https://www.srbija.gov.rs/?lang=en-US",
+    "nordmazedonien": "https://vlada.mk/?ln=en-gb",
+    "albanien": "https://albania.al/",
+    "griechenland": "https://www.gov.gr/en/",
+    "bulgarien": "https://www.government.bg/en",
+    "tuerkei": "https://www.turkiye.gov.tr/",
+    "rumaenien": "https://www.romania.gov.ro/en/",
+    "ukraine": "https://www.ukraine.ua/",
+    "russland": "http://government.ru/en/",
+    "weissrussland": "https://www.belarus.by/en/",
+    "tschechien": "https://www.czech.cz/en/",
+    "slowakei": "https://welcometoslovakia.gov.sk/",
+    "slowenien": "https://slovenia.si/",
+    "italien": "https://www.governo.it/en",
+    "niederlande": "https://www.government.nl/",
+    "belgien": "https://www.belgium.be/en",
+    "daenemark": "https://denmark.dk/",
+    "finnland": "https://finland.fi/",
+    "norwegen": "https://www.norge.no/en",
+    "irland": "https://www.gov.ie/en/",
+  },
+};
 const EUROPE_FLAG_IMAGE = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 90" role="img" aria-label="Flagge Europas">
     <rect width="150" height="90" fill="#003399"/>
@@ -640,7 +692,7 @@ function getStatePeopleLists(stateId) {
   ];
 }
 
-function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = "") {
+function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = "", officialUrl = "") {
   factsContentEl.innerHTML = "";
 
   const view = document.createElement("div");
@@ -678,17 +730,44 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
   const titleCopy = document.createElement("div");
   titleCopy.className = "facts-title-copy";
 
-  const nameEl = document.createElement(isNonEmptyValue(tourismUrl) ? "a" : "div");
+  const titleBar = document.createElement("div");
+  titleBar.className = "facts-title-bar";
+
+  const nameEl = document.createElement("div");
   nameEl.className = "facts-view-name";
   nameEl.textContent = title;
-  if (isNonEmptyValue(tourismUrl)) {
-    nameEl.href = tourismUrl;
-    nameEl.target = "_blank";
-    nameEl.rel = "noopener noreferrer";
-    nameEl.title = `${title} Tourismus`;
-    nameEl.setAttribute("aria-label", `${title} Tourismus in neuem Tab öffnen`);
+  titleBar.appendChild(nameEl);
+
+  if (isNonEmptyValue(tourismUrl) || isNonEmptyValue(officialUrl)) {
+    const linksEl = document.createElement("div");
+    linksEl.className = "facts-title-links";
+
+    if (isNonEmptyValue(tourismUrl)) {
+      const tourismEl = document.createElement("a");
+      tourismEl.className = "facts-title-link";
+      tourismEl.href = tourismUrl;
+      tourismEl.target = "_blank";
+      tourismEl.rel = "noopener noreferrer";
+      tourismEl.textContent = "Tourismus";
+      tourismEl.setAttribute("aria-label", `${title} Tourismus in neuem Tab öffnen`);
+      linksEl.appendChild(tourismEl);
+    }
+
+    if (isNonEmptyValue(officialUrl)) {
+      const officialEl = document.createElement("a");
+      officialEl.className = "facts-title-link";
+      officialEl.href = officialUrl;
+      officialEl.target = "_blank";
+      officialEl.rel = "noopener noreferrer";
+      officialEl.textContent = "Official";
+      officialEl.setAttribute("aria-label", `${title} offizielle Website in neuem Tab öffnen`);
+      linksEl.appendChild(officialEl);
+    }
+
+    titleBar.appendChild(linksEl);
   }
-  titleCopy.appendChild(nameEl);
+
+  titleCopy.appendChild(titleBar);
 
   if (isNonEmptyValue(subtitle)) {
     const subtitleEl = document.createElement("div");
@@ -758,7 +837,8 @@ function renderCountryFacts(countryData) {
       ["Bekannte Orte", countryData.highlights],
       ["Natur und Landschaft", countryData.nature],
       ],
-      TOURISM_LINKS.germany
+      TOURISM_LINKS.germany,
+      OFFICIAL_LINKS.germany
     );
   }
 
@@ -830,7 +910,8 @@ function renderStateFacts(stateData) {
       ["Natur und Landschaft", stateData.nature],
       ...getStatePeopleLists(stateData.id),
       ],
-      TOURISM_LINKS.states[stateData.id] || ""
+      TOURISM_LINKS.states[stateData.id] || "",
+      OFFICIAL_LINKS.states[stateData.id] || ""
     );
   }
 
@@ -862,7 +943,8 @@ function renderEuropeanCountryFacts(countryData) {
       ["Sprachen", countryData.languages_list],
       ["Zeitzonen", countryData.timezones_list],
       ],
-      TOURISM_LINKS.countries[countryData.id] || ""
+      TOURISM_LINKS.countries[countryData.id] || "",
+      OFFICIAL_LINKS.countries[countryData.id] || ""
     );
   }
 
