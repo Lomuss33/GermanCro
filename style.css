@@ -42,8 +42,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 6px 14px 2px;
+  justify-content: flex-start;
+  padding: 6px 14px 6px;
   gap: 4px;
   position: relative;
   overflow-x: hidden;
@@ -475,7 +475,7 @@ body > * { position: relative; z-index: 1; }
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 6px 10px;
   font-size: 10px;
   color: rgba(234, 240, 252, 0.8);
@@ -562,20 +562,7 @@ body > * { position: relative; z-index: 1; }
 }
 
 .prompt-head {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.prompt-head-title {
-  font-family: var(--font-display);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
+  display: none;
 }
 
 .prompt-swap-btn {
@@ -1155,8 +1142,8 @@ input.wrong {
   width: min(100%, var(--panel-width));
   display: flex;
   justify-content: center;
-  margin-top: -10px;
-  padding: 0;
+  margin-top: auto;
+  padding: 4px 0 1px;
   line-height: 1;
 }
 
@@ -1166,9 +1153,9 @@ input.wrong {
   font-size: 7px;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: rgba(34, 34, 34, 0.82);
+  color: rgba(255, 255, 255, 0.92);
   text-decoration: none;
-  border-bottom: 1px solid rgba(34, 34, 34, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   transition: color 0.18s ease, border-color 0.18s ease, transform 0.2s ease;
   text-align: center;
 }
@@ -1652,6 +1639,7 @@ input.wrong {
 }
 
 .state-picker-wrap {
+  width: 100%;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -1659,28 +1647,25 @@ input.wrong {
 }
 
 .state-picker-wrap.is-open {
-  max-height: 70vh;
+  max-height: none;
   opacity: 1;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
-  scrollbar-gutter: stable;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 206, 0, 0.78) rgba(255, 255, 255, 0.08);
-  padding-right: 6px;
+  overflow: visible;
+  padding-right: 0;
 }
 
 .state-picker {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  align-items: stretch;
 }
 
 .state-picker-btn {
+  width: 100%;
   font-size: 10px;
-  min-height: 28px;
-  padding: 3px 6px;
+  min-height: 34px;
+  padding: 7px 10px;
   line-height: 1.1;
   text-align: center;
   text-wrap: balance;
@@ -2048,7 +2033,7 @@ input.wrong {
   }
 
   .state-picker {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -2131,7 +2116,7 @@ input.wrong {
   }
 
   .prompt-head {
-    align-items: flex-start;
+    display: none;
   }
 
   .prompt-swap-btn {
@@ -2146,12 +2131,12 @@ input.wrong {
   }
 
   .card-topbar {
-    gap: 10px;
+    gap: 8px;
   }
 
   .card-legend {
-    font-size: 9px;
-    gap: 4px 8px;
+    font-size: 8px;
+    gap: 4px 6px;
   }
 
   .cat-panel-toolbar,
@@ -2163,6 +2148,18 @@ input.wrong {
   .search-panel-head {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .search-panel-head {
+    gap: 8px;
+  }
+
+  .author-toggle-btn {
+    align-self: flex-start;
+  }
+
+  .search-panel-subtitle {
+    margin: 4px 0 10px;
   }
 
   .cat-panel-meta {
@@ -2193,7 +2190,7 @@ input.wrong {
   }
 
   .state-picker {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .state-picker-btn {
@@ -2266,12 +2263,24 @@ input.wrong {
     line-height: 0.8;
   }
 
-  .card-topbar,
+  .card-topbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .card-legend {
+    text-align: right;
+    justify-content: flex-end;
+    font-size: 7px;
+    gap: 3px 5px;
+  }
+
   .answer-guide-head {
     flex-direction: column;
   }
 
-  .card-legend,
   .answer-guide-status {
     text-align: left;
     justify-content: flex-start;
@@ -2384,5 +2393,11 @@ input.wrong {
 
   .state-picker {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .state-picker-btn {
+    min-height: 32px;
+    padding: 6px 8px;
+    font-size: 9px;
   }
 }

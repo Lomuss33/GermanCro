@@ -256,6 +256,7 @@ let europeFacts = null;
 let factsMode = "germany";
 let selectedStateId = null;
 let selectedEuropeCountryId = null;
+let locales = null;
 
 const LEARNING_MODE_STORAGE_KEY = "germancro.learningMode";
 const LANGUAGE_SEQUENCE = ["de", "hr", "en"];
@@ -281,10 +282,20 @@ const installGuidePanelEl = document.getElementById("installGuidePanel");
 const installGuideBrowserPanelEl = document.getElementById("installGuideBrowserPanel");
 const installGuideBrowserEl = document.getElementById("installGuideBrowser");
 const installGuideStepsEl = document.getElementById("installGuideSteps");
+const statLabelStreakEl = document.getElementById("statLabelStreak");
+const statLabelRemainingEl = document.getElementById("statLabelRemaining");
+const statLabelAccuracyEl = document.getElementById("statLabelAccuracy");
+const statLabelWpmEl = document.getElementById("statLabelWpm");
+const cardLegendEl = document.getElementById("cardLegend");
+const legendCorrectEl = document.getElementById("legendCorrect");
+const legendNextEl = document.getElementById("legendNext");
+const legendWrongEl = document.getElementById("legendWrong");
+const promptHeadTitleEl = document.getElementById("promptHeadTitle");
 const inputEl = document.getElementById("answer");
 const solutionEl = document.getElementById("solution");
 const wordGrid = document.getElementById("wordGrid");
 const answerGuideEl = document.getElementById("answerGuide");
+const answerGuideLabelEl = document.getElementById("answerGuideLabel");
 const answerGuideStatusEl = document.getElementById("answerGuideStatus");
 const answerGuideNoteEl = document.getElementById("answerGuideNote");
 const feedbackBurstEl = document.getElementById("feedbackBurst");
@@ -297,26 +308,46 @@ const mainCard = document.getElementById("mainCard");
 const progressTrackEl = document.querySelector(".progress-track");
 const statsBarEl = document.querySelector(".stats-bar");
 const catCountEl = document.getElementById("catCount");
+const catPanelTitleEl = document.getElementById("catPanelTitle");
+const difficultyHardBtn = document.getElementById("difficultyHardBtn");
+const difficultyMediumBtn = document.getElementById("difficultyMediumBtn");
+const difficultyEasyBtn = document.getElementById("difficultyEasyBtn");
+const sliderUnitLabelEl = document.getElementById("sliderUnitLabel");
 const newGameBtn = document.getElementById("newGameBtn");
 const searchPanelEl = document.getElementById("searchPanel");
+const searchPanelTitleEl = document.getElementById("searchPanelTitle");
+const searchPanelSubtitleEl = document.getElementById("searchPanelSubtitle");
+const grammarSectionTitleEl = document.getElementById("grammarSectionTitle");
+const grammarGridEl = document.getElementById("grammarGrid");
 const searchLinksEl = document.getElementById("searchLinks");
 const authorPanelEl = document.getElementById("authorPanel");
 const authorToggleBtn = document.getElementById("authorToggleBtn");
+const authorPanelTitleEl = document.getElementById("authorPanelTitle");
 
 const addCardForm = document.getElementById("addCardForm");
 const addCardDeEl = document.getElementById("newCardDe");
 const addCardHrEl = document.getElementById("newCardHr");
 const addCardEnEl = document.getElementById("newCardEn");
 const addCardCatEl = document.getElementById("newCardCat");
+const authorLabelDeEl = document.getElementById("authorLabelDe");
+const authorLabelCatEl = document.getElementById("authorLabelCat");
+const authorLabelHrEl = document.getElementById("authorLabelHr");
+const authorLabelEnEl = document.getElementById("authorLabelEn");
 const addCardSaveBtn = document.getElementById("addCardSaveBtn");
 const exportCardsBtn = document.getElementById("exportCardsBtn");
 const addCardStatusEl = document.getElementById("addCardStatus");
 const authorModeEl = document.getElementById("authorMode");
+const factsPanelTitleEl = document.getElementById("factsPanelTitle");
+const factsPanelSubtitleEl = document.getElementById("factsPanelSubtitle");
 const factsCountryBtn = document.getElementById("factsCountryBtn");
 const factsStatesBtn = document.getElementById("factsStatesBtn");
 const statePickerWrap = document.getElementById("statePickerWrap");
 const statePickerEl = document.getElementById("statePicker");
 const factsContentEl = document.getElementById("factsContent");
+const enterHintTextEl = document.getElementById("enterHintText");
+const sessionEndLabelEl = document.getElementById("sessionEndLabel");
+const restartBtnEl = document.getElementById("restartBtn");
+const siteFooterLinkEl = document.getElementById("siteFooterLink");
 
 if (statsBarEl && mainCard && progressTrackEl) {
   mainCard.insertBefore(statsBarEl, progressTrackEl);
@@ -353,6 +384,65 @@ function saveLearningMode() {
   } catch (error) {
     // Ignore storage failures and keep the in-memory preference.
   }
+}
+
+function getLocale() {
+  return learningMode;
+}
+
+function getLocaleBundle(locale = getLocale()) {
+  if (!locales) {
+    return null;
+  }
+  return locales[locale] || locales.de || null;
+}
+
+function getByPath(object, path) {
+  return String(path || "")
+    .split(".")
+    .reduce((value, key) => (value && value[key] !== undefined ? value[key] : undefined), object);
+}
+
+function formatTemplate(template, params = {}) {
+  return String(template).replace(/\{(\w+)\}/g, (_, key) => (
+    params[key] !== undefined && params[key] !== null ? String(params[key]) : ""
+  ));
+}
+
+function t(path, params = {}) {
+  const current = getByPath(getLocaleBundle(), path);
+  if (current !== undefined) {
+    return formatTemplate(current, params);
+  }
+  const fallback = getByPath(getLocaleBundle("de"), path);
+  if (fallback !== undefined) {
+    return formatTemplate(fallback, params);
+  }
+  return path;
+}
+
+function getCategoryLabel(cat) {
+  return t(`categories.${cat}`);
+}
+
+function setTextContent(element, value) {
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function setLocalizedText(element, path, params) {
+  setTextContent(element, t(path, params));
+}
+
+function setLocalizedAriaLabel(element, path, params) {
+  if (element) {
+    element.setAttribute("aria-label", t(path, params));
+  }
+}
+
+function joinLocalizedList(items, conjunction = ", ") {
+  return items.filter(Boolean).join(conjunction);
 }
 
 function getCardValue(card, language) {
@@ -402,18 +492,128 @@ function renderSiteTitle(language) {
 }
 
 function updateLanguageDock() {
+  const languageDock = document.getElementById("languageDock");
+  if (languageDock) {
+    languageDock.setAttribute("aria-label", t("messages.languageDockAria"));
+  }
   languageDockButtons.forEach((button) => {
     const language = button.dataset.lang;
     button.textContent = LANGUAGE_FLAGS[language] || "";
     button.classList.toggle("is-active", language === getTargetLanguage());
     button.setAttribute("aria-pressed", String(language === getTargetLanguage()));
+    button.setAttribute("aria-label", t(`messages.languageNames.${language}`));
   });
 }
 
 function applyLearningTheme() {
   document.body.dataset.learningMode = getTargetLanguage();
+  document.documentElement.lang = getLocaleBundle()?.meta?.htmlLang || getTargetLanguage();
   updateLanguageDock();
   renderSiteTitle(getTargetLanguage());
+}
+
+function renderGrammarSection() {
+  if (!grammarGridEl) {
+    return;
+  }
+
+  grammarGridEl.innerHTML = "";
+  const cards = getLocaleBundle()?.grammar?.cards || [];
+
+  cards.forEach((card) => {
+    const section = document.createElement("section");
+    section.className = "grammar-card";
+
+    const title = document.createElement("div");
+    title.className = "grammar-card-title";
+    title.textContent = card.title;
+    section.appendChild(title);
+
+    const wrap = document.createElement("div");
+    wrap.className = "grammar-table-wrap";
+
+    const table = document.createElement("table");
+    table.className = "grammar-table";
+
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+    card.columns.forEach((column) => {
+      const th = document.createElement("th");
+      th.textContent = column;
+      headRow.appendChild(th);
+    });
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+    card.rows.forEach((row) => {
+      const tr = document.createElement("tr");
+      row.forEach((cell, index) => {
+        const td = document.createElement(index === 0 ? "th" : "td");
+        td.textContent = cell;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    wrap.appendChild(table);
+    section.appendChild(wrap);
+    grammarGridEl.appendChild(section);
+  });
+}
+
+function renderStaticUi() {
+  setLocalizedText(statLabelStreakEl, "messages.stats.streak");
+  setLocalizedText(statLabelRemainingEl, "messages.stats.remaining");
+  setLocalizedText(statLabelAccuracyEl, "messages.stats.accuracy");
+  setLocalizedText(statLabelWpmEl, "messages.stats.wpm");
+  setLocalizedAriaLabel(cardLegendEl, "messages.legend.aria");
+  setLocalizedText(legendCorrectEl, "messages.legend.correct");
+  setLocalizedText(legendNextEl, "messages.legend.next");
+  setLocalizedText(legendWrongEl, "messages.legend.wrong");
+  setLocalizedText(promptHeadTitleEl, "messages.prompt.card");
+  if (promptSwapBtn) {
+    promptSwapBtn.setAttribute("aria-label", t("messages.prompt.swapAria"));
+    promptSwapBtn.setAttribute("title", t("messages.prompt.swapTitle"));
+  }
+  if (inputEl) {
+    inputEl.placeholder = t("messages.prompt.placeholder");
+  }
+  setLocalizedText(answerGuideLabelEl, "messages.guide.label");
+  setLocalizedText(document.getElementById("hintBtn"), "messages.actions.hint");
+  setLocalizedText(enterHintTextEl, "messages.actions.enterHint");
+  setLocalizedText(sessionEndLabelEl, "messages.session.finished");
+  setLocalizedText(restartBtnEl, "messages.session.newRound");
+  setLocalizedText(catPanelTitleEl, "messages.categories.title");
+  setLocalizedText(sliderUnitLabelEl, "messages.categories.unit");
+  setLocalizedText(newGameBtn, "messages.categories.newGame");
+  setLocalizedText(difficultyEasyBtn, "difficulty.easy");
+  setLocalizedText(difficultyMediumBtn, "difficulty.medium");
+  setLocalizedText(difficultyHardBtn, "difficulty.hard");
+  setLocalizedText(searchPanelTitleEl, "messages.search.title");
+  setLocalizedText(searchPanelSubtitleEl, "messages.search.subtitle");
+  setLocalizedText(authorToggleBtn, "messages.search.authorToggle");
+  setLocalizedText(grammarSectionTitleEl, "grammar.title");
+  setLocalizedText(authorPanelTitleEl, "messages.authoring.title");
+  setLocalizedText(authorLabelDeEl, "messages.authoring.labels.de");
+  setLocalizedText(authorLabelCatEl, "messages.authoring.labels.cat");
+  setLocalizedText(authorLabelHrEl, "messages.authoring.labels.hr");
+  setLocalizedText(authorLabelEnEl, "messages.authoring.labels.en");
+  if (addCardDeEl) {
+    addCardDeEl.placeholder = t("messages.authoring.placeholders.de");
+  }
+  if (addCardHrEl) {
+    addCardHrEl.placeholder = t("messages.authoring.placeholders.hr");
+  }
+  if (addCardEnEl) {
+    addCardEnEl.placeholder = t("messages.authoring.placeholders.en");
+  }
+  setLocalizedText(factsPanelTitleEl, "facts.panelTitle");
+  setLocalizedText(factsPanelSubtitleEl, "facts.panelSubtitle");
+  setLocalizedText(factsCountryBtn, "facts.tabs.germany");
+  setLocalizedText(factsStatesBtn, "facts.tabs.europe");
+  setLocalizedText(siteFooterLinkEl, "footer");
+  renderGrammarSection();
 }
 
 function switchLearningMode(nextLanguage) {
@@ -431,6 +631,11 @@ function switchLearningMode(nextLanguage) {
     learningMode = nextLanguage;
     saveLearningMode();
     applyLearningTheme();
+    renderStaticUi();
+    renderInstallGuide();
+    renderAuthoringMode();
+    updateStats();
+    renderFactsSelection();
     loadCard();
 
     if (siteTitleEl) {
@@ -463,8 +668,8 @@ function renderPrompt(card) {
   }
   if (promptSwapBtn) {
     promptSwapBtn.innerHTML = "&#128260;";
-    promptSwapBtn.setAttribute("aria-label", "Lernsprache wechseln");
-    promptSwapBtn.setAttribute("title", "Lernsprache wechseln");
+    promptSwapBtn.setAttribute("aria-label", t("messages.prompt.swapAria"));
+    promptSwapBtn.setAttribute("title", t("messages.prompt.swapTitle"));
   }
   return;
 }
@@ -530,6 +735,10 @@ async function fetchJson(url, fallback) {
   }
 }
 
+async function loadLocales() {
+  return fetchJson("locales.json", null);
+}
+
 async function detectCapabilities() {
   try {
     const response = await fetch("/api/capabilities", { cache: "no-store" });
@@ -576,19 +785,20 @@ function setAuthoringBusy(isBusy) {
   addCardSaveBtn.disabled = isBusy;
   exportCardsBtn.disabled = isBusy;
   addCardSaveBtn.textContent = isBusy
-    ? "Speichert..."
+    ? t("messages.authoring.saveBusy")
     : capabilities.persistentSave
-      ? "Dauerhaft speichern"
-      : "Zur Sitzung speichern";
+      ? t("messages.authoring.savePersistent")
+      : t("messages.authoring.saveSession");
+  exportCardsBtn.textContent = t("messages.authoring.export");
 }
 
 function renderAuthoringMode() {
   if (capabilities.persistentSave) {
     authorModeEl.classList.add("persistent");
-    setAuthoringFeedback("Direktes Speichern ist aktiv. Export bleibt als Backup verfügbar.", false);
+    setAuthoringFeedback(t("messages.authoring.modePersistent"), false);
   } else {
     authorModeEl.classList.remove("persistent");
-    setAuthoringFeedback("Mit npx serve . kannst du Karten lokal anlegen und danach als cards.user.json herunterladen.", false);
+    setAuthoringFeedback(t("messages.authoring.modeSession"), false);
   }
   setAuthoringBusy(false);
 }
@@ -598,7 +808,7 @@ function fillCategorySelect() {
   allCats.forEach((cat) => {
     const option = document.createElement("option");
     option.value = cat;
-    option.textContent = cat;
+    option.textContent = getCategoryLabel(cat);
     addCardCatEl.appendChild(option);
   });
 }
@@ -612,7 +822,7 @@ function buildCatPanel() {
   if (selectedCats === null) {
     mixBtn.style.background = "#e8ff47";
   }
-  mixBtn.textContent = "Gemischt";
+  mixBtn.textContent = t("messages.categories.mixed");
   mixBtn.onclick = () => {
     selectedCats = null;
     buildCatPanel();
@@ -624,7 +834,7 @@ function buildCatPanel() {
     const isActive = selectedCats !== null && selectedCats.has(cat);
     const btn = document.createElement("button");
     btn.className = `cat-btn${isActive ? " active" : ""}`;
-    btn.textContent = cat;
+    btn.textContent = getCategoryLabel(cat);
     btn.style.borderColor = `${color}55`;
     btn.style.color = isActive ? "#000" : color;
     if (isActive) {
@@ -650,7 +860,10 @@ function buildCatPanel() {
   });
 
   const pool = getPool();
-  catCountEl.textContent = `${pool.length} Karten verfügbar`;
+  catCountEl.textContent = t("messages.categories.available", {
+    count: pool.length,
+    unit: t("messages.categories.unit"),
+  });
   newGameBtn.disabled = pool.length === 0;
 }
 
@@ -673,6 +886,129 @@ function updateSearchLinks(card) {
     link.rel = "noopener";
     link.innerHTML = `<span class="search-link-icon">${site.icon}</span><span>${site.name}</span>`;
     searchLinksEl.appendChild(link);
+  });
+}
+
+const FACT_LANGUAGE_MAP = {
+  Deutsch: { de: "Deutsch", hr: "njemački", en: "German" },
+  Englisch: { de: "Englisch", hr: "engleski", en: "English" },
+  Kroatisch: { de: "Kroatisch", hr: "hrvatski", en: "Croatian" },
+  Französisch: { de: "Französisch", hr: "francuski", en: "French" },
+  Spanisch: { de: "Spanisch", hr: "španjolski", en: "Spanish" },
+  Katalanisch: { de: "Katalanisch", hr: "katalonski", en: "Catalan" },
+  Baskisch: { de: "Baskisch", hr: "baskijski", en: "Basque" },
+  Galicisch: { de: "Galicisch", hr: "galicijski", en: "Galician" },
+  Schwedisch: { de: "Schwedisch", hr: "švedski", en: "Swedish" },
+  Polnisch: { de: "Polnisch", hr: "poljski", en: "Polish" },
+  Ungarisch: { de: "Ungarisch", hr: "mađarski", en: "Hungarian" },
+};
+
+function getFactsBundle() {
+  return getLocaleBundle()?.facts || getLocaleBundle("de")?.facts || {};
+}
+
+function getLocalizedCountryNameById(id, fallback = "") {
+  return getFactsBundle().names?.countries?.[id] || fallback;
+}
+
+function translateCountryOrRegionName(value) {
+  const factsBundle = getFactsBundle();
+  if (value === "Deutschland") {
+    return factsBundle.names?.germany || value;
+  }
+  if (value === "Europa") {
+    return factsBundle.names?.europe || value;
+  }
+  const countryEntries = Object.entries(getLocaleBundle("de")?.facts?.names?.countries || {});
+  for (const [id, name] of countryEntries) {
+    if (name === value) {
+      return getLocalizedCountryNameById(id, value);
+    }
+  }
+  return factsBundle.regions?.[value] || value;
+}
+
+function translateFactScalar(value) {
+  if (!value || typeof value !== "string") {
+    return value;
+  }
+
+  const factsBundle = getFactsBundle();
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return trimmed;
+  }
+
+  if (trimmed === "Ja") {
+    return factsBundle.values?.yes || trimmed;
+  }
+  if (trimmed === "Nein") {
+    return factsBundle.values?.no || trimmed;
+  }
+
+  if (factsBundle.stateTypes?.[trimmed]) {
+    return factsBundle.stateTypes[trimmed];
+  }
+  if (factsBundle.stateForms?.[trimmed]) {
+    return factsBundle.stateForms[trimmed];
+  }
+  if (factsBundle.regions?.[trimmed]) {
+    return factsBundle.regions[trimmed];
+  }
+  if (FACT_LANGUAGE_MAP[trimmed]) {
+    return FACT_LANGUAGE_MAP[trimmed][getLocale()] || FACT_LANGUAGE_MAP[trimmed].de;
+  }
+  if (trimmed.includes(",")) {
+    return trimmed
+      .split(",")
+      .map((part) => translateFactScalar(part.trim()))
+      .join(", ");
+  }
+  return translateCountryOrRegionName(trimmed);
+}
+
+function translateFactList(values) {
+  if (!Array.isArray(values)) {
+    return [];
+  }
+  return values.map((value) => translateFactScalar(value));
+}
+
+function buildGermanyOverview(countryData) {
+  return t("facts.values.germanyOverviewText", {
+    statesCount: countryData.states_count,
+    neighbors: joinLocalizedList(translateFactList(countryData.neighboring_countries)),
+  });
+}
+
+function buildEuropeOverview(unionData) {
+  return t("facts.values.europeOverviewText", {
+    capital: unionData.capital,
+    institutions: joinLocalizedList(translateFactList(unionData.institutions)),
+  });
+}
+
+function buildStateLocationSummary(stateData) {
+  return t("facts.values.stateLocationText", {
+    name: stateData.name,
+    region: translateFactScalar(stateData.region),
+    capital: stateData.capital,
+  });
+}
+
+function buildStateProfileSummary(stateData) {
+  return t("facts.values.stateProfileText", {
+    name: stateData.name,
+    knownFor: joinLocalizedList(translateFactList(stateData.known_for)),
+  });
+}
+
+function buildCountryOverview(countryData) {
+  return t("facts.values.countryOverviewText", {
+    name: getLocalizedCountryNameById(countryData.id, countryData.name),
+    region: translateFactScalar(countryData.region),
+    capital: countryData.capital,
+    neighbors: joinLocalizedList(translateFactList(countryData.neighboring_countries)),
   });
 }
 
@@ -845,9 +1181,9 @@ function createFactsList(label, items) {
 function getStatePeopleLists(stateId) {
   const notablePeople = STATE_NOTABLE_PEOPLE[stateId] || {};
   return [
-    ["Bekannte Personen: Wissenschaft", notablePeople.science],
-    ["Bekannte Personen: Politik", notablePeople.politics],
-    ["Bekannte Personen: Kunst", notablePeople.art],
+    [t("facts.lists.science"), notablePeople.science],
+    [t("facts.lists.politics"), notablePeople.politics],
+    [t("facts.lists.art"), notablePeople.art],
   ];
 }
 
@@ -868,7 +1204,7 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
 
   const flagEl = document.createElement("img");
   flagEl.className = "facts-flag";
-  flagEl.alt = `${title} Flagge`;
+  flagEl.alt = `${title} flag`;
   flagEl.loading = "lazy";
   flagEl.decoding = "async";
   flagEl.addEventListener("error", () => {
@@ -907,8 +1243,8 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
       tourismEl.href = tourismUrl;
       tourismEl.target = "_blank";
       tourismEl.rel = "noopener noreferrer";
-      tourismEl.textContent = "Tourismus";
-      tourismEl.setAttribute("aria-label", `${title} Tourismus in neuem Tab öffnen`);
+      tourismEl.textContent = t("facts.links.tourism");
+      tourismEl.setAttribute("aria-label", t("facts.values.tourismAria", { name: title }));
       linksEl.appendChild(tourismEl);
     }
 
@@ -918,8 +1254,8 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
       officialEl.href = officialUrl;
       officialEl.target = "_blank";
       officialEl.rel = "noopener noreferrer";
-      officialEl.textContent = "Official";
-      officialEl.setAttribute("aria-label", `${title} offizielle Website in neuem Tab öffnen`);
+      officialEl.textContent = t("facts.links.official");
+      officialEl.setAttribute("aria-label", t("facts.values.officialSiteAria", { name: title }));
       linksEl.appendChild(officialEl);
     }
 
@@ -964,37 +1300,37 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
 
 function renderCountryFacts(countryData) {
   renderFactsView(
-      countryData.name || "Deutschland",
-      countryData.official_name || "",
+      t("facts.names.germany"),
+      translateFactScalar(countryData.official_name || ""),
       getFactsImagePath("country"),
     [
-      ["Hauptstadt", countryData.capital],
-      ["Gr\u00f6\u00dfte Stadt", countryData.largest_city],
-      ["Hymne", countryData.anthem],
-      ["Gegr\u00fcndet", countryData.founded],
-      ["Staatsform", countryData.state_form],
-      ["Nationalfeiertag", countryData.national_day],
-      ["Einwohnerzahl", countryData.population],
-      ["Fl\u00e4che", countryData.area_km2],
-      ["Anzahl Bundesl\u00e4nder", countryData.states_count],
-      ["W\u00e4hrung", countryData.currency],
-      ["Sprache", countryData.language],
-      ["Zeitzone", countryData.time_zone],
-      ["Telefonvorwahl", countryData.calling_code],
-      ["Internet-Domain", countryData.internet_tld],
-      ["Nachbarl\u00e4nder", countryData.bordering_countries_count],
-      ["BIP nominal", countryData.gdp_nominal],
-      ["EU seit", countryData.eu_member_since],
+      [t("facts.fields.capital"), countryData.capital],
+      [t("facts.fields.largestCity"), countryData.largest_city],
+      [t("facts.fields.anthem"), countryData.anthem],
+      [t("facts.fields.founded"), countryData.founded],
+      [t("facts.fields.stateForm"), translateFactScalar(countryData.state_form)],
+      [t("facts.fields.nationalDay"), countryData.national_day],
+      [t("facts.fields.population"), countryData.population],
+      [t("facts.fields.area"), countryData.area_km2],
+      [t("facts.fields.statesCount"), countryData.states_count],
+      [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
+      [t("facts.fields.language"), translateFactScalar(countryData.language)],
+      [t("facts.fields.timeZone"), countryData.time_zone],
+      [t("facts.fields.callingCode"), countryData.calling_code],
+      [t("facts.fields.internetTld"), countryData.internet_tld],
+      [t("facts.fields.bordersCount"), countryData.bordering_countries_count],
+      [t("facts.fields.gdp"), countryData.gdp_nominal],
+      [t("facts.fields.euSince"), countryData.eu_member_since],
       {
-        label: "Deutschland im \u00dcberblick",
-        value: countryData.overview,
+        label: t("facts.featured.germanyOverview"),
+        value: buildGermanyOverview(countryData),
         featured: true,
       },
     ],
     [
-      ["Nachbarl\u00e4nder", countryData.neighboring_countries],
-      ["Bekannte Orte", countryData.highlights],
-      ["Natur und Landschaft", countryData.nature],
+      [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries)],
+      [t("facts.lists.highlights"), translateFactList(countryData.highlights)],
+      [t("facts.lists.nature"), translateFactList(countryData.nature)],
       ],
       TOURISM_LINKS.germany,
       OFFICIAL_LINKS.germany
@@ -1003,35 +1339,35 @@ function renderCountryFacts(countryData) {
 
 function renderEuropeOverview(unionData) {
   renderFactsView(
-      unionData.name || "Europa",
-      unionData.official_name || "",
+      t("facts.names.europe"),
+      translateFactScalar(unionData.official_name || ""),
       EUROPE_FLAG_IMAGE,
     [
-      ["Hauptstadt", unionData.capital],
-      ["Groesste Stadt", unionData.largest_city],
-      ["Hymne", unionData.anthem],
-      ["Gegruendet", unionData.founded],
-      ["Staatsform", unionData.state_form],
-      ["Europatag", unionData.national_day],
-      ["Bevoelkerung", unionData.population],
-      ["Flaeche", unionData.area_km2],
-      ["Mitgliedstaaten", unionData.states_count],
-      ["Waehrung", unionData.currency],
-      ["Sprachen", unionData.language],
-      ["Zeitzonen", unionData.time_zone],
-      ["Internet-Domain", unionData.internet_tld],
-      ["BIP nominal", unionData.gdp_nominal],
+      [t("facts.fields.capital"), unionData.capital],
+      [t("facts.fields.largestCity"), unionData.largest_city],
+      [t("facts.fields.anthem"), unionData.anthem],
+      [t("facts.fields.founded"), unionData.founded],
+      [t("facts.fields.stateForm"), translateFactScalar(unionData.state_form)],
+      [t("facts.fields.nationalDay"), unionData.national_day],
+      [t("facts.fields.population"), unionData.population],
+      [t("facts.fields.area"), unionData.area_km2],
+      [t("facts.fields.statesCount"), unionData.states_count],
+      [t("facts.fields.currency"), translateFactScalar(unionData.currency)],
+      [t("facts.fields.language"), translateFactScalar(unionData.language)],
+      [t("facts.fields.timeZone"), unionData.time_zone],
+      [t("facts.fields.internetTld"), unionData.internet_tld],
+      [t("facts.fields.gdp"), unionData.gdp_nominal],
       {
-        label: "Europa im Ueberblick",
-        value: unionData.overview,
+        label: t("facts.featured.europeOverview"),
+        value: buildEuropeOverview(unionData),
         featured: true,
       },
     ],
     [
-      ["Institutionen", unionData.institutions],
-      ["Ausgewaehlte Orte", unionData.highlights],
-      ["Natur und Grossraeume", unionData.nature],
-      ["Meere und Verbindungen", unionData.neighboring_countries],
+      [t("facts.lists.institutions"), translateFactList(unionData.institutions)],
+      [t("facts.lists.highlights"), translateFactList(unionData.highlights)],
+      [t("facts.lists.nature"), translateFactList(unionData.nature)],
+      [t("facts.lists.seas"), translateFactList(unionData.neighboring_countries)],
       ]
     );
   }
@@ -1042,31 +1378,31 @@ function renderStateFacts(stateData) {
       "",
       getFactsImagePath("state", stateData.id),
     [
-      ["K\u00fcrzel", stateData.abbreviation],
-      ["Landestyp", stateData.state_type],
-      ["Region", stateData.region],
-      ["Hauptstadt", stateData.capital],
-      ["Gr\u00f6\u00dfte Stadt", stateData.largest_city],
-      ["Einwohnerzahl", stateData.population],
-      ["Fl\u00e4che", stateData.area_km2],
-      ["Gegr\u00fcndet / in heutiger Form", stateData.joined_or_founded],
-      ["Regierungschef", stateData.minister_president || stateData.state_head],
+      [t("facts.fields.abbreviation"), stateData.abbreviation],
+      [t("facts.fields.stateType"), translateFactScalar(stateData.state_type)],
+      [t("facts.fields.region"), translateFactScalar(stateData.region)],
+      [t("facts.fields.capital"), stateData.capital],
+      [t("facts.fields.largestCity"), stateData.largest_city],
+      [t("facts.fields.population"), stateData.population],
+      [t("facts.fields.area"), stateData.area_km2],
+      [t("facts.fields.joined"), stateData.joined_or_founded],
+      [t("facts.fields.headOfGovernment"), stateData.minister_president || stateData.state_head],
       {
-        label: "Lage und Raum",
-        value: stateData.location_summary,
+        label: t("facts.featured.location"),
+        value: buildStateLocationSummary(stateData),
         featured: true,
       },
       {
-        label: "Kurzprofil",
-        value: stateData.identity_summary,
+        label: t("facts.featured.profile"),
+        value: buildStateProfileSummary(stateData),
         featured: true,
       },
     ],
     [
-      ["Nachbar-Bundesl\u00e4nder", stateData.neighboring_states],
-      ["Grenzt an", stateData.bordering_countries],
-      ["Bekannt f\u00fcr", stateData.known_for],
-      ["Natur und Landschaft", stateData.nature],
+      [t("facts.lists.neighborStates"), translateFactList(stateData.neighboring_states)],
+      [t("facts.lists.borders"), translateFactList(stateData.bordering_countries)],
+      [t("facts.lists.knownFor"), translateFactList(stateData.known_for)],
+      [t("facts.lists.nature"), translateFactList(stateData.nature)],
       ...getStatePeopleLists(stateData.id),
       ],
       TOURISM_LINKS.states[stateData.id] || "",
@@ -1076,31 +1412,31 @@ function renderStateFacts(stateData) {
 
 function renderEuropeanCountryFacts(countryData) {
   renderFactsView(
-      countryData.name || "Land",
-      countryData.official_name || "",
+      getLocalizedCountryNameById(countryData.id, countryData.name || "Land"),
+      translateFactScalar(countryData.official_name || ""),
       countryData.flag_image || "",
     [
-      ["Hauptstadt", countryData.capital],
-      ["Region", countryData.region],
-      ["Staatsform", countryData.state_form],
-      ["Einwohnerzahl", countryData.population],
-      ["Flaeche", countryData.area_km2],
-      ["Waehrung", countryData.currency],
-      ["Sprache", countryData.language],
-      ["Zeitzone", countryData.time_zone],
-      ["Telefonvorwahl", countryData.calling_code],
-      ["Internet-Domain", countryData.internet_tld],
-      ["Binnenland", countryData.landlocked],
+      [t("facts.fields.capital"), countryData.capital],
+      [t("facts.fields.region"), translateFactScalar(countryData.region)],
+      [t("facts.fields.stateForm"), translateFactScalar(countryData.state_form)],
+      [t("facts.fields.population"), countryData.population],
+      [t("facts.fields.area"), countryData.area_km2],
+      [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
+      [t("facts.fields.language"), translateFactScalar(countryData.language)],
+      [t("facts.fields.timeZone"), countryData.time_zone],
+      [t("facts.fields.callingCode"), countryData.calling_code],
+      [t("facts.fields.internetTld"), countryData.internet_tld],
+      [t("facts.fields.landlocked"), translateFactScalar(countryData.landlocked)],
       {
-        label: "Kurzprofil",
-        value: countryData.overview,
+        label: t("facts.featured.profile"),
+        value: buildCountryOverview(countryData),
         featured: true,
       },
     ],
     [
-      ["Nachbarlaender", countryData.neighboring_countries],
-      ["Sprachen", countryData.languages_list],
-      ["Zeitzonen", countryData.timezones_list],
+      [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries)],
+      [t("facts.lists.languages"), translateFactList(countryData.languages_list)],
+      [t("facts.lists.timezones"), countryData.timezones_list],
       ],
       TOURISM_LINKS.countries[countryData.id] || "",
       OFFICIAL_LINKS.countries[countryData.id] || ""
@@ -1111,7 +1447,7 @@ function renderFactsError() {
   factsContentEl.innerHTML = "";
   const error = document.createElement("div");
   error.className = "facts-error";
-  error.textContent = "Fakten konnten nicht geladen werden.";
+  error.textContent = t("facts.errors.loadFailed");
   factsContentEl.appendChild(error);
 }
 
@@ -1137,7 +1473,7 @@ function buildFactsPicker() {
         id: state.id,
         label: state.name,
         active: state.id === selectedStateId,
-        ariaLabel: `Bundesland ${state.name} auswaehlen`,
+        ariaLabel: t("facts.picker.stateButton", { name: state.name }),
         onClick: () => {
           factsMode = "state";
           selectedStateId = state.id;
@@ -1146,9 +1482,11 @@ function buildFactsPicker() {
       }))
     : (europeFacts?.countries || []).map((country) => ({
         id: country.id,
-        label: country.name,
+        label: getLocalizedCountryNameById(country.id, country.name),
         active: country.id === selectedEuropeCountryId,
-        ariaLabel: `Land ${country.name} auswaehlen`,
+        ariaLabel: t("facts.picker.countryButton", {
+          name: getLocalizedCountryNameById(country.id, country.name),
+        }),
         onClick: () => {
           factsMode = "europe-country";
           selectedEuropeCountryId = country.id;
@@ -1158,7 +1496,7 @@ function buildFactsPicker() {
 
   statePickerEl.setAttribute(
     "aria-label",
-    isGermanyMode ? "Bundeslaender auswaehlen" : "Europaeische Laender auswaehlen"
+    isGermanyMode ? t("facts.picker.statesAria") : t("facts.picker.countriesAria")
   );
 
   items.forEach((item) => {
@@ -1342,8 +1680,8 @@ function getGuideProgress(target, typed) {
   if (hasExtraChars) {
     return {
       state: "error",
-      statusText: "Zu lang - letztes Zeichen loeschen",
-      noteText: "Die Antwort war schon komplett. Extra Zeichen werden rot hinten angehaengt."
+      statusText: t("messages.guide.statusTooLong"),
+      noteText: t("messages.guide.noteTooLong")
     };
   }
 
@@ -1362,15 +1700,19 @@ function getGuideProgress(target, typed) {
 
     return {
       state: "error",
-      statusText: `Fehler in Wort ${currentWord}/${totalWords} - pruef Zeichen ${charInWord}`,
-      noteText: "Rot markiert den ersten falschen Teil der Eingabe."
+      statusText: t("messages.guide.statusWrong", {
+        word: currentWord,
+        total: totalWords,
+        char: charInWord,
+      }),
+      noteText: t("messages.guide.noteWrong")
     };
   }
 
   if (correctPrefixLen >= target.length) {
     return {
       state: "success",
-      statusText: `Wort ${totalWords}/${totalWords} komplett`,
+      statusText: t("messages.guide.statusDone", { total: totalWords }),
       noteText: ""
     };
   }
@@ -1392,14 +1734,22 @@ function getGuideProgress(target, typed) {
   if (nextChar === " ") {
     return {
       state: "progress",
-      statusText: `Wort ${currentWord}/${totalWords} fertig - jetzt Leerzeichen`,
+      statusText: t("messages.guide.statusSpace", {
+        word: currentWord,
+        total: totalWords,
+      }),
       noteText: ""
     };
   }
 
   return {
     state: "progress",
-    statusText: `Wort ${currentWord}/${totalWords} - Buchstabe ${charInWord}/${words[currentWord - 1].length}`,
+    statusText: t("messages.guide.statusProgress", {
+      word: currentWord,
+      total: totalWords,
+      char: charInWord,
+      length: words[currentWord - 1].length,
+    }),
     noteText: ""
   };
 }
@@ -1531,7 +1881,7 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
       const typedSeparator = typed[separatorIndex];
 
       separator.className = "word-separator";
-      separator.textContent = "space";
+      separator.textContent = t("messages.guide.separator");
 
       if (typedSeparator !== undefined) {
         separator.classList.add(typedSeparator === " " ? "state-ok" : "state-bad");
@@ -1548,7 +1898,7 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
       if (extraChar === " ") {
         const extraSeparator = document.createElement("div");
         extraSeparator.className = "word-separator state-bad is-overflow";
-        extraSeparator.textContent = "extra space";
+        extraSeparator.textContent = t("messages.guide.extraSeparator");
         wordGrid.appendChild(extraSeparator);
         return;
       }
@@ -1617,7 +1967,7 @@ function loadCard() {
   progFill.style.width = `${(sessionIndex / sessionCards.length) * 100}%`;
 
   const color = catColors[card.cat] || "#888";
-  categoryEl.textContent = card.cat;
+  categoryEl.textContent = getCategoryLabel(card.cat);
   categoryEl.style.color = color;
   categoryEl.style.borderColor = `${color}55`;
   categoryEl.style.background = `${color}14`;
@@ -1666,8 +2016,7 @@ function showCombo() {
     return;
   }
 
-  const labels = ["", "", "", "Gut!", "Stark!", "Super!", "Mega!", "Wahnsinn!", "Unschlagbar!"];
-  comboPop.textContent = labels[Math.min(streak, labels.length - 1)] || `x${streak}`;
+  comboPop.textContent = t(`combo.${Math.min(streak, 8)}`) || `x${streak}`;
   comboPop.classList.remove("animate");
   void comboPop.offsetWidth;
   comboPop.classList.add("animate");
@@ -1715,63 +2064,58 @@ function detectInstallGuideContext() {
   const isFirefoxDesktop = isFirefox && !isMobile;
   const isFirefoxMobile = isFirefox && isMobile;
 
-  let browserLabel = "Browser";
-  let installPath = {
-    de: "Menue > Install.",
-    hr: "Izbornik > Instaliraj",
-    en: "Menu > Install",
-  };
+  let browserLabel = t("installGuide.fallbackBrowser");
+  let installPathKey = "default";
 
   if (isIOS && isSafari) {
     browserLabel = "Safari";
-    installPath = { de: "Teilen > Home", hr: "Dijeli > Home", en: "Share > Home" };
+    installPathKey = "iosShare";
   } else if (isEdgeIOS) {
     browserLabel = "Edge iPhone";
-    installPath = { de: "Teilen > Home", hr: "Dijeli > Home", en: "Share > Home" };
+    installPathKey = "iosShare";
   } else if (isIOS && isChromeIOS) {
     browserLabel = "Chrome iOS";
-    installPath = { de: "Teilen > Home", hr: "Dijeli > Home", en: "Share > Home" };
+    installPathKey = "iosShare";
   } else if (isFirefoxIOS) {
     browserLabel = "Firefox iPhone";
-    installPath = { de: "Teilen > Home", hr: "Dijeli > Home", en: "Share > Home" };
+    installPathKey = "iosShare";
   } else if (isAndroid && isSamsung) {
     browserLabel = "Samsung";
-    installPath = { de: "Menue > Seite > Home", hr: "Izbornik > Stranica > Home", en: "Menu > Page > Home" };
+    installPathKey = "samsung";
   } else if (isEdgeAndroid) {
     browserLabel = "Edge Android";
-    installPath = { de: "... > Zum Handy", hr: "... > Dodaj na mobitel", en: "... > Add to phone" };
+    installPathKey = "edgeAndroid";
   } else if (isAndroid && isOperaTouch) {
     browserLabel = "Opera Touch";
-    installPath = { de: "Menue > Home", hr: "Izbornik > Home", en: "Menu > Home" };
+    installPathKey = "opera";
   } else if (isAndroid && isOpera) {
     browserLabel = "Opera";
-    installPath = { de: "Menue > Home", hr: "Izbornik > Home", en: "Menu > Home" };
+    installPathKey = "opera";
   } else if (isFirefoxMobile) {
     browserLabel = "Firefox";
-    installPath = { de: "Menue > Install/Home", hr: "Izbornik > Instaliraj/Home", en: "Menu > Install/Home" };
+    installPathKey = "firefoxMobile";
   } else if (isAndroid && isChromeDesktopOrAndroid) {
     browserLabel = "Chrome";
-    installPath = { de: "Menue > Home", hr: "Izbornik > Home", en: "Menu > Home" };
+    installPathKey = "chromeAndroid";
   } else if (isEdgeDesktop) {
     browserLabel = "Edge";
-    installPath = { de: "... > Apps > Install.", hr: "... > Apps > Instaliraj", en: "... > Apps > Install" };
+    installPathKey = "edgeDesktop";
   } else if (isDesktop && isOpera) {
     browserLabel = "Opera";
-    installPath = { de: "Menue > Install.", hr: "Izbornik > Instaliraj", en: "Menu > Install" };
+    installPathKey = "default";
   } else if (isDesktop && isChromeDesktopOrAndroid) {
     browserLabel = "Chrome";
-    installPath = { de: "Menue > App install.", hr: "Izbornik > Install app", en: "Menu > Install app" };
+    installPathKey = "chromeDesktop";
   } else if (isFirefoxDesktop) {
     browserLabel = "Firefox";
-    installPath = { de: "besser Edge/Chrome", hr: "bolje Edge/Chrome", en: "better Edge/Chrome" };
+    installPathKey = "firefoxDesktop";
   } else if (isDesktop) {
-    browserLabel = "Desktop";
-    installPath = { de: "Menue > Install.", hr: "Izbornik > Instaliraj", en: "Menu > Install" };
+    browserLabel = t("installGuide.fallbackDesktop");
   } else if (isMobile) {
-    browserLabel = "Mobile";
+    browserLabel = t("installGuide.fallbackMobile");
   }
 
-  return { isMobile, isDesktop, browserLabel, installPath };
+  return { isMobile, isDesktop, browserLabel, installPathKey };
 }
 
 function renderInstallGuide() {
@@ -1781,7 +2125,10 @@ function renderInstallGuide() {
 
   const context = detectInstallGuideContext();
   installGuideBrowserEl.textContent = context.browserLabel;
-  installGuideStepsEl.textContent = context.installPath[getTargetLanguage()] || context.installPath.de;
+  const localizedPath = t(`installGuide.paths.${context.installPathKey}`);
+  installGuideStepsEl.textContent = localizedPath === `installGuide.paths.${context.installPathKey}`
+    ? t("installGuide.paths.default")
+    : localizedPath;
 }
 
 function hideInstallGuide() {
@@ -1816,26 +2163,15 @@ function initInstallGuide() {
 
   window.addEventListener("appinstalled", () => {
     hideInstallGuide();
-    showToast("App installiert");
+    showToast(t("messages.toasts.install"));
   });
 
   maybeShowInstallGuide();
 }
 
 function getEncouragement(currentStreak) {
-  if (currentStreak === 3) {
-    return "Drei in Reihe!";
-  }
-  if (currentStreak === 5) {
-    return "Fünf! Weiter so!";
-  }
-  if (currentStreak === 7) {
-    return "Perfekt!";
-  }
-  if (currentStreak === 10) {
-    return "Legende!";
-  }
-  return null;
+  const value = t(`messages.encouragement.${currentStreak}`);
+  return value === `messages.encouragement.${currentStreak}` ? null : value;
 }
 
 function showSessionEnd() {
@@ -1849,12 +2185,18 @@ function showSessionEnd() {
   const secs = Math.round((Date.now() - sessionStart) / 1000);
   const wpm = secs > 0 ? Math.round((totalCharsTyped / 5) / (secs / 60)) : 0;
   document.getElementById("finalDetails").textContent =
-    `${totalCorrect}/${sessionCards.length} richtig · Streak: ${bestStreak} · ${wpm} WPM · ${secs}s`;
+    t("messages.session.finalDetails", {
+      correct: totalCorrect,
+      total: sessionCards.length,
+      streak: bestStreak,
+      wpm,
+      secs,
+    });
   document.getElementById("finalEmoji").textContent =
-    pct === 100 ? "Topscore" :
-    pct >= 80 ? "Sehr stark" :
-    pct >= 60 ? "Guter Lauf" :
-    "Weiterüben";
+    pct === 100 ? t("messages.session.emojiPerfect") :
+    pct >= 80 ? t("messages.session.emojiStrong") :
+    pct >= 60 ? t("messages.session.emojiGood") :
+    t("messages.session.emojiPractice");
 }
 
 function hasDuplicate(card) {
@@ -1870,7 +2212,7 @@ function addCardToRuntime(card) {
 function downloadCardsUserJson() {
   const cards = getExtraCardsForExport();
   if (!cards.length) {
-    setAuthoringFeedback("Noch keine Zusatzkarten zum Exportieren vorhanden.", true);
+    setAuthoringFeedback(t("messages.authoring.exportEmpty"), true);
     return;
   }
 
@@ -1886,7 +2228,7 @@ function downloadCardsUserJson() {
   link.remove();
   URL.revokeObjectURL(url);
 
-  setAuthoringFeedback("cards.user.json wurde heruntergeladen. Lege die Datei ins Repo, damit sie beim nächsten Start geladen wird.", false);
+  setAuthoringFeedback(t("messages.authoring.exportDone"), false);
 }
 
 async function handleAddCardSubmit(event) {
@@ -1900,12 +2242,12 @@ async function handleAddCardSubmit(event) {
   });
 
   if (!card) {
-    setAuthoringFeedback("Bitte Deutsch, Kroatisch, Englisch und eine gültige Kategorie ausfüllen.", true);
+    setAuthoringFeedback(t("messages.authoring.invalid"), true);
     return;
   }
 
   if (hasDuplicate(card)) {
-    setAuthoringFeedback("Diese Karte existiert bereits.", true);
+    setAuthoringFeedback(t("messages.authoring.duplicate"), true);
     return;
   }
 
@@ -1921,25 +2263,25 @@ async function handleAddCardSubmit(event) {
 
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) {
-        throw new Error(payload.error || "Speichern fehlgeschlagen.");
+        throw new Error(payload.error || t("messages.authoring.saveFailed"));
       }
 
       const savedCard = payload.card || card;
       persistentCards = mergeCards(persistentCards, [savedCard]);
       addCardToRuntime(savedCard);
-      setAuthoringFeedback("Dauerhaft lokal gespeichert. Ein neues Spiel nimmt die Karte in die Auswahl auf.", false);
+      setAuthoringFeedback(t("messages.authoring.savedPersistent"), false);
     } else {
       sessionOnlyCards = mergeCards(sessionOnlyCards, [card]);
       saveSessionCards();
       addCardToRuntime(card);
-      setAuthoringFeedback("Nur für diese Sitzung gespeichert. Beim Neuladen ohne lokale API bleibt die Datenbank unverändert.", false);
+      setAuthoringFeedback(t("messages.authoring.savedSession"), false);
     }
 
     addCardForm.reset();
     addCardCatEl.value = allCats[0];
-    showToast("Neue Karte gespeichert");
+    showToast(t("messages.toasts.cardSaved"));
   } catch (error) {
-    setAuthoringFeedback(error.message || "Speichern fehlgeschlagen.", true);
+    setAuthoringFeedback(error.message || t("messages.authoring.saveFailed"), true);
   } finally {
     setAuthoringBusy(false);
   }
@@ -2049,7 +2391,7 @@ function initInputEvents() {
         streak = 0;
       }
       inputEl.className = "wrong";
-      solutionEl.innerHTML = `<strong>Richtig:</strong> ${target}`;
+      solutionEl.innerHTML = `<strong>${t("messages.solution.correctPrefix")}</strong> ${target}`;
       solutionEl.style.display = "block";
       forceCorrection = true;
       updateStats();
@@ -2070,21 +2412,23 @@ function createFlagColumns() {
 
 async function initApp() {
   learningMode = loadLearningMode();
-  applyLearningTheme();
-  createFlagColumns();
-  initInstallGuide();
-  initDifficultyControls();
-  initInputEvents();
-  initAuthoringForm();
-  buildCatPanel();
-
-  const [baseCards, loadedPersistentCards, currentCapabilities, loadedFacts, loadedEuropeFacts] = await Promise.all([
+  const [loadedLocales, baseCards, loadedPersistentCards, currentCapabilities, loadedFacts, loadedEuropeFacts] = await Promise.all([
+    loadLocales(),
     fetchJson("cards.json", []),
     fetchJson("cards.user.json", []),
     detectCapabilities(),
     loadGermanyFacts(),
     loadEuropeFacts(),
   ]);
+
+  locales = loadedLocales || {};
+  applyLearningTheme();
+  renderStaticUi();
+  createFlagColumns();
+  initInstallGuide();
+  initDifficultyControls();
+  initInputEvents();
+  initAuthoringForm();
 
   capabilities = currentCapabilities;
   germanyFacts = loadedFacts;
@@ -2097,6 +2441,7 @@ async function initApp() {
 
   renderAuthoringMode();
   initFactsPanel();
+  renderStaticUi();
   buildCatPanel();
   startSession();
 }
