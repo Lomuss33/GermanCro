@@ -85,6 +85,7 @@ body > * { position: relative; z-index: 1; }
 .site-title {
   font-family: var(--font-display);
   width: min(100%, var(--panel-width));
+  max-width: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -1432,6 +1433,14 @@ input.wrong {
     padding-top: 14px;
   }
 
+  .site-title {
+    width: auto;
+    justify-content: center;
+    font-size: clamp(46px, 12vw, 68px);
+    gap: 0.02em;
+    line-height: 0.96;
+  }
+
   .card,
   .cat-panel,
   .search-panel,
@@ -1545,6 +1554,36 @@ input.wrong {
 }
 
 @media (max-width: 430px) {
+  .site-title {
+    font-size: clamp(38px, 11.5vw, 52px);
+    gap: 0.01em;
+  }
+
+  .stats-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 10px;
+  }
+
+  .stat-streak,
+  .stat-remaining,
+  .stats-right {
+    justify-self: stretch;
+    align-items: center;
+  }
+
+  .stat-streak {
+    align-items: flex-start;
+  }
+
+  .stat-remaining {
+    order: 3;
+    grid-column: 1 / -1;
+  }
+
+  .stats-right {
+    justify-content: flex-end;
+  }
+
   .facts-grid {
     grid-template-columns: 1fr;
   }
@@ -1559,6 +1598,16 @@ input.wrong {
 
   .facts-controls {
     padding: 7px;
+  }
+
+  .facts-title-row,
+  .facts-title-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .facts-title-links {
+    justify-content: flex-start;
   }
 
   .facts-switch-btn {
