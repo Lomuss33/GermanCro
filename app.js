@@ -249,17 +249,27 @@ let sessionStart = 0;
 let totalCharsTyped = 0;
 let difficulty = "medium";
 let previousTypedValue = "";
+let feedbackBurstTimer = null;
+let promptOrder = "hr-first";
 let germanyFacts = null;
 let europeFacts = null;
 let factsMode = "germany";
 let selectedStateId = null;
 let selectedEuropeCountryId = null;
 
+const PROMPT_ORDER_STORAGE_KEY = "germancro.promptOrder";
 const promptEl = document.getElementById("promptText");
 const promptSub = document.getElementById("promptSub");
+const promptPrimaryFlagEl = document.getElementById("promptPrimaryFlag");
+const promptSecondaryFlagEl = document.getElementById("promptSecondaryFlag");
+const promptSwapBtn = document.getElementById("promptSwapBtn");
 const inputEl = document.getElementById("answer");
 const solutionEl = document.getElementById("solution");
 const wordGrid = document.getElementById("wordGrid");
+const answerGuideEl = document.getElementById("answerGuide");
+const answerGuideStatusEl = document.getElementById("answerGuideStatus");
+const answerGuideNoteEl = document.getElementById("answerGuideNote");
+const feedbackBurstEl = document.getElementById("feedbackBurst");
 const progFill = document.getElementById("progressFill");
 const categoryEl = document.getElementById("categoryBadge");
 const comboPop = document.getElementById("comboPop");
@@ -308,6 +318,49 @@ function normalizeField(value) {
 
 function normalizeAnswer(value) {
   return normalizeField(value).replace(/[.,!?:;]+$/, "").toLowerCase();
+}
+
+function loadPromptOrder() {
+  try {
+    return localStorage.getItem(PROMPT_ORDER_STORAGE_KEY) === "en-first" ? "en-first" : "hr-first";
+  } catch (error) {
+    return "hr-first";
+  }
+}
+
+function savePromptOrder() {
+  try {
+    localStorage.setItem(PROMPT_ORDER_STORAGE_KEY, promptOrder);
+  } catch (error) {
+    // Ignore storage failures and keep the in-memory preference.
+  }
+}
+
+function renderPrompt(card) {
+  if (!card) {
+    return;
+  }
+
+  const primaryIsEnglish = promptOrder === "en-first";
+  const primaryText = primaryIsEnglish ? card.en || "" : card.hr;
+  const secondaryText = primaryIsEnglish ? card.hr : card.en || "";
+
+  promptEl.textContent = primaryText;
+  promptSub.textContent = secondaryText;
+
+  if (promptPrimaryFlagEl) {
+    promptPrimaryFlagEl.textContent = primaryIsEnglish ? "🇬🇧" : "🇭🇷";
+  }
+  if (promptSecondaryFlagEl) {
+    promptSecondaryFlagEl.textContent = primaryIsEnglish ? "🇭🇷" : "🇬🇧";
+  }
+  if (promptSwapBtn) {
+    promptSwapBtn.textContent = primaryIsEnglish ? "EN ⇄ HR" : "HR ⇄ EN";
+    promptSwapBtn.setAttribute(
+      "aria-label",
+      primaryIsEnglish ? "Englisch und Kroatisch tauschen" : "Kroatisch und Englisch tauschen"
+    );
+  }
 }
 
 function cardKey(card) {
@@ -1173,6 +1226,143 @@ function getFreshCorrectIndexes(target, previousTyped, currentTyped) {
   return freshIndexes;
 }
 
+function getGuideProgress(target, typed) {
+  const correctPrefixLen = getCorrectPrefixLength(target, typed);
+  const words = target.split(" ");
+  const totalWords = words.length;
+  const hasExtraChars = typed.length > target.length && correctPrefixLen >= target.length;
+  const hasWrongChar = typed.length > correctPrefixLen && !hasExtraChars;
+
+  if (hasExtraChars) {
+    return {
+      state: "error",
+      statusText: "Zu lang - letztes Zeichen loeschen",
+      noteText: "Die Antwort war schon komplett. Extra Zeichen werden rot hinten angehaengt."
+    };
+  }
+
+  if (hasWrongChar) {
+    let currentWord = 1;
+    let charInWord = 1;
+
+    for (let i = 0; i < correctPrefixLen; i += 1) {
+      if (target[i] === " ") {
+        currentWord += 1;
+        charInWord = 1;
+      } else {
+        charInWord += 1;
+      }
+    }
+
+    return {
+      state: "error",
+      statusText: `Fehler in Wort ${currentWord}/${totalWords} - pruef Zeichen ${charInWord}`,
+      noteText: "Rot markiert den ersten falschen Teil der Eingabe."
+    };
+  }
+
+  if (correctPrefixLen >= target.length) {
+    return {
+      state: "success",
+      statusText: `Wort ${totalWords}/${totalWords} komplett`,
+      noteText: ""
+    };
+  }
+
+  let currentWord = 1;
+  let charInWord = 1;
+
+  for (let i = 0; i < correctPrefixLen; i += 1) {
+    if (target[i] === " ") {
+      currentWord += 1;
+      charInWord = 1;
+    } else {
+      charInWord += 1;
+    }
+  }
+
+  const nextChar = target[correctPrefixLen];
+
+  if (nextChar === " ") {
+    return {
+      state: "progress",
+      statusText: `Wort ${currentWord}/${totalWords} fertig - jetzt Leerzeichen`,
+      noteText: ""
+    };
+  }
+
+  return {
+    state: "progress",
+    statusText: `Wort ${currentWord}/${totalWords} - Buchstabe ${charInWord}/${words[currentWord - 1].length}`,
+    noteText: ""
+  };
+}
+
+function updateAnswerGuide(target, typed) {
+  if (!answerGuideEl || !answerGuideStatusEl || !answerGuideNoteEl) {
+    return;
+  }
+
+  if (!target) {
+    answerGuideEl.classList.remove("is-success", "is-error");
+    answerGuideStatusEl.classList.remove("is-success", "is-error");
+    answerGuideStatusEl.textContent = "";
+    answerGuideNoteEl.textContent = "";
+    return;
+  }
+
+  const { state, statusText, noteText } = getGuideProgress(target, typed);
+  answerGuideEl.classList.toggle("is-success", state === "success");
+  answerGuideEl.classList.toggle("is-error", state === "error");
+  answerGuideStatusEl.classList.toggle("is-success", state === "success");
+  answerGuideStatusEl.classList.toggle("is-error", state === "error");
+  answerGuideStatusEl.textContent = statusText;
+  answerGuideNoteEl.textContent = noteText;
+}
+
+function isExactTypedMatch(target, typed) {
+  return typed.length === target.length && getCorrectPrefixLength(target, typed) === target.length;
+}
+
+function showFeedbackBurst(kind, isBig = false) {
+  if (!feedbackBurstEl) {
+    return;
+  }
+
+  clearTimeout(feedbackBurstTimer);
+  feedbackBurstEl.innerHTML = "";
+  feedbackBurstEl.className = `feedback-burst is-${kind}${isBig ? " is-big" : ""}`;
+
+  const pieces = kind === "success"
+    ? (isBig
+      ? ["🎉", "✨", "⭐", "💥", "🎊", "✨", "⭐", "🎉", "💫", "✨"]
+      : ["✨", "⭐", "💫", "✨", "⭐", "✨"])
+    : ["✖", "⚡", "✕", "⚠", "✖", "⚡"];
+  const spread = isBig ? 92 : 58;
+  const verticalLift = kind === "success" ? (isBig ? -96 : -62) : 54;
+
+  pieces.forEach((symbol, index) => {
+    const piece = document.createElement("span");
+    const angle = (-90 + (180 / Math.max(pieces.length - 1, 1)) * index) * (Math.PI / 180);
+    const distance = spread * (0.7 + (index % 3) * 0.16);
+    const dx = Math.round(Math.cos(angle) * distance);
+    const dy = Math.round(Math.sin(angle) * distance + verticalLift);
+
+    piece.className = "burst-piece";
+    piece.textContent = symbol;
+    piece.style.setProperty("--dx", `${dx}px`);
+    piece.style.setProperty("--dy", `${dy}px`);
+    piece.style.setProperty("--rot", `${Math.round((Math.random() * 60) - 30)}deg`);
+    piece.style.animationDelay = `${index * 18}ms`;
+    feedbackBurstEl.appendChild(piece);
+  });
+
+  feedbackBurstTimer = setTimeout(() => {
+    feedbackBurstEl.innerHTML = "";
+    feedbackBurstEl.className = "feedback-burst";
+  }, isBig ? 980 : 760);
+}
+
 function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
   wordGrid.innerHTML = "";
   const { hints, autofill } = getCharMeta(target);
@@ -1230,11 +1420,48 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
     wordGrid.appendChild(group);
 
     if (wordIndex < words.length - 1) {
-      const spacer = document.createElement("div");
-      spacer.style.cssText = "width:5px;flex-shrink:0";
-      wordGrid.appendChild(spacer);
+      const separator = document.createElement("div");
+      const separatorIndex = pos - 1;
+      const typedSeparator = typed[separatorIndex];
+
+      separator.className = "word-separator";
+      separator.textContent = "space";
+
+      if (typedSeparator !== undefined) {
+        separator.classList.add(typedSeparator === " " ? "state-ok" : "state-bad");
+      } else if (separatorIndex === correctPrefixLen) {
+        separator.classList.add("state-next");
+      }
+
+      wordGrid.appendChild(separator);
     }
   });
+
+  if (typed.length > target.length) {
+    typed.slice(target.length).split("").forEach((extraChar) => {
+      if (extraChar === " ") {
+        const extraSeparator = document.createElement("div");
+        extraSeparator.className = "word-separator state-bad is-overflow";
+        extraSeparator.textContent = "extra space";
+        wordGrid.appendChild(extraSeparator);
+        return;
+      }
+
+      const overflowWrap = document.createElement("div");
+      const overflowLetter = document.createElement("div");
+      const overflowLine = document.createElement("div");
+
+      overflowWrap.className = "wchar state-bad";
+      overflowLetter.className = "wchar-letter";
+      overflowLine.className = "wchar-line";
+      overflowLetter.textContent = extraChar;
+      overflowWrap.appendChild(overflowLetter);
+      overflowWrap.appendChild(overflowLine);
+      wordGrid.appendChild(overflowWrap);
+    });
+  }
+
+  updateAnswerGuide(target, typed);
 }
 
 function shuffle(cards) {
@@ -1274,8 +1501,7 @@ function loadCard() {
     return;
   }
 
-  promptEl.textContent = card.hr;
-  promptSub.textContent = card.en || "";
+  renderPrompt(card);
   inputEl.value = "";
   inputEl.className = "";
   previousTypedValue = "";
@@ -1493,19 +1719,43 @@ function initAuthoringForm() {
 }
 
 function initInputEvents() {
+  if (promptSwapBtn) {
+    promptSwapBtn.addEventListener("click", () => {
+      promptOrder = promptOrder === "en-first" ? "hr-first" : "en-first";
+      savePromptOrder();
+      renderPrompt(sessionCards[sessionIndex]);
+      inputEl.focus();
+    });
+  }
+
   inputEl.addEventListener("input", () => {
     if (!sessionCards.length) {
       return;
     }
 
+    const target = sessionCards[sessionIndex].de;
     const typedValue = inputEl.value;
+    const previousPrefix = getCorrectPrefixLength(target, previousTypedValue);
+    const currentPrefix = getCorrectPrefixLength(target, typedValue);
+    const previousExact = isExactTypedMatch(target, previousTypedValue);
+    const currentExact = isExactTypedMatch(target, typedValue);
     const freshCorrectIndexes = getFreshCorrectIndexes(
-      sessionCards[sessionIndex].de,
+      target,
       previousTypedValue,
       typedValue
     );
 
-    buildWordGrid(sessionCards[sessionIndex].de, typedValue, freshCorrectIndexes);
+    buildWordGrid(target, typedValue, freshCorrectIndexes);
+
+    if (!previousExact && currentExact) {
+      showFeedbackBurst("success", false);
+    } else if (
+      (previousExact && !currentExact && typedValue.length > previousTypedValue.length) ||
+      (typedValue.length > previousTypedValue.length && currentPrefix < typedValue.length && currentPrefix <= previousPrefix)
+    ) {
+      showFeedbackBurst("error", false);
+    }
+
     previousTypedValue = typedValue;
   });
 
@@ -1530,6 +1780,7 @@ function initInputEvents() {
 
     const card = sessionCards[sessionIndex];
     if (normalizeAnswer(inputEl.value) === normalizeAnswer(card.de)) {
+      showFeedbackBurst("success", true);
       totalCharsTyped += card.de.length;
       if (!forceCorrection) {
         totalCorrect += 1;
@@ -1552,6 +1803,7 @@ function initInputEvents() {
         }
       }, 140);
     } else {
+      showFeedbackBurst("error", false);
       if (!forceCorrection) {
         totalAttempts += 1;
         streak = 0;
@@ -1577,6 +1829,7 @@ function createFlagColumns() {
 }
 
 async function initApp() {
+  promptOrder = loadPromptOrder();
   createFlagColumns();
   initDifficultyControls();
   initInputEvents();

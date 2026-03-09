@@ -49,13 +49,45 @@
 
 <div class="card" id="mainCard">
   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-  <span class="category-badge" id="categoryBadge"></span>
+  <div class="card-topbar">
+    <span class="category-badge" id="categoryBadge"></span>
+    <div class="card-legend" aria-label="Spielhilfe">
+      <span class="card-legend-item"><span class="card-legend-dot is-green"></span>Gr&uuml;n richtig</span>
+      <span class="card-legend-item"><span class="card-legend-dot is-yellow"></span>Gelb als N&auml;chstes</span>
+      <span class="card-legend-item"><span class="card-legend-dot is-red"></span>Rot falsch</span>
+    </div>
+  </div>
 
   <div id="gameArea">
-    <div class="prompt-text" id="promptText"></div>
-    <div class="prompt-sub" id="promptSub"></div>
-    <input id="answer" type="text" autocomplete="off" spellcheck="false" placeholder="Tippe hier..." />
-    <div class="word-grid" id="wordGrid"></div>
+    <div class="prompt-head">
+      <div class="prompt-head-title">Karte</div>
+      <button class="prompt-swap-btn" id="promptSwapBtn" type="button">HR ⇄ EN</button>
+    </div>
+    <div class="prompt-row prompt-row-main">
+      <span class="prompt-flag" id="promptPrimaryFlag" aria-hidden="true">🇭🇷</span>
+      <div class="prompt-copy">
+        <div class="prompt-text" id="promptText"></div>
+      </div>
+    </div>
+    <div class="prompt-row prompt-row-sub">
+      <span class="prompt-flag prompt-flag-sub" id="promptSecondaryFlag" aria-hidden="true">🇬🇧</span>
+      <div class="prompt-copy">
+        <div class="prompt-sub" id="promptSub"></div>
+      </div>
+    </div>
+    <div class="input-shell">
+      <span class="input-flag" aria-hidden="true">🇩🇪</span>
+      <input id="answer" type="text" autocomplete="off" spellcheck="false" placeholder="Auf deutsch tippen..." />
+    </div>
+    <div class="answer-guide" id="answerGuide">
+      <div class="answer-guide-head">
+        <div class="answer-guide-label">Antwortverlauf</div>
+        <div class="answer-guide-status" id="answerGuideStatus" aria-live="polite"></div>
+      </div>
+      <div class="word-grid" id="wordGrid"></div>
+      <div class="answer-guide-note" id="answerGuideNote"></div>
+    </div>
+    <div class="feedback-burst" id="feedbackBurst" aria-hidden="true"></div>
     <div class="solution" id="solution"></div>
     <div class="action-row">
       <button class="hint-btn" id="hintBtn">Tipp</button>
