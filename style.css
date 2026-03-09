@@ -132,20 +132,21 @@ body > * { position: relative; z-index: 1; }
 .site-title-row {
   width: min(100%, var(--panel-width));
   max-width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  gap: 6px;
   margin-inline: auto;
 }
 
 .title-guide {
-  flex: 0 1 auto;
+  width: 100%;
   min-width: 0;
-  padding: 2px 6px;
+  padding: 3px 8px;
   border-radius: 999px;
-  background: rgba(8, 10, 18, 0.14);
-  opacity: 0.66;
+  background: rgba(8, 10, 18, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  opacity: 0.82;
 }
 
 .title-guide.is-hidden {
@@ -164,9 +165,9 @@ body > * { position: relative; z-index: 1; }
 
 .title-guide-browser,
 .title-guide-steps {
-  font-size: 7px;
-  line-height: 1;
-  color: rgba(244, 246, 252, 0.8);
+  font-size: 9px;
+  line-height: 1.05;
+  color: rgba(248, 249, 252, 0.92);
   white-space: nowrap;
 }
 
@@ -202,12 +203,13 @@ body > * { position: relative; z-index: 1; }
   overflow: visible;
   color: var(--title-mid);
   -webkit-text-fill-color: var(--title-mid);
-  -webkit-text-stroke: 0.01em color-mix(in srgb, var(--title-deep) 82%, transparent);
+  -webkit-text-stroke: 0.012em rgba(255, 255, 255, 0.78);
   text-shadow:
-    0 1px 0 color-mix(in srgb, var(--title-shine) 20%, transparent),
+    0 0 0.5px rgba(255, 255, 255, 0.92),
+    0 1px 0 color-mix(in srgb, var(--title-shine) 32%, transparent),
     0 2px 0 rgba(10, 10, 10, 0.22),
     0 5px 10px rgba(0, 0, 0, 0.15);
-  filter: saturate(1.02) brightness(1) contrast(1.02);
+  filter: saturate(1.12) brightness(1.01) contrast(1.07);
   transform: translateZ(0);
 }
 
@@ -222,13 +224,13 @@ body > * { position: relative; z-index: 1; }
 .site-title-letter::before {
   color: transparent;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.008em color-mix(in srgb, var(--title-deep) 72%, var(--title-mid) 28%);
+  -webkit-text-stroke: 0.01em rgba(255, 255, 255, 0.66);
   background-image: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--title-mid) 88%, #ffffff 12%) 0%,
-    var(--title-mid) 20%,
-    var(--title-mid) 62%,
-    color-mix(in srgb, var(--title-mid) 84%, var(--title-deep) 16%) 82%,
+    color-mix(in srgb, var(--title-shine) 74%, #ffffff 26%) 0%,
+    color-mix(in srgb, var(--title-mid) 94%, var(--title-shine) 6%) 22%,
+    var(--title-mid) 60%,
+    color-mix(in srgb, var(--title-mid) 78%, var(--title-deep) 22%) 82%,
     var(--title-deep) 100%
   );
   background-size: 100% 100%;
@@ -246,21 +248,21 @@ body > * { position: relative; z-index: 1; }
 }
 
 .site-title-letter.band-1 {
-  --title-shine: color-mix(in srgb, var(--wave-top-color) 76%, #ffffff 24%);
-  --title-mid: var(--wave-top-color);
-  --title-deep: color-mix(in srgb, var(--wave-top-color) 72%, #000000 28%);
+  --title-shine: color-mix(in srgb, #5d6168 74%, #ffffff 26%);
+  --title-mid: color-mix(in srgb, var(--wave-top-color) 68%, #222831 32%);
+  --title-deep: color-mix(in srgb, var(--wave-top-color) 82%, #000000 18%);
 }
 
 .site-title-letter.band-2 {
-  --title-shine: color-mix(in srgb, var(--wave-mid-color) 76%, #ffffff 24%);
-  --title-mid: var(--wave-mid-color);
-  --title-deep: color-mix(in srgb, var(--wave-mid-color) 72%, #000000 28%);
+  --title-shine: color-mix(in srgb, var(--wave-mid-color) 82%, #ff9dad 18%);
+  --title-mid: color-mix(in srgb, var(--wave-mid-color) 90%, #8a0018 10%);
+  --title-deep: color-mix(in srgb, var(--wave-mid-color) 74%, #260008 26%);
 }
 
 .site-title-letter.band-3 {
-  --title-shine: color-mix(in srgb, var(--wave-bottom-color) 74%, #ffffff 26%);
-  --title-mid: var(--wave-bottom-color);
-  --title-deep: color-mix(in srgb, var(--wave-bottom-color) 72%, #000000 28%);
+  --title-shine: color-mix(in srgb, var(--wave-bottom-color) 84%, #fff0a8 16%);
+  --title-mid: color-mix(in srgb, var(--wave-bottom-color) 88%, #b86a00 12%);
+  --title-deep: color-mix(in srgb, var(--wave-bottom-color) 72%, #2f1800 28%);
 }
 
 .site-title.is-changing-out {
@@ -2058,16 +2060,16 @@ input.wrong {
 
   .site-title-row {
     width: min(100%, var(--panel-width));
-    gap: 6px;
+    gap: 4px;
   }
 
   .title-guide {
-    padding: 2px 5px;
+    padding: 3px 6px;
   }
 
   .title-guide-browser,
   .title-guide-steps {
-    font-size: 6px;
+    font-size: 7px;
   }
 
   .site-title {
@@ -2241,16 +2243,16 @@ input.wrong {
   }
 
   .site-title-row {
-    gap: 4px;
+    gap: 3px;
   }
 
   .title-guide {
-    padding: 1px 4px;
+    padding: 2px 5px;
   }
 
   .title-guide-browser,
   .title-guide-steps {
-    font-size: 5px;
+    font-size: 6px;
     line-height: 1;
   }
 
