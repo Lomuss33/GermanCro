@@ -250,19 +250,33 @@ let totalCharsTyped = 0;
 let difficulty = "medium";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
-let promptOrder = "hr-first";
+let learningMode = "de";
 let germanyFacts = null;
 let europeFacts = null;
 let factsMode = "germany";
 let selectedStateId = null;
 let selectedEuropeCountryId = null;
 
-const PROMPT_ORDER_STORAGE_KEY = "germancro.promptOrder";
+const LEARNING_MODE_STORAGE_KEY = "germancro.learningMode";
+const LANGUAGE_SEQUENCE = ["de", "hr", "en"];
+const LANGUAGE_FLAGS = {
+  de: "🇩🇪",
+  hr: "🇭🇷",
+  en: "🇬🇧",
+};
+const LANGUAGE_TITLES = {
+  de: "Germancro",
+  hr: "Crogerman",
+  en: "Mancroger",
+};
 const promptEl = document.getElementById("promptText");
 const promptSub = document.getElementById("promptSub");
 const promptPrimaryFlagEl = document.getElementById("promptPrimaryFlag");
 const promptSecondaryFlagEl = document.getElementById("promptSecondaryFlag");
 const promptSwapBtn = document.getElementById("promptSwapBtn");
+const inputFlagEl = document.querySelector(".input-flag");
+const siteTitleEl = document.querySelector(".site-title");
+const languageDockButtons = Array.from(document.querySelectorAll(".language-dock-btn"));
 const inputEl = document.getElementById("answer");
 const solutionEl = document.getElementById("solution");
 const wordGrid = document.getElementById("wordGrid");
@@ -320,20 +334,109 @@ function normalizeAnswer(value) {
   return normalizeField(value).replace(/[.,!?:;]+$/, "").toLowerCase();
 }
 
-function loadPromptOrder() {
+function loadLearningMode() {
   try {
-    return localStorage.getItem(PROMPT_ORDER_STORAGE_KEY) === "en-first" ? "en-first" : "hr-first";
+    const saved = localStorage.getItem(LEARNING_MODE_STORAGE_KEY);
+    return LANGUAGE_SEQUENCE.includes(saved) ? saved : "de";
   } catch (error) {
-    return "hr-first";
+    return "de";
   }
 }
 
-function savePromptOrder() {
+function saveLearningMode() {
   try {
-    localStorage.setItem(PROMPT_ORDER_STORAGE_KEY, promptOrder);
+    localStorage.setItem(LEARNING_MODE_STORAGE_KEY, learningMode);
   } catch (error) {
     // Ignore storage failures and keep the in-memory preference.
   }
+}
+
+function getCardValue(card, language) {
+  if (!card) {
+    return "";
+  }
+  return String(card[language] || "").trim();
+}
+
+function getTargetLanguage() {
+  return learningMode;
+}
+
+function getTargetValue(card) {
+  return getCardValue(card, getTargetLanguage());
+}
+
+function getPromptLanguages() {
+  const activeIndex = LANGUAGE_SEQUENCE.indexOf(getTargetLanguage());
+  return [
+    LANGUAGE_SEQUENCE[(activeIndex + 1) % LANGUAGE_SEQUENCE.length],
+    LANGUAGE_SEQUENCE[(activeIndex + 2) % LANGUAGE_SEQUENCE.length],
+  ];
+}
+
+function cycleLearningMode() {
+  const currentIndex = LANGUAGE_SEQUENCE.indexOf(getTargetLanguage());
+  learningMode = LANGUAGE_SEQUENCE[(currentIndex + 1) % LANGUAGE_SEQUENCE.length];
+}
+
+function renderSiteTitle(language) {
+  if (!siteTitleEl) {
+    return;
+  }
+
+  const title = LANGUAGE_TITLES[language] || LANGUAGE_TITLES.de;
+  siteTitleEl.innerHTML = "";
+  siteTitleEl.setAttribute("aria-label", title);
+
+  title.split("").forEach((letter, index) => {
+    const span = document.createElement("span");
+    span.className = `site-title-letter band-${Math.min(3, Math.floor(index / 3) + 1)}`;
+    span.dataset.letter = letter;
+    span.textContent = letter;
+    siteTitleEl.appendChild(span);
+  });
+}
+
+function updateLanguageDock() {
+  languageDockButtons.forEach((button) => {
+    const language = button.dataset.lang;
+    button.textContent = LANGUAGE_FLAGS[language] || "";
+    button.classList.toggle("is-active", language === getTargetLanguage());
+    button.setAttribute("aria-pressed", String(language === getTargetLanguage()));
+  });
+}
+
+function applyLearningTheme() {
+  document.body.dataset.learningMode = getTargetLanguage();
+  updateLanguageDock();
+  renderSiteTitle(getTargetLanguage());
+}
+
+function switchLearningMode(nextLanguage) {
+  if (!LANGUAGE_SEQUENCE.includes(nextLanguage) || nextLanguage === getTargetLanguage()) {
+    return;
+  }
+
+  document.body.classList.add("is-language-switching");
+  if (siteTitleEl) {
+    siteTitleEl.classList.remove("is-changing-in");
+    siteTitleEl.classList.add("is-changing-out");
+  }
+
+  window.setTimeout(() => {
+    learningMode = nextLanguage;
+    saveLearningMode();
+    applyLearningTheme();
+    loadCard();
+
+    if (siteTitleEl) {
+      siteTitleEl.classList.remove("is-changing-out");
+      siteTitleEl.classList.add("is-changing-in");
+      window.setTimeout(() => siteTitleEl.classList.remove("is-changing-in"), 340);
+    }
+
+    window.setTimeout(() => document.body.classList.remove("is-language-switching"), 180);
+  }, 85);
 }
 
 function renderPrompt(card) {
@@ -341,26 +444,25 @@ function renderPrompt(card) {
     return;
   }
 
-  const primaryIsEnglish = promptOrder === "en-first";
-  const primaryText = primaryIsEnglish ? card.en || "" : card.hr;
-  const secondaryText = primaryIsEnglish ? card.hr : card.en || "";
-
-  promptEl.textContent = primaryText;
-  promptSub.textContent = secondaryText;
+  const [primaryLanguage, secondaryLanguage] = getPromptLanguages();
+  promptEl.textContent = getCardValue(card, primaryLanguage);
+  promptSub.textContent = getCardValue(card, secondaryLanguage);
 
   if (promptPrimaryFlagEl) {
-    promptPrimaryFlagEl.textContent = primaryIsEnglish ? "🇬🇧" : "🇭🇷";
+    promptPrimaryFlagEl.textContent = LANGUAGE_FLAGS[primaryLanguage];
   }
   if (promptSecondaryFlagEl) {
-    promptSecondaryFlagEl.textContent = primaryIsEnglish ? "🇭🇷" : "🇬🇧";
+    promptSecondaryFlagEl.textContent = LANGUAGE_FLAGS[secondaryLanguage];
+  }
+  if (inputFlagEl) {
+    inputFlagEl.textContent = LANGUAGE_FLAGS[getTargetLanguage()];
   }
   if (promptSwapBtn) {
-    promptSwapBtn.textContent = primaryIsEnglish ? "EN ⇄ HR" : "HR ⇄ EN";
-    promptSwapBtn.setAttribute(
-      "aria-label",
-      primaryIsEnglish ? "Englisch und Kroatisch tauschen" : "Kroatisch und Englisch tauschen"
-    );
+    promptSwapBtn.innerHTML = "&#128260;";
+    promptSwapBtn.setAttribute("aria-label", "Lernsprache wechseln");
+    promptSwapBtn.setAttribute("title", "Lernsprache wechseln");
   }
+  return;
 }
 
 function cardKey(card) {
@@ -1196,7 +1298,7 @@ function initDifficultyControls() {
       btn.classList.add("active");
 
       if (sessionCards.length) {
-        buildWordGrid(sessionCards[sessionIndex].de, inputEl.value);
+        buildWordGrid(getTargetValue(sessionCards[sessionIndex]), inputEl.value);
       }
     });
   });
@@ -1517,7 +1619,7 @@ function loadCard() {
   categoryEl.style.background = `${color}14`;
 
   mainCard.classList.add("active");
-  buildWordGrid(card.de, "");
+  buildWordGrid(getTargetValue(card), "");
   updateSearchLinks(card);
   inputEl.focus();
 }
@@ -1719,21 +1821,18 @@ function initAuthoringForm() {
 }
 
 function initInputEvents() {
-  if (promptSwapBtn) {
-    promptSwapBtn.addEventListener("click", () => {
-      promptOrder = promptOrder === "en-first" ? "hr-first" : "en-first";
-      savePromptOrder();
-      renderPrompt(sessionCards[sessionIndex]);
-      inputEl.focus();
+  languageDockButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      switchLearningMode(button.dataset.lang);
     });
-  }
+  });
 
   inputEl.addEventListener("input", () => {
     if (!sessionCards.length) {
       return;
     }
 
-    const target = sessionCards[sessionIndex].de;
+    const target = getTargetValue(sessionCards[sessionIndex]);
     const typedValue = inputEl.value;
     const previousPrefix = getCorrectPrefixLength(target, previousTypedValue);
     const currentPrefix = getCorrectPrefixLength(target, typedValue);
@@ -1764,7 +1863,7 @@ function initInputEvents() {
       return;
     }
 
-    const target = sessionCards[sessionIndex].de;
+    const target = getTargetValue(sessionCards[sessionIndex]);
     hintCount += 1;
     const reveal = target.slice(0, hintCount * 3);
     inputEl.value = reveal;
@@ -1779,9 +1878,10 @@ function initInputEvents() {
     }
 
     const card = sessionCards[sessionIndex];
-    if (normalizeAnswer(inputEl.value) === normalizeAnswer(card.de)) {
+    const target = getTargetValue(card);
+    if (normalizeAnswer(inputEl.value) === normalizeAnswer(target)) {
       showFeedbackBurst("success", true);
-      totalCharsTyped += card.de.length;
+      totalCharsTyped += target.length;
       if (!forceCorrection) {
         totalCorrect += 1;
         streak += 1;
@@ -1809,7 +1909,7 @@ function initInputEvents() {
         streak = 0;
       }
       inputEl.className = "wrong";
-      solutionEl.innerHTML = `<strong>Richtig:</strong> ${card.de}`;
+      solutionEl.innerHTML = `<strong>Richtig:</strong> ${target}`;
       solutionEl.style.display = "block";
       forceCorrection = true;
       updateStats();
@@ -1829,7 +1929,8 @@ function createFlagColumns() {
 }
 
 async function initApp() {
-  promptOrder = loadPromptOrder();
+  learningMode = loadLearningMode();
+  applyLearningTheme();
   createFlagColumns();
   initDifficultyControls();
   initInputEvents();
