@@ -443,17 +443,17 @@ body > * { position: relative; z-index: 1; }
   flex: 1 1 auto;
   align-self: center;
   position: relative;
-  padding-left: 10px;
+  padding: 0 0 5px;
 }
 
 .prompt-copy::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 3px;
-  bottom: 3px;
-  width: 1px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.06));
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1));
   border-radius: 999px;
 }
 
@@ -2048,10 +2048,6 @@ input.wrong {
 
   .prompt-sub {
     font-size: 10px;
-  }
-
-  .prompt-copy {
-    padding-left: 8px;
   }
 
   .input-shell input {
