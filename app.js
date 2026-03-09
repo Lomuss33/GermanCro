@@ -277,6 +277,10 @@ const promptSwapBtn = document.getElementById("promptSwapBtn");
 const inputFlagEl = document.querySelector(".input-flag");
 const siteTitleEl = document.querySelector(".site-title");
 const languageDockButtons = Array.from(document.querySelectorAll(".language-dock-btn"));
+const installGuidePanelEl = document.getElementById("installGuidePanel");
+const installGuideBrowserPanelEl = document.getElementById("installGuideBrowserPanel");
+const installGuideBrowserEl = document.getElementById("installGuideBrowser");
+const installGuideStepsEl = document.getElementById("installGuideSteps");
 const inputEl = document.getElementById("answer");
 const solutionEl = document.getElementById("solution");
 const wordGrid = document.getElementById("wordGrid");
@@ -1682,6 +1686,142 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove("show"), 1400);
 }
 
+function isStandaloneMode() {
+  return Boolean(
+    window.matchMedia?.("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true
+  );
+}
+
+function detectInstallGuideContext() {
+  const ua = navigator.userAgent || "";
+  const isIOS = /iPad|iPhone|iPod/i.test(ua);
+  const isAndroid = /Android/i.test(ua);
+  const isMobile = isIOS || isAndroid;
+  const isDesktop = !isMobile;
+  const isSamsung = /SamsungBrowser/i.test(ua);
+  const isFirefox = /Firefox|FxiOS/i.test(ua);
+  const isEdgeAndroid = /EdgA/i.test(ua);
+  const isEdgeIOS = /EdgiOS/i.test(ua);
+  const isEdgeDesktop = /Edg/i.test(ua) && !isEdgeAndroid && !isEdgeIOS;
+  const isEdge = isEdgeAndroid || isEdgeIOS || isEdgeDesktop;
+  const isOperaTouch = /OPT/i.test(ua);
+  const isOpera = /OPR|Opera/i.test(ua) || isOperaTouch;
+  const isChromeIOS = /CriOS/i.test(ua);
+  const isChromeDesktopOrAndroid = /Chrome/i.test(ua) && !isSamsung && !isFirefox && !isEdge && !isOpera;
+  const isChrome = isChromeIOS || isChromeDesktopOrAndroid;
+  const isSafari = /Safari/i.test(ua) && !isChrome && !isFirefox && !isEdge && !isOpera && !isSamsung;
+  const isFirefoxIOS = /FxiOS/i.test(ua);
+  const isFirefoxDesktop = isFirefox && !isMobile;
+  const isFirefoxMobile = isFirefox && isMobile;
+
+  let browserLabel = "Browser";
+  let installPath = {
+    de: "Menue > Install.",
+    hr: "Izbornik > Instaliraj",
+    en: "Menu > Install",
+  };
+
+  if (isIOS && isSafari) {
+    browserLabel = "Safari";
+    installPath = { de: "Teilen > Home", hr: "Dijeli > Home", en: "Share > Home" };
+  } else if (isEdgeIOS) {
+    browserLabel = "Edge iPhone";
+    installPath = { de: "Teilen > Home", hr: "Dijeli > Home", en: "Share > Home" };
+  } else if (isIOS && isChromeIOS) {
+    browserLabel = "Chrome iOS";
+    installPath = { de: "Teilen > Home", hr: "Dijeli > Home", en: "Share > Home" };
+  } else if (isFirefoxIOS) {
+    browserLabel = "Firefox iPhone";
+    installPath = { de: "Teilen > Home", hr: "Dijeli > Home", en: "Share > Home" };
+  } else if (isAndroid && isSamsung) {
+    browserLabel = "Samsung";
+    installPath = { de: "Menue > Seite > Home", hr: "Izbornik > Stranica > Home", en: "Menu > Page > Home" };
+  } else if (isEdgeAndroid) {
+    browserLabel = "Edge Android";
+    installPath = { de: "... > Zum Handy", hr: "... > Dodaj na mobitel", en: "... > Add to phone" };
+  } else if (isAndroid && isOperaTouch) {
+    browserLabel = "Opera Touch";
+    installPath = { de: "Menue > Home", hr: "Izbornik > Home", en: "Menu > Home" };
+  } else if (isAndroid && isOpera) {
+    browserLabel = "Opera";
+    installPath = { de: "Menue > Home", hr: "Izbornik > Home", en: "Menu > Home" };
+  } else if (isFirefoxMobile) {
+    browserLabel = "Firefox";
+    installPath = { de: "Menue > Install/Home", hr: "Izbornik > Instaliraj/Home", en: "Menu > Install/Home" };
+  } else if (isAndroid && isChromeDesktopOrAndroid) {
+    browserLabel = "Chrome";
+    installPath = { de: "Menue > Home", hr: "Izbornik > Home", en: "Menu > Home" };
+  } else if (isEdgeDesktop) {
+    browserLabel = "Edge";
+    installPath = { de: "... > Apps > Install.", hr: "... > Apps > Instaliraj", en: "... > Apps > Install" };
+  } else if (isDesktop && isOpera) {
+    browserLabel = "Opera";
+    installPath = { de: "Menue > Install.", hr: "Izbornik > Instaliraj", en: "Menu > Install" };
+  } else if (isDesktop && isChromeDesktopOrAndroid) {
+    browserLabel = "Chrome";
+    installPath = { de: "Menue > App install.", hr: "Izbornik > Install app", en: "Menu > Install app" };
+  } else if (isFirefoxDesktop) {
+    browserLabel = "Firefox";
+    installPath = { de: "besser Edge/Chrome", hr: "bolje Edge/Chrome", en: "better Edge/Chrome" };
+  } else if (isDesktop) {
+    browserLabel = "Desktop";
+    installPath = { de: "Menue > Install.", hr: "Izbornik > Instaliraj", en: "Menu > Install" };
+  } else if (isMobile) {
+    browserLabel = "Mobile";
+  }
+
+  return { isMobile, isDesktop, browserLabel, installPath };
+}
+
+function renderInstallGuide() {
+  if (!installGuidePanelEl || !installGuideBrowserPanelEl || !installGuideBrowserEl || !installGuideStepsEl) {
+    return;
+  }
+
+  const context = detectInstallGuideContext();
+  installGuideBrowserEl.textContent = context.browserLabel;
+  installGuideStepsEl.textContent = context.installPath[getTargetLanguage()] || context.installPath.de;
+}
+
+function hideInstallGuide() {
+  if (!installGuidePanelEl || !installGuideBrowserPanelEl) {
+    return;
+  }
+
+  installGuidePanelEl.classList.add("is-hidden");
+  installGuideBrowserPanelEl.classList.add("is-hidden");
+}
+
+function maybeShowInstallGuide() {
+  if (!installGuidePanelEl || !installGuideBrowserPanelEl) {
+    return;
+  }
+
+  const context = detectInstallGuideContext();
+  if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
+    hideInstallGuide();
+    return;
+  }
+
+  renderInstallGuide();
+  installGuidePanelEl.classList.remove("is-hidden");
+  installGuideBrowserPanelEl.classList.remove("is-hidden");
+}
+
+function initInstallGuide() {
+  if (!installGuidePanelEl || !installGuideBrowserPanelEl) {
+    return;
+  }
+
+  window.addEventListener("appinstalled", () => {
+    hideInstallGuide();
+    showToast("App installiert");
+  });
+
+  maybeShowInstallGuide();
+}
+
 function getEncouragement(currentStreak) {
   if (currentStreak === 3) {
     return "Drei in Reihe!";
@@ -1932,6 +2072,7 @@ async function initApp() {
   learningMode = loadLearningMode();
   applyLearningTheme();
   createFlagColumns();
+  initInstallGuide();
   initDifficultyControls();
   initInputEvents();
   initAuthoringForm();
