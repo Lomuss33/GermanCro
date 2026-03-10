@@ -1086,7 +1086,7 @@ async function loadEuropeFacts() {
 
 function getFactsImagePath(type, stateId) {
   if (type === "country") {
-    return `${FACTS_IMAGE_ROOT}/country/deutschland.webp`;
+    return "https://flagcdn.com/de.svg";
   }
 
   if (type === "state" && isNonEmptyValue(stateId)) {
