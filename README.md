@@ -2,8 +2,6 @@
 
 GermanCro is a browser-based German vocabulary trainer with Croatian prompts and English support text. You see the Croatian prompt, use the English gloss as context, and type the German answer into a live character grid.
 
-![GermanCro screenshot](image.png)
-
 ## What it includes
 
 - 302 vocabulary cards in `cards.json`
@@ -49,7 +47,7 @@ cards.json      Vocabulary dataset
 image.png       README screenshot
 MAINTAINING.md  Maintainer workflow and smoke-test checklist
 USER_GUIDE.md   End-user guide for controls and clickable UI sections
-germany-facts.json Germany and Bundeslander facts dataset
+germany-facts.json Germany and Bundesländer facts dataset
 assets/facts/... Placeholder or real WebP flags for Germany and the states
 server.js       Local editable server with persistent card saves
 cards.user.json Local extension dataset written by server.js
@@ -106,17 +104,15 @@ Use [USER_GUIDE.md](USER_GUIDE.md) for:
 The UI now includes a facts panel at the bottom of the page.
 
 - `Deutschland` shows country-level quick facts such as capital, anthem, population, area, GDP, and highlights.
-- `Bundeslander` opens a picker for all 16 states.
+- `Bundesländer` opens a picker for all 16 states.
 - Choosing a state shows its basic data and short highlight lists.
 
 The module is fully static and GitHub Pages-safe because it loads data from `germany-facts.json`.
 
 Flag images for this panel are loaded from:
 
-- `assets/facts/country/deutschland.webp`
-- `assets/facts/states/<state-id>.webp`
-
-You can replace the placeholder files with your own WebP flags without changing the code.
+- `https://flagcdn.com/de.svg` for Germany
+- `assets/facts/states/<state-id>.webp` for the state flags
 
 ## Add-card bubble behavior
 
@@ -161,3 +157,7 @@ Publishing new cards:
 - The app remains GitHub Pages-safe because persistent writes require a local Node server that static hosting does not provide.
 - There is currently no automated test suite or CI.
 - If text renders incorrectly after editing, verify the file encoding before changing content.
+
+## Current full-page screenshot
+
+![GermanCro full-page screenshot](image.png)

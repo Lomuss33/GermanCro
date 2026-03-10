@@ -279,6 +279,8 @@ const promptSwapBtn = document.getElementById("promptSwapBtn");
 const inputFlagEl = document.querySelector(".input-flag");
 const siteTitleEl = document.querySelector(".site-title");
 const languageDockButtons = Array.from(document.querySelectorAll(".language-dock-btn"));
+const appLoaderEl = document.getElementById("appLoader");
+const appLoaderSpinnerEl = document.getElementById("appLoaderSpinner");
 const installGuidePanelEl = document.getElementById("installGuidePanel");
 const installGuideBrowserPanelEl = document.getElementById("installGuideBrowserPanel");
 const installGuideBrowserEl = document.getElementById("installGuideBrowser");
@@ -349,6 +351,7 @@ const enterHintTextEl = document.getElementById("enterHintText");
 const sessionEndLabelEl = document.getElementById("sessionEndLabel");
 const restartBtnEl = document.getElementById("restartBtn");
 const siteFooterLinkEl = document.getElementById("siteFooterLink");
+let appLoaderStartedAt = Date.now();
 
 if (statsBarEl && mainCard && progressTrackEl) {
   mainCard.insertBefore(statsBarEl, progressTrackEl);
@@ -356,6 +359,39 @@ if (statsBarEl && mainCard && progressTrackEl) {
 
 if (authorPanelEl && searchPanelEl && searchPanelEl.parentNode) {
   searchPanelEl.parentNode.insertBefore(authorPanelEl, searchPanelEl);
+}
+
+function initAppLoader() {
+  if (!appLoaderSpinnerEl) {
+    return;
+  }
+
+  appLoaderStartedAt = Date.now();
+  appLoaderSpinnerEl.innerHTML = "";
+
+  const loaderColors = ["is-black", "is-red", "is-gold"];
+
+  for (let i = 0; i < 3; i += 1) {
+    const dot = document.createElement("span");
+    dot.className = "app-loader-dot";
+    dot.classList.add(loaderColors[i]);
+    dot.style.setProperty("--offset", `${(i - 1) * 24}px`);
+
+    appLoaderSpinnerEl.appendChild(dot);
+  }
+}
+
+function hideAppLoader() {
+  if (!appLoaderEl) {
+    return;
+  }
+
+  const elapsed = Date.now() - appLoaderStartedAt;
+  const delay = Math.max(0, 600 - elapsed);
+
+  window.setTimeout(() => {
+    appLoaderEl.classList.add("is-hidden");
+  }, delay);
 }
 
 function normalizeCategory(cat) {
@@ -2407,7 +2443,9 @@ function createFlagColumns() {
     const col = document.createElement("div");
     col.className = "de-flag-col";
     col.style.animationDelay = `${-(i / 20) * 3}s`;
-    col.style.setProperty("--billow", `${(i / 4) * 16 + 4}px`);
+    const baseBillow = (i / 4) * 16 + 4;
+    const billow = i >= 25 ? baseBillow * 1.3 : baseBillow;
+    col.style.setProperty("--billow", `${billow}px`);
     flagEl.appendChild(col);
   }
 }
@@ -2449,4 +2487,11 @@ async function initApp() {
 }
 
 window.startSession = startSession;
-initApp();
+initAppLoader();
+initApp()
+  .catch((error) => {
+    console.error(error);
+  })
+  .finally(() => {
+    hideAppLoader();
+  });
