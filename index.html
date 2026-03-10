@@ -134,8 +134,8 @@
   <div class="cat-panel-toolbar">
     <div class="difficulty-panel">
       <button data-diff="hard" id="difficultyHardBtn">Schwer</button>
-      <button data-diff="medium" class="active" id="difficultyMediumBtn">Mittel</button>
-      <button data-diff="easy" id="difficultyEasyBtn">Leicht</button>
+      <button data-diff="medium" id="difficultyMediumBtn">Mittel</button>
+      <button data-diff="easy" class="active" id="difficultyEasyBtn">Leicht</button>
     </div>
     <div class="cat-panel-meta">
       <div class="new-game-row">
@@ -146,10 +146,10 @@
             min="5"
             max="50"
             step="5"
-            value="20"
+            value="10"
             oninput="document.getElementById('sliderLabel').textContent = this.value"
           />
-          <span class="slider-label"><span id="sliderLabel">20</span> <span id="sliderUnitLabel">Karten</span></span>
+          <span class="slider-label"><span id="sliderLabel">10</span> <span id="sliderUnitLabel">Karten</span></span>
         </div>
         <button class="new-game-btn" id="newGameBtn"
           onclick="startSession(+document.getElementById('sessionSizeSlider').value)">

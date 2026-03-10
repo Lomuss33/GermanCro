@@ -22,7 +22,7 @@ const searchSites = [
   { name: "Leo", icon: "L", url: (w) => `https://dict.leo.org/german-english/${encodeURIComponent(w)}` },
 ];
 
-const SESSION_SIZE = 20;
+const SESSION_SIZE = 10;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const PUNCT = /[.,!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
@@ -248,7 +248,7 @@ let forceCorrection = false;
 let hintCount = 0;
 let sessionStart = 0;
 let totalCharsTyped = 0;
-let difficulty = "medium";
+let difficulty = "easy";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let learningMode = "de";
