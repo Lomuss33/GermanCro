@@ -1,5 +1,6 @@
 const CATEGORY_ALIASES = {
   "PrÃ¤position": "Präposition",
+  "PrÃƒÂ¤position": "Präposition",
 };
 
 const catColors = {
@@ -162,7 +163,7 @@ const STATE_NOTABLE_PEOPLE = {
   berlin: {
     science: ["Albert Einstein", "Max Planck", "Rudolf Virchow"],
     politics: ["Willy Brandt", "Angela Merkel", "Walter Rathenau"],
-    art: ["Marlene Dietrich", "Kaethe Kollwitz", "Bertolt Brecht"],
+    art: ["Marlene Dietrich", "Käthe Kollwitz", "Bertolt Brecht"],
   },
   brandenburg: {
     science: ["Hermann von Helmholtz", "Hasso Plattner", "Karl Foerster"],
@@ -182,7 +183,7 @@ const STATE_NOTABLE_PEOPLE = {
   hessen: {
     science: ["Paul Ehrlich", "Robert Bunsen", "Otto Hahn"],
     politics: ["Joschka Fischer", "Georg-August Zinn", "Volker Bouffier"],
-    art: ["Johann Wolfgang von Goethe", "Brueder Grimm", "Anne Frank"],
+    art: ["Johann Wolfgang von Goethe", "Brüder Grimm", "Anne Frank"],
   },
   "mecklenburg-vorpommern": {
     science: ["Heinrich Schliemann", "Albrecht Kossel", "Otto Lilienthal"],
@@ -191,13 +192,13 @@ const STATE_NOTABLE_PEOPLE = {
   },
   niedersachsen: {
     science: ["Carl Friedrich Gauss", "Wilhelm Weber", "David Hilbert"],
-    politics: ["Gerhard Schroeder", "Christian Wulff", "Ernst Albrecht"],
+    politics: ["Gerhard Schröder", "Christian Wulff", "Ernst Albrecht"],
     art: ["Wilhelm Busch", "Kurt Schwitters", "Niki de Saint Phalle"],
   },
   "nordrhein-westfalen": {
-    science: ["Harald zur Hausen", "Max Born", "Julius Pluecker"],
+    science: ["Harald zur Hausen", "Max Born", "Julius Plücker"],
     politics: ["Konrad Adenauer", "Johannes Rau", "Armin Laschet"],
-    art: ["Ludwig van Beethoven", "Heinrich Boell", "Joseph Beuys"],
+    art: ["Ludwig van Beethoven", "Heinrich Böll", "Joseph Beuys"],
   },
   "rheinland-pfalz": {
     science: ["Johannes Gutenberg", "Hermann Staudinger", "Julius Richard Petri"],
@@ -205,27 +206,27 @@ const STATE_NOTABLE_PEOPLE = {
     art: ["Hildegard von Bingen", "Max Slevogt", "Thomas Nast"],
   },
   saarland: {
-    science: ["Peter Gruenberg", "Wolfgang Wahlster"],
+    science: ["Peter Grünberg", "Wolfgang Wahlster"],
     politics: ["Oskar Lafontaine", "Heiko Maas", "Annegret Kramp-Karrenbauer"],
-    art: ["Max Ophuels", "Nicole", "Gerd Dudenhoeffer"],
+    art: ["Max Ophüls", "Nicole", "Gerd Dudenhöffer"],
   },
   sachsen: {
     science: ["Gottfried Wilhelm Leibniz", "Wilhelm Ostwald", "Manfred von Ardenne"],
     politics: ["August Bebel", "Kurt Biedenkopf", "Stanislaw Tillich"],
-    art: ["Richard Wagner", "Erich Kaestner", "Caspar David Friedrich"],
+    art: ["Richard Wagner", "Erich Kästner", "Caspar David Friedrich"],
   },
   "sachsen-anhalt": {
     science: ["Otto von Guericke", "Dorothea Erxleben", "Georg Cantor"],
-    politics: ["Hans-Dietrich Genscher", "Reiner Haseloff", "Wolfgang Boehmer"],
-    art: ["Georg Friedrich Haendel", "Lyonel Feininger", "Johann Joachim Winckelmann"],
+    politics: ["Hans-Dietrich Genscher", "Reiner Haseloff", "Wolfgang Böhmer"],
+    art: ["Georg Friedrich Händel", "Lyonel Feininger", "Johann Joachim Winckelmann"],
   },
   "schleswig-holstein": {
-    science: ["Max Planck", "Otto Diels", "Ferdinand Toennies"],
-    politics: ["Willy Brandt", "Heide Simonis", "Daniel Guenther"],
-    art: ["Thomas Mann", "Guenter Grass", "Emil Nolde"],
+    science: ["Max Planck", "Otto Diels", "Ferdinand Tönnies"],
+    politics: ["Willy Brandt", "Heide Simonis", "Daniel Günther"],
+    art: ["Thomas Mann", "Günter Grass", "Emil Nolde"],
   },
   thueringen: {
-    science: ["Carl Zeiss", "Ernst Abbe", "Johann Wolfgang Doebereiner"],
+    science: ["Carl Zeiss", "Ernst Abbe", "Johann Wolfgang Döbereiner"],
     politics: ["Bodo Ramelow", "Christine Lieberknecht", "Bernhard Vogel"],
     art: ["Johann Sebastian Bach", "Johann Wolfgang von Goethe", "Friedrich Schiller"],
   },
@@ -2124,11 +2125,12 @@ function renderInstallGuide() {
   }
 
   const context = detectInstallGuideContext();
-  installGuideBrowserEl.textContent = context.browserLabel;
   const localizedPath = t(`installGuide.paths.${context.installPathKey}`);
-  installGuideStepsEl.textContent = localizedPath === `installGuide.paths.${context.installPathKey}`
+  const resolvedPath = localizedPath === `installGuide.paths.${context.installPathKey}`
     ? t("installGuide.paths.default")
     : localizedPath;
+  installGuideBrowserEl.textContent = `${context.browserLabel}: ${resolvedPath}`;
+  installGuideStepsEl.textContent = t("installGuide.cta");
 }
 
 function hideInstallGuide() {

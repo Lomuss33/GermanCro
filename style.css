@@ -168,7 +168,8 @@ body > * { position: relative; z-index: 1; }
   font-size: 9px;
   line-height: 1.05;
   color: rgba(248, 249, 252, 0.92);
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .title-guide-steps {
