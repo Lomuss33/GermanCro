@@ -1790,16 +1790,16 @@ input.wrong {
 .state-picker {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
   align-items: stretch;
 }
 
 .state-picker-btn {
   width: 100%;
-  font-size: 10px;
+  font-size: 9px;
   min-height: 34px;
-  padding: 7px 10px;
+  padding: 6px 7px;
   line-height: 1.1;
   text-align: center;
   text-wrap: balance;
@@ -2167,7 +2167,7 @@ input.wrong {
   }
 
   .state-picker {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -2340,13 +2340,13 @@ input.wrong {
   }
 
   .state-picker {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .state-picker-btn {
     min-height: 30px;
-    padding: 3px 5px;
-    font-size: 9.5px;
+    padding: 3px 4px;
+    font-size: 8.5px;
   }
 
   .state-picker-wrap.is-open {
@@ -2545,12 +2545,12 @@ input.wrong {
   }
 
   .state-picker {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .state-picker-btn {
     min-height: 32px;
-    padding: 6px 8px;
-    font-size: 9px;
+    padding: 4px 4px;
+    font-size: 8px;
   }
 }

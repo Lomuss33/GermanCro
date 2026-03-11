@@ -245,7 +245,6 @@ let bestStreak = 0;
 let totalCorrect = 0;
 let totalAttempts = 0;
 let forceCorrection = false;
-let hintCount = 0;
 let sessionStart = 0;
 let totalCharsTyped = 0;
 let difficulty = "easy";
@@ -351,6 +350,7 @@ const factsStatesBtn = document.getElementById("factsStatesBtn");
 const statePickerWrap = document.getElementById("statePickerWrap");
 const statePickerEl = document.getElementById("statePicker");
 const factsContentEl = document.getElementById("factsContent");
+const factsPanelEl = document.querySelector(".facts-panel");
 const enterHintTextEl = document.getElementById("enterHintText");
 const sessionEndLabelEl = document.getElementById("sessionEndLabel");
 const restartBtnEl = document.getElementById("restartBtn");
@@ -1599,6 +1599,7 @@ function buildFactsPicker() {
           factsMode = "state";
           selectedStateId = state.id;
           renderFactsSelection();
+          scrollFactsContentIntoView();
         },
       }))
     : (europeFacts?.countries || []).map((country) => ({
@@ -1612,6 +1613,7 @@ function buildFactsPicker() {
           factsMode = "europe-country";
           selectedEuropeCountryId = country.id;
           renderFactsSelection();
+          scrollFactsContentIntoView();
         },
       }));
 
@@ -1667,6 +1669,17 @@ function renderFactsSelection() {
   updateStatePickerVisibility();
 }
 
+function scrollFactsContentIntoView() {
+  const targetEl = factsContentEl || factsPanelEl;
+  if (!targetEl) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
 function initFactsPanel() {
   updateFactsModeButtons();
   updateStatePickerVisibility();
@@ -1675,6 +1688,7 @@ function initFactsPanel() {
     factsMode = "germany";
     selectedStateId = null;
     renderFactsSelection();
+    scrollFactsContentIntoView();
   });
 
   factsStatesBtn.addEventListener("click", () => {
@@ -1686,6 +1700,7 @@ function initFactsPanel() {
     factsMode = "europe";
     selectedEuropeCountryId = null;
     renderFactsSelection();
+    scrollFactsContentIntoView();
   });
 
   if (!germanyFacts && !europeFacts) {
@@ -1716,6 +1731,21 @@ function getCorrectPrefixLength(target, typed) {
     index += 1;
   }
   return index;
+}
+
+function getHintRevealStep() {
+  if (difficulty === "easy") {
+    return 3;
+  }
+  if (difficulty === "medium") {
+    return 2;
+  }
+  return 1;
+}
+
+function getHintRevealValue(target, typed) {
+  const nextLength = Math.min(target.length, getCorrectPrefixLength(target, typed) + getHintRevealStep());
+  return target.slice(0, nextLength);
 }
 
 function getCharMeta(target) {
@@ -1761,7 +1791,9 @@ function initDifficultyControls() {
       btn.classList.add("active");
 
       if (sessionCards.length) {
-        buildWordGrid(getTargetValue(sessionCards[sessionIndex]), inputEl.value);
+        const target = getTargetValue(sessionCards[sessionIndex]);
+        buildWordGrid(target, inputEl.value);
+        updateAnswerGuide(target, inputEl.value);
       }
     });
   });
@@ -2084,7 +2116,6 @@ function loadCard() {
   previousTypedValue = "";
   solutionEl.style.display = "none";
   forceCorrection = false;
-  hintCount = 0;
   progFill.style.width = `${(sessionIndex / sessionCards.length) * 100}%`;
 
   const color = catColors[card.cat] || "#888";
@@ -2474,8 +2505,7 @@ function initInputEvents() {
     }
 
     const target = getTargetValue(sessionCards[sessionIndex]);
-    hintCount += 1;
-    const reveal = target.slice(0, hintCount * 3);
+    const reveal = getHintRevealValue(target, inputEl.value);
     inputEl.value = reveal;
     buildWordGrid(target, reveal);
     previousTypedValue = reveal;
