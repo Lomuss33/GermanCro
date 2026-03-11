@@ -17,7 +17,7 @@ html {
   --green: #4ade80;
   --de-red: #cc0000;
   --de-gold: #ffce00;
-  --font-body: "Manrope", sans-serif;
+  --font-body: "Segoe UI", "Trebuchet MS", sans-serif;
   --font-display: Tahoma, sans-serif;
   --panel-width: 620px;
   --wave-top-color: #000000;
@@ -379,6 +379,12 @@ body > * { position: relative; z-index: 1; }
   -webkit-backdrop-filter: blur(10px) saturate(130%);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
   z-index: 12;
+  transform-origin: bottom right;
+  transition: transform 0.2s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.language-dock.is-settings-open {
+  transform: scale(1.5);
 }
 
 .language-dock-btn {
@@ -500,7 +506,7 @@ body > * { position: relative; z-index: 1; }
 
 .card {
   border: 1px solid rgba(255, 255, 255, 0.32);
-  padding: clamp(12px, 2.1vw, 18px);
+  padding: clamp(8px, 1.4vw, 12px) clamp(12px, 2.1vw, 18px) clamp(12px, 2.1vw, 18px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
 
@@ -1095,9 +1101,18 @@ input.wrong {
   align-items: center;
   margin-top: 16px;
   gap: 16px;
+  flex-wrap: wrap;
+}
+
+.action-row-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 1 auto;
 }
 
 .hint-btn,
+.settings-btn,
 .author-save-btn,
 .author-secondary-btn {
   font-size: 12px;
@@ -1116,7 +1131,30 @@ input.wrong {
   padding: 4px 12px;
 }
 
-.hint-btn:hover { color: var(--text); border-color: #444; }
+.settings-btn {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 6px 15px;
+  font-size: 13px;
+  min-height: 32px;
+}
+
+.hint-btn:hover,
+.settings-btn:hover {
+  color: var(--text);
+  border-color: #444;
+}
+
+.settings-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.settings-btn.active {
+  background: rgba(232, 255, 71, 0.16);
+  border-color: rgba(232, 255, 71, 0.82);
+  box-shadow: 0 0 0 1px rgba(232, 255, 71, 0.18) inset;
+}
 
 .enter-hint {
   font-size: 12px;
@@ -1447,6 +1485,10 @@ input.wrong {
 }
 
 .author-panel.is-hidden {
+  display: none;
+}
+
+.cat-panel.is-hidden {
   display: none;
 }
 
@@ -2225,11 +2267,31 @@ input.wrong {
   .cat-panel-meta,
   .new-game-row,
   .author-actions,
-  .action-row,
   .author-panel-head,
   .search-panel-head {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .action-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .action-row-left {
+    gap: 6px;
+  }
+
+  .settings-btn {
+    padding: 5px 12px;
+    min-height: 30px;
+    font-size: 12px;
+  }
+
+  .enter-hint {
+    margin-left: auto;
   }
 
   .search-panel-head {

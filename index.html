@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>GermanCro</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -111,7 +110,10 @@
     <div class="feedback-burst" id="feedbackBurst" aria-hidden="true"></div>
     <div class="solution" id="solution"></div>
     <div class="action-row">
-      <button class="hint-btn" id="hintBtn">Tipp</button>
+      <div class="action-row-left">
+        <button class="settings-btn" id="settingsBtn" type="button" aria-expanded="false" aria-controls="catPanel">Settings</button>
+        <button class="hint-btn" id="hintBtn">Tipp</button>
+      </div>
       <div class="enter-hint"><span class="key-badge">Enter</span> <span id="enterHintText">zum Pr&uuml;fen</span></div>
     </div>
     <div class="combo-pop" id="comboPop"></div>
@@ -126,7 +128,7 @@
   </div>
 </div>
 
-<div class="cat-panel">
+<div class="cat-panel is-hidden" id="catPanel">
   <div class="cat-panel-head">
     <div class="cat-panel-title" id="catPanelTitle">Kategorien ausw&auml;hlen</div>
     <div class="cat-count" id="catCount"></div>

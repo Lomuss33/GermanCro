@@ -116,7 +116,7 @@ const OFFICIAL_LINKS = {
     "tuerkei": "https://www.turkiye.gov.tr/",
     "rumaenien": "https://www.romania.gov.ro/en/",
     "ukraine": "https://www.ukraine.ua/",
-    "russland": "http://government.ru/en/",
+    "russland": "https://government.ru/en/",
     "weissrussland": "https://www.belarus.by/en/",
     "tschechien": "https://www.czech.cz/en/",
     "slowakei": "https://welcometoslovakia.gov.sk/",
@@ -252,6 +252,7 @@ let difficulty = "easy";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let learningMode = "de";
+let isSettingsOpen = false;
 let germanyFacts = null;
 let europeFacts = null;
 let factsMode = "germany";
@@ -278,6 +279,7 @@ const promptSecondaryFlagEl = document.getElementById("promptSecondaryFlag");
 const promptSwapBtn = document.getElementById("promptSwapBtn");
 const inputFlagEl = document.querySelector(".input-flag");
 const siteTitleEl = document.querySelector(".site-title");
+const languageDockEl = document.getElementById("languageDock");
 const languageDockButtons = Array.from(document.querySelectorAll(".language-dock-btn"));
 const appLoaderEl = document.getElementById("appLoader");
 const appLoaderSpinnerEl = document.getElementById("appLoaderSpinner");
@@ -310,6 +312,7 @@ const sessionEndEl = document.getElementById("sessionEnd");
 const mainCard = document.getElementById("mainCard");
 const progressTrackEl = document.querySelector(".progress-track");
 const statsBarEl = document.querySelector(".stats-bar");
+const catPanelEl = document.getElementById("catPanel");
 const catCountEl = document.getElementById("catCount");
 const catPanelTitleEl = document.getElementById("catPanelTitle");
 const difficultyHardBtn = document.getElementById("difficultyHardBtn");
@@ -317,6 +320,7 @@ const difficultyMediumBtn = document.getElementById("difficultyMediumBtn");
 const difficultyEasyBtn = document.getElementById("difficultyEasyBtn");
 const sliderUnitLabelEl = document.getElementById("sliderUnitLabel");
 const newGameBtn = document.getElementById("newGameBtn");
+const settingsBtn = document.getElementById("settingsBtn");
 const searchPanelEl = document.getElementById("searchPanel");
 const searchPanelTitleEl = document.getElementById("searchPanelTitle");
 const searchPanelSubtitleEl = document.getElementById("searchPanelSubtitle");
@@ -394,16 +398,96 @@ function hideAppLoader() {
   }, delay);
 }
 
+function setSettingsOpen(isOpen) {
+  isSettingsOpen = Boolean(isOpen);
+
+  if (catPanelEl) {
+    catPanelEl.classList.toggle("is-hidden", !isSettingsOpen);
+  }
+
+  if (settingsBtn) {
+    settingsBtn.classList.toggle("active", isSettingsOpen);
+    settingsBtn.setAttribute("aria-expanded", String(isSettingsOpen));
+  }
+
+  if (languageDockEl) {
+    languageDockEl.classList.toggle("is-settings-open", isSettingsOpen);
+  }
+}
+
 function normalizeCategory(cat) {
   return CATEGORY_ALIASES[cat] || cat;
 }
 
 function normalizeField(value) {
-  return String(value || "").trim().replace(/\s+/g, " ");
+  const raw = String(value || "");
+  let normalized = "";
+  let sawSpace = false;
+
+  for (let i = 0; i < raw.length; i += 1) {
+    const char = raw[i];
+    const isSpace = char <= " ";
+
+    if (isSpace) {
+      sawSpace = normalized.length > 0;
+      continue;
+    }
+
+    if (sawSpace) {
+      normalized += " ";
+      sawSpace = false;
+    }
+
+    normalized += char;
+  }
+
+  return normalized;
 }
 
 function normalizeAnswer(value) {
-  return normalizeField(value).replace(/[.,!?:;]+$/, "").toLowerCase();
+  const normalized = normalizeField(value);
+  let end = normalized.length;
+
+  while (end > 0) {
+    const char = normalized[end - 1];
+    if (char !== "." && char !== "," && char !== "!" && char !== "?" && char !== ":" && char !== ";") {
+      break;
+    }
+    end -= 1;
+  }
+
+  return normalized.slice(0, end).toLowerCase();
+}
+
+function getSecureRandomInt(maxExclusive) {
+  if (!Number.isInteger(maxExclusive) || maxExclusive <= 0) {
+    return 0;
+  }
+
+  const cryptoApi = globalThis.crypto;
+  if (!cryptoApi || typeof cryptoApi.getRandomValues !== "function") {
+    return 0;
+  }
+
+  const range = 0x100000000;
+  const limit = range - (range % maxExclusive);
+  const values = new Uint32Array(1);
+
+  do {
+    cryptoApi.getRandomValues(values);
+  } while (values[0] >= limit);
+
+  return values[0] % maxExclusive;
+}
+
+function getSecureRandomRange(minInclusive, maxInclusive) {
+  if (!Number.isFinite(minInclusive) || !Number.isFinite(maxInclusive)) {
+    return minInclusive;
+  }
+
+  const min = Math.ceil(Math.min(minInclusive, maxInclusive));
+  const max = Math.floor(Math.max(minInclusive, maxInclusive));
+  return min + getSecureRandomInt((max - min) + 1);
 }
 
 function loadLearningMode() {
@@ -778,7 +862,7 @@ async function loadLocales() {
 
 async function detectCapabilities() {
   try {
-    const response = await fetch("/api/capabilities", { cache: "no-store" });
+    const response = await fetch("./api/capabilities", { cache: "no-store" });
     if (!response.ok) {
       return { persistentSave: false };
     }
@@ -1845,7 +1929,7 @@ function showFeedbackBurst(kind, isBig = false) {
     piece.textContent = symbol;
     piece.style.setProperty("--dx", `${dx}px`);
     piece.style.setProperty("--dy", `${dy}px`);
-    piece.style.setProperty("--rot", `${Math.round((Math.random() * 60) - 30)}deg`);
+    piece.style.setProperty("--rot", `${getSecureRandomRange(-30, 30)}deg`);
     piece.style.animationDelay = `${index * 18}ms`;
     feedbackBurstEl.appendChild(piece);
   });
@@ -1960,7 +2044,7 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
 function shuffle(cards) {
   const shuffled = [...cards];
   for (let i = shuffled.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = getSecureRandomInt(i + 1);
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
@@ -2293,7 +2377,7 @@ async function handleAddCardSubmit(event) {
 
   try {
     if (capabilities.persistentSave) {
-      const response = await fetch("/api/cards", {
+    const response = await fetch("./api/cards", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(card),
@@ -2346,6 +2430,12 @@ function initInputEvents() {
       switchLearningMode(button.dataset.lang);
     });
   });
+
+  if (settingsBtn) {
+    settingsBtn.addEventListener("click", () => {
+      setSettingsOpen(!isSettingsOpen);
+    });
+  }
 
   inputEl.addEventListener("input", () => {
     if (!sessionCards.length) {
@@ -2469,6 +2559,7 @@ async function initApp() {
   initDifficultyControls();
   initInputEvents();
   initAuthoringForm();
+  setSettingsOpen(false);
 
   capabilities = currentCapabilities;
   germanyFacts = loadedFacts;
