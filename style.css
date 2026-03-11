@@ -416,40 +416,45 @@ body > * { position: relative; z-index: 1; }
 }
 
 .stats-bar {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   margin-bottom: 4px;
   white-space: nowrap;
+  flex-wrap: nowrap;
 }
 
 .stat {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 2px;
+  gap: 6px;
   min-width: 0;
 }
 
 .stat-streak {
-  justify-self: start;
-  align-items: flex-start;
+  order: 2;
+  align-items: center;
 }
 
 .stat-remaining {
-  justify-self: center;
+  order: 1;
 }
 
 .stats-right {
   display: flex;
-  justify-self: end;
+  order: 3;
   justify-content: flex-end;
   gap: 18px;
   min-width: 0;
+  margin-left: auto;
 }
 
 .stat-value {
+  order: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 26px;
   font-weight: 800;
   line-height: 1;
@@ -458,11 +463,16 @@ body > * { position: relative; z-index: 1; }
 }
 
 .stat-label {
-  font-size: 10px;
+  order: 1;
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: var(--muted);
   font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .flame {
@@ -2199,8 +2209,6 @@ input.wrong {
   }
 
   .stats-bar {
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    justify-items: stretch;
     gap: 6px;
     margin-bottom: 6px;
   }
@@ -2210,17 +2218,15 @@ input.wrong {
     align-items: center;
   }
 
-  .stat-streak {
-    justify-self: start;
-    align-items: flex-start;
+  .stat {
+    gap: 4px;
   }
 
-  .stat-remaining {
-    justify-self: center;
+  .stat-streak {
+    align-items: center;
   }
 
   .stats-right {
-    justify-self: end;
     justify-content: flex-end;
     align-items: center;
     gap: 8px;
@@ -2231,7 +2237,7 @@ input.wrong {
   }
 
   .stat-label {
-    font-size: 8px;
+    font-size: 9px;
     letter-spacing: 0.05em;
   }
 
@@ -2431,8 +2437,11 @@ input.wrong {
   }
 
   .stats-bar {
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     gap: 4px;
+  }
+
+  .stat {
+    gap: 3px;
   }
 
   .stat-value {
@@ -2440,7 +2449,7 @@ input.wrong {
   }
 
   .stat-label {
-    font-size: 7px;
+    font-size: 8px;
     letter-spacing: 0.04em;
   }
 
