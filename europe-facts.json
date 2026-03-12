@@ -1,18 +1,18 @@
 {
   "union": {
-    "name": "Europa",
-    "official_name": "Europaeische Union und europaeischer Raum",
+    "name": "EU",
+    "official_name": "Europaeische Union",
     "capital": "Bruessel",
-    "largest_city": "Istanbul",
+    "largest_city": "Berlin",
     "anthem": "Ode an die Freude",
     "founded": "1993 (Europaeische Union)",
     "state_form": "Staatenverbund",
     "national_day": "9. Mai",
-    "population": "ca. 449 Mio. in der EU",
+    "population": "452.162.974 (2026)",
     "area_km2": "ca. 4.233.000 km2 in der EU",
-    "states_count": "27 EU-Mitgliedstaaten",
-    "currency": "Euro und weitere Landeswaehrungen",
-    "language": "24 Amtssprachen in der EU",
+    "states_count": "27",
+    "currency": "Euro (EUR)",
+    "language": "24",
     "time_zone": "UTC+00:00 bis UTC+02:00",
     "internet_tld": ".eu",
     "gdp_nominal": "ca. 17 Billionen EUR",
@@ -981,6 +981,214 @@
         "UTC"
       ],
       "flag_image": "https://flagcdn.com/ie.svg"
+    },
+    {
+      "id": "schweiz",
+      "name": "Schweiz",
+      "official_name": "Schweizerische Eidgenossenschaft",
+      "capital": "Bern",
+      "region": "Mitteleuropa",
+      "state_form": "Souveraener Staat",
+      "population": "9.048.000",
+      "area_km2": "41.285 km2",
+      "currency": "Schweizer Franken (CHF)",
+      "language": "Deutsch, Franzoesisch, Italienisch, Raetoromanisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+41",
+      "internet_tld": ".ch",
+      "landlocked": "Ja",
+      "overview": "Die Schweiz liegt in Mitteleuropa. Die Hauptstadt ist Bern. Es grenzt an Deutschland, Frankreich, Italien, Oesterreich, Liechtenstein.",
+      "neighboring_countries": [
+        "Deutschland",
+        "Frankreich",
+        "Italien",
+        "Oesterreich",
+        "Liechtenstein"
+      ],
+      "languages_list": [
+        "Deutsch",
+        "Franzoesisch",
+        "Italienisch",
+        "Raetoromanisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/ch.svg"
+    },
+    {
+      "id": "vatikanstadt",
+      "name": "Vatikanstadt",
+      "official_name": "Staat Vatikanstadt",
+      "capital": "Vatikanstadt",
+      "region": "Suedeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "ca. 800",
+      "area_km2": "0,49 km2",
+      "currency": "euro (EUR)",
+      "language": "Italienisch, Latein",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+379",
+      "internet_tld": ".va",
+      "landlocked": "Ja",
+      "overview": "Vatikanstadt ist der kleinste allgemein anerkannte Staat der Welt. Der Staat liegt vollstaendig in Rom und ist Sitz der katholischen Kirche.",
+      "neighboring_countries": [
+        "Italien"
+      ],
+      "languages_list": [
+        "Italienisch",
+        "Latein"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/va.svg"
+    },
+    {
+      "id": "portugal",
+      "name": "Portugal",
+      "official_name": "Portugiesische Republik",
+      "capital": "Lissabon",
+      "region": "Suedeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "10.639.726",
+      "area_km2": "92.212 km2",
+      "currency": "euro (EUR)",
+      "language": "Portugiesisch",
+      "time_zone": "UTC, UTC-01:00",
+      "calling_code": "+351",
+      "internet_tld": ".pt",
+      "landlocked": "Nein",
+      "overview": "Portugal liegt im Suedwesten Europas auf der Iberischen Halbinsel. Die Hauptstadt ist Lissabon. Es grenzt an Spanien.",
+      "neighboring_countries": [
+        "Spanien"
+      ],
+      "languages_list": [
+        "Portugiesisch"
+      ],
+      "timezones_list": [
+        "UTC",
+        "UTC-01:00"
+      ],
+      "flag_image": "https://flagcdn.com/pt.svg"
+    },
+    {
+      "id": "montenegro",
+      "name": "Montenegro",
+      "official_name": "Montenegro",
+      "capital": "Podgorica",
+      "region": "Suedosteuropa",
+      "state_form": "Souveraener Staat",
+      "population": "616.177",
+      "area_km2": "13.812 km2",
+      "currency": "euro (EUR)",
+      "language": "Montenegrinisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+382",
+      "internet_tld": ".me",
+      "landlocked": "Nein",
+      "overview": "Montenegro liegt an der Adriakueste in Suedosteuropa. Die Hauptstadt ist Podgorica. Es grenzt an Albanien, Bosnien und Herzegowina, Kroatien, Kosovo, Serbien.",
+      "neighboring_countries": [
+        "Albanien",
+        "Bosnien und Herzegowina",
+        "Kroatien",
+        "Kosovo",
+        "Serbien"
+      ],
+      "languages_list": [
+        "Montenegrinisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/me.svg"
+    },
+    {
+      "id": "luxemburg",
+      "name": "Luxemburg",
+      "official_name": "Grossherzogtum Luxemburg",
+      "capital": "Luxemburg",
+      "region": "Westeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "672.050",
+      "area_km2": "2.586 km2",
+      "currency": "euro (EUR)",
+      "language": "Luxemburgisch, Franzoesisch, Deutsch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+352",
+      "internet_tld": ".lu",
+      "landlocked": "Ja",
+      "overview": "Luxemburg liegt in Westeuropa. Die Hauptstadt ist Luxemburg. Es grenzt an Belgien, Deutschland, Frankreich.",
+      "neighboring_countries": [
+        "Belgien",
+        "Deutschland",
+        "Frankreich"
+      ],
+      "languages_list": [
+        "Luxemburgisch",
+        "Franzoesisch",
+        "Deutsch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/lu.svg"
+    },
+    {
+      "id": "liechtenstein",
+      "name": "Liechtenstein",
+      "official_name": "Fuerstentum Liechtenstein",
+      "capital": "Vaduz",
+      "region": "Mitteleuropa",
+      "state_form": "Souveraener Staat",
+      "population": "39.870",
+      "area_km2": "160 km2",
+      "currency": "Schweizer Franken (CHF)",
+      "language": "Deutsch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+423",
+      "internet_tld": ".li",
+      "landlocked": "Ja",
+      "overview": "Liechtenstein liegt in Mitteleuropa zwischen Oesterreich und der Schweiz. Die Hauptstadt ist Vaduz.",
+      "neighboring_countries": [
+        "Oesterreich",
+        "Schweiz"
+      ],
+      "languages_list": [
+        "Deutsch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/li.svg"
+    },
+    {
+      "id": "andorra",
+      "name": "Andorra",
+      "official_name": "Fuerstentum Andorra",
+      "capital": "Andorra la Vella",
+      "region": "Suedeuropa",
+      "state_form": "Souveraener Staat",
+      "population": "85.863",
+      "area_km2": "468 km2",
+      "currency": "euro (EUR)",
+      "language": "Katalanisch",
+      "time_zone": "UTC+01:00",
+      "calling_code": "+376",
+      "internet_tld": ".ad",
+      "landlocked": "Ja",
+      "overview": "Andorra liegt in den Pyrenaeen zwischen Spanien und Frankreich. Die Hauptstadt ist Andorra la Vella.",
+      "neighboring_countries": [
+        "Spanien",
+        "Frankreich"
+      ],
+      "languages_list": [
+        "Katalanisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
+      "flag_image": "https://flagcdn.com/ad.svg"
     }
   ]
 }

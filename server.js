@@ -8,6 +8,7 @@ const USER_CARDS_FILE = path.join(ROOT, "cards.user.json");
 
 const CATEGORY_ALIASES = {
   "PrÃ¤position": "Präposition",
+  "PrÃƒÂ¤position": "Präposition",
 };
 
 const VALID_CATEGORIES = new Set([

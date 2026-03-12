@@ -1,6 +1,7 @@
 const CATEGORY_ALIASES = {
   "PrÃ¤position": "Präposition",
   "PrÃƒÂ¤position": "Präposition",
+  "PrÃƒÆ’Ã‚Â¤position": "Präposition",
 };
 
 const catColors = {
@@ -76,6 +77,39 @@ const TOURISM_LINKS = {
     "finnland": "https://www.visitfinland.com/",
     "norwegen": "https://www.visitnorway.com/",
     "irland": "https://www.ireland.com/",
+    "schweiz": "https://www.myswitzerland.com/",
+    "vatikanstadt": "https://www.vaticanstate.va/en/",
+    "portugal": "https://www.visitportugal.com/",
+    "montenegro": "https://www.montenegro.travel/en",
+    "luxemburg": "https://www.visitluxembourg.com/",
+    "liechtenstein": "https://tourismus.li/en/",
+    "andorra": "https://visitandorra.com/en/",
+    "kanada": "https://travel.destinationcanada.com/",
+    "usa": "https://www.visittheusa.com/",
+    "china": "https://www.visitchina.com/",
+    "brasilien": "https://www.visitbrasil.com/",
+    "australien": "https://www.australia.com/",
+    "indien": "https://www.incredibleindia.gov.in/",
+    "argentinien": "https://www.argentina.travel/en",
+    "algerien": "https://www.algeria.com/",
+    "mexiko": "https://www.visitmexico.com/en/",
+    "indonesien": "https://www.indonesia.travel/gb/en/home",
+    "japan": "https://www.japan.travel/en/",
+    "suedkorea": "https://english.visitkorea.or.kr/",
+    "pakistan": "https://www.tourism.gov.pk/",
+    "bangladesch": "https://bangladeshtourismboard.gov.bd/",
+    "nigeria": "https://tourism.gov.ng/",
+    "aethiopien": "https://visitethiopia.et/",
+    "aegypten": "https://www.experienceegypt.eg/",
+    "suedafrika": "https://www.southafrica.net/gl/en/travel",
+    "kasachstan": "https://kazakhstan.travel/en",
+    "peru": "https://www.peru.travel/en",
+    "kolumbien": "https://colombia.travel/en",
+    "chile": "https://www.chile.travel/en/",
+    "venezuela": "https://www.venezuelatuya.com/",
+    "neuseeland": "https://www.newzealand.com/int/",
+    "thailand": "https://www.tourismthailand.org/home",
+    "vietnam": "https://vietnam.travel/",
   },
 };
 const OFFICIAL_LINKS = {
@@ -128,7 +162,47 @@ const OFFICIAL_LINKS = {
     "finnland": "https://finland.fi/",
     "norwegen": "https://www.norge.no/en",
     "irland": "https://www.gov.ie/en/",
+    "schweiz": "https://www.admin.ch/gov/en/start.html",
+    "vatikanstadt": "https://www.vaticanstate.va/en/",
+    "portugal": "https://www.portugal.gov.pt/en/gc23",
+    "montenegro": "https://www.gov.me/en",
+    "luxemburg": "https://gouvernement.lu/en.html",
+    "liechtenstein": "https://www.liechtenstein.li/en/",
+    "andorra": "https://www.govern.ad/en/",
+    "kanada": "https://www.canada.ca/en.html",
+    "usa": "https://www.usa.gov/",
+    "china": "https://english.www.gov.cn/",
+    "brasilien": "https://www.gov.br/planalto/en",
+    "australien": "https://www.australia.gov.au/",
+    "indien": "https://www.india.gov.in/",
+    "argentinien": "https://www.argentina.gob.ar/",
+    "algerien": "https://www.interieur.gov.dz/",
+    "dr-kongo": "https://www.primature.gouv.cd/",
+    "saudi-arabien": "https://www.my.gov.sa/wps/portal/snp/main",
+    "mexiko": "https://www.gob.mx/",
+    "indonesien": "https://indonesia.go.id/",
+    "sudan": "https://www.sudan.gov.sd/",
+    "libyen": "https://government.gov.ly/",
+    "iran": "https://en.irna.ir/",
+    "mongolei": "https://mongolia.gov.mn/en/",
+    "japan": "https://www.japan.go.jp/",
+    "suedkorea": "https://www.korea.net/",
+    "pakistan": "https://www.pakistan.gov.pk/",
+    "bangladesch": "https://bangladesh.gov.bd/index.php",
+    "nigeria": "https://statehouse.gov.ng/",
+    "aethiopien": "https://pmo.gov.et/",
+    "aegypten": "https://www.sis.gov.eg/",
+    "suedafrika": "https://www.gov.za/",
+    "kasachstan": "https://www.gov.kz/memleket/entities?lang=en",
+    "peru": "https://www.gob.pe/en/",
+    "kolumbien": "https://www.gov.co/",
+    "chile": "https://www.gob.cl/en/",
+    "venezuela": "https://mppre.gob.ve/en/",
+    "neuseeland": "https://www.govt.nz/",
+    "thailand": "https://www.thaigov.go.th/",
+    "vietnam": "https://en.vietnamplus.vn/",
   },
+  world: "https://www.un.org/en/",
 };
 const EUROPE_FLAG_IMAGE = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 90" role="img" aria-label="Flagge Europas">
@@ -149,6 +223,260 @@ const EUROPE_FLAG_IMAGE = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent
     </g>
   </svg>`
 )}`;
+const FACTS_LOCALE_PATCHES = {
+  de: {
+    facts: {
+      panelSubtitle: "Deutschland, Bundeslaender, Europa und Welt im Ueberblick.",
+      tabs: { world: "Welt" },
+      fields: {
+        headquarters: "Hauptsitz",
+        memberStates: "UN-Mitgliedstaaten",
+        secretaryGeneral: "UN-Generalsekretaer",
+        officialLanguages: "Amtssprachen"
+      },
+      featured: { overview: "Im Ueberblick", europeOverview: "EU im Ueberblick", worldOverview: "UN im Ueberblick" },
+      names: {
+        europe: "EU",
+        world: "UN",
+        countries: {
+          "schweiz": "Schweiz",
+          "vatikanstadt": "Vatikanstadt",
+          "portugal": "Portugal",
+          "montenegro": "Montenegro",
+          "luxemburg": "Luxemburg",
+          "liechtenstein": "Liechtenstein",
+          "andorra": "Andorra",
+          "liechtenstein": "Liechtenstein",
+          "kosovo": "Kosovo",
+          "kanada": "Kanada",
+          "usa": "USA",
+          "china": "China",
+          "brasilien": "Brasilien",
+          "australien": "Australien",
+          "indien": "Indien",
+          "argentinien": "Argentinien",
+          "algerien": "Algerien",
+          "dr-kongo": "DR Kongo",
+          "saudi-arabien": "Saudi-Arabien",
+          "mexiko": "Mexiko",
+          "indonesien": "Indonesien",
+          "sudan": "Sudan",
+          "libyen": "Libyen",
+          "iran": "Iran",
+          "mongolei": "Mongolei",
+          "japan": "Japan",
+          "suedkorea": "Suedkorea",
+          "pakistan": "Pakistan",
+          "bangladesch": "Bangladesch",
+          "nigeria": "Nigeria",
+          "aethiopien": "Aethiopien",
+          "aegypten": "Aegypten",
+          "suedafrika": "Suedafrika",
+          "kasachstan": "Kasachstan",
+          "peru": "Peru",
+          "kolumbien": "Kolumbien",
+          "chile": "Chile",
+          "venezuela": "Venezuela",
+          "neuseeland": "Neuseeland",
+          "thailand": "Thailand",
+          "vietnam": "Vietnam"
+        }
+      },
+      regions: {
+        "Nordamerika": "Nordamerika",
+        "Suedamerika": "Suedamerika",
+        "Ostasien": "Ostasien",
+        "Ozeanien": "Ozeanien",
+        "Suedasien": "Suedasien",
+        "Nordafrika": "Nordafrika",
+        "Zentralafrika": "Zentralafrika",
+        "Westasien": "Westasien",
+        "Suedostasien": "Suedostasien",
+        "Westafrika": "Westafrika",
+        "Ostafrika": "Ostafrika",
+        "Suedafrika": "Suedafrika",
+        "Zentralasien": "Zentralasien",
+        "Osteuropa": "Osteuropa",
+        "Suedosteuropa und Vorderasien": "Suedosteuropa und Vorderasien"
+      },
+      stateForms: {
+        "Globale Staatenorganisation": "Globale Staatenorganisation"
+      },
+      values: {
+        europeOverviewText: "Die EU verbindet {memberStates} Mitgliedstaaten. Politisches Zentrum ist {capital}; zentrale Institutionen sind {institutions}.",
+        worldOverviewText: "Die UN vereint {memberStates} Mitgliedstaaten. Hauptsitz ist {headquarters}; zentrale Organe sind {institutions}."
+      }
+    }
+  },
+  hr: {
+    facts: {
+      panelSubtitle: "Njemacka, savezne zemlje, Europa i svijet na jednom mjestu.",
+      tabs: { world: "Svijet" },
+      fields: {
+        headquarters: "Sjediste",
+        memberStates: "Drzave clanice UN-a",
+        secretaryGeneral: "Glavni tajnik UN-a",
+        officialLanguages: "Sluzbeni jezici"
+      },
+      featured: { overview: "Ukratko", europeOverview: "EU ukratko", worldOverview: "UN ukratko" },
+      names: {
+        europe: "EU",
+        world: "UN",
+        countries: {
+          "schweiz": "Svicarska",
+          "vatikanstadt": "Vatikan",
+          "portugal": "Portugal",
+          "montenegro": "Crna Gora",
+          "luxemburg": "Luksemburg",
+          "liechtenstein": "Lihtenstajn",
+          "andorra": "Andora",
+          "liechtenstein": "Lihtenstajn",
+          "kosovo": "Kosovo",
+          "kanada": "Kanada",
+          "usa": "SAD",
+          "china": "Kina",
+          "brasilien": "Brazil",
+          "australien": "Australija",
+          "indien": "Indija",
+          "argentinien": "Argentina",
+          "algerien": "Alzir",
+          "dr-kongo": "DR Kongo",
+          "saudi-arabien": "Saudijska Arabija",
+          "mexiko": "Meksiko",
+          "indonesien": "Indonezija",
+          "sudan": "Sudan",
+          "libyen": "Libija",
+          "iran": "Iran",
+          "mongolei": "Mongolija",
+          "japan": "Japan",
+          "suedkorea": "Juzna Koreja",
+          "pakistan": "Pakistan",
+          "bangladesch": "Banglades",
+          "nigeria": "Nigerija",
+          "aethiopien": "Etiopija",
+          "aegypten": "Egipat",
+          "suedafrika": "Juznoafricka Republika",
+          "kasachstan": "Kazahstan",
+          "peru": "Peru",
+          "kolumbien": "Kolumbija",
+          "chile": "Cile",
+          "venezuela": "Venezuela",
+          "neuseeland": "Novi Zeland",
+          "thailand": "Tajland",
+          "vietnam": "Vijetnam"
+        }
+      },
+      regions: {
+        "Nordamerika": "Sjeverna Amerika",
+        "Suedamerika": "Juzna Amerika",
+        "Ostasien": "Istocna Azija",
+        "Ozeanien": "Oceanija",
+        "Suedasien": "Juzna Azija",
+        "Nordafrika": "Sjeverna Afrika",
+        "Zentralafrika": "Sredisnja Afrika",
+        "Westasien": "Zapadna Azija",
+        "Suedostasien": "Jugoistocna Azija",
+        "Westafrika": "Zapadna Afrika",
+        "Ostafrika": "Istocna Afrika",
+        "Suedafrika": "Juzna Afrika",
+        "Zentralasien": "Sredisnja Azija",
+        "Osteuropa": "Istocna Europa",
+        "Suedosteuropa und Vorderasien": "Jugoistocna Europa i Zapadna Azija"
+      },
+      stateForms: {
+        "Globale Staatenorganisation": "globalna organizacija drzava"
+      },
+      values: {
+        europeOverviewText: "EU povezuje {memberStates} drzava clanica. Politicko sredisiste je {capital}, a glavne institucije su {institutions}.",
+        worldOverviewText: "UN okuplja {memberStates} drzave clanice. Glavno sjediste je u {headquarters}, a glavna tijela su {institutions}."
+      }
+    }
+  },
+  en: {
+    facts: {
+      panelSubtitle: "Germany, its states, Europe, and the world at a glance.",
+      tabs: { world: "World" },
+      fields: {
+        headquarters: "Headquarters",
+        memberStates: "UN member states",
+        secretaryGeneral: "UN Secretary-General",
+        officialLanguages: "Official languages"
+      },
+      featured: { overview: "At a glance", europeOverview: "EU at a glance", worldOverview: "UN at a glance" },
+      names: {
+        europe: "EU",
+        world: "UN",
+        countries: {
+          "schweiz": "Switzerland",
+          "vatikanstadt": "Vatican City",
+          "portugal": "Portugal",
+          "montenegro": "Montenegro",
+          "luxemburg": "Luxembourg",
+          "liechtenstein": "Liechtenstein",
+          "andorra": "Andorra",
+          "liechtenstein": "Liechtenstein",
+          "kosovo": "Kosovo",
+          "kanada": "Canada",
+          "usa": "USA",
+          "china": "China",
+          "brasilien": "Brazil",
+          "australien": "Australia",
+          "indien": "India",
+          "argentinien": "Argentina",
+          "algerien": "Algeria",
+          "dr-kongo": "DR Congo",
+          "saudi-arabien": "Saudi Arabia",
+          "mexiko": "Mexico",
+          "indonesien": "Indonesia",
+          "sudan": "Sudan",
+          "libyen": "Libya",
+          "iran": "Iran",
+          "mongolei": "Mongolia",
+          "japan": "Japan",
+          "suedkorea": "South Korea",
+          "pakistan": "Pakistan",
+          "bangladesch": "Bangladesh",
+          "nigeria": "Nigeria",
+          "aethiopien": "Ethiopia",
+          "aegypten": "Egypt",
+          "suedafrika": "South Africa",
+          "kasachstan": "Kazakhstan",
+          "peru": "Peru",
+          "kolumbien": "Colombia",
+          "chile": "Chile",
+          "venezuela": "Venezuela",
+          "neuseeland": "New Zealand",
+          "thailand": "Thailand",
+          "vietnam": "Vietnam"
+        }
+      },
+      regions: {
+        "Nordamerika": "North America",
+        "Suedamerika": "South America",
+        "Ostasien": "East Asia",
+        "Ozeanien": "Oceania",
+        "Suedasien": "South Asia",
+        "Nordafrika": "North Africa",
+        "Zentralafrika": "Central Africa",
+        "Westasien": "West Asia",
+        "Suedostasien": "Southeast Asia",
+        "Westafrika": "West Africa",
+        "Ostafrika": "East Africa",
+        "Suedafrika": "Southern Africa",
+        "Zentralasien": "Central Asia",
+        "Osteuropa": "Eastern Europe",
+        "Suedosteuropa und Vorderasien": "Southeastern Europe and West Asia"
+      },
+      stateForms: {
+        "Globale Staatenorganisation": "global organization of states"
+      },
+      values: {
+        europeOverviewText: "The EU brings together {memberStates} member states. Its political center is {capital}, and key institutions include {institutions}.",
+        worldOverviewText: "The UN brings together {memberStates} member states. Its headquarters are in {headquarters}, and key bodies include {institutions}."
+      }
+    }
+  }
+};
 const STATE_NOTABLE_PEOPLE = {
   "baden-wuerttemberg": {
     science: ["Albert Einstein", "Johannes Kepler", "Carl Benz"],
@@ -254,9 +582,11 @@ let learningMode = "de";
 let isSettingsOpen = false;
 let germanyFacts = null;
 let europeFacts = null;
+let worldFacts = null;
 let factsMode = "germany";
 let selectedStateId = null;
 let selectedEuropeCountryId = null;
+let selectedWorldCountryId = null;
 let locales = null;
 
 const LEARNING_MODE_STORAGE_KEY = "germancro.learningMode";
@@ -347,10 +677,12 @@ const factsPanelTitleEl = document.getElementById("factsPanelTitle");
 const factsPanelSubtitleEl = document.getElementById("factsPanelSubtitle");
 const factsCountryBtn = document.getElementById("factsCountryBtn");
 const factsStatesBtn = document.getElementById("factsStatesBtn");
+const factsWorldBtn = document.getElementById("factsWorldBtn");
 const statePickerWrap = document.getElementById("statePickerWrap");
 const statePickerEl = document.getElementById("statePicker");
 const factsContentEl = document.getElementById("factsContent");
 const factsPanelEl = document.querySelector(".facts-panel");
+const hintBtnEl = document.getElementById("hintBtn");
 const enterHintTextEl = document.getElementById("enterHintText");
 const sessionEndLabelEl = document.getElementById("sessionEndLabel");
 const restartBtnEl = document.getElementById("restartBtn");
@@ -562,6 +894,34 @@ function setLocalizedAriaLabel(element, path, params) {
   }
 }
 
+function renderHintButtonLabel() {
+  if (!hintBtnEl) {
+    return;
+  }
+
+  const textEl = hintBtnEl.querySelector(".hint-btn-text");
+  if (textEl && hintBtnEl.querySelector(".button-icon-emoji")) {
+    textEl.textContent = t("messages.actions.hint");
+    return;
+  }
+
+  hintBtnEl.replaceChildren();
+
+  const iconEl = document.createElement("span");
+  iconEl.className = "button-icon button-icon-emoji";
+  iconEl.setAttribute("aria-hidden", "true");
+  iconEl.textContent = String.fromCodePoint(0x1F4A1);
+
+  const labelEl = document.createElement("span");
+  labelEl.className = "hint-btn-text";
+  labelEl.textContent = t("messages.actions.hint");
+
+  hintBtnEl.append(iconEl, document.createTextNode(" "), labelEl);
+  return;
+
+  hintBtnEl.innerHTML = `<span class="button-icon button-icon-emoji" aria-hidden="true">💡</span> <span>${t("messages.actions.hint")}</span>`;
+}
+
 function joinLocalizedList(items, conjunction = ", ") {
   return items.filter(Boolean).join(conjunction);
 }
@@ -701,7 +1061,7 @@ function renderStaticUi() {
     inputEl.placeholder = t("messages.prompt.placeholder");
   }
   setLocalizedText(answerGuideLabelEl, "messages.guide.label");
-  setLocalizedText(document.getElementById("hintBtn"), "messages.actions.hint");
+  renderHintButtonLabel();
   setLocalizedText(enterHintTextEl, "messages.actions.enterHint");
   setLocalizedText(sessionEndLabelEl, "messages.session.finished");
   setLocalizedText(restartBtnEl, "messages.session.newRound");
@@ -733,6 +1093,7 @@ function renderStaticUi() {
   setLocalizedText(factsPanelSubtitleEl, "facts.panelSubtitle");
   setLocalizedText(factsCountryBtn, "facts.tabs.germany");
   setLocalizedText(factsStatesBtn, "facts.tabs.europe");
+  setLocalizedText(factsWorldBtn, "facts.tabs.world");
   setLocalizedText(siteFooterLinkEl, "footer");
   renderGrammarSection();
 }
@@ -757,7 +1118,7 @@ function switchLearningMode(nextLanguage) {
     renderAuthoringMode();
     updateStats();
     renderFactsSelection();
-    loadCard();
+    loadCard({ focusInput: false });
 
     if (siteTitleEl) {
       siteTitleEl.classList.remove("is-changing-out");
@@ -981,10 +1342,7 @@ function buildCatPanel() {
   });
 
   const pool = getPool();
-  catCountEl.textContent = t("messages.categories.available", {
-    count: pool.length,
-    unit: t("messages.categories.unit"),
-  });
+  catCountEl.textContent = `${pool.length} ${t("messages.categories.unit")}`;
   newGameBtn.disabled = pool.length === 0;
 }
 
@@ -1024,6 +1382,144 @@ const FACT_LANGUAGE_MAP = {
   Ungarisch: { de: "Ungarisch", hr: "mađarski", en: "Hungarian" },
 };
 
+FACT_LANGUAGE_MAP.Portugiesisch = { de: "Portugiesisch", hr: "portugalski", en: "Portuguese" };
+FACT_LANGUAGE_MAP.Italienisch = { de: "Italienisch", hr: "talijanski", en: "Italian" };
+FACT_LANGUAGE_MAP.Raetoromanisch = { de: "Raetoromanisch", hr: "retoromanski", en: "Romansh" };
+FACT_LANGUAGE_MAP.Latein = { de: "Latein", hr: "latinski", en: "Latin" };
+FACT_LANGUAGE_MAP.Arabisch = { de: "Arabisch", hr: "arapski", en: "Arabic" };
+FACT_LANGUAGE_MAP.Chinesisch = { de: "Chinesisch", hr: "kineski", en: "Chinese" };
+FACT_LANGUAGE_MAP.Russisch = { de: "Russisch", hr: "ruski", en: "Russian" };
+FACT_LANGUAGE_MAP.Hindi = { de: "Hindi", hr: "hindski", en: "Hindi" };
+FACT_LANGUAGE_MAP.Persisch = { de: "Persisch", hr: "perzijski", en: "Persian" };
+FACT_LANGUAGE_MAP.Indonesisch = { de: "Indonesisch", hr: "indonezijski", en: "Indonesian" };
+FACT_LANGUAGE_MAP.Mongolisch = { de: "Mongolisch", hr: "mongolski", en: "Mongolian" };
+FACT_LANGUAGE_MAP.Montenegrinisch = { de: "Montenegrinisch", hr: "crnogorski", en: "Montenegrin" };
+FACT_LANGUAGE_MAP.Luxemburgisch = { de: "Luxemburgisch", hr: "luksemburski", en: "Luxembourgish" };
+FACT_LANGUAGE_MAP.Japanisch = { de: "Japanisch", hr: "japanski", en: "Japanese" };
+FACT_LANGUAGE_MAP.Koreanisch = { de: "Koreanisch", hr: "korejski", en: "Korean" };
+FACT_LANGUAGE_MAP.Urdu = { de: "Urdu", hr: "urdu", en: "Urdu" };
+FACT_LANGUAGE_MAP.Bengalisch = { de: "Bengalisch", hr: "bengalski", en: "Bengali" };
+FACT_LANGUAGE_MAP.Amharisch = { de: "Amharisch", hr: "amharski", en: "Amharic" };
+FACT_LANGUAGE_MAP.Kasachisch = { de: "Kasachisch", hr: "kazaški", en: "Kazakh" };
+FACT_LANGUAGE_MAP.Thai = { de: "Thai", hr: "tajlandski", en: "Thai" };
+FACT_LANGUAGE_MAP.Vietnamesisch = { de: "Vietnamesisch", hr: "vijetnamski", en: "Vietnamese" };
+
+FACT_LANGUAGE_MAP.Bosnisch = { de: "Bosnisch", hr: "bosanski", en: "Bosnian" };
+FACT_LANGUAGE_MAP.Serbisch = { de: "Serbisch", hr: "srpski", en: "Serbian" };
+FACT_LANGUAGE_MAP.Mazedonisch = { de: "Mazedonisch", hr: "makedonski", en: "Macedonian" };
+FACT_LANGUAGE_MAP.Albanisch = { de: "Albanisch", hr: "albanski", en: "Albanian" };
+FACT_LANGUAGE_MAP.Griechisch = { de: "Griechisch", hr: "grcki", en: "Greek" };
+FACT_LANGUAGE_MAP.Bulgarisch = { de: "Bulgarisch", hr: "bugarski", en: "Bulgarian" };
+FACT_LANGUAGE_MAP["Türkisch"] = { de: "Türkisch", hr: "turski", en: "Turkish" };
+FACT_LANGUAGE_MAP.Tuerkisch = { de: "Türkisch", hr: "turski", en: "Turkish" };
+FACT_LANGUAGE_MAP["Rumänisch"] = { de: "Rumänisch", hr: "rumunjski", en: "Romanian" };
+FACT_LANGUAGE_MAP.Rumaenisch = { de: "Rumänisch", hr: "rumunjski", en: "Romanian" };
+FACT_LANGUAGE_MAP.Ukrainisch = { de: "Ukrainisch", hr: "ukrajinski", en: "Ukrainian" };
+FACT_LANGUAGE_MAP.Belarussisch = { de: "Belarussisch", hr: "bjeloruski", en: "Belarusian" };
+FACT_LANGUAGE_MAP.Tschechisch = { de: "Tschechisch", hr: "ceski", en: "Czech" };
+FACT_LANGUAGE_MAP.Slowakisch = { de: "Slowakisch", hr: "slovacki", en: "Slovak" };
+FACT_LANGUAGE_MAP.Slowenisch = { de: "Slowenisch", hr: "slovenski", en: "Slovene" };
+FACT_LANGUAGE_MAP.Niederländisch = { de: "Niederländisch", hr: "nizozemski", en: "Dutch" };
+FACT_LANGUAGE_MAP.Niederlaendisch = { de: "Niederländisch", hr: "nizozemski", en: "Dutch" };
+FACT_LANGUAGE_MAP["Dänisch"] = { de: "Dänisch", hr: "danski", en: "Danish" };
+FACT_LANGUAGE_MAP.Daenisch = { de: "Dänisch", hr: "danski", en: "Danish" };
+FACT_LANGUAGE_MAP.Finnisch = { de: "Finnisch", hr: "finski", en: "Finnish" };
+FACT_LANGUAGE_MAP.Irisch = { de: "Irisch", hr: "irski", en: "Irish" };
+FACT_LANGUAGE_MAP["Norwegisch (Nynorsk)"] = { de: "Norwegisch (Nynorsk)", hr: "norveski (nynorsk)", en: "Norwegian (Nynorsk)" };
+FACT_LANGUAGE_MAP["Norwegisch (Bokmål)"] = { de: "Norwegisch (Bokmål)", hr: "norveski (bokmal)", en: "Norwegian (Bokmal)" };
+FACT_LANGUAGE_MAP.smi = { de: "Sami", hr: "sami", en: "Sami" };
+
+const EXTRA_FACT_LABEL_MAP = {
+  Monaco: { de: "Monaco", hr: "Monako", en: "Monaco" },
+  Gibraltar: { de: "Gibraltar", hr: "Gibraltar", en: "Gibraltar" },
+  Marokko: { de: "Marokko", hr: "Maroko", en: "Morocco" },
+  Schottland: { de: "Schottland", hr: "Skotska", en: "Scotland" },
+  Wales: { de: "Wales", hr: "Wales", en: "Wales" },
+  Litauen: { de: "Litauen", hr: "Litva", en: "Lithuania" },
+  Moldawien: { de: "Moldawien", hr: "Moldavija", en: "Moldova" },
+  Afghanistan: { de: "Afghanistan", hr: "Afganistan", en: "Afghanistan" },
+  Armenien: { de: "Armenien", hr: "Armenija", en: "Armenia" },
+  Aserbaidschan: { de: "Aserbaidschan", hr: "Azerbajdzan", en: "Azerbaijan" },
+  Angola: { de: "Angola", hr: "Angola", en: "Angola" },
+  Belize: { de: "Belize", hr: "Belize", en: "Belize" },
+  Bolivien: { de: "Bolivien", hr: "Bolivija", en: "Bolivia" },
+  Guatemala: { de: "Guatemala", hr: "Gvatemala", en: "Guatemala" },
+  Guyana: { de: "Guyana", hr: "Gvajana", en: "Guyana" },
+  Irak: { de: "Irak", hr: "Irak", en: "Iraq" },
+  Israel: { de: "Israel", hr: "Izrael", en: "Israel" },
+  Jemen: { de: "Jemen", hr: "Jemen", en: "Yemen" },
+  Jordanien: { de: "Jordanien", hr: "Jordan", en: "Jordan" },
+  Kambodscha: { de: "Kambodscha", hr: "Kambodza", en: "Cambodia" },
+  Kamerun: { de: "Kamerun", hr: "Kamerun", en: "Cameroon" },
+  Kenia: { de: "Kenia", hr: "Kenija", en: "Kenya" },
+  Kirgisistan: { de: "Kirgisistan", hr: "Kirgistan", en: "Kyrgyzstan" },
+  Laos: { de: "Laos", hr: "Laos", en: "Laos" },
+  Lettland: { de: "Lettland", hr: "Latvija", en: "Latvia" },
+  Malaysia: { de: "Malaysia", hr: "Malezija", en: "Malaysia" },
+  Mali: { de: "Mali", hr: "Mali", en: "Mali" },
+  Nepal: { de: "Nepal", hr: "Nepal", en: "Nepal" },
+  Niger: { de: "Niger", hr: "Niger", en: "Niger" },
+  Nordkorea: { de: "Nordkorea", hr: "Sjeverna Koreja", en: "North Korea" },
+  Panama: { de: "Panama", hr: "Panama", en: "Panama" },
+  "Papua-Neuguinea": { de: "Papua-Neuguinea", hr: "Papua Nova Gvineja", en: "Papua New Guinea" },
+  Paraguay: { de: "Paraguay", hr: "Paragvaj", en: "Paraguay" },
+  "Republik Kongo": { de: "Republik Kongo", hr: "Republika Kongo", en: "Republic of the Congo" },
+  Ruanda: { de: "Ruanda", hr: "Ruanda", en: "Rwanda" },
+  "San Marino": { de: "San Marino", hr: "San Marino", en: "San Marino" },
+  Simbabwe: { de: "Simbabwe", hr: "Zimbabve", en: "Zimbabwe" },
+  Somalia: { de: "Somalia", hr: "Somalija", en: "Somalia" },
+  Suedsudan: { de: "Südsudan", hr: "Juzni Sudan", en: "South Sudan" },
+  Syrien: { de: "Syrien", hr: "Sirija", en: "Syria" },
+  "Timor-Leste": { de: "Timor-Leste", hr: "Timor-Leste", en: "Timor-Leste" },
+  Tschad: { de: "Tschad", hr: "Cad", en: "Chad" },
+  Tunesien: { de: "Tunesien", hr: "Tunis", en: "Tunisia" },
+  Turkmenistan: { de: "Turkmenistan", hr: "Turkmenistan", en: "Turkmenistan" },
+  Uganda: { de: "Uganda", hr: "Uganda", en: "Uganda" },
+  Uruguay: { de: "Uruguay", hr: "Urugvaj", en: "Uruguay" },
+  Usbekistan: { de: "Usbekistan", hr: "Uzbekistan", en: "Uzbekistan" },
+  "Vereinigte Arabische Emirate": { de: "Vereinigte Arabische Emirate", hr: "Ujedinjeni Arapski Emirati", en: "United Arab Emirates" },
+  Atlantik: { de: "Atlantik", hr: "Atlantik", en: "Atlantic Ocean" },
+  Mittelmeer: { de: "Mittelmeer", hr: "Sredozemno more", en: "Mediterranean Sea" },
+  Nordsee: { de: "Nordsee", hr: "Sjeverno more", en: "North Sea" },
+  Ostsee: { de: "Ostsee", hr: "Balticko more", en: "Baltic Sea" },
+  "Schwarzes Meer": { de: "Schwarzes Meer", hr: "Crno more", en: "Black Sea" },
+  Pazifik: { de: "Pazifik", hr: "Tihi ocean", en: "Pacific Ocean" },
+  "Indischer Ozean": { de: "Indischer Ozean", hr: "Indijski ocean", en: "Indian Ocean" },
+  "Arktischer Ozean": { de: "Arktischer Ozean", hr: "Arkticki ocean", en: "Arctic Ocean" },
+  "Suedlicher Ozean": { de: "Südlicher Ozean", hr: "Juzni ocean", en: "Southern Ocean" },
+  "Europaeisches Parlament": { de: "Europäisches Parlament", hr: "Europski parlament", en: "European Parliament" },
+  "Europaeische Kommission": { de: "Europäische Kommission", hr: "Europska komisija", en: "European Commission" },
+  "Europaeischer Rat": { de: "Europäischer Rat", hr: "Europsko vijece", en: "European Council" },
+  "UN-Generalversammlung": { de: "UN-Generalversammlung", hr: "Glavna skupstina UN-a", en: "UN General Assembly" },
+  "UN-Sicherheitsrat": { de: "UN-Sicherheitsrat", hr: "Vijece sigurnosti UN-a", en: "UN Security Council" },
+  "UN-Sekretariat": { de: "UN-Sekretariat", hr: "Tajnistvo UN-a", en: "UN Secretariat" },
+  "Internationaler Gerichtshof": { de: "Internationaler Gerichtshof", hr: "Medunarodni sud pravde", en: "International Court of Justice" },
+  Bruessel: { de: "Brüssel", hr: "Bruxelles", en: "Brussels" },
+  Strassburg: { de: "Straßburg", hr: "Strasbourg", en: "Strasbourg" },
+  Genf: { de: "Genf", hr: "Zeneva", en: "Geneva" },
+  Wien: { de: "Wien", hr: "Bec", en: "Vienna" }
+};
+
+function deepMergeObjects(base, patch) {
+  if (!patch || typeof patch !== "object" || Array.isArray(patch)) {
+    return patch === undefined ? base : patch;
+  }
+
+  const output = base && typeof base === "object" && !Array.isArray(base)
+    ? { ...base }
+    : {};
+
+  Object.entries(patch).forEach(([key, value]) => {
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+      output[key] = deepMergeObjects(output[key], value);
+    } else {
+      output[key] = value;
+    }
+  });
+
+  return output;
+}
+
 function getFactsBundle() {
   return getLocaleBundle()?.facts || getLocaleBundle("de")?.facts || {};
 }
@@ -1040,11 +1536,17 @@ function translateCountryOrRegionName(value) {
   if (value === "Europa") {
     return factsBundle.names?.europe || value;
   }
+  if (value === "Welt") {
+    return factsBundle.names?.world || value;
+  }
   const countryEntries = Object.entries(getLocaleBundle("de")?.facts?.names?.countries || {});
   for (const [id, name] of countryEntries) {
     if (name === value) {
       return getLocalizedCountryNameById(id, value);
     }
+  }
+  if (EXTRA_FACT_LABEL_MAP[value]) {
+    return EXTRA_FACT_LABEL_MAP[value][getLocale()] || EXTRA_FACT_LABEL_MAP[value].de;
   }
   return factsBundle.regions?.[value] || value;
 }
@@ -1104,7 +1606,16 @@ function buildGermanyOverview(countryData) {
 
 function buildEuropeOverview(unionData) {
   return t("facts.values.europeOverviewText", {
-    capital: unionData.capital,
+    memberStates: unionData.states_count,
+    capital: translateFactScalar(unionData.capital),
+    institutions: joinLocalizedList(translateFactList(unionData.institutions)),
+  });
+}
+
+function buildWorldOverview(unionData) {
+  return t("facts.values.worldOverviewText", {
+    memberStates: unionData.member_states,
+    headquarters: unionData.headquarters,
     institutions: joinLocalizedList(translateFactList(unionData.institutions)),
   });
 }
@@ -1124,13 +1635,30 @@ function buildStateProfileSummary(stateData) {
   });
 }
 
+function buildStateOverview(stateData) {
+  const location = buildStateLocationSummary(stateData);
+  const profile = buildStateProfileSummary(stateData);
+  if (!location) {
+    return profile;
+  }
+  if (!profile) {
+    return location;
+  }
+  return `${location} ${profile}`;
+}
+
 function buildCountryOverview(countryData) {
-  return t("facts.values.countryOverviewText", {
-    name: getLocalizedCountryNameById(countryData.id, countryData.name),
-    region: translateFactScalar(countryData.region),
-    capital: countryData.capital,
-    neighbors: joinLocalizedList(translateFactList(countryData.neighboring_countries)),
-  });
+  const name = getLocalizedCountryNameById(countryData.id, countryData.name);
+  const region = translateFactScalar(countryData.region);
+  const capital = countryData.capital;
+
+  if (getLocale() === "hr") {
+    return `${name} se nalazi u ${region}. Glavni grad je ${capital}.`;
+  }
+  if (getLocale() === "en") {
+    return `${name} is in ${region}. Its capital is ${capital}.`;
+  }
+  return `${name} liegt in ${region}. Hauptstadt ist ${capital}.`;
 }
 
 function isNonEmptyValue(value) {
@@ -1201,7 +1729,44 @@ function normalizeEuropeFacts(raw) {
 
 async function loadEuropeFacts() {
   const raw = await fetchJson("europe-facts.json", null);
-  return normalizeEuropeFacts(raw);
+  const normalized = normalizeEuropeFacts(raw);
+  if (!normalized) {
+    return normalized;
+  }
+
+  normalized.union = {
+    ...normalized.union,
+    name: "EU",
+    official_name: "Europaeische Union",
+    capital: "Bruessel",
+    largest_city: "Berlin",
+    population: "452.162.974 (2026)",
+    states_count: "27",
+    currency: "EUR",
+    language: "24",
+  };
+
+  return normalized;
+}
+
+async function loadWorldFacts() {
+  const raw = await fetchJson("world-facts.json", null);
+  const normalized = normalizeEuropeFacts(raw);
+  if (!normalized) {
+    return normalized;
+  }
+
+  normalized.union = {
+    ...normalized.union,
+    name: "UN",
+    official_name: "Vereinte Nationen",
+    largest_city: "Jakarta (41.9m, 2025)",
+    founded: "1945",
+    member_states: "193",
+    secretary_general: "Antonio Guterres",
+  };
+
+  return normalized;
 }
 
 function getFactsImagePath(type, stateId) {
@@ -1422,7 +1987,7 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
 function renderCountryFacts(countryData) {
   renderFactsView(
       t("facts.names.germany"),
-      translateFactScalar(countryData.official_name || ""),
+      "",
       getFactsImagePath("country"),
     [
       [t("facts.fields.capital"), countryData.capital],
@@ -1461,11 +2026,10 @@ function renderCountryFacts(countryData) {
 function renderEuropeOverview(unionData) {
   renderFactsView(
       t("facts.names.europe"),
-      translateFactScalar(unionData.official_name || ""),
+      "",
       EUROPE_FLAG_IMAGE,
     [
-      [t("facts.fields.capital"), unionData.capital],
-      [t("facts.fields.largestCity"), unionData.largest_city],
+      [t("facts.fields.capital"), translateFactScalar(unionData.capital)],
       [t("facts.fields.anthem"), unionData.anthem],
       [t("facts.fields.founded"), unionData.founded],
       [t("facts.fields.stateForm"), translateFactScalar(unionData.state_form)],
@@ -1474,7 +2038,7 @@ function renderEuropeOverview(unionData) {
       [t("facts.fields.area"), unionData.area_km2],
       [t("facts.fields.statesCount"), unionData.states_count],
       [t("facts.fields.currency"), translateFactScalar(unionData.currency)],
-      [t("facts.fields.language"), translateFactScalar(unionData.language)],
+      [t("facts.fields.officialLanguages"), unionData.language],
       [t("facts.fields.timeZone"), unionData.time_zone],
       [t("facts.fields.internetTld"), unionData.internet_tld],
       [t("facts.fields.gdp"), unionData.gdp_nominal],
@@ -1490,6 +2054,36 @@ function renderEuropeOverview(unionData) {
       [t("facts.lists.nature"), translateFactList(unionData.nature)],
       [t("facts.lists.seas"), translateFactList(unionData.neighboring_countries)],
       ]
+    );
+  }
+
+function renderWorldOverview(unionData) {
+  renderFactsView(
+      t("facts.names.world"),
+      "",
+      unionData.flag_image || "",
+    [
+      [t("facts.fields.headquarters"), unionData.headquarters],
+      [t("facts.fields.founded"), unionData.founded],
+      [t("facts.fields.stateForm"), translateFactScalar(unionData.state_form)],
+      [t("facts.fields.nationalDay"), unionData.national_day],
+      [t("facts.fields.memberStates"), unionData.member_states],
+      [t("facts.fields.officialLanguages"), translateFactScalar(unionData.language)],
+      [t("facts.fields.secretaryGeneral"), unionData.secretary_general],
+      {
+        label: t("facts.featured.worldOverview"),
+        value: buildWorldOverview(unionData),
+        featured: true,
+      },
+    ],
+    [
+      [t("facts.lists.institutions"), translateFactList(unionData.institutions)],
+      [t("facts.lists.highlights"), translateFactList(unionData.highlights)],
+      [t("facts.lists.nature"), translateFactList(unionData.nature)],
+      [t("facts.lists.seas"), translateFactList(unionData.neighboring_countries)],
+      ],
+      "",
+      OFFICIAL_LINKS.world
     );
   }
 
@@ -1509,13 +2103,8 @@ function renderStateFacts(stateData) {
       [t("facts.fields.joined"), stateData.joined_or_founded],
       [t("facts.fields.headOfGovernment"), stateData.minister_president || stateData.state_head],
       {
-        label: t("facts.featured.location"),
-        value: buildStateLocationSummary(stateData),
-        featured: true,
-      },
-      {
-        label: t("facts.featured.profile"),
-        value: buildStateProfileSummary(stateData),
+        label: t("facts.featured.overview"),
+        value: buildStateOverview(stateData),
         featured: true,
       },
     ],
@@ -1534,7 +2123,7 @@ function renderStateFacts(stateData) {
 function renderEuropeanCountryFacts(countryData) {
   renderFactsView(
       getLocalizedCountryNameById(countryData.id, countryData.name || "Land"),
-      translateFactScalar(countryData.official_name || ""),
+      "",
       countryData.flag_image || "",
     [
       [t("facts.fields.capital"), countryData.capital],
@@ -1549,7 +2138,40 @@ function renderEuropeanCountryFacts(countryData) {
       [t("facts.fields.internetTld"), countryData.internet_tld],
       [t("facts.fields.landlocked"), translateFactScalar(countryData.landlocked)],
       {
-        label: t("facts.featured.profile"),
+        label: t("facts.featured.overview"),
+        value: buildCountryOverview(countryData),
+        featured: true,
+      },
+    ],
+    [
+      [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries)],
+      [t("facts.lists.languages"), translateFactList(countryData.languages_list)],
+      [t("facts.lists.timezones"), countryData.timezones_list],
+      ],
+      TOURISM_LINKS.countries[countryData.id] || "",
+      OFFICIAL_LINKS.countries[countryData.id] || ""
+    );
+  }
+
+function renderWorldCountryFacts(countryData) {
+  renderFactsView(
+      getLocalizedCountryNameById(countryData.id, countryData.name || "Land"),
+      "",
+      countryData.flag_image || "",
+    [
+      [t("facts.fields.capital"), countryData.capital],
+      [t("facts.fields.region"), translateFactScalar(countryData.region)],
+      [t("facts.fields.stateForm"), translateFactScalar(countryData.state_form)],
+      [t("facts.fields.population"), countryData.population],
+      [t("facts.fields.area"), countryData.area_km2],
+      [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
+      [t("facts.fields.language"), translateFactScalar(countryData.language)],
+      [t("facts.fields.timeZone"), countryData.time_zone],
+      [t("facts.fields.callingCode"), countryData.calling_code],
+      [t("facts.fields.internetTld"), countryData.internet_tld],
+      [t("facts.fields.landlocked"), translateFactScalar(countryData.landlocked)],
+      {
+        label: t("facts.featured.overview"),
         value: buildCountryOverview(countryData),
         featured: true,
       },
@@ -1575,24 +2197,29 @@ function renderFactsError() {
 function updateFactsModeButtons() {
   const isGermanyMode = factsMode === "germany" || factsMode === "state";
   const isEuropeMode = factsMode === "europe" || factsMode === "europe-country";
+  const isWorldMode = factsMode === "world" || factsMode === "world-country";
   factsCountryBtn.classList.toggle("active", isGermanyMode);
   factsStatesBtn.classList.toggle("active", isEuropeMode);
+  factsWorldBtn.classList.toggle("active", isWorldMode);
 }
 
 function updateStatePickerVisibility() {
   const showGermanyPicker = (factsMode === "germany" || factsMode === "state") && Boolean(germanyFacts);
   const showEuropePicker = (factsMode === "europe" || factsMode === "europe-country") && Boolean(europeFacts);
-  statePickerWrap.classList.toggle("is-open", showGermanyPicker || showEuropePicker);
+  const showWorldPicker = (factsMode === "world" || factsMode === "world-country") && Boolean(worldFacts);
+  statePickerWrap.classList.toggle("is-open", showGermanyPicker || showEuropePicker || showWorldPicker);
 }
 
 function buildFactsPicker() {
   statePickerEl.innerHTML = "";
 
   const isGermanyMode = factsMode === "germany" || factsMode === "state";
+  const isWorldMode = factsMode === "world" || factsMode === "world-country";
   const items = isGermanyMode
     ? (germanyFacts?.states || []).map((state) => ({
         id: state.id,
         label: state.name,
+        flagSrc: getFactsImagePath("state", state.id),
         active: state.id === selectedStateId,
         ariaLabel: t("facts.picker.stateButton", { name: state.name }),
         onClick: () => {
@@ -1602,9 +2229,26 @@ function buildFactsPicker() {
           scrollFactsContentIntoView();
         },
       }))
+    : isWorldMode
+    ? (worldFacts?.countries || []).map((country) => ({
+        id: country.id,
+        label: getLocalizedCountryNameById(country.id, country.name),
+        flagSrc: country.flag_image || "",
+        active: country.id === selectedWorldCountryId,
+        ariaLabel: t("facts.picker.countryButton", {
+          name: getLocalizedCountryNameById(country.id, country.name),
+        }),
+        onClick: () => {
+          factsMode = "world-country";
+          selectedWorldCountryId = country.id;
+          renderFactsSelection();
+          scrollFactsContentIntoView();
+        },
+      }))
     : (europeFacts?.countries || []).map((country) => ({
         id: country.id,
         label: getLocalizedCountryNameById(country.id, country.name),
+        flagSrc: country.flag_image || "",
         active: country.id === selectedEuropeCountryId,
         ariaLabel: t("facts.picker.countryButton", {
           name: getLocalizedCountryNameById(country.id, country.name),
@@ -1626,7 +2270,33 @@ function buildFactsPicker() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "state-picker-btn";
-    button.textContent = item.label;
+    if (item.flagSrc) {
+      button.classList.add("has-flag");
+
+      const copy = document.createElement("span");
+      copy.className = "state-picker-btn-copy";
+
+      const flag = document.createElement("img");
+      flag.className = "state-picker-btn-flag";
+      flag.src = item.flagSrc;
+      flag.alt = "";
+      flag.loading = "lazy";
+      flag.decoding = "async";
+      flag.addEventListener("error", () => {
+        flag.hidden = true;
+        button.classList.remove("has-flag");
+      });
+
+      const label = document.createElement("span");
+      label.className = "state-picker-btn-label";
+      label.textContent = item.label;
+
+      copy.appendChild(flag);
+      copy.appendChild(label);
+      button.appendChild(copy);
+    } else {
+      button.textContent = item.label;
+    }
     button.classList.toggle("active", item.active);
     button.setAttribute("aria-pressed", String(item.active));
     button.setAttribute("aria-label", item.ariaLabel);
@@ -1637,6 +2307,7 @@ function buildFactsPicker() {
 
 function renderFactsSelection() {
   const isGermanyMode = factsMode === "germany" || factsMode === "state";
+  const isWorldMode = factsMode === "world" || factsMode === "world-country";
 
   if (isGermanyMode) {
     if (!germanyFacts) {
@@ -1649,6 +2320,18 @@ function renderFactsSelection() {
       renderStateFacts(activeState);
     } else {
       renderCountryFacts(germanyFacts.country);
+    }
+  } else if (isWorldMode) {
+    if (!worldFacts) {
+      renderFactsError();
+      return;
+    }
+
+    const activeCountry = worldFacts.countries.find((country) => country.id === selectedWorldCountryId) || null;
+    if (factsMode === "world-country" && activeCountry) {
+      renderWorldCountryFacts(activeCountry);
+    } else {
+      renderWorldOverview(worldFacts.union);
     }
   } else {
     if (!europeFacts) {
@@ -1670,13 +2353,32 @@ function renderFactsSelection() {
 }
 
 function scrollFactsContentIntoView() {
-  const targetEl = factsContentEl || factsPanelEl;
+  const targetEl =
+    factsContentEl?.querySelector(".facts-view-head, .facts-error, .facts-view") ||
+    factsContentEl ||
+    factsPanelEl;
   if (!targetEl) {
     return;
   }
 
   requestAnimationFrame(() => {
-    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    requestAnimationFrame(() => {
+      const targetTop = Math.max(0, window.scrollY + targetEl.getBoundingClientRect().top - 10);
+      window.scrollTo({ top: targetTop, behavior: "smooth" });
+    });
+  });
+}
+
+function scrollFactsPanelTopIntoView() {
+  if (!factsPanelEl) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const targetTop = Math.max(0, window.scrollY + factsPanelEl.getBoundingClientRect().top - 10);
+      window.scrollTo({ top: targetTop, behavior: "smooth" });
+    });
   });
 }
 
@@ -1688,7 +2390,7 @@ function initFactsPanel() {
     factsMode = "germany";
     selectedStateId = null;
     renderFactsSelection();
-    scrollFactsContentIntoView();
+    scrollFactsPanelTopIntoView();
   });
 
   factsStatesBtn.addEventListener("click", () => {
@@ -1700,12 +2402,25 @@ function initFactsPanel() {
     factsMode = "europe";
     selectedEuropeCountryId = null;
     renderFactsSelection();
-    scrollFactsContentIntoView();
+    scrollFactsPanelTopIntoView();
   });
 
-  if (!germanyFacts && !europeFacts) {
+  factsWorldBtn.addEventListener("click", () => {
+    if (!worldFacts || !worldFacts.countries.length) {
+      renderFactsError();
+      return;
+    }
+
+    factsMode = "world";
+    selectedWorldCountryId = null;
+    renderFactsSelection();
+    scrollFactsPanelTopIntoView();
+  });
+
+  if (!germanyFacts && !europeFacts && !worldFacts) {
     factsCountryBtn.disabled = true;
     factsStatesBtn.disabled = true;
+    factsWorldBtn.disabled = true;
     renderFactsError();
     return;
   }
@@ -1714,8 +2429,16 @@ function initFactsPanel() {
     factsMode = "europe";
   }
 
+  if (!germanyFacts && !europeFacts && worldFacts) {
+    factsMode = "world";
+  }
+
   if (germanyFacts && !europeFacts) {
     factsStatesBtn.disabled = true;
+  }
+
+  if (!worldFacts) {
+    factsWorldBtn.disabled = true;
   }
 
   renderFactsSelection();
@@ -2104,7 +2827,8 @@ function startSession(size) {
   mainCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
-function loadCard() {
+function loadCard(options = {}) {
+  const { focusInput = true } = options;
   const card = sessionCards[sessionIndex];
   if (!card) {
     return;
@@ -2127,7 +2851,10 @@ function loadCard() {
   mainCard.classList.add("active");
   buildWordGrid(getTargetValue(card), "");
   updateSearchLinks(card);
-  inputEl.focus();
+
+  if (focusInput) {
+    inputEl.focus();
+  }
 }
 
 function updateStats() {
@@ -2572,16 +3299,17 @@ function createFlagColumns() {
 
 async function initApp() {
   learningMode = loadLearningMode();
-  const [loadedLocales, baseCards, loadedPersistentCards, currentCapabilities, loadedFacts, loadedEuropeFacts] = await Promise.all([
+  const [loadedLocales, baseCards, loadedPersistentCards, currentCapabilities, loadedFacts, loadedEuropeFacts, loadedWorldFacts] = await Promise.all([
     loadLocales(),
     fetchJson("cards.json", []),
     fetchJson("cards.user.json", []),
     detectCapabilities(),
     loadGermanyFacts(),
     loadEuropeFacts(),
+    loadWorldFacts(),
   ]);
 
-  locales = loadedLocales || {};
+  locales = deepMergeObjects(loadedLocales || {}, FACTS_LOCALE_PATCHES);
   applyLearningTheme();
   renderStaticUi();
   createFlagColumns();
@@ -2594,6 +3322,7 @@ async function initApp() {
   capabilities = currentCapabilities;
   germanyFacts = loadedFacts;
   europeFacts = loadedEuropeFacts;
+  worldFacts = loadedWorldFacts;
   persistentCards = Array.isArray(loadedPersistentCards)
     ? loadedPersistentCards.map(sanitizeCard).filter(Boolean)
     : [];

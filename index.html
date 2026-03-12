@@ -111,8 +111,8 @@
     <div class="solution" id="solution"></div>
     <div class="action-row">
       <div class="action-row-left">
-        <button class="settings-btn" id="settingsBtn" type="button" aria-expanded="false" aria-controls="catPanel">Settings</button>
-        <button class="hint-btn" id="hintBtn">Tipp</button>
+        <button class="settings-btn" id="settingsBtn" type="button" aria-expanded="false" aria-controls="catPanel"><span class="button-icon" aria-hidden="true">⚙</span> <span>Settings</span></button>
+        <button class="hint-btn" id="hintBtn"><span class="button-icon button-icon-emoji" aria-hidden="true">💡</span> <span>Tipp</span></button>
       </div>
       <div class="enter-hint"><span class="key-badge">Enter</span> <span id="enterHintText">zum Pr&uuml;fen</span></div>
     </div>
@@ -129,10 +129,6 @@
 </div>
 
 <div class="cat-panel is-hidden" id="catPanel">
-  <div class="cat-panel-head">
-    <div class="cat-panel-title" id="catPanelTitle">Kategorien ausw&auml;hlen</div>
-    <div class="cat-count" id="catCount"></div>
-  </div>
   <div class="cat-panel-toolbar">
     <div class="difficulty-panel">
       <button data-diff="hard" id="difficultyHardBtn">Schwer</button>
@@ -153,6 +149,7 @@
           />
           <span class="slider-label"><span id="sliderLabel">10</span> <span id="sliderUnitLabel">Karten</span></span>
         </div>
+        <div class="cat-count" id="catCount"></div>
         <button class="new-game-btn" id="newGameBtn"
           onclick="startSession(+document.getElementById('sessionSizeSlider').value)">
           Neues Spiel
@@ -164,14 +161,11 @@
 </div>
 
 <div class="search-panel" id="searchPanel">
-  <div class="search-panel-head">
-    <div class="search-panel-title" id="searchPanelTitle">Deutschen Ausdruck nachschlagen</div>
+  <div class="search-tools-row">
+    <div class="search-links" id="searchLinks"></div>
     <button class="author-toggle-btn" id="authorToggleBtn" type="button" aria-expanded="false">Neue Karten</button>
   </div>
-  <div class="search-panel-subtitle" id="searchPanelSubtitle">F&uuml;r W&ouml;rter, Wendungen oder ganze S&auml;tze.</div>
-  <div class="search-links" id="searchLinks"></div>
   <div class="grammar-section">
-    <div class="grammar-section-title" id="grammarSectionTitle">Lerntipps</div>
     <div class="grammar-grid" id="grammarGrid"></div>
   </div>
 </div>
@@ -211,15 +205,11 @@
 </div>
 
 <div class="facts-panel">
-  <div class="facts-panel-head">
-    <div class="facts-panel-title" id="factsPanelTitle">Deutsche Geographie</div>
-    <div class="facts-panel-subtitle" id="factsPanelSubtitle">Deutschland, Bundesl&auml;nder und Europa im &Uuml;berblick.</div>
-  </div>
-
   <div class="facts-controls">
     <div class="facts-mode-switch">
       <button class="facts-switch-btn active" id="factsCountryBtn" type="button">Deutschland</button>
       <button class="facts-switch-btn" id="factsStatesBtn" type="button">Europa</button>
+      <button class="facts-switch-btn" id="factsWorldBtn" type="button">Welt</button>
     </div>
 
     <div class="state-picker-wrap" id="statePickerWrap">
@@ -231,7 +221,7 @@
 </div>
 
 <footer class="site-footer">
-  <a href="http://www.lovro-music.de" target="_blank" rel="noopener noreferrer" id="siteFooterLink">made by Lovro Musi&#263;, in Gie&#223;en 2026, with &#9829;</a>
+  <a href="https://lomuss33.github.io/myWebsite/" target="_blank" rel="noopener noreferrer" id="siteFooterLink">made by Lovro Musi&#263;, in Gie&#223;en 2026, with &#9829;</a>
 </footer>
 
 <script src="app.js"></script>
