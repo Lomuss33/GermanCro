@@ -1,79 +1,48 @@
 # GermanCro
 
-GermanCro is a browser-based German vocabulary trainer with Croatian prompts and English support text. You see the Croatian prompt, use the English gloss as context, and type the German answer into a live character grid.
+GermanCro is a browser-based German trainer with Croatian and English support. The learner sees two prompt languages, types the German answer, and gets live character-by-character feedback.
 
-## What it includes
+## Current card model
 
-- 302 vocabulary cards in `cards.json`
-- 8 grammar and usage categories
-- Easy, Medium, and Hard difficulty modes
-- Live per-character feedback while typing
-- Hint reveal button and automatic punctuation fill
-- Session stats for streak, accuracy, remaining cards, and WPM
-- Search shortcuts for the active word
-- "Deutschland kennenlernen" facts panel for Germany and all 16 states
-
-## Quick start
-
-This app must be served over HTTP because `app.js` loads `cards.json` with `fetch()`.
-
-```bash
-npx serve .
-```
-
-Open the local URL shown by the server, usually `http://localhost:3000`.
-
-If you want direct file writes from the UI, run the built-in local server instead:
-
-```bash
-npm start
-```
-
-That enables persistent saves to `cards.user.json`. GitHub Pages stays read-only because it cannot run `server.js`.
-
-If you prefer `npx serve .`, that also works for adding cards:
-
-- cards are added to the current session in the browser
-- you can then export them as `cards.user.json`
-- place that file in the repo root so it will load the next time you start the app
-
-## How the repo is organized
-
-```text
-index.html      App structure and controls
-style.css       Visual design and responsive layout
-app.js          Session flow, scoring, hints, filters, and search links
-cards.json      Vocabulary dataset
-image.png       README screenshot
-MAINTAINING.md  Maintainer workflow and smoke-test checklist
-USER_GUIDE.md   End-user guide for controls and clickable UI sections
-germany-facts.json Germany and Bundesländer facts dataset
-assets/facts/... Placeholder or real WebP flags for Germany and the states
-server.js       Local editable server with persistent card saves
-cards.user.json Local extension dataset written by server.js
-```
-
-## Data model
-
-Each card is a JSON object with four fields:
+The vocabulary deck now uses a structured card schema:
 
 ```json
 {
-  "de": "die Schlussfolgerung",
-  "hr": "zakljucak",
-  "en": "conclusion",
-  "cat": "Nomen"
+  "de": "das Auto",
+  "hr": "auto",
+  "en": "car",
+  "topic": "vehicles",
+  "subcategory": "Nomen",
+  "scope": "all"
 }
 ```
 
 Field meanings:
 
-- `de`: German answer the user types
-- `hr`: Croatian prompt shown as the main cue
-- `en`: English support text shown below the prompt
-- `cat`: category label used for filtering and styling
+- `de`: German answer the learner types
+- `hr`: Croatian prompt
+- `en`: English support gloss
+- `topic`: top-level content group used for session filtering
+- `subcategory`: grammar or content type shown on the card badge
+- `scope`: card availability mode
 
-Valid categories are:
+Current built-in topics:
+
+- `basics`
+- `vehicles`
+- `nature`
+- `food`
+- `travel`
+- `work`
+- `health`
+- `people`
+- `shopping`
+- `developertech`
+- `itnetwork`
+- `deutschebahn`
+- `bahn-technik`
+
+Current subcategories:
 
 - `Nomen`
 - `Verb`
@@ -84,80 +53,105 @@ Valid categories are:
 - `Ausdruck`
 - `Satz`
 
-## Maintainer docs
+Current scopes:
 
-Use [MAINTAINING.md](MAINTAINING.md) for:
+- `all`: shared card for all three learning modes
+- `de`: DE-mode specific
+- `hr`: HR-mode specific
+- `gb`: GB-mode specific
 
-- local maintenance workflow
-- data-edit rules
-- coordinated code/data changes
-- manual smoke testing after edits
+The shipped starter deck currently contains 467 cards across thirteen built-in topics, mostly shared and some DE-mode-specific.
 
-Use [USER_GUIDE.md](USER_GUIDE.md) for:
+## Quick start
 
-- what each clickable interface section does
-- how sessions, filters, and lookup links work
-- how to use the `Neue Karte hinzufügen` panel
+Serve the app over HTTP from the repo root:
 
-## Deutschland kennenlernen
+```bash
+npx serve .
+```
 
-The UI now includes a facts panel at the bottom of the page.
+Open the local URL shown by the server.
 
-- `Deutschland` shows country-level quick facts such as capital, anthem, population, area, GDP, and highlights.
-- `Bundesländer` opens a picker for all 16 states.
-- Choosing a state shows its basic data and short highlight lists.
+If you want direct writes from the add-card panel, run the local Node server:
 
-The module is fully static and GitHub Pages-safe because it loads data from `germany-facts.json`.
+```bash
+npm start
+```
 
-Flag images for this panel are loaded from:
+That enables `POST /api/cards` and writes to `cards.user.json`.
 
-- `https://flagcdn.com/de.svg` for Germany
-- `assets/facts/states/<state-id>.webp` for the state flags
+## Repo map
 
-## Add-card bubble behavior
-
-The UI now includes a separate "Neue Karte hinzufügen" panel below the lookup panel.
-
-- On GitHub Pages or any static host, saving stores the new card only for the current browser session.
-- On a local repo copy started with `npm start`, saving writes directly to `cards.user.json`.
-- On a local repo copy started with `npx serve .`, saving stays in-session but you can export `cards.user.json` from the UI.
-- If you want to publish locally added cards, commit `cards.user.json` or merge its entries into `cards.json`.
+```text
+index.html        App structure and form controls
+style.css         Visual design and responsive layout
+app.js            Session flow, filters, authoring UI, and card validation
+cards.json        Main vocabulary dataset
+cards.user.json   Optional local extension dataset
+locales.json      UI labels for topics, subcategories, and scopes
+server.js         Local editable server and save API
+MAINTAINING.md    Maintainer workflow and change checklist
+USER_GUIDE.md     End-user guide for the interface
+```
 
 ## Adding cards
 
-Use the "Neue Karte hinzufügen" panel and fill in:
+Use the `Neue Karte hinzufügen` panel in the app and fill in:
 
-- `Deutsch`: the exact German answer users should type
-- `Kategorie`: one of the supported grammar categories
-- `Kroatisch`: the main prompt shown on the card
-- `Englisch`: the support gloss shown under the prompt
+- `Topic`: top-level filter group such as `basics`, `developertech`, or `deutschebahn`
+- `Subcategory`: `Nomen`, `Verb`, `Adjektiv`, and so on
+- `Mode`: `all`, `de`, `hr`, or `gb`
+- `Deutsch`: exact German answer
+- `Kroatisch`: Croatian prompt
+- `Englisch`: English support gloss
 
-Save behavior:
+Save modes:
 
-- Static hosting mode: the card is added only for the current browser session and is not written to the repo.
-- Local static mode with `npx serve .`: the card is added for the current session and can be exported as `cards.user.json`.
-- Local editable mode with `npm start`: the card is appended to `cards.user.json` and becomes available after saving.
+- `npx serve .`: session-only, with optional `cards.user.json` export
+- `npm start`: persistent save into `cards.user.json`
 
-Rules:
+Validation rules:
 
-- All four fields are required.
-- Duplicate cards are blocked based on German answer plus Croatian prompt.
-- The category must match one of the existing supported categories.
+- all six fields are required
+- topic must be a supported topic key
+- subcategory must be a supported subcategory key
+- scope must be `all`, `de`, `hr`, or `gb`
+- duplicates are blocked by `de + hr + topic + subcategory + scope`
 
-Publishing new cards:
+## Adding new topics or subcategories
 
-1. Run the app locally with either `npx serve .` or `npm start`.
-2. Add cards through the panel.
-3. If you used `npx serve .`, export `cards.user.json` from the panel and place it in the repo root.
-4. Review the saved entries in `cards.user.json`.
-5. Commit `cards.user.json`, or move the entries into `cards.json` if you want them in the main dataset.
+If you want to extend the taxonomy itself, update these files together:
+
+1. `app.js`
+   Add the new topic to `TOPIC_CONFIG`, or add the new subcategory to `SUBCATEGORY_OPTIONS`.
+2. `server.js`
+   Add the same key to `VALID_TOPICS` or `VALID_SUBCATEGORIES`.
+3. `locales.json`
+   Add labels for the new topic under `topics`, or for the new subcategory under `categories`, in `de`, `hr`, and `en`.
+4. `cards.json`
+   Add cards that use the new keys.
+
+If the new taxonomy value does not exist in all four places, cards using it will be rejected or shown with broken labels.
+
+## Scope rules
+
+`scope` is future-facing metadata for language-mode-specific content.
+
+- Use `all` for shared vocabulary.
+- Use `de`, `hr`, or `gb` only when a card should belong to one learning mode.
+- The session pool automatically includes only cards compatible with the current learning mode.
+
+## More docs
+
+- Use [MAINTAINING.md](MAINTAINING.md) for maintainer workflow and smoke testing.
+- Use [USER_GUIDE.md](USER_GUIDE.md) for the clickable UI overview.
 
 ## Notes
 
-- The app remains GitHub Pages-safe because persistent writes require a local Node server that static hosting does not provide.
-- There is currently no automated test suite or CI.
-- If text renders incorrectly after editing, verify the file encoding before changing content.
+- Static hosting stays read-only.
+- There is no automated test suite or CI yet.
+- Keep JSON files UTF-8 encoded so German and Croatian diacritics stay intact.
 
-## Current full-page screenshot
+## Screenshot
 
 ![GermanCro full-page screenshot](image.png)

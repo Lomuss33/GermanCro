@@ -558,15 +558,30 @@ body > * { position: relative; z-index: 1; }
 }
 
 .category-badge {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding: 3px 10px;
+  line-height: 1.08;
+  padding: 5px 10px;
   border-radius: 20px;
   border: 1px solid;
   flex: 0 0 auto;
+}
+
+.category-badge-main {
+  white-space: nowrap;
+}
+
+.category-badge-meta {
+  font-size: 8.5px;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+  white-space: nowrap;
 }
 
 .card-legend {
@@ -2128,7 +2143,7 @@ input.wrong {
 
 .add-card-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 

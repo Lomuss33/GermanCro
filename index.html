@@ -179,12 +179,20 @@
   <form class="add-card-form" id="addCardForm">
     <div class="add-card-grid">
       <label class="author-field">
-        <span id="authorLabelDe">Deutsch</span>
-        <input id="newCardDe" type="text" placeholder="z. B. die Entscheidung" required>
+        <span id="authorLabelTopic">Thema</span>
+        <select id="newCardTopic" required></select>
       </label>
       <label class="author-field">
-        <span id="authorLabelCat">Kategorie</span>
-        <select id="newCardCat" required></select>
+        <span id="authorLabelSubcategory">Unterkategorie</span>
+        <select id="newCardSubcategory" required></select>
+      </label>
+      <label class="author-field">
+        <span id="authorLabelScope">Modus</span>
+        <select id="newCardScope" required></select>
+      </label>
+      <label class="author-field">
+        <span id="authorLabelDe">Deutsch</span>
+        <input id="newCardDe" type="text" placeholder="z. B. die Entscheidung" required>
       </label>
       <label class="author-field">
         <span id="authorLabelHr">Kroatisch</span>

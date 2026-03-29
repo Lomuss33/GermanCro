@@ -6,12 +6,29 @@ const ROOT = __dirname;
 const PORT = Number(process.env.PORT) || 3000;
 const USER_CARDS_FILE = path.join(ROOT, "cards.user.json");
 
-const CATEGORY_ALIASES = {
+const SUBCATEGORY_ALIASES = {
+  Praeposition: "Präposition",
   "PrÃ¤position": "Präposition",
   "PrÃƒÂ¤position": "Präposition",
 };
 
-const VALID_CATEGORIES = new Set([
+const VALID_TOPICS = new Set([
+  "basics",
+  "vehicles",
+  "nature",
+  "food",
+  "travel",
+  "work",
+  "health",
+  "people",
+  "shopping",
+  "developertech",
+  "itnetwork",
+  "deutschebahn",
+  "bahn-technik",
+]);
+
+const VALID_SUBCATEGORIES = new Set([
   "Nomen",
   "Verb",
   "Adjektiv",
@@ -21,6 +38,7 @@ const VALID_CATEGORIES = new Set([
   "Ausdruck",
   "Satz",
 ]);
+const VALID_SCOPES = new Set(["all", "de", "hr", "gb"]);
 
 const CONTENT_TYPES = {
   ".css": "text/css; charset=utf-8",
@@ -32,8 +50,23 @@ const CONTENT_TYPES = {
   ".txt": "text/plain; charset=utf-8",
 };
 
-function normalizeCategory(cat) {
-  return CATEGORY_ALIASES[cat] || cat;
+function normalizeTopic(topic) {
+  return String(topic || "").trim().toLowerCase();
+}
+
+function normalizeSubcategory(subcategory) {
+  return SUBCATEGORY_ALIASES[subcategory] || subcategory;
+}
+
+function normalizeScope(scope) {
+  const normalized = String(scope || "").trim().toLowerCase();
+  if (!normalized || normalized === "shared" || normalized === "universal") {
+    return "all";
+  }
+  if (normalized === "en") {
+    return "gb";
+  }
+  return normalized;
 }
 
 function normalizeField(value) {
@@ -45,7 +78,13 @@ function normalizeAnswer(value) {
 }
 
 function cardKey(card) {
-  return `${normalizeAnswer(card.de)}::${normalizeAnswer(card.hr)}::${card.cat}`;
+  return [
+    normalizeAnswer(card.de),
+    normalizeAnswer(card.hr),
+    normalizeTopic(card.topic),
+    normalizeSubcategory(card.subcategory),
+    normalizeScope(card.scope),
+  ].join("::");
 }
 
 function sanitizeCard(raw) {
@@ -57,10 +96,19 @@ function sanitizeCard(raw) {
     de: normalizeField(raw.de),
     hr: normalizeField(raw.hr),
     en: normalizeField(raw.en),
-    cat: normalizeCategory(normalizeField(raw.cat)),
+    topic: normalizeTopic(normalizeField(raw.topic)),
+    subcategory: normalizeSubcategory(normalizeField(raw.subcategory || raw.cat)),
+    scope: normalizeScope(normalizeField(raw.scope || "all")),
   };
 
-  if (!card.de || !card.hr || !card.en || !VALID_CATEGORIES.has(card.cat)) {
+  if (
+    !card.de ||
+    !card.hr ||
+    !card.en ||
+    !VALID_TOPICS.has(card.topic) ||
+    !VALID_SUBCATEGORIES.has(card.subcategory) ||
+    !VALID_SCOPES.has(card.scope)
+  ) {
     return null;
   }
 

@@ -1,196 +1,114 @@
 # User Guide
 
-This guide explains the clickable parts of the GermanCro interface and what they do.
+This guide explains the main clickable parts of the GermanCro interface.
 
 ## Main card
 
 The main card is the central learning area.
 
-- Croatian prompt: the large text at the top of the card. This is the item you translate into German.
-- English hint: the smaller line below the prompt. This gives extra context.
-- Category badge: shows which type of card is currently active, such as `Nomen` or `Verb`.
-- Answer field: where you type the German answer.
-- Character grid: shows the target answer letter by letter and reacts while you type.
-
-Character grid behavior:
-
-- Green letter: the typed letter is correct.
-- Red letter: the typed letter is wrong.
-- Hint letter: the letter is being shown as a difficulty or hint reveal.
-- Auto-filled letter: punctuation at the end of a word can be filled automatically.
-- Next-letter marker: in non-hard modes, the next expected position is highlighted.
+- Croatian prompt: the large cue line
+- English support line: the smaller helper gloss
+- Topic badge: shows the active card's topic, subcategory, and mode
+- Answer field: where you type the German answer
+- Character grid: shows the target answer letter by letter while you type
 
 ## Difficulty buttons
 
-The difficulty buttons are inside the main card.
+The difficulty buttons change how much of the answer is visible.
 
-- `Hard`: no starting letters are shown.
-- `Medium`: the first letter of each word is shown.
-- `Easy`: the first three letters of each word are shown.
+- `Hard`: no starting letters
+- `Medium`: first letter of each word
+- `Easy`: first three letters of each word
 
-These buttons only change how much visual help you get. They do not change the underlying card data.
+They do not change the card data itself.
 
 ## Tipp button
 
-The `Tipp` button reveals more of the answer.
-
-- Each click reveals more characters from the start of the German answer.
-- This helps when you want to continue the round instead of stopping.
-- The revealed text is placed directly into the answer field.
+The `Tipp` button reveals more of the current German answer and writes the revealed part into the answer field.
 
 ## New game controls
 
-The category area below the main card controls the session.
+The settings area below the main card controls session setup.
 
-- Category buttons: filter the active card pool.
-- `Gemischt`: uses all categories together.
-- Session size slider: chooses how many cards the next session will use.
-- `Neues Spiel`: starts a fresh session using the currently selected categories and slider value.
+- Topic buttons: filter the pool by top-level topic
+- `All topics`: uses every available topic together
+- Session-size slider: sets how many cards the next session uses
+- `Neues Spiel`: starts a fresh session with the current filter
 
 Important behavior:
 
-- Category changes do not automatically restart the current session.
-- Start a new session after changing categories or session size if you want the change to apply immediately.
+- topic changes do not restart the current session automatically
+- start a new session after changing the topic filter or session size
 
-## Aktuelles Wort nachschlagen
+## Search links
 
-This panel contains quick external lookup links for the current card.
+This panel opens external reference links for the current German word.
 
-Each button opens a new browser tab for the active German word on a reference site such as:
+The current app uses:
 
-- Duden
-- DWDS
-- dict.cc
-- Wikipedia
-- Google
-- Linguee
-- Leo
+- `dict.cc`
+- `Google`
+- `Linguee`
+- `Leo`
 
-Use this when you want more context, examples, dictionary detail, or confirmation outside the app.
+## Add a new card
 
-## Neue Karte hinzufügen
-
-This panel lets you add learning items from the browser without editing JSON manually.
+The add-card panel lets you create cards without editing JSON manually.
 
 ### Fields
 
-- `Deutsch`: the exact German answer the learner should type
-- `Kategorie`: the grammar or content category for the card
-- `Kroatisch`: the Croatian prompt shown on the card
-- `Englisch`: the English support text shown below the prompt
+- `Topic`: top-level group such as `basics`, `developertech`, `itnetwork`, `deutschebahn`, or `bahn-technik`
+- `Subcategory`: `Nomen`, `Verb`, `Adjektiv`, `Adverb`, `Präposition`, `Konjunktion`, `Ausdruck`, or `Satz`
+- `Mode`: `all`, `de`, `hr`, or `gb`
+- `Deutsch`: exact German answer
+- `Kroatisch`: Croatian prompt
+- `Englisch`: English helper gloss
+
+### Scope meanings
+
+- `all`: shared card for every learning mode
+- `de`: DE-mode-specific card
+- `hr`: HR-mode-specific card
+- `gb`: GB-mode-specific card
 
 ### How to add a card
 
-1. Enter the German answer in `Deutsch`.
-2. Choose the correct category.
-3. Enter the Croatian prompt.
-4. Enter the English helper translation.
-5. Click the save button.
-
-### What happens after saving
-
-There are two save modes.
-
-- Static-host mode, such as GitHub Pages:
-  The card is stored only for the current browser session.
-  It is usable immediately in the app, but it is not written to the repository.
-  Reloading or opening the hosted site elsewhere will not update the published dataset.
-
-- Local static mode with `npx serve .`:
-  The card is also stored only in the current session at first.
-  Use the `cards.user.json exportieren` button to download the added cards as `cards.user.json`.
-  Put that file into the repo root if you want the app to load those cards again next time.
-
-- Local editable mode with `npm start`:
-  The card is saved to `cards.user.json`.
-  It becomes part of your local extended dataset and can be committed later if you want to publish it.
+1. Choose the topic.
+2. Choose the subcategory.
+3. Choose the mode.
+4. Enter the German answer.
+5. Enter the Croatian prompt.
+6. Enter the English support text.
+7. Save the card.
 
 ### Validation rules
 
-- All four fields must be filled in.
-- The category must match one of the supported categories.
-- Duplicate entries are rejected.
+- all six fields are required
+- duplicate cards are rejected
+- topic, subcategory, and mode must be supported values
 
-In practice, duplicate blocking is based on the German answer and Croatian prompt combination.
+In practice, duplicate blocking is based on:
 
-### Best practices
+- German answer
+- Croatian prompt
+- topic
+- subcategory
+- mode
 
-- Put the full answer in `Deutsch`, including articles when they matter, for example `der Tisch`.
-- Keep `Kroatisch` concise and consistent with the rest of the dataset.
-- Use `Englisch` as a helper gloss, not as the main teaching language.
-- Choose the category carefully because it affects filtering and visual grouping.
+### Save behavior
 
-### Publishing locally added cards
-
-If you add cards while running `npm start`, review `cards.user.json` afterwards.
-
-If you add cards while running `npx serve .`, export `cards.user.json` first and place the downloaded file into the repo root.
-
-You can then:
-
-- keep them in `cards.user.json` as an extension dataset, or
-- move reviewed entries into `cards.json` if you want them in the main published set
+- On static hosting, the card is stored only for the current browser session.
+- With `npx serve .`, the card is also session-only at first, but you can export `cards.user.json`.
+- With `npm start`, the card is written directly to `cards.user.json`.
 
 ## Session end screen
 
-When a session finishes, the app shows a summary.
+When a session finishes, the app shows:
 
-- Score percent
-- Correct answers
-- Best streak
+- score percent
+- correct answers
+- best streak
 - WPM
-- Total session time
+- total session time
 
 Use `Neue Runde` to start again.
-
-## Deutschland kennenlernen
-
-This panel is a small facts explorer at the bottom of the page.
-
-### Deutschland button
-
-Click `Deutschland` to show quick facts for the country.
-
-The title area also shows the image from `assets/facts/country/deutschland.webp`.
-
-Typical facts shown here:
-
-- capital
-- largest city
-- anthem
-- founding year
-- population
-- area
-- number of states
-- currency
-- language
-- time zone
-- GDP
-- well-known places and nature highlights
-
-### Bundeslander button
-
-Click `Bundeslander` to open the state selector.
-
-- A list of all 16 German states appears.
-- Click any state button to load that state's facts.
-- The selected state button is highlighted.
-- The image next to the state name is loaded from `assets/facts/states/<state-id>.webp`.
-
-### What you can expect in a state view
-
-Depending on the available data, the panel can show:
-
-- capital
-- largest city
-- population
-- area
-- founding or current-form year
-- what the state is known for
-- nature and landscape highlights
-
-### Notes
-
-- This panel is for quick orientation and browsing, not for scored quiz rounds.
-- If the facts file is missing or broken, the main learning app still works.
-- The shipped WebP files are placeholders and can be replaced with your own proper flag images.

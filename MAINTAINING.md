@@ -1,8 +1,6 @@
 # Maintaining GermanCro
 
-This document is for repo maintenance. For the product overview, quick start, and data summary, use [README.md](README.md).
-
-GermanCro is a static client-side app. There is no build step, backend, or package manifest in the repo.
+This document is for developers and future agents who need to add cards or extend the card taxonomy.
 
 ## Local run
 
@@ -12,111 +10,158 @@ Run the app from the repo root with a local web server:
 npx serve .
 ```
 
-Do not open `index.html` directly from disk. `app.js` loads `cards.json` with `fetch()`, so the app needs HTTP.
+Do not open `index.html` directly from disk. `app.js` loads JSON with `fetch()`, so the app needs HTTP.
 
-For direct file writes from the add-card panel, use the local Node server instead:
+For direct writes from the add-card panel, run:
 
 ```bash
 npm start
 ```
 
-That enables `POST /api/cards` and writes to `cards.user.json`. Static hosting such as GitHub Pages does not expose that API, so hosted deployments remain read-only.
+That enables `POST /api/cards` and writes to `cards.user.json`.
 
-If you run the app with `npx serve .`, the add-card panel still works:
+## Files that matter for cards
 
-- cards are stored for the current browser session
-- the panel can export them as `cards.user.json`
-- placing that file in the repo root makes the cards available on the next start
+- `cards.json`: main vocabulary dataset
+- `cards.user.json`: local extension dataset written by `server.js`
+- `app.js`: client-side card sanitizing, topic filtering, authoring selects, and scope handling
+- `server.js`: save API and server-side card validation
+- `locales.json`: display labels for topics, subcategories, and scopes
+- `index.html`: add-card form fields
+- `style.css`: badge and authoring-form layout
 
-## Files that matter
+## Card contract
 
-- `index.html`: app structure, controls, labels, and CDN font imports
-- `style.css`: all visuals and responsive layout
-- `app.js`: session flow, grading, hints, stats, category filtering, and search links
-- `cards.json`: vocabulary source of truth
-- `cards.user.json`: optional locally saved cards written by `server.js`
-- `germany-facts.json`: data source for the Germany facts explorer
-- `assets/facts/country/deutschland.webp`: country image shown in the facts header
-- `assets/facts/states/*.webp`: state images keyed by the stable state `id`
-- `server.js`: local static server plus save API for the authoring bubble
+Every card must have these fields:
 
-## Card data rules
-
-- Keep the file valid JSON and UTF-8 encoded. German and Croatian diacritics must remain intact.
-- Each card must have `de`, `hr`, `en`, and `cat`.
-- Valid `cat` values are `Nomen`, `Verb`, `Adjektiv`, `Adverb`, `Praeposition` or `Präposition`, `Konjunktion`, `Ausdruck`, and `Satz`.
-- If you add, rename, or remove a category, update both `cards.json` and `catColors` in `app.js`.
-- Session-only cards are stored in browser `sessionStorage` when no local API is available.
-
-## Germany facts module
-
-The `Deutschland kennenlernen` panel is backed by `germany-facts.json`.
+```json
+{
+  "de": "das Auto",
+  "hr": "auto",
+  "en": "car",
+  "topic": "vehicles",
+  "subcategory": "Nomen",
+  "scope": "all"
+}
+```
 
 Rules:
 
-- keep the file valid JSON and UTF-8 encoded
-- keep `country` as a single object and `states` as an array
-- keep state `id` values unique and stable
-- store display-ready values as strings unless a simple number is clearly better
-- if a field is missing, the UI hides it rather than rendering placeholders
-- if you replace a flag image, keep the same filename and use `.webp`
+- keep files valid JSON and UTF-8 encoded
+- keep `de`, `hr`, and `en` trimmed and human-readable
+- `topic` must exist in both the client and server allow-lists
+- `subcategory` must exist in both the client and server allow-lists
+- `scope` must be one of `all`, `de`, `hr`, or `gb`
+- duplicates are blocked by `de + hr + topic + subcategory + scope`
 
-## Adding cards through the UI
+## Current taxonomy
 
-The authoring panel is intended for fast content entry without editing JSON by hand.
+Topics:
 
-Fields:
+- `basics`
+- `vehicles`
+- `nature`
+- `food`
+- `travel`
+- `work`
+- `health`
+- `people`
+- `shopping`
+- `developertech`
+- `itnetwork`
+- `deutschebahn`
+- `bahn-technik`
 
-- `Deutsch`: exact German answer to be typed in the trainer
-- `Kategorie`: existing category value
-- `Kroatisch`: card prompt
-- `Englisch`: support translation shown below the prompt
+Subcategories:
+
+- `Nomen`
+- `Verb`
+- `Adjektiv`
+- `Adverb`
+- `Präposition`
+- `Konjunktion`
+- `Ausdruck`
+- `Satz`
+
+Scopes:
+
+- `all`
+- `de`
+- `hr`
+- `gb`
+
+## How to add new cards
+
+Preferred workflow:
+
+1. Run `npx serve .` or `npm start`.
+2. Open the add-card panel in the UI.
+3. Fill `Topic`, `Subcategory`, `Mode`, `Deutsch`, `Kroatisch`, and `Englisch`.
+4. Save the card.
+5. If you used `npx serve .`, export `cards.user.json`.
+6. Review the saved cards.
+7. Either keep them in `cards.user.json` or merge them into `cards.json`.
 
 Save modes:
 
-- `npx serve .`: save is session-only and uses browser `sessionStorage`
-- `npx serve .` plus export: save in-session, then download `cards.user.json` from the UI
-- `npm start`: save is persistent and appends the card to `cards.user.json`
+- `npx serve .`: session-only storage, optional export
+- `npm start`: persistent save to `cards.user.json`
 
-Validation behavior:
+## How to add a new topic
 
-- all fields are required
-- duplicate cards are rejected
-- unsupported categories are rejected
+When you create a new top-level topic, update all of these together:
 
-Recommended maintainer workflow:
+1. `app.js`
+   Add the topic key to `TOPIC_CONFIG` and choose a color.
+2. `server.js`
+   Add the same key to `VALID_TOPICS`.
+3. `locales.json`
+   Add labels for the topic in `de.topics`, `hr.topics`, and `en.topics`.
+4. `cards.json`
+   Add cards that use the new topic key.
 
-1. Run either `npx serve .` or `npm start`.
-2. Add new cards through the UI.
-3. If you used `npx serve .`, export `cards.user.json` from the UI and move it into the repo root.
-4. Review `cards.user.json`.
-5. Keep `cards.user.json` as the extension dataset, or merge reviewed cards into `cards.json`.
-6. Commit whichever dataset file you want to publish.
+If one of those steps is skipped, the new topic will either fail validation or render with raw keys.
+
+## How to add a new subcategory
+
+When you introduce a new subcategory, update all of these together:
+
+1. `app.js`
+   Add the new value to `SUBCATEGORY_OPTIONS`.
+2. `server.js`
+   Add the same value to `VALID_SUBCATEGORIES`.
+3. `locales.json`
+   Add translated labels under `categories` for `de`, `hr`, and `en`.
+4. `cards.json`
+   Add or update cards to use the new subcategory.
+
+## How to use scope correctly
+
+- Use `all` for shared vocabulary.
+- Use `de`, `hr`, or `gb` only for language-mode-specific cards.
+- The session pool in the client automatically hides incompatible scoped cards for the active learning mode.
+- If you ever add a brand-new learning mode, you must also update `MODE_SCOPE_MAP` in `app.js`.
 
 ## Change checklist
 
-- Content-only change: edit `cards.json`, then confirm category counts and a few sample answers in the browser.
-- Authoring-bubble change: test `npx serve .` export flow and `npm start` direct-save flow.
-- Germany-facts change: test country view, state picker view, and missing-field rendering.
-- UI copy or layout change: update `index.html` and `style.css` together if spacing or labels shift.
-- Gameplay change: update `app.js`, then manually retest difficulty modes, hints, answer checking, and session completion.
+- Card content change: validate JSON, then test topic filters and a few sample answers.
+- Topic taxonomy change: update `app.js`, `server.js`, `locales.json`, and `cards.json` together.
+- Add-card form change: test both `npx serve .` export flow and `npm start` persistent-save flow.
+- Scope change: switch learning modes and confirm the expected cards remain available.
 
 ## Manual smoke test
 
 1. Start the app through a local server and confirm cards load.
-2. Switch between `Hard`, `Medium`, and `Easy`.
-3. Answer one card correctly and one incorrectly.
-4. Use `Tipp`, category filters, and the session size slider.
-5. Add a card through the bubble and confirm the save-mode message is correct.
-6. In `npx serve .` mode, export `cards.user.json` and confirm the file downloads.
-7. In static mode without export, reload and confirm the added card does not persist beyond the session.
+2. Open settings and confirm topic buttons render.
+3. Start a mixed session and answer one card correctly and one incorrectly.
+4. Filter to a single topic and start a new session.
+5. Use `Tipp`, difficulty buttons, and the session-size slider.
+6. Add a new card through the browser form and confirm validation works.
+7. In `npx serve .` mode, export `cards.user.json` and confirm the file downloads.
 8. In `npm start` mode, add a card and confirm it is written to `cards.user.json`.
-9. Check the `Deutschland kennenlernen` panel and confirm Germany facts load by default.
-10. Open `Bundeslander`, choose multiple states, and confirm the displayed facts change.
-11. Finish a session and confirm the final score screen appears.
-12. Open one search link for the active word and confirm it is populated.
 
 ## Notes
 
-- There is currently no automated test suite or CI in this repo.
-- If text looks garbled, check the editor and file encoding first before changing content.
+- Static hosting remains read-only.
+- There is no automated test suite or CI yet.
+- If text looks garbled, check the editor encoding before editing content.

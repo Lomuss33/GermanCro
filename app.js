@@ -1,21 +1,43 @@
-const CATEGORY_ALIASES = {
+const SUBCATEGORY_ALIASES = {
+  Praeposition: "Präposition",
   "PrÃ¤position": "Präposition",
   "PrÃƒÂ¤position": "Präposition",
   "PrÃƒÆ’Ã‚Â¤position": "Präposition",
 };
 
-const catColors = {
-  Nomen: "#60a5fa",
-  Verb: "#f472b6",
-  Adjektiv: "#4ade80",
-  Adverb: "#dbfa60",
-  Präposition: "#f47272",
-  Konjunktion: "#884ade",
-  Ausdruck: "#fb923c",
-  Satz: "#a78bfa",
+const TOPIC_CONFIG = {
+  basics: { color: "#60a5fa" },
+  vehicles: { color: "#fb923c" },
+  nature: { color: "#4ade80" },
+  food: { color: "#f87171" },
+  travel: { color: "#facc15" },
+  work: { color: "#818cf8" },
+  health: { color: "#22d3ee" },
+  people: { color: "#f472b6" },
+  shopping: { color: "#34d399" },
+  developertech: { color: "#0284c7" },
+  itnetwork: { color: "#65a30d" },
+  deutschebahn: { color: "#b91c1c" },
+  "bahn-technik": { color: "#0f766e" },
 };
 
-const allCats = Object.keys(catColors);
+const TOPIC_OPTIONS = Object.keys(TOPIC_CONFIG);
+const SUBCATEGORY_OPTIONS = [
+  "Nomen",
+  "Verb",
+  "Adjektiv",
+  "Adverb",
+  "Präposition",
+  "Konjunktion",
+  "Ausdruck",
+  "Satz",
+];
+const CARD_SCOPE_OPTIONS = ["all", "de", "hr", "gb"];
+const MODE_SCOPE_MAP = {
+  de: "de",
+  hr: "hr",
+  en: "gb",
+};
 const searchSites = [
   { name: "dict.cc", icon: "C", url: (w) => `https://www.dict.cc/?s=${encodeURIComponent(w)}` },
   { name: "Google", icon: "G", url: (w) => `https://www.google.com/search?q=${encodeURIComponent(`${w} auf Deutsch`)}` },
@@ -563,7 +585,7 @@ const STATE_NOTABLE_PEOPLE = {
 let allCards = [];
 let persistentCards = [];
 let sessionOnlyCards = [];
-let selectedCats = null;
+let selectedTopics = null;
 let capabilities = { persistentSave: false };
 
 let sessionCards = [];
@@ -664,9 +686,13 @@ const addCardForm = document.getElementById("addCardForm");
 const addCardDeEl = document.getElementById("newCardDe");
 const addCardHrEl = document.getElementById("newCardHr");
 const addCardEnEl = document.getElementById("newCardEn");
-const addCardCatEl = document.getElementById("newCardCat");
+const addCardTopicEl = document.getElementById("newCardTopic");
+const addCardSubcategoryEl = document.getElementById("newCardSubcategory");
+const addCardScopeEl = document.getElementById("newCardScope");
 const authorLabelDeEl = document.getElementById("authorLabelDe");
-const authorLabelCatEl = document.getElementById("authorLabelCat");
+const authorLabelTopicEl = document.getElementById("authorLabelTopic");
+const authorLabelSubcategoryEl = document.getElementById("authorLabelSubcategory");
+const authorLabelScopeEl = document.getElementById("authorLabelScope");
 const authorLabelHrEl = document.getElementById("authorLabelHr");
 const authorLabelEnEl = document.getElementById("authorLabelEn");
 const addCardSaveBtn = document.getElementById("addCardSaveBtn");
@@ -747,8 +773,35 @@ function setSettingsOpen(isOpen) {
   }
 }
 
-function normalizeCategory(cat) {
-  return CATEGORY_ALIASES[cat] || cat;
+function normalizeTopic(topic) {
+  return String(topic || "").trim().toLowerCase();
+}
+
+function normalizeSubcategory(subcategory) {
+  return SUBCATEGORY_ALIASES[subcategory] || subcategory;
+}
+
+function normalizeScope(scope) {
+  const normalized = String(scope || "").trim().toLowerCase();
+  if (!normalized || normalized === "shared" || normalized === "universal") {
+    return "all";
+  }
+  if (normalized === "en") {
+    return "gb";
+  }
+  return normalized;
+}
+
+function getCurrentScopeMode() {
+  return MODE_SCOPE_MAP[getTargetLanguage()] || "all";
+}
+
+function isCardScopeCompatible(card) {
+  return Boolean(card) && (card.scope === "all" || card.scope === getCurrentScopeMode());
+}
+
+function getTopicColor(topic) {
+  return TOPIC_CONFIG[topic]?.color || "#888";
 }
 
 function normalizeField(value) {
@@ -874,8 +927,38 @@ function t(path, params = {}) {
   return path;
 }
 
-function getCategoryLabel(cat) {
-  return t(`categories.${cat}`);
+function getTopicLabel(topic) {
+  return t(`topics.${topic}`);
+}
+
+function getSubcategoryLabel(subcategory) {
+  return t(`categories.${subcategory}`);
+}
+
+function getScopeLabel(scope) {
+  return t(`scopes.${scope}`);
+}
+
+function renderCardBadge(card) {
+  if (!categoryEl || !card) {
+    return;
+  }
+
+  const color = getTopicColor(card.topic);
+  categoryEl.innerHTML = "";
+
+  const topicEl = document.createElement("span");
+  topicEl.className = "category-badge-main";
+  topicEl.textContent = getTopicLabel(card.topic);
+
+  const metaEl = document.createElement("span");
+  metaEl.className = "category-badge-meta";
+  metaEl.textContent = `${getSubcategoryLabel(card.subcategory)} · ${getScopeLabel(card.scope)}`;
+
+  categoryEl.append(topicEl, metaEl);
+  categoryEl.style.color = color;
+  categoryEl.style.borderColor = `${color}55`;
+  categoryEl.style.background = `${color}14`;
 }
 
 function setTextContent(element, value) {
@@ -1077,7 +1160,9 @@ function renderStaticUi() {
   setLocalizedText(grammarSectionTitleEl, "grammar.title");
   setLocalizedText(authorPanelTitleEl, "messages.authoring.title");
   setLocalizedText(authorLabelDeEl, "messages.authoring.labels.de");
-  setLocalizedText(authorLabelCatEl, "messages.authoring.labels.cat");
+  setLocalizedText(authorLabelTopicEl, "messages.authoring.labels.topic");
+  setLocalizedText(authorLabelSubcategoryEl, "messages.authoring.labels.subcategory");
+  setLocalizedText(authorLabelScopeEl, "messages.authoring.labels.scope");
   setLocalizedText(authorLabelHrEl, "messages.authoring.labels.hr");
   setLocalizedText(authorLabelEnEl, "messages.authoring.labels.en");
   if (addCardDeEl) {
@@ -1089,6 +1174,7 @@ function renderStaticUi() {
   if (addCardEnEl) {
     addCardEnEl.placeholder = t("messages.authoring.placeholders.en");
   }
+  fillAuthoringSelects();
   setLocalizedText(factsPanelTitleEl, "facts.panelTitle");
   setLocalizedText(factsPanelSubtitleEl, "facts.panelSubtitle");
   setLocalizedText(factsCountryBtn, "facts.tabs.germany");
@@ -1116,6 +1202,7 @@ function switchLearningMode(nextLanguage) {
     renderStaticUi();
     renderInstallGuide();
     renderAuthoringMode();
+    buildTopicPanel();
     updateStats();
     renderFactsSelection();
     loadCard({ focusInput: false });
@@ -1160,7 +1247,9 @@ function cardKey(card) {
   return [
     normalizeAnswer(card.de),
     normalizeAnswer(card.hr),
-    normalizeCategory(card.cat),
+    normalizeTopic(card.topic),
+    normalizeSubcategory(card.subcategory),
+    normalizeScope(card.scope),
   ].join("::");
 }
 
@@ -1173,10 +1262,19 @@ function sanitizeCard(raw) {
     de: normalizeField(raw.de),
     hr: normalizeField(raw.hr),
     en: normalizeField(raw.en),
-    cat: normalizeCategory(normalizeField(raw.cat)),
+    topic: normalizeTopic(normalizeField(raw.topic)),
+    subcategory: normalizeSubcategory(normalizeField(raw.subcategory || raw.cat)),
+    scope: normalizeScope(normalizeField(raw.scope || "all")),
   };
 
-  if (!card.de || !card.hr || !card.en || !allCats.includes(card.cat)) {
+  if (
+    !card.de ||
+    !card.hr ||
+    !card.en ||
+    !TOPIC_OPTIONS.includes(card.topic) ||
+    !SUBCATEGORY_OPTIONS.includes(card.subcategory) ||
+    !CARD_SCOPE_OPTIONS.includes(card.scope)
+  ) {
     return null;
   }
 
@@ -1285,58 +1383,75 @@ function renderAuthoringMode() {
   setAuthoringBusy(false);
 }
 
-function fillCategorySelect() {
-  addCardCatEl.innerHTML = "";
-  allCats.forEach((cat) => {
+function fillSelectOptions(selectEl, values, getLabel, fallbackValue) {
+  if (!selectEl) {
+    return;
+  }
+
+  const currentValue = selectEl.value;
+  selectEl.innerHTML = "";
+
+  values.forEach((value) => {
     const option = document.createElement("option");
-    option.value = cat;
-    option.textContent = getCategoryLabel(cat);
-    addCardCatEl.appendChild(option);
+    option.value = value;
+    option.textContent = getLabel(value);
+    selectEl.appendChild(option);
   });
+
+  const nextValue = values.includes(currentValue) ? currentValue : fallbackValue;
+  if (nextValue) {
+    selectEl.value = nextValue;
+  }
 }
 
-function buildCatPanel() {
+function fillAuthoringSelects() {
+  fillSelectOptions(addCardTopicEl, TOPIC_OPTIONS, getTopicLabel, TOPIC_OPTIONS[0]);
+  fillSelectOptions(addCardSubcategoryEl, SUBCATEGORY_OPTIONS, getSubcategoryLabel, SUBCATEGORY_OPTIONS[0]);
+  fillSelectOptions(addCardScopeEl, CARD_SCOPE_OPTIONS, getScopeLabel, CARD_SCOPE_OPTIONS[0]);
+}
+
+function buildTopicPanel() {
   const container = document.getElementById("catButtons");
   container.innerHTML = "";
 
   const mixBtn = document.createElement("button");
-  mixBtn.className = `cat-btn mixed${selectedCats === null ? " active" : ""}`;
-  if (selectedCats === null) {
+  mixBtn.className = `cat-btn mixed${selectedTopics === null ? " active" : ""}`;
+  if (selectedTopics === null) {
     mixBtn.style.background = "#e8ff47";
   }
   mixBtn.textContent = t("messages.categories.mixed");
   mixBtn.onclick = () => {
-    selectedCats = null;
-    buildCatPanel();
+    selectedTopics = null;
+    buildTopicPanel();
   };
   container.appendChild(mixBtn);
 
-  allCats.forEach((cat) => {
-    const color = catColors[cat];
-    const isActive = selectedCats !== null && selectedCats.has(cat);
+  TOPIC_OPTIONS.forEach((topic) => {
+    const color = getTopicColor(topic);
+    const isActive = selectedTopics !== null && selectedTopics.has(topic);
     const btn = document.createElement("button");
     btn.className = `cat-btn${isActive ? " active" : ""}`;
-    btn.textContent = getCategoryLabel(cat);
+    btn.textContent = getTopicLabel(topic);
     btn.style.borderColor = `${color}55`;
     btn.style.color = isActive ? "#000" : color;
     if (isActive) {
       btn.style.background = color;
     }
     btn.onclick = () => {
-      if (selectedCats === null) {
-        selectedCats = new Set();
+      if (selectedTopics === null) {
+        selectedTopics = new Set();
       }
 
-      if (selectedCats.has(cat)) {
-        selectedCats.delete(cat);
-        if (selectedCats.size === 0) {
-          selectedCats = null;
+      if (selectedTopics.has(topic)) {
+        selectedTopics.delete(topic);
+        if (selectedTopics.size === 0) {
+          selectedTopics = null;
         }
       } else {
-        selectedCats.add(cat);
+        selectedTopics.add(topic);
       }
 
-      buildCatPanel();
+      buildTopicPanel();
     };
     container.appendChild(btn);
   });
@@ -1347,10 +1462,10 @@ function buildCatPanel() {
 }
 
 function getPool() {
-  if (selectedCats === null) {
-    return allCards;
-  }
-  return allCards.filter((card) => selectedCats.has(card.cat));
+  const topicFiltered = selectedTopics === null
+    ? allCards
+    : allCards.filter((card) => selectedTopics.has(card.topic));
+  return topicFiltered.filter(isCardScopeCompatible);
 }
 
 function updateSearchLinks(card) {
@@ -2842,11 +2957,7 @@ function loadCard(options = {}) {
   forceCorrection = false;
   progFill.style.width = `${(sessionIndex / sessionCards.length) * 100}%`;
 
-  const color = catColors[card.cat] || "#888";
-  categoryEl.textContent = getCategoryLabel(card.cat);
-  categoryEl.style.color = color;
-  categoryEl.style.borderColor = `${color}55`;
-  categoryEl.style.background = `${color}14`;
+  renderCardBadge(card);
 
   mainCard.classList.add("active");
   buildWordGrid(getTargetValue(card), "");
@@ -3086,7 +3197,7 @@ function hasDuplicate(card) {
 
 function addCardToRuntime(card) {
   allCards = mergeCards(allCards, [card]);
-  buildCatPanel();
+  buildTopicPanel();
 }
 
 function downloadCardsUserJson() {
@@ -3115,10 +3226,12 @@ async function handleAddCardSubmit(event) {
   event.preventDefault();
 
   const card = sanitizeCard({
+    topic: addCardTopicEl.value,
+    subcategory: addCardSubcategoryEl.value,
+    scope: addCardScopeEl.value,
     de: addCardDeEl.value,
     hr: addCardHrEl.value,
     en: addCardEnEl.value,
-    cat: addCardCatEl.value,
   });
 
   if (!card) {
@@ -3158,7 +3271,10 @@ async function handleAddCardSubmit(event) {
     }
 
     addCardForm.reset();
-    addCardCatEl.value = allCats[0];
+    fillAuthoringSelects();
+    addCardTopicEl.value = TOPIC_OPTIONS[0];
+    addCardSubcategoryEl.value = SUBCATEGORY_OPTIONS[0];
+    addCardScopeEl.value = CARD_SCOPE_OPTIONS[0];
     showToast(t("messages.toasts.cardSaved"));
   } catch (error) {
     setAuthoringFeedback(error.message || t("messages.authoring.saveFailed"), true);
@@ -3168,7 +3284,7 @@ async function handleAddCardSubmit(event) {
 }
 
 function initAuthoringForm() {
-  fillCategorySelect();
+  fillAuthoringSelects();
   addCardForm.addEventListener("submit", handleAddCardSubmit);
   exportCardsBtn.addEventListener("click", downloadCardsUserJson);
 
@@ -3332,7 +3448,7 @@ async function initApp() {
   renderAuthoringMode();
   initFactsPanel();
   renderStaticUi();
-  buildCatPanel();
+  buildTopicPanel();
   startSession();
 }
 
