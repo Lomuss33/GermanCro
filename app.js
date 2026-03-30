@@ -749,11 +749,11 @@ const siteTitleController = createPretextBlockController({
 const promptController = createPretextBlockController({
   element: promptEl,
   maxLines: 2,
-  minFontPx: 14,
-  maxFontPx: 24,
+  minFontPx: 15,
+  maxFontPx: 20,
   lineHeightRatio: 1.12,
   fontFamily: "Tahoma, sans-serif",
-  fontWeight: 700,
+  fontWeight: 400,
   targetWidthRatio: 0.96,
   lineClassName: "pretext-line--prompt",
 });
