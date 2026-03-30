@@ -69,8 +69,6 @@ Topics:
 - `shopping`
 - `developertech`
 - `itnetwork`
-- `deutschebahn`
-- `bahn-technik`
 
 Subcategories:
 

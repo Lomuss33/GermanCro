@@ -39,8 +39,6 @@ Current built-in topics:
 - `shopping`
 - `developertech`
 - `itnetwork`
-- `deutschebahn`
-- `bahn-technik`
 
 Current subcategories:
 
@@ -60,7 +58,7 @@ Current scopes:
 - `hr`: HR-mode specific
 - `gb`: GB-mode specific
 
-The shipped starter deck currently contains 467 cards across thirteen built-in topics, mostly shared and some DE-mode-specific.
+The shipped starter deck currently contains 659 cards across eleven built-in topics, mostly shared and a few DE-mode-specific.
 
 ## Quick start
 
@@ -98,7 +96,7 @@ USER_GUIDE.md     End-user guide for the interface
 
 Use the `Neue Karte hinzufügen` panel in the app and fill in:
 
-- `Topic`: top-level filter group such as `basics`, `developertech`, or `deutschebahn`
+- `Topic`: top-level filter group such as `basics`, `developertech`, or `itnetwork`
 - `Subcategory`: `Nomen`, `Verb`, `Adjektiv`, and so on
 - `Mode`: `all`, `de`, `hr`, or `gb`
 - `Deutsch`: exact German answer

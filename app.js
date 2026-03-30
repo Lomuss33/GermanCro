@@ -1,3 +1,5 @@
+import { createPretextBlockController } from "./pretext-layout.js";
+
 const SUBCATEGORY_ALIASES = {
   Praeposition: "Präposition",
   "PrÃ¤position": "Präposition",
@@ -17,8 +19,6 @@ const TOPIC_CONFIG = {
   shopping: { color: "#34d399" },
   developertech: { color: "#0284c7" },
   itnetwork: { color: "#65a30d" },
-  deutschebahn: { color: "#b91c1c" },
-  "bahn-technik": { color: "#0f766e" },
 };
 
 const TOPIC_OPTIONS = Object.keys(TOPIC_CONFIG);
@@ -601,6 +601,7 @@ let difficulty = "easy";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let learningMode = "de";
+let isPromptOrderSwapped = false;
 let isSettingsOpen = false;
 let germanyFacts = null;
 let europeFacts = null;
@@ -612,6 +613,7 @@ let selectedWorldCountryId = null;
 let locales = null;
 
 const LEARNING_MODE_STORAGE_KEY = "germancro.learningMode";
+const PROMPT_ORDER_STORAGE_KEY = "germancro.promptOrderSwapped";
 const LANGUAGE_SEQUENCE = ["de", "hr", "en"];
 const LANGUAGE_FLAGS = {
   de: "🇩🇪",
@@ -672,6 +674,9 @@ const difficultyEasyBtn = document.getElementById("difficultyEasyBtn");
 const sliderUnitLabelEl = document.getElementById("sliderUnitLabel");
 const newGameBtn = document.getElementById("newGameBtn");
 const settingsBtn = document.getElementById("settingsBtn");
+const settingsBtnLabelEl = settingsBtn ? settingsBtn.querySelector("span:last-child") : null;
+const switchOrderBtn = document.getElementById("switchOrderBtn");
+const switchOrderBtnLabelEl = switchOrderBtn ? switchOrderBtn.querySelector("span:last-child") : null;
 const searchPanelEl = document.getElementById("searchPanel");
 const searchPanelTitleEl = document.getElementById("searchPanelTitle");
 const searchPanelSubtitleEl = document.getElementById("searchPanelSubtitle");
@@ -714,6 +719,56 @@ const sessionEndLabelEl = document.getElementById("sessionEndLabel");
 const restartBtnEl = document.getElementById("restartBtn");
 const siteFooterLinkEl = document.getElementById("siteFooterLink");
 let appLoaderStartedAt = Date.now();
+
+function renderSiteTitleLineContent({ line, startCharIndex }) {
+  const fragment = document.createDocumentFragment();
+  Array.from(line.text).forEach((letter, index) => {
+    const globalIndex = startCharIndex + index;
+    const span = document.createElement("span");
+    span.className = `site-title-letter band-${Math.min(3, Math.floor(globalIndex / 3) + 1)}`;
+    span.dataset.letter = letter;
+    span.textContent = letter;
+    fragment.appendChild(span);
+  });
+  return fragment;
+}
+
+const siteTitleController = createPretextBlockController({
+  element: siteTitleEl,
+  maxLines: 1,
+  minFontPx: 10,
+  maxFontPx: 38,
+  lineHeightRatio: 0.82,
+  fontFamily: "Tahoma, sans-serif",
+  fontWeight: 800,
+  targetWidthRatio: 0.98,
+  lineClassName: "pretext-line--hero",
+  renderLineContent: renderSiteTitleLineContent,
+});
+
+const promptController = createPretextBlockController({
+  element: promptEl,
+  maxLines: 2,
+  minFontPx: 14,
+  maxFontPx: 24,
+  lineHeightRatio: 1.12,
+  fontFamily: "Tahoma, sans-serif",
+  fontWeight: 700,
+  targetWidthRatio: 0.96,
+  lineClassName: "pretext-line--prompt",
+});
+
+const promptSubController = createPretextBlockController({
+  element: promptSub,
+  maxLines: 2,
+  minFontPx: 10,
+  maxFontPx: 13,
+  lineHeightRatio: 1.32,
+  fontFamily: "Tahoma, sans-serif",
+  fontWeight: 700,
+  targetWidthRatio: 0.96,
+  lineClassName: "pretext-line--prompt",
+});
 
 if (statsBarEl && mainCard && progressTrackEl) {
   mainCard.insertBefore(statsBarEl, progressTrackEl);
@@ -884,9 +939,25 @@ function loadLearningMode() {
   }
 }
 
+function loadPromptOrderPreference() {
+  try {
+    return localStorage.getItem(PROMPT_ORDER_STORAGE_KEY) === "true";
+  } catch (error) {
+    return false;
+  }
+}
+
 function saveLearningMode() {
   try {
     localStorage.setItem(LEARNING_MODE_STORAGE_KEY, learningMode);
+  } catch (error) {
+    // Ignore storage failures and keep the in-memory preference.
+  }
+}
+
+function savePromptOrderPreference() {
+  try {
+    localStorage.setItem(PROMPT_ORDER_STORAGE_KEY, String(isPromptOrderSwapped));
   } catch (error) {
     // Ignore storage failures and keep the in-memory preference.
   }
@@ -953,7 +1024,7 @@ function renderCardBadge(card) {
 
   const metaEl = document.createElement("span");
   metaEl.className = "category-badge-meta";
-  metaEl.textContent = `${getSubcategoryLabel(card.subcategory)} · ${getScopeLabel(card.scope)}`;
+  metaEl.textContent = `· ${getSubcategoryLabel(card.subcategory)}`;
 
   categoryEl.append(topicEl, metaEl);
   categoryEl.style.color = color;
@@ -1026,10 +1097,12 @@ function getTargetValue(card) {
 
 function getPromptLanguages() {
   const activeIndex = LANGUAGE_SEQUENCE.indexOf(getTargetLanguage());
-  return [
+  const promptLanguages = [
     LANGUAGE_SEQUENCE[(activeIndex + 1) % LANGUAGE_SEQUENCE.length],
     LANGUAGE_SEQUENCE[(activeIndex + 2) % LANGUAGE_SEQUENCE.length],
   ];
+
+  return isPromptOrderSwapped ? promptLanguages.reverse() : promptLanguages;
 }
 
 function cycleLearningMode() {
@@ -1043,16 +1116,13 @@ function renderSiteTitle(language) {
   }
 
   const title = LANGUAGE_TITLES[language] || LANGUAGE_TITLES.de;
-  siteTitleEl.innerHTML = "";
   siteTitleEl.setAttribute("aria-label", title);
+  if (siteTitleController) {
+    siteTitleController.setText(title, { animate: true });
+    return;
+  }
 
-  title.split("").forEach((letter, index) => {
-    const span = document.createElement("span");
-    span.className = `site-title-letter band-${Math.min(3, Math.floor(index / 3) + 1)}`;
-    span.dataset.letter = letter;
-    span.textContent = letter;
-    siteTitleEl.appendChild(span);
-  });
+  siteTitleEl.textContent = title;
 }
 
 function updateLanguageDock() {
@@ -1151,6 +1221,14 @@ function renderStaticUi() {
   setLocalizedText(catPanelTitleEl, "messages.categories.title");
   setLocalizedText(sliderUnitLabelEl, "messages.categories.unit");
   setLocalizedText(newGameBtn, "messages.categories.newGame");
+  setLocalizedText(settingsBtnLabelEl, "messages.actions.settings");
+  setLocalizedText(switchOrderBtnLabelEl, "messages.actions.switchPrompt");
+  if (switchOrderBtn) {
+    switchOrderBtn.setAttribute("aria-label", t("messages.actions.switchPromptAria"));
+    switchOrderBtn.setAttribute("title", t("messages.actions.switchPromptAria"));
+    switchOrderBtn.setAttribute("aria-pressed", String(isPromptOrderSwapped));
+    switchOrderBtn.classList.toggle("active", isPromptOrderSwapped);
+  }
   setLocalizedText(difficultyEasyBtn, "difficulty.easy");
   setLocalizedText(difficultyMediumBtn, "difficulty.medium");
   setLocalizedText(difficultyHardBtn, "difficulty.hard");
@@ -1223,8 +1301,20 @@ function renderPrompt(card) {
   }
 
   const [primaryLanguage, secondaryLanguage] = getPromptLanguages();
-  promptEl.textContent = getCardValue(card, primaryLanguage);
-  promptSub.textContent = getCardValue(card, secondaryLanguage);
+  const primaryText = getCardValue(card, primaryLanguage);
+  const secondaryText = getCardValue(card, secondaryLanguage);
+
+  if (promptController) {
+    promptController.setText(primaryText, { animate: true });
+  } else if (promptEl) {
+    promptEl.textContent = primaryText;
+  }
+
+  if (promptSubController) {
+    promptSubController.setText(secondaryText, { animate: true });
+  } else if (promptSub) {
+    promptSub.textContent = secondaryText;
+  }
 
   if (promptPrimaryFlagEl) {
     promptPrimaryFlagEl.textContent = LANGUAGE_FLAGS[primaryLanguage];
@@ -1235,12 +1325,31 @@ function renderPrompt(card) {
   if (inputFlagEl) {
     inputFlagEl.textContent = LANGUAGE_FLAGS[getTargetLanguage()];
   }
+  if (switchOrderBtn) {
+    switchOrderBtn.classList.toggle("active", isPromptOrderSwapped);
+    switchOrderBtn.setAttribute("aria-pressed", String(isPromptOrderSwapped));
+  }
   if (promptSwapBtn) {
     promptSwapBtn.innerHTML = "&#128260;";
     promptSwapBtn.setAttribute("aria-label", t("messages.prompt.swapAria"));
     promptSwapBtn.setAttribute("title", t("messages.prompt.swapTitle"));
   }
   return;
+}
+
+function togglePromptOrder() {
+  isPromptOrderSwapped = !isPromptOrderSwapped;
+  savePromptOrderPreference();
+
+  if (sessionCards.length && sessionCards[sessionIndex]) {
+    renderPrompt(sessionCards[sessionIndex]);
+    return;
+  }
+
+  if (switchOrderBtn) {
+    switchOrderBtn.classList.toggle("active", isPromptOrderSwapped);
+    switchOrderBtn.setAttribute("aria-pressed", String(isPromptOrderSwapped));
+  }
 }
 
 function cardKey(card) {
@@ -2837,10 +2946,9 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
         letter.textContent = targetChar;
         wrap.classList.add("state-auto");
       } else if (typedChar !== undefined) {
-        letter.textContent = targetChar;
-        wrap.classList.add(
-          typedChar.toLowerCase() === targetChar.toLowerCase() ? "state-ok" : "state-bad"
-        );
+        const isCorrectChar = typedChar.toLowerCase() === targetChar.toLowerCase();
+        letter.textContent = isCorrectChar ? targetChar : typedChar;
+        wrap.classList.add(isCorrectChar ? "state-ok" : "state-bad");
         if (freshCorrectIndexes.has(idx)) {
           wrap.classList.add("state-hit");
         }
@@ -3311,6 +3419,12 @@ function initInputEvents() {
     });
   }
 
+  if (switchOrderBtn) {
+    switchOrderBtn.addEventListener("click", () => {
+      togglePromptOrder();
+    });
+  }
+
   inputEl.addEventListener("input", () => {
     if (!sessionCards.length) {
       return;
@@ -3415,6 +3529,7 @@ function createFlagColumns() {
 
 async function initApp() {
   learningMode = loadLearningMode();
+  isPromptOrderSwapped = loadPromptOrderPreference();
   const [loadedLocales, baseCards, loadedPersistentCards, currentCapabilities, loadedFacts, loadedEuropeFacts, loadedWorldFacts] = await Promise.all([
     loadLocales(),
     fetchJson("cards.json", []),

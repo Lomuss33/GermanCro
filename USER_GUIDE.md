@@ -57,7 +57,7 @@ The add-card panel lets you create cards without editing JSON manually.
 
 ### Fields
 
-- `Topic`: top-level group such as `basics`, `developertech`, `itnetwork`, `deutschebahn`, or `bahn-technik`
+- `Topic`: top-level group such as `basics`, `developertech`, `itnetwork`, `work`, or `shopping`
 - `Subcategory`: `Nomen`, `Verb`, `Adjektiv`, `Adverb`, `Präposition`, `Konjunktion`, `Ausdruck`, or `Satz`
 - `Mode`: `all`, `de`, `hr`, or `gb`
 - `Deutsch`: exact German answer

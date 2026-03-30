@@ -24,8 +24,6 @@ const VALID_TOPICS = new Set([
   "shopping",
   "developertech",
   "itnetwork",
-  "deutschebahn",
-  "bahn-technik",
 ]);
 
 const VALID_SUBCATEGORIES = new Set([
