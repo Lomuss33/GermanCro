@@ -24,27 +24,28 @@
   <button class="language-dock-btn" data-lang="en" type="button" aria-label="English"></button>
 </div>
 
-<div class="site-title-row">
-  <div class="title-guide title-guide-left is-hidden" id="installGuideBrowserPanel" aria-live="polite">
-    <div class="title-guide-browser" id="installGuideBrowser"></div>
-  </div>
+<div id="heroStage">
+  <div class="site-title-row">
+    <div class="title-guide title-guide-left is-hidden" id="installGuideBrowserPanel" aria-live="polite">
+      <div class="title-guide-browser" id="installGuideBrowser"></div>
+    </div>
 
-  <div class="site-title" aria-label="Germancro">
-    <span class="site-title-letter t-w">G</span>
-    <span class="site-title-letter t-w">e</span>
-    <span class="site-title-letter t-w">r</span>
-    <span class="site-title-letter t-r">m</span>
-    <span class="site-title-letter t-r">a</span>
-    <span class="site-title-letter t-r">n</span>
-    <span class="site-title-letter t-g">c</span>
-    <span class="site-title-letter t-g">r</span>
-    <span class="site-title-letter t-g">o</span>
-  </div>
+    <div class="site-title" aria-label="Germancro">
+      <span class="site-title-letter t-w">G</span>
+      <span class="site-title-letter t-w">e</span>
+      <span class="site-title-letter t-w">r</span>
+      <span class="site-title-letter t-r">m</span>
+      <span class="site-title-letter t-r">a</span>
+      <span class="site-title-letter t-r">n</span>
+      <span class="site-title-letter t-g">c</span>
+      <span class="site-title-letter t-g">r</span>
+      <span class="site-title-letter t-g">o</span>
+    </div>
 
-  <div class="title-guide title-guide-right is-hidden" id="installGuidePanel" aria-live="polite">
-    <div class="title-guide-steps" id="installGuideSteps"></div>
+    <div class="title-guide title-guide-right is-hidden" id="installGuidePanel" aria-live="polite">
+      <div class="title-guide-steps" id="installGuideSteps"></div>
+    </div>
   </div>
-</div>
 
 <div class="stats-bar">
   <div class="stat stat-streak">
@@ -127,7 +128,10 @@
     <div style="margin-top:16px;font-size:26px" id="finalEmoji"></div>
     <button class="restart-btn" id="restartBtn" onclick="startSession()">Neue Runde</button>
   </div>
+  </div>
 </div>
+
+<div class="phone-guide-bar is-hidden" id="phoneGuideBar" aria-live="polite"></div>
 
 <div class="cat-panel is-hidden" id="catPanel">
   <div class="cat-panel-toolbar">

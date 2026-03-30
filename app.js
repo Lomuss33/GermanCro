@@ -47,6 +47,8 @@ const searchSites = [
 
 const SESSION_SIZE = 10;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
+const PHONE_PORTRAIT_MIN_RATIO = 16 / 9;
+const SOFT_KEYBOARD_VIEWPORT_DELTA = 120;
 const PUNCT = /[.,!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
 const TOURISM_LINKS = {
@@ -632,6 +634,8 @@ const promptSecondaryFlagEl = document.getElementById("promptSecondaryFlag");
 const promptSwapBtn = document.getElementById("promptSwapBtn");
 const inputFlagEl = document.querySelector(".input-flag");
 const siteTitleEl = document.querySelector(".site-title");
+const heroStageEl = document.getElementById("heroStage");
+const phoneGuideBarEl = document.getElementById("phoneGuideBar");
 const languageDockEl = document.getElementById("languageDock");
 const languageDockButtons = Array.from(document.querySelectorAll(".language-dock-btn"));
 const appLoaderEl = document.getElementById("appLoader");
@@ -719,6 +723,234 @@ const sessionEndLabelEl = document.getElementById("sessionEndLabel");
 const restartBtnEl = document.getElementById("restartBtn");
 const siteFooterLinkEl = document.getElementById("siteFooterLink");
 let appLoaderStartedAt = Date.now();
+const viewportProfile = {
+  width: 0,
+  height: 0,
+  isPhonePortrait: false,
+  isSoftKeyboardOpen: false,
+  lastClosedHeight: 0,
+  syncFrame: 0,
+};
+let phoneInputAlignFrame = 0;
+let phoneInputAlignTimeout = 0;
+let pendingPhoneInputViewportAlign = false;
+
+function isPhoneDevice() {
+  if (typeof navigator.userAgentData?.mobile === "boolean") {
+    return navigator.userAgentData.mobile;
+  }
+
+  const ua = navigator.userAgent || "";
+  const isTablet =
+    /iPad|Tablet|PlayBook|Silk/i.test(ua) ||
+    (/Android/i.test(ua) && !/Mobile/i.test(ua));
+
+  if (isTablet) {
+    return false;
+  }
+
+  return (
+    /iPhone|iPod/i.test(ua) ||
+    /Windows Phone/i.test(ua) ||
+    (/Android/i.test(ua) && /Mobile/i.test(ua))
+  );
+}
+
+function isPhonePortraitLayoutActive() {
+  return viewportProfile.isPhonePortrait;
+}
+
+function getViewportSize() {
+  const visualViewport = window.visualViewport;
+  const width = visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0;
+  const height = visualViewport?.height || window.innerHeight || document.documentElement.clientHeight || 0;
+
+  return {
+    width: Math.max(0, Math.round(width)),
+    height: Math.max(0, Math.round(height)),
+  };
+}
+
+function renderPhoneInstallGuide(browserText, stepsText) {
+  if (!phoneGuideBarEl) {
+    return;
+  }
+
+  const browserLine = document.createElement("span");
+  browserLine.className = "phone-guide-bar-browser";
+  browserLine.textContent = browserText;
+
+  const stepsLine = document.createElement("span");
+  stepsLine.className = "phone-guide-bar-steps";
+  stepsLine.textContent = stepsText;
+
+  phoneGuideBarEl.replaceChildren(browserLine, stepsLine);
+}
+
+function isSessionEndVisible() {
+  return Boolean(sessionEndEl) && window.getComputedStyle(sessionEndEl).display !== "none";
+}
+
+function setGameSurfaceMode(showSessionEnd) {
+  if (!gameArea || !sessionEndEl) {
+    return;
+  }
+
+  gameArea.style.display = showSessionEnd ? "none" : "";
+  sessionEndEl.style.display = showSessionEnd
+    ? isPhonePortraitLayoutActive()
+      ? "flex"
+      : "block"
+    : "none";
+}
+
+function alignPhoneInputIntoView() {
+  if (!isPhonePortraitLayoutActive() || document.activeElement !== inputEl) {
+    return;
+  }
+
+  inputEl.scrollIntoView({
+    block: "nearest",
+    inline: "nearest",
+  });
+}
+
+function clearPhoneInputAlignmentTimers() {
+  if (phoneInputAlignFrame) {
+    window.cancelAnimationFrame(phoneInputAlignFrame);
+    phoneInputAlignFrame = 0;
+  }
+  if (phoneInputAlignTimeout) {
+    window.clearTimeout(phoneInputAlignTimeout);
+    phoneInputAlignTimeout = 0;
+  }
+}
+
+function schedulePhoneInputAlignment() {
+  if (!isPhonePortraitLayoutActive()) {
+    return;
+  }
+
+  clearPhoneInputAlignmentTimers();
+
+  phoneInputAlignFrame = window.requestAnimationFrame(() => {
+    phoneInputAlignFrame = 0;
+    alignPhoneInputIntoView();
+  });
+
+  phoneInputAlignTimeout = window.setTimeout(() => {
+    phoneInputAlignTimeout = 0;
+    alignPhoneInputIntoView();
+  }, 160);
+}
+
+function maybeAlignFocusedPhoneInputFromViewport() {
+  if (!pendingPhoneInputViewportAlign) {
+    return;
+  }
+
+  pendingPhoneInputViewportAlign = false;
+  schedulePhoneInputAlignment();
+}
+
+function syncViewportProfile() {
+  viewportProfile.syncFrame = 0;
+
+  const nextViewport = getViewportSize();
+  const visualViewport = window.visualViewport;
+  const visualViewportOffsetTop = visualViewport
+    ? Math.max(0, Math.round(visualViewport.offsetTop || 0))
+    : 0;
+  const layoutViewportHeight = Math.max(
+    0,
+    Math.round(window.innerHeight || nextViewport.height || 0)
+  );
+  const viewportBottomInset = visualViewport
+    ? Math.max(
+        0,
+        Math.round(layoutViewportHeight - ((visualViewport.height || 0) + (visualViewport.offsetTop || 0)))
+      )
+    : 0;
+
+  document.documentElement.style.setProperty("--app-viewport-width", `${nextViewport.width}px`);
+  document.documentElement.style.setProperty("--app-viewport-height", `${nextViewport.height}px`);
+  document.documentElement.style.setProperty("--app-viewport-offset-top", `${visualViewportOffsetTop}px`);
+  document.documentElement.style.setProperty("--app-viewport-bottom-inset", `${viewportBottomInset}px`);
+  document.documentElement.style.setProperty("--phone-hero-height", `${nextViewport.height}px`);
+  document.documentElement.style.setProperty("--phone-input-bottom-gap", "6px");
+
+  const isPortrait = nextViewport.height >= nextViewport.width;
+  const nextAspectRatio = nextViewport.width > 0 ? nextViewport.height / nextViewport.width : 0;
+  const nextPhonePortrait =
+    isPhoneDevice() &&
+    isPortrait &&
+    nextAspectRatio >= PHONE_PORTRAIT_MIN_RATIO;
+
+  let nextKeyboardOpen = false;
+
+  if (nextPhonePortrait) {
+    if (!viewportProfile.lastClosedHeight) {
+      viewportProfile.lastClosedHeight = nextViewport.height;
+    }
+
+    if (nextViewport.height > viewportProfile.lastClosedHeight) {
+      viewportProfile.lastClosedHeight = nextViewport.height;
+    }
+
+    nextKeyboardOpen =
+      viewportProfile.lastClosedHeight - nextViewport.height > SOFT_KEYBOARD_VIEWPORT_DELTA;
+
+    if (!nextKeyboardOpen) {
+      viewportProfile.lastClosedHeight = Math.max(
+        viewportProfile.lastClosedHeight,
+        nextViewport.height
+      );
+    }
+  } else {
+    viewportProfile.lastClosedHeight = nextViewport.height;
+  }
+
+  const layoutChanged = viewportProfile.isPhonePortrait !== nextPhonePortrait;
+  const keyboardChanged = viewportProfile.isSoftKeyboardOpen !== nextKeyboardOpen;
+
+  viewportProfile.width = nextViewport.width;
+  viewportProfile.height = nextViewport.height;
+  viewportProfile.isPhonePortrait = nextPhonePortrait;
+  viewportProfile.isSoftKeyboardOpen = nextKeyboardOpen;
+
+  document.body.classList.toggle("layout-phone-portrait", nextPhonePortrait);
+  document.body.classList.toggle("is-soft-keyboard-open", nextKeyboardOpen);
+  setGameSurfaceMode(isSessionEndVisible());
+
+  if (!nextPhonePortrait) {
+    pendingPhoneInputViewportAlign = false;
+    clearPhoneInputAlignmentTimers();
+  } else if (document.activeElement === inputEl && (layoutChanged || keyboardChanged)) {
+    schedulePhoneInputAlignment();
+  }
+
+  if (layoutChanged || keyboardChanged) {
+    maybeShowInstallGuide();
+  }
+}
+
+function scheduleViewportProfileSync() {
+  if (viewportProfile.syncFrame) {
+    return;
+  }
+
+  viewportProfile.syncFrame = window.requestAnimationFrame(syncViewportProfile);
+}
+
+function initViewportProfile() {
+  scheduleViewportProfileSync();
+  window.addEventListener("load", scheduleViewportProfileSync, { passive: true });
+  window.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
+  window.addEventListener("orientationchange", scheduleViewportProfileSync, { passive: true });
+  window.visualViewport?.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
+  window.visualViewport?.addEventListener("scroll", scheduleViewportProfileSync, { passive: true });
+  window.visualViewport?.addEventListener("resize", maybeAlignFocusedPhoneInputFromViewport, { passive: true });
+}
 
 function renderSiteTitleLineContent({ line, startCharIndex }) {
   const fragment = document.createDocumentFragment();
@@ -3044,10 +3276,13 @@ function startSession(size) {
   totalCharsTyped = 0;
   sessionStart = Date.now();
   updateStats();
-  gameArea.style.display = "block";
-  sessionEndEl.style.display = "none";
+  setGameSurfaceMode(false);
   loadCard();
-  mainCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  const scrollTarget = isPhonePortraitLayoutActive() && heroStageEl ? heroStageEl : mainCard;
+  scrollTarget.scrollIntoView({
+    behavior: "smooth",
+    block: isPhonePortraitLayoutActive() ? "start" : "nearest",
+  });
 }
 
 function loadCard(options = {}) {
@@ -3217,7 +3452,7 @@ function detectInstallGuideContext() {
 }
 
 function renderInstallGuide() {
-  if (!installGuidePanelEl || !installGuideBrowserPanelEl || !installGuideBrowserEl || !installGuideStepsEl) {
+  if (!installGuideBrowserEl || !installGuideStepsEl) {
     return;
   }
 
@@ -3226,21 +3461,22 @@ function renderInstallGuide() {
   const resolvedPath = localizedPath === `installGuide.paths.${context.installPathKey}`
     ? t("installGuide.paths.default")
     : localizedPath;
-  installGuideBrowserEl.textContent = `${context.browserLabel}: ${resolvedPath}`;
-  installGuideStepsEl.textContent = t("installGuide.cta");
+  const browserText = `${context.browserLabel}: ${resolvedPath}`;
+  const stepsText = t("installGuide.cta");
+
+  installGuideBrowserEl.textContent = browserText;
+  installGuideStepsEl.textContent = stepsText;
+  renderPhoneInstallGuide(browserText, stepsText);
 }
 
 function hideInstallGuide() {
-  if (!installGuidePanelEl || !installGuideBrowserPanelEl) {
-    return;
-  }
-
-  installGuidePanelEl.classList.add("is-hidden");
-  installGuideBrowserPanelEl.classList.add("is-hidden");
+  installGuidePanelEl?.classList.add("is-hidden");
+  installGuideBrowserPanelEl?.classList.add("is-hidden");
+  phoneGuideBarEl?.classList.add("is-hidden");
 }
 
 function maybeShowInstallGuide() {
-  if (!installGuidePanelEl || !installGuideBrowserPanelEl) {
+  if (!installGuidePanelEl || !installGuideBrowserPanelEl || !phoneGuideBarEl) {
     return;
   }
 
@@ -3251,6 +3487,15 @@ function maybeShowInstallGuide() {
   }
 
   renderInstallGuide();
+
+  if (isPhonePortraitLayoutActive()) {
+    installGuidePanelEl.classList.add("is-hidden");
+    installGuideBrowserPanelEl.classList.add("is-hidden");
+    phoneGuideBarEl.classList.remove("is-hidden");
+    return;
+  }
+
+  phoneGuideBarEl.classList.add("is-hidden");
   installGuidePanelEl.classList.remove("is-hidden");
   installGuideBrowserPanelEl.classList.remove("is-hidden");
 }
@@ -3275,8 +3520,7 @@ function getEncouragement(currentStreak) {
 
 function showSessionEnd() {
   progFill.style.width = "100%";
-  gameArea.style.display = "none";
-  sessionEndEl.style.display = "block";
+  setGameSurfaceMode(true);
 
   const pct = Math.round((totalCorrect / sessionCards.length) * 100);
   document.getElementById("finalScore").textContent = `${pct}%`;
@@ -3469,6 +3713,20 @@ function initInputEvents() {
     inputEl.focus();
   });
 
+  inputEl.addEventListener("focus", () => {
+    if (!isPhonePortraitLayoutActive()) {
+      return;
+    }
+
+    pendingPhoneInputViewportAlign = true;
+    schedulePhoneInputAlignment();
+  });
+
+  inputEl.addEventListener("blur", () => {
+    pendingPhoneInputViewportAlign = false;
+    clearPhoneInputAlignmentTimers();
+  });
+
   inputEl.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" || !sessionCards.length) {
       return;
@@ -3543,6 +3801,7 @@ async function initApp() {
   locales = deepMergeObjects(loadedLocales || {}, FACTS_LOCALE_PATCHES);
   applyLearningTheme();
   renderStaticUi();
+  initViewportProfile();
   createFlagColumns();
   initInstallGuide();
   initDifficultyControls();
