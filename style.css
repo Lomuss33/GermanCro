@@ -79,6 +79,68 @@ body {
   margin-left: -2px;
 }
 
+body[data-learning-mode="en"] .de-flag-col {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.92) 0 3px,
+      rgba(255, 255, 255, 0) 3px 34px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      rgba(200, 16, 46, 0.95) 8px 11px,
+      rgba(200, 16, 46, 0) 11px 34px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.14) 0 1px,
+      rgba(255, 255, 255, 0) 1px 42px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.18) 0 2px,
+      rgba(255, 255, 255, 0) 2px 76px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.18) 0 2px,
+      rgba(255, 255, 255, 0) 2px 76px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(200, 16, 46, 0.22) 22px 25px,
+      rgba(200, 16, 46, 0) 25px 84px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(200, 16, 46, 0.22) 22px 25px,
+      rgba(200, 16, 46, 0) 25px 84px
+    ),
+    linear-gradient(
+      180deg,
+      rgba(10, 36, 112, 0.98),
+      rgba(1, 33, 105, 0.96)
+    );
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    180px 180px,
+    180px 180px,
+    180px 180px,
+    180px 180px,
+    100% 150%;
+  background-position:
+    0 0,
+    0 0,
+    0 0,
+    center,
+    center,
+    center,
+    center,
+    0% 50%;
+}
+
 body[data-learning-mode="hr"] {
   --wave-top-color: #ef3340;
   --wave-mid-color: #ffffff;
@@ -133,6 +195,13 @@ body::after {
     radial-gradient(ellipse 70% 20% at 50% 95%, rgba(190, 150, 0, 0.10) 0%, transparent 100%);
   pointer-events: none;
   z-index: 0;
+}
+
+body[data-learning-mode="en"]::after {
+  background:
+    radial-gradient(ellipse 56% 22% at 14% 20%, rgba(1, 33, 105, 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 54% 20% at 84% 30%, rgba(200, 16, 46, 0.12) 0%, transparent 68%),
+    radial-gradient(ellipse 68% 22% at 50% 96%, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
 }
 
 body > * { position: relative; z-index: 1; }
@@ -2836,7 +2905,7 @@ body.layout-phone-portrait {
 body.layout-phone-portrait #heroStage {
   min-height: calc(var(--phone-hero-height, var(--app-viewport-height, 100dvh)) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
   gap: 6px;
 }
 
@@ -2845,9 +2914,14 @@ body.layout-phone-portrait.is-soft-keyboard-open #heroStage {
 }
 
 body.layout-phone-portrait .site-title-row {
+  grid-row: 1;
   width: 100%;
   grid-template-columns: minmax(0, 1fr);
   gap: 0;
+}
+
+body.layout-phone-portrait .stats-bar {
+  grid-row: 2;
 }
 
 body.layout-phone-portrait .title-guide {
@@ -2861,6 +2935,7 @@ body.layout-phone-portrait .site-title {
 }
 
 body.layout-phone-portrait #mainCard {
+  grid-row: 3;
   width: 100%;
   height: 100%;
   min-height: 0;
@@ -3209,4 +3284,148 @@ body.layout-phone-portrait.is-soft-keyboard-open .combo-pop {
 
 body.layout-phone-portrait.is-soft-keyboard-open .solution:empty {
   display: none !important;
+}
+
+@media (max-width: 520px) {
+  .site-title-row {
+    width: 100%;
+    gap: 3px;
+    grid-template-columns: minmax(0, 0.58fr) minmax(0, 3.84fr) minmax(0, 0.58fr);
+  }
+
+  .title-guide {
+    padding: 2px 4px;
+  }
+
+  .title-guide-browser,
+  .title-guide-steps {
+    display: block;
+    font-size: 6px;
+    line-height: 1.05;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+  }
+
+  .stats-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 8px;
+    white-space: normal;
+  }
+
+  .stats-right {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .card-topbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .category-badge {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .card-legend {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 2px;
+    scrollbar-width: thin;
+  }
+
+  .cat-btn,
+  .search-link {
+    font-size: 9px;
+  }
+
+  .cat-btn {
+    padding: 5px 10px;
+  }
+
+  .action-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .action-row-left {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    gap: 8px;
+  }
+
+  .settings-btn,
+  .switch-order-btn,
+  .hint-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .enter-hint {
+    margin-left: 0;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .cat-panel-toolbar,
+  .cat-panel-meta,
+  .new-game-row {
+    align-items: stretch;
+  }
+
+  .difficulty-panel {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .difficulty-panel button {
+    width: 100%;
+    padding: 6px 8px;
+  }
+
+  .session-slider-wrap {
+    width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  #sessionSizeSlider {
+    width: 100%;
+  }
+
+  .slider-label,
+  .cat-count,
+  .new-game-btn {
+    width: 100%;
+  }
+
+  .cat-count {
+    white-space: normal;
+  }
+
+  .state-picker {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 360px) {
+  .state-picker {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
