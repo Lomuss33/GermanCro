@@ -1,4 +1,5 @@
 import { createPretextBlockController } from "./pretext-layout.js";
+import { createGrammarSliderTable } from "./grammar-slider-table.js";
 
 const SUBCATEGORY_ALIASES = {
   Praeposition: "Präposition",
@@ -622,6 +623,11 @@ const LANGUAGE_FLAGS = {
   hr: "🇭🇷",
   en: "🇬🇧",
 };
+const LANGUAGE_DOCK_LABELS = {
+  de: "DE",
+  hr: "HR",
+  en: "GB",
+};
 const LANGUAGE_TITLES = {
   de: "Germancro",
   hr: "Crogerman",
@@ -634,6 +640,7 @@ const promptSecondaryFlagEl = document.getElementById("promptSecondaryFlag");
 const promptSwapBtn = document.getElementById("promptSwapBtn");
 const inputFlagEl = document.querySelector(".input-flag");
 const siteTitleEl = document.querySelector(".site-title");
+const siteTitleRowEl = document.querySelector(".site-title-row");
 const heroStageEl = document.getElementById("heroStage");
 const phoneGuideBarEl = document.getElementById("phoneGuideBar");
 const languageDockEl = document.getElementById("languageDock");
@@ -723,9 +730,14 @@ const sessionEndLabelEl = document.getElementById("sessionEndLabel");
 const restartBtnEl = document.getElementById("restartBtn");
 const siteFooterLinkEl = document.getElementById("siteFooterLink");
 let appLoaderStartedAt = Date.now();
+let grammarSliderControllers = [];
+let languageDockZoomFrame = 0;
+let installGuideLayoutFrame = 0;
 const viewportProfile = {
   width: 0,
   height: 0,
+  maxObservedWidth: 0,
+  maxObservedHeight: 0,
   isPhonePortrait: false,
   isSoftKeyboardOpen: false,
   lastClosedHeight: 0,
@@ -857,6 +869,17 @@ function syncViewportProfile() {
   viewportProfile.syncFrame = 0;
 
   const nextViewport = getViewportSize();
+  viewportProfile.maxObservedWidth = Math.max(viewportProfile.maxObservedWidth, nextViewport.width);
+  viewportProfile.maxObservedHeight = Math.max(viewportProfile.maxObservedHeight, nextViewport.height);
+
+  const widthRatio = viewportProfile.maxObservedWidth > 0
+    ? nextViewport.width / viewportProfile.maxObservedWidth
+    : 1;
+  const heightRatio = viewportProfile.maxObservedHeight > 0
+    ? nextViewport.height / viewportProfile.maxObservedHeight
+    : 1;
+  updateLanguageDockZoom(Math.min(widthRatio, heightRatio), nextViewport);
+
   const visualViewport = window.visualViewport;
   const visualViewportOffsetTop = visualViewport
     ? Math.max(0, Math.round(visualViewport.offsetTop || 0))
@@ -912,6 +935,9 @@ function syncViewportProfile() {
 
   const layoutChanged = viewportProfile.isPhonePortrait !== nextPhonePortrait;
   const keyboardChanged = viewportProfile.isSoftKeyboardOpen !== nextKeyboardOpen;
+  const sizeChanged =
+    viewportProfile.width !== nextViewport.width ||
+    viewportProfile.height !== nextViewport.height;
 
   viewportProfile.width = nextViewport.width;
   viewportProfile.height = nextViewport.height;
@@ -929,7 +955,7 @@ function syncViewportProfile() {
     schedulePhoneInputAlignment();
   }
 
-  if (layoutChanged || keyboardChanged) {
+  if (sizeChanged || layoutChanged || keyboardChanged) {
     maybeShowInstallGuide();
   }
 }
@@ -1057,6 +1083,16 @@ function setSettingsOpen(isOpen) {
 
   if (languageDockEl) {
     languageDockEl.classList.toggle("is-settings-open", isSettingsOpen);
+    const widthRatio = viewportProfile.maxObservedWidth > 0
+      ? viewportProfile.width / viewportProfile.maxObservedWidth
+      : 1;
+    const heightRatio = viewportProfile.maxObservedHeight > 0
+      ? viewportProfile.height / viewportProfile.maxObservedHeight
+      : 1;
+    updateLanguageDockZoom(Math.min(widthRatio, heightRatio), {
+      width: viewportProfile.width,
+      height: viewportProfile.height,
+    });
   }
 }
 
@@ -1364,11 +1400,82 @@ function updateLanguageDock() {
   }
   languageDockButtons.forEach((button) => {
     const language = button.dataset.lang;
-    button.textContent = LANGUAGE_FLAGS[language] || "";
+    const labelEl = button.querySelector(".language-dock-label");
+    if (labelEl) {
+      labelEl.textContent = LANGUAGE_DOCK_LABELS[language] || "";
+    }
     button.classList.toggle("is-active", language === getTargetLanguage());
     button.setAttribute("aria-pressed", String(language === getTargetLanguage()));
     button.setAttribute("aria-label", t(`messages.languageNames.${language}`));
   });
+}
+
+function getLanguageDockZoomScale(dockViewportRatio) {
+  const ratio = Number.isFinite(dockViewportRatio) ? dockViewportRatio : 1;
+
+  if (ratio >= 0.9) {
+    return 1;
+  }
+
+  if (ratio >= 0.72) {
+    return Math.max(0.82, Math.min(1, 0.82 + ((ratio - 0.72) / 0.18) * 0.18));
+  }
+
+  if (ratio >= 0.52) {
+    return Math.max(0.64, Math.min(0.82, 0.64 + ((ratio - 0.52) / 0.2) * 0.18));
+  }
+
+  return 0.64;
+}
+
+function cancelLanguageDockZoomFrame() {
+  if (!languageDockZoomFrame) {
+    return;
+  }
+
+  window.cancelAnimationFrame(languageDockZoomFrame);
+  languageDockZoomFrame = 0;
+}
+
+function applyLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
+  languageDockZoomFrame = 0;
+
+  if (!languageDockEl) {
+    return;
+  }
+
+  const ratio = Number.isFinite(dockViewportRatio) ? dockViewportRatio : 1;
+  const scale = getLanguageDockZoomScale(ratio);
+  const viewportWidth = Math.max(0, Math.round(nextViewport?.width || 0));
+  const viewportHeight = Math.max(0, Math.round(nextViewport?.height || 0));
+
+  languageDockEl.style.setProperty("--language-dock-zoom-scale", String(scale));
+  const dockRect = languageDockEl.getBoundingClientRect();
+  const isTooLarge =
+    viewportWidth < 280 ||
+    dockRect.width > viewportWidth * 0.24 ||
+    dockRect.height > viewportHeight * 0.16;
+  const isHidden = ratio < 0.52 && isTooLarge;
+  languageDockEl.classList.toggle("is-zoom-hidden", isHidden);
+}
+
+function scheduleLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
+  if (!languageDockEl) {
+    return;
+  }
+
+  cancelLanguageDockZoomFrame();
+  const scheduledViewport = {
+    width: Math.max(0, Math.round(nextViewport?.width || 0)),
+    height: Math.max(0, Math.round(nextViewport?.height || 0)),
+  };
+  languageDockZoomFrame = window.requestAnimationFrame(() => {
+    applyLanguageDockZoomLayout(dockViewportRatio, scheduledViewport);
+  });
+}
+
+function updateLanguageDockZoom(dockViewportRatio, nextViewport) {
+  scheduleLanguageDockZoomLayout(dockViewportRatio, nextViewport);
 }
 
 function applyLearningTheme() {
@@ -1383,6 +1490,8 @@ function renderGrammarSection() {
     return;
   }
 
+  grammarSliderControllers.forEach((controller) => controller?.destroy?.());
+  grammarSliderControllers = [];
   grammarGridEl.innerHTML = "";
   const cards = getLocaleBundle()?.grammar?.cards || [];
 
@@ -1394,6 +1503,21 @@ function renderGrammarSection() {
     title.className = "grammar-card-title";
     title.textContent = card.title;
     section.appendChild(title);
+
+    if (card?.interaction?.mode === "fixed_first_slider") {
+      section.classList.add("grammar-card--interactive");
+
+      const mount = document.createElement("div");
+      mount.className = "grammar-slider-mount";
+      section.appendChild(mount);
+      grammarGridEl.appendChild(section);
+
+      const controller = createGrammarSliderTable({ root: mount, card });
+      if (controller) {
+        grammarSliderControllers.push(controller);
+      }
+      return;
+    }
 
     const wrap = document.createElement("div");
     wrap.className = "grammar-table-wrap";
@@ -1510,7 +1634,7 @@ function switchLearningMode(nextLanguage) {
     saveLearningMode();
     applyLearningTheme();
     renderStaticUi();
-    renderInstallGuide();
+    maybeShowInstallGuide();
     renderAuthoringMode();
     buildTopicPanel();
     updateStats();
@@ -3469,9 +3593,112 @@ function renderInstallGuide() {
   renderPhoneInstallGuide(browserText, stepsText);
 }
 
+function setDesktopInstallGuideShellVisible(isVisible) {
+  siteTitleRowEl?.classList.toggle("has-install-guides", isVisible);
+}
+
+function setInstallGuidePillVisible(element, isVisible) {
+  element?.classList.toggle("is-hidden", !isVisible);
+}
+
+function measureInstallGuidePillFits(element) {
+  if (!element || !element.parentElement) {
+    return false;
+  }
+
+  const panel = element.parentElement;
+  if (panel.classList.contains("is-hidden")) {
+    return false;
+  }
+
+  if (element.clientWidth <= 0 || element.clientHeight <= 0) {
+    return false;
+  }
+
+  return element.scrollHeight <= element.clientHeight + 1;
+}
+
+function cancelInstallGuideLayoutFrame() {
+  if (!installGuideLayoutFrame) {
+    return;
+  }
+
+  window.cancelAnimationFrame(installGuideLayoutFrame);
+  installGuideLayoutFrame = 0;
+}
+
+function finalizeDesktopInstallGuideLayout() {
+  installGuideLayoutFrame = 0;
+
+  if (!installGuidePanelEl || !installGuideBrowserPanelEl || !installGuideBrowserEl || !installGuideStepsEl || !phoneGuideBarEl) {
+    return;
+  }
+
+  const context = detectInstallGuideContext();
+  if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
+    hideInstallGuide();
+    return;
+  }
+
+  if (isPhonePortraitLayoutActive()) {
+    setDesktopInstallGuideShellVisible(false);
+    setInstallGuidePillVisible(installGuideBrowserPanelEl, false);
+    setInstallGuidePillVisible(installGuidePanelEl, false);
+    phoneGuideBarEl.classList.remove("is-hidden");
+    return;
+  }
+
+  phoneGuideBarEl.classList.add("is-hidden");
+
+  const browserFits = measureInstallGuidePillFits(installGuideBrowserEl);
+  const stepsFits = measureInstallGuidePillFits(installGuideStepsEl);
+
+  setInstallGuidePillVisible(installGuideBrowserPanelEl, browserFits);
+  setInstallGuidePillVisible(installGuidePanelEl, stepsFits);
+  setDesktopInstallGuideShellVisible(browserFits || stepsFits);
+}
+
+function applyInstallGuideLayout() {
+  installGuideLayoutFrame = 0;
+
+  if (!installGuidePanelEl || !installGuideBrowserPanelEl || !phoneGuideBarEl) {
+    return;
+  }
+
+  const context = detectInstallGuideContext();
+  if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
+    hideInstallGuide();
+    return;
+  }
+
+  renderInstallGuide();
+
+  if (isPhonePortraitLayoutActive()) {
+    setDesktopInstallGuideShellVisible(false);
+    setInstallGuidePillVisible(installGuideBrowserPanelEl, false);
+    setInstallGuidePillVisible(installGuidePanelEl, false);
+    phoneGuideBarEl.classList.remove("is-hidden");
+    return;
+  }
+
+  phoneGuideBarEl.classList.add("is-hidden");
+  setDesktopInstallGuideShellVisible(true);
+  setInstallGuidePillVisible(installGuideBrowserPanelEl, true);
+  setInstallGuidePillVisible(installGuidePanelEl, true);
+
+  installGuideLayoutFrame = window.requestAnimationFrame(finalizeDesktopInstallGuideLayout);
+}
+
+function scheduleInstallGuideLayout() {
+  cancelInstallGuideLayoutFrame();
+  installGuideLayoutFrame = window.requestAnimationFrame(applyInstallGuideLayout);
+}
+
 function hideInstallGuide() {
-  installGuidePanelEl?.classList.add("is-hidden");
-  installGuideBrowserPanelEl?.classList.add("is-hidden");
+  cancelInstallGuideLayoutFrame();
+  setDesktopInstallGuideShellVisible(false);
+  setInstallGuidePillVisible(installGuideBrowserPanelEl, false);
+  setInstallGuidePillVisible(installGuidePanelEl, false);
   phoneGuideBarEl?.classList.add("is-hidden");
 }
 
@@ -3486,18 +3713,7 @@ function maybeShowInstallGuide() {
     return;
   }
 
-  renderInstallGuide();
-
-  if (isPhonePortraitLayoutActive()) {
-    installGuidePanelEl.classList.add("is-hidden");
-    installGuideBrowserPanelEl.classList.add("is-hidden");
-    phoneGuideBarEl.classList.remove("is-hidden");
-    return;
-  }
-
-  phoneGuideBarEl.classList.add("is-hidden");
-  installGuidePanelEl.classList.remove("is-hidden");
-  installGuideBrowserPanelEl.classList.remove("is-hidden");
+  scheduleInstallGuideLayout();
 }
 
 function initInstallGuide() {
