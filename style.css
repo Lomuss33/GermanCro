@@ -3618,86 +3618,6 @@ input.wrong {
     font-size: 8px;
   }
 
-  .card-topbar {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-
-  .card-legend {
-    text-align: right;
-    justify-content: flex-end;
-    font-size: 6px;
-    gap: 3px 5px;
-  }
-
-  .answer-guide-head {
-    flex-direction: column;
-  }
-
-  .answer-guide-status {
-    text-align: left;
-    justify-content: flex-start;
-  }
-
-  .stats-bar {
-    gap: 4px;
-  }
-
-  .stat {
-    gap: 3px;
-  }
-
-  .stat-value {
-    font-size: 13px;
-  }
-
-  .stat-label {
-    font-size: 7px;
-    letter-spacing: 0.04em;
-  }
-
-  .stats-right {
-    gap: 6px;
-  }
-
-  :root {
-    --game-emoji-pill-width: 46px;
-    --game-emoji-pill-height: 22px;
-    --game-emoji-pill-font-size: 11px;
-    --game-emoji-pill-gap: 3px;
-    --game-emoji-pill-icon-size: 10px;
-    --game-row-column-gap: 7px;
-    --game-row-input-padding-start: 26px;
-    --game-row-input-symbol-offset: 11px;
-    --game-row-inline-padding: 14px;
-  }
-
-  .prompt-row {
-    grid-template-columns: var(--game-emoji-pill-width) minmax(0, 1fr);
-    column-gap: var(--game-row-column-gap);
-  }
-
-  .prompt-text {
-    font-size: var(--pretext-font-size, 15px);
-  }
-
-  .prompt-sub {
-    font-size: var(--pretext-font-size, 10px);
-  }
-
-  .input-shell input {
-    padding: 10px var(--game-row-inline-padding) 10px calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap) + var(--game-row-input-padding-start));
-    font-size: 15px;
-  }
-
-  .input-shell::before {
-    left: calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap) + var(--game-row-input-symbol-offset));
-    font-size: 19px;
-  }
-
   .facts-grid {
     grid-template-columns: 1fr;
   }
@@ -3770,9 +3690,9 @@ body.layout-phone-portrait {
 }
 
 body.layout-phone-portrait #heroStage {
-  min-height: calc(var(--phone-hero-height, var(--app-viewport-height, 100dvh)) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-  display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr);
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
   gap: 6px;
 }
 
@@ -3802,13 +3722,9 @@ body.layout-phone-portrait .site-title {
 }
 
 body.layout-phone-portrait #mainCard {
-  grid-row: 3;
   width: 100%;
-  height: 100%;
+  height: auto;
   min-height: 0;
-  display: grid;
-  grid-template-rows: auto auto auto minmax(0, 1fr);
-  align-content: stretch;
   padding: 8px 10px 10px;
   border-radius: 16px;
 }
@@ -4003,7 +3919,7 @@ body.layout-phone-portrait .input-shell::before {
 }
 
 body.layout-phone-portrait .answer-guide {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -4174,64 +4090,199 @@ body.layout-phone-portrait.is-soft-keyboard-open .solution:empty {
 }
 
 @media (max-width: 510px) {
-  body:not(.layout-phone-portrait) .stats-bar {
+  .stats-bar,
+  .card-topbar,
+  .answer-guide-body,
+  .action-row {
+    scrollbar-width: none;
+  }
+
+  .stats-bar::-webkit-scrollbar,
+  .card-topbar::-webkit-scrollbar,
+  .answer-guide-body::-webkit-scrollbar,
+  .action-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stats-bar {
+    overflow-x: auto;
+    overflow-y: hidden;
     flex-wrap: nowrap;
     justify-content: flex-start;
     white-space: nowrap;
-    gap: 6px;
   }
 
-  body:not(.layout-phone-portrait) .stats-right {
-    width: auto;
-    margin-left: auto;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 8px;
-  }
-
-  body:not(.layout-phone-portrait) .card-topbar {
+  .stats-right {
     flex-wrap: nowrap;
+  }
+
+  .card-topbar {
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+  }
+
+  .card-legend {
+    flex-wrap: nowrap;
+  }
+
+  .answer-guide-body {
+    display: flex;
     align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 22px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .word-grid {
+    flex: 0 0 auto;
+    width: max-content;
+    min-width: 0;
+    flex-wrap: nowrap;
+  }
+
+  .action-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+  }
+
+  .action-row-left,
+  .action-row-right {
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+  }
+
+  body.layout-phone-portrait #gameArea {
+    display: block;
+  }
+
+  body.layout-phone-portrait .stats-bar {
+    align-self: stretch;
+    margin-inline: 0;
     text-align: left;
   }
 
-  body:not(.layout-phone-portrait) .category-badge {
+  body.layout-phone-portrait .stats-right {
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+
+  body.layout-phone-portrait .stat {
     justify-content: flex-start;
+  }
+
+  body.layout-phone-portrait .card-topbar {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 30px;
     text-align: left;
   }
 
-  body:not(.layout-phone-portrait) .card-legend {
-    width: auto;
+  body.layout-phone-portrait .card-legend {
+    display: flex;
     justify-content: flex-end;
     text-align: right;
-    overflow: visible;
-    padding-bottom: 0;
-    font-size: 6px;
-    gap: 4px 6px;
   }
 
-  body:not(.layout-phone-portrait) .action-row {
-    flex-direction: row;
-    align-items: center;
+  body.layout-phone-portrait .category-badge {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-self: auto;
+    padding: 4px 8px;
+    font-size: 8px;
+    text-align: left;
+  }
+
+  body.layout-phone-portrait .category-badge-main,
+  body.layout-phone-portrait .category-badge-meta {
+    white-space: nowrap;
+  }
+
+  body.layout-phone-portrait .category-badge-meta {
+    font-size: 8px;
+  }
+
+  body.layout-phone-portrait .prompt-row {
+    align-self: stretch;
+    justify-self: auto;
+    justify-content: initial;
+  }
+
+  body.layout-phone-portrait .prompt-copy,
+  body.layout-phone-portrait .prompt-text,
+  body.layout-phone-portrait .prompt-sub {
+    text-align: left;
+  }
+
+  body.layout-phone-portrait .answer-guide {
+    display: block;
+    text-align: left;
+    overflow-y: visible;
+  }
+
+  body.layout-phone-portrait .answer-guide-head {
+    display: flex;
+    justify-items: initial;
     justify-content: space-between;
+  }
+
+  body.layout-phone-portrait .answer-guide-status {
+    text-align: right;
+  }
+
+  body.layout-phone-portrait .word-grid {
+    justify-content: flex-start;
+    align-content: normal;
+  }
+
+  body.layout-phone-portrait .action-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-self: stretch;
+    width: 100%;
+  }
+
+  body.layout-phone-portrait .action-row-left,
+  body.layout-phone-portrait .action-row-right {
+    display: inline-flex;
+    width: auto;
     gap: 12px;
   }
 
-  body:not(.layout-phone-portrait) .action-row-left,
-  body:not(.layout-phone-portrait) .action-row-right {
-    display: inline-flex;
-    width: auto;
-    gap: 10px;
+  body.layout-phone-portrait .action-row-right {
+    margin-left: auto;
   }
 
-  body:not(.layout-phone-portrait) .settings-btn,
-  body:not(.layout-phone-portrait) .switch-order-btn,
-  body:not(.layout-phone-portrait) .skip-card-btn,
-  body:not(.layout-phone-portrait) .hint-btn {
+  body.layout-phone-portrait .hint-btn,
+  body.layout-phone-portrait .settings-btn,
+  body.layout-phone-portrait .switch-order-btn,
+  body.layout-phone-portrait .skip-card-btn {
     width: auto;
+    min-height: 22px;
+  }
+
+  body.layout-phone-portrait.is-soft-keyboard-open #gameArea {
+    padding-bottom: 0;
+    scroll-padding-bottom: 0;
+  }
+
+  body.layout-phone-portrait.is-soft-keyboard-open .input-shell {
+    position: relative;
+    bottom: auto;
+    z-index: 2;
+    padding-top: 0;
+    background: none;
+  }
+
+  body.layout-phone-portrait.is-soft-keyboard-open .action-row {
+    display: flex;
+  }
+
+  body.layout-phone-portrait.is-soft-keyboard-open .combo-pop {
+    display: block;
   }
 }
 
@@ -4258,43 +4309,6 @@ body.layout-phone-portrait.is-soft-keyboard-open .solution:empty {
     line-height: 1.1;
   }
 
-  .stats-bar {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px 8px;
-    white-space: normal;
-  }
-
-  .stats-right {
-    width: 100%;
-    margin-left: 0;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .card-topbar {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-
-  .category-badge {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .card-legend {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 2px;
-    scrollbar-width: thin;
-  }
-
   .cat-btn,
   .search-link {
     font-size: 9px;
@@ -4302,42 +4316,6 @@ body.layout-phone-portrait.is-soft-keyboard-open .solution:empty {
 
   .cat-btn {
     padding: 5px 10px;
-  }
-
-  .action-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .action-row-left {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
-    gap: 8px;
-  }
-
-  .action-row-right {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
-    gap: 8px;
-    margin-left: 0;
-  }
-
-  .settings-btn,
-  .switch-order-btn,
-  .skip-card-btn,
-  .hint-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .enter-hint {
-    margin-left: 0;
-    justify-content: flex-end;
-    text-align: right;
-    font-size: 6px;
   }
 
   .cat-panel-toolbar,
