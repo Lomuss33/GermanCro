@@ -743,9 +743,75 @@ const viewportProfile = {
   initialized: false,
   syncFrame: 0,
 };
+let touchKeyboardScrollLockX = 0;
+let touchKeyboardScrollLockY = 0;
+let touchKeyboardScrollLockFrame = 0;
+let touchKeyboardScrollLockTimeout = 0;
+let isTouchKeyboardScrollLocked = false;
 
 function isPhonePortraitLayoutActive() {
   return viewportProfile.isPhonePortrait;
+}
+
+function isTouchKeyboardEnvironment() {
+  return Boolean(
+    window.matchMedia?.("(pointer: coarse)").matches ||
+    window.matchMedia?.("(hover: none)").matches ||
+    "ontouchstart" in window
+  );
+}
+
+function clearTouchKeyboardScrollLock() {
+  if (touchKeyboardScrollLockFrame) {
+    window.cancelAnimationFrame(touchKeyboardScrollLockFrame);
+    touchKeyboardScrollLockFrame = 0;
+  }
+  if (touchKeyboardScrollLockTimeout) {
+    window.clearTimeout(touchKeyboardScrollLockTimeout);
+    touchKeyboardScrollLockTimeout = 0;
+  }
+  isTouchKeyboardScrollLocked = false;
+}
+
+function restoreTouchKeyboardScrollPosition() {
+  if (!isTouchKeyboardScrollLocked) {
+    return;
+  }
+  window.scrollTo(touchKeyboardScrollLockX, touchKeyboardScrollLockY);
+}
+
+function lockTouchKeyboardScrollPosition() {
+  if (!isTouchKeyboardEnvironment()) {
+    return;
+  }
+
+  clearTouchKeyboardScrollLock();
+  touchKeyboardScrollLockX = window.scrollX || window.pageXOffset || 0;
+  touchKeyboardScrollLockY = window.scrollY || window.pageYOffset || 0;
+  isTouchKeyboardScrollLocked = true;
+
+  restoreTouchKeyboardScrollPosition();
+  touchKeyboardScrollLockFrame = window.requestAnimationFrame(() => {
+    touchKeyboardScrollLockFrame = 0;
+    restoreTouchKeyboardScrollPosition();
+  });
+  touchKeyboardScrollLockTimeout = window.setTimeout(() => {
+    touchKeyboardScrollLockTimeout = 0;
+    restoreTouchKeyboardScrollPosition();
+    clearTouchKeyboardScrollLock();
+  }, 420);
+}
+
+function focusAnswerInputWithoutScroll() {
+  if (!inputEl) {
+    return;
+  }
+
+  try {
+    inputEl.focus({ preventScroll: true });
+  } catch {
+    inputEl.focus();
+  }
 }
 
 function getViewportSize() {
@@ -831,6 +897,9 @@ function scheduleViewportProfileSync() {
 function initViewportProfile() {
   if (!viewportProfile.initialized) {
     viewportProfile.initialized = true;
+    if ("virtualKeyboard" in navigator && navigator.virtualKeyboard) {
+      navigator.virtualKeyboard.overlaysContent = true;
+    }
     window.addEventListener("load", scheduleViewportProfileSync, { passive: true });
     window.addEventListener("pageshow", syncViewportProfile, { passive: true });
     window.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
@@ -3529,7 +3598,7 @@ function loadCard(options = {}) {
   updateSearchLinks(card);
 
   if (focusInput) {
-    inputEl.focus();
+    focusAnswerInputWithoutScroll();
   }
 }
 
@@ -4044,7 +4113,15 @@ function initInputEvents() {
       playAnswerGuideCompleteHit();
     }
     previousTypedValue = reveal;
-    inputEl.focus();
+    focusAnswerInputWithoutScroll();
+  });
+
+  inputEl.addEventListener("focus", () => {
+    lockTouchKeyboardScrollPosition();
+  });
+
+  inputEl.addEventListener("blur", () => {
+    lockTouchKeyboardScrollPosition();
   });
 
   inputEl.addEventListener("keydown", (event) => {
