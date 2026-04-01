@@ -934,7 +934,7 @@ body > * { position: relative; z-index: 1; }
 .answer-guide-head {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
   margin-bottom: 6px;
 }
@@ -966,6 +966,7 @@ body > * { position: relative; z-index: 1; }
   font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
   flex: 0 0 auto;
   justify-self: center;
+  align-self: center;
 }
 
 .answer-guide-foot {
@@ -978,6 +979,7 @@ body > * { position: relative; z-index: 1; }
 }
 
 .answer-guide-label {
+  display: none;
   font-family: var(--font-display);
   font-size: 6px;
   font-weight: 700;
@@ -4426,6 +4428,10 @@ body.layout-phone-portrait #heroStage {
   gap: 6px;
 }
 
+body.layout-phone-portrait.is-soft-keyboard-open #heroStage {
+  min-height: auto;
+}
+
 body.layout-phone-portrait .site-title-row {
   grid-row: 1;
   width: 100%;
@@ -4461,28 +4467,32 @@ body.layout-phone-portrait #mainCard {
   border-radius: 16px;
 }
 
+body.layout-phone-portrait.is-soft-keyboard-open #mainCard {
+  min-height: 0;
+}
+
 body.layout-phone-portrait .stats-bar {
-  justify-content: center;
-  align-self: center;
-  flex-wrap: wrap;
-  gap: 6px 10px;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-wrap: nowrap;
+  gap: 12px;
   margin-bottom: 6px;
-  margin-inline: auto;
-  text-align: center;
-  white-space: normal;
+  margin-inline: 0;
+  text-align: left;
+  white-space: nowrap;
   overflow: visible;
 }
 
 body.layout-phone-portrait .stats-right {
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-left: 0;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 18px;
+  margin-left: auto;
 }
 
 body.layout-phone-portrait .stat {
-  gap: 4px;
-  justify-content: center;
+  gap: 6px;
+  justify-content: flex-start;
 }
 
 body.layout-phone-portrait .stat-value {
@@ -4549,6 +4559,7 @@ body.layout-phone-portrait #gameArea {
   flex: 1 1 auto;
   min-height: 100%;
   gap: clamp(8px, 1.7vh, 14px);
+  justify-content: flex-start;
 }
 
 body.layout-phone-portrait #gameArea > *:not(.feedback-burst):not(.combo-pop) {
@@ -4557,14 +4568,17 @@ body.layout-phone-portrait #gameArea > *:not(.feedback-burst):not(.combo-pop) {
 
 body.layout-phone-portrait #gameArea > .prompt-row-main {
   order: 1;
+  margin-top: auto;
 }
 
 body.layout-phone-portrait #gameArea > .prompt-row-sub {
   order: 2;
+  margin-top: auto;
 }
 
 body.layout-phone-portrait #gameArea > .answer-guide {
   order: 3;
+  margin-top: auto;
 }
 
 body.layout-phone-portrait #gameArea > .solution {
@@ -4659,7 +4673,7 @@ body.layout-phone-portrait .answer-guide-head {
   width: 100%;
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 4px;
   margin-bottom: 6px;
 }
@@ -4778,6 +4792,12 @@ body.layout-phone-portrait.is-soft-keyboard-open #gameArea {
   scroll-padding-top: calc(var(--app-viewport-offset-top, 0px) + env(safe-area-inset-top) + 8px);
   scroll-padding-bottom: calc(var(--app-viewport-bottom-inset, 0px) + env(safe-area-inset-bottom) + 72px);
   padding-bottom: calc(72px + var(--app-viewport-bottom-inset, 0px) + env(safe-area-inset-bottom) + var(--phone-input-bottom-gap, 6px));
+}
+
+body.layout-phone-portrait.is-soft-keyboard-open #gameArea > .prompt-row-main,
+body.layout-phone-portrait.is-soft-keyboard-open #gameArea > .prompt-row-sub,
+body.layout-phone-portrait.is-soft-keyboard-open #gameArea > .answer-guide {
+  margin-top: 0;
 }
 
 body.layout-phone-portrait.is-soft-keyboard-open .answer-guide {

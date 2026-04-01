@@ -753,6 +753,10 @@ function isPhonePortraitLayoutActive() {
   return viewportProfile.isPhonePortrait;
 }
 
+function isGameInputFocused() {
+  return document.activeElement === inputEl;
+}
+
 function getViewportSize() {
   const visualViewport = window.visualViewport;
   const width = visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0;
@@ -794,7 +798,7 @@ function setGameSurfaceMode(showSessionEnd) {
 }
 
 function alignPhoneInputIntoView() {
-  if (!isPhonePortraitLayoutActive() || document.activeElement !== inputEl) {
+  if (!isPhonePortraitLayoutActive() || !isGameInputFocused()) {
     return;
   }
 
@@ -880,8 +884,21 @@ function syncViewportProfile() {
   document.documentElement.style.setProperty("--phone-input-bottom-gap", "6px");
 
   const nextPhonePortrait = true;
-  const nextKeyboardOpen = false;
-  viewportProfile.lastClosedHeight = nextViewport.height;
+  const isInputFocused = isGameInputFocused();
+  const closedViewportHeight = Math.max(
+    viewportProfile.lastClosedHeight || 0,
+    layoutViewportHeight,
+    nextViewport.height
+  );
+  const viewportHeightLoss = Math.max(0, closedViewportHeight - nextViewport.height);
+  const layoutHeightLoss = Math.max(0, layoutViewportHeight - nextViewport.height);
+  const keyboardInset = Math.max(viewportBottomInset, viewportHeightLoss, layoutHeightLoss);
+  const keyboardThreshold = Math.max(120, Math.round(closedViewportHeight * 0.18));
+  const nextKeyboardOpen = Boolean(isInputFocused && keyboardInset >= keyboardThreshold);
+
+  if (!nextKeyboardOpen) {
+    viewportProfile.lastClosedHeight = nextViewport.height;
+  }
 
   const layoutChanged = viewportProfile.isPhonePortrait !== nextPhonePortrait;
   const keyboardChanged = viewportProfile.isSoftKeyboardOpen !== nextKeyboardOpen;
@@ -895,10 +912,10 @@ function syncViewportProfile() {
   viewportProfile.isSoftKeyboardOpen = nextKeyboardOpen;
 
   document.body.classList.toggle("layout-phone-portrait", nextPhonePortrait);
-  document.body.classList.remove("is-soft-keyboard-open");
+  document.body.classList.toggle("is-soft-keyboard-open", nextKeyboardOpen);
   setGameSurfaceMode(isSessionEndVisible());
 
-  if (document.activeElement === inputEl && (layoutChanged || keyboardChanged || sizeChanged)) {
+  if (isInputFocused && (layoutChanged || keyboardChanged || sizeChanged)) {
     schedulePhoneInputAlignment();
   }
 
@@ -4140,11 +4157,13 @@ function initInputEvents() {
   inputEl.addEventListener("focus", () => {
     pendingPhoneInputViewportAlign = true;
     schedulePhoneInputAlignment();
+    scheduleViewportProfileSync();
   });
 
   inputEl.addEventListener("blur", () => {
     pendingPhoneInputViewportAlign = false;
     clearPhoneInputAlignmentTimers();
+    scheduleViewportProfileSync();
   });
 
   inputEl.addEventListener("keydown", (event) => {
