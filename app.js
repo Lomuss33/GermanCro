@@ -603,6 +603,7 @@ let totalCharsTyped = 0;
 let difficulty = "easy";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
+let answerGuideCompleteTimer = null;
 let learningMode = "de";
 let isPromptOrderSwapped = false;
 let isSettingsOpen = false;
@@ -3239,6 +3240,32 @@ function getFreshCorrectIndexes(target, previousTyped, currentTyped) {
   return freshIndexes;
 }
 
+function getFreshWrongIndexes(target, previousTyped, currentTyped) {
+  const freshIndexes = new Set();
+  const maxLen = Math.max(previousTyped.length, currentTyped.length);
+
+  for (let idx = 0; idx < maxLen; idx += 1) {
+    const prevChar = previousTyped[idx];
+    const currentChar = currentTyped[idx];
+    const targetChar = target[idx];
+
+    if (currentChar === undefined || targetChar === undefined) {
+      continue;
+    }
+
+    const isWrong = currentChar.toLowerCase() !== targetChar.toLowerCase();
+    if (!isWrong) {
+      continue;
+    }
+
+    if (prevChar === undefined || currentChar !== prevChar || prevChar.toLowerCase() === targetChar.toLowerCase()) {
+      freshIndexes.add(idx);
+    }
+  }
+
+  return freshIndexes;
+}
+
 function getGuideProgress(target, typed) {
   const correctPrefixLen = getCorrectPrefixLength(target, typed);
   const wordTokens = getGuideWordTokens(target);
@@ -3348,6 +3375,20 @@ function updateAnswerGuide(target, typed) {
   answerGuideNoteEl.textContent = noteText;
 }
 
+function playAnswerGuideCompleteHit() {
+  if (!answerGuideEl) {
+    return;
+  }
+
+  clearTimeout(answerGuideCompleteTimer);
+  answerGuideEl.classList.remove("is-complete-hit");
+  void answerGuideEl.offsetWidth;
+  answerGuideEl.classList.add("is-complete-hit");
+  answerGuideCompleteTimer = setTimeout(() => {
+    answerGuideEl.classList.remove("is-complete-hit");
+  }, 360);
+}
+
 function isExactTypedMatch(target, typed) {
   return typed.length === target.length && getCorrectPrefixLength(target, typed) === target.length;
 }
@@ -3391,7 +3432,15 @@ function showFeedbackBurst(kind, isBig = false) {
   }, isBig ? 980 : 760);
 }
 
-function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
+function buildWordGrid(
+  target,
+  typed,
+  {
+    freshCorrectIndexes = new Set(),
+    freshWrongIndexes = new Set(),
+    terminalHit = null,
+  } = {}
+) {
   wordGrid.innerHTML = "";
   const { hints, autofill } = getCharMeta(target);
   const correctPrefixLen = getCorrectPrefixLength(target, typed);
@@ -3415,6 +3464,14 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
         separator.classList.add(typedSeparator === token.char ? "state-ok" : "state-bad");
       } else if (token.start === correctPrefixLen) {
         separator.classList.add("state-next");
+      }
+
+      if (freshCorrectIndexes.has(token.start)) {
+        separator.classList.add("state-hit");
+      }
+
+      if (freshWrongIndexes.has(token.start)) {
+        separator.classList.add("state-miss");
       }
 
       if (token.start === caretIndex) {
@@ -3452,6 +3509,9 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
         wrap.classList.add(isCorrectChar ? "state-ok" : "state-bad");
         if (freshCorrectIndexes.has(idx)) {
           wrap.classList.add("state-hit");
+        }
+        if (freshWrongIndexes.has(idx)) {
+          wrap.classList.add("state-miss");
         }
       } else if (difficulty === "easy" && idx >= correctPrefixLen && idx < correctPrefixLen + 3) {
         letter.textContent = targetChar;
@@ -3511,6 +3571,9 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
   if (showTerminalStatus) {
     const terminalStatus = document.createElement("div");
     terminalStatus.className = `answer-guide-terminal-status is-${terminalStatusKind}`;
+    if (terminalHit && terminalHit === terminalStatusKind) {
+      terminalStatus.classList.add(`is-hit-${terminalHit}`);
+    }
     terminalStatus.textContent = terminalStatusKind === "success" ? "♥" : "×";
     terminalStatus.setAttribute("aria-hidden", "true");
     wordGrid.appendChild(terminalStatus);
@@ -3569,6 +3632,8 @@ function loadCard(options = {}) {
   inputEl.value = "";
   inputEl.className = "";
   previousTypedValue = "";
+  clearTimeout(answerGuideCompleteTimer);
+  answerGuideEl?.classList.remove("is-complete-hit");
   solutionEl.style.display = "none";
   forceCorrection = false;
   progFill.style.width = `${(sessionIndex / sessionCards.length) * 100}%`;
@@ -4045,17 +4110,35 @@ function initInputEvents() {
     const currentPrefix = getCorrectPrefixLength(target, typedValue);
     const previousExact = isExactTypedMatch(target, previousTypedValue);
     const currentExact = isExactTypedMatch(target, typedValue);
+    const previousAtOrPastEnd = previousTypedValue.length >= target.length;
+    const currentAtOrPastEnd = typedValue.length >= target.length;
+    const reachedTerminalSuccess = !previousExact && currentExact;
+    const reachedTerminalError = currentAtOrPastEnd && !currentExact && (!previousAtOrPastEnd || previousExact);
     const freshCorrectIndexes = getFreshCorrectIndexes(
       target,
       previousTypedValue,
       typedValue
     );
+    const freshWrongIndexes = getFreshWrongIndexes(
+      target,
+      previousTypedValue,
+      typedValue
+    );
 
-    buildWordGrid(target, typedValue, freshCorrectIndexes);
+    buildWordGrid(target, typedValue, {
+      freshCorrectIndexes,
+      freshWrongIndexes,
+      terminalHit:
+        reachedTerminalSuccess ? "success" :
+        reachedTerminalError ? "error" :
+        null,
+    });
 
-    if (!previousExact && currentExact) {
+    if (reachedTerminalSuccess) {
+      playAnswerGuideCompleteHit();
       showFeedbackBurst("success", false);
     } else if (
+      reachedTerminalError ||
       (previousExact && !currentExact && typedValue.length > previousTypedValue.length) ||
       (typedValue.length > previousTypedValue.length && currentPrefix < typedValue.length && currentPrefix <= previousPrefix)
     ) {
@@ -4073,7 +4156,12 @@ function initInputEvents() {
     const target = getTargetValue(sessionCards[sessionIndex]);
     const reveal = getHintRevealValue(target, inputEl.value);
     inputEl.value = reveal;
-    buildWordGrid(target, reveal);
+    buildWordGrid(target, reveal, {
+      terminalHit: isExactTypedMatch(target, reveal) ? "success" : null,
+    });
+    if (isExactTypedMatch(target, reveal)) {
+      playAnswerGuideCompleteHit();
+    }
     previousTypedValue = reveal;
     inputEl.focus();
   });
