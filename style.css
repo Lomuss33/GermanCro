@@ -42,6 +42,7 @@ html {
   --game-row-input-padding-start: 28px;
   --game-row-input-symbol-offset: 12px;
   --game-row-inline-padding: 14px;
+  --game-centered-lane-inset: calc(var(--game-emoji-pill-width) + var(--game-row-column-gap));
   --app-scale: 1.08;
 }
 
@@ -73,6 +74,14 @@ body {
   gap: 4px;
   position: relative;
   overflow-x: hidden;
+}
+
+body.touch-keyboard-locked {
+  position: fixed;
+  top: calc(-1 * var(--touch-keyboard-lock-top, 0px));
+  left: calc(-1 * var(--touch-keyboard-lock-left, 0px));
+  width: 100%;
+  overflow: hidden;
 }
 
 .de-flag {
@@ -955,12 +964,11 @@ body > * { position: relative; z-index: 1; }
 }
 
 .answer-guide-body {
-  display: grid;
+  display: block;
   width: 100%;
-  grid-template-columns: var(--game-emoji-pill-width) minmax(0, 1fr);
-  column-gap: var(--game-row-column-gap);
-  row-gap: 6px;
-  align-items: flex-start;
+  position: relative;
+  min-height: var(--game-emoji-pill-height);
+  padding-inline: var(--game-centered-lane-inset);
 }
 
 .answer-guide-trail-flag {
@@ -980,8 +988,10 @@ body > * { position: relative; z-index: 1; }
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
   font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
   flex: 0 0 auto;
-  justify-self: center;
-  align-self: center;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .answer-guide-foot {
@@ -1071,10 +1081,12 @@ body.is-language-switching .stats-bar {
   display: grid;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
   padding-inline: var(--game-row-inline-padding);
-  grid-template-columns: var(--game-emoji-pill-width) minmax(0, 1fr);
-  column-gap: var(--game-row-column-gap);
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 0;
   align-items: center;
+  min-height: var(--game-emoji-pill-height);
 }
 
 .prompt-row-main {
@@ -1137,18 +1149,28 @@ body.is-language-switching .stats-bar {
   flex: 1 1 auto;
   align-self: center;
   position: relative;
-  padding: 0 0 4px;
+  width: 100%;
+  padding: 0 var(--game-centered-lane-inset) 4px;
+  text-align: center;
 }
 
 .prompt-copy::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
+  left: var(--game-centered-lane-inset);
+  right: var(--game-centered-lane-inset);
   bottom: 0;
   height: 1px;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1));
   border-radius: 999px;
+}
+
+.prompt-flag {
+  position: absolute;
+  left: var(--game-row-inline-padding);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
 }
 
 .prompt-text,
@@ -1256,6 +1278,7 @@ input.wrong {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   --answer-guide-token-gap: 8px;
   --answer-guide-char-gap: 3px;
   width: 100%;
@@ -4570,8 +4593,8 @@ body.layout-phone-portrait .prompt-row {
   align-self: center;
   justify-self: center;
   justify-content: center;
-  grid-template-columns: var(--game-emoji-pill-width) minmax(0, 1fr);
-  column-gap: var(--game-row-column-gap);
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 0;
 }
 
 body.layout-phone-portrait .prompt-row-main,
@@ -4582,6 +4605,7 @@ body.layout-phone-portrait .prompt-row-sub {
 body.layout-phone-portrait .prompt-copy {
   width: 100%;
   justify-self: center;
+  padding-inline: var(--game-centered-lane-inset);
   text-align: center;
 }
 
@@ -4647,9 +4671,10 @@ body.layout-phone-portrait .answer-guide-label {
 }
 
 body.layout-phone-portrait .answer-guide-body {
-  display: grid;
+  display: block;
   width: 100%;
-  grid-template-columns: var(--game-emoji-pill-width) minmax(0, 1fr);
+  min-height: var(--game-emoji-pill-height);
+  padding-inline: var(--game-centered-lane-inset);
   align-items: flex-start;
   justify-content: initial;
   overflow: hidden;
