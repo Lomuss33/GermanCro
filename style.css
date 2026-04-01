@@ -64,6 +64,7 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3718,10 +3719,6 @@ body.layout-phone-portrait #heroStage {
   gap: 6px;
 }
 
-body.layout-phone-portrait.is-soft-keyboard-open #heroStage {
-  min-height: auto;
-}
-
 body.layout-phone-portrait .site-title-row {
   grid-row: 1;
   width: 100%;
@@ -3749,10 +3746,6 @@ body.layout-phone-portrait #mainCard {
   min-height: 0;
   padding: 8px 10px 10px;
   border-radius: 16px;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open #mainCard {
-  height: auto;
 }
 
 body.layout-phone-portrait .stats-bar {
@@ -4068,49 +4061,6 @@ body.layout-phone-portrait .combo-pop {
   top: 10px;
 }
 
-body.layout-phone-portrait.is-soft-keyboard-open #gameArea {
-  gap: 8px;
-  overflow-y: auto;
-  align-content: flex-start;
-  scroll-padding-top: calc(var(--app-viewport-offset-top, 0px) + env(safe-area-inset-top) + 8px);
-  scroll-padding-bottom: calc(var(--app-viewport-bottom-inset, 0px) + env(safe-area-inset-bottom) + 72px);
-  padding-bottom: calc(72px + var(--app-viewport-bottom-inset, 0px) + env(safe-area-inset-bottom) + var(--phone-input-bottom-gap, 6px));
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open .prompt-row {
-  width: 100%;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open .answer-guide {
-  flex: 0 0 auto;
-  justify-content: flex-start;
-  max-height: none;
-  overflow: visible;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open .input-shell {
-  position: sticky;
-  bottom: calc(var(--app-viewport-bottom-inset, 0px) + env(safe-area-inset-bottom) + var(--phone-input-bottom-gap, 6px));
-  z-index: 4;
-  margin-top: 0;
-  padding-top: 8px;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 18, 44, 0) 0%,
-    rgba(10, 18, 44, 0.84) 24%,
-    rgba(10, 18, 44, 0.96) 100%
-  );
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open .action-row,
-body.layout-phone-portrait.is-soft-keyboard-open .combo-pop {
-  display: none;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open .solution:empty {
-  display: none !important;
-}
-
 @media (max-width: 510px) {
   .stats-bar,
   .card-topbar,
@@ -4314,26 +4264,6 @@ body.layout-phone-portrait.is-soft-keyboard-open .solution:empty {
     min-height: 22px;
   }
 
-  body.layout-phone-portrait.is-soft-keyboard-open #gameArea {
-    padding-bottom: 0;
-    scroll-padding-bottom: 0;
-  }
-
-  body.layout-phone-portrait.is-soft-keyboard-open .input-shell {
-    position: relative;
-    bottom: auto;
-    z-index: 2;
-    padding-top: 0;
-    background: none;
-  }
-
-  body.layout-phone-portrait.is-soft-keyboard-open .action-row {
-    display: flex;
-  }
-
-  body.layout-phone-portrait.is-soft-keyboard-open .combo-pop {
-    display: block;
-  }
 }
 
 @media (max-width: 520px) {
@@ -4464,14 +4394,10 @@ body.layout-phone-portrait {
 }
 
 body.layout-phone-portrait #heroStage {
-  min-height: calc(100dvh - var(--top-screen-search-peek));
+  min-height: calc(100svh - var(--top-screen-search-peek));
   display: flex;
   flex-direction: column;
   gap: 6px;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open #heroStage {
-  min-height: auto;
 }
 
 body.layout-phone-portrait .site-title-row {
@@ -4504,13 +4430,9 @@ body.layout-phone-portrait #mainCard {
   flex-direction: column;
   flex: 1 1 auto;
   height: auto;
-  min-height: clamp(460px, calc(100dvh - 320px), 560px);
+  min-height: clamp(460px, calc(100svh - 320px), 560px);
   padding: 12px 14px 16px;
   border-radius: 16px;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open #mainCard {
-  min-height: 0;
 }
 
 body.layout-phone-portrait .stats-bar {
@@ -4825,51 +4747,6 @@ body.layout-phone-portrait .enter-hint {
 body.layout-phone-portrait .combo-pop {
   right: 16px;
   top: 10px;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open #gameArea {
-  gap: 8px;
-  overflow-y: auto;
-  align-content: flex-start;
-  scroll-padding-top: calc(var(--app-viewport-offset-top, 0px) + env(safe-area-inset-top) + 8px);
-  scroll-padding-bottom: calc(var(--app-viewport-bottom-inset, 0px) + env(safe-area-inset-bottom) + 72px);
-  padding-bottom: calc(72px + var(--app-viewport-bottom-inset, 0px) + env(safe-area-inset-bottom) + var(--phone-input-bottom-gap, 6px));
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open #gameArea > .prompt-row-main,
-body.layout-phone-portrait.is-soft-keyboard-open #gameArea > .prompt-row-sub,
-body.layout-phone-portrait.is-soft-keyboard-open #gameArea > .answer-guide {
-  margin-top: 0;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open .answer-guide {
-  flex: 0 0 auto;
-  justify-content: flex-start;
-  max-height: none;
-  overflow: visible;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open .input-shell {
-  position: sticky;
-  bottom: calc(var(--app-viewport-bottom-inset, 0px) + env(safe-area-inset-bottom) + var(--phone-input-bottom-gap, 6px));
-  z-index: 4;
-  margin-top: 0;
-  padding-top: 8px;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 18, 44, 0) 0%,
-    rgba(10, 18, 44, 0.84) 24%,
-    rgba(10, 18, 44, 0.96) 100%
-  );
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open .action-row,
-body.layout-phone-portrait.is-soft-keyboard-open .combo-pop {
-  display: none;
-}
-
-body.layout-phone-portrait.is-soft-keyboard-open .solution:empty {
-  display: none !important;
 }
 
 body.layout-phone-portrait .cat-panel-toolbar,

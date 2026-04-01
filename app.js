@@ -740,27 +740,17 @@ const viewportProfile = {
   maxObservedWidth: 0,
   maxObservedHeight: 0,
   isPhonePortrait: false,
-  isSoftKeyboardOpen: false,
-  lastClosedHeight: 0,
   initialized: false,
   syncFrame: 0,
 };
-let phoneInputAlignFrame = 0;
-let phoneInputAlignTimeout = 0;
-let pendingPhoneInputViewportAlign = false;
 
 function isPhonePortraitLayoutActive() {
   return viewportProfile.isPhonePortrait;
 }
 
-function isGameInputFocused() {
-  return document.activeElement === inputEl;
-}
-
 function getViewportSize() {
-  const visualViewport = window.visualViewport;
-  const width = visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0;
-  const height = visualViewport?.height || window.innerHeight || document.documentElement.clientHeight || 0;
+  const width = window.innerWidth || document.documentElement.clientWidth || 0;
+  const height = window.innerHeight || document.documentElement.clientHeight || 0;
 
   return {
     width: Math.max(0, Math.round(width)),
@@ -797,60 +787,10 @@ function setGameSurfaceMode(showSessionEnd) {
   sessionEndEl.style.display = showSessionEnd ? "flex" : "none";
 }
 
-function alignPhoneInputIntoView() {
-  if (!isPhonePortraitLayoutActive() || !isGameInputFocused()) {
-    return;
-  }
-
-  inputEl.scrollIntoView({
-    block: "nearest",
-    inline: "nearest",
-  });
-}
-
-function clearPhoneInputAlignmentTimers() {
-  if (phoneInputAlignFrame) {
-    window.cancelAnimationFrame(phoneInputAlignFrame);
-    phoneInputAlignFrame = 0;
-  }
-  if (phoneInputAlignTimeout) {
-    window.clearTimeout(phoneInputAlignTimeout);
-    phoneInputAlignTimeout = 0;
-  }
-}
-
-function schedulePhoneInputAlignment() {
-  if (!isPhonePortraitLayoutActive()) {
-    return;
-  }
-
-  clearPhoneInputAlignmentTimers();
-
-  phoneInputAlignFrame = window.requestAnimationFrame(() => {
-    phoneInputAlignFrame = 0;
-    alignPhoneInputIntoView();
-  });
-
-  phoneInputAlignTimeout = window.setTimeout(() => {
-    phoneInputAlignTimeout = 0;
-    alignPhoneInputIntoView();
-  }, 160);
-}
-
-function maybeAlignFocusedPhoneInputFromViewport() {
-  if (!pendingPhoneInputViewportAlign) {
-    return;
-  }
-
-  pendingPhoneInputViewportAlign = false;
-  schedulePhoneInputAlignment();
-}
-
 function syncViewportProfile() {
   viewportProfile.syncFrame = 0;
 
   const nextViewport = getViewportSize();
-  const previousViewportHeight = viewportProfile.height || nextViewport.height;
   viewportProfile.maxObservedWidth = Math.max(viewportProfile.maxObservedWidth, nextViewport.width);
   viewportProfile.maxObservedHeight = Math.max(viewportProfile.maxObservedHeight, nextViewport.height);
 
@@ -862,47 +802,8 @@ function syncViewportProfile() {
     : 1;
   updateLanguageDockZoom(Math.min(widthRatio, heightRatio), nextViewport);
 
-  const visualViewport = window.visualViewport;
-  const visualViewportOffsetTop = visualViewport
-    ? Math.max(0, Math.round(visualViewport.offsetTop || 0))
-    : 0;
-  const layoutViewportHeight = Math.max(
-    0,
-    Math.round(window.innerHeight || nextViewport.height || 0)
-  );
-  const viewportBottomInset = visualViewport
-    ? Math.max(
-        0,
-        Math.round(layoutViewportHeight - ((visualViewport.height || 0) + (visualViewport.offsetTop || 0)))
-      )
-    : 0;
-
-  document.documentElement.style.setProperty("--app-viewport-width", `${nextViewport.width}px`);
-  document.documentElement.style.setProperty("--app-viewport-height", `${nextViewport.height}px`);
-  document.documentElement.style.setProperty("--app-viewport-offset-top", `${visualViewportOffsetTop}px`);
-  document.documentElement.style.setProperty("--app-viewport-bottom-inset", `${viewportBottomInset}px`);
-  document.documentElement.style.setProperty("--phone-hero-height", `${nextViewport.height}px`);
-  document.documentElement.style.setProperty("--phone-input-bottom-gap", "6px");
-
   const nextPhonePortrait = true;
-  const isInputFocused = isGameInputFocused();
-  const closedViewportHeight = Math.max(
-    viewportProfile.lastClosedHeight || 0,
-    previousViewportHeight,
-    nextViewport.height
-  );
-  const viewportHeightLoss = Math.max(0, closedViewportHeight - nextViewport.height);
-  const layoutHeightLoss = Math.max(0, layoutViewportHeight - nextViewport.height);
-  const keyboardInset = Math.max(viewportBottomInset, viewportHeightLoss, layoutHeightLoss);
-  const keyboardThreshold = Math.max(120, Math.round(closedViewportHeight * 0.18));
-  const nextKeyboardOpen = Boolean(isInputFocused && keyboardInset >= keyboardThreshold);
-
-  if (!isInputFocused) {
-    viewportProfile.lastClosedHeight = nextViewport.height;
-  }
-
   const layoutChanged = viewportProfile.isPhonePortrait !== nextPhonePortrait;
-  const keyboardChanged = viewportProfile.isSoftKeyboardOpen !== nextKeyboardOpen;
   const sizeChanged =
     viewportProfile.width !== nextViewport.width ||
     viewportProfile.height !== nextViewport.height;
@@ -910,17 +811,11 @@ function syncViewportProfile() {
   viewportProfile.width = nextViewport.width;
   viewportProfile.height = nextViewport.height;
   viewportProfile.isPhonePortrait = nextPhonePortrait;
-  viewportProfile.isSoftKeyboardOpen = nextKeyboardOpen;
 
   document.body.classList.toggle("layout-phone-portrait", nextPhonePortrait);
-  document.body.classList.toggle("is-soft-keyboard-open", nextKeyboardOpen);
   setGameSurfaceMode(isSessionEndVisible());
 
-  if (isInputFocused && (layoutChanged || keyboardChanged || sizeChanged)) {
-    schedulePhoneInputAlignment();
-  }
-
-  if (sizeChanged || layoutChanged || keyboardChanged) {
+  if (sizeChanged || layoutChanged) {
     maybeShowInstallGuide();
   }
 }
@@ -940,9 +835,6 @@ function initViewportProfile() {
     window.addEventListener("pageshow", syncViewportProfile, { passive: true });
     window.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
     window.addEventListener("orientationchange", scheduleViewportProfileSync, { passive: true });
-    window.visualViewport?.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
-    window.visualViewport?.addEventListener("scroll", scheduleViewportProfileSync, { passive: true });
-    window.visualViewport?.addEventListener("resize", maybeAlignFocusedPhoneInputFromViewport, { passive: true });
   }
 
   if (viewportProfile.syncFrame) {
@@ -4153,20 +4045,6 @@ function initInputEvents() {
     }
     previousTypedValue = reveal;
     inputEl.focus();
-  });
-
-  inputEl.addEventListener("focus", () => {
-    pendingPhoneInputViewportAlign = true;
-    scheduleViewportProfileSync();
-    if (!window.visualViewport) {
-      schedulePhoneInputAlignment();
-    }
-  });
-
-  inputEl.addEventListener("blur", () => {
-    pendingPhoneInputViewportAlign = false;
-    clearPhoneInputAlignmentTimers();
-    scheduleViewportProfileSync();
   });
 
   inputEl.addEventListener("keydown", (event) => {
