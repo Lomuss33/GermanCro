@@ -192,24 +192,45 @@ function getLayoutMode(root) {
   };
 }
 
-function createHoverZones(setActiveGroupIndex, maxGroupIndex) {
+function createHoverZones({ isMobile, activeGroupIndex, setActiveGroupIndex, maxGroupIndex }) {
   const zones = document.createElement("div");
-  zones.className = "grammar-slider-hover-zones grammar-slider-hover-overlay";
+  zones.className = `grammar-slider-hover-zones grammar-slider-hover-overlay${isMobile ? " is-mobile" : " is-desktop"}`;
 
-  const leftZone = document.createElement("div");
-  leftZone.className = "grammar-slider-hover-zone is-left";
-  leftZone.addEventListener("mouseenter", () => setActiveGroupIndex(0));
-  leftZone.addEventListener("click", () => setActiveGroupIndex(0));
+  const hasPrev = activeGroupIndex > 0;
+  const hasNext = activeGroupIndex < maxGroupIndex;
+
+  const buildHint = (direction) => {
+    const hint = document.createElement("span");
+    hint.className = `grammar-slider-edge-hint is-${direction}`;
+    hint.setAttribute("aria-hidden", "true");
+    hint.textContent =
+      direction === "left" ? "‹" :
+      direction === "right" ? "›" :
+      direction === "up" ? "˄" :
+      "˅";
+    return hint;
+  };
+
+  const prevZone = document.createElement("div");
+  prevZone.className = `grammar-slider-hover-zone ${isMobile ? "is-top" : "is-left"}${hasPrev ? "" : " is-disabled"}`;
+  if (hasPrev) {
+    prevZone.addEventListener("mouseenter", () => setActiveGroupIndex(activeGroupIndex - 1));
+    prevZone.addEventListener("click", () => setActiveGroupIndex(activeGroupIndex - 1));
+  }
+  prevZone.appendChild(buildHint(isMobile ? "up" : "left"));
 
   const centerZone = document.createElement("div");
   centerZone.className = "grammar-slider-hover-zone is-center";
 
-  const rightZone = document.createElement("div");
-  rightZone.className = "grammar-slider-hover-zone is-right";
-  rightZone.addEventListener("mouseenter", () => setActiveGroupIndex(maxGroupIndex));
-  rightZone.addEventListener("click", () => setActiveGroupIndex(maxGroupIndex));
+  const nextZone = document.createElement("div");
+  nextZone.className = `grammar-slider-hover-zone ${isMobile ? "is-bottom" : "is-right"}${hasNext ? "" : " is-disabled"}`;
+  if (hasNext) {
+    nextZone.addEventListener("mouseenter", () => setActiveGroupIndex(activeGroupIndex + 1));
+    nextZone.addEventListener("click", () => setActiveGroupIndex(activeGroupIndex + 1));
+  }
+  nextZone.appendChild(buildHint(isMobile ? "down" : "right"));
 
-  zones.append(leftZone, centerZone, rightZone);
+  zones.append(prevZone, centerZone, nextZone);
   return zones;
 }
 
@@ -444,7 +465,12 @@ export function renderGrammarSliderTable({
   });
 
   if (measurement.groups.length > 1) {
-    table.appendChild(createHoverZones(setActiveGroupIndex, measurement.groups.length - 1));
+    table.appendChild(createHoverZones({
+      isMobile: measurement.isMobile,
+      activeGroupIndex,
+      setActiveGroupIndex,
+      maxGroupIndex: measurement.groups.length - 1,
+    }));
   }
 
   shell.appendChild(table);

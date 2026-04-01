@@ -3051,6 +3051,125 @@ function getHintRevealValue(target, typed) {
   return target.slice(0, nextLength);
 }
 
+function getGuideSeparatorKind(char) {
+  if (char === " ") {
+    return "space";
+  }
+  if (char === ",") {
+    return "comma";
+  }
+  return null;
+}
+
+function isGuideSeparatorChar(char) {
+  return getGuideSeparatorKind(char) !== null;
+}
+
+function getGuideSeparatorLabel(char, { overflow = false } = {}) {
+  const kind = getGuideSeparatorKind(char);
+
+  if (kind === "space") {
+    return t(overflow ? "messages.guide.extraSeparator" : "messages.guide.separator");
+  }
+
+  if (kind === "comma") {
+    return t(overflow ? "messages.guide.extraComma" : "messages.guide.comma");
+  }
+
+  return char;
+}
+
+function getGuideStatusForSeparator(char, word, total) {
+  const kind = getGuideSeparatorKind(char);
+
+  if (kind === "space") {
+    return t("messages.guide.statusSpace", { word, total });
+  }
+
+  if (kind === "comma") {
+    return t("messages.guide.statusComma", { word, total });
+  }
+
+  return "";
+}
+
+function getGuideTokens(target) {
+  const tokens = [];
+  let wordStart = -1;
+
+  for (let index = 0; index < target.length; index += 1) {
+    const char = target[index];
+
+    if (isGuideSeparatorChar(char)) {
+      if (wordStart !== -1) {
+        tokens.push({
+          type: "word",
+          start: wordStart,
+          end: index,
+          text: target.slice(wordStart, index),
+        });
+        wordStart = -1;
+      }
+
+      tokens.push({
+        type: "separator",
+        start: index,
+        end: index + 1,
+        char,
+        kind: getGuideSeparatorKind(char),
+      });
+      continue;
+    }
+
+    if (wordStart === -1) {
+      wordStart = index;
+    }
+  }
+
+  if (wordStart !== -1) {
+    tokens.push({
+      type: "word",
+      start: wordStart,
+      end: target.length,
+      text: target.slice(wordStart),
+    });
+  }
+
+  return tokens;
+}
+
+function getGuideWordTokens(target) {
+  return getGuideTokens(target)
+    .filter((token) => token.type === "word")
+    .map((token, index) => ({
+      ...token,
+      wordNumber: index + 1,
+    }));
+}
+
+function getGuideWordTokenAt(wordTokens, index) {
+  for (const token of wordTokens) {
+    if (index >= token.start && index < token.end) {
+      return token;
+    }
+  }
+
+  return null;
+}
+
+function getGuidePreviousWordToken(wordTokens, index) {
+  let previous = null;
+
+  for (const token of wordTokens) {
+    if (token.start >= index) {
+      break;
+    }
+    previous = token;
+  }
+
+  return previous;
+}
+
 function getCharMeta(target) {
   const hints = new Set();
   const autofill = new Set();
@@ -3058,25 +3177,19 @@ function getCharMeta(target) {
     difficulty === "easy" ? 3 :
     difficulty === "medium" ? 1 :
     0;
-  let pos = 0;
 
-  target.split(" ").forEach((word) => {
-    if (!word.length) {
-      pos += 1;
-      return;
-    }
+  getGuideWordTokens(target).forEach((wordToken) => {
+    const word = wordToken.text;
 
     for (let i = 0; i < hintCountPerWord && i < word.length; i += 1) {
-      hints.add(pos + i);
+      hints.add(wordToken.start + i);
     }
 
-    let tail = word.length - 1;
-    while (tail > 0 && PUNCT.test(word[tail])) {
-      autofill.add(pos + tail);
+    let tail = wordToken.end - 1;
+    while (tail > wordToken.start && PUNCT.test(target[tail])) {
+      autofill.add(tail);
       tail -= 1;
     }
-
-    pos += word.length + 1;
   });
 
   return { hints, autofill };
@@ -3128,8 +3241,8 @@ function getFreshCorrectIndexes(target, previousTyped, currentTyped) {
 
 function getGuideProgress(target, typed) {
   const correctPrefixLen = getCorrectPrefixLength(target, typed);
-  const words = target.split(" ");
-  const totalWords = words.length;
+  const wordTokens = getGuideWordTokens(target);
+  const totalWords = Math.max(wordTokens.length, 1);
   const hasExtraChars = typed.length > target.length && correctPrefixLen >= target.length;
   const hasWrongChar = typed.length > correctPrefixLen && !hasExtraChars;
 
@@ -3142,24 +3255,32 @@ function getGuideProgress(target, typed) {
   }
 
   if (hasWrongChar) {
-    let currentWord = 1;
-    let charInWord = 1;
+    const expectedChar = target[correctPrefixLen];
+    const separatorStatus = getGuideStatusForSeparator(
+      expectedChar,
+      getGuidePreviousWordToken(wordTokens, correctPrefixLen)?.wordNumber || 1,
+      totalWords,
+    );
 
-    for (let i = 0; i < correctPrefixLen; i += 1) {
-      if (target[i] === " ") {
-        currentWord += 1;
-        charInWord = 1;
-      } else {
-        charInWord += 1;
-      }
+    if (separatorStatus) {
+      return {
+        state: "error",
+        statusText: separatorStatus,
+        noteText: t("messages.guide.noteWrong")
+      };
     }
+
+    const currentWordToken =
+      getGuideWordTokenAt(wordTokens, correctPrefixLen) ||
+      getGuidePreviousWordToken(wordTokens, correctPrefixLen) ||
+      wordTokens[0];
 
     return {
       state: "error",
       statusText: t("messages.guide.statusWrong", {
-        word: currentWord,
+        word: currentWordToken?.wordNumber || 1,
         total: totalWords,
-        char: charInWord,
+        char: currentWordToken ? (correctPrefixLen - currentWordToken.start + 1) : 1,
       }),
       noteText: t("messages.guide.noteWrong")
     };
@@ -3173,38 +3294,33 @@ function getGuideProgress(target, typed) {
     };
   }
 
-  let currentWord = 1;
-  let charInWord = 1;
-
-  for (let i = 0; i < correctPrefixLen; i += 1) {
-    if (target[i] === " ") {
-      currentWord += 1;
-      charInWord = 1;
-    } else {
-      charInWord += 1;
-    }
-  }
-
   const nextChar = target[correctPrefixLen];
+  const separatorStatus = getGuideStatusForSeparator(
+    nextChar,
+    getGuidePreviousWordToken(wordTokens, correctPrefixLen)?.wordNumber || 1,
+    totalWords,
+  );
 
-  if (nextChar === " ") {
+  if (separatorStatus) {
     return {
       state: "progress",
-      statusText: t("messages.guide.statusSpace", {
-        word: currentWord,
-        total: totalWords,
-      }),
+      statusText: separatorStatus,
       noteText: ""
     };
   }
 
+  const currentWordToken =
+    getGuideWordTokenAt(wordTokens, correctPrefixLen) ||
+    wordTokens[wordTokens.length - 1] ||
+    null;
+
   return {
     state: "progress",
     statusText: t("messages.guide.statusProgress", {
-      word: currentWord,
+      word: currentWordToken?.wordNumber || 1,
       total: totalWords,
-      char: charInWord,
-      length: words[currentWord - 1].length,
+      char: currentWordToken ? (correctPrefixLen - currentWordToken.start + 1) : 1,
+      length: currentWordToken?.text.length || 1,
     }),
     noteText: ""
   };
@@ -3279,15 +3395,44 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
   wordGrid.innerHTML = "";
   const { hints, autofill } = getCharMeta(target);
   const correctPrefixLen = getCorrectPrefixLength(target, typed);
-  const words = target.split(" ");
-  let pos = 0;
+  const caretIndex = typed.length;
+  const showTerminalStatus = target.length > 0 && caretIndex >= target.length;
+  const terminalStatusKind = showTerminalStatus && isExactTypedMatch(target, typed)
+    ? "success"
+    : "error";
+  const tokens = getGuideTokens(target);
 
-  words.forEach((word, wordIndex) => {
+  tokens.forEach((token) => {
+    if (token.type === "separator") {
+      const separator = document.createElement("div");
+      const typedSeparator = typed[token.start];
+
+      separator.className = "word-separator";
+      separator.dataset.separatorKind = token.kind;
+      separator.textContent = getGuideSeparatorLabel(token.char);
+
+      if (typedSeparator !== undefined) {
+        separator.classList.add(typedSeparator === token.char ? "state-ok" : "state-bad");
+      } else if (token.start === correctPrefixLen) {
+        separator.classList.add("state-next");
+      }
+
+      if (token.start === caretIndex) {
+        separator.classList.add("state-caret");
+      }
+
+      if (!showTerminalStatus && token.end === caretIndex && caretIndex === target.length) {
+        separator.classList.add("state-caret-after");
+      }
+
+      wordGrid.appendChild(separator);
+      return;
+    }
+
     const group = document.createElement("div");
     group.className = "word-group";
 
-    for (let charIndex = 0; charIndex < word.length; charIndex += 1) {
-      const idx = pos + charIndex;
+    for (let idx = token.start; idx < token.end; idx += 1) {
       const targetChar = target[idx];
       const typedChar = typed[idx];
       const wrap = document.createElement("div");
@@ -3322,38 +3467,29 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
         wrap.classList.add("state-hidden");
       }
 
+      if (idx === caretIndex) {
+        wrap.classList.add("state-caret");
+      }
+
+      if (!showTerminalStatus && idx + 1 === caretIndex && caretIndex === target.length) {
+        wrap.classList.add("state-caret-after");
+      }
+
       wrap.appendChild(letter);
       wrap.appendChild(line);
       group.appendChild(wrap);
     }
 
-    pos += word.length + 1;
     wordGrid.appendChild(group);
-
-    if (wordIndex < words.length - 1) {
-      const separator = document.createElement("div");
-      const separatorIndex = pos - 1;
-      const typedSeparator = typed[separatorIndex];
-
-      separator.className = "word-separator";
-      separator.textContent = t("messages.guide.separator");
-
-      if (typedSeparator !== undefined) {
-        separator.classList.add(typedSeparator === " " ? "state-ok" : "state-bad");
-      } else if (separatorIndex === correctPrefixLen) {
-        separator.classList.add("state-next");
-      }
-
-      wordGrid.appendChild(separator);
-    }
   });
 
   if (typed.length > target.length) {
     typed.slice(target.length).split("").forEach((extraChar) => {
-      if (extraChar === " ") {
+      if (isGuideSeparatorChar(extraChar)) {
         const extraSeparator = document.createElement("div");
         extraSeparator.className = "word-separator state-bad is-overflow";
-        extraSeparator.textContent = t("messages.guide.extraSeparator");
+        extraSeparator.dataset.separatorKind = getGuideSeparatorKind(extraChar);
+        extraSeparator.textContent = getGuideSeparatorLabel(extraChar, { overflow: true });
         wordGrid.appendChild(extraSeparator);
         return;
       }
@@ -3370,6 +3506,19 @@ function buildWordGrid(target, typed, freshCorrectIndexes = new Set()) {
       overflowWrap.appendChild(overflowLine);
       wordGrid.appendChild(overflowWrap);
     });
+  }
+
+  if (showTerminalStatus) {
+    const terminalStatus = document.createElement("div");
+    terminalStatus.className = `answer-guide-terminal-status is-${terminalStatusKind}`;
+    terminalStatus.textContent = terminalStatusKind === "success" ? "♥" : "×";
+    terminalStatus.setAttribute("aria-hidden", "true");
+    wordGrid.appendChild(terminalStatus);
+  } else if (caretIndex > target.length || !target.length) {
+    const endCaret = document.createElement("div");
+    endCaret.className = "answer-guide-inline-caret";
+    endCaret.setAttribute("aria-hidden", "true");
+    wordGrid.appendChild(endCaret);
   }
 
   updateAnswerGuide(target, typed);
