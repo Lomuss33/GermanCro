@@ -1229,6 +1229,54 @@ body.is-language-switching .stats-bar {
   font-size: calc(var(--game-emoji-pill-icon-size) + 1px);
 }
 
+.answer-terminal-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 22px;
+  margin: 6px 0;
+  pointer-events: none;
+}
+
+.answer-terminal-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  min-height: 18px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.84);
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+}
+
+.answer-terminal-status-row.is-visible .answer-terminal-status-badge,
+.answer-terminal-status-badge.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.answer-terminal-status-badge.is-success {
+  color: rgba(255, 150, 184, 0.94);
+  text-shadow: 0 0 8px rgba(255, 150, 184, 0.18);
+}
+
+.answer-terminal-status-badge.is-error {
+  color: rgba(223, 122, 130, 0.94);
+  text-shadow: 0 0 8px rgba(223, 122, 130, 0.16);
+}
+
+.answer-terminal-status-badge.is-hit-success {
+  animation: answerGuideCompleteIconHit 340ms cubic-bezier(0.2, 0.9, 0.2, 1.1);
+}
+
+.answer-terminal-status-badge.is-hit-error {
+  animation: answerGuideTerminalErrorHit 360ms cubic-bezier(0.22, 0.88, 0.2, 1.08);
+}
+
 input,
 select {
   width: 100%;
@@ -1522,7 +1570,7 @@ input.wrong {
 }
 
 .answer-guide-terminal-status {
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   align-self: center;
@@ -1605,6 +1653,7 @@ input.wrong {
 
 #gameArea > .prompt-row,
 #gameArea > .input-shell,
+#gameArea > .answer-terminal-status-row,
 #gameArea > .answer-guide {
   width: 100%;
 }
@@ -3864,8 +3913,12 @@ body.layout-phone-portrait #gameArea > .answer-guide {
   order: 3;
 }
 
-body.layout-phone-portrait #gameArea > .solution {
+body.layout-phone-portrait #gameArea > .answer-terminal-status-row {
   order: 4;
+}
+
+body.layout-phone-portrait #gameArea > .solution {
+  order: 6;
 }
 
 body.layout-phone-portrait #gameArea > .input-shell {
@@ -3932,6 +3985,15 @@ body.layout-phone-portrait .prompt-sub {
 body.layout-phone-portrait .input-shell {
   align-self: stretch;
   margin-top: 0;
+}
+
+body.layout-phone-portrait .answer-terminal-status-row {
+  min-height: 20px;
+  margin: 4px 0;
+}
+
+body.layout-phone-portrait .answer-terminal-status-badge {
+  font-size: 16px;
 }
 
 body.layout-phone-portrait .input-shell input {
@@ -4561,8 +4623,12 @@ body.layout-phone-portrait #gameArea > .answer-guide {
   margin-top: auto;
 }
 
-body.layout-phone-portrait #gameArea > .solution {
+body.layout-phone-portrait #gameArea > .answer-terminal-status-row {
   order: 4;
+}
+
+body.layout-phone-portrait #gameArea > .solution {
+  order: 6;
 }
 
 body.layout-phone-portrait #gameArea > .input-shell {
@@ -4619,6 +4685,15 @@ body.layout-phone-portrait .prompt-sub {
 body.layout-phone-portrait .input-shell {
   align-self: stretch;
   margin-top: auto;
+}
+
+body.layout-phone-portrait .answer-terminal-status-row {
+  min-height: 20px;
+  margin: 4px 0;
+}
+
+body.layout-phone-portrait .answer-terminal-status-badge {
+  font-size: 16px;
 }
 
 body.layout-phone-portrait .input-shell input {

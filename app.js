@@ -664,6 +664,8 @@ const promptHeadTitleEl = document.getElementById("promptHeadTitle");
 const inputEl = document.getElementById("answer");
 const solutionEl = document.getElementById("solution");
 const wordGrid = document.getElementById("wordGrid");
+const answerTerminalStatusRowEl = document.getElementById("answerTerminalStatusRow");
+const answerTerminalStatusEl = document.getElementById("answerTerminalStatus");
 const answerGuideEl = document.getElementById("answerGuide");
 const answerGuideLabelEl = document.getElementById("answerGuideLabel");
 const answerGuideStatusEl = document.getElementById("answerGuideStatus");
@@ -3334,6 +3336,30 @@ function playAnswerGuideCompleteHit() {
   }, 360);
 }
 
+function updateAnswerTerminalStatus(target, typed, terminalHit = null) {
+  if (!answerTerminalStatusRowEl || !answerTerminalStatusEl) {
+    return;
+  }
+
+  const showTerminalStatus = Boolean(target) && typed.length >= target.length;
+  answerTerminalStatusRowEl.classList.toggle("is-visible", showTerminalStatus);
+  answerTerminalStatusEl.className = "answer-terminal-status-badge";
+
+  if (!showTerminalStatus) {
+    answerTerminalStatusEl.textContent = "";
+    return;
+  }
+
+  const terminalStatusKind = isExactTypedMatch(target, typed) ? "success" : "error";
+  answerTerminalStatusEl.classList.add("is-visible", `is-${terminalStatusKind}`);
+
+  if (terminalHit && terminalHit === terminalStatusKind) {
+    answerTerminalStatusEl.classList.add(`is-hit-${terminalHit}`);
+  }
+
+  answerTerminalStatusEl.textContent = terminalStatusKind === "success" ? "\u2665" : "\u2715";
+}
+
 function isExactTypedMatch(target, typed) {
   return typed.length === target.length && getCorrectPrefixLength(target, typed) === target.length;
 }
@@ -3529,6 +3555,7 @@ function buildWordGrid(
     wordGrid.appendChild(endCaret);
   }
 
+  updateAnswerTerminalStatus(target, typed, terminalHit);
   updateAnswerGuide(target, typed);
 }
 
