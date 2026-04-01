@@ -742,6 +742,8 @@ const viewportProfile = {
   isPhonePortrait: false,
   initialized: false,
   syncFrame: 0,
+  keyboardLayoutLocked: false,
+  keyboardLayoutReleaseTimer: 0,
 };
 
 function isPhonePortraitLayoutActive() {
@@ -756,8 +758,44 @@ function isTouchKeyboardEnvironment() {
   );
 }
 
-function isTouchKeyboardInputActive() {
-  return isTouchKeyboardEnvironment() && document.activeElement === inputEl;
+function setStableViewportCssVars(viewport) {
+  if (!viewport) {
+    return;
+  }
+
+  const width = Math.max(0, Math.round(viewport.width || 0));
+  const height = Math.max(0, Math.round(viewport.height || 0));
+  document.documentElement.style.setProperty("--app-stable-viewport-width", `${width}px`);
+  document.documentElement.style.setProperty("--app-stable-viewport-height", `${height}px`);
+}
+
+function lockViewportLayoutForKeyboard() {
+  if (!isTouchKeyboardEnvironment()) {
+    return;
+  }
+
+  viewportProfile.keyboardLayoutLocked = true;
+  if (viewportProfile.keyboardLayoutReleaseTimer) {
+    window.clearTimeout(viewportProfile.keyboardLayoutReleaseTimer);
+    viewportProfile.keyboardLayoutReleaseTimer = 0;
+  }
+}
+
+function releaseViewportLayoutAfterKeyboard(delay = 420) {
+  if (!isTouchKeyboardEnvironment()) {
+    scheduleViewportProfileSync();
+    return;
+  }
+
+  if (viewportProfile.keyboardLayoutReleaseTimer) {
+    window.clearTimeout(viewportProfile.keyboardLayoutReleaseTimer);
+  }
+
+  viewportProfile.keyboardLayoutReleaseTimer = window.setTimeout(() => {
+    viewportProfile.keyboardLayoutReleaseTimer = 0;
+    viewportProfile.keyboardLayoutLocked = false;
+    scheduleViewportProfileSync();
+  }, delay);
 }
 
 function activateTouchInputWithoutScroll(event) {
@@ -765,6 +803,7 @@ function activateTouchInputWithoutScroll(event) {
     return;
   }
 
+  lockViewportLayoutForKeyboard();
   event.preventDefault();
   focusAnswerInputWithoutScroll();
   const caretPosition = inputEl.value.length;
@@ -829,9 +868,25 @@ function setGameSurfaceMode(showSessionEnd) {
 function syncViewportProfile() {
   viewportProfile.syncFrame = 0;
 
-  const nextViewport = getViewportSize();
+  const measuredViewport = getViewportSize();
+  const shouldKeepStableViewport =
+    viewportProfile.keyboardLayoutLocked &&
+    viewportProfile.width > 0 &&
+    Math.abs(measuredViewport.width - viewportProfile.width) <= 2;
+  const nextViewport = shouldKeepStableViewport
+    ? {
+        width: viewportProfile.width,
+        height: viewportProfile.height,
+      }
+    : measuredViewport;
+
+  if (!shouldKeepStableViewport) {
+    viewportProfile.keyboardLayoutLocked = false;
+  }
+
   viewportProfile.maxObservedWidth = Math.max(viewportProfile.maxObservedWidth, nextViewport.width);
   viewportProfile.maxObservedHeight = Math.max(viewportProfile.maxObservedHeight, nextViewport.height);
+  setStableViewportCssVars(nextViewport);
 
   const widthRatio = viewportProfile.maxObservedWidth > 0
     ? nextViewport.width / viewportProfile.maxObservedWidth
@@ -860,9 +915,6 @@ function syncViewportProfile() {
 }
 
 function scheduleViewportProfileSync() {
-  if (isTouchKeyboardInputActive()) {
-    return;
-  }
   if (viewportProfile.syncFrame) {
     return;
   }
@@ -4100,8 +4152,12 @@ function initInputEvents() {
     }
   });
 
+  inputEl.addEventListener("focus", () => {
+    lockViewportLayoutForKeyboard();
+  });
+
   inputEl.addEventListener("blur", () => {
-    scheduleViewportProfileSync();
+    releaseViewportLayoutAfterKeyboard();
   });
 
   inputEl.addEventListener("keydown", (event) => {
