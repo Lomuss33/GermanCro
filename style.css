@@ -76,14 +76,6 @@ body {
   overflow-x: hidden;
 }
 
-body.touch-keyboard-locked {
-  position: fixed;
-  top: calc(-1 * var(--touch-keyboard-lock-top, 0px));
-  left: calc(-1 * var(--touch-keyboard-lock-left, 0px));
-  width: 100%;
-  overflow: hidden;
-}
-
 .de-flag {
   position: fixed;
   inset: 0 -2px;

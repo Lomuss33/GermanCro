@@ -743,10 +743,6 @@ const viewportProfile = {
   initialized: false,
   syncFrame: 0,
 };
-let touchKeyboardLockX = 0;
-let touchKeyboardLockY = 0;
-let touchKeyboardLockReleaseTimeout = 0;
-let isTouchKeyboardLayoutLocked = false;
 
 function isPhonePortraitLayoutActive() {
   return viewportProfile.isPhonePortrait;
@@ -760,63 +756,23 @@ function isTouchKeyboardEnvironment() {
   );
 }
 
-function applyTouchKeyboardLayoutLock() {
-  document.documentElement.style.setProperty("--touch-keyboard-lock-top", `${touchKeyboardLockY}px`);
-  document.documentElement.style.setProperty("--touch-keyboard-lock-left", `${touchKeyboardLockX}px`);
-  document.body.classList.add("touch-keyboard-locked");
+function isTouchKeyboardInputActive() {
+  return isTouchKeyboardEnvironment() && document.activeElement === inputEl;
 }
 
-function clearTouchKeyboardLayoutLock() {
-  if (touchKeyboardLockReleaseTimeout) {
-    window.clearTimeout(touchKeyboardLockReleaseTimeout);
-    touchKeyboardLockReleaseTimeout = 0;
-  }
-  isTouchKeyboardLayoutLocked = false;
-  document.body.classList.remove("touch-keyboard-locked");
-  document.documentElement.style.removeProperty("--touch-keyboard-lock-top");
-  document.documentElement.style.removeProperty("--touch-keyboard-lock-left");
-}
-
-function restoreTouchKeyboardLayoutPosition() {
-  if (!isTouchKeyboardLayoutLocked) {
-    return;
-  }
-  window.scrollTo(touchKeyboardLockX, touchKeyboardLockY);
-}
-
-function enableTouchKeyboardLayoutLock() {
-  if (!isTouchKeyboardEnvironment()) {
+function activateTouchInputWithoutScroll(event) {
+  if (!isTouchKeyboardEnvironment() || !inputEl || document.activeElement === inputEl) {
     return;
   }
 
-  if (touchKeyboardLockReleaseTimeout) {
-    window.clearTimeout(touchKeyboardLockReleaseTimeout);
-    touchKeyboardLockReleaseTimeout = 0;
+  event.preventDefault();
+  focusAnswerInputWithoutScroll();
+  const caretPosition = inputEl.value.length;
+  try {
+    inputEl.setSelectionRange(caretPosition, caretPosition);
+  } catch {
+    // ignore inputs that do not support selection APIs
   }
-  if (!isTouchKeyboardLayoutLocked) {
-    touchKeyboardLockX = window.scrollX || window.pageXOffset || 0;
-    touchKeyboardLockY = window.scrollY || window.pageYOffset || 0;
-  }
-  isTouchKeyboardLayoutLocked = true;
-  applyTouchKeyboardLayoutLock();
-  restoreTouchKeyboardLayoutPosition();
-}
-
-function releaseTouchKeyboardLayoutLock() {
-  if (!isTouchKeyboardEnvironment()) {
-    return;
-  }
-
-  if (touchKeyboardLockReleaseTimeout) {
-    window.clearTimeout(touchKeyboardLockReleaseTimeout);
-  }
-
-  touchKeyboardLockReleaseTimeout = window.setTimeout(() => {
-    touchKeyboardLockReleaseTimeout = 0;
-    clearTouchKeyboardLayoutLock();
-    window.scrollTo(touchKeyboardLockX, touchKeyboardLockY);
-    scheduleViewportProfileSync();
-  }, 420);
 }
 
 function focusAnswerInputWithoutScroll() {
@@ -904,7 +860,7 @@ function syncViewportProfile() {
 }
 
 function scheduleViewportProfileSync() {
-  if (isTouchKeyboardLayoutLocked) {
+  if (isTouchKeyboardInputActive()) {
     return;
   }
   if (viewportProfile.syncFrame) {
@@ -4136,20 +4092,16 @@ function initInputEvents() {
     focusAnswerInputWithoutScroll();
   });
 
-  inputEl.addEventListener("touchstart", () => {
-    enableTouchKeyboardLayoutLock();
-  }, { passive: true });
+  inputEl.addEventListener("touchstart", activateTouchInputWithoutScroll, { passive: false });
 
-  inputEl.addEventListener("pointerdown", () => {
-    enableTouchKeyboardLayoutLock();
-  }, { passive: true });
-
-  inputEl.addEventListener("focus", () => {
-    enableTouchKeyboardLayoutLock();
+  inputEl.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "touch") {
+      activateTouchInputWithoutScroll(event);
+    }
   });
 
   inputEl.addEventListener("blur", () => {
-    releaseTouchKeyboardLayoutLock();
+    scheduleViewportProfileSync();
   });
 
   inputEl.addEventListener("keydown", (event) => {
