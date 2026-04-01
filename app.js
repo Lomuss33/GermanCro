@@ -742,8 +742,6 @@ const viewportProfile = {
   isPhonePortrait: false,
   initialized: false,
   syncFrame: 0,
-  keyboardLayoutLocked: false,
-  keyboardLayoutReleaseTimer: 0,
 };
 
 function isPhonePortraitLayoutActive() {
@@ -769,41 +767,11 @@ function setStableViewportCssVars(viewport) {
   document.documentElement.style.setProperty("--app-stable-viewport-height", `${height}px`);
 }
 
-function lockViewportLayoutForKeyboard() {
-  if (!isTouchKeyboardEnvironment()) {
-    return;
-  }
-
-  viewportProfile.keyboardLayoutLocked = true;
-  if (viewportProfile.keyboardLayoutReleaseTimer) {
-    window.clearTimeout(viewportProfile.keyboardLayoutReleaseTimer);
-    viewportProfile.keyboardLayoutReleaseTimer = 0;
-  }
-}
-
-function releaseViewportLayoutAfterKeyboard(delay = 420) {
-  if (!isTouchKeyboardEnvironment()) {
-    scheduleViewportProfileSync();
-    return;
-  }
-
-  if (viewportProfile.keyboardLayoutReleaseTimer) {
-    window.clearTimeout(viewportProfile.keyboardLayoutReleaseTimer);
-  }
-
-  viewportProfile.keyboardLayoutReleaseTimer = window.setTimeout(() => {
-    viewportProfile.keyboardLayoutReleaseTimer = 0;
-    viewportProfile.keyboardLayoutLocked = false;
-    scheduleViewportProfileSync();
-  }, delay);
-}
-
 function activateTouchInputWithoutScroll(event) {
   if (!isTouchKeyboardEnvironment() || !inputEl || document.activeElement === inputEl) {
     return;
   }
 
-  lockViewportLayoutForKeyboard();
   event.preventDefault();
   focusAnswerInputWithoutScroll();
   const caretPosition = inputEl.value.length;
@@ -869,20 +837,17 @@ function syncViewportProfile() {
   viewportProfile.syncFrame = 0;
 
   const measuredViewport = getViewportSize();
-  const shouldKeepStableViewport =
-    viewportProfile.keyboardLayoutLocked &&
+  const shouldIgnoreHeightOnlyChange =
+    isTouchKeyboardEnvironment() &&
     viewportProfile.width > 0 &&
+    viewportProfile.height > 0 &&
     Math.abs(measuredViewport.width - viewportProfile.width) <= 2;
-  const nextViewport = shouldKeepStableViewport
+  const nextViewport = shouldIgnoreHeightOnlyChange
     ? {
         width: viewportProfile.width,
         height: viewportProfile.height,
       }
     : measuredViewport;
-
-  if (!shouldKeepStableViewport) {
-    viewportProfile.keyboardLayoutLocked = false;
-  }
 
   viewportProfile.maxObservedWidth = Math.max(viewportProfile.maxObservedWidth, nextViewport.width);
   viewportProfile.maxObservedHeight = Math.max(viewportProfile.maxObservedHeight, nextViewport.height);
@@ -4150,14 +4115,6 @@ function initInputEvents() {
     if (event.pointerType === "touch") {
       activateTouchInputWithoutScroll(event);
     }
-  });
-
-  inputEl.addEventListener("focus", () => {
-    lockViewportLayoutForKeyboard();
-  });
-
-  inputEl.addEventListener("blur", () => {
-    releaseViewportLayoutAfterKeyboard();
   });
 
   inputEl.addEventListener("keydown", (event) => {
