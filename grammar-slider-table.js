@@ -199,36 +199,22 @@ function createHoverZones({ isMobile, activeGroupIndex, setActiveGroupIndex, max
   const hasPrev = activeGroupIndex > 0;
   const hasNext = activeGroupIndex < maxGroupIndex;
 
-  const buildHint = (direction) => {
-    const hint = document.createElement("span");
-    hint.className = `grammar-slider-edge-hint is-${direction}`;
-    hint.setAttribute("aria-hidden", "true");
-    hint.textContent =
-      direction === "left" ? "‹" :
-      direction === "right" ? "›" :
-      direction === "up" ? "˄" :
-      "˅";
-    return hint;
-  };
-
   const prevZone = document.createElement("div");
-  prevZone.className = `grammar-slider-hover-zone ${isMobile ? "is-top" : "is-left"}${hasPrev ? "" : " is-disabled"}`;
+  prevZone.className = `grammar-slider-hover-zone is-left${hasPrev ? "" : " is-disabled"}`;
   if (hasPrev) {
     prevZone.addEventListener("mouseenter", () => setActiveGroupIndex(activeGroupIndex - 1));
     prevZone.addEventListener("click", () => setActiveGroupIndex(activeGroupIndex - 1));
   }
-  prevZone.appendChild(buildHint(isMobile ? "up" : "left"));
 
   const centerZone = document.createElement("div");
   centerZone.className = "grammar-slider-hover-zone is-center";
 
   const nextZone = document.createElement("div");
-  nextZone.className = `grammar-slider-hover-zone ${isMobile ? "is-bottom" : "is-right"}${hasNext ? "" : " is-disabled"}`;
+  nextZone.className = `grammar-slider-hover-zone is-right${hasNext ? "" : " is-disabled"}`;
   if (hasNext) {
     nextZone.addEventListener("mouseenter", () => setActiveGroupIndex(activeGroupIndex + 1));
     nextZone.addEventListener("click", () => setActiveGroupIndex(activeGroupIndex + 1));
   }
-  nextZone.appendChild(buildHint(isMobile ? "down" : "right"));
 
   zones.append(prevZone, centerZone, nextZone);
   return zones;
@@ -325,6 +311,11 @@ export function renderGrammarSliderTable({
   activeGroupIndex,
   setActiveGroupIndex,
 }) {
+  const mobileTrackWidth = measurement.groups.length * measurement.dataViewportWidth;
+  const mobileTranslateX =
+    measurement.groups.length <= 1
+      ? 0
+      : -(activeGroupIndex * measurement.dataViewportWidth);
   const desktopTrackWidth = measurement.dataColumns.length * measurement.dataColumnWidth;
   const desktopTranslateX =
     measurement.isMobile || measurement.groups.length <= 1 || activeGroupIndex === 0
@@ -351,8 +342,9 @@ export function renderGrammarSliderTable({
     track.className = "grammar-slider-track";
 
     if (measurement.isMobile) {
-      track.classList.add("is-vertical");
-      track.style.transform = `translate3d(0, ${-activeGroupIndex * height}px, 0)`;
+      track.classList.add("is-horizontal");
+      track.style.width = `${mobileTrackWidth}px`;
+      track.style.transform = `translate3d(${mobileTranslateX}px, 0, 0)`;
 
       measurement.groups.forEach((group) => {
         const page = document.createElement("div");
@@ -476,27 +468,33 @@ export function renderGrammarSliderTable({
   shell.appendChild(table);
 
   if (measurement.isMobile && measurement.groups.length > 1) {
+    let touchStartX = null;
     let touchStartY = null;
 
     table.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0]?.clientX ?? null;
       touchStartY = event.changedTouches[0]?.clientY ?? null;
     }, { passive: true });
 
     table.addEventListener("touchend", (event) => {
+      const touchEndX = event.changedTouches[0]?.clientX ?? null;
       const touchEndY = event.changedTouches[0]?.clientY ?? null;
-      if (touchStartY === null || touchEndY === null) {
+      if (touchStartX === null || touchStartY === null || touchEndX === null || touchEndY === null) {
+        touchStartX = null;
         touchStartY = null;
         return;
       }
 
+      const deltaX = touchStartX - touchEndX;
       const deltaY = touchStartY - touchEndY;
+      touchStartX = null;
       touchStartY = null;
 
-      if (Math.abs(deltaY) < 24) {
+      if (Math.abs(deltaX) < 24 || Math.abs(deltaX) <= Math.abs(deltaY)) {
         return;
       }
 
-      if (deltaY > 0) {
+      if (deltaX > 0) {
         setActiveGroupIndex(activeGroupIndex + 1);
         return;
       }

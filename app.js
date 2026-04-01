@@ -660,6 +660,8 @@ const cardLegendEl = document.getElementById("cardLegend");
 const legendCorrectEl = document.getElementById("legendCorrect");
 const legendNextEl = document.getElementById("legendNext");
 const legendWrongEl = document.getElementById("legendWrong");
+const skipCardBtnEl = document.getElementById("skipCardBtn");
+const skipCardBtnLabelEl = document.getElementById("skipCardBtnLabel");
 const promptHeadTitleEl = document.getElementById("promptHeadTitle");
 const inputEl = document.getElementById("answer");
 const solutionEl = document.getElementById("solution");
@@ -742,6 +744,7 @@ const viewportProfile = {
   isPhonePortrait: false,
   isSoftKeyboardOpen: false,
   lastClosedHeight: 0,
+  initialized: false,
   syncFrame: 0,
 };
 let phoneInputAlignFrame = 0;
@@ -970,13 +973,23 @@ function scheduleViewportProfileSync() {
 }
 
 function initViewportProfile() {
-  scheduleViewportProfileSync();
-  window.addEventListener("load", scheduleViewportProfileSync, { passive: true });
-  window.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
-  window.addEventListener("orientationchange", scheduleViewportProfileSync, { passive: true });
-  window.visualViewport?.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
-  window.visualViewport?.addEventListener("scroll", scheduleViewportProfileSync, { passive: true });
-  window.visualViewport?.addEventListener("resize", maybeAlignFocusedPhoneInputFromViewport, { passive: true });
+  if (!viewportProfile.initialized) {
+    viewportProfile.initialized = true;
+    window.addEventListener("load", scheduleViewportProfileSync, { passive: true });
+    window.addEventListener("pageshow", syncViewportProfile, { passive: true });
+    window.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
+    window.addEventListener("orientationchange", scheduleViewportProfileSync, { passive: true });
+    window.visualViewport?.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
+    window.visualViewport?.addEventListener("scroll", scheduleViewportProfileSync, { passive: true });
+    window.visualViewport?.addEventListener("resize", maybeAlignFocusedPhoneInputFromViewport, { passive: true });
+  }
+
+  if (viewportProfile.syncFrame) {
+    window.cancelAnimationFrame(viewportProfile.syncFrame);
+    viewportProfile.syncFrame = 0;
+  }
+
+  syncViewportProfile();
 }
 
 function renderSiteTitleLineContent({ line, startCharIndex }) {
@@ -1317,6 +1330,18 @@ function setLocalizedAriaLabel(element, path, params) {
   }
 }
 
+function canSkipCurrentCard() {
+  return sessionCards.length - sessionIndex > 1;
+}
+
+function updateSkipCardButtonState() {
+  if (!skipCardBtnEl) {
+    return;
+  }
+
+  skipCardBtnEl.disabled = !canSkipCurrentCard();
+}
+
 function renderHintButtonLabel() {
   if (!hintBtnEl) {
     return;
@@ -1562,6 +1587,11 @@ function renderStaticUi() {
   setLocalizedText(legendCorrectEl, "messages.legend.correct");
   setLocalizedText(legendNextEl, "messages.legend.next");
   setLocalizedText(legendWrongEl, "messages.legend.wrong");
+  setLocalizedText(skipCardBtnLabelEl, "messages.actions.skip");
+  if (skipCardBtnEl) {
+    skipCardBtnEl.setAttribute("aria-label", t("messages.actions.skip"));
+    skipCardBtnEl.setAttribute("title", t("messages.actions.skip"));
+  }
   setLocalizedText(promptHeadTitleEl, "messages.prompt.card");
   if (promptSwapBtn) {
     promptSwapBtn.setAttribute("aria-label", t("messages.prompt.swapAria"));
@@ -3639,6 +3669,7 @@ function loadCard(options = {}) {
   progFill.style.width = `${(sessionIndex / sessionCards.length) * 100}%`;
 
   renderCardBadge(card);
+  updateSkipCardButtonState();
 
   mainCard.classList.add("active");
   buildWordGrid(getTargetValue(card), "");
@@ -3951,6 +3982,7 @@ function getEncouragement(currentStreak) {
 function showSessionEnd() {
   progFill.style.width = "100%";
   setGameSurfaceMode(true);
+  updateSkipCardButtonState();
 
   const pct = Math.round((totalCorrect / sessionCards.length) * 100);
   document.getElementById("finalScore").textContent = `${pct}%`;
@@ -4086,6 +4118,18 @@ function initInputEvents() {
       switchLearningMode(button.dataset.lang);
     });
   });
+
+  if (skipCardBtnEl) {
+    skipCardBtnEl.addEventListener("click", () => {
+      if (!canSkipCurrentCard()) {
+        return;
+      }
+
+      const [currentCard] = sessionCards.splice(sessionIndex, 1);
+      sessionCards.push(currentCard);
+      loadCard();
+    });
+  }
 
   if (settingsBtn) {
     settingsBtn.addEventListener("click", () => {
@@ -4254,7 +4298,6 @@ async function initApp() {
   locales = deepMergeObjects(loadedLocales || {}, FACTS_LOCALE_PATCHES);
   applyLearningTheme();
   renderStaticUi();
-  initViewportProfile();
   createFlagColumns();
   initInstallGuide();
   initDifficultyControls();
@@ -4280,6 +4323,7 @@ async function initApp() {
 }
 
 window.startSession = startSession;
+initViewportProfile();
 initAppLoader();
 initApp()
   .catch((error) => {

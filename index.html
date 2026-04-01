@@ -118,17 +118,22 @@
         <span class="answer-guide-trail-flag" aria-hidden="true">🎮☑️</span>
         <div class="word-grid" id="wordGrid"></div>
       </div>
-      <div class="answer-guide-note" id="answerGuideNote"></div>
+      <div class="answer-guide-foot">
+        <div class="answer-guide-note" id="answerGuideNote"></div>
+        <div class="enter-hint"><span class="key-badge">Enter</span> <span id="enterHintText">zum Pr&uuml;fen</span></div>
+      </div>
     </div>
     <div class="feedback-burst" id="feedbackBurst" aria-hidden="true"></div>
     <div class="solution" id="solution"></div>
     <div class="action-row">
       <div class="action-row-left">
-        <button class="settings-btn" id="settingsBtn" type="button" aria-expanded="false" aria-controls="catPanel"><span class="button-icon" aria-hidden="true">⚙</span> <span>Settings</span></button>
-        <button class="switch-order-btn" id="switchOrderBtn" type="button"><span class="button-icon" aria-hidden="true">&#8646;</span> <span>Tauschen</span></button>
+        <button class="skip-card-btn" id="skipCardBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#9197;&#65039;</span> <span id="skipCardBtnLabel">Skip</span></button>
         <button class="hint-btn" id="hintBtn"><span class="button-icon button-icon-emoji" aria-hidden="true">💡</span> <span>Tipp</span></button>
       </div>
-      <div class="enter-hint"><span class="key-badge">Enter</span> <span id="enterHintText">zum Pr&uuml;fen</span></div>
+      <div class="action-row-right">
+        <button class="settings-btn" id="settingsBtn" type="button" aria-expanded="false" aria-controls="catPanel"><span class="button-icon" aria-hidden="true">⚙</span> <span>Settings</span></button>
+        <button class="switch-order-btn" id="switchOrderBtn" type="button"><span class="button-icon" aria-hidden="true">&#8646;</span> <span>Tauschen</span></button>
+      </div>
     </div>
     <div class="combo-pop" id="comboPop"></div>
   </div>
