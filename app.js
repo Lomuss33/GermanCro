@@ -746,7 +746,7 @@ const viewportProfile = {
 let touchKeyboardScrollLockX = 0;
 let touchKeyboardScrollLockY = 0;
 let touchKeyboardScrollLockFrame = 0;
-let touchKeyboardScrollLockTimeout = 0;
+let touchKeyboardScrollLockReleaseTimeout = 0;
 let isTouchKeyboardScrollLocked = false;
 
 function isPhonePortraitLayoutActive() {
@@ -766,9 +766,9 @@ function clearTouchKeyboardScrollLock() {
     window.cancelAnimationFrame(touchKeyboardScrollLockFrame);
     touchKeyboardScrollLockFrame = 0;
   }
-  if (touchKeyboardScrollLockTimeout) {
-    window.clearTimeout(touchKeyboardScrollLockTimeout);
-    touchKeyboardScrollLockTimeout = 0;
+  if (touchKeyboardScrollLockReleaseTimeout) {
+    window.clearTimeout(touchKeyboardScrollLockReleaseTimeout);
+    touchKeyboardScrollLockReleaseTimeout = 0;
   }
   isTouchKeyboardScrollLocked = false;
 }
@@ -777,28 +777,56 @@ function restoreTouchKeyboardScrollPosition() {
   if (!isTouchKeyboardScrollLocked) {
     return;
   }
+  const currentX = window.scrollX || window.pageXOffset || 0;
+  const currentY = window.scrollY || window.pageYOffset || 0;
+  if (
+    Math.abs(currentX - touchKeyboardScrollLockX) <= 1 &&
+    Math.abs(currentY - touchKeyboardScrollLockY) <= 1
+  ) {
+    return;
+  }
   window.scrollTo(touchKeyboardScrollLockX, touchKeyboardScrollLockY);
 }
 
-function lockTouchKeyboardScrollPosition() {
-  if (!isTouchKeyboardEnvironment()) {
+function scheduleTouchKeyboardScrollRestore() {
+  if (!isTouchKeyboardScrollLocked || touchKeyboardScrollLockFrame) {
     return;
   }
-
-  clearTouchKeyboardScrollLock();
-  touchKeyboardScrollLockX = window.scrollX || window.pageXOffset || 0;
-  touchKeyboardScrollLockY = window.scrollY || window.pageYOffset || 0;
-  isTouchKeyboardScrollLocked = true;
-
-  restoreTouchKeyboardScrollPosition();
   touchKeyboardScrollLockFrame = window.requestAnimationFrame(() => {
     touchKeyboardScrollLockFrame = 0;
     restoreTouchKeyboardScrollPosition();
   });
-  touchKeyboardScrollLockTimeout = window.setTimeout(() => {
-    touchKeyboardScrollLockTimeout = 0;
+}
+
+function enableTouchKeyboardScrollLock() {
+  if (!isTouchKeyboardEnvironment()) {
+    return;
+  }
+
+  if (touchKeyboardScrollLockReleaseTimeout) {
+    window.clearTimeout(touchKeyboardScrollLockReleaseTimeout);
+    touchKeyboardScrollLockReleaseTimeout = 0;
+  }
+  touchKeyboardScrollLockX = window.scrollX || window.pageXOffset || 0;
+  touchKeyboardScrollLockY = window.scrollY || window.pageYOffset || 0;
+  isTouchKeyboardScrollLocked = true;
+  restoreTouchKeyboardScrollPosition();
+}
+
+function releaseTouchKeyboardScrollLock() {
+  if (!isTouchKeyboardEnvironment()) {
+    return;
+  }
+
+  if (touchKeyboardScrollLockReleaseTimeout) {
+    window.clearTimeout(touchKeyboardScrollLockReleaseTimeout);
+  }
+
+  touchKeyboardScrollLockReleaseTimeout = window.setTimeout(() => {
+    touchKeyboardScrollLockReleaseTimeout = 0;
     restoreTouchKeyboardScrollPosition();
     clearTouchKeyboardScrollLock();
+    scheduleViewportProfileSync();
   }, 420);
 }
 
@@ -887,6 +915,9 @@ function syncViewportProfile() {
 }
 
 function scheduleViewportProfileSync() {
+  if (isTouchKeyboardScrollLocked) {
+    return;
+  }
   if (viewportProfile.syncFrame) {
     return;
   }
@@ -904,6 +935,9 @@ function initViewportProfile() {
     window.addEventListener("pageshow", syncViewportProfile, { passive: true });
     window.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
     window.addEventListener("orientationchange", scheduleViewportProfileSync, { passive: true });
+    window.addEventListener("scroll", scheduleTouchKeyboardScrollRestore, { passive: true });
+    window.visualViewport?.addEventListener("resize", scheduleTouchKeyboardScrollRestore, { passive: true });
+    window.visualViewport?.addEventListener("scroll", scheduleTouchKeyboardScrollRestore, { passive: true });
   }
 
   if (viewportProfile.syncFrame) {
@@ -4117,11 +4151,11 @@ function initInputEvents() {
   });
 
   inputEl.addEventListener("focus", () => {
-    lockTouchKeyboardScrollPosition();
+    enableTouchKeyboardScrollLock();
   });
 
   inputEl.addEventListener("blur", () => {
-    lockTouchKeyboardScrollPosition();
+    releaseTouchKeyboardScrollLock();
   });
 
   inputEl.addEventListener("keydown", (event) => {
