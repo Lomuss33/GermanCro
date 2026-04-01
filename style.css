@@ -45,6 +45,20 @@ html {
   --app-scale: 1.08;
 }
 
+@media (min-width: 2560px) {
+  :root {
+    --panel-width: 920px;
+    --app-scale: 1.2;
+  }
+}
+
+@media (min-width: 3200px) {
+  :root {
+    --panel-width: 1040px;
+    --app-scale: 1.28;
+  }
+}
+
 body {
   font-family: var(--font-body);
   background: var(--bg);
@@ -4419,6 +4433,34 @@ body.layout-phone-portrait {
   --game-row-input-padding-start: 28px;
   --game-row-input-symbol-offset: 12px;
   --game-row-inline-padding: 10px;
+}
+
+@media (min-width: 2560px) {
+  body.layout-phone-portrait {
+    --game-text-scale: 1.45;
+    --game-emoji-pill-width: 46px;
+    --game-emoji-pill-height: 22px;
+    --game-emoji-pill-font-size: 12px;
+    --game-emoji-pill-icon-size: 10px;
+    --game-row-column-gap: 10px;
+    --game-row-input-padding-start: 30px;
+    --game-row-input-symbol-offset: 13px;
+    --game-row-inline-padding: 12px;
+  }
+}
+
+@media (min-width: 3200px) {
+  body.layout-phone-portrait {
+    --game-text-scale: 1.56;
+    --game-emoji-pill-width: 50px;
+    --game-emoji-pill-height: 24px;
+    --game-emoji-pill-font-size: 13px;
+    --game-emoji-pill-icon-size: 11px;
+    --game-row-column-gap: 11px;
+    --game-row-input-padding-start: 32px;
+    --game-row-input-symbol-offset: 14px;
+    --game-row-inline-padding: 13px;
+  }
 }
 
 body.layout-phone-portrait #heroStage {

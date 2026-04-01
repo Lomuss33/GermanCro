@@ -850,6 +850,7 @@ function syncViewportProfile() {
   viewportProfile.syncFrame = 0;
 
   const nextViewport = getViewportSize();
+  const previousViewportHeight = viewportProfile.height || nextViewport.height;
   viewportProfile.maxObservedWidth = Math.max(viewportProfile.maxObservedWidth, nextViewport.width);
   viewportProfile.maxObservedHeight = Math.max(viewportProfile.maxObservedHeight, nextViewport.height);
 
@@ -887,7 +888,7 @@ function syncViewportProfile() {
   const isInputFocused = isGameInputFocused();
   const closedViewportHeight = Math.max(
     viewportProfile.lastClosedHeight || 0,
-    layoutViewportHeight,
+    previousViewportHeight,
     nextViewport.height
   );
   const viewportHeightLoss = Math.max(0, closedViewportHeight - nextViewport.height);
@@ -896,7 +897,7 @@ function syncViewportProfile() {
   const keyboardThreshold = Math.max(120, Math.round(closedViewportHeight * 0.18));
   const nextKeyboardOpen = Boolean(isInputFocused && keyboardInset >= keyboardThreshold);
 
-  if (!nextKeyboardOpen) {
+  if (!isInputFocused) {
     viewportProfile.lastClosedHeight = nextViewport.height;
   }
 
@@ -4156,8 +4157,10 @@ function initInputEvents() {
 
   inputEl.addEventListener("focus", () => {
     pendingPhoneInputViewportAlign = true;
-    schedulePhoneInputAlignment();
     scheduleViewportProfileSync();
+    if (!window.visualViewport) {
+      schedulePhoneInputAlignment();
+    }
   });
 
   inputEl.addEventListener("blur", () => {
