@@ -667,6 +667,8 @@ const wordGrid = document.getElementById("wordGrid");
 const answerTerminalStatusRowEl = document.getElementById("answerTerminalStatusRow");
 const answerTerminalStatusEl = document.getElementById("answerTerminalStatus");
 const answerGuideEl = document.getElementById("answerGuide");
+const answerGuideBodyEl = answerGuideEl?.querySelector(".answer-guide-body") || null;
+const answerGuideTrailFlagEl = answerGuideEl?.querySelector(".answer-guide-trail-flag") || null;
 const answerGuideLabelEl = document.getElementById("answerGuideLabel");
 const answerGuideStatusEl = document.getElementById("answerGuideStatus");
 const answerGuideNoteEl = document.getElementById("answerGuideNote");
@@ -742,8 +744,62 @@ const viewportProfile = {
   maxObservedWidth: 0,
   maxObservedHeight: 0,
   isPhonePortrait: false,
+  gameDensity: "regular",
   initialized: false,
   syncFrame: 0,
+};
+
+const GAME_DENSITY_ORDER = ["regular", "compact", "dense"];
+const PROMPT_FIT_PROFILES = {
+  main: {
+    regular: { maxLines: 2, minFontPx: 15, maxFontPx: 20, lineHeightRatio: 1.12 },
+    compact: { maxLines: 3, minFontPx: 14, maxFontPx: 20, lineHeightRatio: 1.14 },
+    dense: { maxLines: 4, minFontPx: 12, maxFontPx: 19, lineHeightRatio: 1.16 },
+  },
+  secondary: {
+    regular: { maxLines: 2, minFontPx: 10, maxFontPx: 13, lineHeightRatio: 1.32 },
+    compact: { maxLines: 3, minFontPx: 10, maxFontPx: 13, lineHeightRatio: 1.34 },
+    dense: { maxLines: 4, minFontPx: 9, maxFontPx: 12, lineHeightRatio: 1.36 },
+  },
+};
+const ANSWER_GUIDE_SIZE_PROFILES = {
+  regular: {
+    textScale: 1,
+    metaScale: 1,
+    tokenGap: 8,
+    charGap: 3,
+    separatorMinWidth: 28,
+    separatorPaddingInline: 6,
+  },
+  compact: {
+    textScale: 0.92,
+    metaScale: 0.96,
+    tokenGap: 6,
+    charGap: 2,
+    separatorMinWidth: 22,
+    separatorPaddingInline: 5,
+  },
+  dense: {
+    textScale: 0.84,
+    metaScale: 0.92,
+    tokenGap: 4,
+    charGap: 2,
+    separatorMinWidth: 18,
+    separatorPaddingInline: 4,
+  },
+  "dense-minus": {
+    textScale: 0.78,
+    metaScale: 0.9,
+    tokenGap: 3,
+    charGap: 1,
+    separatorMinWidth: 16,
+    separatorPaddingInline: 3,
+  },
+};
+const ANSWER_GUIDE_HEIGHT_BUDGETS = {
+  regular: 120,
+  compact: 140,
+  dense: 160,
 };
 
 function isPhonePortraitLayoutActive() {
@@ -756,6 +812,121 @@ function isTouchKeyboardEnvironment() {
     window.matchMedia?.("(hover: none)").matches ||
     "ontouchstart" in window
   );
+}
+
+function clampGameDensity(density) {
+  return GAME_DENSITY_ORDER.includes(density) ? density : "regular";
+}
+
+function getNextDenserDensity(density) {
+  const currentIndex = GAME_DENSITY_ORDER.indexOf(clampGameDensity(density));
+  if (currentIndex === -1 || currentIndex >= GAME_DENSITY_ORDER.length - 1) {
+    return GAME_DENSITY_ORDER[GAME_DENSITY_ORDER.length - 1];
+  }
+  return GAME_DENSITY_ORDER[currentIndex + 1];
+}
+
+function getCurrentGameDensity() {
+  return clampGameDensity(document.body?.dataset?.gameDensity);
+}
+
+function getGameDensityProfile({ viewportWidth, viewportHeight, cardWidth }) {
+  const resolvedWidth = Math.max(0, Math.round(cardWidth || 0)) || Math.max(0, Math.round(viewportWidth || 0));
+  const aspectRatio = viewportWidth > 0 ? viewportHeight / viewportWidth : 0;
+
+  if (resolvedWidth <= 400 || aspectRatio >= 1.9) {
+    return "dense";
+  }
+
+  if (
+    (resolvedWidth >= 401 && resolvedWidth <= 560) ||
+    (aspectRatio >= 1.6 && aspectRatio < 1.9)
+  ) {
+    return "compact";
+  }
+
+  return "regular";
+}
+
+function getPromptFitProfile({ text, width, density, kind }) {
+  const trimmedText = String(text ?? "").trim();
+  const promptKind = kind === "secondary" ? "secondary" : "main";
+  const bumpThreshold = promptKind === "secondary" ? 46 : 38;
+  let effectiveDensity = clampGameDensity(density);
+
+  if (Array.from(trimmedText).length > bumpThreshold) {
+    effectiveDensity = getNextDenserDensity(effectiveDensity);
+  }
+
+  const profileGroup = PROMPT_FIT_PROFILES[promptKind] || PROMPT_FIT_PROFILES.main;
+  return profileGroup[effectiveDensity] || profileGroup.regular;
+}
+
+function getNextAnswerGuideSizingTier(tier) {
+  if (tier === "regular") {
+    return "compact";
+  }
+  if (tier === "compact") {
+    return "dense";
+  }
+  if (tier === "dense") {
+    return "dense-minus";
+  }
+  return "dense-minus";
+}
+
+function getAnswerGuideVerticalBudget(density) {
+  return ANSWER_GUIDE_HEIGHT_BUDGETS[clampGameDensity(density)] || ANSWER_GUIDE_HEIGHT_BUDGETS.regular;
+}
+
+function setAnswerGuideResponsiveVars(tier) {
+  if (!answerGuideEl) {
+    return;
+  }
+
+  const profile = ANSWER_GUIDE_SIZE_PROFILES[tier] || ANSWER_GUIDE_SIZE_PROFILES.regular;
+  answerGuideEl.style.setProperty("--answer-guide-text-scale", String(profile.textScale));
+  answerGuideEl.style.setProperty("--answer-guide-meta-scale", String(profile.metaScale));
+  answerGuideEl.style.setProperty("--answer-guide-token-gap", `${profile.tokenGap}px`);
+  answerGuideEl.style.setProperty("--answer-guide-char-gap", `${profile.charGap}px`);
+  answerGuideEl.style.setProperty("--answer-guide-separator-min-width", `${profile.separatorMinWidth}px`);
+  answerGuideEl.style.setProperty("--answer-guide-separator-padding-inline", `${profile.separatorPaddingInline}px`);
+  answerGuideEl.dataset.answerGuideScale = tier;
+}
+
+function measureAnswerGuideBodyHeight() {
+  if (!answerGuideBodyEl) {
+    return 0;
+  }
+
+  return Math.max(
+    answerGuideBodyEl.scrollHeight || 0,
+    Math.ceil(answerGuideBodyEl.getBoundingClientRect().height || 0),
+    wordGrid?.scrollHeight || 0,
+  );
+}
+
+function applyAnswerGuideResponsiveSizing({ target, typed }) {
+  if (!answerGuideEl || !answerGuideBodyEl || !wordGrid) {
+    return;
+  }
+
+  const baseDensity = getCurrentGameDensity();
+  const budget = getAnswerGuideVerticalBudget(baseDensity);
+  const targetLength = Array.from(String(target ?? "")).length;
+  const typedLength = Array.from(String(typed ?? "")).length;
+  let tier = baseDensity;
+
+  if (targetLength > 72 || typedLength > 72) {
+    tier = getNextDenserDensity(tier);
+  }
+
+  setAnswerGuideResponsiveVars(tier);
+
+  if (measureAnswerGuideBodyHeight() > budget) {
+    tier = getNextAnswerGuideSizingTier(tier);
+    setAnswerGuideResponsiveVars(tier);
+  }
 }
 
 function setStableViewportCssVars(viewport) {
@@ -864,7 +1035,13 @@ function syncViewportProfile() {
   updateLanguageDockZoom(Math.min(widthRatio, heightRatio), nextViewport);
 
   const nextPhonePortrait = true;
+  const nextGameDensity = getGameDensityProfile({
+    viewportWidth: nextViewport.width,
+    viewportHeight: nextViewport.height,
+    cardWidth: mainCard?.clientWidth || 0,
+  });
   const layoutChanged = viewportProfile.isPhonePortrait !== nextPhonePortrait;
+  const densityChanged = viewportProfile.gameDensity !== nextGameDensity;
   const sizeChanged =
     viewportProfile.width !== nextViewport.width ||
     viewportProfile.height !== nextViewport.height;
@@ -872,12 +1049,20 @@ function syncViewportProfile() {
   viewportProfile.width = nextViewport.width;
   viewportProfile.height = nextViewport.height;
   viewportProfile.isPhonePortrait = nextPhonePortrait;
+  viewportProfile.gameDensity = nextGameDensity;
 
   document.body.classList.toggle("layout-phone-portrait", nextPhonePortrait);
+  document.body.dataset.gameDensity = nextGameDensity;
   setGameSurfaceMode(isSessionEndVisible());
 
   if (sizeChanged || layoutChanged) {
     maybeShowInstallGuide();
+  }
+
+  if ((sizeChanged || densityChanged) && sessionCards.length && sessionCards[sessionIndex]) {
+    promptController?.relayout();
+    promptSubController?.relayout();
+    buildWordGrid(getTargetValue(sessionCards[sessionIndex]), inputEl.value);
   }
 }
 
@@ -937,26 +1122,34 @@ const siteTitleController = createPretextBlockController({
 
 const promptController = createPretextBlockController({
   element: promptEl,
-  maxLines: 2,
-  minFontPx: 15,
-  maxFontPx: 20,
-  lineHeightRatio: 1.12,
   fontFamily: "Tahoma, sans-serif",
   fontWeight: 400,
   targetWidthRatio: 0.96,
   lineClassName: "pretext-line--prompt",
+  getLayoutConfig({ text, width }) {
+    return getPromptFitProfile({
+      text,
+      width,
+      density: getCurrentGameDensity(),
+      kind: "main",
+    });
+  },
 });
 
 const promptSubController = createPretextBlockController({
   element: promptSub,
-  maxLines: 2,
-  minFontPx: 10,
-  maxFontPx: 13,
-  lineHeightRatio: 1.32,
   fontFamily: "Tahoma, sans-serif",
   fontWeight: 700,
   targetWidthRatio: 0.96,
   lineClassName: "pretext-line--prompt",
+  getLayoutConfig({ text, width }) {
+    return getPromptFitProfile({
+      text,
+      width,
+      density: getCurrentGameDensity(),
+      kind: "secondary",
+    });
+  },
 });
 
 if (statsBarEl && mainCard && progressTrackEl) {
@@ -3027,6 +3220,20 @@ function getGuideSeparatorLabel(char, { overflow = false } = {}) {
   return char;
 }
 
+function getGuideSeparatorSymbol(char) {
+  const kind = getGuideSeparatorKind(char);
+
+  if (kind === "space") {
+    return "\u2420";
+  }
+
+  if (kind === "comma") {
+    return ",";
+  }
+
+  return char;
+}
+
 function getGuideStatusForSeparator(char, word, total) {
   const kind = getGuideSeparatorKind(char);
 
@@ -3426,10 +3633,13 @@ function buildWordGrid(
     if (token.type === "separator") {
       const separator = document.createElement("div");
       const typedSeparator = typed[token.start];
+      const separatorLabel = getGuideSeparatorLabel(token.char);
 
       separator.className = "word-separator";
       separator.dataset.separatorKind = token.kind;
-      separator.textContent = getGuideSeparatorLabel(token.char);
+      separator.textContent = getGuideSeparatorSymbol(token.char);
+      separator.setAttribute("aria-label", separatorLabel);
+      separator.setAttribute("title", separatorLabel);
 
       if (typedSeparator !== undefined) {
         separator.classList.add(typedSeparator === token.char ? "state-ok" : "state-bad");
@@ -3518,9 +3728,12 @@ function buildWordGrid(
     typed.slice(target.length).split("").forEach((extraChar) => {
       if (isGuideSeparatorChar(extraChar)) {
         const extraSeparator = document.createElement("div");
+        const separatorLabel = getGuideSeparatorLabel(extraChar, { overflow: true });
         extraSeparator.className = "word-separator state-bad is-overflow";
         extraSeparator.dataset.separatorKind = getGuideSeparatorKind(extraChar);
-        extraSeparator.textContent = getGuideSeparatorLabel(extraChar, { overflow: true });
+        extraSeparator.textContent = getGuideSeparatorSymbol(extraChar);
+        extraSeparator.setAttribute("aria-label", separatorLabel);
+        extraSeparator.setAttribute("title", separatorLabel);
         wordGrid.appendChild(extraSeparator);
         return;
       }
@@ -3555,6 +3768,7 @@ function buildWordGrid(
     wordGrid.appendChild(endCaret);
   }
 
+  applyAnswerGuideResponsiveSizing({ target, typed });
   updateAnswerTerminalStatus(target, typed, terminalHit);
   updateAnswerGuide(target, typed);
 }

@@ -4070,7 +4070,7 @@ body.layout-phone-portrait .wchar {
 
 body.layout-phone-portrait .wchar-letter {
   min-width: 9px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 body.layout-phone-portrait .word-separator {
@@ -4765,12 +4765,12 @@ body.layout-phone-portrait .word-group {
 }
 
 body.layout-phone-portrait .answer-guide-status {
-  font-size: calc(6px * var(--game-text-scale) * var(--answer-guide-text-scale));
+  font-size: calc(6px * var(--game-text-scale) * var(--answer-guide-text-scale, 1));
   text-align: right;
 }
 
 body.layout-phone-portrait .answer-guide-note {
-  font-size: calc(6px * var(--game-text-scale) * var(--answer-guide-text-scale));
+  font-size: calc(6px * var(--game-text-scale) * var(--answer-guide-text-scale, 1));
   text-align: left;
 }
 
@@ -4785,13 +4785,13 @@ body.layout-phone-portrait .wchar {
 
 body.layout-phone-portrait .wchar-letter {
   min-width: 9px;
-  font-size: calc(11px * var(--game-text-scale) * var(--answer-guide-text-scale));
+  font-size: calc(12px * var(--game-text-scale) * var(--answer-guide-text-scale, 1));
 }
 
 body.layout-phone-portrait .word-separator {
   min-width: 32px;
   padding: 2px 6px;
-  font-size: calc(6px * var(--game-text-scale) * var(--answer-guide-text-scale));
+  font-size: calc(6px * var(--game-text-scale) * var(--answer-guide-text-scale, 1));
 }
 
 body.layout-phone-portrait .solution {

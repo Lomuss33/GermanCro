@@ -204,6 +204,26 @@ export function createPretextBlockController(config) {
     return Math.max(0, element.clientWidth || 0);
   }
 
+  function getResolvedConfig(width) {
+    if (typeof config.getLayoutConfig !== "function") {
+      return config;
+    }
+
+    const dynamicConfig = config.getLayoutConfig({
+      text: state.text,
+      width,
+    });
+
+    if (!dynamicConfig || typeof dynamicConfig !== "object") {
+      return config;
+    }
+
+    return {
+      ...config,
+      ...dynamicConfig,
+    };
+  }
+
   function clearBlock() {
     state.fit = null;
     element.replaceChildren();
@@ -224,9 +244,10 @@ export function createPretextBlockController(config) {
       return;
     }
 
+    const resolvedConfig = getResolvedConfig(width);
     state.lastWidth = width;
     state.fit = fitPretextBlock({
-      ...config,
+      ...resolvedConfig,
       text: state.text,
       width,
     });
@@ -235,9 +256,9 @@ export function createPretextBlockController(config) {
       element,
       fit: state.fit,
       animate,
-      lineClassName: config.lineClassName,
-      blockClassName: config.blockClassName,
-      renderLineContent: config.renderLineContent,
+      lineClassName: resolvedConfig.lineClassName,
+      blockClassName: resolvedConfig.blockClassName,
+      renderLineContent: resolvedConfig.renderLineContent,
     });
   }
 
