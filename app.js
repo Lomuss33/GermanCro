@@ -668,7 +668,6 @@ const answerTerminalStatusRowEl = document.getElementById("answerTerminalStatusR
 const answerTerminalStatusEl = document.getElementById("answerTerminalStatus");
 const answerGuideEl = document.getElementById("answerGuide");
 const answerGuideBodyEl = answerGuideEl?.querySelector(".answer-guide-body") || null;
-const answerGuideTrailFlagEl = answerGuideEl?.querySelector(".answer-guide-trail-flag") || null;
 const answerGuideLabelEl = document.getElementById("answerGuideLabel");
 const answerGuideStatusEl = document.getElementById("answerGuideStatus");
 const answerGuideNoteEl = document.getElementById("answerGuideNote");
@@ -3224,7 +3223,7 @@ function getGuideSeparatorSymbol(char) {
   const kind = getGuideSeparatorKind(char);
 
   if (kind === "space") {
-    return "\u2420";
+    return "\u00A0";
   }
 
   if (kind === "comma") {
@@ -3631,15 +3630,67 @@ function buildWordGrid(
 
   tokens.forEach((token) => {
     if (token.type === "separator") {
+      if (token.kind === "space") {
+        const typedSeparator = typed[token.start];
+        const separatorLabel = getGuideSeparatorLabel(token.char);
+        const wrap = document.createElement("div");
+        const letter = document.createElement("div");
+        const line = document.createElement("div");
+
+        wrap.className = "wchar is-space-slot";
+        letter.className = "wchar-letter";
+        line.className = "wchar-line";
+        wrap.setAttribute("aria-label", separatorLabel);
+        wrap.setAttribute("title", separatorLabel);
+        letter.textContent = "\u00A0";
+
+        if (typedSeparator !== undefined) {
+          wrap.classList.add(typedSeparator === token.char ? "state-ok" : "state-bad");
+        } else if (token.start === correctPrefixLen) {
+          wrap.classList.add("state-next");
+        } else {
+          wrap.classList.add("state-hidden");
+        }
+
+        if (freshCorrectIndexes.has(token.start)) {
+          wrap.classList.add("state-hit");
+        }
+
+        if (freshWrongIndexes.has(token.start)) {
+          wrap.classList.add("state-miss");
+        }
+
+        if (token.start === caretIndex) {
+          wrap.classList.add("state-caret");
+        }
+
+        if (!showTerminalStatus && token.end === caretIndex && caretIndex === target.length) {
+          wrap.classList.add("state-caret-after");
+        }
+
+        wrap.appendChild(letter);
+        wrap.appendChild(line);
+        wordGrid.appendChild(wrap);
+        return;
+      }
+
       const separator = document.createElement("div");
+      const letter = document.createElement("div");
+      const line = document.createElement("div");
       const typedSeparator = typed[token.start];
       const separatorLabel = getGuideSeparatorLabel(token.char);
 
-      separator.className = "word-separator";
+      separator.className = "word-separator wchar";
       separator.dataset.separatorKind = token.kind;
-      separator.textContent = getGuideSeparatorSymbol(token.char);
+      separator.classList.add(`is-${token.kind}`);
       separator.setAttribute("aria-label", separatorLabel);
       separator.setAttribute("title", separatorLabel);
+
+      letter.className = "word-separator-letter wchar-letter";
+      line.className = "word-separator-line wchar-line";
+      letter.textContent = getGuideSeparatorSymbol(token.char);
+      separator.appendChild(letter);
+      separator.appendChild(line);
 
       if (typedSeparator !== undefined) {
         separator.classList.add(typedSeparator === token.char ? "state-ok" : "state-bad");
@@ -3727,13 +3778,35 @@ function buildWordGrid(
   if (typed.length > target.length) {
     typed.slice(target.length).split("").forEach((extraChar) => {
       if (isGuideSeparatorChar(extraChar)) {
+        if (getGuideSeparatorKind(extraChar) === "space") {
+          const overflowWrap = document.createElement("div");
+          const overflowLetter = document.createElement("div");
+          const overflowLine = document.createElement("div");
+
+          overflowWrap.className = "wchar is-space-slot state-bad is-overflow";
+          overflowLetter.className = "wchar-letter";
+          overflowLine.className = "wchar-line";
+          overflowLetter.textContent = "\u00A0";
+          overflowWrap.appendChild(overflowLetter);
+          overflowWrap.appendChild(overflowLine);
+          wordGrid.appendChild(overflowWrap);
+          return;
+        }
+
         const extraSeparator = document.createElement("div");
+        const letter = document.createElement("div");
+        const line = document.createElement("div");
         const separatorLabel = getGuideSeparatorLabel(extraChar, { overflow: true });
-        extraSeparator.className = "word-separator state-bad is-overflow";
+        extraSeparator.className = "word-separator wchar state-bad is-overflow";
         extraSeparator.dataset.separatorKind = getGuideSeparatorKind(extraChar);
-        extraSeparator.textContent = getGuideSeparatorSymbol(extraChar);
+        extraSeparator.classList.add(`is-${getGuideSeparatorKind(extraChar)}`);
         extraSeparator.setAttribute("aria-label", separatorLabel);
         extraSeparator.setAttribute("title", separatorLabel);
+        letter.className = "word-separator-letter wchar-letter";
+        line.className = "word-separator-line wchar-line";
+        letter.textContent = getGuideSeparatorSymbol(extraChar);
+        extraSeparator.appendChild(letter);
+        extraSeparator.appendChild(line);
         wordGrid.appendChild(extraSeparator);
         return;
       }
