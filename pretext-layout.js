@@ -198,6 +198,7 @@ export function createPretextBlockController(config) {
     text: "",
     lastWidth: 0,
     fit: null,
+    relayoutFrame: 0,
   };
 
   function getWidth() {
@@ -225,8 +226,34 @@ export function createPretextBlockController(config) {
   }
 
   function clearBlock() {
+    if (state.relayoutFrame) {
+      cancelAnimationFrame(state.relayoutFrame);
+      state.relayoutFrame = 0;
+    }
     state.fit = null;
     element.replaceChildren();
+    element.style.removeProperty("--pretext-block-height");
+    element.style.removeProperty("--pretext-font-size");
+    element.style.removeProperty("--pretext-line-height");
+    element.style.removeProperty("min-height");
+  }
+
+  function scheduleRelayout() {
+    if (state.relayoutFrame) {
+      return;
+    }
+
+    state.relayoutFrame = requestAnimationFrame(() => {
+      state.relayoutFrame = 0;
+      applyLayout(false);
+    });
+  }
+
+  function renderPlainTextFallback() {
+    state.fit = null;
+    element.replaceChildren();
+    element.classList.add("pretext-block");
+    element.textContent = state.text;
     element.style.removeProperty("--pretext-block-height");
     element.style.removeProperty("--pretext-font-size");
     element.style.removeProperty("--pretext-line-height");
@@ -236,12 +263,13 @@ export function createPretextBlockController(config) {
   function applyLayout(animate = false) {
     if (!state.text) {
       clearBlock();
-      return;
+      return true;
     }
 
     const width = getWidth();
     if (width <= 0) {
-      return;
+      renderPlainTextFallback();
+      return false;
     }
 
     const resolvedConfig = getResolvedConfig(width);
@@ -260,6 +288,7 @@ export function createPretextBlockController(config) {
       blockClassName: resolvedConfig.blockClassName,
       renderLineContent: resolvedConfig.renderLineContent,
     });
+    return true;
   }
 
   const resizeObserver =
@@ -280,10 +309,14 @@ export function createPretextBlockController(config) {
       const text = String(nextText ?? "");
       const animate = Boolean(options.animate) && text !== state.text;
       state.text = text;
-      applyLayout(animate);
+      if (!applyLayout(animate)) {
+        scheduleRelayout();
+      }
     },
     relayout(options = {}) {
-      applyLayout(Boolean(options.animate));
+      if (!applyLayout(Boolean(options.animate))) {
+        scheduleRelayout();
+      }
     },
     destroy() {
       resizeObserver?.disconnect();

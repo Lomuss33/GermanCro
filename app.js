@@ -50,6 +50,14 @@ const SESSION_SIZE = 10;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const PUNCT = /[.,!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
+const EMERGENCY_FALLBACK_CARD = Object.freeze({
+  de: "das Haus",
+  hr: "kuća",
+  en: "house",
+  topic: "basics",
+  subcategory: "Nomen",
+  scope: "all",
+});
 const TOURISM_LINKS = {
   germany: "https://www.germany.travel/",
   states: {
@@ -584,6 +592,7 @@ const STATE_NOTABLE_PEOPLE = {
 };
 
 let allCards = [];
+let bundledCards = [];
 let persistentCards = [];
 let sessionOnlyCards = [];
 let selectedTopics = null;
@@ -613,6 +622,8 @@ let selectedStateId = null;
 let selectedEuropeCountryId = null;
 let selectedWorldCountryId = null;
 let locales = null;
+let hasBootstrappedApp = false;
+let sessionRecoveryNonce = 0;
 
 const LEARNING_MODE_STORAGE_KEY = "germancro.learningMode";
 const PROMPT_ORDER_STORAGE_KEY = "germancro.promptOrderSwapped";
@@ -1080,7 +1091,12 @@ function initViewportProfile() {
       navigator.virtualKeyboard.overlaysContent = true;
     }
     window.addEventListener("load", scheduleViewportProfileSync, { passive: true });
-    window.addEventListener("pageshow", syncViewportProfile, { passive: true });
+    window.addEventListener("pageshow", () => {
+      syncViewportProfile();
+      if (hasBootstrappedApp) {
+        void recoverPlayableSession("pageshow", sessionCards.length || SESSION_SIZE);
+      }
+    }, { passive: true });
     window.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
     window.addEventListener("orientationchange", scheduleViewportProfileSync, { passive: true });
   }
@@ -1402,12 +1418,20 @@ function getScopeLabel(scope) {
 }
 
 function renderCardBadge(card) {
-  if (!categoryEl || !card) {
+  if (!categoryEl) {
+    return;
+  }
+
+  categoryEl.innerHTML = "";
+
+  if (!card) {
+    categoryEl.style.removeProperty("color");
+    categoryEl.style.removeProperty("border-color");
+    categoryEl.style.removeProperty("background");
     return;
   }
 
   const color = getTopicColor(card.topic);
-  categoryEl.innerHTML = "";
 
   const topicEl = document.createElement("span");
   topicEl.className = "category-badge-main";
@@ -1490,6 +1514,14 @@ function getCardValue(card, language) {
   return String(card[language] || "").trim();
 }
 
+function resolveSessionSize(size, fallback = SESSION_SIZE) {
+  const parsed = Number(size);
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    return fallback;
+  }
+  return Math.max(1, Math.floor(parsed));
+}
+
 function getTargetLanguage() {
   return learningMode;
 }
@@ -1498,14 +1530,32 @@ function getTargetValue(card) {
   return getCardValue(card, getTargetLanguage());
 }
 
-function getPromptLanguages() {
-  const activeIndex = LANGUAGE_SEQUENCE.indexOf(getTargetLanguage());
+function getPromptLanguagesForTarget(language = getTargetLanguage()) {
+  const activeIndex = LANGUAGE_SEQUENCE.indexOf(language);
   const promptLanguages = [
     LANGUAGE_SEQUENCE[(activeIndex + 1) % LANGUAGE_SEQUENCE.length],
     LANGUAGE_SEQUENCE[(activeIndex + 2) % LANGUAGE_SEQUENCE.length],
   ];
 
   return isPromptOrderSwapped ? promptLanguages.reverse() : promptLanguages;
+}
+
+function getPromptLanguages() {
+  return getPromptLanguagesForTarget(getTargetLanguage());
+}
+
+function isRenderableCard(card, language = getTargetLanguage()) {
+  if (!card) {
+    return false;
+  }
+
+  const targetLanguage = LANGUAGE_SEQUENCE.includes(language) ? language : getTargetLanguage();
+  const promptLanguages = getPromptLanguagesForTarget(targetLanguage);
+  return [targetLanguage, ...promptLanguages].every((currentLanguage) => getCardValue(card, currentLanguage));
+}
+
+function getRenderablePool(cards, language = getTargetLanguage()) {
+  return (Array.isArray(cards) ? cards : []).filter((card) => isRenderableCard(card, language));
 }
 
 function cycleLearningMode() {
@@ -1769,7 +1819,7 @@ function switchLearningMode(nextLanguage) {
     siteTitleEl.classList.add("is-changing-out");
   }
 
-  window.setTimeout(() => {
+  window.setTimeout(async () => {
     learningMode = nextLanguage;
     saveLearningMode();
     applyLearningTheme();
@@ -1779,7 +1829,11 @@ function switchLearningMode(nextLanguage) {
     buildTopicPanel();
     updateStats();
     renderFactsSelection();
-    loadCard({ focusInput: false });
+    if (isRenderableCard(sessionCards[sessionIndex], nextLanguage)) {
+      loadCard({ focusInput: false });
+    } else {
+      await recoverPlayableSession("language-switch", sessionCards.length || SESSION_SIZE);
+    }
 
     if (siteTitleEl) {
       siteTitleEl.classList.remove("is-changing-out");
@@ -2075,6 +2129,10 @@ function getPool() {
 
 function updateSearchLinks(card) {
   searchLinksEl.innerHTML = "";
+  if (!card) {
+    return;
+  }
+
   const query = String(card.de || card.en || "").trim();
 
   searchSites.forEach((site) => {
@@ -3566,6 +3624,29 @@ function updateAnswerTerminalStatus(target, typed, terminalHit = null) {
   answerTerminalStatusEl.textContent = terminalStatusKind === "success" ? "\u2665" : "\u2715";
 }
 
+function syncSolutionLayout() {
+  if (!solutionEl) {
+    return;
+  }
+
+  solutionEl.style.removeProperty("top");
+  solutionEl.style.removeProperty("left");
+  solutionEl.style.removeProperty("width");
+  solutionEl.style.removeProperty("max-height");
+}
+
+function showSolution(target) {
+  if (!solutionEl) {
+    return;
+  }
+
+  const prefixEl = document.createElement("strong");
+  prefixEl.textContent = t("messages.solution.correctPrefix");
+  solutionEl.replaceChildren(prefixEl, document.createTextNode(` ${target}`));
+  solutionEl.style.display = "block";
+  syncSolutionLayout();
+}
+
 function isExactTypedMatch(target, typed) {
   return typed.length === target.length && getCorrectPrefixLength(target, typed) === target.length;
 }
@@ -3642,7 +3723,10 @@ function buildWordGrid(
         line.className = "wchar-line";
         wrap.setAttribute("aria-label", separatorLabel);
         wrap.setAttribute("title", separatorLabel);
-        letter.textContent = "\u00A0";
+        letter.textContent =
+          typedSeparator !== undefined && typedSeparator !== token.char
+            ? "x"
+            : "\u00A0";
 
         if (typedSeparator !== undefined) {
           wrap.classList.add(typedSeparator === token.char ? "state-ok" : "state-bad");
@@ -3688,7 +3772,10 @@ function buildWordGrid(
 
       letter.className = "word-separator-letter wchar-letter";
       line.className = "word-separator-line wchar-line";
-      letter.textContent = getGuideSeparatorSymbol(token.char);
+      letter.textContent =
+        typedSeparator !== undefined && typedSeparator !== token.char
+          ? "x"
+          : getGuideSeparatorSymbol(token.char);
       separator.appendChild(letter);
       separator.appendChild(line);
 
@@ -3737,7 +3824,7 @@ function buildWordGrid(
         wrap.classList.add("state-auto");
       } else if (typedChar !== undefined) {
         const isCorrectChar = typedChar.toLowerCase() === targetChar.toLowerCase();
-        letter.textContent = isCorrectChar ? targetChar : typedChar;
+        letter.textContent = isCorrectChar ? targetChar : "x";
         wrap.classList.add(isCorrectChar ? "state-ok" : "state-bad");
         if (freshCorrectIndexes.has(idx)) {
           wrap.classList.add("state-hit");
@@ -3786,7 +3873,7 @@ function buildWordGrid(
           overflowWrap.className = "wchar is-space-slot state-bad is-overflow";
           overflowLetter.className = "wchar-letter";
           overflowLine.className = "wchar-line";
-          overflowLetter.textContent = "\u00A0";
+          overflowLetter.textContent = "x";
           overflowWrap.appendChild(overflowLetter);
           overflowWrap.appendChild(overflowLine);
           wordGrid.appendChild(overflowWrap);
@@ -3804,7 +3891,7 @@ function buildWordGrid(
         extraSeparator.setAttribute("title", separatorLabel);
         letter.className = "word-separator-letter wchar-letter";
         line.className = "word-separator-line wchar-line";
-        letter.textContent = getGuideSeparatorSymbol(extraChar);
+        letter.textContent = "x";
         extraSeparator.appendChild(letter);
         extraSeparator.appendChild(line);
         wordGrid.appendChild(extraSeparator);
@@ -3818,7 +3905,7 @@ function buildWordGrid(
       overflowWrap.className = "wchar state-bad";
       overflowLetter.className = "wchar-letter";
       overflowLine.className = "wchar-line";
-      overflowLetter.textContent = extraChar;
+      overflowLetter.textContent = "x";
       overflowWrap.appendChild(overflowLetter);
       overflowWrap.appendChild(overflowLine);
       wordGrid.appendChild(overflowWrap);
@@ -3844,6 +3931,7 @@ function buildWordGrid(
   applyAnswerGuideResponsiveSizing({ target, typed });
   updateAnswerTerminalStatus(target, typed, terminalHit);
   updateAnswerGuide(target, typed);
+  syncSolutionLayout();
 }
 
 function shuffle(cards) {
@@ -3855,14 +3943,7 @@ function shuffle(cards) {
   return shuffled;
 }
 
-function startSession(size) {
-  const pool = getPool();
-  if (!pool.length) {
-    return;
-  }
-
-  const count = Math.min(size || SESSION_SIZE, pool.length);
-  sessionCards = shuffle(pool).slice(0, count);
+function resetSessionProgress() {
   sessionIndex = 0;
   streak = 0;
   bestStreak = 0;
@@ -3870,9 +3951,105 @@ function startSession(size) {
   totalAttempts = 0;
   totalCharsTyped = 0;
   sessionStart = Date.now();
-  updateStats();
+}
+
+function clearSessionUi() {
   setGameSurfaceMode(false);
-  loadCard();
+  inputEl.value = "";
+  inputEl.className = "";
+  previousTypedValue = "";
+  clearTimeout(answerGuideCompleteTimer);
+  answerGuideEl?.classList.remove("is-complete-hit");
+  solutionEl.style.display = "none";
+  syncSolutionLayout();
+  forceCorrection = false;
+  progFill.style.width = "0%";
+  renderCardBadge(null);
+  updateSearchLinks(null);
+  buildWordGrid("", "");
+  updateSkipCardButtonState();
+}
+
+async function loadCriticalCardsWithRetry() {
+  if (allCards.length) {
+    return allCards;
+  }
+
+  await new Promise((resolve) => window.setTimeout(resolve, 120));
+  const retriedBundledCards = await fetchJson("cards.json", []);
+  bundledCards = Array.isArray(retriedBundledCards)
+    ? retriedBundledCards.map(sanitizeCard).filter(Boolean)
+    : [];
+  allCards = mergeCards(bundledCards, persistentCards, sessionOnlyCards);
+  buildTopicPanel();
+  return allCards;
+}
+
+async function recoverPlayableSession(reason = "unknown", requestedSize = SESSION_SIZE) {
+  const recoveryNonce = ++sessionRecoveryNonce;
+  const nextSessionSize = resolveSessionSize(requestedSize, sessionCards.length || SESSION_SIZE);
+  clearSessionUi();
+
+  const currentCard = sessionCards[sessionIndex];
+  if (isRenderableCard(currentCard)) {
+    loadCard({ allowRecovery: false });
+    return true;
+  }
+
+  const rebuildSessionFromCards = (cards) => {
+    const renderablePool = getRenderablePool(cards);
+    if (!renderablePool.length) {
+      return false;
+    }
+
+    sessionCards = shuffle(renderablePool).slice(0, Math.min(nextSessionSize, renderablePool.length));
+    resetSessionProgress();
+    updateStats();
+    loadCard({ allowRecovery: false });
+    return true;
+  };
+
+  if (rebuildSessionFromCards(getPool())) {
+    return true;
+  }
+
+  if (selectedTopics !== null) {
+    selectedTopics = null;
+    buildTopicPanel();
+    if (rebuildSessionFromCards(getPool())) {
+      return true;
+    }
+  }
+
+  await loadCriticalCardsWithRetry();
+  if (recoveryNonce !== sessionRecoveryNonce) {
+    return false;
+  }
+
+  if (rebuildSessionFromCards(getPool())) {
+    return true;
+  }
+
+  sessionCards = [EMERGENCY_FALLBACK_CARD];
+  resetSessionProgress();
+  updateStats();
+  loadCard({ allowRecovery: false });
+  return false;
+}
+
+async function startSession(size) {
+  const renderablePool = getRenderablePool(getPool());
+  const count = resolveSessionSize(size);
+
+  if (renderablePool.length) {
+    sessionCards = shuffle(renderablePool).slice(0, Math.min(count, renderablePool.length));
+    resetSessionProgress();
+    updateStats();
+    loadCard();
+  } else {
+    await recoverPlayableSession("start-session", count);
+  }
+
   const scrollTarget = heroStageEl || mainCard;
   scrollTarget.scrollIntoView({
     behavior: "smooth",
@@ -3881,20 +4058,17 @@ function startSession(size) {
 }
 
 function loadCard(options = {}) {
-  const { focusInput = true } = options;
+  const { focusInput = true, allowRecovery = true } = options;
   const card = sessionCards[sessionIndex];
-  if (!card) {
+  if (!isRenderableCard(card)) {
+    if (allowRecovery) {
+      void recoverPlayableSession("load-card", sessionCards.length || SESSION_SIZE);
+    }
     return;
   }
 
+  clearSessionUi();
   renderPrompt(card);
-  inputEl.value = "";
-  inputEl.className = "";
-  previousTypedValue = "";
-  clearTimeout(answerGuideCompleteTimer);
-  answerGuideEl?.classList.remove("is-complete-hit");
-  solutionEl.style.display = "none";
-  forceCorrection = false;
   progFill.style.width = `${(sessionIndex / sessionCards.length) * 100}%`;
 
   renderCardBadge(card);
@@ -4338,6 +4512,11 @@ function initInputEvents() {
         return;
       }
 
+      if (!isRenderableCard(sessionCards[sessionIndex])) {
+        void recoverPlayableSession("skip-invalid-card", sessionCards.length || SESSION_SIZE);
+        return;
+      }
+
       const [currentCard] = sessionCards.splice(sessionIndex, 1);
       sessionCards.push(currentCard);
       loadCard();
@@ -4358,6 +4537,11 @@ function initInputEvents() {
 
   inputEl.addEventListener("input", () => {
     if (!sessionCards.length) {
+      return;
+    }
+
+    if (!isRenderableCard(sessionCards[sessionIndex])) {
+      void recoverPlayableSession("input-invalid-card", sessionCards.length || SESSION_SIZE);
       return;
     }
 
@@ -4410,6 +4594,11 @@ function initInputEvents() {
       return;
     }
 
+    if (!isRenderableCard(sessionCards[sessionIndex])) {
+      void recoverPlayableSession("hint-invalid-card", sessionCards.length || SESSION_SIZE);
+      return;
+    }
+
     const target = getTargetValue(sessionCards[sessionIndex]);
     const reveal = getHintRevealValue(target, inputEl.value);
     inputEl.value = reveal;
@@ -4437,6 +4626,10 @@ function initInputEvents() {
     }
 
     const card = sessionCards[sessionIndex];
+    if (!isRenderableCard(card)) {
+      void recoverPlayableSession("submit-invalid-card", sessionCards.length || SESSION_SIZE);
+      return;
+    }
     const target = getTargetValue(card);
     if (normalizeAnswer(inputEl.value) === normalizeAnswer(target)) {
       showFeedbackBurst("success", true);
@@ -4468,8 +4661,7 @@ function initInputEvents() {
         streak = 0;
       }
       inputEl.className = "wrong";
-      solutionEl.innerHTML = `<strong>${t("messages.solution.correctPrefix")}</strong> ${target}`;
-      solutionEl.style.display = "block";
+      showSolution(target);
       forceCorrection = true;
       updateStats();
     }
@@ -4516,17 +4708,21 @@ async function initApp() {
   germanyFacts = loadedFacts;
   europeFacts = loadedEuropeFacts;
   worldFacts = loadedWorldFacts;
+  bundledCards = Array.isArray(baseCards)
+    ? baseCards.map(sanitizeCard).filter(Boolean)
+    : [];
   persistentCards = Array.isArray(loadedPersistentCards)
     ? loadedPersistentCards.map(sanitizeCard).filter(Boolean)
     : [];
   sessionOnlyCards = capabilities.persistentSave ? [] : loadSessionCards();
-  allCards = mergeCards(baseCards, persistentCards, sessionOnlyCards);
+  allCards = mergeCards(bundledCards, persistentCards, sessionOnlyCards);
 
   renderAuthoringMode();
   initFactsPanel();
   renderStaticUi();
   buildTopicPanel();
-  startSession();
+  hasBootstrappedApp = true;
+  await recoverPlayableSession("init-app", SESSION_SIZE);
 }
 
 window.startSession = startSession;
