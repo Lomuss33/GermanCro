@@ -91,16 +91,15 @@
   <div id="gameArea">
     <div class="prompt-head">
       <div class="prompt-head-title" id="promptHeadTitle">Karte</div>
-      <button class="prompt-swap-btn" id="promptSwapBtn" type="button">&#128260;</button>
     </div>
     <div class="prompt-row prompt-row-main">
-      <span class="prompt-flag" id="promptPrimaryFlag" aria-hidden="true">&#127469;&#127479;</span>
+      <button class="prompt-flag" id="promptPrimaryFlag" type="button">&#127469;&#127479;</button>
       <div class="prompt-copy">
         <div class="prompt-text" id="promptText"></div>
       </div>
     </div>
     <div class="prompt-row prompt-row-sub">
-      <span class="prompt-flag prompt-flag-sub" id="promptSecondaryFlag" aria-hidden="true">&#127468;&#127463;</span>
+      <button class="prompt-flag prompt-flag-sub" id="promptSecondaryFlag" type="button">&#127468;&#127463;</button>
       <div class="prompt-copy">
         <div class="prompt-sub" id="promptSub"></div>
       </div>
@@ -126,16 +125,11 @@
         <div class="enter-hint"><span class="key-badge">Enter</span> <span id="enterHintText">zum Pr&uuml;fen</span></div>
       </div>
     </div>
-    <div class="solution" id="solution"></div>
     <div class="feedback-burst" id="feedbackBurst" aria-hidden="true"></div>
     <div class="action-row">
       <div class="action-row-left">
         <button class="skip-card-btn" id="skipCardBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#9197;&#65039;</span> <span id="skipCardBtnLabel">Skip</span></button>
         <button class="hint-btn" id="hintBtn"><span class="button-icon button-icon-emoji" aria-hidden="true">💡</span> <span>Tipp</span></button>
-      </div>
-      <div class="action-row-right">
-        <button class="settings-btn" id="settingsBtn" type="button" aria-expanded="false" aria-controls="catPanel"><span class="button-icon" aria-hidden="true">⚙</span> <span>Settings</span></button>
-        <button class="switch-order-btn" id="switchOrderBtn" type="button"><span class="button-icon" aria-hidden="true">&#8646;</span> <span>Tauschen</span></button>
       </div>
     </div>
     <div class="combo-pop" id="comboPop"></div>
@@ -144,8 +138,8 @@
   <div class="session-end" id="sessionEnd">
     <div class="score-label" id="sessionEndLabel">Sitzung beendet</div>
     <div class="big-score" id="finalScore"></div>
-    <div style="color:var(--muted);font-size:13px;margin-top:4px" id="finalDetails"></div>
-    <div style="margin-top:16px;font-size:26px" id="finalEmoji"></div>
+    <div class="session-end-details" id="finalDetails"></div>
+    <div class="session-end-emoji" id="finalEmoji"></div>
     <button class="restart-btn" id="restartBtn" onclick="startSession()">Neue Runde</button>
   </div>
   </div>
@@ -153,7 +147,10 @@
 
 <div class="phone-guide-bar is-hidden" id="phoneGuideBar" aria-live="polite"></div>
 
-<div class="cat-panel is-hidden" id="catPanel">
+<div class="cat-panel" id="catPanel">
+  <div class="cat-panel-head">
+    <div class="cat-panel-title" id="settingsPanelTitle">Settings</div>
+  </div>
   <div class="cat-panel-toolbar">
     <div class="difficulty-panel">
       <button data-diff="hard" id="difficultyHardBtn">Schwer</button>
@@ -163,6 +160,7 @@
     <div class="cat-panel-meta">
       <div class="new-game-row">
         <div class="session-slider-wrap">
+          <span class="slider-prefix" id="sliderUnitLabel">rounds:</span>
           <input
             type="range"
             id="sessionSizeSlider"
@@ -172,14 +170,14 @@
             value="10"
             oninput="document.getElementById('sliderLabel').textContent = this.value"
           />
-          <span class="slider-label"><span id="sliderLabel">10</span> <span id="sliderUnitLabel">Karten</span></span>
+          <span class="slider-label"><span id="sliderLabel">10</span></span>
         </div>
         <div class="cat-count" id="catCount"></div>
-        <button class="new-game-btn" id="newGameBtn"
-          onclick="startSession(+document.getElementById('sessionSizeSlider').value)">
-          Neues Spiel
-        </button>
       </div>
+      <button class="new-game-btn" id="newGameBtn"
+        onclick="startSession(+document.getElementById('sessionSizeSlider').value)">
+        Neues Spiel
+      </button>
     </div>
   </div>
   <div class="cat-buttons" id="catButtons"></div>

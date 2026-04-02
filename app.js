@@ -613,7 +613,6 @@ let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
 let learningMode = "de";
 let isPromptOrderSwapped = false;
-let isSettingsOpen = false;
 let germanyFacts = null;
 let europeFacts = null;
 let worldFacts = null;
@@ -647,7 +646,6 @@ const promptEl = document.getElementById("promptText");
 const promptSub = document.getElementById("promptSub");
 const promptPrimaryFlagEl = document.getElementById("promptPrimaryFlag");
 const promptSecondaryFlagEl = document.getElementById("promptSecondaryFlag");
-const promptSwapBtn = document.getElementById("promptSwapBtn");
 const inputFlagEl = document.querySelector(".input-flag");
 const siteTitleEl = document.querySelector(".site-title");
 const siteTitleRowEl = document.querySelector(".site-title-row");
@@ -673,7 +671,6 @@ const skipCardBtnEl = document.getElementById("skipCardBtn");
 const skipCardBtnLabelEl = document.getElementById("skipCardBtnLabel");
 const promptHeadTitleEl = document.getElementById("promptHeadTitle");
 const inputEl = document.getElementById("answer");
-const solutionEl = document.getElementById("solution");
 const wordGrid = document.getElementById("wordGrid");
 const answerTerminalStatusRowEl = document.getElementById("answerTerminalStatusRow");
 const answerTerminalStatusEl = document.getElementById("answerTerminalStatus");
@@ -691,18 +688,14 @@ const sessionEndEl = document.getElementById("sessionEnd");
 const mainCard = document.getElementById("mainCard");
 const progressTrackEl = document.querySelector(".progress-track");
 const statsBarEl = document.querySelector(".stats-bar");
-const catPanelEl = document.getElementById("catPanel");
 const catCountEl = document.getElementById("catCount");
+const settingsPanelTitleEl = document.getElementById("settingsPanelTitle");
 const catPanelTitleEl = document.getElementById("catPanelTitle");
 const difficultyHardBtn = document.getElementById("difficultyHardBtn");
 const difficultyMediumBtn = document.getElementById("difficultyMediumBtn");
 const difficultyEasyBtn = document.getElementById("difficultyEasyBtn");
 const sliderUnitLabelEl = document.getElementById("sliderUnitLabel");
 const newGameBtn = document.getElementById("newGameBtn");
-const settingsBtn = document.getElementById("settingsBtn");
-const settingsBtnLabelEl = settingsBtn ? settingsBtn.querySelector("span:last-child") : null;
-const switchOrderBtn = document.getElementById("switchOrderBtn");
-const switchOrderBtnLabelEl = switchOrderBtn ? switchOrderBtn.querySelector("span:last-child") : null;
 const searchPanelEl = document.getElementById("searchPanel");
 const searchPanelTitleEl = document.getElementById("searchPanelTitle");
 const searchPanelSubtitleEl = document.getElementById("searchPanelSubtitle");
@@ -755,11 +748,21 @@ const viewportProfile = {
   maxObservedHeight: 0,
   isPhonePortrait: false,
   gameDensity: "regular",
+  typeProfile: null,
   initialized: false,
   syncFrame: 0,
 };
 
 const GAME_DENSITY_ORDER = ["regular", "compact", "dense"];
+const DEFAULT_TYPE_PROFILE = Object.freeze({
+  contentWidth: 390,
+  bodyScale: 1,
+  microScale: 1,
+  displayScale: 1,
+  controlScale: 1,
+  iconScale: 1,
+  gameTextScale: 1.3,
+});
 const PROMPT_FIT_PROFILES = {
   main: {
     regular: { maxLines: 2, minFontPx: 15, maxFontPx: 20, lineHeightRatio: 1.12 },
@@ -780,6 +783,7 @@ const ANSWER_GUIDE_SIZE_PROFILES = {
     charGap: 3,
     separatorMinWidth: 28,
     separatorPaddingInline: 6,
+    spaceSeparatorGap: 6,
   },
   compact: {
     textScale: 0.92,
@@ -788,6 +792,7 @@ const ANSWER_GUIDE_SIZE_PROFILES = {
     charGap: 2,
     separatorMinWidth: 22,
     separatorPaddingInline: 5,
+    spaceSeparatorGap: 5,
   },
   dense: {
     textScale: 0.84,
@@ -796,6 +801,7 @@ const ANSWER_GUIDE_SIZE_PROFILES = {
     charGap: 2,
     separatorMinWidth: 18,
     separatorPaddingInline: 4,
+    spaceSeparatorGap: 4,
   },
   "dense-minus": {
     textScale: 0.78,
@@ -804,6 +810,7 @@ const ANSWER_GUIDE_SIZE_PROFILES = {
     charGap: 1,
     separatorMinWidth: 16,
     separatorPaddingInline: 3,
+    spaceSeparatorGap: 3,
   },
 };
 const ANSWER_GUIDE_HEIGHT_BUDGETS = {
@@ -811,6 +818,82 @@ const ANSWER_GUIDE_HEIGHT_BUDGETS = {
   compact: 140,
   dense: 160,
 };
+
+function clampNumber(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function roundScale(value) {
+  return Math.round(value * 1000) / 1000;
+}
+
+function getResponsiveTypeProfile() {
+  return viewportProfile.typeProfile || DEFAULT_TYPE_PROFILE;
+}
+
+function getScaledFontPx(fontPx, scale) {
+  return Math.max(1, Math.round(Number(fontPx || 0) * Number(scale || 1)));
+}
+
+function computeResponsiveTypeProfile({ viewportWidth, viewportHeight, heroWidth, cardWidth }) {
+  const contentWidth = clampNumber(
+    Math.max(0, Math.round(cardWidth || heroWidth || viewportWidth || 0)),
+    390,
+    780
+  );
+  const contentBoost = clampNumber((contentWidth - 390) / 390, 0, 1);
+  const viewportBoost = clampNumber((viewportWidth - 1280) / 1920, 0, 1);
+  const heightBoost = clampNumber((viewportHeight - 800) / 1400, 0, 1);
+
+  const bodyScale = clampNumber(1 + contentBoost * 0.08 + viewportBoost * 0.06 + heightBoost * 0.02, 1, 1.16);
+  const microScale = clampNumber(1 + (bodyScale - 1) * 0.7, 1, 1.11);
+  const displayScale = clampNumber(1 + (bodyScale - 1) * 1.2, 1, 1.19);
+  const controlScale = clampNumber(1 + (bodyScale - 1) * 0.6, 1, 1.1);
+  const iconScale = clampNumber(1 + (bodyScale - 1) * 0.5, 1, 1.08);
+  const gameTextScale = clampNumber(1.3 + (bodyScale - 1) * 0.9, 1.3, 1.44);
+
+  return {
+    contentWidth,
+    bodyScale: roundScale(bodyScale),
+    microScale: roundScale(microScale),
+    displayScale: roundScale(displayScale),
+    controlScale: roundScale(controlScale),
+    iconScale: roundScale(iconScale),
+    gameTextScale: roundScale(gameTextScale),
+  };
+}
+
+function hasResponsiveTypeProfileChanged(currentProfile, nextProfile) {
+  if (!currentProfile) {
+    return true;
+  }
+
+  return Object.keys(DEFAULT_TYPE_PROFILE).some((key) => {
+    const currentValue = Number(currentProfile[key] ?? 0);
+    const nextValue = Number(nextProfile[key] ?? 0);
+    return Math.abs(currentValue - nextValue) > 0.001;
+  });
+}
+
+function applyResponsiveTypeProfile(profile) {
+  if (!profile) {
+    return;
+  }
+
+  const rootStyle = document.documentElement?.style;
+  if (!rootStyle) {
+    return;
+  }
+
+  rootStyle.setProperty("--type-scale-body", String(profile.bodyScale));
+  rootStyle.setProperty("--type-scale-micro", String(profile.microScale));
+  rootStyle.setProperty("--type-scale-display", String(profile.displayScale));
+  rootStyle.setProperty("--type-scale-control", String(profile.controlScale));
+  rootStyle.setProperty("--type-scale-icon", String(profile.iconScale));
+  rootStyle.setProperty("--game-text-scale", String(profile.gameTextScale));
+  rootStyle.setProperty("--type-content-width", `${profile.contentWidth}px`);
+  viewportProfile.typeProfile = profile;
+}
 
 function isPhonePortraitLayoutActive() {
   return viewportProfile.isPhonePortrait;
@@ -869,7 +952,24 @@ function getPromptFitProfile({ text, width, density, kind }) {
   }
 
   const profileGroup = PROMPT_FIT_PROFILES[promptKind] || PROMPT_FIT_PROFILES.main;
-  return profileGroup[effectiveDensity] || profileGroup.regular;
+  const baseProfile = profileGroup[effectiveDensity] || profileGroup.regular;
+  const { bodyScale } = getResponsiveTypeProfile();
+
+  return {
+    ...baseProfile,
+    minFontPx: getScaledFontPx(baseProfile.minFontPx, bodyScale),
+    maxFontPx: getScaledFontPx(baseProfile.maxFontPx, bodyScale),
+  };
+}
+
+function getSiteTitleFitProfile() {
+  const { displayScale } = getResponsiveTypeProfile();
+
+  return {
+    maxLines: 1,
+    minFontPx: getScaledFontPx(10, displayScale),
+    maxFontPx: getScaledFontPx(38, displayScale),
+  };
 }
 
 function getNextAnswerGuideSizingTier(tier) {
@@ -886,7 +986,8 @@ function getNextAnswerGuideSizingTier(tier) {
 }
 
 function getAnswerGuideVerticalBudget(density) {
-  return ANSWER_GUIDE_HEIGHT_BUDGETS[clampGameDensity(density)] || ANSWER_GUIDE_HEIGHT_BUDGETS.regular;
+  const baseBudget = ANSWER_GUIDE_HEIGHT_BUDGETS[clampGameDensity(density)] || ANSWER_GUIDE_HEIGHT_BUDGETS.regular;
+  return Math.round(baseBudget * getResponsiveTypeProfile().controlScale);
 }
 
 function setAnswerGuideResponsiveVars(tier) {
@@ -895,13 +996,30 @@ function setAnswerGuideResponsiveVars(tier) {
   }
 
   const profile = ANSWER_GUIDE_SIZE_PROFILES[tier] || ANSWER_GUIDE_SIZE_PROFILES.regular;
+  const { controlScale } = getResponsiveTypeProfile();
   answerGuideEl.style.setProperty("--answer-guide-text-scale", String(profile.textScale));
   answerGuideEl.style.setProperty("--answer-guide-meta-scale", String(profile.metaScale));
-  answerGuideEl.style.setProperty("--answer-guide-token-gap", `${profile.tokenGap}px`);
-  answerGuideEl.style.setProperty("--answer-guide-char-gap", `${profile.charGap}px`);
-  answerGuideEl.style.setProperty("--answer-guide-separator-min-width", `${profile.separatorMinWidth}px`);
-  answerGuideEl.style.setProperty("--answer-guide-separator-padding-inline", `${profile.separatorPaddingInline}px`);
+  answerGuideEl.style.setProperty("--answer-guide-token-gap", `${Math.round(profile.tokenGap * controlScale)}px`);
+  answerGuideEl.style.setProperty("--answer-guide-char-gap", `${Math.round(profile.charGap * controlScale)}px`);
+  answerGuideEl.style.setProperty("--answer-guide-separator-min-width", `${Math.round(profile.separatorMinWidth * controlScale)}px`);
+  answerGuideEl.style.setProperty("--answer-guide-separator-padding-inline", `${Math.round(profile.separatorPaddingInline * controlScale)}px`);
+  answerGuideEl.style.setProperty("--answer-guide-space-separator-gap", `${Math.round(profile.spaceSeparatorGap * controlScale)}px`);
   answerGuideEl.dataset.answerGuideScale = tier;
+}
+
+function syncPromptOrderControls() {
+  const swapAria = t("messages.actions.switchPromptAria");
+
+  [promptPrimaryFlagEl, promptSecondaryFlagEl].forEach((button) => {
+    if (!button) {
+      return;
+    }
+
+    button.setAttribute("aria-label", swapAria);
+    button.setAttribute("title", swapAria);
+    button.setAttribute("aria-pressed", String(isPromptOrderSwapped));
+    button.classList.toggle("is-swapped", isPromptOrderSwapped);
+  });
 }
 
 function measureAnswerGuideBodyHeight() {
@@ -956,13 +1074,7 @@ function activateTouchInputWithoutScroll(event) {
   }
 
   event.preventDefault();
-  focusAnswerInputWithoutScroll();
-  const caretPosition = inputEl.value.length;
-  try {
-    inputEl.setSelectionRange(caretPosition, caretPosition);
-  } catch {
-    // ignore inputs that do not support selection APIs
-  }
+  focusAnswerInputAtEnd();
 }
 
 function focusAnswerInputWithoutScroll() {
@@ -975,6 +1087,89 @@ function focusAnswerInputWithoutScroll() {
   } catch {
     inputEl.focus();
   }
+}
+
+function focusAnswerInputAtEnd() {
+  if (!inputEl) {
+    return;
+  }
+
+  focusAnswerInputWithoutScroll();
+  const caretPosition = inputEl.value.length;
+  try {
+    inputEl.setSelectionRange(caretPosition, caretPosition);
+  } catch {
+    // ignore inputs that do not support selection APIs
+  }
+}
+
+function isAnswerFocusBlocked() {
+  return Boolean(
+    isSessionEndVisible() ||
+    (authorPanelEl && !authorPanelEl.classList.contains("is-hidden"))
+  );
+}
+
+function hasActivePlayableCard() {
+  return sessionCards.length > 0 && isRenderableCard(sessionCards[sessionIndex]);
+}
+
+function canConvenienceFocusAnswerInput() {
+  return Boolean(inputEl && hasActivePlayableCard() && !isAnswerFocusBlocked());
+}
+
+function shouldCaptureTypingForAnswer(event) {
+  if (!canConvenienceFocusAnswerInput()) {
+    return false;
+  }
+
+  if (event.defaultPrevented || event.isComposing || event.ctrlKey || event.metaKey || event.altKey) {
+    return false;
+  }
+
+  if (event.key.length !== 1) {
+    return false;
+  }
+
+  const activeElement = document.activeElement;
+  if (!activeElement || activeElement === document.body || activeElement === document.documentElement) {
+    return true;
+  }
+
+  return false;
+}
+
+function insertTextIntoAnswerInput(text) {
+  if (!inputEl || !text) {
+    return;
+  }
+
+  const start = typeof inputEl.selectionStart === "number" ? inputEl.selectionStart : inputEl.value.length;
+  const end = typeof inputEl.selectionEnd === "number" ? inputEl.selectionEnd : inputEl.value.length;
+
+  if (typeof inputEl.setRangeText === "function") {
+    inputEl.setRangeText(text, start, end, "end");
+  } else {
+    inputEl.value = `${inputEl.value.slice(0, start)}${text}${inputEl.value.slice(end)}`;
+  }
+
+  inputEl.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+function shouldTapFocusAnswerInput(target) {
+  if (!canConvenienceFocusAnswerInput() || !(target instanceof Element)) {
+    return false;
+  }
+
+  if (!gameArea?.contains(target)) {
+    return false;
+  }
+
+  if (target.closest("button, a, input, textarea, select, label")) {
+    return false;
+  }
+
+  return true;
 }
 
 function getViewportSize() {
@@ -1035,6 +1230,14 @@ function syncViewportProfile() {
   viewportProfile.maxObservedWidth = Math.max(viewportProfile.maxObservedWidth, nextViewport.width);
   viewportProfile.maxObservedHeight = Math.max(viewportProfile.maxObservedHeight, nextViewport.height);
   setStableViewportCssVars(nextViewport);
+  const nextTypeProfile = computeResponsiveTypeProfile({
+    viewportWidth: nextViewport.width,
+    viewportHeight: nextViewport.height,
+    heroWidth: heroStageEl?.clientWidth || 0,
+    cardWidth: mainCard?.clientWidth || 0,
+  });
+  const typeProfileChanged = hasResponsiveTypeProfileChanged(viewportProfile.typeProfile, nextTypeProfile);
+  applyResponsiveTypeProfile(nextTypeProfile);
 
   const widthRatio = viewportProfile.maxObservedWidth > 0
     ? nextViewport.width / viewportProfile.maxObservedWidth
@@ -1065,11 +1268,15 @@ function syncViewportProfile() {
   document.body.dataset.gameDensity = nextGameDensity;
   setGameSurfaceMode(isSessionEndVisible());
 
+  if (sizeChanged || typeProfileChanged) {
+    siteTitleController?.relayout();
+  }
+
   if (sizeChanged || layoutChanged) {
     maybeShowInstallGuide();
   }
 
-  if ((sizeChanged || densityChanged) && sessionCards.length && sessionCards[sessionIndex]) {
+  if ((sizeChanged || densityChanged || typeProfileChanged) && sessionCards.length && sessionCards[sessionIndex]) {
     promptController?.relayout();
     promptSubController?.relayout();
     buildWordGrid(getTargetValue(sessionCards[sessionIndex]), inputEl.value);
@@ -1124,15 +1331,15 @@ function renderSiteTitleLineContent({ line, startCharIndex }) {
 
 const siteTitleController = createPretextBlockController({
   element: siteTitleEl,
-  maxLines: 1,
-  minFontPx: 10,
-  maxFontPx: 38,
   lineHeightRatio: 0.82,
   fontFamily: "Tahoma, sans-serif",
   fontWeight: 800,
   targetWidthRatio: 0.98,
   lineClassName: "pretext-line--hero",
   renderLineContent: renderSiteTitleLineContent,
+  getLayoutConfig() {
+    return getSiteTitleFitProfile();
+  },
 });
 
 const promptController = createPretextBlockController({
@@ -1206,33 +1413,6 @@ function hideAppLoader() {
   window.setTimeout(() => {
     appLoaderEl.classList.add("is-hidden");
   }, delay);
-}
-
-function setSettingsOpen(isOpen) {
-  isSettingsOpen = Boolean(isOpen);
-
-  if (catPanelEl) {
-    catPanelEl.classList.toggle("is-hidden", !isSettingsOpen);
-  }
-
-  if (settingsBtn) {
-    settingsBtn.classList.toggle("active", isSettingsOpen);
-    settingsBtn.setAttribute("aria-expanded", String(isSettingsOpen));
-  }
-
-  if (languageDockEl) {
-    languageDockEl.classList.toggle("is-settings-open", isSettingsOpen);
-    const widthRatio = viewportProfile.maxObservedWidth > 0
-      ? viewportProfile.width / viewportProfile.maxObservedWidth
-      : 1;
-    const heightRatio = viewportProfile.maxObservedHeight > 0
-      ? viewportProfile.height / viewportProfile.maxObservedHeight
-      : 1;
-    updateLanguageDockZoom(Math.min(widthRatio, heightRatio), {
-      width: viewportProfile.width,
-      height: viewportProfile.height,
-    });
-  }
 }
 
 function normalizeTopic(topic) {
@@ -1752,10 +1932,6 @@ function renderStaticUi() {
     skipCardBtnEl.setAttribute("title", t("messages.actions.skip"));
   }
   setLocalizedText(promptHeadTitleEl, "messages.prompt.card");
-  if (promptSwapBtn) {
-    promptSwapBtn.setAttribute("aria-label", t("messages.prompt.swapAria"));
-    promptSwapBtn.setAttribute("title", t("messages.prompt.swapTitle"));
-  }
   if (inputEl) {
     inputEl.placeholder = t("messages.prompt.placeholder");
   }
@@ -1764,17 +1940,10 @@ function renderStaticUi() {
   setLocalizedText(enterHintTextEl, "messages.actions.enterHint");
   setLocalizedText(sessionEndLabelEl, "messages.session.finished");
   setLocalizedText(restartBtnEl, "messages.session.newRound");
+  setLocalizedText(settingsPanelTitleEl, "messages.actions.settings");
   setLocalizedText(catPanelTitleEl, "messages.categories.title");
-  setLocalizedText(sliderUnitLabelEl, "messages.categories.unit");
   setLocalizedText(newGameBtn, "messages.categories.newGame");
-  setLocalizedText(settingsBtnLabelEl, "messages.actions.settings");
-  setLocalizedText(switchOrderBtnLabelEl, "messages.actions.switchPrompt");
-  if (switchOrderBtn) {
-    switchOrderBtn.setAttribute("aria-label", t("messages.actions.switchPromptAria"));
-    switchOrderBtn.setAttribute("title", t("messages.actions.switchPromptAria"));
-    switchOrderBtn.setAttribute("aria-pressed", String(isPromptOrderSwapped));
-    switchOrderBtn.classList.toggle("active", isPromptOrderSwapped);
-  }
+  syncPromptOrderControls();
   setLocalizedText(difficultyEasyBtn, "difficulty.easy");
   setLocalizedText(difficultyMediumBtn, "difficulty.medium");
   setLocalizedText(difficultyHardBtn, "difficulty.hard");
@@ -1875,15 +2044,7 @@ function renderPrompt(card) {
   if (inputFlagEl) {
     inputFlagEl.textContent = LANGUAGE_FLAGS[getTargetLanguage()];
   }
-  if (switchOrderBtn) {
-    switchOrderBtn.classList.toggle("active", isPromptOrderSwapped);
-    switchOrderBtn.setAttribute("aria-pressed", String(isPromptOrderSwapped));
-  }
-  if (promptSwapBtn) {
-    promptSwapBtn.innerHTML = "&#128260;";
-    promptSwapBtn.setAttribute("aria-label", t("messages.prompt.swapAria"));
-    promptSwapBtn.setAttribute("title", t("messages.prompt.swapTitle"));
-  }
+  syncPromptOrderControls();
   return;
 }
 
@@ -1896,10 +2057,7 @@ function togglePromptOrder() {
     return;
   }
 
-  if (switchOrderBtn) {
-    switchOrderBtn.classList.toggle("active", isPromptOrderSwapped);
-    switchOrderBtn.setAttribute("aria-pressed", String(isPromptOrderSwapped));
-  }
+  syncPromptOrderControls();
 }
 
 function cardKey(card) {
@@ -3281,11 +3439,11 @@ function getGuideSeparatorSymbol(char) {
   const kind = getGuideSeparatorKind(char);
 
   if (kind === "space") {
-    return "\u00A0";
+    return "";
   }
 
   if (kind === "comma") {
-    return ",";
+    return "";
   }
 
   return char;
@@ -3624,29 +3782,6 @@ function updateAnswerTerminalStatus(target, typed, terminalHit = null) {
   answerTerminalStatusEl.textContent = terminalStatusKind === "success" ? "\u2665" : "\u2715";
 }
 
-function syncSolutionLayout() {
-  if (!solutionEl) {
-    return;
-  }
-
-  solutionEl.style.removeProperty("top");
-  solutionEl.style.removeProperty("left");
-  solutionEl.style.removeProperty("width");
-  solutionEl.style.removeProperty("max-height");
-}
-
-function showSolution(target) {
-  if (!solutionEl) {
-    return;
-  }
-
-  const prefixEl = document.createElement("strong");
-  prefixEl.textContent = t("messages.solution.correctPrefix");
-  solutionEl.replaceChildren(prefixEl, document.createTextNode(` ${target}`));
-  solutionEl.style.display = "block";
-  syncSolutionLayout();
-}
-
 function isExactTypedMatch(target, typed) {
   return typed.length === target.length && getCorrectPrefixLength(target, typed) === target.length;
 }
@@ -3665,21 +3800,31 @@ function showFeedbackBurst(kind, isBig = false) {
       ? ["🎉", "✨", "⭐", "💥", "🎊", "✨", "⭐", "🎉", "💫", "✨"]
       : ["✨", "⭐", "💫", "✨", "⭐", "✨"])
     : ["✖", "⚡", "✕", "⚠", "✖", "⚡"];
-  const spread = isBig ? 92 : 58;
-  const verticalLift = kind === "success" ? (isBig ? -96 : -62) : 54;
+  const baseDistance = isBig ? 164 : 116;
+  const distanceJitter = isBig ? 42 : 30;
+  const startAngle = getSecureRandomRange(0, 359);
+  const angleStep = 360 / Math.max(pieces.length, 1);
+  const midpointPull = kind === "success" ? (isBig ? 20 : 14) : 8;
 
   pieces.forEach((symbol, index) => {
     const piece = document.createElement("span");
-    const angle = (-90 + (180 / Math.max(pieces.length - 1, 1)) * index) * (Math.PI / 180);
-    const distance = spread * (0.7 + (index % 3) * 0.16);
+    const angleDegrees = startAngle + (angleStep * index) + getSecureRandomRange(-12, 12);
+    const angle = angleDegrees * (Math.PI / 180);
+    const distance = baseDistance + getSecureRandomRange(-distanceJitter, distanceJitter);
     const dx = Math.round(Math.cos(angle) * distance);
-    const dy = Math.round(Math.sin(angle) * distance + verticalLift);
+    const dy = Math.round(Math.sin(angle) * distance);
+    const mx = Math.round(dx * 0.52);
+    const my = Math.round(dy * 0.4 - midpointPull);
 
     piece.className = "burst-piece";
     piece.textContent = symbol;
     piece.style.setProperty("--dx", `${dx}px`);
     piece.style.setProperty("--dy", `${dy}px`);
-    piece.style.setProperty("--rot", `${getSecureRandomRange(-30, 30)}deg`);
+    const rotation = getSecureRandomRange(-44, 44);
+    piece.style.setProperty("--mx", `${mx}px`);
+    piece.style.setProperty("--my", `${my}px`);
+    piece.style.setProperty("--rot-mid", `${Math.round(rotation * 0.45)}deg`);
+    piece.style.setProperty("--rot", `${rotation}deg`);
     piece.style.animationDelay = `${index * 18}ms`;
     feedbackBurstEl.appendChild(piece);
   });
@@ -3711,53 +3856,6 @@ function buildWordGrid(
 
   tokens.forEach((token) => {
     if (token.type === "separator") {
-      if (token.kind === "space") {
-        const typedSeparator = typed[token.start];
-        const separatorLabel = getGuideSeparatorLabel(token.char);
-        const wrap = document.createElement("div");
-        const letter = document.createElement("div");
-        const line = document.createElement("div");
-
-        wrap.className = "wchar is-space-slot";
-        letter.className = "wchar-letter";
-        line.className = "wchar-line";
-        wrap.setAttribute("aria-label", separatorLabel);
-        wrap.setAttribute("title", separatorLabel);
-        letter.textContent =
-          typedSeparator !== undefined && typedSeparator !== token.char
-            ? "x"
-            : "\u00A0";
-
-        if (typedSeparator !== undefined) {
-          wrap.classList.add(typedSeparator === token.char ? "state-ok" : "state-bad");
-        } else if (token.start === correctPrefixLen) {
-          wrap.classList.add("state-next");
-        } else {
-          wrap.classList.add("state-hidden");
-        }
-
-        if (freshCorrectIndexes.has(token.start)) {
-          wrap.classList.add("state-hit");
-        }
-
-        if (freshWrongIndexes.has(token.start)) {
-          wrap.classList.add("state-miss");
-        }
-
-        if (token.start === caretIndex) {
-          wrap.classList.add("state-caret");
-        }
-
-        if (!showTerminalStatus && token.end === caretIndex && caretIndex === target.length) {
-          wrap.classList.add("state-caret-after");
-        }
-
-        wrap.appendChild(letter);
-        wrap.appendChild(line);
-        wordGrid.appendChild(wrap);
-        return;
-      }
-
       const separator = document.createElement("div");
       const letter = document.createElement("div");
       const line = document.createElement("div");
@@ -3865,21 +3963,6 @@ function buildWordGrid(
   if (typed.length > target.length) {
     typed.slice(target.length).split("").forEach((extraChar) => {
       if (isGuideSeparatorChar(extraChar)) {
-        if (getGuideSeparatorKind(extraChar) === "space") {
-          const overflowWrap = document.createElement("div");
-          const overflowLetter = document.createElement("div");
-          const overflowLine = document.createElement("div");
-
-          overflowWrap.className = "wchar is-space-slot state-bad is-overflow";
-          overflowLetter.className = "wchar-letter";
-          overflowLine.className = "wchar-line";
-          overflowLetter.textContent = "x";
-          overflowWrap.appendChild(overflowLetter);
-          overflowWrap.appendChild(overflowLine);
-          wordGrid.appendChild(overflowWrap);
-          return;
-        }
-
         const extraSeparator = document.createElement("div");
         const letter = document.createElement("div");
         const line = document.createElement("div");
@@ -3931,7 +4014,6 @@ function buildWordGrid(
   applyAnswerGuideResponsiveSizing({ target, typed });
   updateAnswerTerminalStatus(target, typed, terminalHit);
   updateAnswerGuide(target, typed);
-  syncSolutionLayout();
 }
 
 function shuffle(cards) {
@@ -3960,8 +4042,6 @@ function clearSessionUi() {
   previousTypedValue = "";
   clearTimeout(answerGuideCompleteTimer);
   answerGuideEl?.classList.remove("is-complete-hit");
-  solutionEl.style.display = "none";
-  syncSolutionLayout();
   forceCorrection = false;
   progFill.style.width = "0%";
   renderCardBadge(null);
@@ -4523,17 +4603,29 @@ function initInputEvents() {
     });
   }
 
-  if (settingsBtn) {
-    settingsBtn.addEventListener("click", () => {
-      setSettingsOpen(!isSettingsOpen);
-    });
-  }
-
-  if (switchOrderBtn) {
-    switchOrderBtn.addEventListener("click", () => {
+  [promptPrimaryFlagEl, promptSecondaryFlagEl].forEach((button) => {
+    button?.addEventListener("click", () => {
       togglePromptOrder();
     });
-  }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!shouldCaptureTypingForAnswer(event)) {
+      return;
+    }
+
+    event.preventDefault();
+    focusAnswerInputAtEnd();
+    insertTextIntoAnswerInput(event.key);
+  });
+
+  gameArea?.addEventListener("click", (event) => {
+    if (!shouldTapFocusAnswerInput(event.target)) {
+      return;
+    }
+
+    focusAnswerInputAtEnd();
+  });
 
   inputEl.addEventListener("input", () => {
     if (!sessionCards.length) {
@@ -4609,7 +4701,7 @@ function initInputEvents() {
       playAnswerGuideCompleteHit();
     }
     previousTypedValue = reveal;
-    focusAnswerInputWithoutScroll();
+    focusAnswerInputAtEnd();
   });
 
   inputEl.addEventListener("touchstart", activateTouchInputWithoutScroll, { passive: false });
@@ -4661,7 +4753,6 @@ function initInputEvents() {
         streak = 0;
       }
       inputEl.className = "wrong";
-      showSolution(target);
       forceCorrection = true;
       updateStats();
     }
@@ -4702,8 +4793,6 @@ async function initApp() {
   initDifficultyControls();
   initInputEvents();
   initAuthoringForm();
-  setSettingsOpen(false);
-
   capabilities = currentCapabilities;
   germanyFacts = loadedFacts;
   europeFacts = loadedEuropeFacts;

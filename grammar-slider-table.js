@@ -47,31 +47,44 @@ function getFontFamily(root, variableName, fallback) {
   return value || fallback;
 }
 
+function getNumericCssVar(root, variableName, fallback) {
+  const styles = getComputedStyle(root);
+  const rawValue = styles.getPropertyValue(variableName).trim();
+  const parsed = Number.parseFloat(rawValue);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
 function getTypography(root) {
   const displayFamily = getFontFamily(root, "--font-display", "Tahoma, sans-serif");
   const bodyFamily = getFontFamily(root, "--font-body", '"Segoe UI", "Trebuchet MS", sans-serif');
+  const headerFontSize = getNumericCssVar(root, "--grammar-header-font-size", 9);
+  const headerLineHeight = getNumericCssVar(root, "--grammar-header-line-height", 12);
+  const rowHeaderFontSize = getNumericCssVar(root, "--grammar-row-header-font-size", 10.5);
+  const rowHeaderLineHeight = getNumericCssVar(root, "--grammar-row-header-line-height", 14);
+  const cellFontSize = getNumericCssVar(root, "--grammar-cell-font-size", 11);
+  const cellLineHeight = getNumericCssVar(root, "--grammar-cell-line-height", 14);
 
   return {
     header: {
-      fontSize: 9,
+      fontSize: headerFontSize,
       fontWeight: 700,
-      lineHeight: 12,
+      lineHeight: headerLineHeight,
       fontFamily: displayFamily,
-      font: buildFontShorthand(700, 9, displayFamily),
+      font: buildFontShorthand(700, headerFontSize, displayFamily),
     },
     rowHeader: {
-      fontSize: 10.5,
+      fontSize: rowHeaderFontSize,
       fontWeight: 700,
-      lineHeight: 14,
+      lineHeight: rowHeaderLineHeight,
       fontFamily: displayFamily,
-      font: buildFontShorthand(700, 10.5, displayFamily),
+      font: buildFontShorthand(700, rowHeaderFontSize, displayFamily),
     },
     cell: {
-      fontSize: 11,
+      fontSize: cellFontSize,
       fontWeight: 400,
-      lineHeight: 14,
+      lineHeight: cellLineHeight,
       fontFamily: bodyFamily,
-      font: buildFontShorthand(400, 11, bodyFamily),
+      font: buildFontShorthand(400, cellFontSize, bodyFamily),
     },
   };
 }
