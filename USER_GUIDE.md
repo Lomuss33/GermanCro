@@ -26,6 +26,13 @@ They do not change the card data itself.
 
 The `Tipp` button reveals more of the current German answer and writes the revealed part into the answer field.
 
+## Skip button
+
+The skip button moves the current card to later in the same round.
+
+- skipping breaks the current streak
+- skipped cards are counted and shown at the end of the session
+
 ## New game controls
 
 The settings area below the main card controls session setup.

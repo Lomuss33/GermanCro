@@ -48,7 +48,7 @@ const searchSites = [
 
 const SESSION_SIZE = 10;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
-const PUNCT = /[.,!?:;]/;
+const AUTOFILL_TRAILING_PUNCT = /[.!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
 const EMERGENCY_FALLBACK_CARD = Object.freeze({
   de: "das Haus",
@@ -604,9 +604,11 @@ let streak = 0;
 let bestStreak = 0;
 let totalCorrect = 0;
 let totalAttempts = 0;
+let skippedCount = 0;
 let forceCorrection = false;
 let sessionStart = 0;
 let totalCharsTyped = 0;
+let sessionSkipCounts = new WeakMap();
 let difficulty = "easy";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
@@ -1647,6 +1649,32 @@ function canSkipCurrentCard() {
   return sessionCards.length - sessionIndex > 1;
 }
 
+function incrementCardSkipCount(card) {
+  const currentCount = sessionSkipCounts.get(card) || 0;
+  sessionSkipCounts.set(card, currentCount + 1);
+}
+
+function skipCurrentCard() {
+  const card = sessionCards[sessionIndex];
+  if (!isRenderableCard(card)) {
+    void recoverPlayableSession("skip-invalid-card", sessionCards.length || SESSION_SIZE);
+    return;
+  }
+
+  if (!canSkipCurrentCard()) {
+    return;
+  }
+
+  skippedCount += 1;
+  incrementCardSkipCount(card);
+  streak = 0;
+  updateStats();
+
+  const [currentCard] = sessionCards.splice(sessionIndex, 1);
+  sessionCards.push(currentCard);
+  loadCard();
+}
+
 function updateSkipCardButtonState() {
   if (!skipCardBtnEl) {
     return;
@@ -1929,7 +1957,7 @@ function renderStaticUi() {
   setLocalizedText(skipCardBtnLabelEl, "messages.actions.skip");
   if (skipCardBtnEl) {
     skipCardBtnEl.setAttribute("aria-label", t("messages.actions.skip"));
-    skipCardBtnEl.setAttribute("title", t("messages.actions.skip"));
+    skipCardBtnEl.setAttribute("title", t("messages.actions.skipTitle"));
   }
   setLocalizedText(promptHeadTitleEl, "messages.prompt.card");
   if (inputEl) {
@@ -3411,9 +3439,6 @@ function getGuideSeparatorKind(char) {
   if (char === " ") {
     return "space";
   }
-  if (char === ",") {
-    return "comma";
-  }
   return null;
 }
 
@@ -3428,10 +3453,6 @@ function getGuideSeparatorLabel(char, { overflow = false } = {}) {
     return t(overflow ? "messages.guide.extraSeparator" : "messages.guide.separator");
   }
 
-  if (kind === "comma") {
-    return t(overflow ? "messages.guide.extraComma" : "messages.guide.comma");
-  }
-
   return char;
 }
 
@@ -3439,10 +3460,6 @@ function getGuideSeparatorSymbol(char) {
   const kind = getGuideSeparatorKind(char);
 
   if (kind === "space") {
-    return "";
-  }
-
-  if (kind === "comma") {
     return "";
   }
 
@@ -3454,10 +3471,6 @@ function getGuideStatusForSeparator(char, word, total) {
 
   if (kind === "space") {
     return t("messages.guide.statusSpace", { word, total });
-  }
-
-  if (kind === "comma") {
-    return t("messages.guide.statusComma", { word, total });
   }
 
   return "";
@@ -3556,7 +3569,7 @@ function getCharMeta(target) {
     }
 
     let tail = wordToken.end - 1;
-    while (tail > wordToken.start && PUNCT.test(target[tail])) {
+    while (tail > wordToken.start && AUTOFILL_TRAILING_PUNCT.test(target[tail])) {
       autofill.add(tail);
       tail -= 1;
     }
@@ -4031,8 +4044,10 @@ function resetSessionProgress() {
   bestStreak = 0;
   totalCorrect = 0;
   totalAttempts = 0;
+  skippedCount = 0;
   totalCharsTyped = 0;
   sessionStart = Date.now();
+  sessionSkipCounts = new WeakMap();
 }
 
 function clearSessionUi() {
@@ -4460,6 +4475,7 @@ function showSessionEnd() {
     t("messages.session.finalDetails", {
       correct: totalCorrect,
       total: sessionCards.length,
+      skipped: skippedCount,
       streak: bestStreak,
       wpm,
       secs,
@@ -4588,18 +4604,7 @@ function initInputEvents() {
 
   if (skipCardBtnEl) {
     skipCardBtnEl.addEventListener("click", () => {
-      if (!canSkipCurrentCard()) {
-        return;
-      }
-
-      if (!isRenderableCard(sessionCards[sessionIndex])) {
-        void recoverPlayableSession("skip-invalid-card", sessionCards.length || SESSION_SIZE);
-        return;
-      }
-
-      const [currentCard] = sessionCards.splice(sessionIndex, 1);
-      sessionCards.push(currentCard);
-      loadCard();
+      skipCurrentCard();
     });
   }
 
