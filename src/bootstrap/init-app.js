@@ -341,6 +341,7 @@ let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
 let feedbackBurstPieces = [];
+let answerGuideMeasureRaf = 0;
 let learningMode = "de";
 let isPromptOrderSwapped = false;
 let germanyFacts = null;
@@ -483,6 +484,16 @@ const viewportProfile = {
   typeProfile: null,
   initialized: false,
   syncFrame: 0,
+};
+const answerGuideSizingState = {
+  target: "",
+  typed: "",
+  width: 0,
+  baseDensity: "regular",
+  targetBucket: -1,
+  typedBucket: -1,
+  lastTier: "",
+  lastMeasuredHeight: 0,
 };
 const FEEDBACK_BURST_SYMBOLS = Object.freeze({
   success: Object.freeze({
@@ -766,34 +777,85 @@ function measureAnswerGuideBodyHeight() {
     return 0;
   }
 
-  return Math.max(
+  const height = Math.max(
     answerGuideBodyEl.scrollHeight || 0,
     Math.ceil(answerGuideBodyEl.getBoundingClientRect().height || 0),
     wordGrid?.scrollHeight || 0,
   );
+  answerGuideSizingState.lastMeasuredHeight = height;
+  return height;
 }
 
-function applyAnswerGuideResponsiveSizing({ target, typed }) {
+function getAnswerGuideLengthBucket(length) {
+  if (length <= 24) {
+    return 0;
+  }
+  if (length <= 48) {
+    return 1;
+  }
+  if (length <= 72) {
+    return 2;
+  }
+  if (length <= 96) {
+    return 3;
+  }
+  return 4;
+}
+
+function scheduleAnswerGuideMeasure(reason) {
+  void reason;
+  if (answerGuideMeasureRaf || !answerGuideEl || !answerGuideBodyEl || !wordGrid) {
+    return;
+  }
+
+  answerGuideMeasureRaf = requestAnimationFrame(() => {
+    answerGuideMeasureRaf = 0;
+    measureAnswerGuideBodyHeight();
+    applyAnswerGuideResponsiveSizing();
+  });
+}
+
+function applyAnswerGuideResponsiveSizing() {
   if (!answerGuideEl || !answerGuideBodyEl || !wordGrid) {
     return;
   }
 
   const baseDensity = getCurrentGameDensity();
   const budget = getAnswerGuideVerticalBudget(baseDensity);
-  const targetLength = Array.from(String(target ?? "")).length;
-  const typedLength = Array.from(String(typed ?? "")).length;
+  const targetLength = Array.from(String(answerGuideSizingState.target ?? "")).length;
+  const typedLength = Array.from(String(answerGuideSizingState.typed ?? "")).length;
+  const width = Math.round(answerGuideBodyEl.clientWidth || answerGuideEl.clientWidth || 0);
+  const targetBucket = getAnswerGuideLengthBucket(targetLength);
+  const typedBucket = getAnswerGuideLengthBucket(typedLength);
   let tier = baseDensity;
 
   if (targetLength > 72 || typedLength > 72) {
     tier = getNextDenserDensity(tier);
   }
 
+  const sameSizingInputs =
+    answerGuideSizingState.width === width &&
+    answerGuideSizingState.baseDensity === baseDensity &&
+    answerGuideSizingState.targetBucket === targetBucket &&
+    answerGuideSizingState.typedBucket === typedBucket &&
+    answerGuideSizingState.lastTier === tier;
+
   setAnswerGuideResponsiveVars(tier);
+
+  if (sameSizingInputs && answerGuideSizingState.lastMeasuredHeight <= budget) {
+    return;
+  }
 
   if (measureAnswerGuideBodyHeight() > budget) {
     tier = getNextAnswerGuideSizingTier(tier);
     setAnswerGuideResponsiveVars(tier);
   }
+
+  answerGuideSizingState.width = width;
+  answerGuideSizingState.baseDensity = baseDensity;
+  answerGuideSizingState.targetBucket = targetBucket;
+  answerGuideSizingState.typedBucket = typedBucket;
+  answerGuideSizingState.lastTier = tier;
 }
 
 function setStableViewportCssVars(viewport) {
@@ -3714,7 +3776,9 @@ function buildWordGrid(
     wordGrid.appendChild(endCaret);
   }
 
-  applyAnswerGuideResponsiveSizing({ target, typed });
+  answerGuideSizingState.target = String(target ?? "");
+  answerGuideSizingState.typed = String(typed ?? "");
+  scheduleAnswerGuideMeasure("build-word-grid");
   updateAnswerTerminalStatus(target, typed, terminalHit);
   updateAnswerGuide(target, typed);
 }
