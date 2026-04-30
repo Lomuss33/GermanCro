@@ -340,6 +340,7 @@ let difficulty = "easy";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
+let feedbackBurstPieces = [];
 let learningMode = "de";
 let isPromptOrderSwapped = false;
 let germanyFacts = null;
@@ -483,6 +484,13 @@ const viewportProfile = {
   initialized: false,
   syncFrame: 0,
 };
+const FEEDBACK_BURST_SYMBOLS = Object.freeze({
+  success: Object.freeze({
+    big: Object.freeze(["\u{1F389}", "\u2728", "\u2B50", "\u{1F4A5}", "\u{1F38A}", "\u2728", "\u2B50", "\u{1F389}", "\u{1F4AB}", "\u2728"]),
+    small: Object.freeze(["\u2728", "\u2B50", "\u{1F4AB}", "\u2728", "\u2B50", "\u2728"]),
+  }),
+  error: Object.freeze(["\u2716", "\u26A1", "\u2715", "\u26A0", "\u2716", "\u26A1"]),
+});
 
 const GAME_DENSITY_ORDER = ["regular", "compact", "dense"];
 const DEFAULT_TYPE_PROFILE = Object.freeze({
@@ -3440,28 +3448,63 @@ function isExactTypedMatch(target, typed) {
   return typed.length === target.length && getCorrectPrefixLength(target, typed) === target.length;
 }
 
+function ensureFeedbackBurstPieces(count) {
+  if (!feedbackBurstEl) {
+    return [];
+  }
+
+  while (feedbackBurstPieces.length < count) {
+    const piece = document.createElement("span");
+    piece.className = "burst-piece";
+    piece.hidden = true;
+    feedbackBurstEl.appendChild(piece);
+    feedbackBurstPieces.push(piece);
+  }
+
+  return feedbackBurstPieces;
+}
+
+function getFeedbackBurstSymbols(kind, isBig) {
+  if (kind === "success") {
+    return isBig ? FEEDBACK_BURST_SYMBOLS.success.big : FEEDBACK_BURST_SYMBOLS.success.small;
+  }
+
+  return FEEDBACK_BURST_SYMBOLS.error;
+}
+
+function resetFeedbackBurstPieces() {
+  feedbackBurstPieces.forEach((piece) => {
+    piece.hidden = true;
+    piece.textContent = "";
+    piece.style.animation = "none";
+  });
+}
+
 function showFeedbackBurst(kind, isBig = false) {
   if (!feedbackBurstEl) {
     return;
   }
 
   clearTimeout(feedbackBurstTimer);
-  feedbackBurstEl.innerHTML = "";
   feedbackBurstEl.className = `feedback-burst is-${kind}${isBig ? " is-big" : ""}`;
 
-  const pieces = kind === "success"
-    ? (isBig
-      ? ["🎉", "✨", "⭐", "💥", "🎊", "✨", "⭐", "🎉", "💫", "✨"]
-      : ["✨", "⭐", "💫", "✨", "⭐", "✨"])
-    : ["✖", "⚡", "✕", "⚠", "✖", "⚡"];
+  const pieces = getFeedbackBurstSymbols(kind, isBig);
   const baseDistance = isBig ? 164 : 116;
   const distanceJitter = isBig ? 42 : 30;
   const startAngle = getSecureRandomRange(0, 359);
   const angleStep = 360 / Math.max(pieces.length, 1);
   const midpointPull = kind === "success" ? (isBig ? 20 : 14) : 8;
+  const burstPieces = ensureFeedbackBurstPieces(pieces.length);
 
-  pieces.forEach((symbol, index) => {
-    const piece = document.createElement("span");
+  burstPieces.forEach((piece, index) => {
+    piece.hidden = true;
+    piece.style.animation = "none";
+    if (index >= pieces.length) {
+      piece.textContent = "";
+      return;
+    }
+
+    const symbol = pieces[index];
     const angleDegrees = startAngle + (angleStep * index) + getSecureRandomRange(-12, 12);
     const angle = angleDegrees * (Math.PI / 180);
     const distance = baseDistance + getSecureRandomRange(-distanceJitter, distanceJitter);
@@ -3470,7 +3513,6 @@ function showFeedbackBurst(kind, isBig = false) {
     const mx = Math.round(dx * 0.52);
     const my = Math.round(dy * 0.4 - midpointPull);
 
-    piece.className = "burst-piece";
     piece.textContent = symbol;
     piece.style.setProperty("--dx", `${dx}px`);
     piece.style.setProperty("--dy", `${dy}px`);
@@ -3480,11 +3522,18 @@ function showFeedbackBurst(kind, isBig = false) {
     piece.style.setProperty("--rot-mid", `${Math.round(rotation * 0.45)}deg`);
     piece.style.setProperty("--rot", `${rotation}deg`);
     piece.style.animationDelay = `${index * 18}ms`;
-    feedbackBurstEl.appendChild(piece);
+    piece.hidden = false;
+  });
+
+  void feedbackBurstEl.offsetWidth;
+  burstPieces.forEach((piece, index) => {
+    if (index < pieces.length) {
+      piece.style.animation = "";
+    }
   });
 
   feedbackBurstTimer = setTimeout(() => {
-    feedbackBurstEl.innerHTML = "";
+    resetFeedbackBurstPieces();
     feedbackBurstEl.className = "feedback-burst";
   }, isBig ? 980 : 760);
 }
