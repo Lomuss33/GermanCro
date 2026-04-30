@@ -4578,11 +4578,11 @@ function initInputEvents() {
 
 function createFlagColumns() {
   const flagEl = document.getElementById("deFlag");
-  for (let i = 0; i < 50; i += 1) {
+  for (let i = 0; i < 28; i += 1) {
     const col = document.createElement("div");
     col.className = "de-flag-col";
     col.style.animationDelay = `${-(i / 20) * 3}s`;
-    const baseBillow = (i / 4) * 16 + 4;
+    const baseBillow = (i / 4) * 11.2 + 4;
     const billow = i >= 25 ? baseBillow * 1.3 : baseBillow;
     col.style.setProperty("--billow", `${billow}px`);
     flagEl.appendChild(col);
