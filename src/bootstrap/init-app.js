@@ -28,6 +28,9 @@ const SESSION_SIZE = 10;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const AUTOFILL_TRAILING_PUNCT = /[.!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
+const FACTS_STATE_IMAGE_OVERRIDES = Object.freeze({
+  bayern: `${FACTS_IMAGE_ROOT}/states/bayern-facts.webp`,
+});
 const EMERGENCY_FALLBACK_CARD = Object.freeze({
   de: "das Haus",
   hr: "kuća",
@@ -2363,6 +2366,10 @@ function getFactsImagePath(type, stateId) {
   }
 
   if (type === "state" && isNonEmptyValue(stateId)) {
+    if (FACTS_STATE_IMAGE_OVERRIDES[stateId]) {
+      return FACTS_STATE_IMAGE_OVERRIDES[stateId];
+    }
+
     return `${FACTS_IMAGE_ROOT}/states/${stateId}.webp`;
   }
 
@@ -2941,33 +2948,43 @@ function renderFactsSelection() {
 }
 
 function scrollFactsContentIntoView() {
-  const targetEl =
+  scheduleFactsScroll(() =>
     factsContentEl?.querySelector(".facts-view-head, .facts-error, .facts-view") ||
     factsContentEl ||
-    factsPanelEl;
+    factsPanelEl
+  );
+}
+
+function shouldScrollFactsTargetIntoView(targetEl, offset = 10) {
   if (!targetEl) {
-    return;
+    return false;
   }
 
+  const rect = targetEl.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+  if (viewportHeight <= 0) {
+    return true;
+  }
+
+  return rect.top < offset || rect.top > viewportHeight - offset;
+}
+
+function scheduleFactsScroll(resolveTarget, offset = 10) {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      const targetTop = Math.max(0, window.scrollY + targetEl.getBoundingClientRect().top - 10);
+      const targetEl = typeof resolveTarget === "function" ? resolveTarget() : resolveTarget;
+      if (!targetEl || !shouldScrollFactsTargetIntoView(targetEl, offset)) {
+        return;
+      }
+
+      const targetTop = Math.max(0, window.scrollY + targetEl.getBoundingClientRect().top - offset);
       window.scrollTo({ top: targetTop, behavior: "smooth" });
     });
   });
 }
 
 function scrollFactsPanelTopIntoView() {
-  if (!factsPanelEl) {
-    return;
-  }
-
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const targetTop = Math.max(0, window.scrollY + factsPanelEl.getBoundingClientRect().top - 10);
-      window.scrollTo({ top: targetTop, behavior: "smooth" });
-    });
-  });
+  scheduleFactsScroll(factsPanelEl);
 }
 
 function initFactsPanel() {

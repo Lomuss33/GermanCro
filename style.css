@@ -755,7 +755,6 @@ body > * { position: relative; z-index: 1; }
   isolation: isolate;
   contain: paint;
   transform: translateZ(0);
-  will-change: transform;
   background-color: var(--surface);
   background:
     linear-gradient(180deg, rgba(18, 28, 64, 0.78), rgba(10, 18, 44, 0.66)),
