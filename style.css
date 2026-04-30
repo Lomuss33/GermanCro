@@ -771,6 +771,13 @@ body > * { position: relative; z-index: 1; }
   background-blend-mode: normal, screen, screen, screen, screen, screen, normal;
 }
 
+.search-panel,
+.author-panel,
+.facts-panel {
+  content-visibility: auto;
+  contain-intrinsic-size: 700px;
+}
+
 .card {
   border: 1px solid rgba(255, 255, 255, 0.32);
   padding: clamp(8px, 1.2vw, 11px) clamp(11px, 1.8vw, 16px) clamp(11px, 1.8vw, 16px);
