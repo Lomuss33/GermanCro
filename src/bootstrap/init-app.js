@@ -351,6 +351,7 @@ let factsMode = "germany";
 let selectedStateId = null;
 let selectedEuropeCountryId = null;
 let selectedWorldCountryId = null;
+let factsPickerRenderKey = "";
 let locales = null;
 let hasBootstrappedApp = false;
 let sessionRecoveryNonce = 0;
@@ -495,6 +496,7 @@ const answerGuideSizingState = {
   lastTier: "",
   lastMeasuredHeight: 0,
 };
+const factsPickerButtons = new Map();
 const FEEDBACK_BURST_SYMBOLS = Object.freeze({
   success: Object.freeze({
     big: Object.freeze(["\u{1F389}", "\u2728", "\u2B50", "\u{1F4A5}", "\u{1F38A}", "\u2728", "\u2B50", "\u{1F389}", "\u{1F4AB}", "\u2728"]),
@@ -2875,17 +2877,25 @@ function updateStatePickerVisibility() {
   statePickerWrap.classList.toggle("is-open", showGermanyPicker || showEuropePicker || showWorldPicker);
 }
 
-function buildFactsPicker() {
-  statePickerEl.innerHTML = "";
+function getFactsPickerMode() {
+  if (factsMode === "germany" || factsMode === "state") {
+    return "germany";
+  }
 
-  const isGermanyMode = factsMode === "germany" || factsMode === "state";
-  const isWorldMode = factsMode === "world" || factsMode === "world-country";
-  const items = isGermanyMode
+  if (factsMode === "world" || factsMode === "world-country") {
+    return "world";
+  }
+
+  return "europe";
+}
+
+function getFactsPickerItems() {
+  const pickerMode = getFactsPickerMode();
+  return pickerMode === "germany"
     ? (germanyFacts?.states || []).map((state) => ({
         id: state.id,
         label: state.name,
         flagSrc: getFactsImagePath("state", state.id),
-        active: state.id === selectedStateId,
         ariaLabel: t("facts.picker.stateButton", { name: state.name }),
         onClick: () => {
           factsMode = "state";
@@ -2894,12 +2904,11 @@ function buildFactsPicker() {
           scrollFactsContentIntoView();
         },
       }))
-    : isWorldMode
+    : pickerMode === "world"
     ? (worldFacts?.countries || []).map((country) => ({
         id: country.id,
         label: getLocalizedCountryNameById(country.id, country.name),
         flagSrc: country.flag_image || "",
-        active: country.id === selectedWorldCountryId,
         ariaLabel: t("facts.picker.countryButton", {
           name: getLocalizedCountryNameById(country.id, country.name),
         }),
@@ -2925,11 +2934,51 @@ function buildFactsPicker() {
           scrollFactsContentIntoView();
         },
       }));
+}
+
+function getActiveFactsPickerId() {
+  const pickerMode = getFactsPickerMode();
+  if (pickerMode === "germany") {
+    return selectedStateId;
+  }
+  if (pickerMode === "world") {
+    return selectedWorldCountryId;
+  }
+  return selectedEuropeCountryId;
+}
+
+function updateFactsPickerSelection() {
+  const activeId = getActiveFactsPickerId();
+  factsPickerButtons.forEach((button, id) => {
+    const isActive = id === activeId;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+    if (isActive) {
+      button.setAttribute("aria-current", "true");
+    } else {
+      button.removeAttribute("aria-current");
+    }
+  });
+}
+
+function buildFactsPicker() {
+  const pickerMode = getFactsPickerMode();
+  const items = getFactsPickerItems();
+  const pickerKey = `${pickerMode}|${getTargetLanguage()}|${items.map((item) => item.id).join(",")}`;
 
   statePickerEl.setAttribute(
     "aria-label",
-    isGermanyMode ? t("facts.picker.statesAria") : t("facts.picker.countriesAria")
+    pickerMode === "germany" ? t("facts.picker.statesAria") : t("facts.picker.countriesAria")
   );
+
+  if (factsPickerRenderKey === pickerKey && factsPickerButtons.size === items.length) {
+    updateFactsPickerSelection();
+    return;
+  }
+
+  factsPickerRenderKey = pickerKey;
+  factsPickerButtons.clear();
+  statePickerEl.innerHTML = "";
 
   items.forEach((item) => {
     const button = document.createElement("button");
@@ -2962,12 +3011,13 @@ function buildFactsPicker() {
     } else {
       button.textContent = item.label;
     }
-    button.classList.toggle("active", item.active);
-    button.setAttribute("aria-pressed", String(item.active));
     button.setAttribute("aria-label", item.ariaLabel);
     button.addEventListener("click", item.onClick);
+    factsPickerButtons.set(item.id, button);
     statePickerEl.appendChild(button);
   });
+
+  updateFactsPickerSelection();
 }
 
 function renderFactsSelection() {
