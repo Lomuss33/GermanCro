@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=overlays-content">
 <title>GermanCro</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=2026-04-29-fix1">
 </head>
 <body>
 
@@ -117,7 +117,7 @@
         <div class="answer-guide-status" id="answerGuideStatus" aria-live="polite"></div>
       </div>
       <div class="answer-guide-body">
-        <span class="answer-guide-trail-flag" aria-hidden="true">🎮☑️</span>
+        <span class="answer-guide-trail-flag" aria-hidden="true">&#127918;&#9745;&#65039;</span>
         <div class="word-grid" id="wordGrid"></div>
       </div>
       <div class="answer-guide-foot">
@@ -129,7 +129,7 @@
     <div class="action-row">
       <div class="action-row-left">
         <button class="skip-card-btn" id="skipCardBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#9197;&#65039;</span> <span id="skipCardBtnLabel">Skip</span></button>
-        <button class="hint-btn" id="hintBtn"><span class="button-icon button-icon-emoji" aria-hidden="true">💡</span> <span>Tipp</span></button>
+        <button class="hint-btn" id="hintBtn"><span class="button-icon button-icon-emoji" aria-hidden="true">&#128161;</span> <span>Tipp</span></button>
       </div>
     </div>
     <div class="combo-pop" id="comboPop"></div>
@@ -140,7 +140,7 @@
     <div class="big-score" id="finalScore"></div>
     <div class="session-end-details" id="finalDetails"></div>
     <div class="session-end-emoji" id="finalEmoji"></div>
-    <button class="restart-btn" id="restartBtn" onclick="startSession()">Neue Runde</button>
+    <button class="restart-btn" id="restartBtn" type="button">Neue Runde</button>
   </div>
   </div>
 </div>
@@ -168,14 +168,12 @@
             max="50"
             step="5"
             value="10"
-            oninput="document.getElementById('sliderLabel').textContent = this.value"
           />
           <span class="slider-label"><span id="sliderLabel">10</span></span>
         </div>
         <div class="cat-count" id="catCount"></div>
       </div>
-      <button class="new-game-btn" id="newGameBtn"
-        onclick="startSession(+document.getElementById('sessionSizeSlider').value)">
+      <button class="new-game-btn" id="newGameBtn" type="button">
         Neues Spiel
       </button>
     </div>
@@ -255,6 +253,6 @@
   <a href="https://lomuss33.github.io/myWebsite/" target="_blank" rel="noopener noreferrer" id="siteFooterLink">made by Lovro Musi&#263;, in Gie&#223;en 2026, with &#9829;</a>
 </footer>
 
-<script type="module" src="app.js"></script>
+<script type="module" src="app.js?v=2026-04-29-fix1"></script>
 </body>
 </html>

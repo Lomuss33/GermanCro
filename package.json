@@ -1,7 +1,13 @@
 {
   "name": "germancro",
+  "type": "module",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "validate:cards": "node scripts/validate-cards.js",
+    "validate:facts": "node scripts/validate-facts.js",
+    "validate:locales": "node scripts/validate-locales.js",
+    "smoke": "node scripts/smoke-static-shape.js",
+    "check": "npm run validate:cards && npm run validate:facts && npm run validate:locales && npm run smoke"
   }
 }

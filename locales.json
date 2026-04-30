@@ -1,115 +1,1655 @@
 {
   "de": {
-    "meta": { "htmlLang": "de" },
-    "categories": { "Nomen": "Nomen", "Verb": "Verb", "Adjektiv": "Adjektiv", "Adverb": "Adverb", "Präposition": "Präposition", "Konjunktion": "Konjunktion", "Ausdruck": "Ausdruck", "Satz": "Satz" },
-    "topics": { "basics": "Alltag", "vehicles": "Fahrzeuge", "nature": "Natur", "food": "Küche", "travel": "Urlaub", "work": "Arbeit", "health": "Krankenhaus", "people": "Menschen", "shopping": "Einkaufen", "developertech": "Softwareentwicklung", "itnetwork": "IT & Netzwerke" },
-    "scopes": { "all": "Alle 3", "de": "DE-Modus", "hr": "HR-Modus", "gb": "GB-Modus" },
-    "difficulty": { "easy": "Leicht", "medium": "Mittel", "hard": "Schwer" },
-    "combo": { "3": "Gut!", "4": "Stark!", "5": "Super!", "6": "Mega!", "7": "Wahnsinn!", "8": "Unschlagbar!" },
+    "meta": {
+      "htmlLang": "de"
+    },
+    "categories": {
+      "Nomen": "Nomen",
+      "Verb": "Verb",
+      "Adjektiv": "Adjektiv",
+      "Adverb": "Adverb",
+      "Präposition": "Präposition",
+      "Konjunktion": "Konjunktion",
+      "Ausdruck": "Ausdruck",
+      "Satz": "Satz"
+    },
+    "topics": {
+      "basics": "Alltag",
+      "vehicles": "Fahrzeuge",
+      "nature": "Natur",
+      "food": "Küche",
+      "travel": "Urlaub",
+      "work": "Arbeit",
+      "health": "Krankenhaus",
+      "people": "Menschen",
+      "shopping": "Einkaufen",
+      "developertech": "Softwareentwicklung",
+      "itnetwork": "IT & Netzwerke"
+    },
+    "scopes": {
+      "all": "Alle 3",
+      "de": "DE-Modus",
+      "hr": "HR-Modus",
+      "gb": "GB-Modus"
+    },
+    "difficulty": {
+      "easy": "Leicht",
+      "medium": "Mittel",
+      "hard": "Schwer"
+    },
+    "combo": {
+      "3": "Gut!",
+      "4": "Stark!",
+      "5": "Super!",
+      "6": "Mega!",
+      "7": "Wahnsinn!",
+      "8": "Unschlagbar!"
+    },
     "messages": {
       "languageDockAria": "Lernsprache wechseln",
-      "languageNames": { "de": "Deutsch", "hr": "Hrvatski", "en": "English" },
-      "stats": { "streak": "Streak", "remaining": "Übrig", "accuracy": "Genauigkeit", "wpm": "WPM" },
-      "legend": { "aria": "Spielhilfe", "correct": "richtig", "next": "als Nächstes", "wrong": "falsch" },
-      "prompt": { "card": "Karte", "swapAria": "Lernsprache wechseln", "swapTitle": "Lernsprache wechseln", "placeholder": "Antwort eingeben..." },
-      "guide": { "label": "Antwortverlauf", "separator": "Leerz.", "extraSeparator": "extra Leerz.", "comma": "Komma", "extraComma": "extra Komma", "statusTooLong": "Zu lang - letztes Zeichen löschen", "noteTooLong": "Die Antwort war schon komplett. Extra Zeichen werden rot hinten angehängt.", "statusWrong": "Fehler in Wort {word}/{total} - prüf Zeichen {char}", "noteWrong": "Rot markiert den ersten falschen Teil der Eingabe.", "statusDone": "Wort {total}/{total} komplett", "statusSpace": "Wort {word}/{total} fertig - jetzt Leerzeichen", "statusComma": "Wort {word}/{total} fertig - jetzt Komma", "statusProgress": "Wort {word}/{total} - Buchstabe {char}/{length}" },
-      "actions": { "hint": "Tipp", "skip": "Überspringen", "skipTitle": "Diese Karte später in dieser Runde zeigen", "enterHint": "zum Prüfen", "settings": "Einstellungen", "switchPrompt": "Tauschen", "switchPromptAria": "Obere und untere Übersetzung tauschen" },
-      "session": { "finished": "Sitzung beendet", "newRound": "Neue Runde", "finalDetails": "{correct}/{total} richtig · Übersprungen: {skipped} · Streak: {streak} · {wpm} WPM · {secs}s", "emojiPerfect": "Topscore", "emojiStrong": "Sehr stark", "emojiGood": "Guter Lauf", "emojiPractice": "Weiterüben" },
-      "categories": { "title": "Themen auswählen", "mixed": "Alle Themen", "available": "{count} {unit} verfügbar", "unit": "Karten", "newGame": "Neues Spiel" },
-      "search": { "title": "Deutschen Ausdruck nachschlagen", "subtitle": "Für Wörter, Wendungen oder ganze Sätze.", "authorToggle": "Neue Karten" },
-      "authoring": { "title": "Neue Karte hinzufügen", "labels": { "topic": "Thema", "subcategory": "Unterkategorie", "scope": "Modus", "de": "Deutsch", "hr": "Kroatisch", "en": "Englisch" }, "placeholders": { "de": "z. B. die Entscheidung", "hr": "z. B. odluka", "en": "z. B. decision" }, "saveBusy": "Speichert...", "savePersistent": "Dauerhaft speichern", "saveSession": "In Sitzung speichern", "export": ".json export", "modePersistent": "Direktes Speichern ist aktiv. Export bleibt als Backup verfügbar.", "modeSession": "Mit npx serve . kannst du Karten lokal anlegen und danach als cards.user.json herunterladen.", "exportEmpty": "Noch keine Zusatzkarten zum Exportieren vorhanden.", "exportDone": "cards.user.json wurde heruntergeladen. Lege die Datei ins Repo, damit sie beim nächsten Start geladen wird.", "invalid": "Bitte Thema, Unterkategorie, Modus, Deutsch, Kroatisch und Englisch ausfüllen.", "duplicate": "Diese Karte existiert bereits.", "saveFailed": "Speichern fehlgeschlagen.", "savedPersistent": "Dauerhaft lokal gespeichert. Ein neues Spiel nimmt die Karte in die Auswahl auf.", "savedSession": "Nur für diese Sitzung gespeichert. Beim Neuladen ohne lokale API bleibt die Datenbank unverändert." },
-      "toasts": { "install": "App installiert", "cardSaved": "Neue Karte gespeichert" },
-      "encouragement": { "3": "Drei in Reihe!", "5": "Fünf! Weiter so!", "7": "Perfekt!", "10": "Legende!" }
+      "languageNames": {
+        "de": "Deutsch",
+        "hr": "Hrvatski",
+        "en": "English"
+      },
+      "stats": {
+        "streak": "Streak",
+        "remaining": "Übrig",
+        "accuracy": "Genauigkeit",
+        "wpm": "WPM"
+      },
+      "legend": {
+        "aria": "Spielhilfe",
+        "correct": "richtig",
+        "next": "als Nächstes",
+        "wrong": "falsch"
+      },
+      "prompt": {
+        "card": "Karte",
+        "swapAria": "Lernsprache wechseln",
+        "swapTitle": "Lernsprache wechseln",
+        "placeholder": "Antwort eingeben..."
+      },
+      "guide": {
+        "label": "Antwortverlauf",
+        "separator": "Leerz.",
+        "extraSeparator": "extra Leerz.",
+        "comma": "Komma",
+        "extraComma": "extra Komma",
+        "statusTooLong": "Zu lang - letztes Zeichen löschen",
+        "noteTooLong": "Die Antwort war schon komplett. Extra Zeichen werden rot hinten angehängt.",
+        "statusWrong": "Fehler in Wort {word}/{total} - prüf Zeichen {char}",
+        "noteWrong": "Rot markiert den ersten falschen Teil der Eingabe.",
+        "statusDone": "Wort {total}/{total} komplett",
+        "statusSpace": "Wort {word}/{total} fertig - jetzt Leerzeichen",
+        "statusComma": "Wort {word}/{total} fertig - jetzt Komma",
+        "statusProgress": "Wort {word}/{total} - Buchstabe {char}/{length}"
+      },
+      "actions": {
+        "hint": "Tipp",
+        "skip": "Überspringen",
+        "skipTitle": "Diese Karte später in dieser Runde zeigen",
+        "enterHint": "zum Prüfen",
+        "settings": "Einstellungen",
+        "switchPrompt": "Tauschen",
+        "switchPromptAria": "Obere und untere Übersetzung tauschen"
+      },
+      "session": {
+        "finished": "Sitzung beendet",
+        "newRound": "Neue Runde",
+        "finalDetails": "{correct}/{total} richtig · Übersprungen: {skipped} · Streak: {streak} · {wpm} WPM · {secs}s",
+        "emojiPerfect": "Topscore",
+        "emojiStrong": "Sehr stark",
+        "emojiGood": "Guter Lauf",
+        "emojiPractice": "Weiterüben"
+      },
+      "categories": {
+        "title": "Themen auswählen",
+        "mixed": "Alle Themen",
+        "available": "{count} {unit} verfügbar",
+        "unit": "Karten",
+        "newGame": "Neues Spiel"
+      },
+      "search": {
+        "title": "Deutschen Ausdruck nachschlagen",
+        "subtitle": "Für Wörter, Wendungen oder ganze Sätze.",
+        "authorToggle": "Neue Karten"
+      },
+      "authoring": {
+        "title": "Neue Karte hinzufügen",
+        "labels": {
+          "topic": "Thema",
+          "subcategory": "Unterkategorie",
+          "scope": "Modus",
+          "de": "Deutsch",
+          "hr": "Kroatisch",
+          "en": "Englisch"
+        },
+        "placeholders": {
+          "de": "z. B. die Entscheidung",
+          "hr": "z. B. odluka",
+          "en": "z. B. decision"
+        },
+        "saveBusy": "Speichert...",
+        "savePersistent": "Dauerhaft speichern",
+        "saveSession": "In Sitzung speichern",
+        "export": ".json export",
+        "modePersistent": "Direktes Speichern ist aktiv. Export bleibt als Backup verfügbar.",
+        "modeSession": "Mit npx serve . kannst du Karten lokal anlegen und danach als cards.user.json herunterladen.",
+        "exportEmpty": "Noch keine Zusatzkarten zum Exportieren vorhanden.",
+        "exportDone": "cards.user.json wurde heruntergeladen. Lege die Datei ins Repo, damit sie beim nächsten Start geladen wird.",
+        "invalid": "Bitte Thema, Unterkategorie, Modus, Deutsch, Kroatisch und Englisch ausfüllen.",
+        "duplicate": "Diese Karte existiert bereits.",
+        "saveFailed": "Speichern fehlgeschlagen.",
+        "savedPersistent": "Dauerhaft lokal gespeichert. Ein neues Spiel nimmt die Karte in die Auswahl auf.",
+        "savedSession": "Nur für diese Sitzung gespeichert. Beim Neuladen ohne lokale API bleibt die Datenbank unverändert."
+      },
+      "toasts": {
+        "install": "App installiert",
+        "cardSaved": "Neue Karte gespeichert"
+      },
+      "encouragement": {
+        "3": "Drei in Reihe!",
+        "5": "Fünf! Weiter so!",
+        "7": "Perfekt!",
+        "10": "Legende!"
+      }
     },
     "grammar": {
       "title": "Lerntipps",
       "cards": [
-        { "id": "grammar_tenses_primary", "title": "Zeiten: sagen", "interaction": { "mode": "fixed_first_slider", "fixedColumns": 1, "desktopVisibleDataColumns": 2, "mobileVisibleDataColumns": 2 }, "columns": ["Pers.", "Futur", "Präs.", "Prät.", "Perf.", "Plusq."], "rows": [["ich", "werde sagen", "sage", "sagte", "habe gesagt", "hatte gesagt"], ["du", "wirst sagen", "sagst", "sagtest", "hast gesagt", "hattest gesagt"], ["er/sie/es", "wird sagen", "sagt", "sagte", "hat gesagt", "hatte gesagt"], ["wir", "werden sagen", "sagen", "sagten", "haben gesagt", "hatten gesagt"], ["ihr", "werdet sagen", "sagt", "sagtet", "habt gesagt", "hattet gesagt"], ["sie", "werden sagen", "sagen", "sagten", "haben gesagt", "hatten gesagt"]] },
-        { "id": "grammar_voice_primary", "title": "Aktiv/Passiv: tragen", "interaction": { "mode": "fixed_first_slider", "fixedColumns": 1, "desktopVisibleDataColumns": 2, "mobileVisibleDataColumns": 2 }, "columns": ["Pers.", "Aktiv Präs.", "Passiv Präs."], "rows": [["ich", "trage", "werde getragen"], ["du", "trägst", "wirst getragen"], ["er/sie/es", "trägt", "wird getragen"], ["wir", "tragen", "werden getragen"], ["ihr", "tragt", "werdet getragen"], ["sie", "tragen", "werden getragen"]] },
-        { "id": "grammar_cases_primary", "title": "Fälle: Nomen und Pronomen", "interaction": { "mode": "fixed_first_slider", "fixedColumns": 1, "desktopVisibleDataColumnsAdaptive": true, "desktopVisibleDataColumnsMin": 2, "desktopVisibleDataColumnsMax": 4, "desktopMinColumnWidth": 84, "mobileVisibleDataColumns": 2 }, "columns": ["Fall", "Männlich", "Weiblich", "Sächlich", "Plural", "Personalpronomen"], "rows": [["Nominativ", "der Fisch", "die Wand", "das Heft", "die Hefte", "ich / wir"], ["Genitiv", "des Fisch(e)s", "der Wand", "des Heft(e)s", "der Hefte", "meiner / unser"], ["Dativ", "dem Fisch", "der Wand", "dem Heft", "den Heften", "mir / uns"], ["Akkusativ", "den Fisch", "die Wand", "das Heft", "die Hefte", "mich / uns"]] }
+        {
+          "id": "grammar_tenses_primary",
+          "title": "Zeiten: sagen",
+          "interaction": {
+            "mode": "fixed_first_slider",
+            "fixedColumns": 1,
+            "desktopVisibleDataColumns": 2,
+            "mobileVisibleDataColumns": 2
+          },
+          "columns": [
+            "Pers.",
+            "Futur",
+            "Präs.",
+            "Prät.",
+            "Perf.",
+            "Plusq."
+          ],
+          "rows": [
+            [
+              "ich",
+              "werde sagen",
+              "sage",
+              "sagte",
+              "habe gesagt",
+              "hatte gesagt"
+            ],
+            [
+              "du",
+              "wirst sagen",
+              "sagst",
+              "sagtest",
+              "hast gesagt",
+              "hattest gesagt"
+            ],
+            [
+              "er/sie/es",
+              "wird sagen",
+              "sagt",
+              "sagte",
+              "hat gesagt",
+              "hatte gesagt"
+            ],
+            [
+              "wir",
+              "werden sagen",
+              "sagen",
+              "sagten",
+              "haben gesagt",
+              "hatten gesagt"
+            ],
+            [
+              "ihr",
+              "werdet sagen",
+              "sagt",
+              "sagtet",
+              "habt gesagt",
+              "hattet gesagt"
+            ],
+            [
+              "sie",
+              "werden sagen",
+              "sagen",
+              "sagten",
+              "haben gesagt",
+              "hatten gesagt"
+            ]
+          ]
+        },
+        {
+          "id": "grammar_voice_primary",
+          "title": "Aktiv/Passiv: tragen",
+          "interaction": {
+            "mode": "fixed_first_slider",
+            "fixedColumns": 1,
+            "desktopVisibleDataColumns": 2,
+            "mobileVisibleDataColumns": 2
+          },
+          "columns": [
+            "Pers.",
+            "Aktiv Präs.",
+            "Passiv Präs."
+          ],
+          "rows": [
+            [
+              "ich",
+              "trage",
+              "werde getragen"
+            ],
+            [
+              "du",
+              "trägst",
+              "wirst getragen"
+            ],
+            [
+              "er/sie/es",
+              "trägt",
+              "wird getragen"
+            ],
+            [
+              "wir",
+              "tragen",
+              "werden getragen"
+            ],
+            [
+              "ihr",
+              "tragt",
+              "werdet getragen"
+            ],
+            [
+              "sie",
+              "tragen",
+              "werden getragen"
+            ]
+          ]
+        },
+        {
+          "id": "grammar_cases_primary",
+          "title": "Fälle: Nomen und Pronomen",
+          "interaction": {
+            "mode": "fixed_first_slider",
+            "fixedColumns": 1,
+            "desktopVisibleDataColumnsAdaptive": true,
+            "desktopVisibleDataColumnsMin": 2,
+            "desktopVisibleDataColumnsMax": 4,
+            "desktopMinColumnWidth": 84,
+            "mobileVisibleDataColumns": 2
+          },
+          "columns": [
+            "Fall",
+            "Männlich",
+            "Weiblich",
+            "Sächlich",
+            "Plural",
+            "Personalpronomen"
+          ],
+          "rows": [
+            [
+              "Nominativ",
+              "der Fisch",
+              "die Wand",
+              "das Heft",
+              "die Hefte",
+              "ich / wir"
+            ],
+            [
+              "Genitiv",
+              "des Fisch(e)s",
+              "der Wand",
+              "des Heft(e)s",
+              "der Hefte",
+              "meiner / unser"
+            ],
+            [
+              "Dativ",
+              "dem Fisch",
+              "der Wand",
+              "dem Heft",
+              "den Heften",
+              "mir / uns"
+            ],
+            [
+              "Akkusativ",
+              "den Fisch",
+              "die Wand",
+              "das Heft",
+              "die Hefte",
+              "mich / uns"
+            ]
+          ]
+        }
       ]
     },
     "facts": {
-      "panelTitle": "Deutsche Geographie", "panelSubtitle": "Deutschland, Bundesländer und Europa im Überblick.", "tabs": { "germany": "Deutschland", "europe": "Europa" }, "links": { "tourism": "Tourismus", "official": "Offiziell" }, "errors": { "loadFailed": "Fakten konnten nicht geladen werden." },
-      "picker": { "statesAria": "Bundesländer auswählen", "countriesAria": "Europäische Länder auswählen", "stateButton": "Bundesland {name} auswählen", "countryButton": "Land {name} auswählen" },
-      "fields": { "capital": "Hauptstadt", "largestCity": "Größte Stadt", "anthem": "Hymne", "founded": "Gegründet", "stateForm": "Staatsform", "nationalDay": "Nationalfeiertag", "population": "Einwohnerzahl", "area": "Fläche", "statesCount": "Anzahl Bundesländer", "currency": "Währung", "language": "Sprache", "timeZone": "Zeitzone", "callingCode": "Telefonvorwahl", "internetTld": "Internet-Domain", "bordersCount": "Nachbarländer", "gdp": "BIP nominal", "euSince": "EU seit", "abbreviation": "Kürzel", "stateType": "Landestyp", "region": "Region", "joined": "Gegründet / in heutiger Form", "headOfGovernment": "Regierungschef", "landlocked": "Binnenland" },
-      "lists": { "neighbors": "Nachbarländer", "highlights": "Bekannte Orte", "nature": "Natur und Landschaft", "institutions": "Institutionen", "seas": "Meere und Verbindungen", "neighborStates": "Nachbar-Bundesländer", "borders": "Grenzt an", "knownFor": "Bekannt für", "science": "Bekannte Personen: Wissenschaft", "politics": "Bekannte Personen: Politik", "art": "Bekannte Personen: Kunst", "languages": "Sprachen", "timezones": "Zeitzonen" },
-      "featured": { "germanyOverview": "Deutschland im Überblick", "europeOverview": "Europa im Überblick", "location": "Lage und Raum", "profile": "Kurzprofil" },
-      "names": { "germany": "Deutschland", "europe": "Europa", "countries": { "frankreich": "Frankreich", "spanien": "Spanien", "england": "England", "schweden": "Schweden", "polen": "Polen", "oesterreich": "Österreich", "ungarn": "Ungarn", "kroatien": "Kroatien", "bosnien-herzegowina": "Bosnien und Herzegowina", "serbien": "Serbien", "nordmazedonien": "Nordmazedonien", "albanien": "Albanien", "griechenland": "Griechenland", "bulgarien": "Bulgarien", "tuerkei": "Türkei", "rumaenien": "Rumänien", "ukraine": "Ukraine", "russland": "Russland", "weissrussland": "Weißrussland", "tschechien": "Tschechien", "slowakei": "Slowakei", "slowenien": "Slowenien", "italien": "Italien", "niederlande": "Niederlande", "belgien": "Belgien", "daenemark": "Dänemark", "finnland": "Finnland", "norwegen": "Norwegen", "irland": "Irland" } },
-      "regions": { "Westeuropa": "Westeuropa", "Suedeuropa": "Südeuropa", "Suedosteuropa": "Südosteuropa", "Nordeuropa": "Nordeuropa", "Mitteleuropa": "Mitteleuropa", "Südwesten": "Südwesten", "Südosten": "Südosten", "Osten": "Osten", "Nordwesten": "Nordwesten", "Norden": "Norden", "Mitte": "Mitte", "Nordosten": "Nordosten", "Westen": "Westen", "Mitteldeutschland": "Mitteldeutschland" },
-      "stateTypes": { "Flächenland": "Flächenland", "Stadtstaat": "Stadtstaat" },
-      "stateForms": { "Bundesstaatliche parlamentarische Republik": "Bundesstaatliche parlamentarische Republik", "Staatenverbund": "Staatenverbund", "Souveraener Staat": "Souveräner Staat", "Landesteil des Vereinigten Koenigreichs": "Landesteil des Vereinigten Königreichs" },
-      "values": { "yes": "Ja", "no": "Nein", "officialSiteAria": "{name} offizielle Website in neuem Tab öffnen", "tourismAria": "{name} Tourismus in neuem Tab öffnen", "germanyOverviewText": "Deutschland liegt im Herzen Europas. Hauptstadt und größte Stadt ist Berlin. Das Land hat {statesCount} Bundesländer und grenzt an {neighbors}.", "europeOverviewText": "Europa verbindet viele Sprachräume, Landschaften und politische Traditionen. Hauptstadt des EU-Raums in dieser Übersicht ist {capital}; wichtige Institutionen sind {institutions}.", "stateLocationText": "{name} liegt im {region} Deutschlands. Hauptstadt ist {capital}.", "stateProfileText": "{name} ist bekannt für {knownFor}.", "countryOverviewText": "{name} liegt in {region}. Hauptstadt ist {capital}. Nachbarländer sind {neighbors}." }
+      "panelTitle": "Deutsche Geographie",
+      "panelSubtitle": "Deutschland, Bundeslaender, Europa und Welt im Ueberblick.",
+      "tabs": {
+        "germany": "Deutschland",
+        "europe": "Europa",
+        "world": "Welt"
+      },
+      "links": {
+        "tourism": "Tourismus",
+        "official": "Offiziell"
+      },
+      "errors": {
+        "loadFailed": "Fakten konnten nicht geladen werden."
+      },
+      "picker": {
+        "statesAria": "Bundesländer auswählen",
+        "countriesAria": "Europäische Länder auswählen",
+        "stateButton": "Bundesland {name} auswählen",
+        "countryButton": "Land {name} auswählen"
+      },
+      "fields": {
+        "capital": "Hauptstadt",
+        "largestCity": "Größte Stadt",
+        "anthem": "Hymne",
+        "founded": "Gegründet",
+        "stateForm": "Staatsform",
+        "nationalDay": "Nationalfeiertag",
+        "population": "Einwohnerzahl",
+        "area": "Fläche",
+        "statesCount": "Anzahl Bundesländer",
+        "currency": "Währung",
+        "language": "Sprache",
+        "timeZone": "Zeitzone",
+        "callingCode": "Telefonvorwahl",
+        "internetTld": "Internet-Domain",
+        "bordersCount": "Nachbarländer",
+        "gdp": "BIP nominal",
+        "euSince": "EU seit",
+        "abbreviation": "Kürzel",
+        "stateType": "Landestyp",
+        "region": "Region",
+        "joined": "Gegründet / in heutiger Form",
+        "headOfGovernment": "Regierungschef",
+        "landlocked": "Binnenland",
+        "headquarters": "Hauptsitz",
+        "memberStates": "UN-Mitgliedstaaten",
+        "secretaryGeneral": "UN-Generalsekretaer",
+        "officialLanguages": "Amtssprachen"
+      },
+      "lists": {
+        "neighbors": "Nachbarländer",
+        "highlights": "Bekannte Orte",
+        "nature": "Natur und Landschaft",
+        "institutions": "Institutionen",
+        "seas": "Meere und Verbindungen",
+        "neighborStates": "Nachbar-Bundesländer",
+        "borders": "Grenzt an",
+        "knownFor": "Bekannt für",
+        "science": "Bekannte Personen: Wissenschaft",
+        "politics": "Bekannte Personen: Politik",
+        "art": "Bekannte Personen: Kunst",
+        "languages": "Sprachen",
+        "timezones": "Zeitzonen"
+      },
+      "featured": {
+        "germanyOverview": "Deutschland im Überblick",
+        "europeOverview": "EU im Ueberblick",
+        "location": "Lage und Raum",
+        "profile": "Kurzprofil",
+        "overview": "Im Ueberblick",
+        "worldOverview": "UN im Ueberblick"
+      },
+      "names": {
+        "germany": "Deutschland",
+        "europe": "EU",
+        "countries": {
+          "frankreich": "Frankreich",
+          "spanien": "Spanien",
+          "england": "England",
+          "schweden": "Schweden",
+          "polen": "Polen",
+          "oesterreich": "Österreich",
+          "ungarn": "Ungarn",
+          "kroatien": "Kroatien",
+          "bosnien-herzegowina": "Bosnien und Herzegowina",
+          "serbien": "Serbien",
+          "nordmazedonien": "Nordmazedonien",
+          "albanien": "Albanien",
+          "griechenland": "Griechenland",
+          "bulgarien": "Bulgarien",
+          "tuerkei": "Türkei",
+          "rumaenien": "Rumänien",
+          "ukraine": "Ukraine",
+          "russland": "Russland",
+          "weissrussland": "Weißrussland",
+          "tschechien": "Tschechien",
+          "slowakei": "Slowakei",
+          "slowenien": "Slowenien",
+          "italien": "Italien",
+          "niederlande": "Niederlande",
+          "belgien": "Belgien",
+          "daenemark": "Dänemark",
+          "finnland": "Finnland",
+          "norwegen": "Norwegen",
+          "irland": "Irland",
+          "schweiz": "Schweiz",
+          "vatikanstadt": "Vatikanstadt",
+          "portugal": "Portugal",
+          "montenegro": "Montenegro",
+          "luxemburg": "Luxemburg",
+          "liechtenstein": "Liechtenstein",
+          "andorra": "Andorra",
+          "kosovo": "Kosovo",
+          "kanada": "Kanada",
+          "usa": "USA",
+          "china": "China",
+          "brasilien": "Brasilien",
+          "australien": "Australien",
+          "indien": "Indien",
+          "argentinien": "Argentinien",
+          "algerien": "Algerien",
+          "dr-kongo": "DR Kongo",
+          "saudi-arabien": "Saudi-Arabien",
+          "mexiko": "Mexiko",
+          "indonesien": "Indonesien",
+          "sudan": "Sudan",
+          "libyen": "Libyen",
+          "iran": "Iran",
+          "mongolei": "Mongolei",
+          "japan": "Japan",
+          "suedkorea": "Südkorea",
+          "pakistan": "Pakistan",
+          "bangladesch": "Bangladesch",
+          "nigeria": "Nigeria",
+          "aethiopien": "Äthiopien",
+          "aegypten": "Ägypten",
+          "suedafrika": "Südafrika",
+          "kasachstan": "Kasachstan",
+          "peru": "Peru",
+          "kolumbien": "Kolumbien",
+          "chile": "Chile",
+          "venezuela": "Venezuela",
+          "neuseeland": "Neuseeland",
+          "thailand": "Thailand",
+          "vietnam": "Vietnam"
+        },
+        "world": "UN"
+      },
+      "regions": {
+        "Westeuropa": "Westeuropa",
+        "Suedeuropa": "Südeuropa",
+        "Suedosteuropa": "Südosteuropa",
+        "Nordeuropa": "Nordeuropa",
+        "Mitteleuropa": "Mitteleuropa",
+        "Südwesten": "Südwesten",
+        "Südosten": "Südosten",
+        "Osten": "Osten",
+        "Nordwesten": "Nordwesten",
+        "Norden": "Norden",
+        "Mitte": "Mitte",
+        "Nordosten": "Nordosten",
+        "Westen": "Westen",
+        "Mitteldeutschland": "Mitteldeutschland",
+        "Nordamerika": "Nordamerika",
+        "Suedamerika": "Südamerika",
+        "Ostasien": "Ostasien",
+        "Ozeanien": "Ozeanien",
+        "Suedasien": "Südasien",
+        "Nordafrika": "Nordafrika",
+        "Zentralafrika": "Zentralafrika",
+        "Westasien": "Westasien",
+        "Suedostasien": "Südostasien",
+        "Westafrika": "Westafrika",
+        "Ostafrika": "Ostafrika",
+        "Suedafrika": "Südafrika",
+        "Zentralasien": "Zentralasien",
+        "Osteuropa": "Osteuropa",
+        "Suedosteuropa und Vorderasien": "Südosteuropa und Vorderasien"
+      },
+      "stateTypes": {
+        "Flächenland": "Flächenland",
+        "Stadtstaat": "Stadtstaat"
+      },
+      "stateForms": {
+        "Bundesstaatliche parlamentarische Republik": "Bundesstaatliche parlamentarische Republik",
+        "Staatenverbund": "Staatenverbund",
+        "Souveraener Staat": "Souveräner Staat",
+        "Landesteil des Vereinigten Koenigreichs": "Landesteil des Vereinigten Königreichs",
+        "Globale Staatenorganisation": "Globale Staatenorganisation"
+      },
+      "values": {
+        "yes": "Ja",
+        "no": "Nein",
+        "officialSiteAria": "{name} offizielle Website in neuem Tab öffnen",
+        "tourismAria": "{name} Tourismus in neuem Tab öffnen",
+        "germanyOverviewText": "Deutschland liegt im Herzen Europas. Hauptstadt und größte Stadt ist Berlin. Das Land hat {statesCount} Bundesländer und grenzt an {neighbors}.",
+        "europeOverviewText": "Die EU verbindet {memberStates} Mitgliedstaaten. Politisches Zentrum ist {capital}; zentrale Institutionen sind {institutions}.",
+        "stateLocationText": "{name} liegt im {region} Deutschlands. Hauptstadt ist {capital}.",
+        "stateProfileText": "{name} ist bekannt für {knownFor}.",
+        "countryOverviewText": "{name} liegt in {region}. Hauptstadt ist {capital}. Nachbarländer sind {neighbors}.",
+        "worldOverviewText": "Die UN vereint {memberStates} Mitgliedstaaten. Hauptsitz ist {headquarters}; zentrale Organe sind {institutions}."
+      }
     },
-    "installGuide": { "fallbackBrowser": "Browser", "fallbackDesktop": "Desktop", "fallbackMobile": "Mobile", "cta": "Lesezeichen setzen 🌟", "paths": { "default": "Menü > Installieren", "iosShare": "Teilen > Home", "samsung": "Menü > Seite > Home", "edgeAndroid": "... > Zum Handy", "opera": "Menü > Installieren", "firefoxMobile": "Menü > Lesezeichen", "chromeAndroid": "... > Startbildschirm", "edgeDesktop": "... > Apps > Installieren", "chromeDesktop": "... > Installieren", "firefoxDesktop": "Lesezeichen speichern" } },
+    "installGuide": {
+      "fallbackBrowser": "Browser",
+      "fallbackDesktop": "Desktop",
+      "fallbackMobile": "Mobile",
+      "cta": "Lesezeichen setzen 🌟",
+      "paths": {
+        "default": "Menü > Installieren",
+        "iosShare": "Teilen > Home",
+        "samsung": "Menü > Seite > Home",
+        "edgeAndroid": "... > Zum Handy",
+        "opera": "Menü > Installieren",
+        "firefoxMobile": "Menü > Lesezeichen",
+        "chromeAndroid": "... > Startbildschirm",
+        "edgeDesktop": "... > Apps > Installieren",
+        "chromeDesktop": "... > Installieren",
+        "firefoxDesktop": "Lesezeichen speichern"
+      }
+    },
     "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
   },
   "hr": {
-    "meta": { "htmlLang": "hr" },
-    "categories": { "Nomen": "Imenica", "Verb": "Glagol", "Adjektiv": "Pridjev", "Adverb": "Prilog", "Präposition": "Prijedlog", "Konjunktion": "Veznik", "Ausdruck": "Izraz", "Satz": "Rečenica" },
-    "topics": { "basics": "Osnove", "vehicles": "Vozila", "nature": "Priroda", "food": "Kuhinja", "travel": "Odmor", "work": "Posao", "health": "Bolnica", "people": "Ljudi", "shopping": "Kupovina", "developertech": "Razvoj softvera", "itnetwork": "IT i mreže" },
-    "scopes": { "all": "Sve 3", "de": "DE mod", "hr": "HR mod", "gb": "GB mod" },
-    "difficulty": { "easy": "Lako", "medium": "Srednje", "hard": "Teško" },
-    "combo": { "3": "Dobro!", "4": "Jako!", "5": "Super!", "6": "Mega!", "7": "Ludo!", "8": "Nepobjedivo!" },
+    "meta": {
+      "htmlLang": "hr"
+    },
+    "categories": {
+      "Nomen": "Imenica",
+      "Verb": "Glagol",
+      "Adjektiv": "Pridjev",
+      "Adverb": "Prilog",
+      "Präposition": "Prijedlog",
+      "Konjunktion": "Veznik",
+      "Ausdruck": "Izraz",
+      "Satz": "Rečenica"
+    },
+    "topics": {
+      "basics": "Osnove",
+      "vehicles": "Vozila",
+      "nature": "Priroda",
+      "food": "Kuhinja",
+      "travel": "Odmor",
+      "work": "Posao",
+      "health": "Bolnica",
+      "people": "Ljudi",
+      "shopping": "Kupovina",
+      "developertech": "Razvoj softvera",
+      "itnetwork": "IT i mreže"
+    },
+    "scopes": {
+      "all": "Sve 3",
+      "de": "DE mod",
+      "hr": "HR mod",
+      "gb": "GB mod"
+    },
+    "difficulty": {
+      "easy": "Lako",
+      "medium": "Srednje",
+      "hard": "Teško"
+    },
+    "combo": {
+      "3": "Dobro!",
+      "4": "Jako!",
+      "5": "Super!",
+      "6": "Mega!",
+      "7": "Ludo!",
+      "8": "Nepobjedivo!"
+    },
     "messages": {
       "languageDockAria": "Promijeni jezik učenja",
-      "languageNames": { "de": "Deutsch", "hr": "Hrvatski", "en": "English" },
-      "stats": { "streak": "Niz", "remaining": "Preostalo", "accuracy": "Točnost", "wpm": "WPM" },
-      "legend": { "aria": "Pomoć u igri", "correct": "točno", "next": "sljedeće", "wrong": "pogrešno" },
-      "prompt": { "card": "Kartica", "swapAria": "Promijeni jezik učenja", "swapTitle": "Promijeni jezik učenja", "placeholder": "Upiši odgovor..." },
-      "guide": { "label": "Tijek odgovora", "separator": "razmak", "extraSeparator": "dodatni razmak", "comma": "zarez", "extraComma": "dodatni zarez", "statusTooLong": "Predugo - izbriši zadnji znak", "noteTooLong": "Odgovor je već bio gotov. Dodatni znakovi prikazuju se crveno na kraju.", "statusWrong": "Greška u riječi {word}/{total} - provjeri znak {char}", "noteWrong": "Crveno označava prvi pogrešan dio unosa.", "statusDone": "Riječ {total}/{total} je gotova", "statusSpace": "Riječ {word}/{total} je gotova - sada razmak", "statusComma": "Riječ {word}/{total} je gotova - sada zarez", "statusProgress": "Riječ {word}/{total} - slovo {char}/{length}" },
-      "actions": { "hint": "Savjet", "skip": "Preskoči", "skipTitle": "Prikaži ovu karticu kasnije u ovoj rundi", "enterHint": "za provjeru", "settings": "Postavke", "switchPrompt": "Zamijeni", "switchPromptAria": "Zamijeni gornji i donji prijevod" },
-      "session": { "finished": "Sesija završena", "newRound": "Nova runda", "finalDetails": "{correct}/{total} točno · Preskočeno: {skipped} · Niz: {streak} · {wpm} WPM · {secs}s", "emojiPerfect": "Vrhunski rezultat", "emojiStrong": "Vrlo jako", "emojiGood": "Dobra serija", "emojiPractice": "Nastavi vježbati" },
-      "categories": { "title": "Odaberi teme", "mixed": "Sve teme", "available": "{count} {unit} dostupno", "unit": "kartica", "newGame": "Nova igra" },
-      "search": { "title": "Potraži njemački izraz", "subtitle": "Za riječi, izraze ili cijele rečenice.", "authorToggle": "Nove kartice" },
-      "authoring": { "title": "Dodaj novu karticu", "labels": { "topic": "Tema", "subcategory": "Potkategorija", "scope": "Mod", "de": "Njemački", "hr": "Hrvatski", "en": "Engleski" }, "placeholders": { "de": "npr. die Entscheidung", "hr": "npr. odluka", "en": "npr. decision" }, "saveBusy": "Spremanje...", "savePersistent": "Spremi trajno", "saveSession": "Spremi u sesiju", "export": ".json izvoz", "modePersistent": "Izravno spremanje je aktivno. Izvoz ostaje kao sigurnosna kopija.", "modeSession": "Uz npx serve . možeš lokalno dodavati kartice i zatim preuzeti cards.user.json.", "exportEmpty": "Još nema dodatnih kartica za izvoz.", "exportDone": "cards.user.json je preuzet. Stavi datoteku u repo da se učita pri sljedećem pokretanju.", "invalid": "Ispuni temu, potkategoriju, mod, njemački, hrvatski i engleski.", "duplicate": "Ova kartica već postoji.", "saveFailed": "Spremanje nije uspjelo.", "savedPersistent": "Trajno spremljeno lokalno. Nova igra uključit će karticu u izbor.", "savedSession": "Spremljeno samo za ovu sesiju. Bez lokalnog API-ja baza ostaje nepromijenjena nakon ponovnog učitavanja." },
-      "toasts": { "install": "Aplikacija instalirana", "cardSaved": "Nova kartica spremljena" },
-      "encouragement": { "3": "Tri zaredom!", "5": "Pet! Samo tako!", "7": "Savršeno!", "10": "Legenda!" }
+      "languageNames": {
+        "de": "Deutsch",
+        "hr": "Hrvatski",
+        "en": "English"
+      },
+      "stats": {
+        "streak": "Niz",
+        "remaining": "Preostalo",
+        "accuracy": "Točnost",
+        "wpm": "WPM"
+      },
+      "legend": {
+        "aria": "Pomoć u igri",
+        "correct": "točno",
+        "next": "sljedeće",
+        "wrong": "pogrešno"
+      },
+      "prompt": {
+        "card": "Kartica",
+        "swapAria": "Promijeni jezik učenja",
+        "swapTitle": "Promijeni jezik učenja",
+        "placeholder": "Upiši odgovor..."
+      },
+      "guide": {
+        "label": "Tijek odgovora",
+        "separator": "razmak",
+        "extraSeparator": "dodatni razmak",
+        "comma": "zarez",
+        "extraComma": "dodatni zarez",
+        "statusTooLong": "Predugo - izbriši zadnji znak",
+        "noteTooLong": "Odgovor je već bio gotov. Dodatni znakovi prikazuju se crveno na kraju.",
+        "statusWrong": "Greška u riječi {word}/{total} - provjeri znak {char}",
+        "noteWrong": "Crveno označava prvi pogrešan dio unosa.",
+        "statusDone": "Riječ {total}/{total} je gotova",
+        "statusSpace": "Riječ {word}/{total} je gotova - sada razmak",
+        "statusComma": "Riječ {word}/{total} je gotova - sada zarez",
+        "statusProgress": "Riječ {word}/{total} - slovo {char}/{length}"
+      },
+      "actions": {
+        "hint": "Savjet",
+        "skip": "Preskoči",
+        "skipTitle": "Prikaži ovu karticu kasnije u ovoj rundi",
+        "enterHint": "za provjeru",
+        "settings": "Postavke",
+        "switchPrompt": "Zamijeni",
+        "switchPromptAria": "Zamijeni gornji i donji prijevod"
+      },
+      "session": {
+        "finished": "Sesija završena",
+        "newRound": "Nova runda",
+        "finalDetails": "{correct}/{total} točno · Preskočeno: {skipped} · Niz: {streak} · {wpm} WPM · {secs}s",
+        "emojiPerfect": "Vrhunski rezultat",
+        "emojiStrong": "Vrlo jako",
+        "emojiGood": "Dobra serija",
+        "emojiPractice": "Nastavi vježbati"
+      },
+      "categories": {
+        "title": "Odaberi teme",
+        "mixed": "Sve teme",
+        "available": "{count} {unit} dostupno",
+        "unit": "kartica",
+        "newGame": "Nova igra"
+      },
+      "search": {
+        "title": "Potraži njemački izraz",
+        "subtitle": "Za riječi, izraze ili cijele rečenice.",
+        "authorToggle": "Nove kartice"
+      },
+      "authoring": {
+        "title": "Dodaj novu karticu",
+        "labels": {
+          "topic": "Tema",
+          "subcategory": "Potkategorija",
+          "scope": "Mod",
+          "de": "Njemački",
+          "hr": "Hrvatski",
+          "en": "Engleski"
+        },
+        "placeholders": {
+          "de": "npr. die Entscheidung",
+          "hr": "npr. odluka",
+          "en": "npr. decision"
+        },
+        "saveBusy": "Spremanje...",
+        "savePersistent": "Spremi trajno",
+        "saveSession": "Spremi u sesiju",
+        "export": ".json izvoz",
+        "modePersistent": "Izravno spremanje je aktivno. Izvoz ostaje kao sigurnosna kopija.",
+        "modeSession": "Uz npx serve . možeš lokalno dodavati kartice i zatim preuzeti cards.user.json.",
+        "exportEmpty": "Još nema dodatnih kartica za izvoz.",
+        "exportDone": "cards.user.json je preuzet. Stavi datoteku u repo da se učita pri sljedećem pokretanju.",
+        "invalid": "Ispuni temu, potkategoriju, mod, njemački, hrvatski i engleski.",
+        "duplicate": "Ova kartica već postoji.",
+        "saveFailed": "Spremanje nije uspjelo.",
+        "savedPersistent": "Trajno spremljeno lokalno. Nova igra uključit će karticu u izbor.",
+        "savedSession": "Spremljeno samo za ovu sesiju. Bez lokalnog API-ja baza ostaje nepromijenjena nakon ponovnog učitavanja."
+      },
+      "toasts": {
+        "install": "Aplikacija instalirana",
+        "cardSaved": "Nova kartica spremljena"
+      },
+      "encouragement": {
+        "3": "Tri zaredom!",
+        "5": "Pet! Samo tako!",
+        "7": "Savršeno!",
+        "10": "Legenda!"
+      }
     },
     "grammar": {
       "title": "Gramatički pregled",
       "cards": [
-        { "id": "grammar_tenses_primary", "title": "Vremena: govoriti", "interaction": { "mode": "fixed_first_slider", "fixedColumns": 1, "desktopVisibleDataColumns": 2, "mobileVisibleDataColumns": 2 }, "columns": ["Os.", "Prez.", "Perf.", "Fut. I"], "rows": [["ja", "govorim", "sam govorio/govorila", "govorit ću"], ["ti", "govoriš", "si govorio/govorila", "govorit ćeš"], ["on/ona/ono", "govori", "je govorio/govorila", "govorit će"], ["mi", "govorimo", "smo govorili", "govorit ćemo"], ["vi", "govorite", "ste govorili", "govorit ćete"], ["oni/one/ona", "govore", "su govorili", "govorit će"]] },
-        { "id": "grammar_cases_primary", "title": "Padeži: imenica i zamjenica", "interaction": { "mode": "fixed_first_slider", "fixedColumns": 1, "desktopVisibleDataColumnsAdaptive": true, "desktopVisibleDataColumnsMin": 2, "desktopVisibleDataColumnsMax": 4, "desktopMinColumnWidth": 84, "mobileVisibleDataColumns": 2 }, "columns": ["Padež", "Muški", "Ženski", "Srednji", "Množina", "Zamjenica"], "rows": [["Nominativ", "grad", "žena", "selo", "gradovi", "ja / mi"], ["Genitiv", "grada", "žene", "sela", "gradova", "mene / nas"], ["Dativ", "gradu", "ženi", "selu", "gradovima", "meni / nama"], ["Akuzativ", "grad", "ženu", "selo", "gradove", "mene / nas"], ["Lokativ", "gradu", "ženi", "selu", "gradovima", "meni / nama"], ["Instrumental", "gradom", "ženom", "selom", "gradovima", "mnom / nama"]] },
-        { "id": "grammar_voice_primary", "title": "Pridjev i slaganje: dobar", "interaction": { "mode": "fixed_first_slider", "fixedColumns": 1, "desktopVisibleDataColumns": 2, "mobileVisibleDataColumns": 2 }, "columns": ["Rod/Broj", "Oblik", "Primjer"], "rows": [["muški jednina", "dobar", "dobar čovjek"], ["ženski jednina", "dobra", "dobra knjiga"], ["srednji jednina", "dobro", "dobro selo"], ["množina", "dobri / dobre", "dobri ljudi / dobre knjige"]] }
+        {
+          "id": "grammar_tenses_primary",
+          "title": "Vremena: govoriti",
+          "interaction": {
+            "mode": "fixed_first_slider",
+            "fixedColumns": 1,
+            "desktopVisibleDataColumns": 2,
+            "mobileVisibleDataColumns": 2
+          },
+          "columns": [
+            "Os.",
+            "Prez.",
+            "Perf.",
+            "Fut. I"
+          ],
+          "rows": [
+            [
+              "ja",
+              "govorim",
+              "sam govorio/govorila",
+              "govorit ću"
+            ],
+            [
+              "ti",
+              "govoriš",
+              "si govorio/govorila",
+              "govorit ćeš"
+            ],
+            [
+              "on/ona/ono",
+              "govori",
+              "je govorio/govorila",
+              "govorit će"
+            ],
+            [
+              "mi",
+              "govorimo",
+              "smo govorili",
+              "govorit ćemo"
+            ],
+            [
+              "vi",
+              "govorite",
+              "ste govorili",
+              "govorit ćete"
+            ],
+            [
+              "oni/one/ona",
+              "govore",
+              "su govorili",
+              "govorit će"
+            ]
+          ]
+        },
+        {
+          "id": "grammar_cases_primary",
+          "title": "Padeži: imenica i zamjenica",
+          "interaction": {
+            "mode": "fixed_first_slider",
+            "fixedColumns": 1,
+            "desktopVisibleDataColumnsAdaptive": true,
+            "desktopVisibleDataColumnsMin": 2,
+            "desktopVisibleDataColumnsMax": 4,
+            "desktopMinColumnWidth": 84,
+            "mobileVisibleDataColumns": 2
+          },
+          "columns": [
+            "Padež",
+            "Muški",
+            "Ženski",
+            "Srednji",
+            "Množina",
+            "Zamjenica"
+          ],
+          "rows": [
+            [
+              "Nominativ",
+              "grad",
+              "žena",
+              "selo",
+              "gradovi",
+              "ja / mi"
+            ],
+            [
+              "Genitiv",
+              "grada",
+              "žene",
+              "sela",
+              "gradova",
+              "mene / nas"
+            ],
+            [
+              "Dativ",
+              "gradu",
+              "ženi",
+              "selu",
+              "gradovima",
+              "meni / nama"
+            ],
+            [
+              "Akuzativ",
+              "grad",
+              "ženu",
+              "selo",
+              "gradove",
+              "mene / nas"
+            ],
+            [
+              "Lokativ",
+              "gradu",
+              "ženi",
+              "selu",
+              "gradovima",
+              "meni / nama"
+            ],
+            [
+              "Instrumental",
+              "gradom",
+              "ženom",
+              "selom",
+              "gradovima",
+              "mnom / nama"
+            ]
+          ]
+        },
+        {
+          "id": "grammar_voice_primary",
+          "title": "Pridjev i slaganje: dobar",
+          "interaction": {
+            "mode": "fixed_first_slider",
+            "fixedColumns": 1,
+            "desktopVisibleDataColumns": 2,
+            "mobileVisibleDataColumns": 2
+          },
+          "columns": [
+            "Rod/Broj",
+            "Oblik",
+            "Primjer"
+          ],
+          "rows": [
+            [
+              "muški jednina",
+              "dobar",
+              "dobar čovjek"
+            ],
+            [
+              "ženski jednina",
+              "dobra",
+              "dobra knjiga"
+            ],
+            [
+              "srednji jednina",
+              "dobro",
+              "dobro selo"
+            ],
+            [
+              "množina",
+              "dobri / dobre",
+              "dobri ljudi / dobre knjige"
+            ]
+          ]
+        }
       ]
     },
-    "facts": { "panelTitle": "Njemačka geografija", "panelSubtitle": "Njemačka, savezne zemlje i Europa na jednom mjestu.", "tabs": { "germany": "Njemačka", "europe": "Europa" }, "links": { "tourism": "Turizam", "official": "Službeno" }, "errors": { "loadFailed": "Podaci se nisu mogli učitati." }, "picker": { "statesAria": "Odaberi saveznu zemlju", "countriesAria": "Odaberi europsku državu", "stateButton": "Odaberi saveznu zemlju {name}", "countryButton": "Odaberi državu {name}" }, "fields": { "capital": "Glavni grad", "largestCity": "Najveći grad", "anthem": "Himna", "founded": "Osnovano", "stateForm": "Državno uređenje", "nationalDay": "Državni praznik", "population": "Stanovništvo", "area": "Površina", "statesCount": "Broj saveznih zemalja", "currency": "Valuta", "language": "Jezik", "timeZone": "Vremenska zona", "callingCode": "Pozivni broj", "internetTld": "Internetska domena", "bordersCount": "Broj susjeda", "gdp": "Nominalni BDP", "euSince": "U EU od", "abbreviation": "Kratica", "stateType": "Tip zemlje", "region": "Regija", "joined": "Osnovano / današnji oblik", "headOfGovernment": "Predsjednik vlade", "landlocked": "Bez izlaza na more" }, "lists": { "neighbors": "Susjedne zemlje", "highlights": "Poznata mjesta", "nature": "Priroda i krajolik", "institutions": "Institucije", "seas": "Mora i veze", "neighborStates": "Susjedne savezne zemlje", "borders": "Graniči s", "knownFor": "Poznato po", "science": "Poznate osobe: znanost", "politics": "Poznate osobe: politika", "art": "Poznate osobe: umjetnost", "languages": "Jezici", "timezones": "Vremenske zone" }, "featured": { "germanyOverview": "Pregled Njemačke", "europeOverview": "Pregled Europe", "location": "Položaj i prostor", "profile": "Kratki profil" }, "names": { "germany": "Njemačka", "europe": "Europa", "countries": { "frankreich": "Francuska", "spanien": "Španjolska", "england": "Engleska", "schweden": "Švedska", "polen": "Poljska", "oesterreich": "Austrija", "ungarn": "Mađarska", "kroatien": "Hrvatska", "bosnien-herzegowina": "Bosna i Hercegovina", "serbien": "Srbija", "nordmazedonien": "Sjeverna Makedonija", "albanien": "Albanija", "griechenland": "Grčka", "bulgarien": "Bugarska", "tuerkei": "Turska", "rumaenien": "Rumunjska", "ukraine": "Ukrajina", "russland": "Rusija", "weissrussland": "Bjelorusija", "tschechien": "Češka", "slowakei": "Slovačka", "slowenien": "Slovenija", "italien": "Italija", "niederlande": "Nizozemska", "belgien": "Belgija", "daenemark": "Danska", "finnland": "Finska", "norwegen": "Norveška", "irland": "Irska" } }, "regions": { "Westeuropa": "Zapadna Europa", "Suedeuropa": "Južna Europa", "Suedosteuropa": "Jugoistočna Europa", "Nordeuropa": "Sjeverna Europa", "Mitteleuropa": "Srednja Europa", "Südwesten": "jugozapadu", "Südosten": "jugoistoku", "Osten": "istoku", "Nordwesten": "sjeverozapadu", "Norden": "sjeveru", "Mitte": "središtu", "Nordosten": "sjeveroistoku", "Westen": "zapadu", "Mitteldeutschland": "središnjoj Njemačkoj" }, "stateTypes": { "Flächenland": "teritorijalna savezna zemlja", "Stadtstaat": "gradska savezna zemlja" }, "stateForms": { "Bundesstaatliche parlamentarische Republik": "savezna parlamentarna republika", "Staatenverbund": "zajednica država", "Souveraener Staat": "suverena država", "Landesteil des Vereinigten Koenigreichs": "dio Ujedinjenog Kraljevstva" }, "values": { "yes": "Da", "no": "Ne", "officialSiteAria": "Otvori službenu stranicu za {name} u novoj kartici", "tourismAria": "Otvori turističku stranicu za {name} u novoj kartici", "germanyOverviewText": "Njemačka se nalazi u srcu Europe. Glavni i najveći grad je Berlin. Država ima {statesCount} saveznih zemalja i graniči s {neighbors}.", "europeOverviewText": "Europa povezuje mnoge jezične prostore, krajolike i političke tradicije. Glavni grad EU prostora u ovom pregledu je {capital}, a važne institucije su {institutions}.", "stateLocationText": "{name} se nalazi u {region} Njemačke. Glavni grad je {capital}.", "stateProfileText": "{name} je poznat po {knownFor}.", "countryOverviewText": "{name} se nalazi u regiji {region}. Glavni grad je {capital}. Susjedne zemlje su {neighbors}." } },
-    "installGuide": { "fallbackBrowser": "Preglednik", "fallbackDesktop": "Desktop", "fallbackMobile": "Mobitel", "cta": "Spremi oznaku 🌟", "paths": { "default": "Izbornik > Instaliraj", "iosShare": "Dijeli > Početni zaslon", "samsung": "Izbornik > Stranica > Home", "edgeAndroid": "... > Dodaj na mobitel", "opera": "Izbornik > Instaliraj", "firefoxMobile": "Izbornik > Oznaka", "chromeAndroid": "... > Početni zaslon", "edgeDesktop": "... > Apps > Instaliraj", "chromeDesktop": "... > Instaliraj", "firefoxDesktop": "Spremi oznaku" } },
+    "facts": {
+      "panelTitle": "Njemačka geografija",
+      "panelSubtitle": "Njemačka, savezne zemlje, Europa i svijet na jednom mjestu.",
+      "tabs": {
+        "germany": "Njemačka",
+        "europe": "Europa",
+        "world": "Svijet"
+      },
+      "links": {
+        "tourism": "Turizam",
+        "official": "Službeno"
+      },
+      "errors": {
+        "loadFailed": "Podaci se nisu mogli učitati."
+      },
+      "picker": {
+        "statesAria": "Odaberi saveznu zemlju",
+        "countriesAria": "Odaberi europsku državu",
+        "stateButton": "Odaberi saveznu zemlju {name}",
+        "countryButton": "Odaberi državu {name}"
+      },
+      "fields": {
+        "capital": "Glavni grad",
+        "largestCity": "Najveći grad",
+        "anthem": "Himna",
+        "founded": "Osnovano",
+        "stateForm": "Državno uređenje",
+        "nationalDay": "Državni praznik",
+        "population": "Stanovništvo",
+        "area": "Površina",
+        "statesCount": "Broj saveznih zemalja",
+        "currency": "Valuta",
+        "language": "Jezik",
+        "timeZone": "Vremenska zona",
+        "callingCode": "Pozivni broj",
+        "internetTld": "Internetska domena",
+        "bordersCount": "Broj susjeda",
+        "gdp": "Nominalni BDP",
+        "euSince": "U EU od",
+        "abbreviation": "Kratica",
+        "stateType": "Tip zemlje",
+        "region": "Regija",
+        "joined": "Osnovano / današnji oblik",
+        "headOfGovernment": "Predsjednik vlade",
+        "landlocked": "Bez izlaza na more",
+        "headquarters": "Sjedište",
+        "memberStates": "Države članice UN-a",
+        "secretaryGeneral": "Glavni tajnik UN-a",
+        "officialLanguages": "Službeni jezici"
+      },
+      "lists": {
+        "neighbors": "Susjedne zemlje",
+        "highlights": "Poznata mjesta",
+        "nature": "Priroda i krajolik",
+        "institutions": "Institucije",
+        "seas": "Mora i veze",
+        "neighborStates": "Susjedne savezne zemlje",
+        "borders": "Graniči s",
+        "knownFor": "Poznato po",
+        "science": "Poznate osobe: znanost",
+        "politics": "Poznate osobe: politika",
+        "art": "Poznate osobe: umjetnost",
+        "languages": "Jezici",
+        "timezones": "Vremenske zone"
+      },
+      "featured": {
+        "germanyOverview": "Pregled Njemačke",
+        "europeOverview": "EU ukratko",
+        "location": "Položaj i prostor",
+        "profile": "Kratki profil",
+        "overview": "Ukratko",
+        "worldOverview": "UN ukratko"
+      },
+      "names": {
+        "germany": "Njemačka",
+        "europe": "EU",
+        "countries": {
+          "frankreich": "Francuska",
+          "spanien": "Španjolska",
+          "england": "Engleska",
+          "schweden": "Švedska",
+          "polen": "Poljska",
+          "oesterreich": "Austrija",
+          "ungarn": "Mađarska",
+          "kroatien": "Hrvatska",
+          "bosnien-herzegowina": "Bosna i Hercegovina",
+          "serbien": "Srbija",
+          "nordmazedonien": "Sjeverna Makedonija",
+          "albanien": "Albanija",
+          "griechenland": "Grčka",
+          "bulgarien": "Bugarska",
+          "tuerkei": "Turska",
+          "rumaenien": "Rumunjska",
+          "ukraine": "Ukrajina",
+          "russland": "Rusija",
+          "weissrussland": "Bjelorusija",
+          "tschechien": "Češka",
+          "slowakei": "Slovačka",
+          "slowenien": "Slovenija",
+          "italien": "Italija",
+          "niederlande": "Nizozemska",
+          "belgien": "Belgija",
+          "daenemark": "Danska",
+          "finnland": "Finska",
+          "norwegen": "Norveška",
+          "irland": "Irska",
+          "schweiz": "Švicarska",
+          "vatikanstadt": "Vatikan",
+          "portugal": "Portugal",
+          "montenegro": "Crna Gora",
+          "luxemburg": "Luksemburg",
+          "liechtenstein": "Lihtenstajn",
+          "andorra": "Andora",
+          "kosovo": "Kosovo",
+          "kanada": "Kanada",
+          "usa": "SAD",
+          "china": "Kina",
+          "brasilien": "Brazil",
+          "australien": "Australija",
+          "indien": "Indija",
+          "argentinien": "Argentina",
+          "algerien": "Alzir",
+          "dr-kongo": "DR Kongo",
+          "saudi-arabien": "Saudijska Arabija",
+          "mexiko": "Meksiko",
+          "indonesien": "Indonezija",
+          "sudan": "Sudan",
+          "libyen": "Libija",
+          "iran": "Iran",
+          "mongolei": "Mongolija",
+          "japan": "Japan",
+          "suedkorea": "Južna Koreja",
+          "pakistan": "Pakistan",
+          "bangladesch": "Bangladeš",
+          "nigeria": "Nigerija",
+          "aethiopien": "Etiopija",
+          "aegypten": "Egipat",
+          "suedafrika": "Južnoafrička Republika",
+          "kasachstan": "Kazahstan",
+          "peru": "Peru",
+          "kolumbien": "Kolumbija",
+          "chile": "Čile",
+          "venezuela": "Venezuela",
+          "neuseeland": "Novi Zeland",
+          "thailand": "Tajland",
+          "vietnam": "Vijetnam"
+        },
+        "world": "UN"
+      },
+      "regions": {
+        "Westeuropa": "Zapadna Europa",
+        "Suedeuropa": "Južna Europa",
+        "Suedosteuropa": "Jugoistočna Europa",
+        "Nordeuropa": "Sjeverna Europa",
+        "Mitteleuropa": "Srednja Europa",
+        "Südwesten": "jugozapadu",
+        "Südosten": "jugoistoku",
+        "Osten": "istoku",
+        "Nordwesten": "sjeverozapadu",
+        "Norden": "sjeveru",
+        "Mitte": "središtu",
+        "Nordosten": "sjeveroistoku",
+        "Westen": "zapadu",
+        "Mitteldeutschland": "središnjoj Njemačkoj",
+        "Nordamerika": "Sjeverna Amerika",
+        "Suedamerika": "Južna Amerika",
+        "Ostasien": "Istočna Azija",
+        "Ozeanien": "Oceanija",
+        "Suedasien": "Južna Azija",
+        "Nordafrika": "Sjeverna Afrika",
+        "Zentralafrika": "Središnja Afrika",
+        "Westasien": "Zapadna Azija",
+        "Suedostasien": "Jugoistočna Azija",
+        "Westafrika": "Zapadna Afrika",
+        "Ostafrika": "Istočna Afrika",
+        "Suedafrika": "Južna Afrika",
+        "Zentralasien": "Središnja Azija",
+        "Osteuropa": "Istočna Europa",
+        "Suedosteuropa und Vorderasien": "Jugoistočna Europa i Zapadna Azija"
+      },
+      "stateTypes": {
+        "Flächenland": "teritorijalna savezna zemlja",
+        "Stadtstaat": "gradska savezna zemlja"
+      },
+      "stateForms": {
+        "Bundesstaatliche parlamentarische Republik": "savezna parlamentarna republika",
+        "Staatenverbund": "zajednica država",
+        "Souveraener Staat": "suverena država",
+        "Landesteil des Vereinigten Koenigreichs": "dio Ujedinjenog Kraljevstva",
+        "Globale Staatenorganisation": "globalna organizacija država"
+      },
+      "values": {
+        "yes": "Da",
+        "no": "Ne",
+        "officialSiteAria": "Otvori službenu stranicu za {name} u novoj kartici",
+        "tourismAria": "Otvori turističku stranicu za {name} u novoj kartici",
+        "germanyOverviewText": "Njemačka se nalazi u srcu Europe. Glavni i najveći grad je Berlin. Država ima {statesCount} saveznih zemalja i graniči s {neighbors}.",
+        "europeOverviewText": "EU povezuje {memberStates} država članica. Političko središte je {capital}, a glavne institucije su {institutions}.",
+        "stateLocationText": "{name} se nalazi u {region} Njemačke. Glavni grad je {capital}.",
+        "stateProfileText": "{name} je poznat po {knownFor}.",
+        "countryOverviewText": "{name} se nalazi u regiji {region}. Glavni grad je {capital}. Susjedne zemlje su {neighbors}.",
+        "worldOverviewText": "UN okuplja {memberStates} države članice. Glavno sjedište je u {headquarters}, a glavna tijela su {institutions}."
+      }
+    },
+    "installGuide": {
+      "fallbackBrowser": "Preglednik",
+      "fallbackDesktop": "Desktop",
+      "fallbackMobile": "Mobitel",
+      "cta": "Spremi oznaku 🌟",
+      "paths": {
+        "default": "Izbornik > Instaliraj",
+        "iosShare": "Dijeli > Početni zaslon",
+        "samsung": "Izbornik > Stranica > Home",
+        "edgeAndroid": "... > Dodaj na mobitel",
+        "opera": "Izbornik > Instaliraj",
+        "firefoxMobile": "Izbornik > Oznaka",
+        "chromeAndroid": "... > Početni zaslon",
+        "edgeDesktop": "... > Apps > Instaliraj",
+        "chromeDesktop": "... > Instaliraj",
+        "firefoxDesktop": "Spremi oznaku"
+      }
+    },
     "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
   },
   "en": {
-    "meta": { "htmlLang": "en" },
-    "categories": { "Nomen": "Noun", "Verb": "Verb", "Adjektiv": "Adjective", "Adverb": "Adverb", "Präposition": "Preposition", "Konjunktion": "Conjunction", "Ausdruck": "Phrase", "Satz": "Sentence" },
-    "topics": { "basics": "Basics", "vehicles": "Vehicles", "nature": "Nature", "food": "Kitchen", "travel": "Holiday", "work": "Work", "health": "Hospital", "people": "People", "shopping": "Shopping", "developertech": "Software Development", "itnetwork": "IT & Networks" },
-    "scopes": { "all": "All 3", "de": "DE mode", "hr": "HR mode", "gb": "GB mode" },
-    "difficulty": { "easy": "Easy", "medium": "Medium", "hard": "Hard" },
-    "combo": { "3": "Nice!", "4": "Strong!", "5": "Super!", "6": "Mega!", "7": "Wild!", "8": "Unstoppable!" },
+    "meta": {
+      "htmlLang": "en"
+    },
+    "categories": {
+      "Nomen": "Noun",
+      "Verb": "Verb",
+      "Adjektiv": "Adjective",
+      "Adverb": "Adverb",
+      "Präposition": "Preposition",
+      "Konjunktion": "Conjunction",
+      "Ausdruck": "Phrase",
+      "Satz": "Sentence"
+    },
+    "topics": {
+      "basics": "Basics",
+      "vehicles": "Vehicles",
+      "nature": "Nature",
+      "food": "Kitchen",
+      "travel": "Holiday",
+      "work": "Work",
+      "health": "Hospital",
+      "people": "People",
+      "shopping": "Shopping",
+      "developertech": "Software Development",
+      "itnetwork": "IT & Networks"
+    },
+    "scopes": {
+      "all": "All 3",
+      "de": "DE mode",
+      "hr": "HR mode",
+      "gb": "GB mode"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "combo": {
+      "3": "Nice!",
+      "4": "Strong!",
+      "5": "Super!",
+      "6": "Mega!",
+      "7": "Wild!",
+      "8": "Unstoppable!"
+    },
     "messages": {
       "languageDockAria": "Change learning language",
-      "languageNames": { "de": "Deutsch", "hr": "Hrvatski", "en": "English" },
-      "stats": { "streak": "Streak", "remaining": "Remaining", "accuracy": "Accuracy", "wpm": "WPM" },
-      "legend": { "aria": "Game help", "correct": "correct", "next": "next", "wrong": "wrong" },
-      "prompt": { "card": "Card", "swapAria": "Change learning language", "swapTitle": "Change learning language", "placeholder": "Type the answer..." },
-      "guide": { "label": "Answer trail", "separator": "space", "extraSeparator": "extra space", "comma": "comma", "extraComma": "extra comma", "statusTooLong": "Too long - delete the last character", "noteTooLong": "The answer was already complete. Extra characters are shown in red at the end.", "statusWrong": "Error in word {word}/{total} - check character {char}", "noteWrong": "Red marks the first wrong part of the input.", "statusDone": "Word {total}/{total} complete", "statusSpace": "Word {word}/{total} done - now type a space", "statusComma": "Word {word}/{total} done - now type a comma", "statusProgress": "Word {word}/{total} - letter {char}/{length}" },
-      "actions": { "hint": "Hint", "skip": "Skip", "skipTitle": "Show this card later in this round", "enterHint": "to check", "settings": "Settings", "switchPrompt": "Swap", "switchPromptAria": "Swap the top and bottom translation" },
-      "session": { "finished": "Session finished", "newRound": "New round", "finalDetails": "{correct}/{total} correct · Skipped: {skipped} · Streak: {streak} · {wpm} WPM · {secs}s", "emojiPerfect": "Top score", "emojiStrong": "Very strong", "emojiGood": "Good run", "emojiPractice": "Keep practicing" },
-      "categories": { "title": "Choose topics", "mixed": "All topics", "available": "{count} {unit} available", "unit": "cards", "newGame": "New game" },
-      "search": { "title": "Look up a German expression", "subtitle": "For words, phrases, or full sentences.", "authorToggle": "Add cards" },
-      "authoring": { "title": "Add a new card", "labels": { "topic": "Topic", "subcategory": "Subcategory", "scope": "Mode", "de": "German", "hr": "Croatian", "en": "English" }, "placeholders": { "de": "e.g. die Entscheidung", "hr": "e.g. odluka", "en": "e.g. decision" }, "saveBusy": "Saving...", "savePersistent": "Save permanently", "saveSession": "Save to session", "export": ".json export", "modePersistent": "Direct saving is active. Export stays available as a backup.", "modeSession": "With npx serve . you can add cards locally and then download cards.user.json.", "exportEmpty": "There are no extra cards to export yet.", "exportDone": "cards.user.json was downloaded. Put the file into the repo so it loads next time.", "invalid": "Please fill topic, subcategory, mode, German, Croatian, and English.", "duplicate": "This card already exists.", "saveFailed": "Saving failed.", "savedPersistent": "Saved locally and permanently. A new game will include the card in the pool.", "savedSession": "Saved for this session only. Without the local API the database stays unchanged after reload." },
-      "toasts": { "install": "App installed", "cardSaved": "New card saved" },
-      "encouragement": { "3": "Three in a row!", "5": "Five! Keep going!", "7": "Perfect!", "10": "Legend!" }
+      "languageNames": {
+        "de": "Deutsch",
+        "hr": "Hrvatski",
+        "en": "English"
+      },
+      "stats": {
+        "streak": "Streak",
+        "remaining": "Remaining",
+        "accuracy": "Accuracy",
+        "wpm": "WPM"
+      },
+      "legend": {
+        "aria": "Game help",
+        "correct": "correct",
+        "next": "next",
+        "wrong": "wrong"
+      },
+      "prompt": {
+        "card": "Card",
+        "swapAria": "Change learning language",
+        "swapTitle": "Change learning language",
+        "placeholder": "Type the answer..."
+      },
+      "guide": {
+        "label": "Answer trail",
+        "separator": "space",
+        "extraSeparator": "extra space",
+        "comma": "comma",
+        "extraComma": "extra comma",
+        "statusTooLong": "Too long - delete the last character",
+        "noteTooLong": "The answer was already complete. Extra characters are shown in red at the end.",
+        "statusWrong": "Error in word {word}/{total} - check character {char}",
+        "noteWrong": "Red marks the first wrong part of the input.",
+        "statusDone": "Word {total}/{total} complete",
+        "statusSpace": "Word {word}/{total} done - now type a space",
+        "statusComma": "Word {word}/{total} done - now type a comma",
+        "statusProgress": "Word {word}/{total} - letter {char}/{length}"
+      },
+      "actions": {
+        "hint": "Hint",
+        "skip": "Skip",
+        "skipTitle": "Show this card later in this round",
+        "enterHint": "to check",
+        "settings": "Settings",
+        "switchPrompt": "Swap",
+        "switchPromptAria": "Swap the top and bottom translation"
+      },
+      "session": {
+        "finished": "Session finished",
+        "newRound": "New round",
+        "finalDetails": "{correct}/{total} correct · Skipped: {skipped} · Streak: {streak} · {wpm} WPM · {secs}s",
+        "emojiPerfect": "Top score",
+        "emojiStrong": "Very strong",
+        "emojiGood": "Good run",
+        "emojiPractice": "Keep practicing"
+      },
+      "categories": {
+        "title": "Choose topics",
+        "mixed": "All topics",
+        "available": "{count} {unit} available",
+        "unit": "cards",
+        "newGame": "New game"
+      },
+      "search": {
+        "title": "Look up a German expression",
+        "subtitle": "For words, phrases, or full sentences.",
+        "authorToggle": "Add cards"
+      },
+      "authoring": {
+        "title": "Add a new card",
+        "labels": {
+          "topic": "Topic",
+          "subcategory": "Subcategory",
+          "scope": "Mode",
+          "de": "German",
+          "hr": "Croatian",
+          "en": "English"
+        },
+        "placeholders": {
+          "de": "e.g. die Entscheidung",
+          "hr": "e.g. odluka",
+          "en": "e.g. decision"
+        },
+        "saveBusy": "Saving...",
+        "savePersistent": "Save permanently",
+        "saveSession": "Save to session",
+        "export": ".json export",
+        "modePersistent": "Direct saving is active. Export stays available as a backup.",
+        "modeSession": "With npx serve . you can add cards locally and then download cards.user.json.",
+        "exportEmpty": "There are no extra cards to export yet.",
+        "exportDone": "cards.user.json was downloaded. Put the file into the repo so it loads next time.",
+        "invalid": "Please fill topic, subcategory, mode, German, Croatian, and English.",
+        "duplicate": "This card already exists.",
+        "saveFailed": "Saving failed.",
+        "savedPersistent": "Saved locally and permanently. A new game will include the card in the pool.",
+        "savedSession": "Saved for this session only. Without the local API the database stays unchanged after reload."
+      },
+      "toasts": {
+        "install": "App installed",
+        "cardSaved": "New card saved"
+      },
+      "encouragement": {
+        "3": "Three in a row!",
+        "5": "Five! Keep going!",
+        "7": "Perfect!",
+        "10": "Legend!"
+      }
     },
     "grammar": {
       "title": "Grammar quick reference",
       "cards": [
-        { "id": "grammar_tenses_primary", "title": "Tenses: to say", "interaction": { "mode": "fixed_first_slider", "fixedColumns": 1, "desktopVisibleDataColumns": 2, "mobileVisibleDataColumns": 2 }, "columns": ["Pers.", "Fut.", "Pres.", "Past", "Pres. perf.", "Past perf."], "rows": [["I", "will say", "say", "said", "have said", "had said"], ["you", "will say", "say", "said", "have said", "had said"], ["he/she/it", "will say", "says", "said", "has said", "had said"], ["we", "will say", "say", "said", "have said", "had said"], ["you (pl.)", "will say", "say", "said", "have said", "had said"], ["they", "will say", "say", "said", "have said", "had said"]] },
-        { "id": "grammar_voice_primary", "title": "Active/passive: carry", "interaction": { "mode": "fixed_first_slider", "fixedColumns": 1, "desktopVisibleDataColumns": 2, "mobileVisibleDataColumns": 2 }, "columns": ["Pers.", "Active pres.", "Passive pres."], "rows": [["I", "carry", "am carried"], ["you", "carry", "are carried"], ["he/she/it", "carries", "is carried"], ["we", "carry", "are carried"], ["you (pl.)", "carry", "are carried"], ["they", "carry", "are carried"]] },
-        { "id": "grammar_cases_primary", "title": "Pronouns and possession", "interaction": { "mode": "fixed_first_slider", "fixedColumns": 1, "desktopVisibleDataColumnsAdaptive": true, "desktopVisibleDataColumnsMin": 2, "desktopVisibleDataColumnsMax": 3, "desktopMinColumnWidth": 88, "mobileVisibleDataColumns": 2 }, "columns": ["Function", "Singular", "Plural", "Example"], "rows": [["Subject", "I / you / he / she / it", "we / you / they", "She writes every day."], ["Object", "me / you / him / her / it", "us / you / them", "I saw them yesterday."], ["Possessive determiner", "my / your / his / her / its", "our / your / their", "Our school is nearby."], ["Possessive pronoun", "mine / yours / his / hers / its", "ours / yours / theirs", "That bag is mine."], ["Reflexive", "myself / yourself / himself / herself / itself", "ourselves / yourselves / themselves", "They introduced themselves."]] }
+        {
+          "id": "grammar_tenses_primary",
+          "title": "Tenses: to say",
+          "interaction": {
+            "mode": "fixed_first_slider",
+            "fixedColumns": 1,
+            "desktopVisibleDataColumns": 2,
+            "mobileVisibleDataColumns": 2
+          },
+          "columns": [
+            "Pers.",
+            "Fut.",
+            "Pres.",
+            "Past",
+            "Pres. perf.",
+            "Past perf."
+          ],
+          "rows": [
+            [
+              "I",
+              "will say",
+              "say",
+              "said",
+              "have said",
+              "had said"
+            ],
+            [
+              "you",
+              "will say",
+              "say",
+              "said",
+              "have said",
+              "had said"
+            ],
+            [
+              "he/she/it",
+              "will say",
+              "says",
+              "said",
+              "has said",
+              "had said"
+            ],
+            [
+              "we",
+              "will say",
+              "say",
+              "said",
+              "have said",
+              "had said"
+            ],
+            [
+              "you (pl.)",
+              "will say",
+              "say",
+              "said",
+              "have said",
+              "had said"
+            ],
+            [
+              "they",
+              "will say",
+              "say",
+              "said",
+              "have said",
+              "had said"
+            ]
+          ]
+        },
+        {
+          "id": "grammar_voice_primary",
+          "title": "Active/passive: carry",
+          "interaction": {
+            "mode": "fixed_first_slider",
+            "fixedColumns": 1,
+            "desktopVisibleDataColumns": 2,
+            "mobileVisibleDataColumns": 2
+          },
+          "columns": [
+            "Pers.",
+            "Active pres.",
+            "Passive pres."
+          ],
+          "rows": [
+            [
+              "I",
+              "carry",
+              "am carried"
+            ],
+            [
+              "you",
+              "carry",
+              "are carried"
+            ],
+            [
+              "he/she/it",
+              "carries",
+              "is carried"
+            ],
+            [
+              "we",
+              "carry",
+              "are carried"
+            ],
+            [
+              "you (pl.)",
+              "carry",
+              "are carried"
+            ],
+            [
+              "they",
+              "carry",
+              "are carried"
+            ]
+          ]
+        },
+        {
+          "id": "grammar_cases_primary",
+          "title": "Pronouns and possession",
+          "interaction": {
+            "mode": "fixed_first_slider",
+            "fixedColumns": 1,
+            "desktopVisibleDataColumnsAdaptive": true,
+            "desktopVisibleDataColumnsMin": 2,
+            "desktopVisibleDataColumnsMax": 3,
+            "desktopMinColumnWidth": 88,
+            "mobileVisibleDataColumns": 2
+          },
+          "columns": [
+            "Function",
+            "Singular",
+            "Plural",
+            "Example"
+          ],
+          "rows": [
+            [
+              "Subject",
+              "I / you / he / she / it",
+              "we / you / they",
+              "She writes every day."
+            ],
+            [
+              "Object",
+              "me / you / him / her / it",
+              "us / you / them",
+              "I saw them yesterday."
+            ],
+            [
+              "Possessive determiner",
+              "my / your / his / her / its",
+              "our / your / their",
+              "Our school is nearby."
+            ],
+            [
+              "Possessive pronoun",
+              "mine / yours / his / hers / its",
+              "ours / yours / theirs",
+              "That bag is mine."
+            ],
+            [
+              "Reflexive",
+              "myself / yourself / himself / herself / itself",
+              "ourselves / yourselves / themselves",
+              "They introduced themselves."
+            ]
+          ]
+        }
       ]
     },
-    "facts": { "panelTitle": "German geography", "panelSubtitle": "Germany, its states, and Europe at a glance.", "tabs": { "germany": "Germany", "europe": "Europe" }, "links": { "tourism": "Tourism", "official": "Official" }, "errors": { "loadFailed": "Facts could not be loaded." }, "picker": { "statesAria": "Choose a German state", "countriesAria": "Choose a European country", "stateButton": "Choose state {name}", "countryButton": "Choose country {name}" }, "fields": { "capital": "Capital", "largestCity": "Largest city", "anthem": "Anthem", "founded": "Founded", "stateForm": "Form of state", "nationalDay": "National day", "population": "Population", "area": "Area", "statesCount": "Number of states", "currency": "Currency", "language": "Language", "timeZone": "Time zone", "callingCode": "Calling code", "internetTld": "Internet domain", "bordersCount": "Border count", "gdp": "Nominal GDP", "euSince": "EU since", "abbreviation": "Abbreviation", "stateType": "State type", "region": "Region", "joined": "Founded / current form", "headOfGovernment": "Head of government", "landlocked": "Landlocked" }, "lists": { "neighbors": "Neighboring countries", "highlights": "Highlights", "nature": "Nature and landscape", "institutions": "Institutions", "seas": "Seas and links", "neighborStates": "Neighboring states", "borders": "Borders", "knownFor": "Known for", "science": "Notable people: science", "politics": "Notable people: politics", "art": "Notable people: art", "languages": "Languages", "timezones": "Time zones" }, "featured": { "germanyOverview": "Germany at a glance", "europeOverview": "Europe at a glance", "location": "Location and space", "profile": "Short profile" }, "names": { "germany": "Germany", "europe": "Europe", "countries": { "frankreich": "France", "spanien": "Spain", "england": "England", "schweden": "Sweden", "polen": "Poland", "oesterreich": "Austria", "ungarn": "Hungary", "kroatien": "Croatia", "bosnien-herzegowina": "Bosnia and Herzegovina", "serbien": "Serbia", "nordmazedonien": "North Macedonia", "albanien": "Albania", "griechenland": "Greece", "bulgarien": "Bulgaria", "tuerkei": "Turkey", "rumaenien": "Romania", "ukraine": "Ukraine", "russland": "Russia", "weissrussland": "Belarus", "tschechien": "Czechia", "slowakei": "Slovakia", "slowenien": "Slovenia", "italien": "Italy", "niederlande": "Netherlands", "belgien": "Belgium", "daenemark": "Denmark", "finnland": "Finland", "norwegen": "Norway", "irland": "Ireland" } }, "regions": { "Westeuropa": "Western Europe", "Suedeuropa": "Southern Europe", "Suedosteuropa": "Southeastern Europe", "Nordeuropa": "Northern Europe", "Mitteleuropa": "Central Europe", "Südwesten": "southwest", "Südosten": "southeast", "Osten": "east", "Nordwesten": "northwest", "Norden": "north", "Mitte": "center", "Nordosten": "northeast", "Westen": "west", "Mitteldeutschland": "central Germany" }, "stateTypes": { "Flächenland": "territorial state", "Stadtstaat": "city-state" }, "stateForms": { "Bundesstaatliche parlamentarische Republik": "federal parliamentary republic", "Staatenverbund": "union of states", "Souveraener Staat": "sovereign state", "Landesteil des Vereinigten Koenigreichs": "part of the United Kingdom" }, "values": { "yes": "Yes", "no": "No", "officialSiteAria": "Open the official website for {name} in a new tab", "tourismAria": "Open tourism information for {name} in a new tab", "germanyOverviewText": "Germany lies in the heart of Europe. The capital and largest city is Berlin. The country has {statesCount} federal states and borders {neighbors}.", "europeOverviewText": "Europe connects many language areas, landscapes, and political traditions. In this overview the capital of the EU space is {capital}, and key institutions include {institutions}.", "stateLocationText": "{name} lies in the {region} of Germany. Its capital is {capital}.", "stateProfileText": "{name} is known for {knownFor}.", "countryOverviewText": "{name} is in {region}. Its capital is {capital}. Neighboring countries are {neighbors}." } },
-    "installGuide": { "fallbackBrowser": "Browser", "fallbackDesktop": "Desktop", "fallbackMobile": "Mobile", "cta": "Bookmark the star 🌟", "paths": { "default": "Menu > Install", "iosShare": "Share > Home Screen", "samsung": "Menu > Page > Home", "edgeAndroid": "... > Add to phone", "opera": "Menu > Install", "firefoxMobile": "Menu > Bookmark", "chromeAndroid": "... > Home screen", "edgeDesktop": "... > Apps > Install", "chromeDesktop": "... > Install", "firefoxDesktop": "Save bookmark" } },
+    "facts": {
+      "panelTitle": "German geography",
+      "panelSubtitle": "Germany, its states, Europe, and the world at a glance.",
+      "tabs": {
+        "germany": "Germany",
+        "europe": "Europe",
+        "world": "World"
+      },
+      "links": {
+        "tourism": "Tourism",
+        "official": "Official"
+      },
+      "errors": {
+        "loadFailed": "Facts could not be loaded."
+      },
+      "picker": {
+        "statesAria": "Choose a German state",
+        "countriesAria": "Choose a European country",
+        "stateButton": "Choose state {name}",
+        "countryButton": "Choose country {name}"
+      },
+      "fields": {
+        "capital": "Capital",
+        "largestCity": "Largest city",
+        "anthem": "Anthem",
+        "founded": "Founded",
+        "stateForm": "Form of state",
+        "nationalDay": "National day",
+        "population": "Population",
+        "area": "Area",
+        "statesCount": "Number of states",
+        "currency": "Currency",
+        "language": "Language",
+        "timeZone": "Time zone",
+        "callingCode": "Calling code",
+        "internetTld": "Internet domain",
+        "bordersCount": "Border count",
+        "gdp": "Nominal GDP",
+        "euSince": "EU since",
+        "abbreviation": "Abbreviation",
+        "stateType": "State type",
+        "region": "Region",
+        "joined": "Founded / current form",
+        "headOfGovernment": "Head of government",
+        "landlocked": "Landlocked",
+        "headquarters": "Headquarters",
+        "memberStates": "UN member states",
+        "secretaryGeneral": "UN Secretary-General",
+        "officialLanguages": "Official languages"
+      },
+      "lists": {
+        "neighbors": "Neighboring countries",
+        "highlights": "Highlights",
+        "nature": "Nature and landscape",
+        "institutions": "Institutions",
+        "seas": "Seas and links",
+        "neighborStates": "Neighboring states",
+        "borders": "Borders",
+        "knownFor": "Known for",
+        "science": "Notable people: science",
+        "politics": "Notable people: politics",
+        "art": "Notable people: art",
+        "languages": "Languages",
+        "timezones": "Time zones"
+      },
+      "featured": {
+        "germanyOverview": "Germany at a glance",
+        "europeOverview": "EU at a glance",
+        "location": "Location and space",
+        "profile": "Short profile",
+        "overview": "At a glance",
+        "worldOverview": "UN at a glance"
+      },
+      "names": {
+        "germany": "Germany",
+        "europe": "EU",
+        "countries": {
+          "frankreich": "France",
+          "spanien": "Spain",
+          "england": "England",
+          "schweden": "Sweden",
+          "polen": "Poland",
+          "oesterreich": "Austria",
+          "ungarn": "Hungary",
+          "kroatien": "Croatia",
+          "bosnien-herzegowina": "Bosnia and Herzegovina",
+          "serbien": "Serbia",
+          "nordmazedonien": "North Macedonia",
+          "albanien": "Albania",
+          "griechenland": "Greece",
+          "bulgarien": "Bulgaria",
+          "tuerkei": "Turkey",
+          "rumaenien": "Romania",
+          "ukraine": "Ukraine",
+          "russland": "Russia",
+          "weissrussland": "Belarus",
+          "tschechien": "Czechia",
+          "slowakei": "Slovakia",
+          "slowenien": "Slovenia",
+          "italien": "Italy",
+          "niederlande": "Netherlands",
+          "belgien": "Belgium",
+          "daenemark": "Denmark",
+          "finnland": "Finland",
+          "norwegen": "Norway",
+          "irland": "Ireland",
+          "schweiz": "Switzerland",
+          "vatikanstadt": "Vatican City",
+          "portugal": "Portugal",
+          "montenegro": "Montenegro",
+          "luxemburg": "Luxembourg",
+          "liechtenstein": "Liechtenstein",
+          "andorra": "Andorra",
+          "kosovo": "Kosovo",
+          "kanada": "Canada",
+          "usa": "USA",
+          "china": "China",
+          "brasilien": "Brazil",
+          "australien": "Australia",
+          "indien": "India",
+          "argentinien": "Argentina",
+          "algerien": "Algeria",
+          "dr-kongo": "DR Congo",
+          "saudi-arabien": "Saudi Arabia",
+          "mexiko": "Mexico",
+          "indonesien": "Indonesia",
+          "sudan": "Sudan",
+          "libyen": "Libya",
+          "iran": "Iran",
+          "mongolei": "Mongolia",
+          "japan": "Japan",
+          "suedkorea": "South Korea",
+          "pakistan": "Pakistan",
+          "bangladesch": "Bangladesh",
+          "nigeria": "Nigeria",
+          "aethiopien": "Ethiopia",
+          "aegypten": "Egypt",
+          "suedafrika": "South Africa",
+          "kasachstan": "Kazakhstan",
+          "peru": "Peru",
+          "kolumbien": "Colombia",
+          "chile": "Chile",
+          "venezuela": "Venezuela",
+          "neuseeland": "New Zealand",
+          "thailand": "Thailand",
+          "vietnam": "Vietnam"
+        },
+        "world": "UN"
+      },
+      "regions": {
+        "Westeuropa": "Western Europe",
+        "Suedeuropa": "Southern Europe",
+        "Suedosteuropa": "Southeastern Europe",
+        "Nordeuropa": "Northern Europe",
+        "Mitteleuropa": "Central Europe",
+        "Südwesten": "southwest",
+        "Südosten": "southeast",
+        "Osten": "east",
+        "Nordwesten": "northwest",
+        "Norden": "north",
+        "Mitte": "center",
+        "Nordosten": "northeast",
+        "Westen": "west",
+        "Mitteldeutschland": "central Germany",
+        "Nordamerika": "North America",
+        "Suedamerika": "South America",
+        "Ostasien": "East Asia",
+        "Ozeanien": "Oceania",
+        "Suedasien": "South Asia",
+        "Nordafrika": "North Africa",
+        "Zentralafrika": "Central Africa",
+        "Westasien": "West Asia",
+        "Suedostasien": "Southeast Asia",
+        "Westafrika": "West Africa",
+        "Ostafrika": "East Africa",
+        "Suedafrika": "Southern Africa",
+        "Zentralasien": "Central Asia",
+        "Osteuropa": "Eastern Europe",
+        "Suedosteuropa und Vorderasien": "Southeastern Europe and West Asia"
+      },
+      "stateTypes": {
+        "Flächenland": "territorial state",
+        "Stadtstaat": "city-state"
+      },
+      "stateForms": {
+        "Bundesstaatliche parlamentarische Republik": "federal parliamentary republic",
+        "Staatenverbund": "union of states",
+        "Souveraener Staat": "sovereign state",
+        "Landesteil des Vereinigten Koenigreichs": "part of the United Kingdom",
+        "Globale Staatenorganisation": "global organization of states"
+      },
+      "values": {
+        "yes": "Yes",
+        "no": "No",
+        "officialSiteAria": "Open the official website for {name} in a new tab",
+        "tourismAria": "Open tourism information for {name} in a new tab",
+        "germanyOverviewText": "Germany lies in the heart of Europe. The capital and largest city is Berlin. The country has {statesCount} federal states and borders {neighbors}.",
+        "europeOverviewText": "The EU brings together {memberStates} member states. Its political center is {capital}, and key institutions include {institutions}.",
+        "stateLocationText": "{name} lies in the {region} of Germany. Its capital is {capital}.",
+        "stateProfileText": "{name} is known for {knownFor}.",
+        "countryOverviewText": "{name} is in {region}. Its capital is {capital}. Neighboring countries are {neighbors}.",
+        "worldOverviewText": "The UN brings together {memberStates} member states. Its headquarters are in {headquarters}, and key bodies include {institutions}."
+      }
+    },
+    "installGuide": {
+      "fallbackBrowser": "Browser",
+      "fallbackDesktop": "Desktop",
+      "fallbackMobile": "Mobile",
+      "cta": "Bookmark the star 🌟",
+      "paths": {
+        "default": "Menu > Install",
+        "iosShare": "Share > Home Screen",
+        "samsung": "Menu > Page > Home",
+        "edgeAndroid": "... > Add to phone",
+        "opera": "Menu > Install",
+        "firefoxMobile": "Menu > Bookmark",
+        "chromeAndroid": "... > Home screen",
+        "edgeDesktop": "... > Apps > Install",
+        "chromeDesktop": "... > Install",
+        "firefoxDesktop": "Save bookmark"
+      }
+    },
     "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
   }
 }

@@ -1,42 +1,13 @@
-const http = require("http");
-const fs = require("fs/promises");
-const path = require("path");
+import http from "node:http";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = __dirname;
+import { cardKey, sanitizeCard } from "./shared/card-schema.js";
+
+const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT) || 3000;
 const USER_CARDS_FILE = path.join(ROOT, "cards.user.json");
-
-const SUBCATEGORY_ALIASES = {
-  Praeposition: "Präposition",
-  "PrÃ¤position": "Präposition",
-  "PrÃƒÂ¤position": "Präposition",
-};
-
-const VALID_TOPICS = new Set([
-  "basics",
-  "vehicles",
-  "nature",
-  "food",
-  "travel",
-  "work",
-  "health",
-  "people",
-  "shopping",
-  "developertech",
-  "itnetwork",
-]);
-
-const VALID_SUBCATEGORIES = new Set([
-  "Nomen",
-  "Verb",
-  "Adjektiv",
-  "Adverb",
-  "Präposition",
-  "Konjunktion",
-  "Ausdruck",
-  "Satz",
-]);
-const VALID_SCOPES = new Set(["all", "de", "hr", "gb"]);
 
 const CONTENT_TYPES = {
   ".css": "text/css; charset=utf-8",
@@ -46,72 +17,8 @@ const CONTENT_TYPES = {
   ".png": "image/png",
   ".svg": "image/svg+xml; charset=utf-8",
   ".txt": "text/plain; charset=utf-8",
+  ".webp": "image/webp",
 };
-
-function normalizeTopic(topic) {
-  return String(topic || "").trim().toLowerCase();
-}
-
-function normalizeSubcategory(subcategory) {
-  return SUBCATEGORY_ALIASES[subcategory] || subcategory;
-}
-
-function normalizeScope(scope) {
-  const normalized = String(scope || "").trim().toLowerCase();
-  if (!normalized || normalized === "shared" || normalized === "universal") {
-    return "all";
-  }
-  if (normalized === "en") {
-    return "gb";
-  }
-  return normalized;
-}
-
-function normalizeField(value) {
-  return String(value || "").trim().replace(/\s+/g, " ");
-}
-
-function normalizeAnswer(value) {
-  return normalizeField(value).replace(/[.,!?:;]+$/, "").toLowerCase();
-}
-
-function cardKey(card) {
-  return [
-    normalizeAnswer(card.de),
-    normalizeAnswer(card.hr),
-    normalizeTopic(card.topic),
-    normalizeSubcategory(card.subcategory),
-    normalizeScope(card.scope),
-  ].join("::");
-}
-
-function sanitizeCard(raw) {
-  if (!raw || typeof raw !== "object") {
-    return null;
-  }
-
-  const card = {
-    de: normalizeField(raw.de),
-    hr: normalizeField(raw.hr),
-    en: normalizeField(raw.en),
-    topic: normalizeTopic(normalizeField(raw.topic)),
-    subcategory: normalizeSubcategory(normalizeField(raw.subcategory || raw.cat)),
-    scope: normalizeScope(normalizeField(raw.scope || "all")),
-  };
-
-  if (
-    !card.de ||
-    !card.hr ||
-    !card.en ||
-    !VALID_TOPICS.has(card.topic) ||
-    !VALID_SUBCATEGORIES.has(card.subcategory) ||
-    !VALID_SCOPES.has(card.scope)
-  ) {
-    return null;
-  }
-
-  return card;
-}
 
 async function readUserCards() {
   try {
@@ -218,7 +125,17 @@ async function serveStatic(res, pathname) {
     const data = await fs.readFile(finalPath);
     const ext = path.extname(finalPath).toLowerCase();
     const type = CONTENT_TYPES[ext] || "application/octet-stream";
-    res.writeHead(200, { "Content-Type": type });
+    const headers = {
+      "Content-Type": type,
+    };
+
+    if ([".html", ".css", ".js", ".json", ".svg", ".txt"].includes(ext)) {
+      headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+      headers.Pragma = "no-cache";
+      headers.Expires = "0";
+    }
+
+    res.writeHead(200, headers);
     res.end(data);
   } catch (error) {
     sendText(res, 404, "Not found");

@@ -9,21 +9,21 @@
     "state_form": "Globale Staatenorganisation",
     "national_day": "24. Oktober (Tag der Vereinten Nationen)",
     "population": "ca. 8,2 Milliarden",
-    "area_km2": "ca. 148.940.000 km2 Landflaeche",
+    "area_km2": "ca. 148.940.000 km2 Landfläche",
     "member_states": "193",
-    "currency": "Viele nationale Waehrungen",
-    "language": "Arabisch, Chinesisch, Englisch, Franzoesisch, Russisch, Spanisch",
+    "currency": "Viele nationale Währungen",
+    "language": "Arabisch, Chinesisch, Englisch, Französisch, Russisch, Spanisch",
     "time_zone": "UTC-12:00 bis UTC+14:00",
-    "internet_tld": ".int und Laender-Domains",
+    "internet_tld": ".int und Länder-Domains",
     "gdp_nominal": "ca. 110 Billionen USD",
     "secretary_general": "António Guterres",
-    "overview": "Die Vereinten Nationen verbinden nahezu alle souveraenen Staaten der Erde. Hauptsitz ist New York City; zentrale Organe koordinieren Frieden, Entwicklung, humanitaere Hilfe und internationales Recht.",
+    "overview": "Die Vereinten Nationen verbinden nahezu alle souveränen Staaten der Erde. Hauptsitz ist New York City; zentrale Organe koordinieren Frieden, Entwicklung, humanitäre Hilfe und internationales Recht.",
     "neighboring_countries": [
       "Pazifik",
       "Atlantik",
       "Indischer Ozean",
       "Arktischer Ozean",
-      "Suedlicher Ozean"
+      "Südlicher Ozean"
     ],
     "highlights": [
       "New York City",
@@ -56,15 +56,27 @@
       "population": "ca. 41.0 Mio.",
       "area_km2": "9.984.670 km2",
       "currency": "Kanadischer Dollar (CAD)",
-      "language": "Englisch, Franzoesisch",
+      "language": "Englisch, Französisch",
       "time_zone": "UTC-08:00 bis UTC-03:30",
       "calling_code": "+1",
       "internet_tld": ".ca",
       "landlocked": "Nein",
-      "overview": "Kanada ist der groesste Staat Nordamerikas und flaechenmaessig der zweitgroesste Staat der Erde. Hauptstadt ist Ottawa; bekannt sind die grossen Seen, die Rocky Mountains und arktische Regionen.",
-      "neighboring_countries": ["USA"],
-      "languages_list": ["Englisch", "Franzoesisch"],
-      "timezones_list": ["UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00", "UTC-04:00", "UTC-03:30"],
+      "overview": "Kanada ist der größte Staat Nordamerikas und flächenmäßig der zweitgrößte Staat der Erde. Hauptstadt ist Ottawa; bekannt sind die großen Seen, die Rocky Mountains und arktische Regionen.",
+      "neighboring_countries": [
+        "USA"
+      ],
+      "languages_list": [
+        "Englisch",
+        "Französisch"
+      ],
+      "timezones_list": [
+        "UTC-08:00",
+        "UTC-07:00",
+        "UTC-06:00",
+        "UTC-05:00",
+        "UTC-04:00",
+        "UTC-03:30"
+      ],
       "flag_image": "https://flagcdn.com/ca.svg"
     },
     {
@@ -82,10 +94,22 @@
       "calling_code": "+1",
       "internet_tld": ".us",
       "landlocked": "Nein",
-      "overview": "Die Vereinigten Staaten erstrecken sich von Atlantik bis Pazifik. Die Hauptstadt ist Washington, D.C.; groesste Metropole ist New York City.",
-      "neighboring_countries": ["Kanada", "Mexiko"],
-      "languages_list": ["Englisch"],
-      "timezones_list": ["UTC-10:00", "UTC-09:00", "UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00"],
+      "overview": "Die Vereinigten Staaten erstrecken sich von Atlantik bis Pazifik. Die Hauptstadt ist Washington, D.C.; größte Metropole ist New York City.",
+      "neighboring_countries": [
+        "Kanada",
+        "Mexiko"
+      ],
+      "languages_list": [
+        "Englisch"
+      ],
+      "timezones_list": [
+        "UTC-10:00",
+        "UTC-09:00",
+        "UTC-08:00",
+        "UTC-07:00",
+        "UTC-06:00",
+        "UTC-05:00"
+      ],
       "flag_image": "https://flagcdn.com/us.svg"
     },
     {
@@ -103,18 +127,28 @@
       "calling_code": "+86",
       "internet_tld": ".cn",
       "landlocked": "Nein",
-      "overview": "China ist eines der flaechengroessten und bevoelkerungsreichsten Laender der Erde. Die Hauptstadt ist Peking; wirtschaftliche Zentren sind auch Shanghai und Shenzhen.",
-      "neighboring_countries": ["Mongolei", "Russland", "Indien", "Pakistan", "Kasachstan"],
-      "languages_list": ["Chinesisch"],
-      "timezones_list": ["UTC+08:00"],
+      "overview": "China ist eines der flächengrößten und bevölkerungsreichsten Länder der Erde. Die Hauptstadt ist Peking; wirtschaftliche Zentren sind auch Shanghai und Shenzhen.",
+      "neighboring_countries": [
+        "Mongolei",
+        "Russland",
+        "Indien",
+        "Pakistan",
+        "Kasachstan"
+      ],
+      "languages_list": [
+        "Chinesisch"
+      ],
+      "timezones_list": [
+        "UTC+08:00"
+      ],
       "flag_image": "https://flagcdn.com/cn.svg"
     },
     {
       "id": "brasilien",
       "name": "Brasilien",
-      "official_name": "Foederative Republik Brasilien",
+      "official_name": "Föderative Republik Brasilien",
       "capital": "Brasilia",
-      "region": "Suedamerika",
+      "region": "Südamerika",
       "state_form": "Souveraener Staat",
       "population": "ca. 203 Mio.",
       "area_km2": "8.515.767 km2",
@@ -124,10 +158,23 @@
       "calling_code": "+55",
       "internet_tld": ".br",
       "landlocked": "Nein",
-      "overview": "Brasilien ist der groesste Staat Suedamerikas. Die Hauptstadt ist Brasilia; der Amazonasraum praegt grosse Teile des Landes.",
-      "neighboring_countries": ["Argentinien", "Bolivien", "Kolumbien", "Peru", "Venezuela"],
-      "languages_list": ["Portugiesisch"],
-      "timezones_list": ["UTC-05:00", "UTC-04:00", "UTC-03:00", "UTC-02:00"],
+      "overview": "Brasilien ist der größte Staat Südamerikas. Die Hauptstadt ist Brasilia; der Amazonasraum prägt große Teile des Landes.",
+      "neighboring_countries": [
+        "Argentinien",
+        "Bolivien",
+        "Kolumbien",
+        "Peru",
+        "Venezuela"
+      ],
+      "languages_list": [
+        "Portugiesisch"
+      ],
+      "timezones_list": [
+        "UTC-05:00",
+        "UTC-04:00",
+        "UTC-03:00",
+        "UTC-02:00"
+      ],
       "flag_image": "https://flagcdn.com/br.svg"
     },
     {
@@ -145,10 +192,21 @@
       "calling_code": "+61",
       "internet_tld": ".au",
       "landlocked": "Nein",
-      "overview": "Australien umfasst den kleinsten Kontinent und ist zugleich ein grosser Inselstaat. Hauptstadt ist Canberra; Sydney und Melbourne sind die groessten Metropolen.",
-      "neighboring_countries": ["Indonesien", "Papua-Neuguinea", "Neuseeland"],
-      "languages_list": ["Englisch"],
-      "timezones_list": ["UTC+08:00", "UTC+09:30", "UTC+10:00", "UTC+10:30"],
+      "overview": "Australien umfasst den kleinsten Kontinent und ist zugleich ein großer Inselstaat. Hauptstadt ist Canberra; Sydney und Melbourne sind die größten Metropolen.",
+      "neighboring_countries": [
+        "Indonesien",
+        "Papua-Neuguinea",
+        "Neuseeland"
+      ],
+      "languages_list": [
+        "Englisch"
+      ],
+      "timezones_list": [
+        "UTC+08:00",
+        "UTC+09:30",
+        "UTC+10:00",
+        "UTC+10:30"
+      ],
       "flag_image": "https://flagcdn.com/au.svg"
     },
     {
@@ -156,7 +214,7 @@
       "name": "Indien",
       "official_name": "Republik Indien",
       "capital": "Neu-Delhi",
-      "region": "Suedasien",
+      "region": "Südasien",
       "state_form": "Souveraener Staat",
       "population": "ca. 1,43 Mrd.",
       "area_km2": "3.287.263 km2",
@@ -166,10 +224,21 @@
       "calling_code": "+91",
       "internet_tld": ".in",
       "landlocked": "Nein",
-      "overview": "Indien ist das bevoelkerungsreichste Land der Erde. Neu-Delhi ist die Hauptstadt; wichtige Zentren sind auch Mumbai, Bengaluru und Kolkata.",
-      "neighboring_countries": ["Pakistan", "China", "Nepal", "Bangladesch", "Myanmar"],
-      "languages_list": ["Hindi", "Englisch"],
-      "timezones_list": ["UTC+05:30"],
+      "overview": "Indien ist das bevölkerungsreichste Land der Erde. Neu-Delhi ist die Hauptstadt; wichtige Zentren sind auch Mumbai, Bengaluru und Kolkata.",
+      "neighboring_countries": [
+        "Pakistan",
+        "China",
+        "Nepal",
+        "Bangladesch",
+        "Myanmar"
+      ],
+      "languages_list": [
+        "Hindi",
+        "Englisch"
+      ],
+      "timezones_list": [
+        "UTC+05:30"
+      ],
       "flag_image": "https://flagcdn.com/in.svg"
     },
     {
@@ -177,7 +246,7 @@
       "name": "Argentinien",
       "official_name": "Argentinische Republik",
       "capital": "Buenos Aires",
-      "region": "Suedamerika",
+      "region": "Südamerika",
       "state_form": "Souveraener Staat",
       "population": "ca. 46 Mio.",
       "area_km2": "2.780.400 km2",
@@ -187,10 +256,20 @@
       "calling_code": "+54",
       "internet_tld": ".ar",
       "landlocked": "Nein",
-      "overview": "Argentinien reicht von den Anden bis an den Atlantik. Die Hauptstadt ist Buenos Aires; der Sueden des Landes umfasst weite Teile Patagoniens.",
-      "neighboring_countries": ["Chile", "Bolivien", "Paraguay", "Brasilien", "Uruguay"],
-      "languages_list": ["Spanisch"],
-      "timezones_list": ["UTC-03:00"],
+      "overview": "Argentinien reicht von den Anden bis an den Atlantik. Die Hauptstadt ist Buenos Aires; der Süden des Landes umfasst weite Teile Patagoniens.",
+      "neighboring_countries": [
+        "Chile",
+        "Bolivien",
+        "Paraguay",
+        "Brasilien",
+        "Uruguay"
+      ],
+      "languages_list": [
+        "Spanisch"
+      ],
+      "timezones_list": [
+        "UTC-03:00"
+      ],
       "flag_image": "https://flagcdn.com/ar.svg"
     },
     {
@@ -208,10 +287,20 @@
       "calling_code": "+213",
       "internet_tld": ".dz",
       "landlocked": "Nein",
-      "overview": "Algerien ist der flaechengroesste Staat Afrikas. Die Hauptstadt ist Algier; grosse Teile des Landes liegen in der Sahara.",
-      "neighboring_countries": ["Tunesien", "Libyen", "Niger", "Mali", "Marokko"],
-      "languages_list": ["Arabisch"],
-      "timezones_list": ["UTC+01:00"],
+      "overview": "Algerien ist der flächengrößte Staat Afrikas. Die Hauptstadt ist Algier; große Teile des Landes liegen in der Sahara.",
+      "neighboring_countries": [
+        "Tunesien",
+        "Libyen",
+        "Niger",
+        "Mali",
+        "Marokko"
+      ],
+      "languages_list": [
+        "Arabisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
       "flag_image": "https://flagcdn.com/dz.svg"
     },
     {
@@ -224,21 +313,32 @@
       "population": "ca. 112 Mio.",
       "area_km2": "2.344.858 km2",
       "currency": "Kongolesischer Franc (CDF)",
-      "language": "Franzoesisch",
+      "language": "Französisch",
       "time_zone": "UTC+01:00 bis UTC+02:00",
       "calling_code": "+243",
       "internet_tld": ".cd",
       "landlocked": "Nein",
-      "overview": "Die Demokratische Republik Kongo liegt in Zentralafrika und besitzt den zweitgroessten Regenwald der Erde nach Amazonien. Hauptstadt ist Kinshasa.",
-      "neighboring_countries": ["Republik Kongo", "Angola", "Sambia", "Uganda", "Ruanda"],
-      "languages_list": ["Franzoesisch"],
-      "timezones_list": ["UTC+01:00", "UTC+02:00"],
+      "overview": "Die Demokratische Republik Kongo liegt in Zentralafrika und besitzt den zweitgrößten Regenwald der Erde nach Amazonien. Hauptstadt ist Kinshasa.",
+      "neighboring_countries": [
+        "Republik Kongo",
+        "Angola",
+        "Sambia",
+        "Uganda",
+        "Ruanda"
+      ],
+      "languages_list": [
+        "Französisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00",
+        "UTC+02:00"
+      ],
       "flag_image": "https://flagcdn.com/cd.svg"
     },
     {
       "id": "saudi-arabien",
       "name": "Saudi-Arabien",
-      "official_name": "Koenigreich Saudi-Arabien",
+      "official_name": "Königreich Saudi-Arabien",
       "capital": "Riad",
       "region": "Westasien",
       "state_form": "Souveraener Staat",
@@ -250,10 +350,20 @@
       "calling_code": "+966",
       "internet_tld": ".sa",
       "landlocked": "Nein",
-      "overview": "Saudi-Arabien nimmt den groessten Teil der Arabischen Halbinsel ein. Hauptstadt ist Riad; wichtige Staedte sind auch Dschidda und Mekka.",
-      "neighboring_countries": ["Jordanien", "Irak", "Kuwait", "Vereinigte Arabische Emirate", "Jemen"],
-      "languages_list": ["Arabisch"],
-      "timezones_list": ["UTC+03:00"],
+      "overview": "Saudi-Arabien nimmt den größten Teil der Arabischen Halbinsel ein. Hauptstadt ist Riad; wichtige Städte sind auch Dschidda und Mekka.",
+      "neighboring_countries": [
+        "Jordanien",
+        "Irak",
+        "Kuwait",
+        "Vereinigte Arabische Emirate",
+        "Jemen"
+      ],
+      "languages_list": [
+        "Arabisch"
+      ],
+      "timezones_list": [
+        "UTC+03:00"
+      ],
       "flag_image": "https://flagcdn.com/sa.svg"
     },
     {
@@ -272,9 +382,20 @@
       "internet_tld": ".mx",
       "landlocked": "Nein",
       "overview": "Mexiko verbindet Nordamerika mit Zentralamerika. Die Hauptstadt ist Mexiko-Stadt; das Land reicht vom Pazifik bis zum Golf von Mexiko.",
-      "neighboring_countries": ["USA", "Guatemala", "Belize"],
-      "languages_list": ["Spanisch"],
-      "timezones_list": ["UTC-08:00", "UTC-07:00", "UTC-06:00", "UTC-05:00"],
+      "neighboring_countries": [
+        "USA",
+        "Guatemala",
+        "Belize"
+      ],
+      "languages_list": [
+        "Spanisch"
+      ],
+      "timezones_list": [
+        "UTC-08:00",
+        "UTC-07:00",
+        "UTC-06:00",
+        "UTC-05:00"
+      ],
       "flag_image": "https://flagcdn.com/mx.svg"
     },
     {
@@ -282,7 +403,7 @@
       "name": "Indonesien",
       "official_name": "Republik Indonesien",
       "capital": "Jakarta",
-      "region": "Suedostasien",
+      "region": "Südostasien",
       "state_form": "Souveraener Staat",
       "population": "ca. 282 Mio.",
       "area_km2": "1.904.569 km2",
@@ -292,10 +413,21 @@
       "calling_code": "+62",
       "internet_tld": ".id",
       "landlocked": "Nein",
-      "overview": "Indonesien ist ein grosser Inselstaat zwischen Indischem Ozean und Pazifik. Die Hauptstadt ist Jakarta; das Land umfasst tausende Inseln.",
-      "neighboring_countries": ["Malaysia", "Papua-Neuguinea", "Timor-Leste", "Australien"],
-      "languages_list": ["Indonesisch"],
-      "timezones_list": ["UTC+07:00", "UTC+08:00", "UTC+09:00"],
+      "overview": "Indonesien ist ein großer Inselstaat zwischen Indischem Ozean und Pazifik. Die Hauptstadt ist Jakarta; das Land umfasst tausende Inseln.",
+      "neighboring_countries": [
+        "Malaysia",
+        "Papua-Neuguinea",
+        "Timor-Leste",
+        "Australien"
+      ],
+      "languages_list": [
+        "Indonesisch"
+      ],
+      "timezones_list": [
+        "UTC+07:00",
+        "UTC+08:00",
+        "UTC+09:00"
+      ],
       "flag_image": "https://flagcdn.com/id.svg"
     },
     {
@@ -313,10 +445,20 @@
       "calling_code": "+249",
       "internet_tld": ".sd",
       "landlocked": "Nein",
-      "overview": "Der Sudan liegt zwischen Nordafrika und der Sahelzone. Hauptstadt ist Khartum am Zusammenfluss von Blauem und Weissem Nil.",
-      "neighboring_countries": ["Aegypten", "Libyen", "Tschad", "Suedsudan", "Aethiopien"],
-      "languages_list": ["Arabisch"],
-      "timezones_list": ["UTC+02:00"],
+      "overview": "Der Sudan liegt zwischen Nordafrika und der Sahelzone. Hauptstadt ist Khartum am Zusammenfluss von Blauem und Weißem Nil.",
+      "neighboring_countries": [
+        "Ägypten",
+        "Libyen",
+        "Tschad",
+        "Südsudan",
+        "Äthiopien"
+      ],
+      "languages_list": [
+        "Arabisch"
+      ],
+      "timezones_list": [
+        "UTC+02:00"
+      ],
       "flag_image": "https://flagcdn.com/sd.svg"
     },
     {
@@ -335,9 +477,20 @@
       "internet_tld": ".ly",
       "landlocked": "Nein",
       "overview": "Libyen liegt am Mittelmeer und reicht weit in die Sahara hinein. Die Hauptstadt ist Tripolis.",
-      "neighboring_countries": ["Tunesien", "Algerien", "Niger", "Tschad", "Sudan", "Aegypten"],
-      "languages_list": ["Arabisch"],
-      "timezones_list": ["UTC+02:00"],
+      "neighboring_countries": [
+        "Tunesien",
+        "Algerien",
+        "Niger",
+        "Tschad",
+        "Sudan",
+        "Ägypten"
+      ],
+      "languages_list": [
+        "Arabisch"
+      ],
+      "timezones_list": [
+        "UTC+02:00"
+      ],
       "flag_image": "https://flagcdn.com/ly.svg"
     },
     {
@@ -355,10 +508,20 @@
       "calling_code": "+98",
       "internet_tld": ".ir",
       "landlocked": "Nein",
-      "overview": "Iran liegt zwischen Vorderasien und Zentralasien. Die Hauptstadt ist Teheran; Gebirge und Wuesten praegen das Landesinnere.",
-      "neighboring_countries": ["Irak", "Tuerkei", "Armenien", "Afghanistan", "Pakistan"],
-      "languages_list": ["Persisch"],
-      "timezones_list": ["UTC+03:30"],
+      "overview": "Iran liegt zwischen Vorderasien und Zentralasien. Die Hauptstadt ist Teheran; Gebirge und Wüsten prägen das Landesinnere.",
+      "neighboring_countries": [
+        "Irak",
+        "Türkei",
+        "Armenien",
+        "Afghanistan",
+        "Pakistan"
+      ],
+      "languages_list": [
+        "Persisch"
+      ],
+      "timezones_list": [
+        "UTC+03:30"
+      ],
       "flag_image": "https://flagcdn.com/ir.svg"
     },
     {
@@ -370,16 +533,24 @@
       "state_form": "Souveraener Staat",
       "population": "ca. 3,5 Mio.",
       "area_km2": "1.564.116 km2",
-      "currency": "Toegroeg (MNT)",
+      "currency": "Tögrög (MNT)",
       "language": "Mongolisch",
       "time_zone": "UTC+07:00 bis UTC+08:00",
       "calling_code": "+976",
       "internet_tld": ".mn",
       "landlocked": "Ja",
-      "overview": "Die Mongolei liegt zwischen Russland und China. Hauptstadt ist Ulaanbaatar; grosse Teile des Landes bestehen aus Steppe und Wueste.",
-      "neighboring_countries": ["Russland", "China"],
-      "languages_list": ["Mongolisch"],
-      "timezones_list": ["UTC+07:00", "UTC+08:00"],
+      "overview": "Die Mongolei liegt zwischen Russland und China. Hauptstadt ist Ulaanbaatar; große Teile des Landes bestehen aus Steppe und Wüste.",
+      "neighboring_countries": [
+        "Russland",
+        "China"
+      ],
+      "languages_list": [
+        "Mongolisch"
+      ],
+      "timezones_list": [
+        "UTC+07:00",
+        "UTC+08:00"
+      ],
       "flag_image": "https://flagcdn.com/mn.svg"
     },
     {
@@ -397,15 +568,23 @@
       "calling_code": "+81",
       "internet_tld": ".jp",
       "landlocked": "Nein",
-      "overview": "Japan ist ein Inselstaat in Ostasien. Die Hauptstadt ist Tokio; das Land erstreckt sich ueber mehrere grosse Inseln im Pazifik.",
-      "neighboring_countries": ["Russland", "Suedkorea", "China"],
-      "languages_list": ["Japanisch"],
-      "timezones_list": ["UTC+09:00"],
+      "overview": "Japan ist ein Inselstaat in Ostasien. Die Hauptstadt ist Tokio; das Land erstreckt sich über mehrere große Inseln im Pazifik.",
+      "neighboring_countries": [
+        "Russland",
+        "Südkorea",
+        "China"
+      ],
+      "languages_list": [
+        "Japanisch"
+      ],
+      "timezones_list": [
+        "UTC+09:00"
+      ],
       "flag_image": "https://flagcdn.com/jp.svg"
     },
     {
       "id": "suedkorea",
-      "name": "Suedkorea",
+      "name": "Südkorea",
       "official_name": "Republik Korea",
       "capital": "Seoul",
       "region": "Ostasien",
@@ -418,10 +597,18 @@
       "calling_code": "+82",
       "internet_tld": ".kr",
       "landlocked": "Nein",
-      "overview": "Suedkorea liegt in Ostasien auf der koreanischen Halbinsel. Die Hauptstadt ist Seoul; das Land ist eines der fuehrenden Technologiezentren der Welt.",
-      "neighboring_countries": ["Nordkorea", "Japan", "China"],
-      "languages_list": ["Koreanisch"],
-      "timezones_list": ["UTC+09:00"],
+      "overview": "Südkorea liegt in Ostasien auf der koreanischen Halbinsel. Die Hauptstadt ist Seoul; das Land ist eines der führenden Technologiezentren der Welt.",
+      "neighboring_countries": [
+        "Nordkorea",
+        "Japan",
+        "China"
+      ],
+      "languages_list": [
+        "Koreanisch"
+      ],
+      "timezones_list": [
+        "UTC+09:00"
+      ],
       "flag_image": "https://flagcdn.com/kr.svg"
     },
     {
@@ -429,7 +616,7 @@
       "name": "Pakistan",
       "official_name": "Islamische Republik Pakistan",
       "capital": "Islamabad",
-      "region": "Suedasien",
+      "region": "Südasien",
       "state_form": "Souveraener Staat",
       "population": "ca. 241 Mio.",
       "area_km2": "881.913 km2",
@@ -439,10 +626,20 @@
       "calling_code": "+92",
       "internet_tld": ".pk",
       "landlocked": "Nein",
-      "overview": "Pakistan liegt in Suedasien zwischen Iran, Afghanistan, China und Indien. Hauptstadt ist Islamabad; die groesste Stadt ist Karachi.",
-      "neighboring_countries": ["Iran", "Afghanistan", "China", "Indien"],
-      "languages_list": ["Urdu", "Englisch"],
-      "timezones_list": ["UTC+05:00"],
+      "overview": "Pakistan liegt in Südasien zwischen Iran, Afghanistan, China und Indien. Hauptstadt ist Islamabad; die größte Stadt ist Karachi.",
+      "neighboring_countries": [
+        "Iran",
+        "Afghanistan",
+        "China",
+        "Indien"
+      ],
+      "languages_list": [
+        "Urdu",
+        "Englisch"
+      ],
+      "timezones_list": [
+        "UTC+05:00"
+      ],
       "flag_image": "https://flagcdn.com/pk.svg"
     },
     {
@@ -450,7 +647,7 @@
       "name": "Bangladesch",
       "official_name": "Volksrepublik Bangladesch",
       "capital": "Dhaka",
-      "region": "Suedasien",
+      "region": "Südasien",
       "state_form": "Souveraener Staat",
       "population": "ca. 171 Mio.",
       "area_km2": "148.460 km2",
@@ -460,10 +657,17 @@
       "calling_code": "+880",
       "internet_tld": ".bd",
       "landlocked": "Nein",
-      "overview": "Bangladesch liegt am Golf von Bengalen in Suedasien. Die Hauptstadt ist Dhaka; das Land ist dicht besiedelt und von grossen Flussdeltas gepraegt.",
-      "neighboring_countries": ["Indien", "Myanmar"],
-      "languages_list": ["Bengalisch"],
-      "timezones_list": ["UTC+06:00"],
+      "overview": "Bangladesch liegt am Golf von Bengalen in Südasien. Die Hauptstadt ist Dhaka; das Land ist dicht besiedelt und von großen Flussdeltas geprägt.",
+      "neighboring_countries": [
+        "Indien",
+        "Myanmar"
+      ],
+      "languages_list": [
+        "Bengalisch"
+      ],
+      "timezones_list": [
+        "UTC+06:00"
+      ],
       "flag_image": "https://flagcdn.com/bd.svg"
     },
     {
@@ -481,16 +685,25 @@
       "calling_code": "+234",
       "internet_tld": ".ng",
       "landlocked": "Nein",
-      "overview": "Nigeria ist das bevoelkerungsreichste Land Afrikas. Hauptstadt ist Abuja; die groesste Metropole ist Lagos.",
-      "neighboring_countries": ["Benin", "Niger", "Tschad", "Kamerun"],
-      "languages_list": ["Englisch"],
-      "timezones_list": ["UTC+01:00"],
+      "overview": "Nigeria ist das bevölkerungsreichste Land Afrikas. Hauptstadt ist Abuja; die größte Metropole ist Lagos.",
+      "neighboring_countries": [
+        "Benin",
+        "Niger",
+        "Tschad",
+        "Kamerun"
+      ],
+      "languages_list": [
+        "Englisch"
+      ],
+      "timezones_list": [
+        "UTC+01:00"
+      ],
       "flag_image": "https://flagcdn.com/ng.svg"
     },
     {
       "id": "aethiopien",
-      "name": "Aethiopien",
-      "official_name": "Foederale Demokratische Republik Aethiopien",
+      "name": "Äthiopien",
+      "official_name": "Föderale Demokratische Republik Äthiopien",
       "capital": "Addis Abeba",
       "region": "Ostafrika",
       "state_form": "Souveraener Staat",
@@ -502,39 +715,58 @@
       "calling_code": "+251",
       "internet_tld": ".et",
       "landlocked": "Ja",
-      "overview": "Aethiopien liegt am Horn von Afrika. Die Hauptstadt ist Addis Abeba; das Land ist historischer Sitz der Afrikanischen Union.",
-      "neighboring_countries": ["Eritrea", "Dschibuti", "Somalia", "Kenia", "Sudan", "Suedsudan"],
-      "languages_list": ["Amharisch"],
-      "timezones_list": ["UTC+03:00"],
+      "overview": "Äthiopien liegt am Horn von Afrika. Die Hauptstadt ist Addis Abeba; das Land ist historischer Sitz der Afrikanischen Union.",
+      "neighboring_countries": [
+        "Eritrea",
+        "Dschibuti",
+        "Somalia",
+        "Kenia",
+        "Sudan",
+        "Südsudan"
+      ],
+      "languages_list": [
+        "Amharisch"
+      ],
+      "timezones_list": [
+        "UTC+03:00"
+      ],
       "flag_image": "https://flagcdn.com/et.svg"
     },
     {
       "id": "aegypten",
-      "name": "Aegypten",
-      "official_name": "Arabische Republik Aegypten",
+      "name": "Ägypten",
+      "official_name": "Arabische Republik Ägypten",
       "capital": "Kairo",
       "region": "Nordafrika",
       "state_form": "Souveraener Staat",
       "population": "ca. 116 Mio.",
       "area_km2": "1.001.450 km2",
-      "currency": "Aegyptisches Pfund (EGP)",
+      "currency": "Ägyptisches Pfund (EGP)",
       "language": "Arabisch",
       "time_zone": "UTC+02:00",
       "calling_code": "+20",
       "internet_tld": ".eg",
       "landlocked": "Nein",
-      "overview": "Aegypten verbindet Nordafrika mit dem Nahen Osten. Hauptstadt ist Kairo; Nil und Suezkanal sind zentral fuer das Land.",
-      "neighboring_countries": ["Libyen", "Sudan", "Israel"],
-      "languages_list": ["Arabisch"],
-      "timezones_list": ["UTC+02:00"],
+      "overview": "Ägypten verbindet Nordafrika mit dem Nahen Osten. Hauptstadt ist Kairo; Nil und Suezkanal sind zentral für das Land.",
+      "neighboring_countries": [
+        "Libyen",
+        "Sudan",
+        "Israel"
+      ],
+      "languages_list": [
+        "Arabisch"
+      ],
+      "timezones_list": [
+        "UTC+02:00"
+      ],
       "flag_image": "https://flagcdn.com/eg.svg"
     },
     {
       "id": "suedafrika",
-      "name": "Suedafrika",
-      "official_name": "Republik Suedafrika",
+      "name": "Südafrika",
+      "official_name": "Republik Südafrika",
       "capital": "Pretoria, Kapstadt, Bloemfontein",
-      "region": "Suedafrika",
+      "region": "Südafrika",
       "state_form": "Souveraener Staat",
       "population": "ca. 63 Mio.",
       "area_km2": "1.221.037 km2",
@@ -544,10 +776,21 @@
       "calling_code": "+27",
       "internet_tld": ".za",
       "landlocked": "Nein",
-      "overview": "Suedafrika liegt an der Suedspitze Afrikas. Das Land hat drei Regierungssitze und verbindet Atlantik, Indischen Ozean und vielfaeltige Landschaften.",
-      "neighboring_countries": ["Namibia", "Botswana", "Simbabwe", "Mosambik", "Eswatini", "Lesotho"],
-      "languages_list": ["Englisch"],
-      "timezones_list": ["UTC+02:00"],
+      "overview": "Südafrika liegt an der Südspitze Afrikas. Das Land hat drei Regierungssitze und verbindet Atlantik, Indischen Ozean und vielfältige Landschaften.",
+      "neighboring_countries": [
+        "Namibia",
+        "Botswana",
+        "Simbabwe",
+        "Mosambik",
+        "Eswatini",
+        "Lesotho"
+      ],
+      "languages_list": [
+        "Englisch"
+      ],
+      "timezones_list": [
+        "UTC+02:00"
+      ],
       "flag_image": "https://flagcdn.com/za.svg"
     },
     {
@@ -565,10 +808,22 @@
       "calling_code": "+7",
       "internet_tld": ".kz",
       "landlocked": "Ja",
-      "overview": "Kasachstan ist der groesste Binnenstaat der Welt. Hauptstadt ist Astana; das Land reicht von der kasachischen Steppe bis an das Kaspische Meer.",
-      "neighboring_countries": ["Russland", "China", "Kirgisistan", "Usbekistan", "Turkmenistan"],
-      "languages_list": ["Kasachisch", "Russisch"],
-      "timezones_list": ["UTC+05:00", "UTC+06:00"],
+      "overview": "Kasachstan ist der größte Binnenstaat der Welt. Hauptstadt ist Astana; das Land reicht von der kasachischen Steppe bis an das Kaspische Meer.",
+      "neighboring_countries": [
+        "Russland",
+        "China",
+        "Kirgisistan",
+        "Usbekistan",
+        "Turkmenistan"
+      ],
+      "languages_list": [
+        "Kasachisch",
+        "Russisch"
+      ],
+      "timezones_list": [
+        "UTC+05:00",
+        "UTC+06:00"
+      ],
       "flag_image": "https://flagcdn.com/kz.svg"
     },
     {
@@ -576,7 +831,7 @@
       "name": "Peru",
       "official_name": "Republik Peru",
       "capital": "Lima",
-      "region": "Suedamerika",
+      "region": "Südamerika",
       "state_form": "Souveraener Staat",
       "population": "ca. 34 Mio.",
       "area_km2": "1.285.216 km2",
@@ -586,18 +841,28 @@
       "calling_code": "+51",
       "internet_tld": ".pe",
       "landlocked": "Nein",
-      "overview": "Peru liegt an der Pazifikkueste Suedamerikas. Die Hauptstadt ist Lima; Anden, Amazonas und historische Inka-Staetten praegen das Land.",
-      "neighboring_countries": ["Ecuador", "Kolumbien", "Brasilien", "Bolivien", "Chile"],
-      "languages_list": ["Spanisch"],
-      "timezones_list": ["UTC-05:00"],
+      "overview": "Peru liegt an der Pazifikküste Südamerikas. Die Hauptstadt ist Lima; Anden, Amazonas und historische Inka-Stätten prägen das Land.",
+      "neighboring_countries": [
+        "Ecuador",
+        "Kolumbien",
+        "Brasilien",
+        "Bolivien",
+        "Chile"
+      ],
+      "languages_list": [
+        "Spanisch"
+      ],
+      "timezones_list": [
+        "UTC-05:00"
+      ],
       "flag_image": "https://flagcdn.com/pe.svg"
     },
     {
       "id": "kolumbien",
       "name": "Kolumbien",
       "official_name": "Republik Kolumbien",
-      "capital": "Bogota",
-      "region": "Suedamerika",
+      "capital": "Bogotá",
+      "region": "Südamerika",
       "state_form": "Souveraener Staat",
       "population": "ca. 53 Mio.",
       "area_km2": "1.141.748 km2",
@@ -607,10 +872,20 @@
       "calling_code": "+57",
       "internet_tld": ".co",
       "landlocked": "Nein",
-      "overview": "Kolumbien liegt im Nordwesten Suedamerikas. Die Hauptstadt ist Bogota; das Land hat Kuesten an Karibik und Pazifik.",
-      "neighboring_countries": ["Panama", "Venezuela", "Brasilien", "Peru", "Ecuador"],
-      "languages_list": ["Spanisch"],
-      "timezones_list": ["UTC-05:00"],
+      "overview": "Kolumbien liegt im Nordwesten Südamerikas. Die Hauptstadt ist Bogotá; das Land hat Küsten an Karibik und Pazifik.",
+      "neighboring_countries": [
+        "Panama",
+        "Venezuela",
+        "Brasilien",
+        "Peru",
+        "Ecuador"
+      ],
+      "languages_list": [
+        "Spanisch"
+      ],
+      "timezones_list": [
+        "UTC-05:00"
+      ],
       "flag_image": "https://flagcdn.com/co.svg"
     },
     {
@@ -618,7 +893,7 @@
       "name": "Chile",
       "official_name": "Republik Chile",
       "capital": "Santiago de Chile",
-      "region": "Suedamerika",
+      "region": "Südamerika",
       "state_form": "Souveraener Staat",
       "population": "ca. 20 Mio.",
       "area_km2": "756.102 km2",
@@ -628,10 +903,19 @@
       "calling_code": "+56",
       "internet_tld": ".cl",
       "landlocked": "Nein",
-      "overview": "Chile erstreckt sich langgezogen an der Pazifikkueste Suedamerikas. Die Hauptstadt ist Santiago de Chile; das Land reicht von der Atacama bis Patagonien.",
-      "neighboring_countries": ["Peru", "Bolivien", "Argentinien"],
-      "languages_list": ["Spanisch"],
-      "timezones_list": ["UTC-04:00", "UTC-03:00"],
+      "overview": "Chile erstreckt sich langgezogen an der Pazifikküste Südamerikas. Die Hauptstadt ist Santiago de Chile; das Land reicht von der Atacama bis Patagonien.",
+      "neighboring_countries": [
+        "Peru",
+        "Bolivien",
+        "Argentinien"
+      ],
+      "languages_list": [
+        "Spanisch"
+      ],
+      "timezones_list": [
+        "UTC-04:00",
+        "UTC-03:00"
+      ],
       "flag_image": "https://flagcdn.com/cl.svg"
     },
     {
@@ -639,7 +923,7 @@
       "name": "Venezuela",
       "official_name": "Bolivarische Republik Venezuela",
       "capital": "Caracas",
-      "region": "Suedamerika",
+      "region": "Südamerika",
       "state_form": "Souveraener Staat",
       "population": "ca. 29 Mio.",
       "area_km2": "916.445 km2",
@@ -649,10 +933,18 @@
       "calling_code": "+58",
       "internet_tld": ".ve",
       "landlocked": "Nein",
-      "overview": "Venezuela liegt im Norden Suedamerikas an der Karibik. Die Hauptstadt ist Caracas; das Land umfasst Anden, Llanos und den Orinoco-Raum.",
-      "neighboring_countries": ["Kolumbien", "Brasilien", "Guyana"],
-      "languages_list": ["Spanisch"],
-      "timezones_list": ["UTC-04:00"],
+      "overview": "Venezuela liegt im Norden Südamerikas an der Karibik. Die Hauptstadt ist Caracas; das Land umfasst Anden, Llanos und den Orinoco-Raum.",
+      "neighboring_countries": [
+        "Kolumbien",
+        "Brasilien",
+        "Guyana"
+      ],
+      "languages_list": [
+        "Spanisch"
+      ],
+      "timezones_list": [
+        "UTC-04:00"
+      ],
       "flag_image": "https://flagcdn.com/ve.svg"
     },
     {
@@ -670,18 +962,26 @@
       "calling_code": "+64",
       "internet_tld": ".nz",
       "landlocked": "Nein",
-      "overview": "Neuseeland liegt im Suedpazifik und besteht vor allem aus Nord- und Suedinsel. Hauptstadt ist Wellington; Auckland ist die groesste Stadt.",
-      "neighboring_countries": ["Australien", "Pazifik"],
-      "languages_list": ["Englisch"],
-      "timezones_list": ["UTC+12:00", "UTC+13:00"],
+      "overview": "Neuseeland liegt im Südpazifik und besteht vor allem aus Nord- und Südinsel. Hauptstadt ist Wellington; Auckland ist die größte Stadt.",
+      "neighboring_countries": [
+        "Australien",
+        "Pazifik"
+      ],
+      "languages_list": [
+        "Englisch"
+      ],
+      "timezones_list": [
+        "UTC+12:00",
+        "UTC+13:00"
+      ],
       "flag_image": "https://flagcdn.com/nz.svg"
     },
     {
       "id": "thailand",
       "name": "Thailand",
-      "official_name": "Koenigreich Thailand",
+      "official_name": "Königreich Thailand",
       "capital": "Bangkok",
-      "region": "Suedostasien",
+      "region": "Südostasien",
       "state_form": "Souveraener Staat",
       "population": "ca. 66 Mio.",
       "area_km2": "513.120 km2",
@@ -691,10 +991,19 @@
       "calling_code": "+66",
       "internet_tld": ".th",
       "landlocked": "Nein",
-      "overview": "Thailand liegt in Suedostasien zwischen Andamanensee und Golf von Thailand. Die Hauptstadt ist Bangkok.",
-      "neighboring_countries": ["Myanmar", "Laos", "Kambodscha", "Malaysia"],
-      "languages_list": ["Thai"],
-      "timezones_list": ["UTC+07:00"],
+      "overview": "Thailand liegt in Südostasien zwischen Andamanensee und Golf von Thailand. Die Hauptstadt ist Bangkok.",
+      "neighboring_countries": [
+        "Myanmar",
+        "Laos",
+        "Kambodscha",
+        "Malaysia"
+      ],
+      "languages_list": [
+        "Thai"
+      ],
+      "timezones_list": [
+        "UTC+07:00"
+      ],
       "flag_image": "https://flagcdn.com/th.svg"
     },
     {
@@ -702,7 +1011,7 @@
       "name": "Vietnam",
       "official_name": "Sozialistische Republik Vietnam",
       "capital": "Hanoi",
-      "region": "Suedostasien",
+      "region": "Südostasien",
       "state_form": "Souveraener Staat",
       "population": "ca. 101 Mio.",
       "area_km2": "331.699 km2",
@@ -712,10 +1021,18 @@
       "calling_code": "+84",
       "internet_tld": ".vn",
       "landlocked": "Nein",
-      "overview": "Vietnam liegt an der Kueste des Suedchinesischen Meeres. Hauptstadt ist Hanoi; Ho-Chi-Minh-Stadt ist die groesste Metropole.",
-      "neighboring_countries": ["China", "Laos", "Kambodscha"],
-      "languages_list": ["Vietnamesisch"],
-      "timezones_list": ["UTC+07:00"],
+      "overview": "Vietnam liegt an der Küste des Südchinesischen Meeres. Hauptstadt ist Hanoi; Ho-Chi-Minh-Stadt ist die größte Metropole.",
+      "neighboring_countries": [
+        "China",
+        "Laos",
+        "Kambodscha"
+      ],
+      "languages_list": [
+        "Vietnamesisch"
+      ],
+      "timezones_list": [
+        "UTC+07:00"
+      ],
       "flag_image": "https://flagcdn.com/vn.svg"
     }
   ]

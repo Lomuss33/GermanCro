@@ -1,11 +1,11 @@
 {
   "union": {
     "name": "EU",
-    "official_name": "Europaeische Union",
+    "official_name": "Europäische Union",
     "capital": "Bruessel",
     "largest_city": "Berlin",
     "anthem": "Ode an die Freude",
-    "founded": "1993 (Europaeische Union)",
+    "founded": "1993 (Europäische Union)",
     "state_form": "Staatenverbund",
     "national_day": "9. Mai",
     "population": "452.162.974 (2026)",
@@ -16,7 +16,7 @@
     "time_zone": "UTC+00:00 bis UTC+02:00",
     "internet_tld": ".eu",
     "gdp_nominal": "ca. 17 Billionen EUR",
-    "overview": "Europa verbindet sehr unterschiedliche Sprachraeume, Landschaften und politische Traditionen. Die Europaeische Union bildet dabei einen zentralen politischen und wirtschaftlichen Rahmen fuer grosse Teile des Kontinents.",
+    "overview": "Europa verbindet sehr unterschiedliche Sprachräume, Landschaften und politische Traditionen. Die Europäische Union bildet dabei einen zentralen politischen und wirtschaftlichen Rahmen für große Teile des Kontinents.",
     "neighboring_countries": [
       "Atlantik",
       "Mittelmeer",
@@ -37,9 +37,9 @@
       "Alpen"
     ],
     "institutions": [
-      "Europaeisches Parlament",
-      "Europaeische Kommission",
-      "Europaeischer Rat"
+      "Europäisches Parlament",
+      "Europäische Kommission",
+      "Europäischer Rat"
     ]
   },
   "countries": [
@@ -95,7 +95,7 @@
       "name": "Spanien",
       "official_name": "Königreich Spanien",
       "capital": "Madrid",
-      "region": "Suedeuropa",
+      "region": "Südeuropa",
       "state_form": "Souveraener Staat",
       "population": "49.315.949",
       "area_km2": "505.992 km2",
@@ -105,7 +105,7 @@
       "calling_code": "+34",
       "internet_tld": ".es",
       "landlocked": "Nein",
-      "overview": "Spanien liegt in Suedeuropa. Die Hauptstadt ist Madrid. Es grenzt an Andorra, Frankreich, Gibraltar, Portugal, Marokko.",
+      "overview": "Spanien liegt in Südeuropa. Die Hauptstadt ist Madrid. Es grenzt an Andorra, Frankreich, Gibraltar, Portugal, Marokko.",
       "neighboring_countries": [
         "Andorra",
         "Frankreich",
@@ -128,10 +128,10 @@
     {
       "id": "england",
       "name": "England",
-      "official_name": "Landesteil des Vereinigten Koenigreichs",
+      "official_name": "Landesteil des Vereinigten Königreichs",
       "capital": "London",
       "region": "Westeuropa",
-      "state_form": "Landesteil des Vereinigten Koenigreichs",
+      "state_form": "Landesteil des Vereinigten Königreichs",
       "population": "",
       "area_km2": "",
       "currency": "Pfund Sterling (GBP)",
@@ -140,7 +140,7 @@
       "calling_code": "+44",
       "internet_tld": ".uk",
       "landlocked": "Nein",
-      "overview": "England ist der bevoelkerungsreichste Landesteil des Vereinigten Koenigreichs. London ist Hauptstadt Englands und zugleich politisches und wirtschaftliches Zentrum des Vereinigten Koenigreichs.",
+      "overview": "England ist der bevölkerungsreichste Landesteil des Vereinigten Königreichs. London ist Hauptstadt Englands und zugleich politisches und wirtschaftliches Zentrum des Vereinigten Königreichs.",
       "neighboring_countries": [
         "Schottland",
         "Wales"
@@ -286,7 +286,7 @@
       "name": "Kroatien",
       "official_name": "Republik Kroatien",
       "capital": "Zagreb",
-      "region": "Suedosteuropa",
+      "region": "Südosteuropa",
       "state_form": "Souveraener Staat",
       "population": "3.866.233",
       "area_km2": "56.594 km2",
@@ -296,7 +296,7 @@
       "calling_code": "+385",
       "internet_tld": ".hr",
       "landlocked": "Nein",
-      "overview": "Kroatien liegt in Suedosteuropa. Die Hauptstadt ist Zagreb. Es grenzt an Bosnien und Herzegowina, Ungarn, Montenegro, Serbien, Slowenien.",
+      "overview": "Kroatien liegt in Südosteuropa. Die Hauptstadt ist Zagreb. Es grenzt an Bosnien und Herzegowina, Ungarn, Montenegro, Serbien, Slowenien.",
       "neighboring_countries": [
         "Bosnien und Herzegowina",
         "Ungarn",
@@ -317,7 +317,7 @@
       "name": "Bosnien und Herzegowina",
       "official_name": "Bosnien und Herzegowina",
       "capital": "Sarajevo",
-      "region": "Suedosteuropa",
+      "region": "Südosteuropa",
       "state_form": "Souveraener Staat",
       "population": "3.422.000",
       "area_km2": "51.209 km2",
@@ -327,7 +327,7 @@
       "calling_code": "+387",
       "internet_tld": ".ba",
       "landlocked": "Nein",
-      "overview": "Bosnien und Herzegowina liegt in Suedosteuropa. Die Hauptstadt ist Sarajevo. Es grenzt an Kroatien, Montenegro, Serbien.",
+      "overview": "Bosnien und Herzegowina liegt in Südosteuropa. Die Hauptstadt ist Sarajevo. Es grenzt an Kroatien, Montenegro, Serbien.",
       "neighboring_countries": [
         "Kroatien",
         "Montenegro",
@@ -348,7 +348,7 @@
       "name": "Serbien",
       "official_name": "Republik Serbien",
       "capital": "Belgrad",
-      "region": "Suedosteuropa",
+      "region": "Südosteuropa",
       "state_form": "Souveraener Staat",
       "population": "6.567.783",
       "area_km2": "77.589 km2",
@@ -358,7 +358,7 @@
       "calling_code": "+381",
       "internet_tld": ".rs, .срб",
       "landlocked": "Ja",
-      "overview": "Serbien liegt in Suedosteuropa. Die Hauptstadt ist Belgrad. Es grenzt an Bosnien und Herzegowina, Bulgarien, Kroatien, Ungarn, Kosovo, Nordmazedonien, Montenegro, Rumänien.",
+      "overview": "Serbien liegt in Südosteuropa. Die Hauptstadt ist Belgrad. Es grenzt an Bosnien und Herzegowina, Bulgarien, Kroatien, Ungarn, Kosovo, Nordmazedonien, Montenegro, Rumänien.",
       "neighboring_countries": [
         "Bosnien und Herzegowina",
         "Bulgarien",
@@ -382,7 +382,7 @@
       "name": "Nordmazedonien",
       "official_name": "Republik Nordmazedonien",
       "capital": "Skopje",
-      "region": "Suedosteuropa",
+      "region": "Südosteuropa",
       "state_form": "Souveraener Staat",
       "population": "1.822.612",
       "area_km2": "25.713 km2",
@@ -392,7 +392,7 @@
       "calling_code": "+389",
       "internet_tld": ".mk",
       "landlocked": "Ja",
-      "overview": "Nordmazedonien liegt in Suedosteuropa. Die Hauptstadt ist Skopje. Es grenzt an Albanien, Bulgarien, Griechenland, Kosovo, Serbien.",
+      "overview": "Nordmazedonien liegt in Südosteuropa. Die Hauptstadt ist Skopje. Es grenzt an Albanien, Bulgarien, Griechenland, Kosovo, Serbien.",
       "neighboring_countries": [
         "Albanien",
         "Bulgarien",
@@ -413,7 +413,7 @@
       "name": "Albanien",
       "official_name": "Republik Albanien",
       "capital": "Tirana",
-      "region": "Suedosteuropa",
+      "region": "Südosteuropa",
       "state_form": "Souveraener Staat",
       "population": "2.363.314",
       "area_km2": "28.748 km2",
@@ -423,7 +423,7 @@
       "calling_code": "+355",
       "internet_tld": ".al",
       "landlocked": "Nein",
-      "overview": "Albanien liegt in Suedosteuropa. Die Hauptstadt ist Tirana. Es grenzt an Montenegro, Griechenland, Nordmazedonien, Kosovo.",
+      "overview": "Albanien liegt in Südosteuropa. Die Hauptstadt ist Tirana. Es grenzt an Montenegro, Griechenland, Nordmazedonien, Kosovo.",
       "neighboring_countries": [
         "Montenegro",
         "Griechenland",
@@ -443,7 +443,7 @@
       "name": "Griechenland",
       "official_name": "Hellenische Republik",
       "capital": "Athen",
-      "region": "Suedeuropa",
+      "region": "Südeuropa",
       "state_form": "Souveraener Staat",
       "population": "10.400.720",
       "area_km2": "131.990 km2",
@@ -453,7 +453,7 @@
       "calling_code": "+30",
       "internet_tld": ".gr",
       "landlocked": "Nein",
-      "overview": "Griechenland liegt in Suedeuropa. Die Hauptstadt ist Athen. Es grenzt an Albanien, Bulgarien, Türkei, Nordmazedonien.",
+      "overview": "Griechenland liegt in Südeuropa. Die Hauptstadt ist Athen. Es grenzt an Albanien, Bulgarien, Türkei, Nordmazedonien.",
       "neighboring_countries": [
         "Albanien",
         "Bulgarien",
@@ -473,7 +473,7 @@
       "name": "Bulgarien",
       "official_name": "Republik Bulgarien",
       "capital": "Sofia",
-      "region": "Suedosteuropa",
+      "region": "Südosteuropa",
       "state_form": "Souveraener Staat",
       "population": "6.437.360",
       "area_km2": "110.879 km2",
@@ -483,7 +483,7 @@
       "calling_code": "+359",
       "internet_tld": ".bg",
       "landlocked": "Nein",
-      "overview": "Bulgarien liegt in Suedosteuropa. Die Hauptstadt ist Sofia. Es grenzt an Griechenland, Nordmazedonien, Rumänien, Serbien, Türkei.",
+      "overview": "Bulgarien liegt in Südosteuropa. Die Hauptstadt ist Sofia. Es grenzt an Griechenland, Nordmazedonien, Rumänien, Serbien, Türkei.",
       "neighboring_countries": [
         "Griechenland",
         "Nordmazedonien",
@@ -504,7 +504,7 @@
       "name": "Türkei",
       "official_name": "Republik Türkei",
       "capital": "Ankara",
-      "region": "Suedosteuropa und Vorderasien",
+      "region": "Südosteuropa und Vorderasien",
       "state_form": "Souveraener Staat",
       "population": "85.664.944",
       "area_km2": "783.562 km2",
@@ -514,7 +514,7 @@
       "calling_code": "+90",
       "internet_tld": ".tr",
       "landlocked": "Nein",
-      "overview": "Türkei liegt in Suedosteuropa und Vorderasien. Die Hauptstadt ist Ankara. Es grenzt an Armenien, Aserbaidschan, Bulgarien, Georgien, Griechenland, Iran, Irak, Syrien.",
+      "overview": "Türkei liegt in Südosteuropa und Vorderasien. Die Hauptstadt ist Ankara. Es grenzt an Armenien, Aserbaidschan, Bulgarien, Georgien, Griechenland, Iran, Irak, Syrien.",
       "neighboring_countries": [
         "Armenien",
         "Aserbaidschan",
@@ -538,7 +538,7 @@
       "name": "Rumänien",
       "official_name": "Rumänien",
       "capital": "Bukarest",
-      "region": "Suedosteuropa",
+      "region": "Südosteuropa",
       "state_form": "Souveraener Staat",
       "population": "19.036.031",
       "area_km2": "238.391 km2",
@@ -548,7 +548,7 @@
       "calling_code": "+40",
       "internet_tld": ".ro",
       "landlocked": "Nein",
-      "overview": "Rumänien liegt in Suedosteuropa. Die Hauptstadt ist Bukarest. Es grenzt an Bulgarien, Ungarn, Moldawien, Serbien, Ukraine.",
+      "overview": "Rumänien liegt in Südosteuropa. Die Hauptstadt ist Bukarest. Es grenzt an Bulgarien, Ungarn, Moldawien, Serbien, Ukraine.",
       "neighboring_countries": [
         "Bulgarien",
         "Ungarn",
@@ -773,8 +773,8 @@
       "id": "italien",
       "name": "Italien",
       "official_name": "Italienische Republik",
-      "capital": "Rome",
-      "region": "Suedeuropa",
+      "capital": "Rom",
+      "region": "Südeuropa",
       "state_form": "Souveraener Staat",
       "population": "58.927.633",
       "area_km2": "301.336 km2",
@@ -784,7 +784,7 @@
       "calling_code": "+39",
       "internet_tld": ".it",
       "landlocked": "Nein",
-      "overview": "Italien liegt in Suedeuropa. Die Hauptstadt ist Rome. Es grenzt an Österreich, Frankreich, San Marino, Slowenien, Schweiz, Vatikanstadt.",
+      "overview": "Italien liegt in Südeuropa. Die Hauptstadt ist Rom. Es grenzt an Österreich, Frankreich, San Marino, Slowenien, Schweiz, Vatikanstadt.",
       "neighboring_countries": [
         "Österreich",
         "Frankreich",
@@ -992,7 +992,7 @@
       "population": "9.048.000",
       "area_km2": "41.285 km2",
       "currency": "Schweizer Franken (CHF)",
-      "language": "Deutsch, Franzoesisch, Italienisch, Raetoromanisch",
+      "language": "Deutsch, Französisch, Italienisch, Rätoromanisch",
       "time_zone": "UTC+01:00",
       "calling_code": "+41",
       "internet_tld": ".ch",
@@ -1007,9 +1007,9 @@
       ],
       "languages_list": [
         "Deutsch",
-        "Franzoesisch",
+        "Französisch",
         "Italienisch",
-        "Raetoromanisch"
+        "Rätoromanisch"
       ],
       "timezones_list": [
         "UTC+01:00"
@@ -1021,7 +1021,7 @@
       "name": "Vatikanstadt",
       "official_name": "Staat Vatikanstadt",
       "capital": "Vatikanstadt",
-      "region": "Suedeuropa",
+      "region": "Südeuropa",
       "state_form": "Souveraener Staat",
       "population": "ca. 800",
       "area_km2": "0,49 km2",
@@ -1049,7 +1049,7 @@
       "name": "Portugal",
       "official_name": "Portugiesische Republik",
       "capital": "Lissabon",
-      "region": "Suedeuropa",
+      "region": "Südeuropa",
       "state_form": "Souveraener Staat",
       "population": "10.639.726",
       "area_km2": "92.212 km2",
@@ -1059,7 +1059,7 @@
       "calling_code": "+351",
       "internet_tld": ".pt",
       "landlocked": "Nein",
-      "overview": "Portugal liegt im Suedwesten Europas auf der Iberischen Halbinsel. Die Hauptstadt ist Lissabon. Es grenzt an Spanien.",
+      "overview": "Portugal liegt im Südwesten Europas auf der Iberischen Halbinsel. Die Hauptstadt ist Lissabon. Es grenzt an Spanien.",
       "neighboring_countries": [
         "Spanien"
       ],
@@ -1077,7 +1077,7 @@
       "name": "Montenegro",
       "official_name": "Montenegro",
       "capital": "Podgorica",
-      "region": "Suedosteuropa",
+      "region": "Südosteuropa",
       "state_form": "Souveraener Staat",
       "population": "616.177",
       "area_km2": "13.812 km2",
@@ -1087,7 +1087,7 @@
       "calling_code": "+382",
       "internet_tld": ".me",
       "landlocked": "Nein",
-      "overview": "Montenegro liegt an der Adriakueste in Suedosteuropa. Die Hauptstadt ist Podgorica. Es grenzt an Albanien, Bosnien und Herzegowina, Kroatien, Kosovo, Serbien.",
+      "overview": "Montenegro liegt an der Adriaküste in Südosteuropa. Die Hauptstadt ist Podgorica. Es grenzt an Albanien, Bosnien und Herzegowina, Kroatien, Kosovo, Serbien.",
       "neighboring_countries": [
         "Albanien",
         "Bosnien und Herzegowina",
@@ -1113,7 +1113,7 @@
       "population": "672.050",
       "area_km2": "2.586 km2",
       "currency": "euro (EUR)",
-      "language": "Luxemburgisch, Franzoesisch, Deutsch",
+      "language": "Luxemburgisch, Französisch, Deutsch",
       "time_zone": "UTC+01:00",
       "calling_code": "+352",
       "internet_tld": ".lu",
@@ -1126,7 +1126,7 @@
       ],
       "languages_list": [
         "Luxemburgisch",
-        "Franzoesisch",
+        "Französisch",
         "Deutsch"
       ],
       "timezones_list": [
@@ -1167,7 +1167,7 @@
       "name": "Andorra",
       "official_name": "Fuerstentum Andorra",
       "capital": "Andorra la Vella",
-      "region": "Suedeuropa",
+      "region": "Südeuropa",
       "state_form": "Souveraener Staat",
       "population": "85.863",
       "area_km2": "468 km2",
