@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=overlays-content">
+<title>GermanCro | German vocabulary trainer for Croatian and English speakers</title>
+<meta name="description" content="Practice German vocabulary with Croatian and English support, typing drills, and fact cards in a fast single-page trainer.">
+<link rel="canonical" href="https://germancro.live/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GermanCro | German vocabulary trainer for Croatian and English speakers">
+<meta property="og:description" content="Practice German vocabulary with Croatian and English support, typing drills, and fact cards in a fast single-page trainer.">
+<meta property="og:url" content="https://germancro.live/">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="stylesheet" href="style.css?v=2026-04-29-fix1">
+</head>
+<body>
+
+<div class="de-flag" id="deFlag"></div>
+
+<div class="app-loader" id="appLoader" aria-live="polite">
+  <div class="app-loader-spinner" id="appLoaderSpinner" aria-hidden="true"></div>
+  <div class="app-loader-title">Lernen je Power!</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="language-dock" id="languageDock" aria-label="Lernsprache wechseln">
+  <button class="language-dock-btn" data-lang="de" type="button" aria-label="Deutsch">
+    <span class="language-dock-flag language-dock-flag--de" aria-hidden="true"></span>
+    <span class="language-dock-label">DE</span>
+  </button>
+  <button class="language-dock-btn" data-lang="hr" type="button" aria-label="Hrvatski">
+    <span class="language-dock-flag language-dock-flag--hr" aria-hidden="true"></span>
+    <span class="language-dock-label">HR</span>
+  </button>
+  <button class="language-dock-btn" data-lang="en" type="button" aria-label="English">
+    <span class="language-dock-flag language-dock-flag--en" aria-hidden="true"></span>
+    <span class="language-dock-label">GB</span>
+  </button>
+</div>
+
+<div id="heroStage">
+  <div class="site-title-row">
+    <div class="title-guide title-guide-left is-hidden" id="installGuideBrowserPanel" aria-live="polite">
+      <div class="title-guide-browser" id="installGuideBrowser"></div>
+    </div>
+
+    <div class="site-title" aria-label="Germancro">
+      <span class="site-title-letter t-w">G</span>
+      <span class="site-title-letter t-w">e</span>
+      <span class="site-title-letter t-w">r</span>
+      <span class="site-title-letter t-r">m</span>
+      <span class="site-title-letter t-r">a</span>
+      <span class="site-title-letter t-r">n</span>
+      <span class="site-title-letter t-g">c</span>
+      <span class="site-title-letter t-g">r</span>
+      <span class="site-title-letter t-g">o</span>
+    </div>
+
+    <div class="title-guide title-guide-right is-hidden" id="installGuidePanel" aria-live="polite">
+      <div class="title-guide-steps" id="installGuideSteps"></div>
+    </div>
+  </div>
+
+<div class="stats-bar">
+  <div class="stat stat-streak">
+    <div class="stat-value"><span id="streakNum">0</span><span class="flame">&#128293;</span></div>
+    <div class="stat-label" id="statLabelStreak">Streak</div>
+  </div>
+  <div class="stat stat-remaining">
+    <div class="stat-value" id="remainingVal">-</div>
+    <div class="stat-label" id="statLabelRemaining">&Uuml;brig</div>
+  </div>
+  <div class="stats-right">
+    <div class="stat stat-accuracy">
+      <div class="stat-value" id="accuracyVal">&mdash;</div>
+      <div class="stat-label" id="statLabelAccuracy">Genauigkeit</div>
+    </div>
+    <div class="stat stat-wpm">
+      <div class="stat-value" id="wpmVal">&mdash;</div>
+      <div class="stat-label" id="statLabelWpm">WPM</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id="mainCard">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="card-topbar">
+    <span class="category-badge" id="categoryBadge"></span>
+    <div class="card-legend" id="cardLegend" aria-label="Spielhilfe">
+      <span class="card-legend-item"><span class="card-legend-dot is-green"></span><span id="legendCorrect">richtig</span></span>
+      <span class="card-legend-item"><span class="card-legend-dot is-yellow"></span><span id="legendNext">als N&auml;chstes</span></span>
+      <span class="card-legend-item"><span class="card-legend-dot is-red"></span><span id="legendWrong">falsch</span></span>
+    </div>
+  </div>
+
+  <div id="gameArea">
+    <div class="prompt-head">
+      <div class="prompt-head-title" id="promptHeadTitle">Karte</div>
+    </div>
+    <div class="prompt-row prompt-row-main">
+      <button class="prompt-flag" id="promptPrimaryFlag" type="button">&#127469;&#127479;</button>
+      <div class="prompt-copy">
+        <div class="prompt-text" id="promptText"></div>
+      </div>
+    </div>
+    <div class="prompt-row prompt-row-sub">
+      <button class="prompt-flag prompt-flag-sub" id="promptSecondaryFlag" type="button">&#127468;&#127463;</button>
+      <div class="prompt-copy">
+        <div class="prompt-sub" id="promptSub"></div>
+      </div>
+    </div>
+    <div class="input-shell">
+      <span class="input-flag" aria-hidden="true">&#127465;&#127466;</span>
+      <input id="answer" type="text" autocomplete="off" spellcheck="false" placeholder="Antwort eingeben..." />
+      <div class="answer-terminal-status-row" id="answerTerminalStatusRow" aria-hidden="true">
+        <div class="answer-terminal-status-badge" id="answerTerminalStatus"></div>
+      </div>
+    </div>
+    <div class="answer-guide" id="answerGuide">
+      <div class="answer-guide-head">
+        <div class="answer-guide-label" id="answerGuideLabel">Antwortverlauf</div>
+        <div class="answer-guide-status" id="answerGuideStatus" aria-live="polite"></div>
+      </div>
+      <div class="answer-guide-body">
+        <span class="answer-guide-trail-flag" aria-hidden="true">&#127918;&#9745;&#65039;</span>
+        <div class="word-grid" id="wordGrid"></div>
+      </div>
+      <div class="answer-guide-foot">
+        <div class="answer-guide-note" id="answerGuideNote"></div>
+        <div class="enter-hint"><span class="key-badge">Enter</span> <span id="enterHintText">zum Pr&uuml;fen</span></div>
+      </div>
+    </div>
+    <div class="feedback-burst" id="feedbackBurst" aria-hidden="true"></div>
+    <div class="action-row">
+      <div class="action-row-left">
+        <button class="skip-card-btn" id="skipCardBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#9197;&#65039;</span> <span id="skipCardBtnLabel">Skip</span></button>
+        <button class="hint-btn" id="hintBtn"><span class="button-icon button-icon-emoji" aria-hidden="true">&#128161;</span> <span>Tipp</span></button>
+      </div>
+    </div>
+    <div class="combo-pop" id="comboPop"></div>
+  </div>
+
+  <div class="session-end" id="sessionEnd">
+    <div class="score-label" id="sessionEndLabel">Sitzung beendet</div>
+    <div class="big-score" id="finalScore"></div>
+    <div class="session-end-details" id="finalDetails"></div>
+    <div class="session-end-emoji" id="finalEmoji"></div>
+    <button class="restart-btn" id="restartBtn" type="button">Neue Runde</button>
+  </div>
+  </div>
+</div>
+
+<div class="phone-guide-bar is-hidden" id="phoneGuideBar" aria-live="polite"></div>
+
+<div class="cat-panel" id="catPanel">
+  <div class="cat-panel-head">
+    <div class="cat-panel-title" id="settingsPanelTitle">Settings</div>
+  </div>
+  <div class="cat-panel-toolbar">
+    <div class="difficulty-panel">
+      <button data-diff="hard" id="difficultyHardBtn">Schwer</button>
+      <button data-diff="medium" id="difficultyMediumBtn">Mittel</button>
+      <button data-diff="easy" class="active" id="difficultyEasyBtn">Leicht</button>
+    </div>
+    <div class="cat-panel-meta">
+      <div class="new-game-row">
+        <div class="session-slider-wrap">
+          <span class="slider-prefix" id="sliderUnitLabel">rounds:</span>
+          <input
+            type="range"
+            id="sessionSizeSlider"
+            min="5"
+            max="50"
+            step="5"
+            value="10"
+          />
+          <span class="slider-label"><span id="sliderLabel">10</span></span>
+        </div>
+        <div class="cat-count" id="catCount"></div>
+      </div>
+      <button class="new-game-btn" id="newGameBtn" type="button">
+        Neues Spiel
+      </button>
+    </div>
+  </div>
+  <div class="cat-buttons" id="catButtons"></div>
+</div>
+
+<div class="search-panel" id="searchPanel">
+  <div class="search-tools-row">
+    <div class="search-links" id="searchLinks"></div>
+    <button class="author-toggle-btn" id="authorToggleBtn" type="button" aria-expanded="false">Neue Karten</button>
+  </div>
+  <div class="grammar-section">
+    <div class="grammar-grid" id="grammarGrid"></div>
+  </div>
+</div>
+
+<div class="author-panel is-hidden" id="authorPanel">
+  <div class="author-panel-head">
+    <div class="author-panel-title" id="authorPanelTitle">Neue Karte hinzuf&uuml;gen</div>
+    <div class="author-mode" id="authorMode"></div>
+  </div>
+
+  <form class="add-card-form" id="addCardForm">
+    <div class="add-card-grid">
+      <label class="author-field">
+        <span id="authorLabelTopic">Thema</span>
+        <select id="newCardTopic" required></select>
+      </label>
+      <label class="author-field">
+        <span id="authorLabelSubcategory">Unterkategorie</span>
+        <select id="newCardSubcategory" required></select>
+      </label>
+      <label class="author-field">
+        <span id="authorLabelScope">Modus</span>
+        <select id="newCardScope" required></select>
+      </label>
+      <label class="author-field">
+        <span id="authorLabelDe">Deutsch</span>
+        <input id="newCardDe" type="text" placeholder="z. B. die Entscheidung" required>
+      </label>
+      <label class="author-field">
+        <span id="authorLabelHr">Kroatisch</span>
+        <input id="newCardHr" type="text" placeholder="z. B. odluka" required>
+      </label>
+      <label class="author-field">
+        <span id="authorLabelEn">Englisch</span>
+        <input id="newCardEn" type="text" placeholder="z. B. decision" required>
+      </label>
+    </div>
+
+    <div class="author-actions">
+      <button class="author-save-btn" id="addCardSaveBtn" type="submit">In Sitzung speichern</button>
+      <button class="author-secondary-btn" id="exportCardsBtn" type="button">.json export</button>
+      <div class="author-status" id="addCardStatus"></div>
+    </div>
+  </form>
+</div>
+
+<div class="facts-panel">
+  <div class="facts-controls">
+    <div class="facts-mode-switch">
+      <button class="facts-switch-btn active" id="factsCountryBtn" type="button">Deutschland</button>
+      <button class="facts-switch-btn" id="factsStatesBtn" type="button">Europa</button>
+      <button class="facts-switch-btn" id="factsWorldBtn" type="button">Welt</button>
+    </div>
+
+    <div class="state-picker-wrap" id="statePickerWrap">
+      <div class="state-picker" id="statePicker"></div>
+    </div>
+  </div>
+
+  <div class="facts-content" id="factsContent"></div>
+</div>
+
+<footer class="site-footer">
+  <a href="https://lomuss33.github.io/myWebsite/" target="_blank" rel="noopener noreferrer" id="siteFooterLink">made by Lovro Musi&#263;, in Gie&#223;en 2026, with &#9829;</a>
+</footer>
+
+<script type="module" src="app.js?v=2026-04-29-fix1"></script>
+</body>
+</html>

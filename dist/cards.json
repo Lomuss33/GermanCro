@@ -1,0 +1,5274 @@
+[
+  {
+    "de": "das Haus",
+    "hr": "kuća",
+    "en": "house",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Schlüssel",
+    "hr": "ključ",
+    "en": "key",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Frühstück",
+    "hr": "doručak",
+    "en": "breakfast",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Frage",
+    "hr": "pitanje",
+    "en": "question",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Termin",
+    "hr": "termin",
+    "en": "appointment",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "brauchen",
+    "hr": "trebati",
+    "en": "to need",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "anfangen",
+    "hr": "početi",
+    "en": "to start",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "bezahlen",
+    "hr": "platiti",
+    "en": "to pay",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "erklären",
+    "hr": "objasniti",
+    "en": "to explain",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "wichtig",
+    "hr": "važan",
+    "en": "important",
+    "topic": "basics",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "müde",
+    "hr": "umoran",
+    "en": "tired",
+    "topic": "basics",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "sofort",
+    "hr": "odmah",
+    "en": "immediately",
+    "topic": "basics",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "ohne",
+    "hr": "bez",
+    "en": "without",
+    "topic": "basics",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "weil",
+    "hr": "jer",
+    "en": "because",
+    "topic": "basics",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "Wie viel kostet das?",
+    "hr": "Koliko to košta?",
+    "en": "How much does that cost?",
+    "topic": "basics",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Ich habe heute keine Zeit.",
+    "hr": "Danas nemam vremena.",
+    "en": "I don't have time today.",
+    "topic": "basics",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "das Auto",
+    "hr": "auto",
+    "en": "car",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Lastwagen",
+    "hr": "kamion",
+    "en": "truck",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Fahrrad",
+    "hr": "bicikl",
+    "en": "bicycle",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Reifen",
+    "hr": "guma",
+    "en": "tire",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Lenkrad",
+    "hr": "volan",
+    "en": "steering wheel",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Kreuzung",
+    "hr": "raskrižje",
+    "en": "intersection",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "fahren",
+    "hr": "voziti",
+    "en": "to drive",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "bremsen",
+    "hr": "kočiti",
+    "en": "to brake",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "einparken",
+    "hr": "parkirati",
+    "en": "to park",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "tanken",
+    "hr": "točiti gorivo",
+    "en": "to refuel",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vorsichtig",
+    "hr": "oprezan",
+    "en": "careful",
+    "topic": "vehicles",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "langsam",
+    "hr": "polako",
+    "en": "slowly",
+    "topic": "vehicles",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "gegenüber",
+    "hr": "nasuprot",
+    "en": "opposite",
+    "topic": "vehicles",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "sobald",
+    "hr": "čim",
+    "en": "as soon as",
+    "topic": "vehicles",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "links abbiegen",
+    "hr": "skrenuti lijevo",
+    "en": "to turn left",
+    "topic": "vehicles",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Bitte schnall dich an.",
+    "hr": "Molim te veži se.",
+    "en": "Please fasten your seat belt.",
+    "topic": "vehicles",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Baum",
+    "hr": "stablo",
+    "en": "tree",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Blume",
+    "hr": "cvijet",
+    "en": "flower",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Garten",
+    "hr": "vrt",
+    "en": "garden",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Erde",
+    "hr": "zemlja",
+    "en": "soil",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Blatt",
+    "hr": "list",
+    "en": "leaf",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "pflanzen",
+    "hr": "saditi",
+    "en": "to plant",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "gießen",
+    "hr": "zalijevati",
+    "en": "to water",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "wachsen",
+    "hr": "rasti",
+    "en": "to grow",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "ernten",
+    "hr": "brati",
+    "en": "to harvest",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "wild",
+    "hr": "divlji",
+    "en": "wild",
+    "topic": "nature",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "draußen",
+    "hr": "vani",
+    "en": "outside",
+    "topic": "nature",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "zwischen",
+    "hr": "između",
+    "en": "between",
+    "topic": "nature",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "obwohl",
+    "hr": "iako",
+    "en": "although",
+    "topic": "nature",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "an der frischen Luft",
+    "hr": "na svježem zraku",
+    "en": "in the fresh air",
+    "topic": "nature",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Die Pflanzen brauchen mehr Licht.",
+    "hr": "Biljkama treba više svjetla.",
+    "en": "The plants need more light.",
+    "topic": "nature",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "das Handy",
+    "hr": "mobitel",
+    "en": "mobile phone",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Rechnung",
+    "hr": "račun",
+    "en": "bill",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "entscheiden",
+    "hr": "odlučiti",
+    "en": "to decide",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "später",
+    "hr": "kasnije",
+    "en": "later",
+    "topic": "basics",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "Kannst du mir helfen?",
+    "hr": "Možeš li mi pomoći?",
+    "en": "Can you help me?",
+    "topic": "basics",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Ampel",
+    "hr": "semafor",
+    "en": "traffic light",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "überholen",
+    "hr": "pretjecati",
+    "en": "to overtake",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sicher",
+    "hr": "siguran",
+    "en": "safe",
+    "topic": "vehicles",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "entlang",
+    "hr": "duž",
+    "en": "along",
+    "topic": "vehicles",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "Wo ist die nächste Tankstelle?",
+    "hr": "Gdje je sljedeća benzinska postaja?",
+    "en": "Where is the next gas station?",
+    "topic": "vehicles",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Regen",
+    "hr": "kiša",
+    "en": "rain",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Fluss",
+    "hr": "rijeka",
+    "en": "river",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "sammeln",
+    "hr": "skupljati",
+    "en": "to gather",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "feucht",
+    "hr": "vlažan",
+    "en": "damp",
+    "topic": "nature",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Im Wald ist es heute ruhig.",
+    "hr": "Danas je u šumi mirno.",
+    "en": "It is quiet in the forest today.",
+    "topic": "nature",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Apfel",
+    "hr": "jabuka",
+    "en": "apple",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Brot",
+    "hr": "kruh",
+    "en": "bread",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Käse",
+    "hr": "sir",
+    "en": "cheese",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Suppe",
+    "hr": "juha",
+    "en": "soup",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "kochen",
+    "hr": "kuhati",
+    "en": "to cook",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "schneiden",
+    "hr": "rezati",
+    "en": "to cut",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "bestellen",
+    "hr": "naručiti",
+    "en": "to order",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "probieren",
+    "hr": "probati",
+    "en": "to try",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "frisch",
+    "hr": "svjež",
+    "en": "fresh",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "bevor",
+    "hr": "prije nego što",
+    "en": "before",
+    "topic": "food",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "zum Mitnehmen",
+    "hr": "za van",
+    "en": "takeaway",
+    "topic": "food",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Bitte ohne Zwiebeln.",
+    "hr": "Molim bez luka.",
+    "en": "Please without onions.",
+    "topic": "food",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Reisepass",
+    "hr": "putovnica",
+    "en": "passport",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Ticket",
+    "hr": "karta",
+    "en": "ticket",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Koffer",
+    "hr": "kofer",
+    "en": "suitcase",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Hotel",
+    "hr": "hotel",
+    "en": "hotel",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "reisen",
+    "hr": "putovati",
+    "en": "to travel",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "buchen",
+    "hr": "rezervirati",
+    "en": "to book",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "ankommen",
+    "hr": "stići",
+    "en": "to arrive",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "umsteigen",
+    "hr": "presjesti",
+    "en": "to transfer",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "direkt",
+    "hr": "izravan",
+    "en": "direct",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "unterwegs",
+    "hr": "na putu",
+    "en": "on the way",
+    "topic": "travel",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "am Schalter",
+    "hr": "na šalteru",
+    "en": "at the counter",
+    "topic": "travel",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Wo ist das Gleis?",
+    "hr": "Gdje je peron?",
+    "en": "Where is the platform?",
+    "topic": "travel",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "das Büro",
+    "hr": "ured",
+    "en": "office",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Kollege",
+    "hr": "kolega",
+    "en": "colleague",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Besprechung",
+    "hr": "sastanak",
+    "en": "meeting",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Vertrag",
+    "hr": "ugovor",
+    "en": "contract",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "arbeiten",
+    "hr": "raditi",
+    "en": "to work",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "planen",
+    "hr": "planirati",
+    "en": "to plan",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "unterschreiben",
+    "hr": "potpisati",
+    "en": "to sign",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "erledigen",
+    "hr": "obaviti",
+    "en": "to complete",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "beschäftigt",
+    "hr": "zauzet",
+    "en": "busy",
+    "topic": "work",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "meistens",
+    "hr": "uglavnom",
+    "en": "usually",
+    "topic": "work",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "im Team",
+    "hr": "u timu",
+    "en": "in a team",
+    "topic": "work",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Die Besprechung beginnt um neun.",
+    "hr": "Sastanak počinje u devet.",
+    "en": "The meeting starts at nine.",
+    "topic": "work",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Arzt",
+    "hr": "liječnik",
+    "en": "doctor",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Apotheke",
+    "hr": "ljekarna",
+    "en": "pharmacy",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Schmerzen",
+    "hr": "bolovi",
+    "en": "pain",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Fieber",
+    "hr": "temperatura",
+    "en": "fever",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "husten",
+    "hr": "kašljati",
+    "en": "to cough",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sich ausruhen",
+    "hr": "odmoriti se",
+    "en": "to rest",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "untersuchen",
+    "hr": "pregledati",
+    "en": "to examine",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "heilen",
+    "hr": "izliječiti",
+    "en": "to heal",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "gesund",
+    "hr": "zdrav",
+    "en": "healthy",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "regelmäßig",
+    "hr": "redovito",
+    "en": "regularly",
+    "topic": "health",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "gegen",
+    "hr": "protiv",
+    "en": "against",
+    "topic": "health",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "Ich brauche einen Termin beim Arzt.",
+    "hr": "Treba mi termin kod liječnika.",
+    "en": "I need an appointment with the doctor.",
+    "topic": "health",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Familie",
+    "hr": "obitelj",
+    "en": "family",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Nachbar",
+    "hr": "susjed",
+    "en": "neighbor",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Kind",
+    "hr": "dijete",
+    "en": "child",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Freundin",
+    "hr": "prijateljica",
+    "en": "friend",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "kennenlernen",
+    "hr": "upoznati",
+    "en": "to get to know",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "helfen",
+    "hr": "pomoći",
+    "en": "to help",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "lachen",
+    "hr": "smijati se",
+    "en": "to laugh",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sich treffen",
+    "hr": "naći se",
+    "en": "to meet up",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "freundlich",
+    "hr": "ljubazan",
+    "en": "friendly",
+    "topic": "people",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "zusammen",
+    "hr": "zajedno",
+    "en": "together",
+    "topic": "people",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "mit anderen",
+    "hr": "s drugima",
+    "en": "with others",
+    "topic": "people",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Wir besuchen heute meine Familie.",
+    "hr": "Danas posjećujemo moju obitelj.",
+    "en": "We are visiting my family today.",
+    "topic": "people",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Laden",
+    "hr": "trgovina",
+    "en": "shop",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Preis",
+    "hr": "cijena",
+    "en": "price",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Kasse",
+    "hr": "blagajna",
+    "en": "checkout",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Tüte",
+    "hr": "vrećica",
+    "en": "bag",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "kaufen",
+    "hr": "kupiti",
+    "en": "to buy",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "umtauschen",
+    "hr": "zamijeniti",
+    "en": "to exchange",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "anprobieren",
+    "hr": "isprobati",
+    "en": "to try on",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "suchen",
+    "hr": "tražiti",
+    "en": "to look for",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "günstig",
+    "hr": "povoljan",
+    "en": "affordable",
+    "topic": "shopping",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "online",
+    "hr": "online",
+    "en": "online",
+    "topic": "shopping",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "im Angebot",
+    "hr": "na akciji",
+    "en": "on sale",
+    "topic": "shopping",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Kann ich mit Karte zahlen?",
+    "hr": "Mogu li platiti karticom?",
+    "en": "Can I pay by card?",
+    "topic": "shopping",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Gewohnheit",
+    "hr": "navika",
+    "en": "habit",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Unterschied",
+    "hr": "razlika",
+    "en": "difference",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "bemerken",
+    "hr": "primijetiti",
+    "en": "to notice",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "überlegen",
+    "hr": "razmisliti",
+    "en": "to think over",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "selbstständig",
+    "hr": "samostalan",
+    "en": "independent",
+    "topic": "basics",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "allerdings",
+    "hr": "međutim",
+    "en": "however",
+    "topic": "basics",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "trotz",
+    "hr": "unatoč",
+    "en": "despite",
+    "topic": "basics",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "während",
+    "hr": "dok",
+    "en": "while",
+    "topic": "basics",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "auf jeden Fall",
+    "hr": "u svakom slučaju",
+    "en": "definitely",
+    "topic": "basics",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Das hängt davon ab, wie dringend es ist.",
+    "hr": "To ovisi o tome koliko je hitno.",
+    "en": "That depends on how urgent it is.",
+    "topic": "basics",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Geschwindigkeitsbegrenzung",
+    "hr": "ograničenje brzine",
+    "en": "speed limit",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Werkstatt",
+    "hr": "radionica",
+    "en": "garage",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Führerschein",
+    "hr": "vozačka dozvola",
+    "en": "driver's license",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "beschleunigen",
+    "hr": "ubrzati",
+    "en": "to accelerate",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "ausweichen",
+    "hr": "izbjeći skretanjem",
+    "en": "to swerve aside",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "rutschig",
+    "hr": "sklisko",
+    "en": "slippery",
+    "topic": "vehicles",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "rückwärts",
+    "hr": "unatrag",
+    "en": "backwards",
+    "topic": "vehicles",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "hinter",
+    "hr": "iza",
+    "en": "behind",
+    "topic": "vehicles",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "auf der rechten Spur",
+    "hr": "u desnoj traci",
+    "en": "in the right lane",
+    "topic": "vehicles",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Wegen des Staus kommen wir später an.",
+    "hr": "Zbog gužve stižemo kasnije.",
+    "en": "We will arrive later because of the traffic jam.",
+    "topic": "vehicles",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "das Gewitter",
+    "hr": "oluja s grmljavinom",
+    "en": "thunderstorm",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Wasserfall",
+    "hr": "vodopad",
+    "en": "waterfall",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Wurzel",
+    "hr": "korijen",
+    "en": "root",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "beobachten",
+    "hr": "promatrati",
+    "en": "to observe",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "blühen",
+    "hr": "cvasti",
+    "en": "to bloom",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "bewölkt",
+    "hr": "oblačno",
+    "en": "cloudy",
+    "topic": "nature",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "überall",
+    "hr": "posvuda",
+    "en": "everywhere",
+    "topic": "nature",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "außerhalb",
+    "hr": "izvan",
+    "en": "outside of",
+    "topic": "nature",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "im Schatten",
+    "hr": "u sjeni",
+    "en": "in the shade",
+    "topic": "nature",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Nach dem Gewitter riecht die Luft frisch.",
+    "hr": "Nakon oluje zrak miriše svježe.",
+    "en": "After the thunderstorm the air smells fresh.",
+    "topic": "nature",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "das Gemüse",
+    "hr": "povrće",
+    "en": "vegetables",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Nachtisch",
+    "hr": "desert",
+    "en": "dessert",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Rezept",
+    "hr": "recept",
+    "en": "recipe",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "würzen",
+    "hr": "začiniti",
+    "en": "to season",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "servieren",
+    "hr": "poslužiti",
+    "en": "to serve",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sättigend",
+    "hr": "zasitan",
+    "en": "filling",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "gemeinsam",
+    "hr": "zajedno",
+    "en": "together",
+    "topic": "food",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "damit",
+    "hr": "kako bi",
+    "en": "so that",
+    "topic": "food",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "Appetit haben",
+    "hr": "imati apetit",
+    "en": "to have an appetite",
+    "topic": "food",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Dieses Gericht schmeckt besser, als es aussieht.",
+    "hr": "Ovo jelo ima bolji okus nego što izgleda.",
+    "en": "This dish tastes better than it looks.",
+    "topic": "food",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Unterkunft",
+    "hr": "smještaj",
+    "en": "accommodation",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Verspätung",
+    "hr": "kašnjenje",
+    "en": "delay",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Strecke",
+    "hr": "ruta",
+    "en": "route",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "einchecken",
+    "hr": "prijaviti se",
+    "en": "to check in",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sich verirren",
+    "hr": "izgubiti se",
+    "en": "to get lost",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "überfüllt",
+    "hr": "prenatrpan",
+    "en": "crowded",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "rechtzeitig",
+    "hr": "na vrijeme",
+    "en": "in time",
+    "topic": "travel",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "solange",
+    "hr": "dokle god",
+    "en": "as long as",
+    "topic": "travel",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "sich zurechtfinden",
+    "hr": "snaći se",
+    "en": "to find one's way around",
+    "topic": "travel",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Wir haben den Anschluss nur knapp erreicht.",
+    "hr": "Jedva smo stigli na presjedanje.",
+    "en": "We barely made the connection.",
+    "topic": "travel",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Bewerbung",
+    "hr": "prijava za posao",
+    "en": "job application",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Abteilung",
+    "hr": "odjel",
+    "en": "department",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Frist",
+    "hr": "rok",
+    "en": "deadline",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "verhandeln",
+    "hr": "pregovarati",
+    "en": "to negotiate",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "einreichen",
+    "hr": "predati",
+    "en": "to submit",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zuverlässig",
+    "hr": "pouzdan",
+    "en": "reliable",
+    "topic": "work",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "demnächst",
+    "hr": "uskoro",
+    "en": "soon",
+    "topic": "work",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "laut",
+    "hr": "prema",
+    "en": "according to",
+    "topic": "work",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "unter Druck",
+    "hr": "pod pritiskom",
+    "en": "under pressure",
+    "topic": "work",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Ich muss den Bericht bis morgen fertigstellen.",
+    "hr": "Moram dovršiti izvještaj do sutra.",
+    "en": "I have to finish the report by tomorrow.",
+    "topic": "work",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Erkältung",
+    "hr": "prehlada",
+    "en": "cold",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Blutdruck",
+    "hr": "krvni tlak",
+    "en": "blood pressure",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Behandlung",
+    "hr": "liječenje",
+    "en": "treatment",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "verschreiben",
+    "hr": "propisati",
+    "en": "to prescribe",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "genesen",
+    "hr": "oporaviti se",
+    "en": "to recover",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "schwindelig",
+    "hr": "omamljen",
+    "en": "dizzy",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "vorsorglich",
+    "hr": "preventivno",
+    "en": "as a precaution",
+    "topic": "health",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "wegen",
+    "hr": "zbog",
+    "en": "because of",
+    "topic": "health",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "außer Atem",
+    "hr": "bez daha",
+    "en": "out of breath",
+    "topic": "health",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Seit gestern fühle ich mich deutlich besser.",
+    "hr": "Od jučer se osjećam znatno bolje.",
+    "en": "I feel much better since yesterday.",
+    "topic": "health",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Bekanntschaft",
+    "hr": "poznanstvo",
+    "en": "acquaintance",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Vertrauen",
+    "hr": "povjerenje",
+    "en": "trust",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Eindruck",
+    "hr": "dojam",
+    "en": "impression",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "sich entschuldigen",
+    "hr": "ispričati se",
+    "en": "to apologize",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zuhören",
+    "hr": "slušati",
+    "en": "to listen",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "geduldig",
+    "hr": "strpljiv",
+    "en": "patient",
+    "topic": "people",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "miteinander",
+    "hr": "jedni s drugima",
+    "en": "with each other",
+    "topic": "people",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "sowie",
+    "hr": "kao i",
+    "en": "as well as",
+    "topic": "people",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "sich gut verstehen",
+    "hr": "dobro se slagati",
+    "en": "to get along well",
+    "topic": "people",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Man merkt sofort, ob jemand ehrlich ist.",
+    "hr": "Odmah se primijeti je li netko iskren.",
+    "en": "You notice immediately whether someone is honest.",
+    "topic": "people",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Rabatt",
+    "hr": "popust",
+    "en": "discount",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Quittung",
+    "hr": "potvrda",
+    "en": "receipt",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Warenkorb",
+    "hr": "košarica",
+    "en": "shopping cart",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "vergleichen",
+    "hr": "usporediti",
+    "en": "to compare",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "reklamieren",
+    "hr": "reklamirati",
+    "en": "to complain about",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verfügbar",
+    "hr": "dostupan",
+    "en": "available",
+    "topic": "shopping",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "zusätzlich",
+    "hr": "dodatno",
+    "en": "additionally",
+    "topic": "shopping",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "inklusive",
+    "hr": "uključujući",
+    "en": "including",
+    "topic": "shopping",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "im Voraus",
+    "hr": "unaprijed",
+    "en": "in advance",
+    "topic": "shopping",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Der Rabatt gilt nur, solange der Vorrat reicht.",
+    "hr": "Popust vrijedi samo dok traju zalihe.",
+    "en": "The discount only applies while supplies last.",
+    "topic": "shopping",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Möglichkeit",
+    "hr": "mogućnost",
+    "en": "possibility",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Erfahrung",
+    "hr": "iskustvo",
+    "en": "experience",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Fortschritt",
+    "hr": "napredak",
+    "en": "progress",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Umgebung",
+    "hr": "okolina",
+    "en": "surroundings",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "vermeiden",
+    "hr": "izbjeći",
+    "en": "to avoid",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "feststellen",
+    "hr": "ustanoviti",
+    "en": "to determine",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sich erinnern",
+    "hr": "sjetiti se",
+    "en": "to remember",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sich gewöhnen",
+    "hr": "naviknuti se",
+    "en": "to get used to",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vernünftig",
+    "hr": "razuman",
+    "en": "reasonable",
+    "topic": "basics",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "deutlich",
+    "hr": "jasan",
+    "en": "clear",
+    "topic": "basics",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "pünktlich",
+    "hr": "točan",
+    "en": "punctual",
+    "topic": "basics",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "der Abstand",
+    "hr": "razmak",
+    "en": "distance",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Rückspiegel",
+    "hr": "retrovizor",
+    "en": "rear-view mirror",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Fahrbahn",
+    "hr": "kolnik",
+    "en": "roadway",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Ausfahrt",
+    "hr": "izlaz",
+    "en": "exit",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "aussteigen",
+    "hr": "izaći",
+    "en": "to get out",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "überqueren",
+    "hr": "prijeći",
+    "en": "to cross",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "lenken",
+    "hr": "upravljati",
+    "en": "to steer",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abschleppen",
+    "hr": "odšlepati",
+    "en": "to tow",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "gesperrt",
+    "hr": "zatvoren",
+    "en": "closed off",
+    "topic": "vehicles",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "defekt",
+    "hr": "pokvaren",
+    "en": "broken",
+    "topic": "vehicles",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "rutschfest",
+    "hr": "protuklizan",
+    "en": "non-slip",
+    "topic": "vehicles",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "die Landschaft",
+    "hr": "krajolik",
+    "en": "landscape",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Sonnenaufgang",
+    "hr": "izlazak sunca",
+    "en": "sunrise",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Höhle",
+    "hr": "špilja",
+    "en": "cave",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Ufer",
+    "hr": "obala",
+    "en": "shore",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "verdunsten",
+    "hr": "ispariti",
+    "en": "to evaporate",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "schmelzen",
+    "hr": "otopiti se",
+    "en": "to melt",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "frieren",
+    "hr": "smrzavati se",
+    "en": "to freeze",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "rauschen",
+    "hr": "šumjeti",
+    "en": "to rustle / roar",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "trocken",
+    "hr": "suh",
+    "en": "dry",
+    "topic": "nature",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "mächtig",
+    "hr": "moćan",
+    "en": "powerful",
+    "topic": "nature",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "sonnig",
+    "hr": "sunčan",
+    "en": "sunny",
+    "topic": "nature",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "die Zutat",
+    "hr": "sastojak",
+    "en": "ingredient",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Getränk",
+    "hr": "piće",
+    "en": "drink",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Geschmack",
+    "hr": "okus",
+    "en": "taste",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Mahlzeit",
+    "hr": "obrok",
+    "en": "meal",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "braten",
+    "hr": "pržiti",
+    "en": "to fry / roast",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "backen",
+    "hr": "peći",
+    "en": "to bake",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abschmecken",
+    "hr": "začiniti po ukusu",
+    "en": "to season to taste",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "genießen",
+    "hr": "uživati",
+    "en": "to enjoy",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "salzig",
+    "hr": "slan",
+    "en": "salty",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "bitter",
+    "hr": "gorak",
+    "en": "bitter",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "knusprig",
+    "hr": "hrskav",
+    "en": "crispy",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "der Fahrplan",
+    "hr": "vozni red",
+    "en": "timetable",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Sehenswürdigkeit",
+    "hr": "znamenitost",
+    "en": "sight / attraction",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Aufenthalt",
+    "hr": "boravak",
+    "en": "stay",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Gepäckstück",
+    "hr": "komad prtljage",
+    "en": "piece of luggage",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "abreisen",
+    "hr": "otputovati",
+    "en": "to depart",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "umbuchen",
+    "hr": "prebukirati",
+    "en": "to rebook",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "erkunden",
+    "hr": "istražiti",
+    "en": "to explore",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vorzeigen",
+    "hr": "pokazati",
+    "en": "to show",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "kurzfristig",
+    "hr": "kratkoročno",
+    "en": "at short notice",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "bequem",
+    "hr": "udoban",
+    "en": "comfortable",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "ausgebucht",
+    "hr": "rasprodan",
+    "en": "fully booked",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "die Verantwortung",
+    "hr": "odgovornost",
+    "en": "responsibility",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Rückmeldung",
+    "hr": "povratna informacija",
+    "en": "feedback",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Weiterbildung",
+    "hr": "daljnje obrazovanje",
+    "en": "further training",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Überstunden",
+    "hr": "prekovremeni sati",
+    "en": "overtime",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "koordinieren",
+    "hr": "koordinirati",
+    "en": "to coordinate",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "begründen",
+    "hr": "obrazložiti",
+    "en": "to justify",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "überwachen",
+    "hr": "nadzirati",
+    "en": "to monitor",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vorbereiten",
+    "hr": "pripremiti",
+    "en": "to prepare",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "effizient",
+    "hr": "učinkovit",
+    "en": "efficient",
+    "topic": "work",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "gründlich",
+    "hr": "temeljit",
+    "en": "thorough",
+    "topic": "work",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "flexibel",
+    "hr": "fleksibilan",
+    "en": "flexible",
+    "topic": "work",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "das Medikament",
+    "hr": "lijek",
+    "en": "medication",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Beschwerde",
+    "hr": "tegoba",
+    "en": "complaint / symptom",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Nebenwirkung",
+    "hr": "nuspojava",
+    "en": "side effect",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Symptom",
+    "hr": "simptom",
+    "en": "symptom",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "lindern",
+    "hr": "ublažiti",
+    "en": "to relieve",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vorbeugen",
+    "hr": "spriječiti",
+    "en": "to prevent",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sich erholen",
+    "hr": "oporaviti se",
+    "en": "to recover",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "atmen",
+    "hr": "disati",
+    "en": "to breathe",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "erschöpft",
+    "hr": "iscrpljen",
+    "en": "exhausted",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "empfindlich",
+    "hr": "osjetljiv",
+    "en": "sensitive",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "stabil",
+    "hr": "stabilan",
+    "en": "stable",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "das Verhalten",
+    "hr": "ponašanje",
+    "en": "behavior",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Beziehung",
+    "hr": "odnos",
+    "en": "relationship",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Unterstützung",
+    "hr": "podrška",
+    "en": "support",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Charakter",
+    "hr": "karakter",
+    "en": "character",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "vertrauen",
+    "hr": "vjerovati",
+    "en": "to trust",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "respektieren",
+    "hr": "poštovati",
+    "en": "to respect",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "ermutigen",
+    "hr": "ohrabriti",
+    "en": "to encourage",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "akzeptieren",
+    "hr": "prihvatiti",
+    "en": "to accept",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "offen",
+    "hr": "otvoren",
+    "en": "open",
+    "topic": "people",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "aufmerksam",
+    "hr": "pažljiv",
+    "en": "attentive",
+    "topic": "people",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "eifersüchtig",
+    "hr": "ljubomoran",
+    "en": "jealous",
+    "topic": "people",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "die Auswahl",
+    "hr": "izbor",
+    "en": "selection",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Lieferzeit",
+    "hr": "vrijeme dostave",
+    "en": "delivery time",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Sonderangebot",
+    "hr": "posebna ponuda",
+    "en": "special offer",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Qualität",
+    "hr": "kvaliteta",
+    "en": "quality",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "sparen",
+    "hr": "uštedjeti",
+    "en": "to save",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zurückgeben",
+    "hr": "vratiti",
+    "en": "to return",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "auswählen",
+    "hr": "odabrati",
+    "en": "to select",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "erwerben",
+    "hr": "kupiti",
+    "en": "to purchase",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "preiswert",
+    "hr": "povoljan",
+    "en": "good value",
+    "topic": "shopping",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "mangelhaft",
+    "hr": "manjkav",
+    "en": "defective / inadequate",
+    "topic": "shopping",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "original",
+    "hr": "originalan",
+    "en": "original / genuine",
+    "topic": "shopping",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "der Quellcode",
+    "hr": "izvorni kod",
+    "en": "source code",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Merge-Konflikt",
+    "hr": "konflikt pri spajanju",
+    "en": "merge conflict",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Pflichtenheft",
+    "hr": "detaljna tehnička specifikacija",
+    "en": "detailed technical specification",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "de"
+  },
+  {
+    "de": "das Code-Review",
+    "hr": "pregled koda",
+    "en": "code review",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Versionskontrolle",
+    "hr": "kontrola verzija",
+    "en": "version control",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Build-Prozess",
+    "hr": "proces izgradnje",
+    "en": "build process",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Schnittstelle",
+    "hr": "sučelje",
+    "en": "interface",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Backlog",
+    "hr": "popis zadataka",
+    "en": "backlog",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Fehlermeldung",
+    "hr": "poruka o grešci",
+    "en": "error message",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Testabdeckung",
+    "hr": "pokrivenost testovima",
+    "en": "test coverage",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Bereitstellung",
+    "hr": "isporuka",
+    "en": "deployment",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Entwicklungsumgebung",
+    "hr": "razvojno okruženje",
+    "en": "development environment",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "implementieren",
+    "hr": "implementirati",
+    "en": "to implement",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "debuggen",
+    "hr": "otklanjati greške",
+    "en": "to debug",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "bereitstellen",
+    "hr": "isporučiti",
+    "en": "to deploy",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "testen",
+    "hr": "testirati",
+    "en": "to test",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "dokumentieren",
+    "hr": "dokumentirati",
+    "en": "to document",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "refaktorieren",
+    "hr": "refaktorirati",
+    "en": "to refactor",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "nachstellen",
+    "hr": "reproducirati",
+    "en": "to reproduce",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "freigeben",
+    "hr": "odobriti",
+    "en": "to approve",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zusammenführen",
+    "hr": "spojiti",
+    "en": "to merge",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "kompilieren",
+    "hr": "kompajlirati",
+    "en": "to compile",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "wartbar",
+    "hr": "jednostavan za održavanje",
+    "en": "maintainable",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "skalierbar",
+    "hr": "skalabilan",
+    "en": "scalable",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "wiederverwendbar",
+    "hr": "ponovno upotrebljiv",
+    "en": "reusable",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "stabil",
+    "hr": "stabilan",
+    "en": "stable",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "effizient",
+    "hr": "učinkovit",
+    "en": "efficient",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "lesbar",
+    "hr": "čitljiv",
+    "en": "readable",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "kompatibel",
+    "hr": "kompatibilan",
+    "en": "compatible",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "produktiv",
+    "hr": "produktivan",
+    "en": "productive",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "im Review",
+    "hr": "na pregledu",
+    "en": "under review",
+    "topic": "developertech",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "in Produktion",
+    "hr": "u produkciji",
+    "en": "in production",
+    "topic": "developertech",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Bitte prüf das Code-Review, bevor wir die Änderung freigeben.",
+    "hr": "Molim te pregledaj code review prije nego što odobrimo promjenu.",
+    "en": "Please check the code review before we approve the change.",
+    "topic": "developertech",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Der Fehler lässt sich nur unter Last nachstellen.",
+    "hr": "Greška se može reproducirati samo pod opterećenjem.",
+    "en": "The bug can only be reproduced under load.",
+    "topic": "developertech",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "schrittweise",
+    "hr": "postupno",
+    "en": "gradually",
+    "topic": "developertech",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "sodass",
+    "hr": "tako da",
+    "en": "so that",
+    "topic": "developertech",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "der Server",
+    "hr": "server",
+    "en": "server",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Firewall",
+    "hr": "vatrozid",
+    "en": "firewall",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Switch",
+    "hr": "mrežni preklopnik",
+    "en": "switch",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Router",
+    "hr": "usmjerivač",
+    "en": "router",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Rechenzentrum",
+    "hr": "podatkovni centar",
+    "en": "data center",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Zugriffsberechtigung",
+    "hr": "pravo pristupa",
+    "en": "access permission",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Ausfall",
+    "hr": "ispad",
+    "en": "outage",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Störung",
+    "hr": "smetnja",
+    "en": "fault",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Datensicherung",
+    "hr": "sigurnosna kopija podataka",
+    "en": "data backup",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Bandbreite",
+    "hr": "propusnost",
+    "en": "bandwidth",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Protokoll",
+    "hr": "protokol",
+    "en": "protocol",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Benutzerkonto",
+    "hr": "korisnički račun",
+    "en": "user account",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "konfigurieren",
+    "hr": "konfigurirati",
+    "en": "to configure",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verbinden",
+    "hr": "povezati",
+    "en": "to connect",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "absichern",
+    "hr": "zaštititi",
+    "en": "to secure",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "neu starten",
+    "hr": "ponovno pokrenuti",
+    "en": "to restart",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "überwachen",
+    "hr": "nadzirati",
+    "en": "to monitor",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "wiederherstellen",
+    "hr": "vratiti u ispravno stanje",
+    "en": "to restore",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "diagnostizieren",
+    "hr": "dijagnosticirati",
+    "en": "to diagnose",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "blockieren",
+    "hr": "blokirati",
+    "en": "to block",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "freischalten",
+    "hr": "omogućiti pristup",
+    "en": "to enable access",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "eskalieren",
+    "hr": "eskalirati",
+    "en": "to escalate",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verfügbar",
+    "hr": "dostupan",
+    "en": "available",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "verschlüsselt",
+    "hr": "šifriran",
+    "en": "encrypted",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "erreichbar",
+    "hr": "dostupan preko mreže",
+    "en": "reachable",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "überlastet",
+    "hr": "preopterećen",
+    "en": "overloaded",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "redundant",
+    "hr": "redundantan",
+    "en": "redundant",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "lokal",
+    "hr": "lokalan",
+    "en": "local",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "instabil",
+    "hr": "nestabilan",
+    "en": "unstable",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "sicher",
+    "hr": "siguran",
+    "en": "secure",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Zugriff gewähren",
+    "hr": "odobriti pristup",
+    "en": "grant access",
+    "topic": "itnetwork",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "vom Netz trennen",
+    "hr": "odspojiti s mreže",
+    "en": "disconnect from the network",
+    "topic": "itnetwork",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Der Server ist erreichbar, aber der Dienst reagiert nicht.",
+    "hr": "Server je dostupan, ali usluga ne reagira.",
+    "en": "The server is reachable, but the service does not respond.",
+    "topic": "itnetwork",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Bitte trenne das Gerät sofort vom Netz.",
+    "hr": "Molim te odmah odspoji uređaj s mreže.",
+    "en": "Please disconnect the device from the network immediately.",
+    "topic": "itnetwork",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "vorübergehend",
+    "hr": "privremeno",
+    "en": "temporarily",
+    "topic": "itnetwork",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "falls",
+    "hr": "ako",
+    "en": "if",
+    "topic": "itnetwork",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "die Anforderung",
+    "hr": "zahtjev",
+    "en": "requirement",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Benutzerstory",
+    "hr": "korisnička priča",
+    "en": "user story",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Abhängigkeit",
+    "hr": "ovisnost",
+    "en": "dependency",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Branch",
+    "hr": "grana repozitorija",
+    "en": "branch",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Repository",
+    "hr": "repozitorij",
+    "en": "repository",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Codebasis",
+    "hr": "baza koda",
+    "en": "codebase",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Hotfix",
+    "hr": "hitni popravak",
+    "en": "hotfix",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Regression",
+    "hr": "regresija",
+    "en": "regression",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Build-Pipeline",
+    "hr": "build pipeline",
+    "en": "build pipeline",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die technische Schuld",
+    "hr": "tehnički dug",
+    "en": "technical debt",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Meilenstein",
+    "hr": "ključna etapa",
+    "en": "milestone",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Codequalität",
+    "hr": "kvaliteta koda",
+    "en": "code quality",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "versionieren",
+    "hr": "verzionirati",
+    "en": "to version",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "automatisieren",
+    "hr": "automatizirati",
+    "en": "to automate",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "validieren",
+    "hr": "validirati",
+    "en": "to validate",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "protokollieren",
+    "hr": "bilježiti u zapisnik",
+    "en": "to log",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "priorisieren",
+    "hr": "odrediti kao prioritet",
+    "en": "to prioritize",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "schätzen",
+    "hr": "procijeniti",
+    "en": "to estimate",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "überarbeiten",
+    "hr": "doraditi",
+    "en": "to revise",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vereinfachen",
+    "hr": "pojednostaviti",
+    "en": "to simplify",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "veröffentlichen",
+    "hr": "objaviti",
+    "en": "to publish",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "analysieren",
+    "hr": "analizirati",
+    "en": "to analyze",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "reviewen",
+    "hr": "pregledati",
+    "en": "to review",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "optimieren",
+    "hr": "optimizirati",
+    "en": "to optimize",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "asynchron",
+    "hr": "asinkron",
+    "en": "asynchronous",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "konsistent",
+    "hr": "dosljedan",
+    "en": "consistent",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "modular",
+    "hr": "modularan",
+    "en": "modular",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "robust",
+    "hr": "robustan",
+    "en": "robust",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "performant",
+    "hr": "visokih performansi",
+    "en": "high-performance",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "nachvollziehbar",
+    "hr": "jasno pratljiv",
+    "en": "traceable",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "sauber",
+    "hr": "čist",
+    "en": "clean",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "veraltet",
+    "hr": "zastario",
+    "en": "outdated",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "kritisch",
+    "hr": "kritičan",
+    "en": "critical",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "vollständig",
+    "hr": "potpun",
+    "en": "complete",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "technische Schulden abbauen",
+    "hr": "smanjivati tehnički dug",
+    "en": "reduce technical debt",
+    "topic": "developertech",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Bitte priorisiere den Hotfix, damit wir die Regression heute beheben.",
+    "hr": "Molim te postavi hotfix kao prioritet kako bismo danas uklonili regresiju.",
+    "en": "Please prioritize the hotfix so we can fix the regression today.",
+    "topic": "developertech",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Netzwerkkarte",
+    "hr": "mrežna kartica",
+    "en": "network card",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Latenz",
+    "hr": "latencija",
+    "en": "latency",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Auslastung",
+    "hr": "iskorištenost kapaciteta",
+    "en": "utilization",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Zugriff",
+    "hr": "pristup",
+    "en": "access",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Wartung",
+    "hr": "održavanje",
+    "en": "maintenance",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Datenverkehr",
+    "hr": "mrežni promet",
+    "en": "data traffic",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Standleitung",
+    "hr": "stalna podatkovna veza",
+    "en": "leased line",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Lasttest",
+    "hr": "test opterećenja",
+    "en": "load test",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Störungsmeldung",
+    "hr": "prijava smetnje",
+    "en": "incident report",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Passwort-Reset",
+    "hr": "resetiranje lozinke",
+    "en": "password reset",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Authentifizierung",
+    "hr": "autentifikacija",
+    "en": "authentication",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Verfügbarkeit",
+    "hr": "dostupnost",
+    "en": "availability",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "authentifizieren",
+    "hr": "autentificirati",
+    "en": "to authenticate",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "entsperren",
+    "hr": "otključati",
+    "en": "to unlock",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abschirmen",
+    "hr": "izolirati od utjecaja",
+    "en": "to shield",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "patchen",
+    "hr": "zakrpati ažuriranjem",
+    "en": "to patch",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "lastverteilen",
+    "hr": "raspodijeliti opterećenje",
+    "en": "to load-balance",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "erneuern",
+    "hr": "obnoviti",
+    "en": "to renew",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "migrieren",
+    "hr": "migrirati",
+    "en": "to migrate",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "prüfen",
+    "hr": "provjeriti",
+    "en": "to verify",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "filtern",
+    "hr": "filtrirati",
+    "en": "to filter",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "drosseln",
+    "hr": "ograničiti protok",
+    "en": "to throttle",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abschalten",
+    "hr": "isključiti",
+    "en": "to shut down",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "umstellen",
+    "hr": "prebaciti na drugo rješenje",
+    "en": "to switch over",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "ausfallsicher",
+    "hr": "otporan na ispad",
+    "en": "fault-tolerant",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "intern",
+    "hr": "interni",
+    "en": "internal",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "extern",
+    "hr": "vanjski",
+    "en": "external",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "kritisch",
+    "hr": "kritičan",
+    "en": "critical",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "autorisiert",
+    "hr": "ovlašten",
+    "en": "authorized",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "wartungsarm",
+    "hr": "s malo potrebe za održavanjem",
+    "en": "low-maintenance",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "zeitkritisch",
+    "hr": "vremenski kritičan",
+    "en": "time-critical",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "unterbrechungsfrei",
+    "hr": "bez prekida",
+    "en": "uninterrupted",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "fehleranfällig",
+    "hr": "sklon greškama",
+    "en": "error-prone",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "mehrstufig",
+    "hr": "višestupanjski",
+    "en": "multi-stage",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Zugriff sperren",
+    "hr": "blokirati pristup",
+    "en": "block access",
+    "topic": "itnetwork",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Die Verbindung bleibt instabil, obwohl alle Dienste lokal verfügbar sind.",
+    "hr": "Veza ostaje nestabilna, iako su sve usluge lokalno dostupne.",
+    "en": "The connection remains unstable, although all services are locally available.",
+    "topic": "itnetwork",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Pfanne",
+    "hr": "tava",
+    "en": "pan",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Topf",
+    "hr": "lonac",
+    "en": "pot",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Schneidebrett",
+    "hr": "daska za rezanje",
+    "en": "cutting board",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Herd",
+    "hr": "štednjak",
+    "en": "stove",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Backofen",
+    "hr": "pećnica",
+    "en": "oven",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Schüssel",
+    "hr": "zdjela",
+    "en": "bowl",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "schälen",
+    "hr": "guliti",
+    "en": "to peel",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "umrühren",
+    "hr": "promiješati",
+    "en": "to stir",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vorheizen",
+    "hr": "zagrijati unaprijed",
+    "en": "to preheat",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "anrichten",
+    "hr": "poslužiti lijepo na tanjuru",
+    "en": "to plate",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abwaschen",
+    "hr": "oprati posuđe",
+    "en": "to wash up",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "hacken",
+    "hr": "nasjeckati",
+    "en": "to chop",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "roh",
+    "hr": "sirov",
+    "en": "raw",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "gar",
+    "hr": "gotov kuhanjem",
+    "en": "cooked through",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "scharf",
+    "hr": "ljut",
+    "en": "spicy",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "sauber",
+    "hr": "čist",
+    "en": "clean",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "in der Küche",
+    "hr": "u kuhinji",
+    "en": "in the kitchen",
+    "topic": "food",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Das Gemüse muss vor dem Kochen fein gehackt werden.",
+    "hr": "Povrće se prije kuhanja mora sitno nasjeckati.",
+    "en": "The vegetables must be chopped finely before cooking.",
+    "topic": "food",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Strand",
+    "hr": "plaža",
+    "en": "beach",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Ferienwohnung",
+    "hr": "apartman za odmor",
+    "en": "holiday apartment",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Souvenir",
+    "hr": "suvenir",
+    "en": "souvenir",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Buchungsbestätigung",
+    "hr": "potvrda rezervacije",
+    "en": "booking confirmation",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Reiseführer",
+    "hr": "turistički vodič",
+    "en": "travel guide",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Ausflug",
+    "hr": "izlet",
+    "en": "excursion",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "sich erholen",
+    "hr": "odmoriti se",
+    "en": "to relax",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sich sonnen",
+    "hr": "sunčati se",
+    "en": "to sunbathe",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "packen",
+    "hr": "spakirati",
+    "en": "to pack",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "stornieren",
+    "hr": "otkazati rezervaciju",
+    "en": "to cancel a booking",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "entspannen",
+    "hr": "opustiti se",
+    "en": "to relax",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "besichtigen",
+    "hr": "razgledati",
+    "en": "to visit / tour",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "erholsam",
+    "hr": "opuštajući",
+    "en": "restful",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "sonnig",
+    "hr": "sunčan",
+    "en": "sunny",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "familienfreundlich",
+    "hr": "prikladan za obitelji",
+    "en": "family-friendly",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "gemütlich",
+    "hr": "ugodan",
+    "en": "cozy",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "am Meer",
+    "hr": "na moru",
+    "en": "by the sea",
+    "topic": "travel",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Wir brauchen noch heute die Buchungsbestätigung für den Urlaub.",
+    "hr": "Još danas trebamo potvrdu rezervacije za odmor.",
+    "en": "We still need the booking confirmation for the holiday today.",
+    "topic": "travel",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Station",
+    "hr": "odjel",
+    "en": "ward",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Patient",
+    "hr": "pacijent",
+    "en": "patient",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Aufnahme",
+    "hr": "prijem u bolnicu",
+    "en": "admission",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Operation",
+    "hr": "operacija",
+    "en": "operation",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Wartezimmer",
+    "hr": "čekaonica",
+    "en": "waiting room",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Untersuchung",
+    "hr": "pregled",
+    "en": "examination",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "aufnehmen",
+    "hr": "primiti u bolnicu",
+    "en": "to admit",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "operieren",
+    "hr": "operirati",
+    "en": "to operate on",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "entlassen",
+    "hr": "otpustiti iz bolnice",
+    "en": "to discharge",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "beobachten",
+    "hr": "promatrati",
+    "en": "to observe",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verbinden",
+    "hr": "previti",
+    "en": "to bandage",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "überweisen",
+    "hr": "uputiti",
+    "en": "to refer",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "stationär",
+    "hr": "stacionaran",
+    "en": "inpatient",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "ambulant",
+    "hr": "ambulantan",
+    "en": "outpatient",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "nüchtern",
+    "hr": "natašte",
+    "en": "fasting",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "ansteckend",
+    "hr": "zarazan",
+    "en": "contagious",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "im Krankenhaus",
+    "hr": "u bolnici",
+    "en": "in the hospital",
+    "topic": "health",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Der Patient bleibt nach der Operation zur Beobachtung auf der Station.",
+    "hr": "Pacijent nakon operacije ostaje na odjelu radi promatranja.",
+    "en": "The patient stays on the ward for observation after the operation.",
+    "topic": "health",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Meinung",
+    "hr": "mišljenje",
+    "en": "opinion",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Gelegenheit",
+    "hr": "prilika",
+    "en": "opportunity",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Antwort",
+    "hr": "odgovor",
+    "en": "answer",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Ziel",
+    "hr": "cilj",
+    "en": "goal",
+    "topic": "basics",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "vermissen",
+    "hr": "nedostajati",
+    "en": "to miss",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verbessern",
+    "hr": "poboljšati",
+    "en": "to improve",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "erreichen",
+    "hr": "dosegnuti",
+    "en": "to reach",
+    "topic": "basics",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "ehrlich",
+    "hr": "iskren",
+    "en": "honest",
+    "topic": "basics",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "nötig",
+    "hr": "potreban",
+    "en": "necessary",
+    "topic": "basics",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Ich brauche eine klare Antwort bis morgen.",
+    "hr": "Treba mi jasan odgovor do sutra.",
+    "en": "I need a clear answer by tomorrow.",
+    "topic": "basics",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Sicherheitsgurt",
+    "hr": "sigurnosni pojas",
+    "en": "seat belt",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Autobahn",
+    "hr": "autocesta",
+    "en": "motorway",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Motorhaube",
+    "hr": "hauba",
+    "en": "hood",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Blinker",
+    "hr": "žmigavac",
+    "en": "turn signal",
+    "topic": "vehicles",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "umfahren",
+    "hr": "zaobići vozilom",
+    "en": "to drive around",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vorbeifahren",
+    "hr": "provoziti pokraj",
+    "en": "to drive past",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abschließen",
+    "hr": "zaključati",
+    "en": "to lock",
+    "topic": "vehicles",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verkehrssicher",
+    "hr": "siguran za promet",
+    "en": "roadworthy",
+    "topic": "vehicles",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "frei",
+    "hr": "slobodan",
+    "en": "clear",
+    "topic": "vehicles",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Die Autobahn ist wegen eines Unfalls teilweise gesperrt.",
+    "hr": "Autocesta je djelomično zatvorena zbog nesreće.",
+    "en": "The motorway is partially closed because of an accident.",
+    "topic": "vehicles",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Nebel",
+    "hr": "magla",
+    "en": "fog",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Wiese",
+    "hr": "livada",
+    "en": "meadow",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Hügel",
+    "hr": "brežuljak",
+    "en": "hill",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Schatten",
+    "hr": "sjena",
+    "en": "shade",
+    "topic": "nature",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "schützen",
+    "hr": "štititi",
+    "en": "to protect",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "trocknen",
+    "hr": "sušiti se",
+    "en": "to dry",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "glitzern",
+    "hr": "svjetlucati",
+    "en": "to sparkle",
+    "topic": "nature",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "nass",
+    "hr": "mokar",
+    "en": "wet",
+    "topic": "nature",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "kühl",
+    "hr": "svjež",
+    "en": "cool",
+    "topic": "nature",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Am Morgen liegt dichter Nebel über der Wiese.",
+    "hr": "Ujutro gusta magla leži nad livadom.",
+    "en": "In the morning thick fog lies over the meadow.",
+    "topic": "nature",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Löffel",
+    "hr": "žlica",
+    "en": "spoon",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Messer",
+    "hr": "nož",
+    "en": "knife",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Gabel",
+    "hr": "vilica",
+    "en": "fork",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Kühlschrank",
+    "hr": "hladnjak",
+    "en": "fridge",
+    "topic": "food",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "würfeln",
+    "hr": "narezati na kockice",
+    "en": "to dice",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abkühlen",
+    "hr": "ohladiti se",
+    "en": "to cool down",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "einfrieren",
+    "hr": "zamrznuti",
+    "en": "to freeze",
+    "topic": "food",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "heiß",
+    "hr": "vruć",
+    "en": "hot",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "würzig",
+    "hr": "začinjen",
+    "en": "well-seasoned",
+    "topic": "food",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Die Suppe muss vor dem Servieren kurz abkühlen.",
+    "hr": "Juha se prije posluživanja mora kratko ohladiti.",
+    "en": "The soup has to cool down briefly before serving.",
+    "topic": "food",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Strandkorb",
+    "hr": "košara za sjedenje na plaži",
+    "en": "beach chair",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Postkarte",
+    "hr": "razglednica",
+    "en": "postcard",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Badeanzug",
+    "hr": "kupaći kostim",
+    "en": "swimsuit",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Campingplatz",
+    "hr": "kamp",
+    "en": "campsite",
+    "topic": "travel",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "schwimmen",
+    "hr": "plivati",
+    "en": "to swim",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "wandern",
+    "hr": "planinariti",
+    "en": "to hike",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "übernachten",
+    "hr": "prenoćiti",
+    "en": "to stay overnight",
+    "topic": "travel",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "ruhig",
+    "hr": "miran",
+    "en": "quiet",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "überteuert",
+    "hr": "preskup",
+    "en": "overpriced",
+    "topic": "travel",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Am Strand ist es heute überraschend ruhig.",
+    "hr": "Na plaži je danas iznenađujuće mirno.",
+    "en": "It is surprisingly quiet at the beach today.",
+    "topic": "travel",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Präsentation",
+    "hr": "prezentacija",
+    "en": "presentation",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Zuständigkeit",
+    "hr": "nadležnost",
+    "en": "responsibility area",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Dienstplan",
+    "hr": "raspored smjena",
+    "en": "duty roster",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Einarbeitung",
+    "hr": "uvođenje u posao",
+    "en": "onboarding",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Beförderung",
+    "hr": "promaknuće",
+    "en": "promotion",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Arbeitstag",
+    "hr": "radni dan",
+    "en": "workday",
+    "topic": "work",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "abstimmen",
+    "hr": "uskladiti",
+    "en": "to coordinate",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "delegieren",
+    "hr": "delegirati",
+    "en": "to delegate",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "beantragen",
+    "hr": "zatražiti",
+    "en": "to apply for",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vertreten",
+    "hr": "zamijeniti",
+    "en": "to cover for",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "kündigen",
+    "hr": "dati otkaz",
+    "en": "to resign",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "einarbeiten",
+    "hr": "uvesti u posao",
+    "en": "to train in",
+    "topic": "work",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "belastbar",
+    "hr": "otporan na stres",
+    "en": "resilient",
+    "topic": "work",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "organisiert",
+    "hr": "organiziran",
+    "en": "organized",
+    "topic": "work",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "motiviert",
+    "hr": "motiviran",
+    "en": "motivated",
+    "topic": "work",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "termingerecht",
+    "hr": "na vrijeme",
+    "en": "on schedule",
+    "topic": "work",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Die Präsentation muss vor dem Meeting noch abgestimmt werden.",
+    "hr": "Prezentacija se prije sastanka još mora uskladiti.",
+    "en": "The presentation still has to be coordinated before the meeting.",
+    "topic": "work",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Chirurg",
+    "hr": "kirurg",
+    "en": "surgeon",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Notaufnahme",
+    "hr": "hitni prijem",
+    "en": "emergency room",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Verband",
+    "hr": "zavoj",
+    "en": "bandage",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Krankenschwester",
+    "hr": "medicinska sestra",
+    "en": "nurse",
+    "topic": "health",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "behandeln",
+    "hr": "liječiti",
+    "en": "to treat",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "pflegen",
+    "hr": "njegovati",
+    "en": "to care for",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "messen",
+    "hr": "mjeriti",
+    "en": "to measure",
+    "topic": "health",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verletzt",
+    "hr": "ozlijeđen",
+    "en": "injured",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "bewusstlos",
+    "hr": "bez svijesti",
+    "en": "unconscious",
+    "topic": "health",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Die Krankenschwester misst gerade den Blutdruck.",
+    "hr": "Medicinska sestra upravo mjeri krvni tlak.",
+    "en": "The nurse is measuring the blood pressure right now.",
+    "topic": "health",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Bekannte",
+    "hr": "poznanik",
+    "en": "acquaintance",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Persönlichkeit",
+    "hr": "osobnost",
+    "en": "personality",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Missverständnis",
+    "hr": "nesporazum",
+    "en": "misunderstanding",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Nähe",
+    "hr": "bliskost",
+    "en": "closeness",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Respekt",
+    "hr": "poštovanje",
+    "en": "respect",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Freundschaft",
+    "hr": "prijateljstvo",
+    "en": "friendship",
+    "topic": "people",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "streiten",
+    "hr": "svađati se",
+    "en": "to argue",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "unterstützen",
+    "hr": "podržati",
+    "en": "to support",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "bewundern",
+    "hr": "diviti se",
+    "en": "to admire",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verzeihen",
+    "hr": "oprostiti",
+    "en": "to forgive",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zustimmen",
+    "hr": "složiti se",
+    "en": "to agree",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sich vertragen",
+    "hr": "slagati se",
+    "en": "to get along",
+    "topic": "people",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "höflich",
+    "hr": "pristojan",
+    "en": "polite",
+    "topic": "people",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "hilfsbereit",
+    "hr": "spreman pomoći",
+    "en": "helpful",
+    "topic": "people",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "tolerant",
+    "hr": "tolerantan",
+    "en": "tolerant",
+    "topic": "people",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "großzügig",
+    "hr": "velikodušan",
+    "en": "generous",
+    "topic": "people",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Kleine Missverständnisse zerstören nicht gleich eine Freundschaft.",
+    "hr": "Mali nesporazumi ne uništavaju odmah prijateljstvo.",
+    "en": "Small misunderstandings do not destroy a friendship right away.",
+    "topic": "people",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Einkaufszettel",
+    "hr": "popis za kupnju",
+    "en": "shopping list",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Umkleidekabine",
+    "hr": "kabina za presvlačenje",
+    "en": "changing room",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Etikett",
+    "hr": "etiketa",
+    "en": "label",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Ladenpreis",
+    "hr": "prodajna cijena",
+    "en": "retail price",
+    "topic": "shopping",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "verpacken",
+    "hr": "zapakirati",
+    "en": "to wrap",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "liefern",
+    "hr": "dostaviti",
+    "en": "to deliver",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "reduzieren",
+    "hr": "smanjiti cijenu",
+    "en": "to reduce",
+    "topic": "shopping",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "passend",
+    "hr": "odgovarajući",
+    "en": "fitting",
+    "topic": "shopping",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "reduziert",
+    "hr": "snižen",
+    "en": "discounted",
+    "topic": "shopping",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Die Umkleidekabine ist gerade frei.",
+    "hr": "Kabina za presvlačenje je upravo slobodna.",
+    "en": "The changing room is free right now.",
+    "topic": "shopping",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die API",
+    "hr": "API",
+    "en": "API",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Pull-Request",
+    "hr": "pull request",
+    "en": "pull request",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Dokumentation",
+    "hr": "dokumentacija",
+    "en": "documentation",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Laufzeit",
+    "hr": "vrijeme izvođenja",
+    "en": "runtime",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Endpunkt",
+    "hr": "krajnja točka",
+    "en": "endpoint",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Fehlersuche",
+    "hr": "traženje greške",
+    "en": "troubleshooting",
+    "topic": "developertech",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "integrieren",
+    "hr": "integrirati",
+    "en": "to integrate",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "serialisieren",
+    "hr": "serijalizirati",
+    "en": "to serialize",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "mocken",
+    "hr": "simulirati za test",
+    "en": "to mock",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "deployen",
+    "hr": "deployati",
+    "en": "to deploy",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "migrieren",
+    "hr": "migrirati",
+    "en": "to migrate",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "kommentieren",
+    "hr": "komentirati",
+    "en": "to comment",
+    "topic": "developertech",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "typsicher",
+    "hr": "tipno siguran",
+    "en": "type-safe",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "testbar",
+    "hr": "pogodan za testiranje",
+    "en": "testable",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "deterministisch",
+    "hr": "deterministički",
+    "en": "deterministic",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "rückwärtskompatibel",
+    "hr": "unatrag kompatibilan",
+    "en": "backward-compatible",
+    "topic": "developertech",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Der Endpunkt liefert nach dem Deployen wieder stabile Daten.",
+    "hr": "Krajnja točka nakon deploya ponovno isporučuje stabilne podatke.",
+    "en": "The endpoint delivers stable data again after the deployment.",
+    "topic": "developertech",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Port",
+    "hr": "port",
+    "en": "port",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die IP-Adresse",
+    "hr": "IP adresa",
+    "en": "IP address",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Domäne",
+    "hr": "domena",
+    "en": "domain",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Subnetz",
+    "hr": "podmreža",
+    "en": "subnet",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Zertifikat",
+    "hr": "certifikat",
+    "en": "certificate",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Fehlkonfiguration",
+    "hr": "pogrešna konfiguracija",
+    "en": "misconfiguration",
+    "topic": "itnetwork",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "routen",
+    "hr": "usmjeravati promet",
+    "en": "to route",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verschlüsseln",
+    "hr": "šifrirati",
+    "en": "to encrypt",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "segmentieren",
+    "hr": "segmentirati",
+    "en": "to segment",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "synchronisieren",
+    "hr": "sinkronizirati",
+    "en": "to synchronize",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "provisionieren",
+    "hr": "pripremiti i dodijeliti resurse",
+    "en": "to provision",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "übertragen",
+    "hr": "prenositi",
+    "en": "to transfer",
+    "topic": "itnetwork",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "öffentlich",
+    "hr": "javan",
+    "en": "public",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "privat",
+    "hr": "privatan",
+    "en": "private",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "isoliert",
+    "hr": "izoliran",
+    "en": "isolated",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "zentral",
+    "hr": "središnji",
+    "en": "central",
+    "topic": "itnetwork",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "Die IP-Adresse muss vor dem Rollout noch geprüft werden.",
+    "hr": "IP adresa se prije rollouta još mora provjeriti.",
+    "en": "The IP address still has to be checked before the rollout.",
+    "topic": "itnetwork",
+    "subcategory": "Satz",
+    "scope": "all"
+  }
+]

@@ -1,0 +1,433 @@
+{
+  "country": {
+    "name": "Deutschland",
+    "official_name": "Bundesrepublik Deutschland",
+    "capital": "Berlin",
+    "largest_city": "Berlin",
+    "anthem": "Das Lied der Deutschen",
+    "founded": "1949",
+    "state_form": "Bundesstaatliche parlamentarische Republik",
+    "national_day": "3. Oktober",
+    "population": "83.577.140 (2024)",
+    "area_km2": "357.592 km2",
+    "states_count": 16,
+    "currency": "Euro (EUR)",
+    "language": "Deutsch",
+    "time_zone": "MEZ / MESZ",
+    "calling_code": "+49",
+    "internet_tld": ".de",
+    "bordering_countries_count": "9",
+    "gdp_nominal": "ca. 4,31 Billionen EUR (2024)",
+    "eu_member_since": "1958",
+    "overview": "Deutschland liegt im Herzen Europas zwischen Nord- und Ostsee im Norden und dem Alpenrand im Suden. Als Bundesstaat mit 16 Bundeslandern verbindet es politische Stabilitat, starke Wirtschaft, dichte Verkehrsnetze und sehr unterschiedliche Kultur- und Naturräume.",
+    "neighboring_countries": [
+      "D\u00e4nemark",
+      "Polen",
+      "Tschechien",
+      "\u00d6sterreich",
+      "Schweiz",
+      "Frankreich",
+      "Luxemburg",
+      "Belgien",
+      "Niederlande"
+    ],
+    "highlights": [
+      "Brandenburger Tor",
+      "K\u00f6lner Dom",
+      "Schloss Neuschwanstein",
+      "Elbphilharmonie"
+    ],
+    "nature": [
+      "Nord- und Ostseek\u00fcste",
+      "Mittelgebirge",
+      "Alpenrand",
+      "Schwarzwald"
+    ]
+  },
+  "states": [
+    {
+      "id": "baden-wuerttemberg",
+      "name": "Baden-W\u00fcrttemberg",
+      "abbreviation": "BW",
+      "state_type": "Fl\u00e4chenland",
+      "region": "S\u00fcdwesten",
+      "capital": "Stuttgart",
+      "largest_city": "Stuttgart",
+      "population": "11.245.898 (2024)",
+      "area_km2": "35.751 km2",
+      "joined_or_founded": "1952",
+      "location_summary": "Baden-Wurttemberg liegt im Sudwesten Deutschlands und verbindet Rheinebene, Mittelgebirge und den Bodenseeraum.",
+      "identity_summary": "Das Land gilt als starker Industrie- und Forschungsstandort mit bekannten Universitatsstadten, vielen Hidden Champions und einer ausgepragten Tufterkultur.",
+      "neighboring_states": [
+        "Bayern",
+        "Hessen",
+        "Rheinland-Pfalz"
+      ],
+      "bordering_countries": [
+        "Frankreich",
+        "Schweiz",
+        "\u00d6sterreich"
+      ],
+      "known_for": ["Automobilindustrie", "Schwarzwald", "T\u00fcbingen und Heidelberg"],
+      "nature": ["Schwarzwald", "Bodensee", "Schw\u00e4bische Alb"]
+    },
+    {
+      "id": "bayern",
+      "name": "Bayern",
+      "abbreviation": "BY",
+      "state_type": "Fl\u00e4chenland",
+      "region": "S\u00fcdosten",
+      "capital": "M\u00fcnchen",
+      "largest_city": "M\u00fcnchen",
+      "population": "13.248.928 (2024)",
+      "area_km2": "70.542 km2",
+      "joined_or_founded": "1949",
+      "location_summary": "Bayern liegt im Sudosten Deutschlands und reicht von Franken uber Altbayern bis an die Alpen.",
+      "identity_summary": "Bayern ist flachenmaßig das großte Bundesland und verbindet internationale Wirtschaftsstandorte mit starker regionaler Tradition und Tourismus.",
+      "neighboring_states": [
+        "Baden-W\u00fcrttemberg",
+        "Hessen",
+        "Th\u00fcringen",
+        "Sachsen"
+      ],
+      "bordering_countries": [
+        "\u00d6sterreich",
+        "Tschechien"
+      ],
+      "known_for": ["Alpen", "Oktoberfest", "Schloss Neuschwanstein"],
+      "nature": ["Bayerische Alpen", "Allgau", "Frankenwald"]
+    },
+    {
+      "id": "berlin",
+      "name": "Berlin",
+      "abbreviation": "BE",
+      "state_type": "Stadtstaat",
+      "region": "Osten",
+      "capital": "Berlin",
+      "largest_city": "Berlin",
+      "population": "3.685.265 (2024)",
+      "area_km2": "892 km2",
+      "joined_or_founded": "1990 in heutiger Form",
+      "location_summary": "Berlin liegt im Osten Deutschlands und ist als Stadtstaat vollstandig von Brandenburg umgeben.",
+      "identity_summary": "Als Hauptstadt vereint Berlin Regierung, Geschichte, Kultur, Wissenschaft und eine international sichtbare Kreativ- und Start-up-Szene.",
+      "neighboring_states": [
+        "Brandenburg"
+      ],
+      "known_for": ["Bundeshauptstadt", "Museumsinsel", "Start-up-Szene"],
+      "nature": ["Tiergarten", "Havel", "Muggelsee"]
+    },
+    {
+      "id": "brandenburg",
+      "name": "Brandenburg",
+      "abbreviation": "BB",
+      "state_type": "Fl\u00e4chenland",
+      "region": "Osten",
+      "capital": "Potsdam",
+      "largest_city": "Potsdam",
+      "population": "2.556.747 (2024)",
+      "area_km2": "29.654 km2",
+      "joined_or_founded": "1990",
+      "location_summary": "Brandenburg umschließt Berlin großraumig und reicht im Osten bis an die Grenze zu Polen.",
+      "identity_summary": "Das Land ist von seenreichen Landschaften, historischen Residenzorten und viel Naturraum mit vergleichsweise geringer Siedlungsdichte gepragt.",
+      "neighboring_states": [
+        "Berlin",
+        "Mecklenburg-Vorpommern",
+        "Niedersachsen",
+        "Sachsen-Anhalt",
+        "Sachsen"
+      ],
+      "bordering_countries": [
+        "Polen"
+      ],
+      "known_for": ["Sanssouci", "Seenlandschaften", "Niederlausitz"],
+      "nature": ["Spreewald", "Uckermark", "Havel-Landschaft"]
+    },
+    {
+      "id": "bremen",
+      "name": "Bremen",
+      "abbreviation": "HB",
+      "state_type": "Stadtstaat",
+      "region": "Nordwesten",
+      "capital": "Bremen",
+      "largest_city": "Bremen",
+      "population": "704.881 (2024)",
+      "area_km2": "419 km2",
+      "joined_or_founded": "1949",
+      "location_summary": "Bremen liegt im Nordwesten Deutschlands und besteht aus den zwei Stadten Bremen und Bremerhaven.",
+      "identity_summary": "Der Stadtstaat ist stark maritim gepragt und verbindet Hafenwirtschaft, Handel, Wissenschaft und hanseatische Geschichte auf kleinem Raum.",
+      "neighboring_states": [
+        "Niedersachsen"
+      ],
+      "known_for": ["Hansestadt", "Bremer Stadtmusikanten", "Hafenwirtschaft"],
+      "nature": ["Weser", "Blockland", "Burgerpark"]
+    },
+    {
+      "id": "hamburg",
+      "name": "Hamburg",
+      "abbreviation": "HH",
+      "state_type": "Stadtstaat",
+      "region": "Norden",
+      "capital": "Hamburg",
+      "largest_city": "Hamburg",
+      "population": "1.862.565 (2024)",
+      "area_km2": "755 km2",
+      "joined_or_founded": "1949",
+      "location_summary": "Hamburg liegt im Norden Deutschlands an Elbe und Alster und ist von Schleswig-Holstein und Niedersachsen umgeben.",
+      "identity_summary": "Die Hansestadt ist ein internationales Hafen-, Medien- und Kulturzentrum mit starker Kaufmannstradition und urbanem Profil.",
+      "neighboring_states": [
+        "Niedersachsen",
+        "Schleswig-Holstein"
+      ],
+      "known_for": ["Hafen", "Speicherstadt", "Musicals"],
+      "nature": ["Elbe", "Alster", "Wattenmeer-Nahe"]
+    },
+    {
+      "id": "hessen",
+      "name": "Hessen",
+      "abbreviation": "HE",
+      "state_type": "Fl\u00e4chenland",
+      "region": "Mitte",
+      "capital": "Wiesbaden",
+      "largest_city": "Frankfurt am Main",
+      "population": "6.280.793 (2024)",
+      "area_km2": "21.116 km2",
+      "joined_or_founded": "1945 / 1949",
+      "location_summary": "Hessen liegt in der Mitte Deutschlands und ist ein wichtiges Verbindungsland zwischen Norden, Westen und Suden.",
+      "identity_summary": "Das Land verbindet den Finanzplatz Frankfurt mit Mittelgebirgen, Kurorten, Logistikachsen und einer zentralen Verkehrslage.",
+      "neighboring_states": [
+        "Nordrhein-Westfalen",
+        "Niedersachsen",
+        "Th\u00fcringen",
+        "Bayern",
+        "Baden-W\u00fcrttemberg",
+        "Rheinland-Pfalz"
+      ],
+      "known_for": ["Finanzplatz Frankfurt", "Documenta-Nahe", "Kurstadte"],
+      "nature": ["Taunus", "Rhon", "Odenwald"]
+    },
+    {
+      "id": "mecklenburg-vorpommern",
+      "name": "Mecklenburg-Vorpommern",
+      "abbreviation": "MV",
+      "state_type": "Fl\u00e4chenland",
+      "region": "Nordosten",
+      "capital": "Schwerin",
+      "largest_city": "Rostock",
+      "population": "1.573.597 (2024)",
+      "area_km2": "23.295 km2",
+      "joined_or_founded": "1990",
+      "location_summary": "Mecklenburg-Vorpommern liegt im Nordosten Deutschlands zwischen Ostseekuste, Seenplatte und der Grenze zu Polen.",
+      "identity_summary": "Das Land ist stark von Tourismus, Kustenlandschaften, Backsteinstadten und weitlaufigen Naturraumen gepragt.",
+      "neighboring_states": [
+        "Schleswig-Holstein",
+        "Niedersachsen",
+        "Brandenburg"
+      ],
+      "bordering_countries": [
+        "Polen"
+      ],
+      "known_for": ["Ostseeb\u00e4der", "Backsteingotik", "Seenplatte"],
+      "nature": ["Ostseek\u00fcste", "M\u00fcritz-Nationalpark", "Mecklenburgische Seenplatte"]
+    },
+    {
+      "id": "niedersachsen",
+      "name": "Niedersachsen",
+      "abbreviation": "NI",
+      "state_type": "Fl\u00e4chenland",
+      "region": "Nordwesten",
+      "capital": "Hannover",
+      "largest_city": "Hannover",
+      "population": "8.004.489 (2024)",
+      "area_km2": "47.710 km2",
+      "joined_or_founded": "1946",
+      "location_summary": "Niedersachsen liegt im Nordwesten Deutschlands und reicht von der Nordseekuste bis in den Harz.",
+      "identity_summary": "Das große Flachenland vereint Industrie, Landwirtschaft, Messewirtschaft und sehr unterschiedliche Naturraume von Heide bis Mittelgebirge.",
+      "neighboring_states": [
+        "Bremen",
+        "Hamburg",
+        "Schleswig-Holstein",
+        "Mecklenburg-Vorpommern",
+        "Brandenburg",
+        "Sachsen-Anhalt",
+        "Th\u00fcringen",
+        "Hessen",
+        "Nordrhein-Westfalen"
+      ],
+      "bordering_countries": [
+        "Niederlande"
+      ],
+      "known_for": ["Automobilindustrie", "Messen", "Pferdezucht"],
+      "nature": ["Harz", "L\u00fcneburger Heide", "Nordseek\u00fcste"]
+    },
+    {
+      "id": "nordrhein-westfalen",
+      "name": "Nordrhein-Westfalen",
+      "abbreviation": "NRW",
+      "state_type": "Fl\u00e4chenland",
+      "region": "Westen",
+      "capital": "D\u00fcsseldorf",
+      "largest_city": "K\u00f6ln",
+      "population": "18.034.454 (2024)",
+      "area_km2": "34.113 km2",
+      "joined_or_founded": "1946",
+      "location_summary": "Nordrhein-Westfalen liegt im Westen Deutschlands und grenzt an Belgien und die Niederlande.",
+      "identity_summary": "Das bevolkerungsreichste Bundesland verbindet Rheinmetropolen, Ruhrgebiet, Medienstandorte, Hochschulen und dichte Infrastruktur.",
+      "neighboring_states": [
+        "Niedersachsen",
+        "Hessen",
+        "Rheinland-Pfalz"
+      ],
+      "bordering_countries": [
+        "Niederlande",
+        "Belgien"
+      ],
+      "known_for": ["Ruhrgebiet", "Medienstandort", "Karneval"],
+      "nature": ["Eifel", "Teutoburger Wald", "Sauerland"]
+    },
+    {
+      "id": "rheinland-pfalz",
+      "name": "Rheinland-Pfalz",
+      "abbreviation": "RLP",
+      "state_type": "Fl\u00e4chenland",
+      "region": "S\u00fcdwesten",
+      "capital": "Mainz",
+      "largest_city": "Mainz",
+      "population": "4.129.569 (2024)",
+      "area_km2": "19.858 km2",
+      "joined_or_founded": "1946",
+      "location_summary": "Rheinland-Pfalz liegt im Sudwesten Deutschlands zwischen Rhein, Mosel, Eifel und Pfalzerwald.",
+      "identity_summary": "Das Land steht fur Weinbau, Flusstäler, romische Geschichte und viele mittelgroße Stadte mit starker regionaler Identitat.",
+      "neighboring_states": [
+        "Nordrhein-Westfalen",
+        "Hessen",
+        "Baden-W\u00fcrttemberg",
+        "Saarland"
+      ],
+      "bordering_countries": [
+        "Frankreich",
+        "Belgien",
+        "Luxemburg"
+      ],
+      "known_for": ["Weinbau", "R\u00f6mische Geschichte", "Mainz und Trier"],
+      "nature": ["Mosel", "Eifel", "Pf\u00e4lzerwald"]
+    },
+    {
+      "id": "saarland",
+      "name": "Saarland",
+      "abbreviation": "SL",
+      "state_type": "Fl\u00e4chenland",
+      "region": "S\u00fcdwesten",
+      "capital": "Saarbr\u00fccken",
+      "largest_city": "Saarbr\u00fccken",
+      "population": "1.012.141 (2024)",
+      "area_km2": "2.571 km2",
+      "joined_or_founded": "1957",
+      "location_summary": "Das Saarland liegt im Sudwesten Deutschlands und grenzt direkt an Frankreich und Luxemburg.",
+      "identity_summary": "Das kleine Bundesland ist grenzuberschreitend gepragt und verbindet Industriekultur, franzosische Einflusse und kurze Wege.",
+      "neighboring_states": [
+        "Rheinland-Pfalz"
+      ],
+      "bordering_countries": [
+        "Frankreich",
+        "Luxemburg"
+      ],
+      "known_for": ["Grenzlage zu Frankreich", "Industriekultur", "Kuche"],
+      "nature": ["Saarschleife", "Naturpark Saar-Hunsruck", "Bliestal"]
+    },
+    {
+      "id": "sachsen",
+      "name": "Sachsen",
+      "abbreviation": "SN",
+      "state_type": "Fl\u00e4chenland",
+      "region": "Osten",
+      "capital": "Dresden",
+      "largest_city": "Leipzig",
+      "population": "4.042.422 (2024)",
+      "area_km2": "18.450 km2",
+      "joined_or_founded": "1990",
+      "location_summary": "Sachsen liegt im Osten Deutschlands an den Grenzen zu Polen und Tschechien.",
+      "identity_summary": "Das Land verbindet Industrie, Forschung, Musik- und Kunstgeschichte mit bekannten Stadten wie Dresden und Leipzig.",
+      "neighboring_states": [
+        "Brandenburg",
+        "Sachsen-Anhalt",
+        "Th\u00fcringen",
+        "Bayern"
+      ],
+      "bordering_countries": [
+        "Polen",
+        "Tschechien"
+      ],
+      "known_for": ["Dresdner Barock", "Leipziger Messe", "Mikroelektronik"],
+      "nature": ["S\u00e4chsische Schweiz", "Erzgebirge", "Oberlausitz"]
+    },
+    {
+      "id": "sachsen-anhalt",
+      "name": "Sachsen-Anhalt",
+      "abbreviation": "ST",
+      "state_type": "Fl\u00e4chenland",
+      "region": "Mitteldeutschland",
+      "capital": "Magdeburg",
+      "largest_city": "Halle (Saale)",
+      "population": "2.135.597 (2024)",
+      "area_km2": "20.462 km2",
+      "joined_or_founded": "1990",
+      "location_summary": "Sachsen-Anhalt liegt in Mitteldeutschland zwischen Harz, Elbe und Magdeburger Borde.",
+      "identity_summary": "Das Land ist bekannt fur Reformationsgeschichte, Bauhaus-Erbe, Chemie- und Industriestandorte sowie weite Kulturlandschaften.",
+      "neighboring_states": [
+        "Niedersachsen",
+        "Brandenburg",
+        "Sachsen",
+        "Th\u00fcringen"
+      ],
+      "known_for": ["Bauhaus Dessau", "Reformationsgeschichte", "Mitteldeutschland"],
+      "nature": ["Harz", "Elbe-Auen", "Altmark"]
+    },
+    {
+      "id": "schleswig-holstein",
+      "name": "Schleswig-Holstein",
+      "abbreviation": "SH",
+      "state_type": "Fl\u00e4chenland",
+      "region": "Norden",
+      "capital": "Kiel",
+      "largest_city": "L\u00fcbeck",
+      "population": "2.959.517 (2024)",
+      "area_km2": "15.804 km2",
+      "joined_or_founded": "1946",
+      "location_summary": "Schleswig-Holstein liegt im Norden Deutschlands zwischen Nordsee, Ostsee und der Grenze zu Danemark.",
+      "identity_summary": "Das Land ist maritim gepragt und steht fur Kusten, Hafen, Deiche, Inseln und eine besondere Lage zwischen zwei Meeren.",
+      "neighboring_states": [
+        "Niedersachsen",
+        "Hamburg",
+        "Mecklenburg-Vorpommern"
+      ],
+      "bordering_countries": [
+        "D\u00e4nemark"
+      ],
+      "known_for": ["Zwei Meere", "Hansegeschichte", "Kieler Woche"],
+      "nature": ["Nordsee", "Ostsee", "Holsteinische Schweiz"]
+    },
+    {
+      "id": "thueringen",
+      "name": "Th\u00fcringen",
+      "abbreviation": "TH",
+      "state_type": "Fl\u00e4chenland",
+      "region": "Mitte",
+      "capital": "Erfurt",
+      "largest_city": "Erfurt",
+      "population": "2.100.277 (2024)",
+      "area_km2": "16.202 km2",
+      "joined_or_founded": "1990",
+      "location_summary": "Thuringen liegt in der Mitte Deutschlands und ist von mehreren Flachenlandern umgeben.",
+      "identity_summary": "Das Land verbindet klassische Kulturorte, Waldlandschaften, Techniktradition und eine zentrale Lage in Deutschland.",
+      "neighboring_states": [
+        "Niedersachsen",
+        "Sachsen-Anhalt",
+        "Sachsen",
+        "Bayern",
+        "Hessen"
+      ],
+      "known_for": ["Klassik in Weimar", "Wartburg", "Optik und Technik"],
+      "nature": ["Th\u00fcringer Wald", "Hainich", "Rennsteig"]
+    }
+  ]
+}
