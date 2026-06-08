@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
+    "build": "node scripts/build-static.js",
     "validate:cards": "node scripts/validate-cards.js",
     "validate:facts": "node scripts/validate-facts.js",
     "validate:locales": "node scripts/validate-locales.js",
