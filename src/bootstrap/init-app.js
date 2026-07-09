@@ -1,5 +1,5 @@
-import { createPretextBlockController } from "../../pretext-layout.js?v=2026-04-29-fix1";
-import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-04-29-fix1";
+import { createPretextBlockController } from "../../pretext-layout.js?v=2026-07-09-flags1";
+import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-07-09-flags1";
 import {
   CARD_SCOPE_OPTIONS,
   MODE_SCOPE_MAP,
@@ -14,7 +14,7 @@ import {
   normalizeSubcategory,
   normalizeTopic,
   sanitizeCard,
-} from "../../shared/card-schema.js?v=2026-04-29-fix1";
+} from "../../shared/card-schema.js?v=2026-07-09-flags1";
 
 const searchSites = [
   { name: "dict.cc", icon: "C", url: (w) => `https://www.dict.cc/?s=${encodeURIComponent(w)}` },
@@ -23,7 +23,7 @@ const searchSites = [
   { name: "Leo", icon: "L", url: (w) => `https://dict.leo.org/german-english/${encodeURIComponent(w)}` },
 ];
 
-const ASSET_REV = "2026-04-29-fix1";
+const ASSET_REV = "2026-07-09-flags1";
 const SESSION_SIZE = 10;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const AUTOFILL_TRAILING_PUNCT = /[.!?:;]/;
@@ -359,11 +359,13 @@ let sessionRecoveryNonce = 0;
 const LEARNING_MODE_STORAGE_KEY = "germancro.learningMode";
 const PROMPT_ORDER_STORAGE_KEY = "germancro.promptOrderSwapped";
 const LANGUAGE_SEQUENCE = ["de", "hr", "en"];
-const LANGUAGE_FLAGS = {
-  de: "🇩🇪",
-  hr: "🇭🇷",
-  en: "🇬🇧",
+const LANGUAGE_FLAG_BASE_CLASS = "language-flag-icon";
+const LANGUAGE_FLAG_CLASSES = {
+  de: "language-flag-icon--de",
+  hr: "language-flag-icon--hr",
+  en: "language-flag-icon--en",
 };
+const LANGUAGE_FLAG_CLASS_NAMES = Object.values(LANGUAGE_FLAG_CLASSES);
 const LANGUAGE_DOCK_LABELS = {
   de: "DE",
   hr: "HR",
@@ -1538,6 +1540,36 @@ function renderSiteTitle(language) {
   siteTitleEl.textContent = title;
 }
 
+function setLanguageFlagIcon(targetEl, language) {
+  if (!targetEl) {
+    return;
+  }
+
+  const resolvedLanguage = LANGUAGE_FLAG_CLASSES[language] ? language : "de";
+  const flagClass = LANGUAGE_FLAG_CLASSES[resolvedLanguage];
+
+  Array.from(targetEl.childNodes).forEach((node) => {
+    if (node.nodeType === 3) {
+      node.remove();
+    }
+  });
+
+  const flagIcons = Array.from(targetEl.querySelectorAll(`.${LANGUAGE_FLAG_BASE_CLASS}`));
+  let flagEl = flagIcons[0] || null;
+  flagIcons.slice(1).forEach((node) => node.remove());
+
+  if (!flagEl) {
+    flagEl = document.createElement("span");
+    targetEl.prepend(flagEl);
+  }
+
+  flagEl.classList.add(LANGUAGE_FLAG_BASE_CLASS);
+  LANGUAGE_FLAG_CLASS_NAMES.forEach((className) => flagEl.classList.remove(className));
+  flagEl.classList.add(flagClass);
+  flagEl.setAttribute("aria-hidden", "true");
+  targetEl.dataset.flagLanguage = resolvedLanguage;
+}
+
 function updateLanguageDock() {
   const languageDock = document.getElementById("languageDock");
   if (languageDock) {
@@ -1815,15 +1847,9 @@ function renderPrompt(card) {
     promptSub.textContent = secondaryText;
   }
 
-  if (promptPrimaryFlagEl) {
-    promptPrimaryFlagEl.textContent = LANGUAGE_FLAGS[primaryLanguage];
-  }
-  if (promptSecondaryFlagEl) {
-    promptSecondaryFlagEl.textContent = LANGUAGE_FLAGS[secondaryLanguage];
-  }
-  if (inputFlagEl) {
-    inputFlagEl.textContent = LANGUAGE_FLAGS[getTargetLanguage()];
-  }
+  setLanguageFlagIcon(promptPrimaryFlagEl, primaryLanguage);
+  setLanguageFlagIcon(promptSecondaryFlagEl, secondaryLanguage);
+  setLanguageFlagIcon(inputFlagEl, getTargetLanguage());
   syncPromptOrderControls();
   return;
 }

@@ -7,6 +7,8 @@ function stripUrlVersion(specifier) {
 }
 
 const html = await readText("index.html");
+const css = await readText("style.css");
+const appSource = await readText("src/bootstrap/init-app.js");
 
 for (const id of [
   "heroStage",
@@ -23,6 +25,21 @@ for (const id of [
 
 const scriptMatch = html.match(/<script type="module" src="([^\"]+)"><\/script>/);
 assert(scriptMatch, "index.html must include a module script entry");
+
+for (const flagEntity of ["&#127469;&#127479;", "&#127468;&#127463;", "&#127465;&#127466;"]) {
+  assert(!html.includes(flagEntity), `index.html still contains native flag emoji entity ${flagEntity}`);
+}
+
+for (const className of ["language-flag-icon--de", "language-flag-icon--hr", "language-flag-icon--en"]) {
+  assert(css.includes(`.${className}`), `style.css is missing .${className}`);
+}
+
+assert(!appSource.includes("LANGUAGE_FLAGS"), "src/bootstrap/init-app.js must not use native flag emoji constants");
+assert(
+  !/\.textContent\s*=\s*LANGUAGE_FLAG/.test(appSource),
+  "src/bootstrap/init-app.js must not assign language flags via textContent",
+);
+assert(appSource.includes("setLanguageFlagIcon("), "src/bootstrap/init-app.js must render language flags through setLanguageFlagIcon");
 
 const entryPath = stripUrlVersion(scriptMatch[1]);
 assert(await fileExists(entryPath), `Entry module does not exist: ${entryPath}`);
