@@ -7145,7 +7145,7 @@
   },
   {
     "de": "wohingegen",
-    "hr": "dok naprotiv",
+    "hr": "dok",
     "en": "whereas",
     "topic": "agile_stakeholder",
     "subcategory": "Konjunktion",
@@ -7529,8 +7529,8 @@
   },
   {
     "de": "lückenlos",
-    "hr": "bez praznina",
-    "en": "comprehensively",
+    "hr": "cjelovito",
+    "en": "without gaps",
     "topic": "it_ops",
     "subcategory": "Adverb",
     "scope": "all"
@@ -7617,8 +7617,8 @@
   },
   {
     "de": "Das Quell-Ziel-Mapping dokumentiert jede fachliche Transformation nachvollziehbar.",
-    "hr": "Mapiranje izvora i cilja sljedivo dokumentira svaku poslovnu transformaciju.",
-    "en": "The source-to-target mapping documents every business transformation traceably.",
+    "hr": "Mapiranje izvora i cilja dokumentira svaku poslovnu transformaciju na sljediv način.",
+    "en": "The source-to-target mapping documents every business transformation in a traceable manner.",
     "topic": "it_ops",
     "subcategory": "Satz",
     "scope": "all"
@@ -7668,6 +7668,806 @@
     "hr": "Potpuna sljedivost podataka omogućuje praćenje do izvornog sustava.",
     "en": "Complete data lineage enables traceability back to the source system.",
     "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "das Kompetenzmodell",
+    "hr": "model kompetencija",
+    "en": "competency model",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Kompetenzmatrix",
+    "hr": "matrica kompetencija",
+    "en": "competency matrix",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Qualifizierungsbedarf",
+    "hr": "potreba za osposobljavanjem",
+    "en": "training need",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Lernziel",
+    "hr": "cilj učenja",
+    "en": "learning objective",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Curriculum",
+    "hr": "kurikulum",
+    "en": "curriculum",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Kurskatalog",
+    "hr": "katalog tečajeva",
+    "en": "course catalog",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Einschreiberegel",
+    "hr": "pravilo upisa",
+    "en": "enrollment rule",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Rezertifizierung",
+    "hr": "recertifikacija",
+    "en": "recertification",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Blended Learning",
+    "hr": "kombinirano učenje",
+    "en": "blended learning",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das SCORM-Paket",
+    "hr": "SCORM paket",
+    "en": "SCORM package",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Autorentool",
+    "hr": "autorski alat",
+    "en": "authoring tool",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Lerntransfer",
+    "hr": "prijenos naučenog u praksu",
+    "en": "learning transfer",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Abschlussquote",
+    "hr": "stopa završetka",
+    "en": "completion rate",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Wirksamkeitsmessung",
+    "hr": "mjerenje učinkovitosti",
+    "en": "effectiveness measurement",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die didaktische Reduktion",
+    "hr": "didaktička redukcija",
+    "en": "didactic reduction",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "konzipieren",
+    "hr": "osmisliti",
+    "en": "to design",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "kuratieren",
+    "hr": "kurirati",
+    "en": "to curate",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "segmentieren",
+    "hr": "segmentirati",
+    "en": "to segment",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zertifizieren",
+    "hr": "certificirati",
+    "en": "to certify",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "rezertifizieren",
+    "hr": "ponovno certificirati",
+    "en": "to recertify",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "terminieren",
+    "hr": "zakazati",
+    "en": "to schedule",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "administrieren",
+    "hr": "administrirati",
+    "en": "to administer",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "synchronisieren",
+    "hr": "sinkronizirati",
+    "en": "to synchronize",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "ausspielen",
+    "hr": "isporučiti sadržaj",
+    "en": "to deliver content",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "operationalisieren",
+    "hr": "operacionalizirati",
+    "en": "to operationalize",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "kompetenzbasiert",
+    "hr": "temeljen na kompetencijama",
+    "en": "competency-based",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "modular",
+    "hr": "modularan",
+    "en": "modular",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "zielgruppenspezifisch",
+    "hr": "specifičan za ciljnu skupinu",
+    "en": "target-group-specific",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "mediengerecht",
+    "hr": "prilagođen mediju",
+    "en": "appropriate for the medium",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "skalierbar",
+    "hr": "skalabilan",
+    "en": "scalable",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "transferorientiert",
+    "hr": "usmjeren na prijenos u praksu",
+    "en": "transfer-oriented",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "bedarfsgerecht",
+    "hr": "u skladu s potrebama",
+    "en": "according to need",
+    "topic": "personal_lms",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "nachweislich",
+    "hr": "dokazivo",
+    "en": "demonstrably",
+    "topic": "personal_lms",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "sofern",
+    "hr": "pod uvjetom da",
+    "en": "provided that",
+    "topic": "personal_lms",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "gemäß",
+    "hr": "u skladu s",
+    "en": "in accordance with",
+    "topic": "personal_lms",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "den Qualifizierungsbedarf ermitteln",
+    "hr": "utvrditi potrebu za osposobljavanjem",
+    "en": "identify qualification needs",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Lernziele operationalisieren",
+    "hr": "operacionalizirati ciljeve učenja",
+    "en": "operationalize learning objectives",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "ein SCORM-Paket importieren",
+    "hr": "uvesti SCORM paket",
+    "en": "import a SCORM package",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "die Abschlussquote auswerten",
+    "hr": "analizirati stopu završetka",
+    "en": "analyze the completion rate",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "den Lerntransfer fördern",
+    "hr": "poticati prijenos naučenog u praksu",
+    "en": "promote learning transfer",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "ein Curriculum aufbauen",
+    "hr": "izraditi kurikulum",
+    "en": "build a curriculum",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Kurse rollenbasiert zuweisen",
+    "hr": "dodijeliti tečajeve prema ulozi",
+    "en": "assign courses based on roles",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Schulungsunterlagen versionieren",
+    "hr": "verzionirati materijale za obuku",
+    "en": "version training materials",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Das Kompetenzmodell beschreibt beobachtbare Verhaltensweisen für jede Anforderungsstufe.",
+    "hr": "Model kompetencija opisuje vidljiva ponašanja za svaku razinu zahtjeva.",
+    "en": "The competency model describes observable behaviors for every proficiency level.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Operationalisierte Lernziele machen den erwarteten Kompetenzzuwachs messbar.",
+    "hr": "Operacionalizirani ciljevi učenja čine očekivani razvoj kompetencija mjerljivim.",
+    "en": "Operationalized learning objectives make the expected competency gain measurable.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Das SCORM-Paket muss mit der aktuellen Version der Lernplattform kompatibel sein.",
+    "hr": "SCORM paket mora biti kompatibilan s trenutačnom verzijom platforme za učenje.",
+    "en": "The SCORM package must be compatible with the current version of the learning platform.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Rollenbasierte Einschreiberegeln reduzieren den administrativen Aufwand erheblich.",
+    "hr": "Pravila upisa prema ulozi znatno smanjuju administrativni napor.",
+    "en": "Role-based enrollment rules significantly reduce administrative effort.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Eine hohe Abschlussquote allein belegt noch keinen nachhaltigen Lernerfolg.",
+    "hr": "Visoka stopa završetka sama po sebi još ne dokazuje održiv uspjeh u učenju.",
+    "en": "A high completion rate alone does not demonstrate sustainable learning success.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Der Lerntransfer wird mehrere Wochen nach der Qualifizierung im Arbeitsalltag bewertet.",
+    "hr": "Prijenos naučenog procjenjuje se u svakodnevnom radu nekoliko tjedana nakon osposobljavanja.",
+    "en": "Learning transfer is assessed in everyday work several weeks after training.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Rezertifizierung muss vor Ablauf der bestehenden Qualifikation abgeschlossen sein.",
+    "hr": "Recertifikacija mora biti završena prije isteka postojeće kvalifikacije.",
+    "en": "Recertification must be completed before the existing qualification expires.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Betriebsvereinbarung",
+    "hr": "sporazum na razini poduzeća",
+    "en": "works agreement",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Mitbestimmung",
+    "hr": "suodlučivanje",
+    "en": "co-determination",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Interessenvertretung",
+    "hr": "predstavništvo zaposlenika",
+    "en": "employee representation",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Matrixorganisation",
+    "hr": "matrična organizacija",
+    "en": "matrix organization",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Rollenklärung",
+    "hr": "razjašnjenje uloga",
+    "en": "role clarification",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Führungsverständnis",
+    "hr": "shvaćanje vodstva",
+    "en": "leadership philosophy",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die psychologische Sicherheit",
+    "hr": "psihološka sigurnost",
+    "en": "psychological safety",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Zielvereinbarung",
+    "hr": "dogovor o ciljevima",
+    "en": "target agreement",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Ergebnisorientierung",
+    "hr": "usmjerenost na rezultate",
+    "en": "results orientation",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Selbstwirksamkeit",
+    "hr": "samoučinkovitost",
+    "en": "self-efficacy",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Handlungsspielraum",
+    "hr": "prostor za djelovanje",
+    "en": "room for maneuver",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Präsenzkultur",
+    "hr": "kultura fizičke prisutnosti",
+    "en": "culture of physical presence",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Fokuszeit",
+    "hr": "vrijeme za usredotočen rad",
+    "en": "focus time",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Arbeitszeitsouveränität",
+    "hr": "samostalnost u upravljanju radnim vremenom",
+    "en": "working-time autonomy",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Schnittstellenverantwortung",
+    "hr": "odgovornost na organizacijskim sučeljima",
+    "en": "cross-functional interface responsibility",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "befähigen",
+    "hr": "osnažiti za djelovanje",
+    "en": "to enable",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vorleben",
+    "hr": "pokazati vlastitim primjerom",
+    "en": "to lead by example",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "einfordern",
+    "hr": "zahtijevati",
+    "en": "to demand",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "rückkoppeln",
+    "hr": "povratno usuglasiti",
+    "en": "to feed back",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "entlasten",
+    "hr": "rasteretiti",
+    "en": "to relieve",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "aushandeln",
+    "hr": "dogovoriti pregovorima",
+    "en": "to negotiate",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vernetzen",
+    "hr": "umrežiti",
+    "en": "to connect",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "reflektieren",
+    "hr": "promisliti",
+    "en": "to reflect",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "fördern",
+    "hr": "poticati",
+    "en": "to foster",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "entscheiden",
+    "hr": "odlučiti",
+    "en": "to decide",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "konzernweit",
+    "hr": "na razini cijelog koncerna",
+    "en": "group-wide",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "bereichsübergreifend",
+    "hr": "međusektorski",
+    "en": "cross-functional",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "asynchron",
+    "hr": "asinkron",
+    "en": "asynchronous",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "selbstwirksam",
+    "hr": "svjestan vlastite učinkovitosti",
+    "en": "self-efficacious",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "partizipativ",
+    "hr": "participativan",
+    "en": "participative",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "ergebnisorientiert",
+    "hr": "usmjeren na rezultate",
+    "en": "results-oriented",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "ortsflexibel",
+    "hr": "fleksibilno u pogledu lokacije",
+    "en": "flexibly across locations",
+    "topic": "db_workplace",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "vertrauensbasiert",
+    "hr": "na temelju povjerenja",
+    "en": "on a basis of trust",
+    "topic": "db_workplace",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "sofern",
+    "hr": "pod uvjetom da",
+    "en": "provided that",
+    "topic": "db_workplace",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "während",
+    "hr": "dok",
+    "en": "whereas",
+    "topic": "db_workplace",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "innerhalb",
+    "hr": "unutar",
+    "en": "within",
+    "topic": "db_workplace",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "Führung auf Distanz gestalten",
+    "hr": "oblikovati vođenje na daljinu",
+    "en": "shape remote leadership",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Entscheidungen dezentral treffen",
+    "hr": "donositi odluke decentralizirano",
+    "en": "make decisions in a decentralized manner",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "psychologische Sicherheit stärken",
+    "hr": "jačati psihološku sigurnost",
+    "en": "strengthen psychological safety",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Fokuszeiten schützen",
+    "hr": "zaštititi vrijeme za usredotočen rad",
+    "en": "protect focus time",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Rollen und Mandate klären",
+    "hr": "razjasniti uloge i ovlasti",
+    "en": "clarify roles and mandates",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "den Arbeitsort tätigkeitsbezogen wählen",
+    "hr": "odabrati mjesto rada prema vrsti zadatka",
+    "en": "choose the work location according to the task",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "die Grenzen der Erreichbarkeit wahren",
+    "hr": "poštovati granice dostupnosti",
+    "en": "respect the boundaries of availability",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Die Betriebsvereinbarung definiert den verbindlichen Rahmen für mobiles Arbeiten.",
+    "hr": "Sporazum na razini poduzeća definira obvezujući okvir za mobilni rad.",
+    "en": "The works agreement defines the binding framework for mobile work.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Hybride Führung erfordert mehr Klarheit über Ziele, Rollen und Entscheidungsspielräume.",
+    "hr": "Hibridno vođenje zahtijeva veću jasnoću ciljeva, uloga i prostora za odlučivanje.",
+    "en": "Hybrid leadership requires greater clarity about goals, roles, and decision-making authority.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Psychologische Sicherheit ermöglicht es, Bedenken frühzeitig und offen anzusprechen.",
+    "hr": "Psihološka sigurnost omogućuje rano i otvoreno iznošenje nedoumica.",
+    "en": "Psychological safety makes it possible to raise concerns early and openly.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Selbstorganisation bedeutet nicht, dass Führung und Orientierung entfallen.",
+    "hr": "Samoorganizacija ne znači da vodstvo i usmjeravanje postaju nepotrebni.",
+    "en": "Self-organization does not mean that leadership and direction are no longer required.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Entscheidungen in der Matrixorganisation benötigen eindeutige Mandate und Eskalationswege.",
+    "hr": "Odluke u matričnoj organizaciji zahtijevaju jasne ovlasti i putove eskalacije.",
+    "en": "Decisions in a matrix organization require clear mandates and escalation paths.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Asynchrone Kommunikation reduziert Besprechungen, wenn Entscheidungen nachvollziehbar dokumentiert sind.",
+    "hr": "Asinkrona komunikacija smanjuje broj sastanaka ako su odluke sljedivo dokumentirane.",
+    "en": "Asynchronous communication reduces meetings when decisions are documented traceably.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Der Arbeitsort wird nach Tätigkeit, Zusammenarbeit und betrieblichen Anforderungen gewählt.",
+    "hr": "Mjesto rada bira se prema zadatku, suradnji i poslovnim zahtjevima.",
+    "en": "The work location is chosen according to the task, collaboration, and operational requirements.",
+    "topic": "db_workplace",
     "subcategory": "Satz",
     "scope": "all"
   }

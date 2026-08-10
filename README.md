@@ -62,7 +62,7 @@ Current scopes:
 - `hr`: HR-mode specific
 - `gb`: GB-mode specific
 
-The shipped starter deck currently contains 859 cards across fifteen built-in topics, mostly shared and a few DE-mode-specific.
+The shipped deck currently contains 1,059 cards across fifteen built-in topics, mostly shared and a few DE-mode-specific. The four professional workplace topics contain 100 cards each, combining foundational and advanced terminology.
 
 ## Quick start
 

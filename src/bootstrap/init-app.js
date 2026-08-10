@@ -1,5 +1,5 @@
-import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-10-topics1";
-import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-10-topics1";
+import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-10-topics2";
+import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-10-topics2";
 import {
   CARD_SCOPE_OPTIONS,
   MODE_SCOPE_MAP,
@@ -14,7 +14,7 @@ import {
   normalizeSubcategory,
   normalizeTopic,
   sanitizeCard,
-} from "../../shared/card-schema.js?v=2026-08-10-topics1";
+} from "../../shared/card-schema.js?v=2026-08-10-topics2";
 
 const searchSites = [
   { name: "dict.cc", icon: "C", url: (w) => `https://www.dict.cc/?s=${encodeURIComponent(w)}` },
@@ -23,7 +23,7 @@ const searchSites = [
   { name: "Leo", icon: "L", url: (w) => `https://dict.leo.org/german-english/${encodeURIComponent(w)}` },
 ];
 
-const ASSET_REV = "2026-08-10-topics1";
+const ASSET_REV = "2026-08-10-topics2";
 const SESSION_SIZE = 10;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const AUTOFILL_TRAILING_PUNCT = /[.!?:;]/;
@@ -512,6 +512,7 @@ const FEEDBACK_BURST_SYMBOLS = Object.freeze({
 const GAME_DENSITY_ORDER = ["regular", "compact", "dense"];
 const DEFAULT_TYPE_PROFILE = Object.freeze({
   contentWidth: 390,
+  heightScale: 1,
   bodyScale: 1,
   microScale: 1,
   displayScale: 1,
@@ -597,19 +598,17 @@ function computeResponsiveTypeProfile({ viewportWidth, viewportHeight, heroWidth
     390,
     780
   );
-  const contentBoost = clampNumber((contentWidth - 390) / 390, 0, 1);
-  const viewportBoost = clampNumber((viewportWidth - 1280) / 1920, 0, 1);
-  const heightBoost = clampNumber((viewportHeight - 800) / 1400, 0, 1);
-
-  const bodyScale = clampNumber(1 + contentBoost * 0.08 + viewportBoost * 0.06 + heightBoost * 0.02, 1, 1.16);
-  const microScale = clampNumber(1 + (bodyScale - 1) * 0.7, 1, 1.11);
-  const displayScale = clampNumber(1 + (bodyScale - 1) * 1.2, 1, 1.19);
-  const controlScale = clampNumber(1 + (bodyScale - 1) * 0.6, 1, 1.1);
-  const iconScale = clampNumber(1 + (bodyScale - 1) * 0.5, 1, 1.08);
-  const gameTextScale = clampNumber(1.3 + (bodyScale - 1) * 0.9, 1.3, 1.44);
+  const heightScale = clampNumber(viewportHeight / 852, 0.82, 2.55);
+  const bodyScale = heightScale;
+  const microScale = heightScale;
+  const displayScale = heightScale;
+  const controlScale = heightScale;
+  const iconScale = heightScale;
+  const gameTextScale = heightScale * 1.3;
 
   return {
     contentWidth,
+    heightScale: roundScale(heightScale),
     bodyScale: roundScale(bodyScale),
     microScale: roundScale(microScale),
     displayScale: roundScale(displayScale),
@@ -647,6 +646,7 @@ function applyResponsiveTypeProfile(profile) {
   rootStyle.setProperty("--type-scale-control", String(profile.controlScale));
   rootStyle.setProperty("--type-scale-icon", String(profile.iconScale));
   rootStyle.setProperty("--game-text-scale", String(profile.gameTextScale));
+  rootStyle.setProperty("--type-height-scale", String(profile.heightScale));
   rootStyle.setProperty("--type-content-width", `${profile.contentWidth}px`);
   viewportProfile.typeProfile = profile;
 }
@@ -1077,6 +1077,7 @@ function syncViewportProfile() {
 
   if (sizeChanged || typeProfileChanged) {
     siteTitleController?.relayout();
+    grammarSliderControllers.forEach((controller) => controller?.rerender?.());
   }
 
   if (sizeChanged || layoutChanged) {
@@ -2514,6 +2515,10 @@ function getFactsImagePath(type, stateId) {
   return "";
 }
 
+function getStateFlagPath(stateId) {
+  return isNonEmptyValue(stateId) ? `${FACTS_IMAGE_ROOT}/states/${stateId}.webp` : "";
+}
+
 function normalizeFactsField(field) {
   if (Array.isArray(field)) {
     return {
@@ -2961,7 +2966,7 @@ function getFactsPickerItems() {
     ? (germanyFacts?.states || []).map((state) => ({
         id: state.id,
         label: state.name,
-        flagSrc: getFactsImagePath("state", state.id),
+        flagSrc: getStateFlagPath(state.id),
         ariaLabel: t("facts.picker.stateButton", { name: state.name }),
         onClick: () => {
           factsMode = "state";
@@ -3031,6 +3036,8 @@ function buildFactsPicker() {
   const pickerMode = getFactsPickerMode();
   const items = getFactsPickerItems();
   const pickerKey = `${pickerMode}|${getTargetLanguage()}|${items.map((item) => item.id).join(",")}`;
+
+  statePickerEl.dataset.pickerMode = pickerMode;
 
   statePickerEl.setAttribute(
     "aria-label",
@@ -4079,6 +4086,7 @@ function updateStats() {
   if (wpmEl) {
     wpmEl.textContent = wpm || "—";
   }
+
 }
 
 function showCombo() {
@@ -4207,7 +4215,11 @@ function renderInstallGuide() {
 }
 
 function setDesktopInstallGuideShellVisible(isVisible) {
+  const wasVisible = siteTitleRowEl?.classList.contains("has-install-guides") || false;
   siteTitleRowEl?.classList.toggle("has-install-guides", isVisible);
+  if (wasVisible !== isVisible) {
+    siteTitleController?.relayout();
+  }
 }
 
 function setInstallGuidePillVisible(element, isVisible) {
