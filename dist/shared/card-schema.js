@@ -18,6 +18,10 @@ export const TOPIC_CONFIG = {
   shopping: { color: "#34d399" },
   developertech: { color: "#0284c7" },
   itnetwork: { color: "#65a30d" },
+  agile_stakeholder: { color: "#a855f7" },
+  it_ops: { color: "#0f766e" },
+  personal_lms: { color: "#e11d48" },
+  db_workplace: { color: "#dc2626" },
 };
 
 export const TOPIC_OPTIONS = Object.keys(TOPIC_CONFIG);

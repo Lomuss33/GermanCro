@@ -24,8 +24,10 @@ That enables `POST /api/cards` and writes to `cards.user.json`.
 
 - `cards.json`: main vocabulary dataset
 - `cards.user.json`: local extension dataset written by `server.js`
-- `app.js`: client-side card sanitizing, topic filtering, authoring selects, and scope handling
-- `server.js`: save API and server-side card validation
+- `shared/card-schema.js`: shared taxonomy, sanitizing, scope handling, and duplicate keys
+- `app.js`: browser entry point
+- `src/bootstrap/init-app.js`: topic filtering and authoring UI
+- `server.js`: save API using the shared card validation
 - `locales.json`: display labels for topics, subcategories, and scopes
 - `index.html`: add-card form fields
 - `style.css`: badge and authoring-form layout
@@ -49,8 +51,8 @@ Rules:
 
 - keep files valid JSON and UTF-8 encoded
 - keep `de`, `hr`, and `en` trimmed and human-readable
-- `topic` must exist in both the client and server allow-lists
-- `subcategory` must exist in both the client and server allow-lists
+- `topic` must exist in the shared topic configuration
+- `subcategory` must exist in the shared subcategory list
 - `scope` must be one of `all`, `de`, `hr`, or `gb`
 - duplicates are blocked by `de + hr + topic + subcategory + scope`
 
@@ -69,6 +71,10 @@ Topics:
 - `shopping`
 - `developertech`
 - `itnetwork`
+- `agile_stakeholder`
+- `it_ops`
+- `personal_lms`
+- `db_workplace`
 
 Subcategories:
 
@@ -109,13 +115,11 @@ Save modes:
 
 When you create a new top-level topic, update all of these together:
 
-1. `app.js`
+1. `shared/card-schema.js`
    Add the topic key to `TOPIC_CONFIG` and choose a color.
-2. `server.js`
-   Add the same key to `VALID_TOPICS`.
-3. `locales.json`
+2. `locales.json`
    Add labels for the topic in `de.topics`, `hr.topics`, and `en.topics`.
-4. `cards.json`
+3. `cards.json`
    Add cards that use the new topic key.
 
 If one of those steps is skipped, the new topic will either fail validation or render with raw keys.
@@ -124,13 +128,11 @@ If one of those steps is skipped, the new topic will either fail validation or r
 
 When you introduce a new subcategory, update all of these together:
 
-1. `app.js`
+1. `shared/card-schema.js`
    Add the new value to `SUBCATEGORY_OPTIONS`.
-2. `server.js`
-   Add the same value to `VALID_SUBCATEGORIES`.
-3. `locales.json`
+2. `locales.json`
    Add translated labels under `categories` for `de`, `hr`, and `en`.
-4. `cards.json`
+3. `cards.json`
    Add or update cards to use the new subcategory.
 
 ## How to use scope correctly
@@ -143,7 +145,7 @@ When you introduce a new subcategory, update all of these together:
 ## Change checklist
 
 - Card content change: validate JSON, then test topic filters and a few sample answers.
-- Topic taxonomy change: update `app.js`, `server.js`, `locales.json`, and `cards.json` together.
+- Topic taxonomy change: update `shared/card-schema.js`, `locales.json`, and `cards.json` together.
 - Add-card form change: test both `npx serve .` export flow and `npm start` persistent-save flow.
 - Scope change: switch learning modes and confirm the expected cards remain available.
 

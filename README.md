@@ -39,6 +39,10 @@ Current built-in topics:
 - `shopping`
 - `developertech`
 - `itnetwork`
+- `agile_stakeholder`
+- `it_ops`
+- `personal_lms`
+- `db_workplace`
 
 Current subcategories:
 
@@ -58,7 +62,7 @@ Current scopes:
 - `hr`: HR-mode specific
 - `gb`: GB-mode specific
 
-The shipped starter deck currently contains 659 cards across eleven built-in topics, mostly shared and a few DE-mode-specific.
+The shipped starter deck currently contains 859 cards across fifteen built-in topics, mostly shared and a few DE-mode-specific.
 
 ## Quick start
 
@@ -111,8 +115,8 @@ Save modes:
 Validation rules:
 
 - all six fields are required
-- topic must be a supported topic key
-- subcategory must be a supported subcategory key
+- topic must be supported by `shared/card-schema.js`
+- subcategory must be supported by `shared/card-schema.js`
 - scope must be `all`, `de`, `hr`, or `gb`
 - duplicates are blocked by `de + hr + topic + subcategory + scope`
 
@@ -120,16 +124,14 @@ Validation rules:
 
 If you want to extend the taxonomy itself, update these files together:
 
-1. `app.js`
-   Add the new topic to `TOPIC_CONFIG`, or add the new subcategory to `SUBCATEGORY_OPTIONS`.
-2. `server.js`
-   Add the same key to `VALID_TOPICS` or `VALID_SUBCATEGORIES`.
-3. `locales.json`
+1. `shared/card-schema.js`
+   Add the new topic to `TOPIC_CONFIG`, or add the new subcategory to `SUBCATEGORY_OPTIONS`. The browser and server both import this shared taxonomy.
+2. `locales.json`
    Add labels for the new topic under `topics`, or for the new subcategory under `categories`, in `de`, `hr`, and `en`.
-4. `cards.json`
+3. `cards.json`
    Add cards that use the new keys.
 
-If the new taxonomy value does not exist in all four places, cards using it will be rejected or shown with broken labels.
+If the new taxonomy value does not exist in all three places, cards using it will be rejected or shown with broken labels.
 
 ## Scope rules
 

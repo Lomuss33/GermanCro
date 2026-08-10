@@ -5270,5 +5270,2405 @@
     "topic": "itnetwork",
     "subcategory": "Satz",
     "scope": "all"
+  },
+  {
+    "de": "der Stakeholder",
+    "hr": "dionik",
+    "en": "stakeholder",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Ansprechperson",
+    "hr": "kontaktna osoba",
+    "en": "contact person",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Zielgruppe",
+    "hr": "ciljna skupina",
+    "en": "target group",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Nutzerfeedback",
+    "hr": "povratna informacija korisnika",
+    "en": "user feedback",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Anforderung",
+    "hr": "zahtjev",
+    "en": "requirement",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Erwartung",
+    "hr": "očekivanje",
+    "en": "expectation",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Gespräch",
+    "hr": "razgovor",
+    "en": "conversation",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Termin",
+    "hr": "termin",
+    "en": "appointment",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Tagesordnung",
+    "hr": "dnevni red",
+    "en": "agenda",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Protokoll",
+    "hr": "zapisnik",
+    "en": "minutes",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Präsentation",
+    "hr": "prezentacija",
+    "en": "presentation",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Folie",
+    "hr": "slajd",
+    "en": "slide",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Rückfrage",
+    "hr": "dodatno pitanje",
+    "en": "follow-up question",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Entscheidung",
+    "hr": "odluka",
+    "en": "decision",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Abstimmungsbedarf",
+    "hr": "potreba za usuglašavanjem",
+    "en": "need for coordination",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "abstimmen",
+    "hr": "usuglasiti",
+    "en": "to coordinate",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "einladen",
+    "hr": "pozvati",
+    "en": "to invite",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "moderieren",
+    "hr": "moderirati",
+    "en": "to facilitate",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "präsentieren",
+    "hr": "prezentirati",
+    "en": "to present",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "erläutern",
+    "hr": "objasniti",
+    "en": "to explain",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "nachfragen",
+    "hr": "dodatno pitati",
+    "en": "to ask a follow-up question",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zuhören",
+    "hr": "slušati",
+    "en": "to listen",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zusammenfassen",
+    "hr": "sažeti",
+    "en": "to summarize",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "visualisieren",
+    "hr": "vizualizirati",
+    "en": "to visualize",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "priorisieren",
+    "hr": "odrediti prioritete",
+    "en": "to prioritize",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "freigeben",
+    "hr": "odobriti",
+    "en": "to approve",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "eskalieren",
+    "hr": "eskalirati",
+    "en": "to escalate",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verbindlich",
+    "hr": "obvezujući",
+    "en": "binding",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "verständlich",
+    "hr": "razumljiv",
+    "en": "understandable",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "zielgruppengerecht",
+    "hr": "prilagođen ciljnoj skupini",
+    "en": "appropriate for the target group",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "transparent",
+    "hr": "transparentan",
+    "en": "transparent",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "lösungsorientiert",
+    "hr": "usmjeren na rješenje",
+    "en": "solution-oriented",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "entscheidungsreif",
+    "hr": "spreman za odlučivanje",
+    "en": "ready for a decision",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "anschließend",
+    "hr": "nakon toga",
+    "en": "afterwards",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "vorab",
+    "hr": "unaprijed",
+    "en": "in advance",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "gemeinsam",
+    "hr": "zajedno",
+    "en": "together",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "Vielen Dank für Ihre Rückmeldung.",
+    "hr": "Hvala Vam na povratnoj informaciji.",
+    "en": "Thank you for your feedback.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Gibt es dazu Rückfragen?",
+    "hr": "Ima li dodatnih pitanja?",
+    "en": "Are there any questions about this?",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Ich nehme den Punkt mit.",
+    "hr": "Zabilježit ću tu točku.",
+    "en": "I will take that point away.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Aus meiner Sicht",
+    "hr": "S moje točke gledišta",
+    "en": "From my point of view",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Wir halten fest:",
+    "hr": "Zaključujemo sljedeće:",
+    "en": "Let us record the following:",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Das klären wir im Nachgang.",
+    "hr": "To ćemo razjasniti naknadno.",
+    "en": "We will clarify that afterwards.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Können Sie das bitte konkretisieren?",
+    "hr": "Možete li to pobliže pojasniti?",
+    "en": "Could you please be more specific?",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Wir beginnen das Meeting mit einem kurzen Überblick.",
+    "hr": "Sastanak započinjemo kratkim pregledom.",
+    "en": "We begin the meeting with a brief overview.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Nutzenden haben klare Erwartungen formuliert.",
+    "hr": "Korisnici su jasno izrazili svoja očekivanja.",
+    "en": "The users have clearly expressed their expectations.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Bitte senden Sie die Präsentation vor dem Termin.",
+    "hr": "Molimo pošaljite prezentaciju prije termina.",
+    "en": "Please send the presentation before the meeting.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Entscheidung wird im Protokoll dokumentiert.",
+    "hr": "Odluka se dokumentira u zapisniku.",
+    "en": "The decision is documented in the minutes.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Wir stimmen die nächsten Schritte mit allen Beteiligten ab.",
+    "hr": "Sljedeće korake usuglašavamo sa svim uključenim osobama.",
+    "en": "We coordinate the next steps with everyone involved.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Folie zeigt die wichtigsten Ergebnisse auf einen Blick.",
+    "hr": "Slajd prikazuje najvažnije rezultate na prvi pogled.",
+    "en": "The slide shows the most important results at a glance.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Offene Punkte werden bis Freitag geklärt.",
+    "hr": "Otvorene točke razjasnit će se do petka.",
+    "en": "Open points will be clarified by Friday.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "der Datenbestand",
+    "hr": "skup podataka",
+    "en": "data inventory",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Datenquelle",
+    "hr": "izvor podataka",
+    "en": "data source",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Datenqualität",
+    "hr": "kvaliteta podataka",
+    "en": "data quality",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Datensatz",
+    "hr": "zapis podataka",
+    "en": "data record",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Schnittstelle",
+    "hr": "sučelje",
+    "en": "interface",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Testfall",
+    "hr": "testni slučaj",
+    "en": "test case",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Testergebnis",
+    "hr": "rezultat testa",
+    "en": "test result",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Testumgebung",
+    "hr": "testno okruženje",
+    "en": "test environment",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Fehlerbild",
+    "hr": "opis greške",
+    "en": "error pattern",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Fehlerprotokoll",
+    "hr": "zapisnik grešaka",
+    "en": "error log",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Freigabe",
+    "hr": "odobrenje",
+    "en": "approval",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Rollout",
+    "hr": "uvođenje sustava",
+    "en": "rollout",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Pilotbetrieb",
+    "hr": "pilotni rad",
+    "en": "pilot operation",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Auswertung",
+    "hr": "analiza",
+    "en": "evaluation",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Excel-Tabelle",
+    "hr": "Excel tablica",
+    "en": "Excel spreadsheet",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Abweichung",
+    "hr": "odstupanje",
+    "en": "deviation",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "pflegen",
+    "hr": "održavati",
+    "en": "to maintain",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "bereinigen",
+    "hr": "očistiti",
+    "en": "to clean up",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "importieren",
+    "hr": "uvesti",
+    "en": "to import",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "exportieren",
+    "hr": "izvesti",
+    "en": "to export",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abgleichen",
+    "hr": "usporediti",
+    "en": "to reconcile",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "testen",
+    "hr": "testirati",
+    "en": "to test",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "dokumentieren",
+    "hr": "dokumentirati",
+    "en": "to document",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "auswerten",
+    "hr": "analizirati",
+    "en": "to evaluate",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "filtern",
+    "hr": "filtrirati",
+    "en": "to filter",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "sortieren",
+    "hr": "razvrstati",
+    "en": "to sort",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "freigeben",
+    "hr": "odobriti",
+    "en": "to release",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "ausrollen",
+    "hr": "uvesti u rad",
+    "en": "to roll out",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vollständig",
+    "hr": "potpun",
+    "en": "complete",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "fehlerfrei",
+    "hr": "bez pogrešaka",
+    "en": "error-free",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "reproduzierbar",
+    "hr": "ponovljiv",
+    "en": "reproducible",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "produktiv",
+    "hr": "produkcijski",
+    "en": "production",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "aktuell",
+    "hr": "ažuran",
+    "en": "up to date",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "auffällig",
+    "hr": "neuobičajen",
+    "en": "unusual",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "stichprobenartig",
+    "hr": "na temelju uzorka",
+    "en": "on a sample basis",
+    "topic": "it_ops",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "schrittweise",
+    "hr": "postupno",
+    "en": "gradually",
+    "topic": "it_ops",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "automatisch",
+    "hr": "automatski",
+    "en": "automatically",
+    "topic": "it_ops",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "Daten aktualisieren",
+    "hr": "ažurirati podatke",
+    "en": "update data",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "einen Test durchführen",
+    "hr": "provesti test",
+    "en": "run a test",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "einen Fehler nachstellen",
+    "hr": "reproducirati grešku",
+    "en": "reproduce an error",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "das Ergebnis dokumentieren",
+    "hr": "dokumentirati rezultat",
+    "en": "document the result",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "den Rollout vorbereiten",
+    "hr": "pripremiti uvođenje sustava",
+    "en": "prepare the rollout",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "eine Pivot-Tabelle erstellen",
+    "hr": "izraditi zaokretnu tablicu",
+    "en": "create a pivot table",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Die Datenquelle wird jede Nacht automatisch aktualisiert.",
+    "hr": "Izvor podataka automatski se ažurira svake noći.",
+    "en": "The data source is updated automatically every night.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Alle Testfälle müssen vor der Freigabe erfolgreich sein.",
+    "hr": "Svi testni slučajevi moraju biti uspješni prije odobrenja.",
+    "en": "All test cases must pass before approval.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Bitte markieren Sie die Abweichungen in der Excel-Tabelle.",
+    "hr": "Molimo označite odstupanja u Excel tablici.",
+    "en": "Please highlight the deviations in the Excel spreadsheet.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Der Fehler tritt nur in der Testumgebung auf.",
+    "hr": "Greška se pojavljuje samo u testnom okruženju.",
+    "en": "The error only occurs in the test environment.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Der Rollout erfolgt schrittweise über mehrere Standorte.",
+    "hr": "Uvođenje sustava provodi se postupno na više lokacija.",
+    "en": "The rollout will take place gradually across several locations.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Wir gleichen die beiden Datenbestände miteinander ab.",
+    "hr": "Međusobno uspoređujemo dva skupa podataka.",
+    "en": "We reconcile the two data inventories.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Das Testergebnis ist im Fehlerprotokoll dokumentiert.",
+    "hr": "Rezultat testa dokumentiran je u zapisniku grešaka.",
+    "en": "The test result is documented in the error log.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "das Lernmanagementsystem",
+    "hr": "sustav za upravljanje učenjem",
+    "en": "learning management system",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Lernplattform",
+    "hr": "platforma za učenje",
+    "en": "learning platform",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Weiterbildung",
+    "hr": "daljnje obrazovanje",
+    "en": "continuing education",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Qualifizierung",
+    "hr": "osposobljavanje",
+    "en": "qualification",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Schulungsunterlage",
+    "hr": "materijal za obuku",
+    "en": "training material",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Lerninhalt",
+    "hr": "sadržaj za učenje",
+    "en": "learning content",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Lernmodul",
+    "hr": "modul za učenje",
+    "en": "learning module",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Lernpfad",
+    "hr": "put učenja",
+    "en": "learning path",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Zielgruppe",
+    "hr": "ciljna skupina",
+    "en": "target group",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Teilnahme",
+    "hr": "sudjelovanje",
+    "en": "participation",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Anmeldung",
+    "hr": "prijava",
+    "en": "registration",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Abschluss",
+    "hr": "završetak",
+    "en": "completion",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Zertifikat",
+    "hr": "certifikat",
+    "en": "certificate",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Lernerfolgskontrolle",
+    "hr": "provjera ishoda učenja",
+    "en": "learning assessment",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Präsenzschulung",
+    "hr": "obuka uživo",
+    "en": "in-person training",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das E-Learning",
+    "hr": "e-učenje",
+    "en": "e-learning",
+    "topic": "personal_lms",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "anmelden",
+    "hr": "prijaviti",
+    "en": "to register",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zuweisen",
+    "hr": "dodijeliti",
+    "en": "to assign",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "veröffentlichen",
+    "hr": "objaviti",
+    "en": "to publish",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "aktualisieren",
+    "hr": "ažurirati",
+    "en": "to update",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abschließen",
+    "hr": "završiti",
+    "en": "to complete",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "teilnehmen",
+    "hr": "sudjelovati",
+    "en": "to participate",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "schulen",
+    "hr": "obučavati",
+    "en": "to train",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "qualifizieren",
+    "hr": "osposobiti",
+    "en": "to qualify",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "hochladen",
+    "hr": "prenijeti na platformu",
+    "en": "to upload",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "herunterladen",
+    "hr": "preuzeti",
+    "en": "to download",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "evaluieren",
+    "hr": "evaluirati",
+    "en": "to evaluate",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "freischalten",
+    "hr": "omogućiti pristup",
+    "en": "to activate",
+    "topic": "personal_lms",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verpflichtend",
+    "hr": "obvezan",
+    "en": "mandatory",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "freiwillig",
+    "hr": "dobrovoljan",
+    "en": "voluntary",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "digital",
+    "hr": "digitalan",
+    "en": "digital",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "barrierefrei",
+    "hr": "pristupačan",
+    "en": "accessible",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "praxisnah",
+    "hr": "praktično usmjeren",
+    "en": "practice-oriented",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "didaktisch",
+    "hr": "didaktički",
+    "en": "didactic",
+    "topic": "personal_lms",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "selbstständig",
+    "hr": "samostalno",
+    "en": "independently",
+    "topic": "personal_lms",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "fristgerecht",
+    "hr": "u roku",
+    "en": "on time",
+    "topic": "personal_lms",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "online",
+    "hr": "online",
+    "en": "online",
+    "topic": "personal_lms",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "eine Schulung buchen",
+    "hr": "rezervirati obuku",
+    "en": "book a training course",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "den Lernstand prüfen",
+    "hr": "provjeriti napredak u učenju",
+    "en": "check the learning progress",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "das Zertifikat herunterladen",
+    "hr": "preuzeti certifikat",
+    "en": "download the certificate",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "einen Kurs freischalten",
+    "hr": "omogućiti pristup tečaju",
+    "en": "activate a course",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "die Teilnahme bestätigen",
+    "hr": "potvrditi sudjelovanje",
+    "en": "confirm participation",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Unterlagen bereitstellen",
+    "hr": "staviti materijale na raspolaganje",
+    "en": "provide materials",
+    "topic": "personal_lms",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Die Führungskraft weist den Mitarbeitenden den Lernpfad zu.",
+    "hr": "Rukovoditelj dodjeljuje zaposlenicima put učenja.",
+    "en": "The manager assigns the learning path to the employees.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Schulungsunterlagen stehen auf der Lernplattform bereit.",
+    "hr": "Materijali za obuku dostupni su na platformi za učenje.",
+    "en": "The training materials are available on the learning platform.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Das Lernmodul muss bis Ende des Monats abgeschlossen werden.",
+    "hr": "Modul za učenje mora se završiti do kraja mjeseca.",
+    "en": "The learning module must be completed by the end of the month.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Nach erfolgreicher Teilnahme erhalten Sie ein Zertifikat.",
+    "hr": "Nakon uspješnog sudjelovanja dobit ćete certifikat.",
+    "en": "After successful participation, you will receive a certificate.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Wir aktualisieren die Lerninhalte regelmäßig.",
+    "hr": "Redovito ažuriramo sadržaje za učenje.",
+    "en": "We update the learning content regularly.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Lernerfolgskontrolle besteht aus zehn Fragen.",
+    "hr": "Provjera ishoda učenja sastoji se od deset pitanja.",
+    "en": "The learning assessment consists of ten questions.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Für die Präsenzschulung ist eine Anmeldung erforderlich.",
+    "hr": "Za obuku uživo potrebna je prijava.",
+    "en": "Registration is required for the in-person training.",
+    "topic": "personal_lms",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "das mobile Arbeiten",
+    "hr": "mobilni rad",
+    "en": "mobile work",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Wo Du Willst-Job",
+    "hr": "posao s proizvoljnim mjestom rada",
+    "en": "work-from-anywhere job",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Führungskraft",
+    "hr": "rukovoditelj",
+    "en": "manager",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Selbstorganisation",
+    "hr": "samoorganizacija",
+    "en": "self-organization",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Eigenverantwortung",
+    "hr": "osobna odgovornost",
+    "en": "personal responsibility",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Zusammenarbeit",
+    "hr": "suradnja",
+    "en": "collaboration",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Desksharing",
+    "hr": "dijeljenje radnih stolova",
+    "en": "desk sharing",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Bürostandort",
+    "hr": "uredska lokacija",
+    "en": "office location",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Arbeitsort",
+    "hr": "mjesto rada",
+    "en": "place of work",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Präsenztermin",
+    "hr": "termin uživo",
+    "en": "in-person appointment",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Teamvereinbarung",
+    "hr": "timski dogovor",
+    "en": "team agreement",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Erreichbarkeit",
+    "hr": "dostupnost",
+    "en": "availability",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Vereinbarkeit",
+    "hr": "ravnoteža između poslovnog i privatnog života",
+    "en": "work-life balance",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Konzernkultur",
+    "hr": "korporativna kultura",
+    "en": "corporate culture",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Entscheidungsspielraum",
+    "hr": "prostor za odlučivanje",
+    "en": "scope for decision-making",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Feedbackkultur",
+    "hr": "kultura povratnih informacija",
+    "en": "feedback culture",
+    "topic": "db_workplace",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "organisieren",
+    "hr": "organizirati",
+    "en": "to organize",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "abstimmen",
+    "hr": "usuglasiti",
+    "en": "to coordinate",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vereinbaren",
+    "hr": "dogovoriti",
+    "en": "to agree",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "übernehmen",
+    "hr": "preuzeti",
+    "en": "to take on",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "vertrauen",
+    "hr": "vjerovati",
+    "en": "to trust",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zusammenarbeiten",
+    "hr": "surađivati",
+    "en": "to collaborate",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "führen",
+    "hr": "voditi",
+    "en": "to lead",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "planen",
+    "hr": "planirati",
+    "en": "to plan",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "teilen",
+    "hr": "dijeliti",
+    "en": "to share",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "respektieren",
+    "hr": "poštovati",
+    "en": "to respect",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "priorisieren",
+    "hr": "odrediti prioritete",
+    "en": "to prioritize",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "delegieren",
+    "hr": "delegirati",
+    "en": "to delegate",
+    "topic": "db_workplace",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "flexibel",
+    "hr": "fleksibilan",
+    "en": "flexible",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "eigenverantwortlich",
+    "hr": "samostalan",
+    "en": "autonomous",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "hybrid",
+    "hr": "hibridan",
+    "en": "hybrid",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "ortsunabhängig",
+    "hr": "neovisan o lokaciji",
+    "en": "location-independent",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "vertrauensvoll",
+    "hr": "pun povjerenja",
+    "en": "trusting",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "wertschätzend",
+    "hr": "pun poštovanja",
+    "en": "appreciative",
+    "topic": "db_workplace",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "mobil",
+    "hr": "mobilno",
+    "en": "remotely",
+    "topic": "db_workplace",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "eigenständig",
+    "hr": "samostalno",
+    "en": "independently",
+    "topic": "db_workplace",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "vor Ort",
+    "hr": "na licu mjesta",
+    "en": "on site",
+    "topic": "db_workplace",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "hybrid zusammenarbeiten",
+    "hr": "hibridno surađivati",
+    "en": "collaborate in a hybrid setting",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "die Erreichbarkeit klären",
+    "hr": "dogovoriti dostupnost",
+    "en": "clarify availability",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Präsenztage abstimmen",
+    "hr": "usuglasiti dane rada u uredu",
+    "en": "coordinate office days",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Verantwortung teilen",
+    "hr": "dijeliti odgovornost",
+    "en": "share responsibility",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Pausen einplanen",
+    "hr": "planirati stanke",
+    "en": "schedule breaks",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Vertrauen schaffen",
+    "hr": "izgraditi povjerenje",
+    "en": "build trust",
+    "topic": "db_workplace",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Mobiles Arbeiten ist ein fester Bestandteil unseres Arbeitsalltags.",
+    "hr": "Mobilni rad sastavni je dio naše radne svakodnevice.",
+    "en": "Mobile work is an integral part of our everyday working life.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Das Team stimmt seine Präsenztage gemeinsam ab.",
+    "hr": "Tim zajednički dogovara dane rada u uredu.",
+    "en": "The team coordinates its office days together.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Führungskraft schafft klare Rahmenbedingungen.",
+    "hr": "Rukovoditelj stvara jasne okvirne uvjete.",
+    "en": "The manager creates clear framework conditions.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Wir organisieren unsere Aufgaben eigenverantwortlich.",
+    "hr": "Svoje zadatke organiziramo na vlastitu odgovornost.",
+    "en": "We organize our tasks on our own responsibility.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Bitte tragen Sie Ihren Arbeitsort im Kalender ein.",
+    "hr": "Molimo unesite svoje mjesto rada u kalendar.",
+    "en": "Please enter your place of work in the calendar.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Gute Zusammenarbeit braucht Vertrauen und Verbindlichkeit.",
+    "hr": "Dobra suradnja zahtijeva povjerenje i pouzdanost.",
+    "en": "Good collaboration requires trust and commitment.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Beim Desksharing hinterlassen wir den Arbeitsplatz ordentlich.",
+    "hr": "Kod dijeljenja radnih stolova ostavljamo radno mjesto urednim.",
+    "en": "When desk sharing, we leave the workplace tidy.",
+    "topic": "db_workplace",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Stakeholderanalyse",
+    "hr": "analiza dionika",
+    "en": "stakeholder analysis",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Kommunikationsmatrix",
+    "hr": "komunikacijska matrica",
+    "en": "communication matrix",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Erwartungsmanagement",
+    "hr": "upravljanje očekivanjima",
+    "en": "expectation management",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Lenkungskreis",
+    "hr": "upravljački odbor",
+    "en": "steering committee",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Entscheidungsgremium",
+    "hr": "tijelo za odlučivanje",
+    "en": "decision-making body",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Beschlussvorlage",
+    "hr": "prijedlog odluke",
+    "en": "decision proposal",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Entscheidungsgrundlage",
+    "hr": "osnova za donošenje odluke",
+    "en": "basis for decision-making",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Eskalationsweg",
+    "hr": "put eskalacije",
+    "en": "escalation path",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Interessenlage",
+    "hr": "struktura interesa",
+    "en": "constellation of interests",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Zielkonflikt",
+    "hr": "sukob ciljeva",
+    "en": "conflict of objectives",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Einwand",
+    "hr": "prigovor",
+    "en": "objection",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Akzeptanz",
+    "hr": "prihvaćenost",
+    "en": "acceptance",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Abnahmekriterium",
+    "hr": "kriterij prihvata",
+    "en": "acceptance criterion",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Nutzerforschung",
+    "hr": "istraživanje korisnika",
+    "en": "user research",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Ergebnispräsentation",
+    "hr": "prezentacija rezultata",
+    "en": "results presentation",
+    "topic": "agile_stakeholder",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "einbeziehen",
+    "hr": "uključiti",
+    "en": "to involve",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "adressieren",
+    "hr": "obraditi",
+    "en": "to address",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "antizipieren",
+    "hr": "predvidjeti",
+    "en": "to anticipate",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "herbeiführen",
+    "hr": "postići",
+    "en": "to bring about",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "überzeugen",
+    "hr": "uvjeriti",
+    "en": "to persuade",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "verhandeln",
+    "hr": "pregovarati",
+    "en": "to negotiate",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "konsolidieren",
+    "hr": "objediniti",
+    "en": "to consolidate",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "strukturieren",
+    "hr": "strukturirati",
+    "en": "to structure",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "protokollieren",
+    "hr": "voditi zapisnik",
+    "en": "to record in the minutes",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "nachhalten",
+    "hr": "pratiti provedbu",
+    "en": "to follow up",
+    "topic": "agile_stakeholder",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "konsensfähig",
+    "hr": "pogodan za konsenzus",
+    "en": "capable of gaining consensus",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "belastbar",
+    "hr": "pouzdan",
+    "en": "robust",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "adressatengerecht",
+    "hr": "prilagođen primatelju",
+    "en": "tailored to the audience",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "ergebnisoffen",
+    "hr": "otvoren prema ishodu",
+    "en": "open-ended",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "kontrovers",
+    "hr": "sporan",
+    "en": "controversial",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "überzeugend",
+    "hr": "uvjerljiv",
+    "en": "compelling",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "nachdrücklich",
+    "hr": "odlučno",
+    "en": "emphatically",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "vorausschauend",
+    "hr": "dalekovidno",
+    "en": "proactively",
+    "topic": "agile_stakeholder",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "sofern",
+    "hr": "pod uvjetom da",
+    "en": "provided that",
+    "topic": "agile_stakeholder",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "wohingegen",
+    "hr": "dok naprotiv",
+    "en": "whereas",
+    "topic": "agile_stakeholder",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "hinsichtlich",
+    "hr": "u pogledu",
+    "en": "with regard to",
+    "topic": "agile_stakeholder",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "Einwände ausräumen",
+    "hr": "otkloniti prigovore",
+    "en": "resolve objections",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Konsens herstellen",
+    "hr": "postići konsenzus",
+    "en": "build consensus",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "eine Entscheidung herbeiführen",
+    "hr": "ishoditi odluku",
+    "en": "bring about a decision",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Stakeholder frühzeitig einbinden",
+    "hr": "pravodobno uključiti dionike",
+    "en": "involve stakeholders at an early stage",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "die Botschaft auf die Zielgruppe zuschneiden",
+    "hr": "prilagoditi poruku ciljnoj skupini",
+    "en": "tailor the message to the target group",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Handlungsbedarf aufzeigen",
+    "hr": "ukazati na potrebu za djelovanjem",
+    "en": "highlight the need for action",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "einen Beschluss zur Abstimmung stellen",
+    "hr": "staviti odluku na glasovanje",
+    "en": "put a resolution to a vote",
+    "topic": "agile_stakeholder",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Die Stakeholderanalyse macht Einfluss, Interessen und Konfliktpotenziale sichtbar.",
+    "hr": "Analiza dionika prikazuje utjecaj, interese i moguće sukobe.",
+    "en": "The stakeholder analysis reveals influence, interests, and potential conflicts.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Beschlussvorlage trennt Fakten, Handlungsoptionen und Empfehlung klar voneinander.",
+    "hr": "Prijedlog odluke jasno razdvaja činjenice, mogućnosti djelovanja i preporuku.",
+    "en": "The decision proposal clearly separates facts, options, and the recommendation.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Der Lenkungskreis benötigt entscheidungsreife Informationen statt operativer Einzelheiten.",
+    "hr": "Upravljačkom odboru potrebne su informacije spremne za odlučivanje, a ne operativni detalji.",
+    "en": "The steering committee needs decision-ready information rather than operational details.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Wir antizipieren kritische Einwände, ohne bestehende Risiken zu verschleiern.",
+    "hr": "Predviđamo kritične prigovore bez prikrivanja postojećih rizika.",
+    "en": "We anticipate critical objections without concealing existing risks.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Jeder Beschluss erhält eine verantwortliche Person und eine verbindliche Frist.",
+    "hr": "Svaka odluka dobiva odgovornu osobu i obvezujući rok.",
+    "en": "Every resolution is assigned an accountable person and a binding deadline.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Erkenntnisse aus der Nutzerforschung fließen unmittelbar in die Argumentation ein.",
+    "hr": "Spoznaje iz istraživanja korisnika izravno se uključuju u argumentaciju.",
+    "en": "The findings from user research feed directly into the argumentation.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Wir eskalieren erst, wenn die Lösungswege auf Arbeitsebene ausgeschöpft sind.",
+    "hr": "Eskaliramo tek kada su iscrpljene mogućnosti rješavanja na radnoj razini.",
+    "en": "We escalate only after the options for resolution at working level have been exhausted.",
+    "topic": "agile_stakeholder",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "die Daten-Governance",
+    "hr": "upravljanje podacima",
+    "en": "data governance",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Datenherkunft",
+    "hr": "podrijetlo podataka",
+    "en": "data lineage",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Datenmodell",
+    "hr": "podatkovni model",
+    "en": "data model",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Stammdaten",
+    "hr": "matični podaci",
+    "en": "master data",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Bewegungsdaten",
+    "hr": "transakcijski podaci",
+    "en": "transaction data",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Dublette",
+    "hr": "duplikat",
+    "en": "duplicate record",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Plausibilitätsprüfung",
+    "hr": "provjera vjerodostojnosti",
+    "en": "plausibility check",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "das Berechtigungskonzept",
+    "hr": "koncept ovlasti pristupa",
+    "en": "authorization concept",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Teststrategie",
+    "hr": "strategija testiranja",
+    "en": "test strategy",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Testabdeckung",
+    "hr": "pokrivenost testovima",
+    "en": "test coverage",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Regressionstest",
+    "hr": "regresijski test",
+    "en": "regression test",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Abnahmetest",
+    "hr": "test prihvata",
+    "en": "acceptance test",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Fehlerpriorität",
+    "hr": "prioritet greške",
+    "en": "defect priority",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "der Rückfallplan",
+    "hr": "plan povratka na prethodno stanje",
+    "en": "rollback plan",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "die Produktivsetzung",
+    "hr": "puštanje u produkciju",
+    "en": "production launch",
+    "topic": "it_ops",
+    "subcategory": "Nomen",
+    "scope": "all"
+  },
+  {
+    "de": "validieren",
+    "hr": "potvrditi valjanost",
+    "en": "to validate",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "transformieren",
+    "hr": "transformirati",
+    "en": "to transform",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "konsolidieren",
+    "hr": "objediniti",
+    "en": "to consolidate",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "anonymisieren",
+    "hr": "anonimizirati",
+    "en": "to anonymize",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "parametrisieren",
+    "hr": "parametrizirati",
+    "en": "to parameterize",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "automatisieren",
+    "hr": "automatizirati",
+    "en": "to automate",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "versionieren",
+    "hr": "verzionirati",
+    "en": "to version",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "überwachen",
+    "hr": "nadzirati",
+    "en": "to monitor",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "zurücksetzen",
+    "hr": "vratiti na prethodno stanje",
+    "en": "to reset",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "eingrenzen",
+    "hr": "suziti",
+    "en": "to narrow down",
+    "topic": "it_ops",
+    "subcategory": "Verb",
+    "scope": "all"
+  },
+  {
+    "de": "konsistent",
+    "hr": "dosljedan",
+    "en": "consistent",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "redundant",
+    "hr": "redundantan",
+    "en": "redundant",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "revisionssicher",
+    "hr": "siguran za reviziju",
+    "en": "audit-proof",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "skalierbar",
+    "hr": "skalabilan",
+    "en": "scalable",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "wartbar",
+    "hr": "jednostavan za održavanje",
+    "en": "maintainable",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "geschäftskritisch",
+    "hr": "kritičan za poslovanje",
+    "en": "business-critical",
+    "topic": "it_ops",
+    "subcategory": "Adjektiv",
+    "scope": "all"
+  },
+  {
+    "de": "inkrementell",
+    "hr": "inkrementalno",
+    "en": "incrementally",
+    "topic": "it_ops",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "lückenlos",
+    "hr": "bez praznina",
+    "en": "comprehensively",
+    "topic": "it_ops",
+    "subcategory": "Adverb",
+    "scope": "all"
+  },
+  {
+    "de": "falls",
+    "hr": "ako",
+    "en": "in case",
+    "topic": "it_ops",
+    "subcategory": "Konjunktion",
+    "scope": "all"
+  },
+  {
+    "de": "anhand",
+    "hr": "na temelju",
+    "en": "on the basis of",
+    "topic": "it_ops",
+    "subcategory": "Präposition",
+    "scope": "all"
+  },
+  {
+    "de": "ein Datenmodell harmonisieren",
+    "hr": "uskladiti podatkovni model",
+    "en": "harmonize a data model",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Dubletten systematisch entfernen",
+    "hr": "sustavno ukloniti duplikate",
+    "en": "systematically remove duplicates",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "die Testabdeckung erhöhen",
+    "hr": "povećati pokrivenost testovima",
+    "en": "increase test coverage",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "eine Power-Query-Abfrage erstellen",
+    "hr": "izraditi Power Query upit",
+    "en": "create a Power Query query",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "den XVERWEIS verwenden",
+    "hr": "upotrijebiti funkciju XLOOKUP",
+    "en": "use XLOOKUP",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "eine Datenvalidierung einrichten",
+    "hr": "postaviti provjeru valjanosti podataka",
+    "en": "configure data validation",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "das Rolloutfenster absichern",
+    "hr": "osigurati vremenski prozor za uvođenje",
+    "en": "safeguard the rollout window",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "einen Rollback einleiten",
+    "hr": "pokrenuti povratak na prethodno stanje",
+    "en": "initiate a rollback",
+    "topic": "it_ops",
+    "subcategory": "Ausdruck",
+    "scope": "all"
+  },
+  {
+    "de": "Das Quell-Ziel-Mapping dokumentiert jede fachliche Transformation nachvollziehbar.",
+    "hr": "Mapiranje izvora i cilja sljedivo dokumentira svaku poslovnu transformaciju.",
+    "en": "The source-to-target mapping documents every business transformation traceably.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Regressionstests stellen sicher, dass bestehende Funktionen unverändert arbeiten.",
+    "hr": "Regresijski testovi osiguravaju da postojeće funkcije i dalje rade nepromijenjeno.",
+    "en": "Regression tests ensure that existing functions continue to work unchanged.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Vor dem Go-live dürfen keine offenen Fehler der höchsten Priorität verbleiben.",
+    "hr": "Prije puštanja u rad ne smiju ostati otvorene greške najvišeg prioriteta.",
+    "en": "No highest-priority defects may remain open before go-live.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Die Pivot-Auswertung verdichtet große Datenmengen zu belastbaren Kennzahlen.",
+    "hr": "Pivot analiza sažima velike količine podataka u pouzdane pokazatelje.",
+    "en": "The pivot analysis condenses large volumes of data into robust key figures.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Das Berechtigungskonzept folgt konsequent dem Prinzip der minimalen Rechte.",
+    "hr": "Koncept ovlasti dosljedno slijedi načelo najmanjih prava pristupa.",
+    "en": "The authorization concept consistently follows the principle of least privilege.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Der Rückfallplan wird vor der Produktivsetzung unter realistischen Bedingungen erprobt.",
+    "hr": "Plan povratka testira se u realnim uvjetima prije puštanja u produkciju.",
+    "en": "The rollback plan is tested under realistic conditions before the production launch.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
+  },
+  {
+    "de": "Eine lückenlose Datenherkunft ermöglicht die Rückverfolgung bis zum Ursprungssystem.",
+    "hr": "Potpuna sljedivost podataka omogućuje praćenje do izvornog sustava.",
+    "en": "Complete data lineage enables traceability back to the source system.",
+    "topic": "it_ops",
+    "subcategory": "Satz",
+    "scope": "all"
   }
 ]

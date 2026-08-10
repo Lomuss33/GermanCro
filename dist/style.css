@@ -45,8 +45,6 @@ html {
   --game-emoji-pill-gap: calc(3px * var(--type-scale-control));
   --game-emoji-pill-icon-size: calc(11px * var(--type-scale-icon));
   --game-row-column-gap: calc(8px * var(--type-scale-control));
-  --game-row-input-padding-start: calc(28px * var(--type-scale-control));
-  --game-row-input-symbol-offset: calc(12px * var(--type-scale-control));
   --game-row-inline-padding: calc(14px * var(--type-scale-control));
   --game-centered-lane-inset: calc(var(--game-emoji-pill-width) + var(--game-row-column-gap));
   --grammar-header-font-size: calc(9px * var(--type-scale-micro));
@@ -1200,27 +1198,12 @@ body.is-language-switching .stats-bar {
   z-index: 7;
 }
 
-.input-shell::before {
-  content: ":";
-  position: absolute;
-  left: calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap) + var(--game-row-input-symbol-offset));
-  top: 50%;
-  transform: translateY(-52%);
-  font-size: calc(20px * var(--type-scale-icon));
-  line-height: 1;
-  font-weight: 800;
-  color: rgba(232, 255, 71, 0.88);
-  text-shadow: 0 0 10px rgba(232, 255, 71, 0.18);
-  pointer-events: none;
-  z-index: 1;
-}
-
 .input-shell input {
   width: 100%;
   box-sizing: border-box;
   min-width: 0;
   min-height: calc(48px * var(--type-scale-control));
-  padding: calc(11px * var(--type-scale-control)) var(--game-row-inline-padding) calc(11px * var(--type-scale-control)) calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap) + var(--game-row-input-padding-start));
+  padding: calc(11px * var(--type-scale-control)) var(--game-row-inline-padding) calc(11px * var(--type-scale-control)) calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap));
   font-size: calc(16px * var(--type-scale-body));
 }
 
@@ -1235,11 +1218,6 @@ body.is-language-switching .stats-bar {
 }
 
 .input-flag::after {
-  content: "✍️:";
-  font-size: calc(13px * var(--type-scale-body));
-}
-
-.input-flag::after {
   content: "\270D\FE0F";
   font-size: calc(var(--game-emoji-pill-icon-size) + 1px);
 }
@@ -1250,7 +1228,7 @@ body.is-language-switching .stats-bar {
   justify-content: center;
   position: absolute;
   left: 50%;
-  bottom: calc(100% + (8px * var(--type-scale-control)));
+  bottom: calc(100% + (4px * var(--type-scale-control)));
   min-height: 0;
   margin: 0;
   pointer-events: none;
@@ -4133,8 +4111,6 @@ body.layout-phone-portrait {
   --game-emoji-pill-gap: calc(2px * var(--type-scale-control));
   --game-emoji-pill-icon-size: calc(9px * var(--type-scale-icon));
   --game-row-column-gap: calc(8px * var(--type-scale-control));
-  --game-row-input-padding-start: calc(28px * var(--type-scale-control));
-  --game-row-input-symbol-offset: calc(12px * var(--type-scale-control));
   --game-row-inline-padding: calc(10px * var(--type-scale-control));
 }
 
@@ -4361,17 +4337,12 @@ body.layout-phone-portrait .answer-terminal-status-badge {
 
 body.layout-phone-portrait .input-shell input {
   min-height: calc(60px * var(--type-scale-control));
-  padding: calc(12px * var(--type-scale-control)) var(--game-row-inline-padding) calc(12px * var(--type-scale-control)) calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap) + var(--game-row-input-padding-start));
+  padding: calc(12px * var(--type-scale-control)) var(--game-row-inline-padding) calc(12px * var(--type-scale-control)) calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap));
   font-size: calc(16px * var(--game-text-scale));
 }
 
 body.layout-phone-portrait .input-flag {
   left: var(--game-row-inline-padding);
-}
-
-body.layout-phone-portrait .input-shell::before {
-  left: calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap) + var(--game-row-input-symbol-offset));
-  font-size: calc(18px * var(--type-scale-icon));
 }
 
 body.layout-phone-portrait .answer-guide {
@@ -4902,3 +4873,26 @@ body[data-game-density="dense"] .answer-guide .word-grid {
   justify-content: flex-start;
 }
 
+.card-topbar.is-legend-stacked {
+  flex-wrap: wrap;
+  row-gap: 8px;
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+.card-topbar.is-legend-stacked .card-legend {
+  flex: 1 0 100%;
+  width: 100%;
+  margin-left: auto;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+body.layout-phone-portrait[data-game-density="compact"] .answer-guide-body,
+body.layout-phone-portrait[data-game-density="dense"] .answer-guide-body {
+  padding-inline: 0;
+}
+
+body.layout-phone-portrait .answer-guide-trail-flag {
+  margin-left: -1px;
+}

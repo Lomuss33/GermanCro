@@ -1,5 +1,5 @@
-import { createPretextBlockController } from "../../pretext-layout.js?v=2026-07-09-flags1";
-import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-07-09-flags1";
+import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-10-topics1";
+import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-10-topics1";
 import {
   CARD_SCOPE_OPTIONS,
   MODE_SCOPE_MAP,
@@ -14,7 +14,7 @@ import {
   normalizeSubcategory,
   normalizeTopic,
   sanitizeCard,
-} from "../../shared/card-schema.js?v=2026-07-09-flags1";
+} from "../../shared/card-schema.js?v=2026-08-10-topics1";
 
 const searchSites = [
   { name: "dict.cc", icon: "C", url: (w) => `https://www.dict.cc/?s=${encodeURIComponent(w)}` },
@@ -23,7 +23,7 @@ const searchSites = [
   { name: "Leo", icon: "L", url: (w) => `https://dict.leo.org/german-english/${encodeURIComponent(w)}` },
 ];
 
-const ASSET_REV = "2026-07-09-flags1";
+const ASSET_REV = "2026-08-10-topics1";
 const SESSION_SIZE = 10;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const AUTOFILL_TRAILING_PUNCT = /[.!?:;]/;
@@ -342,6 +342,7 @@ let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
 let feedbackBurstPieces = [];
 let answerGuideMeasureRaf = 0;
+let cardTopbarLayoutRaf = 0;
 let learningMode = "de";
 let isPromptOrderSwapped = false;
 let germanyFacts = null;
@@ -398,6 +399,7 @@ const statLabelRemainingEl = document.getElementById("statLabelRemaining");
 const statLabelAccuracyEl = document.getElementById("statLabelAccuracy");
 const statLabelWpmEl = document.getElementById("statLabelWpm");
 const cardLegendEl = document.getElementById("cardLegend");
+const cardTopbarEl = cardLegendEl?.closest(".card-topbar") || null;
 const legendCorrectEl = document.getElementById("legendCorrect");
 const legendNextEl = document.getElementById("legendNext");
 const legendWrongEl = document.getElementById("legendWrong");
@@ -1086,6 +1088,8 @@ function syncViewportProfile() {
     promptSubController?.relayout();
     buildWordGrid(getTargetValue(sessionCards[sessionIndex]), inputEl.value);
   }
+
+  scheduleCardTopbarLayoutSync();
 }
 
 function scheduleViewportProfileSync() {
@@ -1354,6 +1358,7 @@ function renderCardBadge(card) {
     categoryEl.style.removeProperty("color");
     categoryEl.style.removeProperty("border-color");
     categoryEl.style.removeProperty("background");
+    scheduleCardTopbarLayoutSync();
     return;
   }
 
@@ -1371,6 +1376,40 @@ function renderCardBadge(card) {
   categoryEl.style.color = color;
   categoryEl.style.borderColor = `${color}55`;
   categoryEl.style.background = `${color}14`;
+  scheduleCardTopbarLayoutSync();
+}
+
+function syncCardTopbarLayout() {
+  cardTopbarLayoutRaf = 0;
+  if (!cardTopbarEl || !cardLegendEl || !categoryEl) {
+    return;
+  }
+
+  if (!categoryEl.textContent.trim() || cardTopbarEl.clientWidth <= 0) {
+    cardTopbarEl.classList.remove("is-legend-stacked");
+    return;
+  }
+
+  const legendItems = Array.from(cardLegendEl.querySelectorAll(".card-legend-item"));
+  const topbarStyles = window.getComputedStyle(cardTopbarEl);
+  const legendStyles = window.getComputedStyle(cardLegendEl);
+  const topbarGap = Number.parseFloat(topbarStyles.columnGap || topbarStyles.gap) || 0;
+  const legendGap = Number.parseFloat(legendStyles.columnGap || legendStyles.gap) || 0;
+  const legendWidth = legendItems.reduce((width, item) => width + item.getBoundingClientRect().width, 0)
+    + Math.max(0, legendItems.length - 1) * legendGap;
+  const categoryWidth = Math.max(categoryEl.scrollWidth, categoryEl.getBoundingClientRect().width);
+  const comfortSpace = 12;
+  const shouldStack = categoryWidth + topbarGap + legendWidth + comfortSpace > cardTopbarEl.clientWidth;
+
+  cardTopbarEl.classList.toggle("is-legend-stacked", shouldStack);
+}
+
+function scheduleCardTopbarLayoutSync() {
+  if (cardTopbarLayoutRaf) {
+    return;
+  }
+
+  cardTopbarLayoutRaf = window.requestAnimationFrame(syncCardTopbarLayout);
 }
 
 function setTextContent(element, value) {
@@ -1787,6 +1826,7 @@ function renderStaticUi() {
   setLocalizedText(factsWorldBtn, "facts.tabs.world");
   setLocalizedText(siteFooterLinkEl, "footer");
   renderGrammarSection();
+  scheduleCardTopbarLayoutSync();
 }
 
 function switchLearningMode(nextLanguage) {

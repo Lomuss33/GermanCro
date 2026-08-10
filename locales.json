@@ -24,7 +24,11 @@
       "people": "Menschen",
       "shopping": "Einkaufen",
       "developertech": "Softwareentwicklung",
-      "itnetwork": "IT & Netzwerke"
+      "itnetwork": "IT & Netzwerke",
+      "agile_stakeholder": "Stakeholder & Formate",
+      "it_ops": "IT-Ops & Testing",
+      "personal_lms": "LMS & Qualifizierung",
+      "db_workplace": "DB-Arbeitskultur"
     },
     "scopes": {
       "all": "Alle 3",
@@ -579,7 +583,11 @@
       "people": "Ljudi",
       "shopping": "Kupovina",
       "developertech": "Razvoj softvera",
-      "itnetwork": "IT i mreže"
+      "itnetwork": "IT i mreže",
+      "agile_stakeholder": "Dionici i formati",
+      "it_ops": "IT operacije i testovi",
+      "personal_lms": "LMS i kvalifikacije",
+      "db_workplace": "DB kultura rada"
     },
     "scopes": {
       "all": "Sve 3",
@@ -1126,7 +1134,11 @@
       "people": "People",
       "shopping": "Shopping",
       "developertech": "Software Development",
-      "itnetwork": "IT & Networks"
+      "itnetwork": "IT & Networks",
+      "agile_stakeholder": "Stakeholders & Formats",
+      "it_ops": "IT Ops & Testing",
+      "personal_lms": "LMS & Qualification",
+      "db_workplace": "DB Work Culture"
     },
     "scopes": {
       "all": "All 3",
