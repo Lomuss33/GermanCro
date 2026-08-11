@@ -19,7 +19,7 @@
     "bordering_countries_count": "9",
     "gdp_nominal": "ca. 4,31 Billionen EUR (2024)",
     "eu_member_since": "1958",
-    "overview": "Deutschland liegt im Herzen Europas zwischen Nord- und Ostsee im Norden und dem Alpenrand im Suden. Als Bundesstaat mit 16 Bundeslandern verbindet es politische Stabilitat, starke Wirtschaft, dichte Verkehrsnetze und sehr unterschiedliche Kultur- und Naturräume.",
+    "overview": "Die deutsche Nationalstaatsbildung führte 1871 zur Gründung des Deutschen Kaiserreichs. Nach nationalsozialistischer Diktatur, Zweitem Weltkrieg und Teilung entstanden 1949 zwei deutsche Staaten, die sich 1990 wiedervereinigten. Automobilbau, Maschinenbau, Chemie, Elektrotechnik und wissensintensive Dienstleistungen bilden zentrale Säulen der Wirtschaft. Das UNESCO-Erbe von Aachen bis zur Museumsinsel, die Alpen, der Schwarzwald sowie Nord- und Ostseeküste zeigen die große kulturelle und landschaftliche Vielfalt.",
     "neighboring_countries": [
       "D\u00e4nemark",
       "Polen",
@@ -58,6 +58,7 @@
       "joined_or_founded": "1952",
       "location_summary": "Baden-Wurttemberg liegt im Sudwesten Deutschlands und verbindet Rheinebene, Mittelgebirge und den Bodenseeraum.",
       "identity_summary": "Das Land gilt als starker Industrie- und Forschungsstandort mit bekannten Universitatsstadten, vielen Hidden Champions und einer ausgepragten Tufterkultur.",
+      "overview": "Das heutige Baden-Württemberg entstand 1952 aus Baden, Württemberg-Baden und Württemberg-Hohenzollern. Seine älteren Regionen wurden von alemannischen Traditionen, den Häusern Baden und Württemberg sowie zahlreichen Reichsstädten geprägt. Automobilbau, Maschinenbau, Elektrotechnik, Medizintechnik und forschungsintensive Mittelständler tragen die Wirtschaft. Schwarzwald, Schwäbische Alb, Bodensee und die Altstädte von Heidelberg und Tübingen verbinden Natur- und Kulturerbe.",
       "neighboring_states": [
         "Bayern",
         "Hessen",
@@ -84,6 +85,7 @@
       "joined_or_founded": "1949",
       "location_summary": "Bayern liegt im Sudosten Deutschlands und reicht von Franken uber Altbayern bis an die Alpen.",
       "identity_summary": "Bayern ist flachenmaßig das großte Bundesland und verbindet internationale Wirtschaftsstandorte mit starker regionaler Tradition und Tourismus.",
+      "overview": "Bayern entwickelte sich aus einem frühmittelalterlichen Herzogtum und wurde 1806 zum Königreich. Seit 1918 ist es Freistaat und seit 1949 ein Land der Bundesrepublik Deutschland. Automobil- und Maschinenbau, Elektrotechnik, Luft- und Raumfahrt, Medien und Biotechnologie prägen die Wirtschaft. Die Alpen, Schloss Neuschwanstein, die Regensburger Altstadt und die fränkischen Kulturlandschaften stehen für sein reiches Natur- und Kulturerbe.",
       "neighboring_states": [
         "Baden-W\u00fcrttemberg",
         "Hessen",
@@ -110,6 +112,7 @@
       "joined_or_founded": "1990 in heutiger Form",
       "location_summary": "Berlin liegt im Osten Deutschlands und ist als Stadtstaat vollstandig von Brandenburg umgeben.",
       "identity_summary": "Als Hauptstadt vereint Berlin Regierung, Geschichte, Kultur, Wissenschaft und eine international sichtbare Kreativ- und Start-up-Szene.",
+      "overview": "Berlin entstand im Mittelalter aus den Siedlungen Berlin und Cölln und stieg zur Residenz der Hohenzollern auf. Seit 1871 deutsche Hauptstadt, war die Stadt von 1945 bis 1990 geteilt und wurde nach der Wiedervereinigung erneut Regierungssitz. Digitale Wirtschaft, Medien, Kreativbranchen, Gesundheitswirtschaft, Forschung und Tourismus bestimmen das heutige Wirtschaftsprofil. Museumsinsel, Brandenburger Tor, Bauhaus- und Nachkriegsarchitektur sowie die ausgedehnten Seen und Wälder machen Berlin kulturell und landschaftlich unverwechselbar.",
       "neighboring_states": [
         "Brandenburg"
       ],
@@ -129,6 +132,7 @@
       "joined_or_founded": "1990",
       "location_summary": "Brandenburg umschließt Berlin großraumig und reicht im Osten bis an die Grenze zu Polen.",
       "identity_summary": "Das Land ist von seenreichen Landschaften, historischen Residenzorten und viel Naturraum mit vergleichsweise geringer Siedlungsdichte gepragt.",
+      "overview": "Die mittelalterliche Mark Brandenburg wurde zum Kernland der Hohenzollern und später Preußens. Nach ihrer Auflösung in der DDR 1952 wurde das Land Brandenburg 1990 neu gegründet. Energietechnik, Schienen- und Fahrzeugbau, Luftfahrt, Ernährungswirtschaft und Filmproduktion sind wichtige Branchen. Die Schlösser und Parks von Potsdam, der Spreewald, das Odertal und tausende Seen prägen das Natur- und Kulturbild.",
       "neighboring_states": [
         "Berlin",
         "Mecklenburg-Vorpommern",
@@ -155,6 +159,7 @@
       "joined_or_founded": "1949",
       "location_summary": "Bremen liegt im Nordwesten Deutschlands und besteht aus den zwei Stadten Bremen und Bremerhaven.",
       "identity_summary": "Der Stadtstaat ist stark maritim gepragt und verbindet Hafenwirtschaft, Handel, Wissenschaft und hanseatische Geschichte auf kleinem Raum.",
+      "overview": "Bremen gewann im Mittelalter als Hansestadt politische und wirtschaftliche Eigenständigkeit. Seit 1947 besteht das Land aus den Städten Bremen und Bremerhaven und gehörte 1949 zu den Gründungsländern der Bundesrepublik. Hafenlogistik, Luft- und Raumfahrt, Automobilbau, Lebensmittelwirtschaft und maritime Forschung prägen die Wirtschaft. Das UNESCO-geschützte Rathaus mit Roland, das Schnoorviertel und Bremerhavens maritime Museumslandschaft bewahren das hanseatische Erbe.",
       "neighboring_states": [
         "Niedersachsen"
       ],
@@ -174,6 +179,7 @@
       "joined_or_founded": "1949",
       "location_summary": "Hamburg liegt im Norden Deutschlands an Elbe und Alster und ist von Schleswig-Holstein und Niedersachsen umgeben.",
       "identity_summary": "Die Hansestadt ist ein internationales Hafen-, Medien- und Kulturzentrum mit starker Kaufmannstradition und urbanem Profil.",
+      "overview": "Hamburg entwickelte sich im Mittelalter zur führenden Hansestadt an der Elbe. Trotz großer Brände, Kriegszerstörungen und wirtschaftlicher Umbrüche bewahrte es seine Tradition als Freie und Hansestadt. Hafenlogistik, Luftfahrt, Medien, Handel, erneuerbare Energien und maritime Dienstleistungen tragen die Wirtschaft. Speicherstadt, Kontorhausviertel, Elbphilharmonie sowie Alster und Elbauen verbinden Welterbe, Gegenwartsarchitektur und Naturraum.",
       "neighboring_states": [
         "Niedersachsen",
         "Schleswig-Holstein"
@@ -194,6 +200,7 @@
       "joined_or_founded": "1945 / 1949",
       "location_summary": "Hessen liegt in der Mitte Deutschlands und ist ein wichtiges Verbindungsland zwischen Norden, Westen und Suden.",
       "identity_summary": "Das Land verbindet den Finanzplatz Frankfurt mit Mittelgebirgen, Kurorten, Logistikachsen und einer zentralen Verkehrslage.",
+      "overview": "Das heutige Hessen entstand 1945 aus früheren hessischen und preußischen Gebieten. Mit seiner Verfassung von 1946 gehörte es 1949 zu den Gründungsländern der Bundesrepublik. Finanzwirtschaft, Chemie und Pharma, Maschinenbau, Mobilität, Logistik und Informationstechnologie sind wirtschaftlich besonders bedeutend. Der Rheingau, der Nationalpark Kellerwald-Edersee, der Bergpark Wilhelmshöhe und die Fachwerkstädte zeigen seine landschaftliche und kulturelle Vielfalt.",
       "neighboring_states": [
         "Nordrhein-Westfalen",
         "Niedersachsen",
@@ -218,6 +225,7 @@
       "joined_or_founded": "1990",
       "location_summary": "Mecklenburg-Vorpommern liegt im Nordosten Deutschlands zwischen Ostseekuste, Seenplatte und der Grenze zu Polen.",
       "identity_summary": "Das Land ist stark von Tourismus, Kustenlandschaften, Backsteinstadten und weitlaufigen Naturraumen gepragt.",
+      "overview": "Mecklenburg und Vorpommern wurden über Jahrhunderte von Herzogtümern, Ostseestädten und der Hanse geprägt. Das 1945 gebildete Land wurde 1952 aufgelöst und 1990 als Mecklenburg-Vorpommern wiedererrichtet. Tourismus, maritime Wirtschaft, Ernährungswirtschaft, Landwirtschaft, erneuerbare Energien und Gesundheitswirtschaft bilden wichtige Schwerpunkte. Rügen, Usedom, die Mecklenburgische Seenplatte und die Backsteingotik von Stralsund und Wismar prägen das Land.",
       "neighboring_states": [
         "Schleswig-Holstein",
         "Niedersachsen",
@@ -242,6 +250,7 @@
       "joined_or_founded": "1946",
       "location_summary": "Niedersachsen liegt im Nordwesten Deutschlands und reicht von der Nordseekuste bis in den Harz.",
       "identity_summary": "Das große Flachenland vereint Industrie, Landwirtschaft, Messewirtschaft und sehr unterschiedliche Naturraume von Heide bis Mittelgebirge.",
+      "overview": "Niedersachsen entstand 1946 aus Hannover, Oldenburg, Braunschweig und Schaumburg-Lippe. Damit wurden historisch unterschiedliche welfische, friesische und norddeutsche Regionen in einem Land verbunden. Automobilbau, Landwirtschaft und Lebensmittelwirtschaft, Windenergie, Stahl, Logistik und Messewesen prägen die Wirtschaft. Wattenmeer, Lüneburger Heide, Harz und die Altstadt von Goslar stehen für seine außergewöhnliche Natur- und Kulturlandschaft.",
       "neighboring_states": [
         "Bremen",
         "Hamburg",
@@ -272,6 +281,7 @@
       "joined_or_founded": "1946",
       "location_summary": "Nordrhein-Westfalen liegt im Westen Deutschlands und grenzt an Belgien und die Niederlande.",
       "identity_summary": "Das bevolkerungsreichste Bundesland verbindet Rheinmetropolen, Ruhrgebiet, Medienstandorte, Hochschulen und dichte Infrastruktur.",
+      "overview": "Nordrhein-Westfalen entstand 1946 aus dem nördlichen Rheinland und Westfalen; Lippe kam 1947 hinzu. Kohle und Stahl formten das Ruhrgebiet, das sich seit dem späten 20. Jahrhundert zu einer vielfältigen Wissens- und Dienstleistungsregion wandelte. Chemie, Maschinenbau, Energie, Logistik, Versicherungen, Medien und digitale Dienstleistungen tragen heute die Wirtschaft. Kölner Dom, Zeche Zollverein, das Rheintal, die Eifel und die Industriekultur des Ruhrgebiets verbinden Natur und Kultur.",
       "neighboring_states": [
         "Niedersachsen",
         "Hessen",
@@ -297,6 +307,7 @@
       "joined_or_founded": "1946",
       "location_summary": "Rheinland-Pfalz liegt im Sudwesten Deutschlands zwischen Rhein, Mosel, Eifel und Pfalzerwald.",
       "identity_summary": "Das Land steht fur Weinbau, Flusstäler, romische Geschichte und viele mittelgroße Stadte mit starker regionaler Identitat.",
+      "overview": "Rheinland-Pfalz wurde 1946 aus Gebieten mit rheinischer, hessischer, pfälzischer und preußischer Vergangenheit gebildet. Römische Städte, mittelalterliche Kurfürstentümer und die Grenzlage zu Frankreich prägten seine Geschichte. Chemie und Pharma, Maschinenbau, Nutzfahrzeuge, Weinbau und Lebensmittelwirtschaft sind zentrale Branchen. Das Obere Mittelrheintal, die Mosel, Trier und die Vulkanlandschaft der Eifel bilden herausragende Kultur- und Naturräume.",
       "neighboring_states": [
         "Nordrhein-Westfalen",
         "Hessen",
@@ -324,6 +335,7 @@
       "joined_or_founded": "1957",
       "location_summary": "Das Saarland liegt im Sudwesten Deutschlands und grenzt direkt an Frankreich und Luxemburg.",
       "identity_summary": "Das kleine Bundesland ist grenzuberschreitend gepragt und verbindet Industriekultur, franzosische Einflusse und kurze Wege.",
+      "overview": "Das Saarland wurde durch seine Lage zwischen dem deutschen und französischen Raum sowie durch Kohle und Stahl geprägt. Nach einem eigenen Nachkriegsstatus trat es 1957 der Bundesrepublik Deutschland bei. Stahl, Automobilbau, Materialwissenschaften, Informationstechnologie und Cybersicherheit tragen den Strukturwandel. Das UNESCO-Welterbe Völklinger Hütte, die Saarschleife und ausgedehnte Wälder verbinden Industriekultur und Natur.",
       "neighboring_states": [
         "Rheinland-Pfalz"
       ],
@@ -347,6 +359,7 @@
       "joined_or_founded": "1990",
       "location_summary": "Sachsen liegt im Osten Deutschlands an den Grenzen zu Polen und Tschechien.",
       "identity_summary": "Das Land verbindet Industrie, Forschung, Musik- und Kunstgeschichte mit bekannten Stadten wie Dresden und Leipzig.",
+      "overview": "Sachsen entwickelte sich unter den Wettinern vom mittelalterlichen Markgrafentum zum Kurfürstentum und 1806 zum Königreich. Nach der Auflösung in der DDR 1952 wurde der Freistaat 1990 wiedererrichtet. Mikroelektronik, Automobilbau, Maschinenbau, Umwelttechnik und Biotechnologie prägen die moderne Wirtschaft. Dresdens Kunstsammlungen, Leipzigs Musiktradition, das Erzgebirge und die Sächsische Schweiz bilden ein dichtes Kultur- und Naturerbe.",
       "neighboring_states": [
         "Brandenburg",
         "Sachsen-Anhalt",
@@ -373,6 +386,7 @@
       "joined_or_founded": "1990",
       "location_summary": "Sachsen-Anhalt liegt in Mitteldeutschland zwischen Harz, Elbe und Magdeburger Borde.",
       "identity_summary": "Das Land ist bekannt fur Reformationsgeschichte, Bauhaus-Erbe, Chemie- und Industriestandorte sowie weite Kulturlandschaften.",
+      "overview": "Das Gebiet Sachsen-Anhalts war ein Zentrum des ottonischen Reiches und der Reformation. Das 1947 gebildete Land wurde 1952 aufgelöst und 1990 wiederhergestellt. Chemie, Maschinenbau, Ernährungswirtschaft, Logistik und erneuerbare Energien prägen die Industrie. Bauhaus Dessau, die Luthergedenkstätten, Quedlinburg, das Gartenreich Dessau-Wörlitz und der Harz bilden ein außergewöhnlich reiches Erbe.",
       "neighboring_states": [
         "Niedersachsen",
         "Brandenburg",
@@ -395,6 +409,7 @@
       "joined_or_founded": "1946",
       "location_summary": "Schleswig-Holstein liegt im Norden Deutschlands zwischen Nordsee, Ostsee und der Grenze zu Danemark.",
       "identity_summary": "Das Land ist maritim gepragt und steht fur Kusten, Hafen, Deiche, Inseln und eine besondere Lage zwischen zwei Meeren.",
+      "overview": "Schleswig und Holstein waren lange eigenständige Herzogtümer mit enger Bindung an die dänische Krone. Nach 1867 preußische Provinz, wurde Schleswig-Holstein 1946 ein deutsches Land. Maritime Wirtschaft, Windenergie, Medizintechnik, Lebensmittelproduktion, Logistik und Tourismus bestimmen das Wirtschaftsprofil. Wattenmeer, Lübecker Altstadt, Ostseefjorde, Inseln und historische Herrenhäuser prägen die Landschaft zwischen zwei Meeren.",
       "neighboring_states": [
         "Niedersachsen",
         "Hamburg",
@@ -419,6 +434,7 @@
       "joined_or_founded": "1990",
       "location_summary": "Thuringen liegt in der Mitte Deutschlands und ist von mehreren Flachenlandern umgeben.",
       "identity_summary": "Das Land verbindet klassische Kulturorte, Waldlandschaften, Techniktradition und eine zentrale Lage in Deutschland.",
+      "overview": "Thüringen entstand 1920 durch den Zusammenschluss mehrerer kleiner Fürstentümer und Freistaaten. Nach der Auflösung in der DDR 1952 wurde der Freistaat 1990 neu gegründet. Optik und Photonik, Präzisionstechnik, Automobilzulieferung, Medizintechnik und Biotechnologie sind wichtige Branchen. Weimar, die Wartburg, Jena und der Thüringer Wald verbinden deutsche Geistesgeschichte, Baukultur und Natur.",
       "neighboring_states": [
         "Niedersachsen",
         "Sachsen-Anhalt",

@@ -61,7 +61,7 @@
       "calling_code": "+1",
       "internet_tld": ".ca",
       "landlocked": "Nein",
-      "overview": "Kanada ist der größte Staat Nordamerikas und flächenmäßig der zweitgrößte Staat der Erde. Hauptstadt ist Ottawa; bekannt sind die großen Seen, die Rocky Mountains und arktische Regionen.",
+      "overview": "Indigene Nationen besiedeln das Gebiet Kanadas seit Jahrtausenden; ab dem 16. Jahrhundert folgten französische und britische Kolonien. Die Konföderation von 1867 legte den Grundstein des heutigen Bundesstaats, der seine staatliche Eigenständigkeit schrittweise ausbaute. Energie und Bergbau, Automobil- und Luftfahrtindustrie, Forstwirtschaft, Landwirtschaft, Technologie und Finanzdienste tragen die Wirtschaft. Die Rocky Mountains, der arktische Norden, die Großen Seen und die historischen Zentren von Québec verbinden monumentale Natur mit vielschichtigem Kulturerbe.",
       "neighboring_countries": [
         "USA"
       ],
@@ -94,7 +94,7 @@
       "calling_code": "+1",
       "internet_tld": ".us",
       "landlocked": "Nein",
-      "overview": "Die Vereinigten Staaten erstrecken sich von Atlantik bis Pazifik. Die Hauptstadt ist Washington, D.C.; größte Metropole ist New York City.",
+      "overview": "Indigene Kulturen prägten Nordamerika lange vor der Entstehung europäischer Kolonien an der Atlantikküste. Dreizehn Kolonien erklärten 1776 ihre Unabhängigkeit; die Verfassung von 1787 und der Bürgerkrieg von 1861 bis 1865 formten den modernen Bundesstaat. Technologie, Finanzwesen, Luft- und Raumfahrt, Pharma, Energie, Landwirtschaft und hochentwickelte Fertigung prägen die weltweit vernetzte Wirtschaft. Yellowstone, Grand Canyon, indigene Kulturlandschaften und die Architektur- und Musikmetropolen des Landes stehen für außergewöhnliche natürliche und kulturelle Vielfalt.",
       "neighboring_countries": [
         "Kanada",
         "Mexiko"
@@ -127,7 +127,7 @@
       "calling_code": "+86",
       "internet_tld": ".cn",
       "landlocked": "Nein",
-      "overview": "China ist eines der flächengrößten und bevölkerungsreichsten Länder der Erde. Die Hauptstadt ist Peking; wirtschaftliche Zentren sind auch Shanghai und Shenzhen.",
+      "overview": "Chinas dynastische Zivilisation reicht mehrere Jahrtausende zurück, wobei die politische Reichseinigung 221 vor unserer Zeitrechnung einen entscheidenden Wendepunkt bildete. Auf die Republikgründung von 1912 folgte 1949 die Volksrepublik, die seit den Reformen ab 1978 einen tiefgreifenden wirtschaftlichen Wandel erlebte. Elektronik, Maschinenbau, Stahl, Chemie, Elektrofahrzeuge, Solartechnik und digitale Dienstleistungen prägen die Industrie. Große Mauer, Verbotene Stadt, Karstlandschaften, Himalaya und die Flusssysteme von Jangtse und Huang He bilden ein monumentales Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Mongolei",
         "Russland",
@@ -158,7 +158,7 @@
       "calling_code": "+55",
       "internet_tld": ".br",
       "landlocked": "Nein",
-      "overview": "Brasilien ist der größte Staat Südamerikas. Die Hauptstadt ist Brasilia; der Amazonasraum prägt große Teile des Landes.",
+      "overview": "Zahlreiche indigene Gesellschaften lebten im heutigen Brasilien, bevor Portugal das Gebiet ab 1500 kolonialisierte. Die Unabhängigkeit folgte 1822, die Republik 1889 und die Rückkehr zur Demokratie 1985. Agrarwirtschaft, Bergbau, Erdöl, Luftfahrt- und Automobilindustrie, Lebensmittelproduktion und Dienstleistungen tragen die größte Volkswirtschaft Südamerikas. Amazonas, Pantanal, Iguaçu-Wasserfälle sowie die historischen Zentren von Salvador und Brasília verbinden globale Naturwerte mit vielfältigem Kulturerbe.",
       "neighboring_countries": [
         "Argentinien",
         "Bolivien",
@@ -192,7 +192,7 @@
       "calling_code": "+61",
       "internet_tld": ".au",
       "landlocked": "Nein",
-      "overview": "Australien umfasst den kleinsten Kontinent und ist zugleich ein großer Inselstaat. Hauptstadt ist Canberra; Sydney und Melbourne sind die größten Metropolen.",
+      "overview": "Aboriginal- und Torres-Strait-Islander-Kulturen bestehen seit Zehntausenden Jahren, bevor 1788 die britische Kolonisierung begann. Sechs Kolonien schlossen sich 1901 zum Australischen Bund zusammen, der seine staatliche Eigenständigkeit im 20. Jahrhundert festigte. Bergbau, Landwirtschaft, Finanz- und Unternehmensdienste, Bildung, Tourismus und moderne Technologien prägen die Wirtschaft. Great Barrier Reef, Uluṟu, die tasmanische Wildnis und Sydneys Architektur verbinden einzigartiges Naturerbe mit lebendigen indigenen und modernen Kulturen.",
       "neighboring_countries": [
         "Indonesien",
         "Papua-Neuguinea",
@@ -224,7 +224,7 @@
       "calling_code": "+91",
       "internet_tld": ".in",
       "landlocked": "Nein",
-      "overview": "Indien ist das bevölkerungsreichste Land der Erde. Neu-Delhi ist die Hauptstadt; wichtige Zentren sind auch Mumbai, Bengaluru und Kolkata.",
+      "overview": "Von der Indus-Kultur über große hinduistische, buddhistische und islamische Reiche entwickelte sich auf dem Subkontinent eine außergewöhnlich vielfältige Zivilisation. Nach britischer Kolonialherrschaft wurde Indien 1947 unabhängig und 1950 eine demokratische Republik. Informationstechnologie und Unternehmensdienste, Pharma, Automobilbau, Textilien, Stahl, Landwirtschaft und Raumfahrt prägen die Wirtschaft. Taj Mahal, Varanasi, die Tempelstätten des Südens, Himalaya und Westghats verbinden tiefes Kulturerbe mit großer biologischer Vielfalt.",
       "neighboring_countries": [
         "Pakistan",
         "China",
@@ -256,7 +256,7 @@
       "calling_code": "+54",
       "internet_tld": ".ar",
       "landlocked": "Nein",
-      "overview": "Argentinien reicht von den Anden bis an den Atlantik. Die Hauptstadt ist Buenos Aires; der Süden des Landes umfasst weite Teile Patagoniens.",
+      "overview": "Indigene Gesellschaften und die spanische Kolonialherrschaft prägten das Gebiet des späteren Vizekönigreichs Río de la Plata. Argentinien erklärte 1816 seine Unabhängigkeit, konsolidierte sich im 19. Jahrhundert als Nationalstaat und kehrte 1983 zur Demokratie zurück. Landwirtschaft und Lebensmittel, Energie, Bergbau, Automobilbau, Biotechnologie und wissensintensive Dienstleistungen sind zentrale Wirtschaftsbereiche. Die Anden mit dem Aconcagua, Patagonien, die Iguaçu-Wasserfälle und Buenos Aires verbinden große Naturkontraste mit markanter Kultur.",
       "neighboring_countries": [
         "Chile",
         "Bolivien",
@@ -287,7 +287,7 @@
       "calling_code": "+213",
       "internet_tld": ".dz",
       "landlocked": "Nein",
-      "overview": "Algerien ist der flächengrößte Staat Afrikas. Die Hauptstadt ist Algier; große Teile des Landes liegen in der Sahara.",
+      "overview": "Numidische, römische, arabisch-islamische und osmanische Herrschaftsperioden hinterließen in Algerien vielfältige Spuren. Frankreich begann 1830 die Kolonisierung, die nach einem langen Unabhängigkeitskrieg 1962 endete. Erdöl und Erdgas, Petrochemie, Bergbau, Bauwirtschaft, Landwirtschaft und Lebensmittelproduktion tragen die Wirtschaft. Die Kasbah von Algier, die römischen Ruinen von Timgad, Tassili n'Ajjer und die Sahara bilden ein außergewöhnliches Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Tunesien",
         "Libyen",
@@ -318,7 +318,7 @@
       "calling_code": "+243",
       "internet_tld": ".cd",
       "landlocked": "Nein",
-      "overview": "Die Demokratische Republik Kongo liegt in Zentralafrika und besitzt den zweitgrößten Regenwald der Erde nach Amazonien. Hauptstadt ist Kinshasa.",
+      "overview": "Vorkoloniale Reiche wie Kongo, Luba und Lunda prägten Zentralafrika, bevor der Kongo-Freistaat ab 1885 und die belgische Kolonie ab 1908 eine Epoche brutaler Ausbeutung einleiteten. Das Land wurde 1960 unabhängig und trägt seit 1997 wieder den Namen Demokratische Republik Kongo. Kupfer- und Kobaltbergbau, Landwirtschaft, Wasserkraft, Telekommunikation und Handel bestimmen große Teile der Wirtschaft. Kongobecken, Virunga-Nationalpark, Kongostrom und die vielfältigen Musik- und Kunsttraditionen bilden ein Erbe von globaler Bedeutung.",
       "neighboring_countries": [
         "Republik Kongo",
         "Angola",
@@ -350,7 +350,7 @@
       "calling_code": "+966",
       "internet_tld": ".sa",
       "landlocked": "Nein",
-      "overview": "Saudi-Arabien nimmt den größten Teil der Arabischen Halbinsel ein. Hauptstadt ist Riad; wichtige Städte sind auch Dschidda und Mekka.",
+      "overview": "Die Arabische Halbinsel war Schauplatz alter Handelsrouten und im 7. Jahrhundert Ursprung des Islam. Abdulaziz Ibn Saud vereinigte große Teile der Halbinsel und gründete 1932 das Königreich Saudi-Arabien. Erdöl und Petrochemie, Bergbau, Bauwirtschaft, Logistik, Finanzdienste und wachsender Tourismus prägen die Wirtschaft. Die heiligen Städte Mekka und Medina, Hegra bei AlUla, das Rote Meer und die Wüste Rub al-Chali verbinden religiöses, archäologisches und natürliches Erbe.",
       "neighboring_countries": [
         "Jordanien",
         "Irak",
@@ -381,7 +381,7 @@
       "calling_code": "+52",
       "internet_tld": ".mx",
       "landlocked": "Nein",
-      "overview": "Mexiko verbindet Nordamerika mit Zentralamerika. Die Hauptstadt ist Mexiko-Stadt; das Land reicht vom Pazifik bis zum Golf von Mexiko.",
+      "overview": "Olmeken, Maya, Zapoteken und Mexica schufen bedeutende Zivilisationen, bevor Spanien das Gebiet im 16. Jahrhundert eroberte. Mexiko erlangte 1821 die Unabhängigkeit, und die Revolution von 1910 bis 1920 formte den modernen Staat. Automobil- und Luftfahrtindustrie, Elektronik, Erdöl, Lebensmittelproduktion, Bergbau und Tourismus sind zentrale Wirtschaftsbereiche. Teotihuacán, Chichén Itzá, koloniale Altstädte, Cenoten und der Kupfercanyon verbinden herausragende Kulturstätten mit vielfältiger Natur.",
       "neighboring_countries": [
         "USA",
         "Guatemala",
@@ -413,7 +413,7 @@
       "calling_code": "+62",
       "internet_tld": ".id",
       "landlocked": "Nein",
-      "overview": "Indonesien ist ein großer Inselstaat zwischen Indischem Ozean und Pazifik. Die Hauptstadt ist Jakarta; das Land umfasst tausende Inseln.",
+      "overview": "Maritime Reiche wie Srivijaya und Majapahit verbanden den indonesischen Archipel lange vor der niederländischen Kolonialherrschaft. Indonesien erklärte 1945 seine Unabhängigkeit, die 1949 international anerkannt wurde. Elektronik, Fahrzeugbau, Textilien, Lebensmittel, Palmöl, Bergbau, digitale Dienste und Tourismus tragen die Wirtschaft. Borobudur, Prambanan, Komodo, tropische Regenwälder und eine Kette aktiver Vulkane bilden ein außergewöhnliches Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Malaysia",
         "Papua-Neuguinea",
@@ -445,7 +445,7 @@
       "calling_code": "+249",
       "internet_tld": ".sd",
       "landlocked": "Nein",
-      "overview": "Der Sudan liegt zwischen Nordafrika und der Sahelzone. Hauptstadt ist Khartum am Zusammenfluss von Blauem und Weißem Nil.",
+      "overview": "Die nubischen Königreiche von Kerma, Napata und Meroë machten den Sudan zu einem frühen Zentrum am Nil. Nach osmanisch-ägyptischer und britisch-ägyptischer Herrschaft wurde das Land 1956 unabhängig; 2011 spaltete sich Südsudan ab. Landwirtschaft und Viehzucht, Goldbergbau, Erdölverarbeitung, Gummi arabicum und Handel bilden wichtige Wirtschaftszweige. Die Pyramiden von Meroë, die Kulturlandschaften am Nil, das Rote Meer und die Wüstengebiete bewahren ein wenig bekanntes, bedeutendes Erbe.",
       "neighboring_countries": [
         "Ägypten",
         "Libyen",
@@ -476,7 +476,7 @@
       "calling_code": "+218",
       "internet_tld": ".ly",
       "landlocked": "Nein",
-      "overview": "Libyen liegt am Mittelmeer und reicht weit in die Sahara hinein. Die Hauptstadt ist Tripolis.",
+      "overview": "Phönizische, griechische, römische, arabische und osmanische Herrschaftsperioden prägten die libysche Küste und ihre Oasen. Nach italienischer Kolonialherrschaft wurde Libyen 1951 unabhängig; der Sturz des langjährigen Regimes 2011 leitete eine anhaltende politische Fragmentierung ein. Erdöl und Erdgas, Petrochemie, Bauwirtschaft, Handel und Dienstleistungen dominieren die Wirtschaft. Leptis Magna, Kyrene, die Felskunst des Akakus und die Landschaften von Mittelmeer und Sahara bilden ein außergewöhnliches Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Tunesien",
         "Algerien",
@@ -508,7 +508,7 @@
       "calling_code": "+98",
       "internet_tld": ".ir",
       "landlocked": "Nein",
-      "overview": "Iran liegt zwischen Vorderasien und Zentralasien. Die Hauptstadt ist Teheran; Gebirge und Wüsten prägen das Landesinnere.",
+      "overview": "Seit den achämenidischen und sassanidischen Reichen steht Iran im Zentrum einer jahrtausendealten persischen Staatstradition. Die Safawiden begründeten ab 1501 einen schiitisch geprägten Staat, auf den die Pahlavi-Monarchie und 1979 die Islamische Republik folgten. Erdöl und Erdgas, Petrochemie, Automobilbau, Stahl, Bergbau, Landwirtschaft und Teppichproduktion prägen die Wirtschaft. Persepolis, Isfahan, persische Gärten, das Zagrosgebirge und die Wüste Lut verbinden monumentales Kulturerbe mit extremer Natur.",
       "neighboring_countries": [
         "Irak",
         "Türkei",
@@ -539,7 +539,7 @@
       "calling_code": "+976",
       "internet_tld": ".mn",
       "landlocked": "Ja",
-      "overview": "Die Mongolei liegt zwischen Russland und China. Hauptstadt ist Ulaanbaatar; große Teile des Landes bestehen aus Steppe und Wüste.",
+      "overview": "Nomadische Reiche prägten die Steppe, bevor Dschingis Khan 1206 das Mongolische Reich begründete. Nach der Herrschaft der Qing-Dynastie erklärte die Mongolei 1911 ihre Unabhängigkeit und vollzog 1990 den Übergang zur Demokratie. Kupfer-, Kohle- und Goldbergbau, Viehzucht, Kaschmirproduktion, Transport und erneuerbare Energien tragen die Wirtschaft. Die Wüste Gobi, das Orchon-Tal, der Altai und die weiten Steppen bewahren nomadische Kultur und eindrucksvolle Natur.",
       "neighboring_countries": [
         "Russland",
         "China"
@@ -568,7 +568,7 @@
       "calling_code": "+81",
       "internet_tld": ".jp",
       "landlocked": "Nein",
-      "overview": "Japan ist ein Inselstaat in Ostasien. Die Hauptstadt ist Tokio; das Land erstreckt sich über mehrere große Inseln im Pazifik.",
+      "overview": "Aus einem frühen Kaiserreich entwickelte sich Japan über Jahrhunderte unter der Herrschaft regionaler Kriegereliten und Shogunate. Die Meiji-Restauration von 1868 leitete die rasche Modernisierung ein, während die Verfassung von 1947 den demokratischen Nachkriegsstaat begründete. Automobilbau, Elektronik, Maschinenbau, Robotik, Chemie, Pharma und Präzisionstechnik prägen die Wirtschaft. Kyoto und Nara, der Fuji, historische Pilgerwege und die vielfältigen Insel- und Küstenlandschaften verbinden Kultur und Natur.",
       "neighboring_countries": [
         "Russland",
         "Südkorea",
@@ -597,7 +597,7 @@
       "calling_code": "+82",
       "internet_tld": ".kr",
       "landlocked": "Nein",
-      "overview": "Südkorea liegt in Ostasien auf der koreanischen Halbinsel. Die Hauptstadt ist Seoul; das Land ist eines der führenden Technologiezentren der Welt.",
+      "overview": "Alte koreanische Königreiche und die Joseon-Dynastie prägten Sprache, Verwaltung und Kultur über viele Jahrhunderte. Nach japanischer Kolonialherrschaft entstand 1948 die Republik Korea, die nach Krieg und autoritärer Entwicklung 1987 den demokratischen Übergang vollzog. Halbleiter, Elektronik, Automobilbau, Schiffbau, Batterien, Chemie und Kulturwirtschaft treiben die exportorientierte Wirtschaft. Seouls Paläste, buddhistische Bergklöster, die Vulkaninsel Jeju und der Seoraksan-Nationalpark verbinden lebendiges Erbe mit markanter Natur.",
       "neighboring_countries": [
         "Nordkorea",
         "Japan",
@@ -626,7 +626,7 @@
       "calling_code": "+92",
       "internet_tld": ".pk",
       "landlocked": "Nein",
-      "overview": "Pakistan liegt in Südasien zwischen Iran, Afghanistan, China und Indien. Hauptstadt ist Islamabad; die größte Stadt ist Karachi.",
+      "overview": "Die Indus-Zivilisation, buddhistische Zentren und islamische Reiche hinterließen im Gebiet Pakistans bedeutende Spuren. Der Staat entstand 1947 aus Britisch-Indien; seit der Unabhängigkeit Bangladeschs 1971 besitzt er seine heutige territoriale Gestalt. Textilien, Landwirtschaft und Lebensmittel, Informationstechnologie, Zement, Düngemittel und chirurgische Instrumente sind wichtige Wirtschaftsbereiche. Mohenjo-Daro, Taxila, Lahores Baukunst sowie Karakorum und K2 verbinden frühe Hochkultur mit extremer Hochgebirgsnatur.",
       "neighboring_countries": [
         "Iran",
         "Afghanistan",
@@ -657,7 +657,7 @@
       "calling_code": "+880",
       "internet_tld": ".bd",
       "landlocked": "Nein",
-      "overview": "Bangladesch liegt am Golf von Bengalen in Südasien. Die Hauptstadt ist Dhaka; das Land ist dicht besiedelt und von großen Flussdeltas geprägt.",
+      "overview": "Bengalen war über Jahrhunderte ein Zentrum regionaler Königreiche, des Mogulreichs und später der britischen Kolonialwirtschaft. Als Ostpakistan 1947 entstanden, erlangte Bangladesch nach einem Befreiungskrieg 1971 die Unabhängigkeit. Bekleidungs- und Textilindustrie, Landwirtschaft, Pharma, Schiffbau, Lederwaren und Informationstechnologie tragen die Wirtschaft. Die Sundarbans, das Ganges-Brahmaputra-Delta, historische Moscheen und die Teelandschaften von Sylhet prägen Natur und Kultur.",
       "neighboring_countries": [
         "Indien",
         "Myanmar"
@@ -685,7 +685,7 @@
       "calling_code": "+234",
       "internet_tld": ".ng",
       "landlocked": "Nein",
-      "overview": "Nigeria ist das bevölkerungsreichste Land Afrikas. Hauptstadt ist Abuja; die größte Metropole ist Lagos.",
+      "overview": "Nok-Kultur sowie Reiche wie Benin, Oyo, Kanem-Bornu und das Sokoto-Kalifat prägten das Gebiet des heutigen Nigeria. Nach britischer Kolonialherrschaft wurde der Bundesstaat 1960 unabhängig und kehrte 1999 dauerhaft zur Zivilregierung zurück. Erdöl und Erdgas, Landwirtschaft, Telekommunikation, Finanztechnologie, Lebensmittelproduktion sowie Film- und Musikwirtschaft tragen die Wirtschaft. Osun-Osogbo, Sukur, der Niger-Benue-Raum und die Landschaften von Savanne bis Regenwald zeigen die kulturelle und natürliche Vielfalt.",
       "neighboring_countries": [
         "Benin",
         "Niger",
@@ -715,7 +715,7 @@
       "calling_code": "+251",
       "internet_tld": ".et",
       "landlocked": "Ja",
-      "overview": "Äthiopien liegt am Horn von Afrika. Die Hauptstadt ist Addis Abeba; das Land ist historischer Sitz der Afrikanischen Union.",
+      "overview": "Das Reich von Aksum und eine lange christliche Kaisertradition machten Äthiopien zu einem der ältesten Staaten Afrikas. Der Sieg von Adwa 1896 bewahrte die Unabhängigkeit weitgehend; nach dem Ende der Monarchie 1974 entstand 1995 die heutige föderale Ordnung. Landwirtschaft und Kaffee, Textilien und Leder, Bauwirtschaft, Luftverkehr, Wasserkraft und Dienstleistungen prägen die Wirtschaft. Lalibela, Aksum, die Simien-Berge, die Danakil-Senke und das Omo-Tal bilden ein außergewöhnliches Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Eritrea",
         "Dschibuti",
@@ -747,7 +747,7 @@
       "calling_code": "+20",
       "internet_tld": ".eg",
       "landlocked": "Nein",
-      "overview": "Ägypten verbindet Nordafrika mit dem Nahen Osten. Hauptstadt ist Kairo; Nil und Suezkanal sind zentral für das Land.",
+      "overview": "Die pharaonische Zivilisation am Nil schuf über drei Jahrtausende einen der einflussreichsten Staaten der Antike. Griechisch-römische, christliche, islamische und osmanische Epochen folgten, bevor 1953 die moderne Republik entstand. Erdöl und Erdgas, Bauwirtschaft, Textilien, Lebensmittel, Tourismus und die Logistik am Suezkanal tragen die Wirtschaft. Pyramiden von Gizeh, Tempel von Luxor, das Niltal, die Wüsten und die Korallenriffe des Roten Meeres verbinden Weltkultur und Natur.",
       "neighboring_countries": [
         "Libyen",
         "Sudan",
@@ -776,7 +776,7 @@
       "calling_code": "+27",
       "internet_tld": ".za",
       "landlocked": "Nein",
-      "overview": "Südafrika liegt an der Südspitze Afrikas. Das Land hat drei Regierungssitze und verbindet Atlantik, Indischen Ozean und vielfältige Landschaften.",
+      "overview": "Indigene Khoisan-Gesellschaften und afrikanische Königreiche bestanden lange vor der niederländischen und britischen Kolonisierung. Die Union Südafrika entstand 1910, das Apartheidsystem wurde ab 1948 institutionalisiert und 1994 durch eine demokratische Ordnung überwunden. Bergbau, Finanzdienste, Automobilbau, Landwirtschaft, Tourismus, Energie und moderne Dienstleistungen prägen die vielfältige Wirtschaft. Robben Island, die Wiege der Menschheit, die Kapflora, der Kruger-Nationalpark und die Drakensberge verbinden Geschichte und globale Biodiversität.",
       "neighboring_countries": [
         "Namibia",
         "Botswana",
@@ -808,7 +808,7 @@
       "calling_code": "+7",
       "internet_tld": ".kz",
       "landlocked": "Ja",
-      "overview": "Kasachstan ist der größte Binnenstaat der Welt. Hauptstadt ist Astana; das Land reicht von der kasachischen Steppe bis an das Kaspische Meer.",
+      "overview": "Nomadische Steppenkulturen und das Kasachische Khanat prägten Zentralasien über Jahrhunderte. Nach der Eingliederung in das Russische Reich und sieben Jahrzehnten als Sowjetrepublik wurde Kasachstan 1991 unabhängig. Erdöl und Erdgas, Uran, Bergbau und Metallurgie, Landwirtschaft, Logistik und Raumfahrtdienstleistungen tragen die Wirtschaft. Charyn-Canyon, Tian-Shan-Gebirge, Tamgaly und die weiten Steppen entlang historischer Seidenstraßen verbinden Natur und Kultur.",
       "neighboring_countries": [
         "Russland",
         "China",
@@ -841,7 +841,7 @@
       "calling_code": "+51",
       "internet_tld": ".pe",
       "landlocked": "Nein",
-      "overview": "Peru liegt an der Pazifikküste Südamerikas. Die Hauptstadt ist Lima; Anden, Amazonas und historische Inka-Stätten prägen das Land.",
+      "overview": "Frühe Kulturen wie Caral, Nazca, Moche und Chimú gingen dem Inka-Reich voraus, das große Teile der Anden verband. Nach der spanischen Eroberung im 16. Jahrhundert errang Peru 1821 bis 1824 seine Unabhängigkeit. Kupfer- und Goldbergbau, Landwirtschaft und Lebensmittel, Fischerei, Textilien, Energie und Tourismus tragen die Wirtschaft. Machu Picchu, Cusco, die Nazca-Linien, Anden und Amazonasregenwald bilden ein Kultur- und Naturerbe von Weltrang.",
       "neighboring_countries": [
         "Ecuador",
         "Kolumbien",
@@ -872,7 +872,7 @@
       "calling_code": "+57",
       "internet_tld": ".co",
       "landlocked": "Nein",
-      "overview": "Kolumbien liegt im Nordwesten Südamerikas. Die Hauptstadt ist Bogotá; das Land hat Küsten an Karibik und Pazifik.",
+      "overview": "Indigene Kulturen wie Muisca und Tairona prägten das Gebiet vor der spanischen Kolonisierung. Die Unabhängigkeitsbewegung führte 1819 zu Großkolumbien, aus dessen Entwicklung die heutige Republik hervorging. Erdöl und Kohle, Kaffee und Schnittblumen, Lebensmittel, Textilien, moderne Dienstleistungen und Kreativwirtschaft tragen die Wirtschaft. Cartagenas Altstadt, die Kaffee-Kulturlandschaft, die Anden, Amazonien sowie Karibik- und Pazifikküste bilden eine außergewöhnliche Vielfalt.",
       "neighboring_countries": [
         "Panama",
         "Venezuela",
@@ -903,7 +903,7 @@
       "calling_code": "+56",
       "internet_tld": ".cl",
       "landlocked": "Nein",
-      "overview": "Chile erstreckt sich langgezogen an der Pazifikküste Südamerikas. Die Hauptstadt ist Santiago de Chile; das Land reicht von der Atacama bis Patagonien.",
+      "overview": "Indigene Völker, besonders die Mapuche, prägten das Gebiet lange vor der spanischen Kolonisierung. Chile errang 1818 die Unabhängigkeit und kehrte 1990 nach der Militärdiktatur von 1973 zur Demokratie zurück. Kupfer- und Lithiumabbau, Wein- und Lebensmittelwirtschaft, Forstwirtschaft, Lachszucht, Dienstleistungen und erneuerbare Energien prägen die Wirtschaft. Atacama, Rapa Nui, Valparaíso, die Anden und Patagoniens Nationalparks verbinden extreme Naturräume mit unverwechselbarem Kulturerbe.",
       "neighboring_countries": [
         "Peru",
         "Bolivien",
@@ -933,7 +933,7 @@
       "calling_code": "+58",
       "internet_tld": ".ve",
       "landlocked": "Nein",
-      "overview": "Venezuela liegt im Norden Südamerikas an der Karibik. Die Hauptstadt ist Caracas; das Land umfasst Anden, Llanos und den Orinoco-Raum.",
+      "overview": "Indigene Gesellschaften lebten im Gebiet des heutigen Venezuela, bevor es Teil des spanischen Kolonialreichs wurde. Die von Simón Bolívar geprägte Unabhängigkeitsbewegung siegte 1821; seit dem frühen 20. Jahrhundert bestimmte Erdöl die staatliche und wirtschaftliche Entwicklung. Erdöl und Petrochemie, Bergbau, Landwirtschaft, Lebensmittelproduktion und Dienstleistungen bilden die wichtigsten Wirtschaftsbereiche. Salto Ángel und Canaima, die Tafelberge, der Orinoco, die Llanos und die Karibikküste prägen das außergewöhnliche Naturerbe.",
       "neighboring_countries": [
         "Kolumbien",
         "Brasilien",
@@ -962,7 +962,7 @@
       "calling_code": "+64",
       "internet_tld": ".nz",
       "landlocked": "Nein",
-      "overview": "Neuseeland liegt im Südpazifik und besteht vor allem aus Nord- und Südinsel. Hauptstadt ist Wellington; Auckland ist die größte Stadt.",
+      "overview": "Polynesische Seefahrer begründeten ab dem 13. Jahrhundert die Māori-Kultur in Aotearoa. Der Vertrag von Waitangi von 1840 leitete die britische Kolonialherrschaft ein, während Neuseeland im 20. Jahrhundert schrittweise volle staatliche Selbstständigkeit erlangte. Milch- und Fleischwirtschaft, Weinbau, Tourismus, Filmproduktion, Technologie und erneuerbare Energien tragen die Wirtschaft. Fiordland, Tongariro, die Geothermiegebiete von Rotorua und lebendige Māori-Traditionen verbinden dramatische Natur mit eigenständigem Kulturerbe.",
       "neighboring_countries": [
         "Australien",
         "Pazifik"
@@ -991,7 +991,7 @@
       "calling_code": "+66",
       "internet_tld": ".th",
       "landlocked": "Nein",
-      "overview": "Thailand liegt in Südostasien zwischen Andamanensee und Golf von Thailand. Die Hauptstadt ist Bangkok.",
+      "overview": "Die Königreiche Sukhothai und Ayutthaya legten Grundlagen des thailändischen Staates, der später als Siam bekannt wurde. Thailand entging formaler europäischer Kolonisierung und wandelte sich 1932 zur konstitutionellen Monarchie. Automobil- und Elektronikindustrie, Lebensmittel und Landwirtschaft, Petrochemie, Tourismus und digitale Dienstleistungen prägen die Wirtschaft. Sukhothai, Ayutthaya, Bangkoks Tempel, die nördlichen Berglandschaften und tropischen Inseln verbinden reiches Kulturerbe mit vielfältiger Natur.",
       "neighboring_countries": [
         "Myanmar",
         "Laos",
@@ -1021,7 +1021,7 @@
       "calling_code": "+84",
       "internet_tld": ".vn",
       "landlocked": "Nein",
-      "overview": "Vietnam liegt an der Küste des Südchinesischen Meeres. Hauptstadt ist Hanoi; Ho-Chi-Minh-Stadt ist die größte Metropole.",
+      "overview": "Frühe vietnamesische Reiche entwickelten sich unter starkem chinesischem Einfluss und behaupteten über lange Dynastien eine eigene Staatstradition. Nach französischer Kolonialherrschaft, Teilung und Krieg wurde das Land 1976 wiedervereinigt. Elektronik, Textilien und Schuhe, Maschinenbau, Landwirtschaft und Lebensmittel, Möbelproduktion und digitale Dienstleistungen tragen die exportorientierte Wirtschaft. Hạ-Long-Bucht, Hội An, Huế, die Höhlen von Phong Nha und das Mekongdelta verbinden historisches Erbe mit eindrucksvoller Natur.",
       "neighboring_countries": [
         "China",
         "Laos",

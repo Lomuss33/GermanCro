@@ -58,7 +58,7 @@
       "calling_code": "+33",
       "internet_tld": ".fr",
       "landlocked": "Nein",
-      "overview": "Frankreich liegt in Westeuropa. Die Hauptstadt ist Paris. Es grenzt an Andorra, Belgien, Deutschland, Italien, Luxemburg, Monaco, Spanien, Schweiz.",
+      "overview": "Aus dem westfränkischen Reich entwickelte sich eine Monarchie, die unter Kapetingern und Bourbonen zur europäischen Großmacht wurde. Die Revolution von 1789 beendete die alte Ordnung; seit 1958 bildet die Fünfte Republik den staatlichen Rahmen. Luft- und Raumfahrt, Automobilbau, Luxusgüter, Energie, Landwirtschaft und Tourismus sind tragende Wirtschaftszweige. Paris, Mont-Saint-Michel, die Loire-Schlösser, die Alpen und die vielfältigen Küsten verbinden herausragendes Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Andorra",
         "Belgien",
@@ -105,7 +105,7 @@
       "calling_code": "+34",
       "internet_tld": ".es",
       "landlocked": "Nein",
-      "overview": "Spanien liegt in Südeuropa. Die Hauptstadt ist Madrid. Es grenzt an Andorra, Frankreich, Gibraltar, Portugal, Marokko.",
+      "overview": "Römische, westgotische, islamische und christliche Reiche prägten die Iberische Halbinsel über viele Jahrhunderte. Die dynastische Einigung am Ende des 15. Jahrhunderts leitete den Aufstieg zum Weltreich ein; seit 1978 ist Spanien eine parlamentarische Demokratie. Automobilbau, Tourismus, Ernährungswirtschaft, Chemie und erneuerbare Energien sind wichtige Branchen. Alhambra, Sagrada Família, Jakobsweg, Pyrenäen und die Inselwelten der Balearen und Kanaren zeigen seine kulturelle und natürliche Vielfalt.",
       "neighboring_countries": [
         "Andorra",
         "Frankreich",
@@ -140,7 +140,7 @@
       "calling_code": "+44",
       "internet_tld": ".uk",
       "landlocked": "Nein",
-      "overview": "England ist der bevölkerungsreichste Landesteil des Vereinigten Königreichs. London ist Hauptstadt Englands und zugleich politisches und wirtschaftliches Zentrum des Vereinigten Königreichs.",
+      "overview": "Aus angelsächsischen Königreichen entstand im frühen Mittelalter ein geeintes England. Die normannische Eroberung von 1066 veränderte Staat und Gesellschaft grundlegend, während die Union von 1707 das Königreich Großbritannien schuf. Finanz- und Unternehmensdienstleistungen, Luft- und Raumfahrt, Automobilbau, Biowissenschaften und Kreativwirtschaft prägen die Wirtschaft. Stonehenge, die Stadtlandschaften von London und Bath, der Lake District und die Kathedralen des Landes bilden ein reiches Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Schottland",
         "Wales"
@@ -168,7 +168,7 @@
       "calling_code": "+46",
       "internet_tld": ".se",
       "landlocked": "Nein",
-      "overview": "Schweden liegt in Nordeuropa. Die Hauptstadt ist Stockholm. Es grenzt an Finnland, Norwegen.",
+      "overview": "Aus nordischen Königreichen der Wikingerzeit entwickelte sich im Mittelalter der schwedische Staat. Nach dem Austritt aus der Kalmarer Union 1523 stieg Schweden zur Großmacht auf und entwickelte später eine stabile parlamentarische Demokratie. Maschinenbau, Fahrzeugindustrie, Telekommunikation, Forstwirtschaft, Pharma und digitale Dienste tragen die exportorientierte Wirtschaft. Stockholms Inselstadt, Gotland, Lappland und die Schärenküsten verbinden historische Kulturlandschaften mit nordischer Wildnis.",
       "neighboring_countries": [
         "Finnland",
         "Norwegen"
@@ -196,7 +196,7 @@
       "calling_code": "+48",
       "internet_tld": ".pl",
       "landlocked": "Nein",
-      "overview": "Polen liegt in Mitteleuropa. Die Hauptstadt ist Warschau. Es grenzt an Weißrussland, Tschechien, Deutschland, Litauen, Russland, Slowakei, Ukraine.",
+      "overview": "Der Piastenstaat des 10. Jahrhunderts und die spätere polnisch-litauische Adelsrepublik formten eine bedeutende europäische Tradition. Nach den Teilungen von 1795 erlangte Polen 1918 seine Unabhängigkeit zurück und wandelte sich 1989 zur parlamentarischen Demokratie. Automobilzulieferung, Maschinenbau, Elektronik, Unternehmensdienstleistungen, Lebensmittelwirtschaft und Möbelproduktion sind starke Branchen. Krakau, das Salzbergwerk Wieliczka, der Białowieża-Urwald und die Masurische Seenplatte stehen für außergewöhnliches Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Weißrussland",
         "Tschechien",
@@ -229,7 +229,7 @@
       "calling_code": "+43",
       "internet_tld": ".at",
       "landlocked": "Ja",
-      "overview": "Österreich liegt in Mitteleuropa. Die Hauptstadt ist Wien. Es grenzt an Tschechien, Deutschland, Ungarn, Italien, Liechtenstein, Slowakei, Slowenien, Schweiz.",
+      "overview": "Die habsburgischen Erblande machten Österreich über Jahrhunderte zum Zentrum eines europäischen Großreichs. Nach dem Ende Österreich-Ungarns 1918 entstand die Republik, deren staatliche Souveränität 1945 wiederhergestellt wurde. Maschinenbau, Fahrzeugzulieferung, Metallverarbeitung, Chemie, Holz- und Lebensmittelwirtschaft sowie Tourismus prägen die Wirtschaft. Wiens historisches Zentrum, Salzburg, die Wachau und die Alpenlandschaften verbinden imperiales Erbe mit eindrucksvoller Natur.",
       "neighboring_countries": [
         "Tschechien",
         "Deutschland",
@@ -263,7 +263,7 @@
       "calling_code": "+36",
       "internet_tld": ".hu",
       "landlocked": "Ja",
-      "overview": "Ungarn liegt in Mitteleuropa. Die Hauptstadt ist Budapest. Es grenzt an Österreich, Kroatien, Rumänien, Serbien, Slowakei, Slowenien, Ukraine.",
+      "overview": "Das um das Jahr 1000 gegründete Königreich Ungarn prägte Mitteleuropa und geriet später unter osmanische und habsburgische Herrschaft. Ab 1867 war Ungarn gleichberechtigter Teil Österreich-Ungarns; seit 1989 besteht wieder eine parlamentarische Republik. Automobilbau, Elektronik, Pharma, Lebensmittelwirtschaft, Logistik und Unternehmensdienste sind zentrale Branchen. Budapest am Donauufer, der Plattensee, die Puszta und historische Weinlandschaften bilden markante Kultur- und Naturräume.",
       "neighboring_countries": [
         "Österreich",
         "Kroatien",
@@ -296,7 +296,7 @@
       "calling_code": "+385",
       "internet_tld": ".hr",
       "landlocked": "Nein",
-      "overview": "Kroatien liegt in Südosteuropa. Die Hauptstadt ist Zagreb. Es grenzt an Bosnien und Herzegowina, Ungarn, Montenegro, Serbien, Slowenien.",
+      "overview": "Das mittelalterliche kroatische Königreich ging später eine lange Verbindung mit der ungarischen und habsburgischen Krone ein. Nach Jahrzehnten in Jugoslawien erklärte Kroatien 1991 seine Unabhängigkeit und trat 2013 der Europäischen Union bei. Tourismus, Ernährungswirtschaft, Pharma, Informationstechnologie, Schiffbau und Energiewirtschaft tragen die Wirtschaft. Dubrovnik, der Diokletianpalast in Split, die Plitvicer Seen und die Inselwelt der Adria sind herausragende Kultur- und Naturgüter.",
       "neighboring_countries": [
         "Bosnien und Herzegowina",
         "Ungarn",
@@ -327,7 +327,7 @@
       "calling_code": "+387",
       "internet_tld": ".ba",
       "landlocked": "Nein",
-      "overview": "Bosnien und Herzegowina liegt in Südosteuropa. Die Hauptstadt ist Sarajevo. Es grenzt an Kroatien, Montenegro, Serbien.",
+      "overview": "Das mittelalterliche bosnische Königreich wurde im 15. Jahrhundert Teil des Osmanischen Reiches. Nach österreichisch-ungarischer Verwaltung und der jugoslawischen Epoche wurde Bosnien und Herzegowina 1992 unabhängig; das Dayton-Abkommen beendete 1995 den Krieg. Metallverarbeitung, Energie, Holz- und Möbelindustrie, Automobilzulieferung, Landwirtschaft und Tourismus prägen die Wirtschaft. Mostars Alte Brücke, Sarajevos vielschichtiges Stadtbild, der Una-Nationalpark und die Dinarischen Alpen zeigen das reiche Erbe des Landes.",
       "neighboring_countries": [
         "Kroatien",
         "Montenegro",
@@ -358,7 +358,7 @@
       "calling_code": "+381",
       "internet_tld": ".rs, .срб",
       "landlocked": "Ja",
-      "overview": "Serbien liegt in Südosteuropa. Die Hauptstadt ist Belgrad. Es grenzt an Bosnien und Herzegowina, Bulgarien, Kroatien, Ungarn, Kosovo, Nordmazedonien, Montenegro, Rumänien.",
+      "overview": "Mittelalterliche serbische Reiche hinterließen bedeutende Klöster, bevor große Teile des Landes unter osmanische Herrschaft gerieten. Serbien wurde 1878 international als unabhängig anerkannt, gehörte später zu Jugoslawien und besteht seit 2006 als eigenständige Republik. Informationstechnologie, Automobilzulieferung, Landwirtschaft, Lebensmittelverarbeitung, Bergbau und Energie sind wichtige Wirtschaftszweige. Die Belgrader Festung, die Klöster von Studenica, der Đerdap-Durchbruch und der Tara-Nationalpark verbinden Geschichte und Natur.",
       "neighboring_countries": [
         "Bosnien und Herzegowina",
         "Bulgarien",
@@ -392,7 +392,7 @@
       "calling_code": "+389",
       "internet_tld": ".mk",
       "landlocked": "Ja",
-      "overview": "Nordmazedonien liegt in Südosteuropa. Die Hauptstadt ist Skopje. Es grenzt an Albanien, Bulgarien, Griechenland, Kosovo, Serbien.",
+      "overview": "Das Gebiet Nordmazedoniens wurde von antiken, römischen, byzantinischen, slawischen und osmanischen Kulturen geprägt. Als jugoslawische Teilrepublik erlangte es 1991 die Unabhängigkeit und nahm 2019 seinen heutigen Staatsnamen an. Automobilkomponenten, Textilien, Nahrungsmittel, Metallverarbeitung, Landwirtschaft und Informationstechnologie bilden wichtige Wirtschaftsbereiche. Der Ohridsee mit seiner Altstadt, der Matka-Canyon und die Berglandschaften von Mavrovo vereinen Natur- und Kulturerbe.",
       "neighboring_countries": [
         "Albanien",
         "Bulgarien",
@@ -423,7 +423,7 @@
       "calling_code": "+355",
       "internet_tld": ".al",
       "landlocked": "Nein",
-      "overview": "Albanien liegt in Südosteuropa. Die Hauptstadt ist Tirana. Es grenzt an Montenegro, Griechenland, Nordmazedonien, Kosovo.",
+      "overview": "Illyrische, römische, byzantinische und osmanische Herrschaftsperioden hinterließen in Albanien vielfältige Spuren. Das Land erklärte 1912 seine Unabhängigkeit und öffnete sich nach dem Ende der kommunistischen Diktatur 1991 schrittweise zur Demokratie. Textil- und Schuhproduktion, Energie, Landwirtschaft, Bergbau, Tourismus und digitale Dienstleistungen tragen die Wirtschaft. Butrint, Berat, Gjirokastra, die Albanischen Alpen und die Riviera bilden ein eindrucksvolles Kultur- und Naturensemble.",
       "neighboring_countries": [
         "Montenegro",
         "Griechenland",
@@ -453,7 +453,7 @@
       "calling_code": "+30",
       "internet_tld": ".gr",
       "landlocked": "Nein",
-      "overview": "Griechenland liegt in Südeuropa. Die Hauptstadt ist Athen. Es grenzt an Albanien, Bulgarien, Türkei, Nordmazedonien.",
+      "overview": "Die antiken griechischen Stadtstaaten, das hellenistische Zeitalter und das Byzantinische Reich prägten Europa und den Mittelmeerraum. Nach Jahrhunderten osmanischer Herrschaft erlangte Griechenland 1830 die Unabhängigkeit und kehrte 1974 dauerhaft zur Demokratie zurück. Schifffahrt, Tourismus, Lebensmittel- und Landwirtschaft, Energie, Pharma und Metallverarbeitung sind zentrale Wirtschaftszweige. Akropolis, Delphi, Meteora und die Inselwelten der Ägäis verbinden weltbekanntes Kulturerbe mit markanter Natur.",
       "neighboring_countries": [
         "Albanien",
         "Bulgarien",
@@ -483,7 +483,7 @@
       "calling_code": "+359",
       "internet_tld": ".bg",
       "landlocked": "Nein",
-      "overview": "Bulgarien liegt in Südosteuropa. Die Hauptstadt ist Sofia. Es grenzt an Griechenland, Nordmazedonien, Rumänien, Serbien, Türkei.",
+      "overview": "Das 681 gegründete Erste Bulgarische Reich entwickelte eine bedeutende slawisch-orthodoxe Kultur. Nach fast fünf Jahrhunderten osmanischer Herrschaft wurde Bulgarien 1908 unabhängig und wandelte sich 1989 zur parlamentarischen Demokratie. Maschinenbau, Elektronik, Informationstechnologie, Lebensmittelverarbeitung, Pharma und Landwirtschaft prägen die Wirtschaft. Das Rila-Kloster, thrakische Gräber, das Pirin-Gebirge und die Schwarzmeerküste zeigen die historische und landschaftliche Vielfalt.",
       "neighboring_countries": [
         "Griechenland",
         "Nordmazedonien",
@@ -514,7 +514,7 @@
       "calling_code": "+90",
       "internet_tld": ".tr",
       "landlocked": "Nein",
-      "overview": "Türkei liegt in Südosteuropa und Vorderasien. Die Hauptstadt ist Ankara. Es grenzt an Armenien, Aserbaidschan, Bulgarien, Georgien, Griechenland, Iran, Irak, Syrien.",
+      "overview": "Anatolien war Heimat hethitischer, griechischer, römischer, byzantinischer und weiterer Hochkulturen. Aus einem anatolischen Fürstentum entstand das Osmanische Reich; 1923 gründete Mustafa Kemal Atatürk die Republik Türkei. Automobilbau, Textilien, Maschinenbau, Elektronik, Bauwirtschaft, Landwirtschaft und Tourismus sind tragende Branchen. Istanbul, Ephesos, Kappadokien, Pamukkale und die Küsten des Mittelmeers verbinden monumentales Kulturerbe mit außergewöhnlichen Landschaften.",
       "neighboring_countries": [
         "Armenien",
         "Aserbaidschan",
@@ -548,7 +548,7 @@
       "calling_code": "+40",
       "internet_tld": ".ro",
       "landlocked": "Nein",
-      "overview": "Rumänien liegt in Südosteuropa. Die Hauptstadt ist Bukarest. Es grenzt an Bulgarien, Ungarn, Moldawien, Serbien, Ukraine.",
+      "overview": "Daker, Römer und die mittelalterlichen Fürstentümer Walachei, Moldau und Siebenbürgen prägten die rumänische Geschichte. Walachei und Moldau vereinigten sich 1859, die Unabhängigkeit wurde 1877 errungen und 1989 endete die kommunistische Herrschaft. Automobilbau, Informationstechnologie, Maschinenbau, Energie, Landwirtschaft und Lebensmittelverarbeitung sind wichtige Wirtschaftsbereiche. Das Donaudelta, die Karpaten, die Kirchenburgen Siebenbürgens und die Klöster der Bukowina bilden herausragende Natur- und Kulturräume.",
       "neighboring_countries": [
         "Bulgarien",
         "Ungarn",
@@ -579,7 +579,7 @@
       "calling_code": "+380",
       "internet_tld": ".ua, .укр",
       "landlocked": "Nein",
-      "overview": "Ukraine liegt in Osteuropa. Die Hauptstadt ist Kyiv. Es grenzt an Weißrussland, Ungarn, Moldawien, Polen, Rumänien, Russland, Slowakei.",
+      "overview": "Die Kyjiwer Rus, das Großfürstentum Litauen, Polen-Litauen, das Kosakenhetmanat und verschiedene Imperien prägten die Geschichte der Ukraine. Seit 1991 unabhängig, verteidigt das Land seine Souveränität gegen die 2014 begonnene und 2022 ausgeweitete russische Aggression. Landwirtschaft, Informationstechnologie, Metallurgie, Maschinenbau, Energie und Lebensmittelverarbeitung bilden wichtige Wirtschaftszweige. Kyjiws Sophienkathedrale, Lwiws Altstadt, die Karpaten und die Landschaften am Dnister stehen für ein reiches Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Weißrussland",
         "Ungarn",
@@ -612,7 +612,7 @@
       "calling_code": "+7",
       "internet_tld": ".ru, .su, .рф",
       "landlocked": "Nein",
-      "overview": "Russland liegt in Osteuropa. Die Hauptstadt ist Moskau. Es grenzt an Aserbaidschan, Weißrussland, China, Estland, Finnland, Georgien, Kasachstan, Nordkorea, Lettland, Litauen, Mongolei, Norwegen, Polen, Ukraine.",
+      "overview": "Aus dem Moskauer Fürstentum entwickelte sich ein zentralisiertes Zarenreich, das 1721 zum Russischen Kaiserreich wurde. Die Revolution von 1917 führte zur Sowjetunion; seit deren Auflösung 1991 besteht die Russische Föderation. Erdöl und Erdgas, Bergbau und Metallurgie, Chemie, Rüstung, Luft- und Raumfahrt sowie Landwirtschaft prägen die Wirtschaft. Kreml und Sankt Petersburg, der Baikalsee, der Kaukasus und die Weiten Sibiriens verkörpern das monumentale Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Aserbaidschan",
         "Weißrussland",
@@ -660,7 +660,7 @@
       "calling_code": "+375",
       "internet_tld": ".by",
       "landlocked": "Ja",
-      "overview": "Weißrussland liegt in Osteuropa. Die Hauptstadt ist Minsk. Es grenzt an Lettland, Litauen, Polen, Russland, Ukraine.",
+      "overview": "Die Gebiete des heutigen Belarus gehörten nacheinander zur Kyjiwer Rus, zum Großfürstentum Litauen, zu Polen-Litauen und zum Russischen Reich. Nach Jahrzehnten als Sowjetrepublik wurde Belarus 1991 unabhängig. Kalidüngemittel, Maschinen- und Fahrzeugbau, Chemie, Lebensmittelverarbeitung, Landwirtschaft und Informationstechnologie sind wichtige Wirtschaftsbereiche. Die Schlösser Mir und Njaswisch, der Białowieża-Urwald sowie ausgedehnte Seen- und Moorlandschaften prägen das Erbe des Landes.",
       "neighboring_countries": [
         "Lettland",
         "Litauen",
@@ -692,7 +692,7 @@
       "calling_code": "+420",
       "internet_tld": ".cz",
       "landlocked": "Ja",
-      "overview": "Tschechien liegt in Mitteleuropa. Die Hauptstadt ist Prague. Es grenzt an Österreich, Deutschland, Polen, Slowakei.",
+      "overview": "Die böhmischen Länder bildeten ein bedeutendes Königreich im Heiligen Römischen Reich und standen später unter habsburgischer Herrschaft. 1918 entstand die Tschechoslowakei, aus deren friedlicher Teilung 1993 die Tschechische Republik hervorging. Automobilbau, Maschinenbau, Elektronik, Informationstechnologie, Chemie sowie Glas- und Lebensmittelproduktion tragen die exportstarke Wirtschaft. Prag, Český Krumlov, die böhmischen Kurstädte und die Felslandschaften des Böhmischen Paradieses verbinden Kultur und Natur.",
       "neighboring_countries": [
         "Österreich",
         "Deutschland",
@@ -723,7 +723,7 @@
       "calling_code": "+421",
       "internet_tld": ".sk",
       "landlocked": "Ja",
-      "overview": "Slowakei liegt in Mitteleuropa. Die Hauptstadt ist Bratislava. Es grenzt an Österreich, Tschechien, Ungarn, Polen, Ukraine.",
+      "overview": "Nach dem frühmittelalterlichen Großmährischen Reich gehörte das Gebiet der Slowakei über Jahrhunderte zum Königreich Ungarn. 1918 wurde es Teil der Tschechoslowakei und erlangte durch deren friedliche Teilung 1993 die staatliche Unabhängigkeit. Automobilbau, Elektronik, Maschinenbau, Metallverarbeitung und Informationstechnologie prägen die stark industrialisierte Wirtschaft. Hohe Tatra, Zipser Burg, historische Bergbaustädte und weitläufige Karsthöhlen bilden das markante Natur- und Kulturerbe.",
       "neighboring_countries": [
         "Österreich",
         "Tschechien",
@@ -754,7 +754,7 @@
       "calling_code": "+386",
       "internet_tld": ".si",
       "landlocked": "Nein",
-      "overview": "Slowenien liegt in Mitteleuropa. Die Hauptstadt ist Ljubljana. Es grenzt an Österreich, Kroatien, Italien, Ungarn.",
+      "overview": "Die slowenischen Gebiete gehörten über Jahrhunderte zu den habsburgischen Ländern und wurden nach 1918 Teil Jugoslawiens. Slowenien erklärte 1991 seine Unabhängigkeit und trat 2004 der Europäischen Union bei. Pharma, Fahrzeugzulieferung, Elektrotechnik, Maschinenbau, Logistik und Tourismus sind wirtschaftlich bedeutend. Ljubljana, der Bleder See, die Škocjan-Höhlen, die Julischen Alpen und Piran verbinden alpine, karstige und mediterrane Kultur- und Naturräume.",
       "neighboring_countries": [
         "Österreich",
         "Kroatien",
@@ -784,7 +784,7 @@
       "calling_code": "+39",
       "internet_tld": ".it",
       "landlocked": "Nein",
-      "overview": "Italien liegt in Südeuropa. Die Hauptstadt ist Rom. Es grenzt an Österreich, Frankreich, San Marino, Slowenien, Schweiz, Vatikanstadt.",
+      "overview": "Das Römische Reich und die späteren Stadtstaaten, Republiken und Fürstentümer hinterließen ein außergewöhnlich dichtes historisches Erbe. Die nationale Einigung wurde 1861 vollzogen; seit 1946 ist Italien eine Republik. Maschinenbau, Automobilindustrie, Mode und Luxusgüter, Lebensmittel, Pharma, Design und Tourismus prägen die Wirtschaft. Rom, Florenz, Venedig, die Dolomiten, die Amalfiküste und die archäologischen Stätten des Südens bilden ein einzigartiges Kultur- und Naturpanorama.",
       "neighboring_countries": [
         "Österreich",
         "Frankreich",
@@ -817,7 +817,7 @@
       "calling_code": "+31",
       "internet_tld": ".nl",
       "landlocked": "Nein",
-      "overview": "Niederlande liegt in Westeuropa. Die Hauptstadt ist Amsterdam. Es grenzt an Belgien, Deutschland.",
+      "overview": "Die nördlichen Niederlande lösten sich im 16. Jahrhundert von der spanischen Herrschaft und gründeten 1588 eine Republik. Nach ihrem maritimen Goldenen Zeitalter entstand 1815 das Königreich der Niederlande, das sich zu einer parlamentarischen Monarchie entwickelte. Agrartechnologie, Lebensmittelwirtschaft, Chemie, Halbleitertechnik, Logistik, Finanzwesen und kreative Industrien tragen die Wirtschaft. Amsterdams Grachten, die Windmühlen von Kinderdijk, das Wattenmeer und die historischen Polderlandschaften zeigen den engen Zusammenhang von Kultur und Wasserbau.",
       "neighboring_countries": [
         "Belgien",
         "Deutschland"
@@ -845,7 +845,7 @@
       "calling_code": "+32",
       "internet_tld": ".be",
       "landlocked": "Nein",
-      "overview": "Belgien liegt in Westeuropa. Die Hauptstadt ist Brussels. Es grenzt an Frankreich, Deutschland, Luxemburg, Niederlande.",
+      "overview": "Die belgischen Gebiete gehörten zu den burgundischen und habsburgischen Niederlanden und später zum Vereinigten Königreich der Niederlande. Nach der Unabhängigkeit von 1830 entwickelte sich Belgien schrittweise zu einem föderalen Staat. Chemie und Pharma, Lebensmittel, Metall- und Maschinenbau, Logistik, Finanzdienste und Diamanthandel sind wichtige Wirtschaftszweige. Brüssels Grand-Place, die Altstadt von Brügge, Jugendstilarchitektur und die Ardennen verbinden dichtes Kulturerbe mit abwechslungsreicher Natur.",
       "neighboring_countries": [
         "Frankreich",
         "Deutschland",
@@ -877,7 +877,7 @@
       "calling_code": "+45",
       "internet_tld": ".dk",
       "landlocked": "Nein",
-      "overview": "Dänemark liegt in Nordeuropa. Die Hauptstadt ist Copenhagen. Es grenzt an Deutschland.",
+      "overview": "Das dänische Königreich entstand in der Wikingerzeit und prägte über Unionen und Seehandel den nordischen Raum. Mit der Verfassung von 1849 wurde Dänemark zur konstitutionellen Monarchie und entwickelte eine stabile parlamentarische Demokratie. Schifffahrt und Logistik, Pharma, Lebensmittelwirtschaft, Windenergie, Maschinenbau und Design sind zentrale Branchen. Kopenhagen, die Runensteine von Jelling, das Wattenmeer und die Insel- und Küstenlandschaften stehen für das dänische Kultur- und Naturerbe.",
       "neighboring_countries": [
         "Deutschland"
       ],
@@ -908,7 +908,7 @@
       "calling_code": "+358",
       "internet_tld": ".fi",
       "landlocked": "Nein",
-      "overview": "Finnland liegt in Nordeuropa. Die Hauptstadt ist Helsinki. Es grenzt an Norwegen, Schweden, Russland.",
+      "overview": "Finnland gehörte jahrhundertelang zum schwedischen Reich und wurde 1809 ein autonomes Großfürstentum im Russischen Reich. Das Land erklärte 1917 seine Unabhängigkeit und bewahrte sie in den Kriegen des 20. Jahrhunderts. Maschinenbau, Forst- und Papierwirtschaft, Elektronik, saubere Technologien, Spieleentwicklung und Gesundheitswirtschaft prägen die Wirtschaft. Suomenlinna, die finnische Seenplatte, Lappland und das Schärenmeer verbinden Kulturgeschichte mit weitläufiger nordischer Natur.",
       "neighboring_countries": [
         "Norwegen",
         "Schweden",
@@ -938,7 +938,7 @@
       "calling_code": "+47",
       "internet_tld": ".no",
       "landlocked": "Nein",
-      "overview": "Norwegen liegt in Nordeuropa. Die Hauptstadt ist Oslo. Es grenzt an Finnland, Schweden, Russland.",
+      "overview": "Aus den norwegischen Wikingerreichen entstand im Mittelalter ein geeintes Königreich. Nach langen Unionen mit Dänemark und Schweden erlangte Norwegen 1905 die volle Unabhängigkeit. Erdöl und Erdgas, Schifffahrt, Fischerei und Aquakultur, Wasserkraft, Metallindustrie und maritime Technologie tragen die Wirtschaft. Die westnorwegischen Fjorde, Lofoten, Stabkirchen und arktische Landschaften bilden ein spektakuläres Natur- und Kulturerbe.",
       "neighboring_countries": [
         "Finnland",
         "Schweden",
@@ -969,7 +969,7 @@
       "calling_code": "+353",
       "internet_tld": ".ie",
       "landlocked": "Nein",
-      "overview": "Irland liegt in Nordeuropa. Die Hauptstadt ist Dublin. Es grenzt an Vereinigtes Königreich.",
+      "overview": "Gälische Königreiche und eine eigenständige Klosterkultur prägten Irland, bevor die englische Herrschaft schrittweise ausgebaut wurde. Der Irische Freistaat entstand 1922 und die Republik 1949, während Nordirland Teil des Vereinigten Königreichs blieb. Pharma und Medizintechnik, digitale Dienstleistungen, Finanzwesen, Lebensmittelwirtschaft und Luftfahrtleasing prägen die moderne Wirtschaft. Brú na Bóinne, Dublins Literaturtradition, die Cliffs of Moher und der Wild Atlantic Way verbinden tiefes Kulturerbe mit dramatischer Küstennatur.",
       "neighboring_countries": [
         "Vereinigtes Königreich"
       ],
@@ -997,7 +997,7 @@
       "calling_code": "+41",
       "internet_tld": ".ch",
       "landlocked": "Ja",
-      "overview": "Die Schweiz liegt in Mitteleuropa. Die Hauptstadt ist Bern. Es grenzt an Deutschland, Frankreich, Italien, Oesterreich, Liechtenstein.",
+      "overview": "Aus mittelalterlichen Bündnissen der Eidgenossen entstand schrittweise die Schweizerische Eidgenossenschaft. Die Bundesverfassung von 1848 schuf den modernen Bundesstaat, dessen Neutralität und direkte Demokratie die weitere Entwicklung prägten. Pharma und Chemie, Präzisionsmaschinen, Uhren, Medizintechnik, Finanzdienste und hochwertige Lebensmittel tragen die Wirtschaft. Die Berner Altstadt, die Alpenregion Jungfrau-Aletsch, der Genfersee und historische Bahnlandschaften verbinden Kultur und Hochgebirgsnatur.",
       "neighboring_countries": [
         "Deutschland",
         "Frankreich",
@@ -1031,7 +1031,7 @@
       "calling_code": "+379",
       "internet_tld": ".va",
       "landlocked": "Ja",
-      "overview": "Vatikanstadt ist der kleinste allgemein anerkannte Staat der Welt. Der Staat liegt vollstaendig in Rom und ist Sitz der katholischen Kirche.",
+      "overview": "Die Geschichte des Kirchenstaats reicht in die Spätantike zurück und war über Jahrhunderte mit den Päpstlichen Staaten verbunden. Durch die Lateranverträge von 1929 entstand der souveräne Staat Vatikanstadt als Sitz des Heiligen Stuhls. Verwaltung, Museen, Verlags- und Medienarbeit sowie Pilger- und Besucherdienste bestimmen seine besondere Wirtschaftsstruktur. Petersdom, Sixtinische Kapelle, Vatikanische Museen und Gärten bilden eines der bedeutendsten Ensembles der europäischen Kunst- und Religionsgeschichte.",
       "neighboring_countries": [
         "Italien"
       ],
@@ -1059,7 +1059,7 @@
       "calling_code": "+351",
       "internet_tld": ".pt",
       "landlocked": "Nein",
-      "overview": "Portugal liegt im Südwesten Europas auf der Iberischen Halbinsel. Die Hauptstadt ist Lissabon. Es grenzt an Spanien.",
+      "overview": "Portugal etablierte sich im 12. Jahrhundert als eigenständiges Königreich und schuf ab dem 15. Jahrhundert ein weitreichendes Seereich. Nach der Republikgründung 1910 führte die Nelkenrevolution von 1974 zur heutigen Demokratie. Automobilzulieferung, Maschinenbau, Textilien und Schuhe, Kork und Papier, erneuerbare Energien und Tourismus sind wichtige Branchen. Lissabon, Porto, Sintra, das Douro-Tal sowie die Vulkanlandschaften der Azoren verbinden maritimes Kulturerbe und Natur.",
       "neighboring_countries": [
         "Spanien"
       ],
@@ -1087,7 +1087,7 @@
       "calling_code": "+382",
       "internet_tld": ".me",
       "landlocked": "Nein",
-      "overview": "Montenegro liegt an der Adriaküste in Südosteuropa. Die Hauptstadt ist Podgorica. Es grenzt an Albanien, Bosnien und Herzegowina, Kroatien, Kosovo, Serbien.",
+      "overview": "Mittelalterliche Fürstentümer und eine lange Grenzlage zum Osmanischen Reich prägten die montenegrinische Staatstradition. 1878 international anerkannt, gehörte Montenegro später zu Jugoslawien und wurde 2006 erneut unabhängig. Tourismus, Energie, Landwirtschaft und Lebensmittelproduktion, Metallverarbeitung und maritime Dienstleistungen tragen die Wirtschaft. Die Bucht von Kotor, der Durmitor-Nationalpark, die Tara-Schlucht und das Kloster Ostrog bilden herausragende Kultur- und Naturräume.",
       "neighboring_countries": [
         "Albanien",
         "Bosnien und Herzegowina",
@@ -1118,7 +1118,7 @@
       "calling_code": "+352",
       "internet_tld": ".lu",
       "landlocked": "Ja",
-      "overview": "Luxemburg liegt in Westeuropa. Die Hauptstadt ist Luxemburg. Es grenzt an Belgien, Deutschland, Frankreich.",
+      "overview": "Aus einer mittelalterlichen Grafschaft um eine strategische Festung entwickelte sich das Großherzogtum Luxemburg. Seine Unabhängigkeit wurde im 19. Jahrhundert gefestigt, und nach 1945 gehörte es zu den Gründungsstaaten der europäischen Integration. Finanz- und Fondsmanagement, Informationstechnologie, Satelliten- und Raumfahrtwirtschaft, Logistik und spezialisierte Industrie tragen die Wirtschaft. Luxemburgs Altstadt und Festungswerke, die Burg Vianden, das Moseltal und die Ardennen verbinden europäische Geschichte mit abwechslungsreicher Landschaft.",
       "neighboring_countries": [
         "Belgien",
         "Deutschland",
@@ -1149,7 +1149,7 @@
       "calling_code": "+423",
       "internet_tld": ".li",
       "landlocked": "Ja",
-      "overview": "Liechtenstein liegt in Mitteleuropa zwischen Oesterreich und der Schweiz. Die Hauptstadt ist Vaduz.",
+      "overview": "Das Fürstentum Liechtenstein entstand 1719 aus den Herrschaften Vaduz und Schellenberg. Mit dem Ende des Heiligen Römischen Reiches wurde es 1806 souverän und band sich im 20. Jahrhundert wirtschaftlich eng an die Schweiz. Präzisionsmaschinen, Dental- und Medizintechnik, Elektronik, Spezialchemie und Finanzdienstleistungen bilden die hochproduktive Wirtschaft. Das Rheintal, alpine Wandergebiete, Vaduz mit seinem Schloss und kleine historische Dörfer prägen das Kultur- und Landschaftsbild.",
       "neighboring_countries": [
         "Oesterreich",
         "Schweiz"
@@ -1177,7 +1177,7 @@
       "calling_code": "+376",
       "internet_tld": ".ad",
       "landlocked": "Ja",
-      "overview": "Andorra liegt in den Pyrenaeen zwischen Spanien und Frankreich. Die Hauptstadt ist Andorra la Vella.",
+      "overview": "Das 1278 vereinbarte Pareatge begründete die bis heute bestehende gemeinsame Herrschaft zweier Kofürsten über Andorra. Die Verfassung von 1993 machte das Land zu einem souveränen parlamentarischen Kofürstentum. Tourismus, Einzelhandel, Finanzdienste, Bauwirtschaft und Wintersport prägen die Wirtschaft. Das Madriu-Claror-Perafita-Tal, romanische Kirchen und die Hochgebirgslandschaften der Pyrenäen bilden das besondere Natur- und Kulturerbe.",
       "neighboring_countries": [
         "Spanien",
         "Frankreich"

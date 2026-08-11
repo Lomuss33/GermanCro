@@ -336,7 +336,7 @@
     },
     "facts": {
       "panelTitle": "Deutsche Geographie",
-      "panelSubtitle": "Deutschland, Bundeslaender, Europa und Welt im Ueberblick.",
+      "panelSubtitle": "Deutschland, Bundesländer, Europa und Welt im Überblick.",
       "tabs": {
         "germany": "Deutschland",
         "europe": "Europa",
@@ -344,6 +344,7 @@
       },
       "links": {
         "tourism": "Tourismus",
+        "websites": "Websites",
         "official": "Offiziell"
       },
       "errors": {
@@ -401,11 +402,11 @@
       },
       "featured": {
         "germanyOverview": "Deutschland im Überblick",
-        "europeOverview": "EU im Ueberblick",
+        "europeOverview": "EU im Überblick",
         "location": "Lage und Raum",
         "profile": "Kurzprofil",
-        "overview": "Im Ueberblick",
-        "worldOverview": "UN im Ueberblick"
+        "overview": "Im Überblick",
+        "worldOverview": "UN im Überblick"
       },
       "names": {
         "germany": "Deutschland",
@@ -895,6 +896,7 @@
       },
       "links": {
         "tourism": "Turizam",
+        "websites": "Web-stranice",
         "official": "Službeno"
       },
       "errors": {
@@ -1450,6 +1452,7 @@
       },
       "links": {
         "tourism": "Tourism",
+        "websites": "Websites",
         "official": "Official"
       },
       "errors": {

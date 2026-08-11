@@ -1,5 +1,5 @@
 import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-10-topics2";
-import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-10-topics2";
+import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-11-height-ui1";
 import {
   CARD_SCOPE_OPTIONS,
   MODE_SCOPE_MAP,
@@ -341,7 +341,7 @@ let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
 let feedbackBurstPieces = [];
-let answerGuideMeasureRaf = 0;
+let answerGuideMeasureTimer = 0;
 let cardTopbarLayoutRaf = 0;
 let learningMode = "de";
 let isPromptOrderSwapped = false;
@@ -810,15 +810,15 @@ function getAnswerGuideLengthBucket(length) {
 
 function scheduleAnswerGuideMeasure(reason) {
   void reason;
-  if (answerGuideMeasureRaf || !answerGuideEl || !answerGuideBodyEl || !wordGrid) {
+  if (answerGuideMeasureTimer || !answerGuideEl || !answerGuideBodyEl || !wordGrid) {
     return;
   }
 
-  answerGuideMeasureRaf = requestAnimationFrame(() => {
-    answerGuideMeasureRaf = 0;
+  answerGuideMeasureTimer = window.setTimeout(() => {
+    answerGuideMeasureTimer = 0;
     measureAnswerGuideBodyHeight();
     applyAnswerGuideResponsiveSizing();
-  });
+  }, 0);
 }
 
 function applyAnswerGuideResponsiveSizing() {
@@ -849,6 +849,7 @@ function applyAnswerGuideResponsiveSizing() {
   setAnswerGuideResponsiveVars(tier);
 
   if (sameSizingInputs && answerGuideSizingState.lastMeasuredHeight <= budget) {
+    document.body.classList.remove("has-expanded-answer-guide");
     return;
   }
 
@@ -856,6 +857,11 @@ function applyAnswerGuideResponsiveSizing() {
     tier = getNextAnswerGuideSizingTier(tier);
     setAnswerGuideResponsiveVars(tier);
   }
+
+  document.body.classList.toggle(
+    "has-expanded-answer-guide",
+    measureAnswerGuideBodyHeight() > budget
+  );
 
   answerGuideSizingState.width = width;
   answerGuideSizingState.baseDensity = baseDensity;
@@ -2037,7 +2043,7 @@ function buildTopicPanel() {
     const btn = document.createElement("button");
     btn.className = `cat-btn${isActive ? " active" : ""}`;
     btn.textContent = getTopicLabel(topic);
-    btn.style.borderColor = `${color}55`;
+    btn.style.borderColor = `${color}70`;
     btn.style.color = isActive ? "#000" : color;
     if (isActive) {
       btn.style.background = color;
@@ -2328,6 +2334,10 @@ function translateFactList(values) {
 }
 
 function buildGermanyOverview(countryData) {
+  if (getLocale() === "de" && isNonEmptyValue(countryData.overview)) {
+    return String(countryData.overview);
+  }
+
   return t("facts.values.germanyOverviewText", {
     statesCount: countryData.states_count,
     neighbors: joinLocalizedList(translateFactList(countryData.neighboring_countries)),
@@ -2366,6 +2376,10 @@ function buildStateProfileSummary(stateData) {
 }
 
 function buildStateOverview(stateData) {
+  if (getLocale() === "de" && isNonEmptyValue(stateData.overview)) {
+    return String(stateData.overview);
+  }
+
   const location = buildStateLocationSummary(stateData);
   const profile = buildStateProfileSummary(stateData);
   if (!location) {
@@ -2381,6 +2395,10 @@ function buildCountryOverview(countryData) {
   const name = getLocalizedCountryNameById(countryData.id, countryData.name);
   const region = translateFactScalar(countryData.region);
   const capital = countryData.capital;
+
+  if (getLocale() === "de" && isNonEmptyValue(countryData.overview)) {
+    return String(countryData.overview);
+  }
 
   if (getLocale() === "hr") {
     return `${name} se nalazi u ${region}. Glavni grad je ${capital}.`;
@@ -2569,6 +2587,17 @@ function createFactsField(field) {
   return card;
 }
 
+function splitFactsOverviewSentences(value) {
+  const protectedOrdinals = String(value || "")
+    .trim()
+    .replace(/\b(\d{1,2})\.(?=\s+\p{L})/gu, "$1\u0000");
+
+  return protectedOrdinals
+    .split(/(?<=[.!?])\s+(?=[\p{Lu}\p{N}])/u)
+    .map((sentence) => sentence.replace(/\u0000/g, ".").trim())
+    .filter(Boolean);
+}
+
 function createFactsList(label, items) {
   if (!Array.isArray(items) || !items.length) {
     return null;
@@ -2673,6 +2702,13 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
     }
 
     if (isNonEmptyValue(officialUrl)) {
+      if (isNonEmptyValue(tourismUrl)) {
+        const websitesLabelEl = document.createElement("span");
+        websitesLabelEl.className = "facts-title-link-separator";
+        websitesLabelEl.textContent = `: ${t("facts.links.websites")} :`;
+        linksEl.appendChild(websitesLabelEl);
+      }
+
       const officialEl = document.createElement("a");
       officialEl.className = "facts-title-link";
       officialEl.href = officialUrl;
@@ -2688,6 +2724,26 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
 
   titleCopy.appendChild(titleBar);
 
+  const featuredFieldData = fields.find((fieldData) => normalizeFactsField(fieldData)?.featured);
+  const featuredField = createFactsField(featuredFieldData);
+  if (featuredField) {
+    featuredField.classList.add("facts-head-overview");
+
+    const overviewValueEl = featuredField.querySelector(".facts-card-value");
+    const overviewSentences = splitFactsOverviewSentences(overviewValueEl?.textContent);
+    if (overviewValueEl && overviewSentences.length > 1) {
+      overviewValueEl.replaceChildren();
+      overviewSentences.forEach((sentence) => {
+        const sentenceEl = document.createElement("span");
+        sentenceEl.className = "facts-overview-sentence";
+        sentenceEl.textContent = sentence;
+        overviewValueEl.appendChild(sentenceEl);
+      });
+    }
+
+    titleCopy.appendChild(featuredField);
+  }
+
   if (isNonEmptyValue(subtitle)) {
     const subtitleEl = document.createElement("div");
     subtitleEl.className = "facts-view-subtitle";
@@ -2702,6 +2758,10 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
   const grid = document.createElement("div");
   grid.className = "facts-grid";
   fields.forEach((fieldData) => {
+    if (normalizeFactsField(fieldData)?.featured) {
+      return;
+    }
+
     const field = createFactsField(fieldData);
     if (field) {
       grid.appendChild(field);

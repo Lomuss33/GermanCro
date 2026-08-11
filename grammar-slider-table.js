@@ -50,8 +50,25 @@ function getFontFamily(root, variableName, fallback) {
 function getNumericCssVar(root, variableName, fallback) {
   const styles = getComputedStyle(root);
   const rawValue = styles.getPropertyValue(variableName).trim();
-  const parsed = Number.parseFloat(rawValue);
-  return Number.isFinite(parsed) ? parsed : fallback;
+  if (/^-?(?:\d+|\d*\.\d+)px$/i.test(rawValue)) {
+    const parsed = Number.parseFloat(rawValue);
+    return Number.isFinite(parsed) ? parsed : fallback;
+  }
+
+  const ownerDocument = root.ownerDocument || document;
+  const measurementHost = ownerDocument.body || ownerDocument.documentElement;
+  if (!measurementHost) {
+    return fallback;
+  }
+
+  const probe = ownerDocument.createElement("span");
+  probe.setAttribute("aria-hidden", "true");
+  probe.style.cssText = "position:fixed;visibility:hidden;pointer-events:none;inset:auto;display:block;height:0;padding:0;border:0;contain:strict;";
+  probe.style.width = `var(${variableName})`;
+  measurementHost.appendChild(probe);
+  const resolved = probe.getBoundingClientRect().width;
+  probe.remove();
+  return Number.isFinite(resolved) && resolved > 0 ? resolved : fallback;
 }
 
 function getTypography(root) {
@@ -63,6 +80,12 @@ function getTypography(root) {
   const rowHeaderLineHeight = getNumericCssVar(root, "--grammar-row-header-line-height", 14);
   const cellFontSize = getNumericCssVar(root, "--grammar-cell-font-size", 11);
   const cellLineHeight = getNumericCssVar(root, "--grammar-cell-line-height", 14);
+  const headerPaddingX = getNumericCssVar(root, "--grammar-header-padding-x", HEADER_PADDING_X);
+  const headerPaddingY = getNumericCssVar(root, "--grammar-header-padding-y", 4);
+  const rowHeaderPaddingX = getNumericCssVar(root, "--grammar-row-header-padding-x", ROW_HEADER_PADDING_X);
+  const rowHeaderPaddingY = getNumericCssVar(root, "--grammar-row-header-padding-y", 4);
+  const cellPaddingX = getNumericCssVar(root, "--grammar-cell-padding-x", CELL_PADDING_X);
+  const cellPaddingY = getNumericCssVar(root, "--grammar-cell-padding-y", 4);
 
   return {
     header: {
@@ -85,6 +108,14 @@ function getTypography(root) {
       lineHeight: cellLineHeight,
       fontFamily: bodyFamily,
       font: buildFontShorthand(400, cellFontSize, bodyFamily),
+    },
+    spacing: {
+      headerPaddingX,
+      headerPaddingY,
+      rowHeaderPaddingX,
+      rowHeaderPaddingY,
+      cellPaddingX,
+      cellPaddingY,
     },
   };
 }
@@ -268,20 +299,20 @@ export function measureGrammarSliderTable({ root, card }) {
     fixedHeaderLabel,
     typography.header,
     fixedColumnWidth,
-    HEADER_PADDING_X
+    typography.spacing.headerPaddingX
   );
 
   const dataHeaderLayouts = dataColumns.map((label) =>
-    measureTextBlock(label, typography.header, dataColumnWidth, HEADER_PADDING_X)
+    measureTextBlock(label, typography.header, dataColumnWidth, typography.spacing.headerPaddingX)
   );
 
   const fixedRowLayouts = rows.map((row) =>
-    measureTextBlock(row[0] || "", typography.rowHeader, fixedColumnWidth, ROW_HEADER_PADDING_X)
+    measureTextBlock(row[0] || "", typography.rowHeader, fixedColumnWidth, typography.spacing.rowHeaderPaddingX)
   );
 
   const dataRowLayouts = rows.map((row) =>
     row.slice(fixedColumns).map((cell) =>
-      measureTextBlock(cell, typography.cell, dataColumnWidth, CELL_PADDING_X)
+      measureTextBlock(cell, typography.cell, dataColumnWidth, typography.spacing.cellPaddingX)
     )
   );
 
@@ -289,12 +320,16 @@ export function measureGrammarSliderTable({ root, card }) {
     fixedHeader.height,
     ...dataHeaderLayouts.map((item) => item.height),
     typography.header.lineHeight
-  );
+  ) + typography.spacing.headerPaddingY * 2;
 
   const rowHeights = rows.map((_, rowIndex) => {
     const fixedHeight = fixedRowLayouts[rowIndex]?.height || typography.rowHeader.lineHeight;
     const dataHeights = dataRowLayouts[rowIndex]?.map((item) => item.height) || [];
-    return Math.max(fixedHeight, ...dataHeights, typography.cell.lineHeight);
+    return Math.max(
+      fixedHeight + typography.spacing.rowHeaderPaddingY * 2,
+      ...dataHeights.map((height) => height + typography.spacing.cellPaddingY * 2),
+      typography.cell.lineHeight + typography.spacing.cellPaddingY * 2
+    );
   });
 
   return {
