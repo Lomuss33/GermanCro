@@ -41,11 +41,12 @@ html {
   --title-band-3-shine: #ffd84a;
   --title-band-3-mid: #c78200;
   --title-band-3-deep: #4b2900;
-  --game-emoji-pill-width: calc(50px * var(--type-scale-control));
-  --game-emoji-pill-height: calc(22px * var(--type-scale-control));
-  --game-emoji-pill-font-size: calc(11px * var(--type-scale-icon));
+  --game-emoji-pill-width: calc(40px * var(--type-scale-control));
+  --game-emoji-pill-height: calc(52px * var(--type-scale-control));
+  --game-emoji-pill-font-size: calc(18px * var(--type-scale-icon));
   --game-emoji-pill-gap: calc(3px * var(--type-scale-control));
-  --game-emoji-pill-icon-size: calc(11px * var(--type-scale-icon));
+  --game-emoji-pill-icon-size: calc(18px * var(--type-scale-icon));
+  --game-emoji-pill-top-icon-size: calc(21px * var(--type-scale-icon));
   --game-row-column-gap: calc(8px * var(--type-scale-control));
   --game-row-inline-padding: calc(14px * var(--type-scale-control));
   --game-centered-lane-inset: calc(var(--game-emoji-pill-width) + var(--game-row-column-gap));
@@ -981,17 +982,23 @@ body > * { position: relative; z-index: 1; }
 }
 
 .answer-guide-trail-flag {
-  display: inline-flex;
+  display: inline-grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  place-items: center;
+  align-content: center;
+  row-gap: var(--game-emoji-pill-gap);
   align-items: center;
   justify-content: center;
   width: var(--game-emoji-pill-width);
   min-width: var(--game-emoji-pill-width);
   height: var(--game-emoji-pill-height);
-  padding: 0 4px;
+  padding: calc(3px * var(--type-scale-control)) calc(4px * var(--type-scale-control));
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.08);
-  font-size: var(--game-emoji-pill-font-size);
+  background-color: rgba(255, 255, 255, 0.08);
+  background-image: linear-gradient(to bottom, transparent calc(50% - 0.5px), rgba(255, 255, 255, 0.14) 50%, transparent calc(50% + 0.5px));
+  font-size: 0;
   line-height: 1;
   letter-spacing: 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
@@ -1001,6 +1008,36 @@ body > * { position: relative; z-index: 1; }
   left: 0;
   top: 50%;
   transform: translateY(-50%);
+  isolation: isolate;
+}
+
+.answer-guide-trail-flag::before,
+.answer-guide-trail-flag::after,
+.prompt-flag::after,
+.input-flag::after {
+  position: static;
+  grid-column: 1;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.answer-guide-trail-flag::before {
+  content: "🔠";
+  grid-row: 2;
+  width: var(--game-emoji-pill-icon-size);
+  height: var(--game-emoji-pill-icon-size);
+  font-size: var(--game-emoji-pill-icon-size);
+  z-index: 1;
+}
+
+.answer-guide-trail-flag::after {
+  content: "🎮";
+  grid-row: 1;
+  width: var(--game-emoji-pill-top-icon-size);
+  height: var(--game-emoji-pill-top-icon-size);
+  font-size: var(--game-emoji-pill-top-icon-size);
+  z-index: 2;
 }
 
 .answer-guide-foot {
@@ -1088,16 +1125,21 @@ body.is-language-switching .stats-bar {
 
 .prompt-flag,
 .input-flag {
-  display: inline-flex;
+  display: inline-grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  place-items: center;
+  align-content: center;
   align-items: center;
   justify-content: center;
   width: var(--game-emoji-pill-width);
   min-width: var(--game-emoji-pill-width);
   height: var(--game-emoji-pill-height);
-  padding: 0 4px;
+  padding: calc(3px * var(--type-scale-control)) calc(4px * var(--type-scale-control));
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.08);
+  background-image: linear-gradient(to bottom, transparent calc(50% - 0.5px), rgba(255, 255, 255, 0.14) 50%, transparent calc(50% + 0.5px));
   gap: var(--game-emoji-pill-gap);
   font-size: var(--game-emoji-pill-font-size);
   flex: 0 0 auto;
@@ -1105,6 +1147,18 @@ body.is-language-switching .stats-bar {
   line-height: 1;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
   font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+  isolation: isolate;
+}
+
+.prompt-flag .language-flag-icon,
+.input-flag .language-flag-icon {
+  position: static;
+  grid-column: 1;
+  grid-row: 2;
+  z-index: 1;
+  width: calc(24px * var(--type-scale-icon));
+  height: var(--game-emoji-pill-icon-size);
+  transform: none;
 }
 
 .prompt-flag {
@@ -1116,7 +1170,7 @@ body.is-language-switching .stats-bar {
 
 .prompt-flag:hover,
 .prompt-flag:focus-visible {
-  background: rgba(255, 255, 255, 0.14);
+  background-color: rgba(255, 255, 255, 0.14);
   border-color: rgba(255, 255, 255, 0.28);
   transform: translateY(-50%) scale(1.03);
 }
@@ -1128,23 +1182,27 @@ body.is-language-switching .stats-bar {
 
 .prompt-flag::after {
   content: "💬";
-  font-size: var(--game-emoji-pill-icon-size);
+  grid-row: 1;
+  width: var(--game-emoji-pill-top-icon-size);
+  height: var(--game-emoji-pill-top-icon-size);
+  font-size: var(--game-emoji-pill-top-icon-size);
   opacity: 0.9;
+  z-index: 2;
 }
 
 .prompt-flag-sub::after {
   content: "🗯";
-  font-size: var(--game-emoji-pill-icon-size);
+  font-size: var(--game-emoji-pill-top-icon-size);
   opacity: 0.9;
 }
 
 .prompt-flag {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .prompt-flag-sub {
   border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.06);
   margin-top: 0;
 }
 
@@ -1216,14 +1274,31 @@ body.is-language-switching .stats-bar {
   left: var(--game-row-inline-padding);
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.22);
   z-index: 1;
 }
 
 .input-flag::after {
   content: "\270D\FE0F";
-  font-size: calc(var(--game-emoji-pill-icon-size) + 1px);
+  grid-row: 1;
+  width: var(--game-emoji-pill-top-icon-size);
+  height: var(--game-emoji-pill-top-icon-size);
+  font-size: var(--game-emoji-pill-top-icon-size);
+  z-index: 2;
+}
+
+.answer-guide-trail-flag,
+.prompt-flag,
+.prompt-flag:hover,
+.prompt-flag:focus-visible,
+.prompt-flag.is-swapped,
+.prompt-flag-sub,
+.input-flag {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .answer-terminal-status-row {
@@ -4047,11 +4122,12 @@ body.layout-phone-portrait {
   padding-top: max(calc(6px * var(--type-height-scale)), env(safe-area-inset-top));
   padding-bottom: max(calc(8px * var(--type-height-scale)), env(safe-area-inset-bottom));
   --top-screen-search-peek: var(--first-screen-teaser);
-  --game-emoji-pill-width: calc(42px * var(--type-scale-control));
-  --game-emoji-pill-height: calc(20px * var(--type-scale-control));
-  --game-emoji-pill-font-size: calc(11px * var(--type-scale-icon));
+  --game-emoji-pill-width: calc(36px * var(--type-scale-control));
+  --game-emoji-pill-height: calc(48px * var(--type-scale-control));
+  --game-emoji-pill-font-size: calc(17px * var(--type-scale-icon));
   --game-emoji-pill-gap: calc(2px * var(--type-scale-control));
-  --game-emoji-pill-icon-size: calc(9px * var(--type-scale-icon));
+  --game-emoji-pill-icon-size: calc(17px * var(--type-scale-icon));
+  --game-emoji-pill-top-icon-size: calc(20px * var(--type-scale-icon));
   --game-row-column-gap: calc(8px * var(--type-scale-control));
   --game-row-inline-padding: calc(10px * var(--type-scale-control));
 }
@@ -4183,7 +4259,7 @@ body.layout-phone-portrait #sessionEnd {
 
 body.layout-phone-portrait #gameArea {
   display: grid;
-  grid-template-rows: minmax(0, 1.15fr) minmax(0, 0.8fr) auto auto auto;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto auto auto;
   align-items: stretch;
   flex: 1 1 auto;
   min-height: 0;
@@ -4242,6 +4318,7 @@ body.layout-phone-portrait .prompt-row {
 body.layout-phone-portrait .prompt-row-main,
 body.layout-phone-portrait .prompt-row-sub {
   margin-bottom: 0;
+  align-self: stretch;
 }
 
 body.layout-phone-portrait .prompt-copy {
@@ -4257,12 +4334,14 @@ body.layout-phone-portrait .prompt-sub {
 }
 
 body.layout-phone-portrait .prompt-text {
-  font-size: calc(var(--pretext-font-size, 8px) * var(--game-emphasis-scale));
+  font-size: var(--pretext-font-size, 20px);
+  line-height: var(--pretext-line-height, 1.1);
 }
 
 body.layout-phone-portrait .prompt-sub {
-  font-size: max(calc(13px * var(--type-scale-body)), var(--pretext-font-size, 12px));
-  line-height: var(--pretext-line-height, 1.24);
+  font-size: var(--pretext-font-size, 16px);
+  line-height: var(--pretext-line-height, 1.18);
+  color: rgba(244, 247, 255, 0.9);
 }
 
 body.layout-phone-portrait .input-shell {

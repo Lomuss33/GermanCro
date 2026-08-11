@@ -522,14 +522,14 @@ const DEFAULT_TYPE_PROFILE = Object.freeze({
 });
 const PROMPT_FIT_PROFILES = {
   main: {
-    regular: { maxLines: 2, minFontPx: 15, maxFontPx: 20, lineHeightRatio: 1.12 },
-    compact: { maxLines: 3, minFontPx: 14, maxFontPx: 20, lineHeightRatio: 1.14 },
-    dense: { maxLines: 4, minFontPx: 12, maxFontPx: 19, lineHeightRatio: 1.16 },
+    regular: { maxLines: 3, minFontPx: 18, maxFontPx: 28, lineHeightRatio: 1.1 },
+    compact: { maxLines: 4, minFontPx: 16, maxFontPx: 26, lineHeightRatio: 1.12 },
+    dense: { maxLines: 6, minFontPx: 13, maxFontPx: 26, lineHeightRatio: 1.14 },
   },
   secondary: {
-    regular: { maxLines: 2, minFontPx: 10, maxFontPx: 13, lineHeightRatio: 1.32 },
-    compact: { maxLines: 3, minFontPx: 10, maxFontPx: 13, lineHeightRatio: 1.34 },
-    dense: { maxLines: 4, minFontPx: 9, maxFontPx: 12, lineHeightRatio: 1.36 },
+    regular: { maxLines: 3, minFontPx: 15, maxFontPx: 22, lineHeightRatio: 1.16 },
+    compact: { maxLines: 4, minFontPx: 14, maxFontPx: 21, lineHeightRatio: 1.18 },
+    dense: { maxLines: 6, minFontPx: 12, maxFontPx: 20, lineHeightRatio: 1.2 },
   },
 };
 const ANSWER_GUIDE_SIZE_PROFILES = {
