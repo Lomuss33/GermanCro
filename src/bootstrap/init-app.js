@@ -25,6 +25,7 @@ const searchSites = [
 
 const ASSET_REV = "2026-08-10-topics2";
 const SESSION_SIZE = 10;
+const MAX_SESSION_SKIPS = 5;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const AUTOFILL_TRAILING_PUNCT = /[.!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
@@ -332,10 +333,12 @@ let bestStreak = 0;
 let totalCorrect = 0;
 let totalAttempts = 0;
 let skippedCount = 0;
+let sessionSkipsUsed = 0;
 let forceCorrection = false;
 let sessionStart = 0;
 let totalCharsTyped = 0;
 let sessionSkipCounts = new WeakMap();
+let sessionSkippedCards = new WeakSet();
 let cardStateByCard = new WeakMap();
 let pendingAdvanceTimer = 0;
 let scoredCardEvents = new WeakSet();
@@ -416,6 +419,7 @@ const legendNextEl = document.getElementById("legendNext");
 const legendWrongEl = document.getElementById("legendWrong");
 const skipCardBtnEl = document.getElementById("skipCardBtn");
 const skipCardBtnLabelEl = document.getElementById("skipCardBtnLabel");
+const skipCounterEl = document.getElementById("skipCounter");
 const promptHeadTitleEl = document.getElementById("promptHeadTitle");
 const inputEl = document.getElementById("answer");
 const wordGrid = document.getElementById("wordGrid");
@@ -436,6 +440,7 @@ const mainCard = document.getElementById("mainCard");
 const progressTrackEl = document.querySelector(".progress-track");
 const statsBarEl = document.querySelector(".stats-bar");
 const catCountEl = document.getElementById("catCount");
+const catButtonsLabelEl = document.getElementById("catButtonsLabel");
 const settingsPanelTitleEl = document.getElementById("settingsPanelTitle");
 const catPanelTitleEl = document.getElementById("catPanelTitle");
 const difficultyHardBtn = document.getElementById("difficultyHardBtn");
@@ -828,6 +833,24 @@ function measureAnswerGuideBodyHeight() {
   return height;
 }
 
+function syncAnswerGuideTrailPosition() {
+  const trailFlag = answerGuideEl?.querySelector(".answer-guide-trail-flag");
+  if (!trailFlag || !answerGuideBodyEl || !mainCard || !skipCardBtnEl) {
+    return;
+  }
+
+  const guideRect = answerGuideEl.getBoundingClientRect();
+  const skipRect = skipCardBtnEl.getBoundingClientRect();
+  const bodyRect = answerGuideBodyEl.getBoundingClientRect();
+  const flagHeight = trailFlag.getBoundingClientRect().height;
+  const midpoint = (guideRect.top + skipRect.top) / 2;
+  const relativeTop = midpoint - bodyRect.top;
+
+  if ([guideRect.top, skipRect.top, bodyRect.top, flagHeight, relativeTop].every(Number.isFinite)) {
+    trailFlag.style.setProperty("--answer-guide-trail-top", `${relativeTop}px`);
+  }
+}
+
 function getAnswerGuideLengthBucket(length) {
   if (length <= 24) {
     return 0;
@@ -854,6 +877,7 @@ function scheduleAnswerGuideMeasure(reason) {
     answerGuideMeasureTimer = 0;
     measureAnswerGuideBodyHeight();
     applyAnswerGuideResponsiveSizing();
+    syncAnswerGuideTrailPosition();
   }, 0);
 }
 
@@ -1474,7 +1498,17 @@ function setLocalizedAriaLabel(element, path, params) {
 }
 
 function canSkipCurrentCard() {
-  return sessionCards.length - sessionIndex > 1;
+  return sessionSkipsUsed < MAX_SESSION_SKIPS && Boolean(getNextSkipCard());
+}
+
+function getNextSkipCard() {
+  const currentCard = sessionCards[sessionIndex];
+  const candidates = getRenderablePool(getPool()).filter((card) => (
+    card !== currentCard &&
+    !sessionCards.includes(card) &&
+    !sessionSkippedCards.has(card)
+  ));
+  return candidates.length ? shuffle(candidates)[0] : null;
 }
 
 function cancelPendingCardAdvance() {
@@ -1544,19 +1578,21 @@ function skipCurrentCard() {
     return;
   }
 
-  if (!canSkipCurrentCard()) {
+  const replacementCard = getNextSkipCard();
+  if (sessionSkipsUsed >= MAX_SESSION_SKIPS || !replacementCard) {
     return;
   }
 
   cancelPendingCardAdvance();
   saveCurrentCardState();
   skippedCount += 1;
+  sessionSkipsUsed += 1;
+  sessionSkippedCards.add(card);
   incrementCardSkipCount(card);
   streak = 0;
   updateStats();
 
-  const [currentCard] = sessionCards.splice(sessionIndex, 1);
-  sessionCards.push(currentCard);
+  sessionCards[sessionIndex] = replacementCard;
   loadCard();
 }
 
@@ -1566,6 +1602,12 @@ function updateSkipCardButtonState() {
   }
 
   skipCardBtnEl.disabled = !canSkipCurrentCard();
+  if (skipCounterEl) {
+    const remainingSkips = Math.max(0, MAX_SESSION_SKIPS - sessionSkipsUsed);
+    skipCounterEl.textContent = String(remainingSkips);
+    skipCounterEl.setAttribute("aria-label", `${remainingSkips} skips remaining`);
+    skipCounterEl.title = `${remainingSkips} skips remaining`;
+  }
 }
 
 function renderHintButtonLabel() {
@@ -1732,6 +1774,18 @@ function updateLanguageDock() {
   Object.entries(arrowDockLabelEls).forEach(([direction, labelEl]) => {
     if (labelEl) {
       labelEl.textContent = t(`messages.arrowActions.${direction}`);
+    }
+  });
+  const arrowDirections = {
+    ArrowUp: "up",
+    ArrowLeft: "left",
+    ArrowDown: "down",
+    ArrowRight: "right",
+  };
+  arrowDockButtons.forEach((button) => {
+    const direction = arrowDirections[button.dataset.arrow];
+    if (direction) {
+      button.setAttribute("aria-label", t(`messages.arrowActions.${direction}`));
     }
   });
 }
@@ -1905,6 +1959,7 @@ function renderStaticUi() {
   setLocalizedText(restartBtnEl, "messages.session.newRound");
   setLocalizedText(settingsPanelTitleEl, "messages.actions.settings");
   setLocalizedText(catPanelTitleEl, "messages.categories.title");
+  setLocalizedText(catButtonsLabelEl, "messages.categories.select");
   setLocalizedText(newGameBtn, "messages.categories.newGame");
   syncPromptOrderControls();
   setLocalizedText(difficultyEasyBtn, "difficulty.easy");
@@ -4148,9 +4203,11 @@ function resetSessionProgress() {
   totalCorrect = 0;
   totalAttempts = 0;
   skippedCount = 0;
+  sessionSkipsUsed = 0;
   totalCharsTyped = 0;
   sessionStart = Date.now();
   sessionSkipCounts = new WeakMap();
+  sessionSkippedCards = new WeakSet();
   cardStateByCard = new WeakMap();
   cancelPendingCardAdvance();
   scoredCardEvents = new WeakSet();
@@ -4727,10 +4784,10 @@ function initInputEvents() {
   });
 
   const arrowActions = {
-    ArrowRight: () => goForwardToNextCard(),
+    ArrowRight: () => skipCurrentCard(),
     ArrowLeft: () => goBackToPreviousCard(),
     ArrowUp: () => switchLearningMode(cycleLearningMode()),
-    ArrowDown: () => togglePromptOrder(),
+    ArrowDown: () => hintBtnEl?.click(),
   };
 
   let arrowPressTimer = 0;

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=overlays-content">
 <title>GermanCro</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="stylesheet" href="style.css?v=2026-08-18-natural-card1">
+    <link rel="stylesheet" href="style.css?v=2026-08-19-trail-position8">
 </head>
 <body>
 
@@ -42,11 +42,11 @@
     <span class="arrow-dock-glyph" aria-hidden="true">←</span>
     <span class="arrow-dock-label" id="arrowDockLabelLeft">Zurück</span>
   </button>
-  <button class="arrow-dock-btn arrow-dock-btn--down" data-arrow="ArrowDown" type="button" aria-label="Reihenfolge wechseln">
+  <button class="arrow-dock-btn arrow-dock-btn--down" data-arrow="ArrowDown" type="button" aria-label="Tipp anzeigen">
     <span class="arrow-dock-glyph" aria-hidden="true">↓</span>
     <span class="arrow-dock-label" id="arrowDockLabelDown">Tausch</span>
   </button>
-  <button class="arrow-dock-btn arrow-dock-btn--right" data-arrow="ArrowRight" type="button" aria-label="Weiter zur nächsten Karte">
+  <button class="arrow-dock-btn arrow-dock-btn--right" data-arrow="ArrowRight" type="button" aria-label="Karte überspringen">
     <span class="arrow-dock-glyph" aria-hidden="true">→</span>
     <span class="arrow-dock-label" id="arrowDockLabelRight">Weiter</span>
   </button>
@@ -142,7 +142,7 @@
       <div class="answer-guide-foot">
         <div class="answer-guide-note" id="answerGuideNote"></div>
         <div class="action-row">
-          <button class="skip-card-btn" id="skipCardBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#9197;&#65039;</span> <span id="skipCardBtnLabel">Skip</span></button>
+          <div class="skip-action"><button class="skip-card-btn" id="skipCardBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#9197;&#65039;</span> <span id="skipCardBtnLabel">Skip</span></button><span class="skip-counter" id="skipCounter" aria-live="polite">5</span></div>
           <div class="enter-hint"><span class="key-badge">Enter</span> <span id="enterHintLabel">zum Pr&uuml;fen</span></div>
           <button class="hint-btn" id="hintBtn"><span class="button-icon button-icon-emoji" aria-hidden="true">&#128161;</span> <span>Tipp</span></button>
         </div>
@@ -195,6 +195,7 @@
       Neues Spiel
     </button>
   </div>
+  <div class="cat-buttons-label" id="catButtonsLabel">Kategorien auswählen</div>
   <div class="cat-buttons" id="catButtons"></div>
 </div>
 
@@ -270,6 +271,6 @@
   <a href="https://lomuss33.github.io/myWebsite/" target="_blank" rel="noopener noreferrer" id="siteFooterLink">made by Lovro Musi&#263;, in Gie&#223;en 2026, with &#9829;</a>
 </footer>
 
-<script type="module" src="app.js?v=2026-08-18-responsive-audit1"></script>
+  <script type="module" src="app.js?v=2026-08-19-trail-position3"></script>
 </body>
 </html>

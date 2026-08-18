@@ -55,8 +55,8 @@
       "arrowActions": {
         "up": "Modus",
         "left": "Zurück",
-        "down": "Tausch",
-        "right": "Weiter"
+        "down": "Tipp",
+        "right": "Skip"
       },
       "languageNames": {
         "de": "Deutsch",
@@ -101,7 +101,7 @@
         "skip": "Überspringen",
         "skipTitle": "Diese Karte später in dieser Runde zeigen",
         "enterHint": "zum Prüfen",
-        "settings": "Einstellungen",
+        "settings": "Einstellungen für nächste Runde",
         "switchPrompt": "Tauschen",
         "switchPromptAria": "Obere und untere Übersetzung tauschen"
       },
@@ -116,6 +116,7 @@
       },
       "categories": {
         "title": "Themen auswählen",
+        "select": "Kategorien auswählen",
         "mixed": "Alle Themen",
         "available": "{count} {unit} verfügbar",
         "unit": "Karten",
@@ -622,8 +623,8 @@
       "arrowActions": {
         "up": "Način",
         "left": "Natrag",
-        "down": "Zamijeni",
-        "right": "Dalje"
+        "down": "Savjet",
+        "right": "Preskoči"
       },
       "languageNames": {
         "de": "Deutsch",
@@ -668,7 +669,7 @@
         "skip": "Preskoči",
         "skipTitle": "Prikaži ovu karticu kasnije u ovoj rundi",
         "enterHint": "za provjeru",
-        "settings": "Postavke",
+        "settings": "Postavke sljedeće igre",
         "switchPrompt": "Zamijeni",
         "switchPromptAria": "Zamijeni gornji i donji prijevod"
       },
@@ -683,6 +684,7 @@
       },
       "categories": {
         "title": "Odaberi teme",
+        "select": "Odaberi kategorije",
         "mixed": "Sve teme",
         "available": "{count} {unit} dostupno",
         "unit": "kartica",
@@ -1181,8 +1183,8 @@
       "arrowActions": {
         "up": "Mode",
         "left": "Back",
-        "down": "Swap",
-        "right": "Next"
+        "down": "Hint",
+        "right": "Skip"
       },
       "languageNames": {
         "de": "Deutsch",
@@ -1227,7 +1229,7 @@
         "skip": "Skip",
         "skipTitle": "Show this card later in this round",
         "enterHint": "to check",
-        "settings": "Settings",
+        "settings": "Next game settings",
         "switchPrompt": "Swap",
         "switchPromptAria": "Swap the top and bottom translation"
       },
@@ -1242,6 +1244,7 @@
       },
       "categories": {
         "title": "Choose topics",
+        "select": "Select categories",
         "mixed": "All topics",
         "available": "{count} {unit} available",
         "unit": "cards",

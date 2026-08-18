@@ -5,6 +5,10 @@ html {
   text-size-adjust: 100%;
 }
 
+body #answerGuide .answer-guide-trail-flag {
+  top: var(--answer-guide-trail-top, 50%);
+}
+
 :root {
   --bg: #000000;
   --surface: rgba(10, 18, 46, 0.7);
@@ -1071,6 +1075,24 @@ body > * { position: relative; z-index: 1; }
   justify-self: start;
 }
 
+.answer-guide-foot > .action-row > .skip-action {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: calc(4px * var(--type-scale-control));
+}
+
+.skip-counter {
+  min-width: 1em;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: calc(8px * var(--type-scale-micro));
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  user-select: none;
+}
+
 .answer-guide-foot > .action-row > .enter-hint {
   justify-self: center;
 }
@@ -1109,14 +1131,14 @@ body > * { position: relative; z-index: 1; }
 .answer-guide-status.is-error { color: #ff9aa4; }
 
 .prompt-text {
-  font-size: var(--pretext-font-size, 8px);
+  font-size: var(--pretext-font-size, clamp(16px, calc(16px * var(--type-scale-body)), 28px));
   font-weight: 400;
   line-height: var(--pretext-line-height, 1.32);
   margin-bottom: 4px;
 }
 
 .prompt-sub {
-  font-size: var(--pretext-font-size, 11px);
+  font-size: var(--pretext-font-size, clamp(15px, calc(15px * var(--type-scale-body)), 24px));
   color: rgba(234, 240, 252, 0.84);
   line-height: var(--pretext-line-height, 1.28);
   margin-bottom: 16px;
@@ -1279,8 +1301,8 @@ body.is-language-switching .stats-bar {
 }
 
 .prompt-sub {
-  font-size: calc(11px * var(--type-scale-body));
-  line-height: 1.28;
+  font-size: var(--pretext-font-size, clamp(15px, calc(15px * var(--type-scale-body)), 24px));
+  line-height: var(--pretext-line-height, 1.28);
   color: rgba(234, 240, 252, 0.72);
 }
 
@@ -4425,11 +4447,15 @@ body.layout-phone-portrait .input-shell {
 }
 
 body.layout-phone-portrait .answer-terminal-status-row {
-  min-height: 0;
-  margin: 0;
+  display: none;
 }
 
-body.layout-phone-portrait .answer-terminal-status-badge {
+body.layout-phone-portrait .answer-guide-terminal-status {
+  display: flex;
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+  margin-left: 0;
   font-size: calc(16px * var(--type-scale-icon));
 }
 
@@ -4745,6 +4771,69 @@ body.layout-phone-portrait #mainCard {
 body.layout-phone-portrait #gameArea {
   flex: 0 0 auto;
   overflow: visible;
+}
+
+#mainCard .category-badge-main,
+#mainCard .category-badge-meta {
+  font-size: clamp(9px, calc(10px * var(--type-scale-micro)), 12px);
+  line-height: 1.15;
+}
+
+#mainCard .card-legend {
+  font-size: clamp(8px, calc(9px * var(--type-scale-micro)), 11px);
+  line-height: 1.2;
+}
+
+#mainCard .answer-guide .answer-guide-status,
+#mainCard .answer-guide .answer-guide-note {
+  font-size: clamp(8px, calc(10px * var(--game-text-scale)), 13px);
+  line-height: 1.2;
+}
+
+#mainCard .answer-guide .wchar-letter,
+#mainCard .answer-guide .word-separator-letter {
+  font-size: clamp(12px, calc(14px * var(--game-text-scale)), 17px);
+  line-height: 1;
+}
+
+#mainCard .answer-guide .word-separator.is-comma .word-separator-letter {
+  font-size: clamp(14px, calc(16px * var(--game-text-scale)), 19px);
+}
+
+#mainCard .answer-guide .skip-card-btn,
+#mainCard .answer-guide .hint-btn {
+  min-height: clamp(30px, calc(26px + 0.5vw), 36px);
+  padding-block: clamp(4px, calc(3px + 0.15vw), 6px);
+  font-size: clamp(9px, calc(8px + 0.3vw), 11.5px);
+}
+
+#mainCard .answer-guide .button-icon-emoji {
+  font-size: clamp(10px, calc(11px * var(--game-text-scale)), 14px);
+}
+
+#mainCard .answer-guide .enter-hint,
+#mainCard .answer-guide .key-badge {
+  font-size: clamp(8px, calc(9px * var(--game-text-scale)), 12px);
+}
+
+#mainCard .prompt-row {
+  align-content: center;
+}
+
+#mainCard .prompt-copy {
+  align-self: center;
+}
+
+#catPanel .new-game-btn,
+#catPanel .difficulty-panel button {
+  font-size: clamp(11px, calc(9px + 0.35vw), 15px);
+}
+
+#mainCard .input-shell input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: clamp(49px, calc(42px + 1vw), 61px);
+  font-size: clamp(16px, calc(14px + 0.2vw), 18px);
 }
 
 body.layout-phone-portrait #sessionSizeSlider,
@@ -5095,6 +5184,7 @@ body[data-game-density="dense"] .answer-guide .word-grid {
   }
 }
 
+
 body.layout-phone-portrait[data-game-density="compact"] .answer-guide-body,
 body.layout-phone-portrait[data-game-density="dense"] .answer-guide-body {
   padding-inline: 0;
@@ -5190,4 +5280,34 @@ body.layout-phone-portrait .answer-guide-foot > .action-row > .enter-hint {
     grid-column: 2;
     grid-row: 2;
   }
+}
+
+body:not(.layout-phone-portrait) .answer-guide-foot > .action-row,
+body.layout-phone-portrait .answer-guide-foot > .action-row {
+  width: calc(100% + (2 * var(--game-row-inline-padding)) + 4px);
+  margin-inline: calc(0px - var(--game-row-inline-padding) - 2px);
+  margin-bottom: calc(0px - var(--game-row-inline-padding));
+  align-self: stretch;
+  position: relative;
+  z-index: 1;
+}
+
+body:not(.layout-phone-portrait) .answer-guide-foot > .action-row {
+  margin-bottom: calc(clamp(0px, calc(1.67vh - 12px), 6px) - var(--game-row-inline-padding));
+}
+
+.answer-guide-foot > .action-row > .skip-action,
+.answer-guide-foot > .action-row > .hint-btn {
+  align-self: end;
+}
+
+.answer-guide-foot > .action-row > .skip-card-btn,
+.answer-guide-foot > .action-row > .hint-btn {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  box-shadow: 0 0 0 1px rgba(6, 10, 24, 0.82);
+}
+
+body.layout-phone-portrait .answer-guide-foot > .action-row {
+  margin-bottom: calc(-1px - var(--game-row-inline-padding));
 }
