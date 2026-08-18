@@ -72,6 +72,7 @@ export function fitPretextBlock(config) {
     minFontPx = 16,
     maxFontPx = minFontPx,
     maxLines = Number.POSITIVE_INFINITY,
+    maxHeight = Number.POSITIVE_INFINITY,
   } = config;
 
   if (!String(text).trim() || width <= 0) {
@@ -101,7 +102,7 @@ export function fitPretextBlock(config) {
     const mid = Math.floor((low + high) / 2);
     const candidate = evaluateCandidate(config, String(text), width, mid);
 
-    if (candidate.lineCount <= maxLines) {
+    if (candidate.lineCount <= maxLines && candidate.height <= maxHeight) {
       if (isBetterCandidate(candidate, best)) {
         best = candidate;
       }

@@ -1,4 +1,4 @@
-import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-10-topics2";
+import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-18-prompt-fit1";
 import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-11-height-ui1";
 import {
   CARD_SCOPE_OPTIONS,
@@ -336,6 +336,9 @@ let forceCorrection = false;
 let sessionStart = 0;
 let totalCharsTyped = 0;
 let sessionSkipCounts = new WeakMap();
+let cardStateByCard = new WeakMap();
+let pendingAdvanceTimer = 0;
+let scoredCardEvents = new WeakSet();
 let difficulty = "easy";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
@@ -388,6 +391,14 @@ const heroStageEl = document.getElementById("heroStage");
 const phoneGuideBarEl = document.getElementById("phoneGuideBar");
 const languageDockEl = document.getElementById("languageDock");
 const languageDockButtons = Array.from(document.querySelectorAll(".language-dock-btn"));
+const arrowDockEl = document.getElementById("arrowDock");
+const arrowDockButtons = Array.from(document.querySelectorAll(".arrow-dock-btn"));
+const arrowDockLabelEls = {
+  up: document.getElementById("arrowDockLabelUp"),
+  left: document.getElementById("arrowDockLabelLeft"),
+  down: document.getElementById("arrowDockLabelDown"),
+  right: document.getElementById("arrowDockLabelRight"),
+};
 const appLoaderEl = document.getElementById("appLoader");
 const appLoaderSpinnerEl = document.getElementById("appLoaderSpinner");
 const installGuidePanelEl = document.getElementById("installGuidePanel");
@@ -471,7 +482,7 @@ const statePickerEl = document.getElementById("statePicker");
 const factsContentEl = document.getElementById("factsContent");
 const factsPanelEl = document.querySelector(".facts-panel");
 const hintBtnEl = document.getElementById("hintBtn");
-const enterHintTextEl = document.getElementById("enterHintText");
+const enterHintLabelEl = document.getElementById("enterHintLabel");
 const sessionEndLabelEl = document.getElementById("sessionEndLabel");
 const restartBtnEl = document.getElementById("restartBtn");
 const siteFooterLinkEl = document.getElementById("siteFooterLink");
@@ -522,14 +533,14 @@ const DEFAULT_TYPE_PROFILE = Object.freeze({
 });
 const PROMPT_FIT_PROFILES = {
   main: {
-    regular: { maxLines: 3, minFontPx: 18, maxFontPx: 28, lineHeightRatio: 1.1 },
-    compact: { maxLines: 4, minFontPx: 16, maxFontPx: 26, lineHeightRatio: 1.12 },
-    dense: { maxLines: 6, minFontPx: 13, maxFontPx: 26, lineHeightRatio: 1.14 },
+    regular: { maxLines: 3, minFontPx: 8, maxFontPx: 28, lineHeightRatio: 1.1 },
+    compact: { maxLines: 4, minFontPx: 8, maxFontPx: 26, lineHeightRatio: 1.12 },
+    dense: { maxLines: 6, minFontPx: 7, maxFontPx: 26, lineHeightRatio: 1.14 },
   },
   secondary: {
-    regular: { maxLines: 3, minFontPx: 15, maxFontPx: 22, lineHeightRatio: 1.16 },
-    compact: { maxLines: 4, minFontPx: 14, maxFontPx: 21, lineHeightRatio: 1.18 },
-    dense: { maxLines: 6, minFontPx: 12, maxFontPx: 20, lineHeightRatio: 1.2 },
+    regular: { maxLines: 3, minFontPx: 8, maxFontPx: 22, lineHeightRatio: 1.16 },
+    compact: { maxLines: 4, minFontPx: 7, maxFontPx: 21, lineHeightRatio: 1.18 },
+    dense: { maxLines: 6, minFontPx: 7, maxFontPx: 20, lineHeightRatio: 1.2 },
   },
 };
 const ANSWER_GUIDE_SIZE_PROFILES = {
@@ -598,17 +609,19 @@ function computeResponsiveTypeProfile({ viewportWidth, viewportHeight, heroWidth
     390,
     780
   );
-  const heightScale = clampNumber(viewportHeight / 852, 0.82, 2.55);
-  const bodyScale = heightScale;
-  const microScale = heightScale;
-  const displayScale = heightScale;
-  const controlScale = heightScale;
-  const iconScale = heightScale;
-  const gameTextScale = heightScale * 1.3;
+  const heightScale = clampNumber(viewportHeight / 852, 0.82, 1.35);
+  const widthScale = clampNumber(viewportWidth / 780, 0.82, 1.35);
+  const typeScale = Math.min(heightScale, widthScale);
+  const bodyScale = typeScale;
+  const microScale = typeScale;
+  const displayScale = typeScale;
+  const controlScale = typeScale;
+  const iconScale = typeScale;
+  const gameTextScale = typeScale * 1.3;
 
   return {
     contentWidth,
-    heightScale: roundScale(heightScale),
+    heightScale: roundScale(typeScale),
     bodyScale: roundScale(bodyScale),
     microScale: roundScale(microScale),
     displayScale: roundScale(displayScale),
@@ -697,7 +710,21 @@ function getGameDensityProfile({ viewportWidth, viewportHeight, cardWidth }) {
   return "regular";
 }
 
-function getPromptFitProfile({ text, width, density, kind }) {
+function getPromptAvailableHeight(element) {
+  const row = element?.closest?.(".prompt-row");
+  if (!row) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  const rowStyle = window.getComputedStyle(row);
+  const verticalPadding =
+    Number.parseFloat(rowStyle.paddingTop || "0") +
+    Number.parseFloat(rowStyle.paddingBottom || "0");
+
+  return Math.max(1, row.clientHeight - verticalPadding - 4);
+}
+
+function getPromptFitProfile({ text, width, height, density, kind }) {
   const trimmedText = String(text ?? "").trim();
   const promptKind = kind === "secondary" ? "secondary" : "main";
   const bumpThreshold = promptKind === "secondary" ? 46 : 38;
@@ -710,11 +737,20 @@ function getPromptFitProfile({ text, width, density, kind }) {
   const profileGroup = PROMPT_FIT_PROFILES[promptKind] || PROMPT_FIT_PROFILES.main;
   const baseProfile = profileGroup[effectiveDensity] || profileGroup.regular;
   const { bodyScale } = getResponsiveTypeProfile();
+  const widthScale = clampNumber(width / 390, 0.72, 1.45);
+  const promptScale = Math.min(bodyScale, widthScale);
+  const minFontPx = getScaledFontPx(baseProfile.minFontPx, promptScale);
+  const maxFontPx = getScaledFontPx(baseProfile.maxFontPx, promptScale);
+  const heightLineLimit = Number.isFinite(height)
+    ? Math.max(1, Math.floor(height / Math.max(1, minFontPx * baseProfile.lineHeightRatio)))
+    : baseProfile.maxLines;
 
   return {
     ...baseProfile,
-    minFontPx: getScaledFontPx(baseProfile.minFontPx, bodyScale),
-    maxFontPx: getScaledFontPx(baseProfile.maxFontPx, bodyScale),
+    minFontPx,
+    maxFontPx,
+    maxLines: Math.max(baseProfile.maxLines, Math.min(14, heightLineLimit)),
+    maxHeight: height,
   };
 }
 
@@ -1060,7 +1096,7 @@ function syncViewportProfile() {
     : 1;
   updateLanguageDockZoom(Math.min(widthRatio, heightRatio), nextViewport);
 
-  const nextPhonePortrait = true;
+  const nextPhonePortrait = nextViewport.width <= 700;
   const nextGameDensity = getGameDensityProfile({
     viewportWidth: nextViewport.width,
     viewportHeight: nextViewport.height,
@@ -1168,6 +1204,7 @@ const promptController = createPretextBlockController({
     return getPromptFitProfile({
       text,
       width,
+      height: getPromptAvailableHeight(promptEl),
       density: getCurrentGameDensity(),
       kind: "main",
     });
@@ -1184,6 +1221,7 @@ const promptSubController = createPretextBlockController({
     return getPromptFitProfile({
       text,
       width,
+      height: getPromptAvailableHeight(promptSub),
       density: getCurrentGameDensity(),
       kind: "secondary",
     });
@@ -1439,6 +1477,61 @@ function canSkipCurrentCard() {
   return sessionCards.length - sessionIndex > 1;
 }
 
+function cancelPendingCardAdvance() {
+  if (!pendingAdvanceTimer) {
+    return;
+  }
+
+  window.clearTimeout(pendingAdvanceTimer);
+  pendingAdvanceTimer = 0;
+}
+
+function saveCurrentCardState() {
+  const card = sessionCards[sessionIndex];
+  if (isRenderableCard(card)) {
+    cardStateByCard.set(card, {
+      typedValue: inputEl.value,
+      previousTypedValue,
+      forceCorrection,
+    });
+  }
+}
+
+function getSavedCardState(card) {
+  return isRenderableCard(card) ? cardStateByCard.get(card) || null : null;
+}
+
+function navigateToCardIndex(nextIndex) {
+  if (!Number.isInteger(nextIndex) || nextIndex < 0 || nextIndex >= sessionCards.length) {
+    return false;
+  }
+
+  const nextCard = sessionCards[nextIndex];
+  if (!isRenderableCard(nextCard)) {
+    return false;
+  }
+
+  cancelPendingCardAdvance();
+  saveCurrentCardState();
+  sessionIndex = nextIndex;
+  updateStats();
+  setGameSurfaceMode(false);
+  loadCard({ restoreState: getSavedCardState(nextCard) });
+  return true;
+}
+
+function goBackToPreviousCard() {
+  return navigateToCardIndex(sessionIndex - 1);
+}
+
+function goForwardToNextCard() {
+  if (sessionIndex >= sessionCards.length - 1) {
+    return false;
+  }
+
+  return navigateToCardIndex(sessionIndex + 1);
+}
+
 function incrementCardSkipCount(card) {
   const currentCount = sessionSkipCounts.get(card) || 0;
   sessionSkipCounts.set(card, currentCount + 1);
@@ -1455,6 +1548,8 @@ function skipCurrentCard() {
     return;
   }
 
+  cancelPendingCardAdvance();
+  saveCurrentCardState();
   skippedCount += 1;
   incrementCardSkipCount(card);
   streak = 0;
@@ -1568,7 +1663,7 @@ function getRenderablePool(cards, language = getTargetLanguage()) {
 
 function cycleLearningMode() {
   const currentIndex = LANGUAGE_SEQUENCE.indexOf(getTargetLanguage());
-  learningMode = LANGUAGE_SEQUENCE[(currentIndex + 1) % LANGUAGE_SEQUENCE.length];
+  return LANGUAGE_SEQUENCE[(currentIndex + 1) % LANGUAGE_SEQUENCE.length];
 }
 
 function renderSiteTitle(language) {
@@ -1631,6 +1726,14 @@ function updateLanguageDock() {
     button.setAttribute("aria-pressed", String(language === getTargetLanguage()));
     button.setAttribute("aria-label", t(`messages.languageNames.${language}`));
   });
+  if (arrowDockEl) {
+    arrowDockEl.setAttribute("aria-label", t("messages.arrowDockAria"));
+  }
+  Object.entries(arrowDockLabelEls).forEach(([direction, labelEl]) => {
+    if (labelEl) {
+      labelEl.textContent = t(`messages.arrowActions.${direction}`);
+    }
+  });
 }
 
 function getLanguageDockZoomScale(dockViewportRatio) {
@@ -1673,6 +1776,7 @@ function applyLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
   const viewportHeight = Math.max(0, Math.round(nextViewport?.height || 0));
 
   languageDockEl.style.setProperty("--language-dock-zoom-scale", String(scale));
+  arrowDockEl?.style.setProperty("--language-dock-zoom-scale", String(scale));
   const dockRect = languageDockEl.getBoundingClientRect();
   const isTooLarge =
     viewportWidth < 280 ||
@@ -1680,6 +1784,7 @@ function applyLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
     dockRect.height > viewportHeight * 0.16;
   const isHidden = ratio < 0.52 && isTooLarge;
   languageDockEl.classList.toggle("is-zoom-hidden", isHidden);
+  arrowDockEl?.classList.toggle("is-zoom-hidden", isHidden);
 }
 
 function scheduleLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
@@ -1795,7 +1900,7 @@ function renderStaticUi() {
   }
   setLocalizedText(answerGuideLabelEl, "messages.guide.label");
   renderHintButtonLabel();
-  setLocalizedText(enterHintTextEl, "messages.actions.enterHint");
+  setLocalizedText(enterHintLabelEl, "messages.actions.enterHint");
   setLocalizedText(sessionEndLabelEl, "messages.session.finished");
   setLocalizedText(restartBtnEl, "messages.session.newRound");
   setLocalizedText(settingsPanelTitleEl, "messages.actions.settings");
@@ -1841,6 +1946,7 @@ function switchLearningMode(nextLanguage) {
     return;
   }
 
+  saveCurrentCardState();
   document.body.classList.add("is-language-switching");
   if (siteTitleEl) {
     siteTitleEl.classList.remove("is-changing-in");
@@ -3689,6 +3795,66 @@ function updateAnswerTerminalStatus(target, typed, terminalHit = null) {
   answerTerminalStatusEl.textContent = terminalStatusKind === "success" ? "\u2665" : "\u2715";
 }
 
+function submitCurrentAnswer() {
+  if (!sessionCards.length) {
+    return;
+  }
+
+  const card = sessionCards[sessionIndex];
+  if (!isRenderableCard(card)) {
+    void recoverPlayableSession("submit-invalid-card", sessionCards.length || SESSION_SIZE);
+    return;
+  }
+
+  const target = getTargetValue(card);
+  const scoreAlreadyRecorded = scoredCardEvents.has(card);
+  if (normalizeAnswer(inputEl.value) === normalizeAnswer(target)) {
+    showFeedbackBurst("success", true);
+    if (!scoreAlreadyRecorded) {
+      scoredCardEvents.add(card);
+      totalCharsTyped += target.length;
+      totalAttempts += 1;
+      if (!forceCorrection) {
+        totalCorrect += 1;
+        streak += 1;
+        if (streak > bestStreak) {
+          bestStreak = streak;
+        }
+        showCombo();
+        showToast(getEncouragement(streak));
+      }
+    }
+    inputEl.className = "correct";
+    updateStats();
+    saveCurrentCardState();
+    cancelPendingCardAdvance();
+    const completedCard = card;
+    pendingAdvanceTimer = window.setTimeout(() => {
+      pendingAdvanceTimer = 0;
+      if (sessionCards[sessionIndex] !== completedCard) {
+        return;
+      }
+
+      if (sessionIndex >= sessionCards.length - 1) {
+        showSessionEnd();
+      } else {
+        navigateToCardIndex(sessionIndex + 1);
+      }
+    }, 140);
+    return;
+  }
+
+  showFeedbackBurst("error", false);
+  if (!scoreAlreadyRecorded) {
+    scoredCardEvents.add(card);
+    totalAttempts += 1;
+    streak = 0;
+  }
+  inputEl.className = "wrong";
+  forceCorrection = true;
+  updateStats();
+}
+
 function isExactTypedMatch(target, typed) {
   return typed.length === target.length && getCorrectPrefixLength(target, typed) === target.length;
 }
@@ -3985,6 +4151,9 @@ function resetSessionProgress() {
   totalCharsTyped = 0;
   sessionStart = Date.now();
   sessionSkipCounts = new WeakMap();
+  cardStateByCard = new WeakMap();
+  cancelPendingCardAdvance();
+  scoredCardEvents = new WeakSet();
 }
 
 function clearSessionUi() {
@@ -4090,7 +4259,7 @@ async function startSession(size) {
 }
 
 function loadCard(options = {}) {
-  const { focusInput = true, allowRecovery = true } = options;
+  const { focusInput = true, allowRecovery = true, restoreState = null } = options;
   const card = sessionCards[sessionIndex];
   if (!isRenderableCard(card)) {
     if (allowRecovery) {
@@ -4107,7 +4276,12 @@ function loadCard(options = {}) {
   updateSkipCardButtonState();
 
   mainCard.classList.add("active");
-  buildWordGrid(getTargetValue(card), "");
+  const savedState = restoreState || getSavedCardState(card);
+  const restoredTypedValue = savedState?.typedValue || "";
+  inputEl.value = restoredTypedValue;
+  previousTypedValue = savedState?.previousTypedValue || restoredTypedValue;
+  forceCorrection = Boolean(savedState?.forceCorrection);
+  buildWordGrid(getTargetValue(card), restoredTypedValue);
   updateSearchLinks(card);
 
   if (focusInput) {
@@ -4552,11 +4726,61 @@ function initInputEvents() {
     });
   });
 
+  const arrowActions = {
+    ArrowRight: () => goForwardToNextCard(),
+    ArrowLeft: () => goBackToPreviousCard(),
+    ArrowUp: () => switchLearningMode(cycleLearningMode()),
+    ArrowDown: () => togglePromptOrder(),
+  };
+
+  let arrowPressTimer = 0;
+  const lightArrowButton = (key) => {
+    const button = arrowDockButtons.find((candidate) => candidate.dataset.arrow === key);
+    if (!button) {
+      return;
+    }
+
+    button.classList.remove("is-pressed");
+    void button.offsetWidth;
+    button.classList.add("is-pressed");
+    window.clearTimeout(arrowPressTimer);
+    arrowPressTimer = window.setTimeout(() => {
+      button.classList.remove("is-pressed");
+    }, 180);
+  };
+
+  arrowDockButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const action = arrowActions[button.dataset.arrow];
+      if (!action) {
+        return;
+      }
+      lightArrowButton(button.dataset.arrow);
+      action();
+    });
+  });
+
   if (skipCardBtnEl) {
     skipCardBtnEl.addEventListener("click", () => {
       skipCurrentCard();
     });
   }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.defaultPrevented || event.repeat || event.altKey || event.ctrlKey || event.metaKey) {
+      return;
+    }
+
+    const action = arrowActions[event.key];
+    if (!action) {
+      return;
+    }
+
+    event.preventDefault();
+    lightArrowButton(event.key);
+    action();
+  });
+
 
   [promptPrimaryFlagEl, promptSecondaryFlagEl].forEach((button) => {
     button?.addEventListener("click", () => {
@@ -4671,46 +4895,8 @@ function initInputEvents() {
     if (event.key !== "Enter" || !sessionCards.length) {
       return;
     }
-
-    const card = sessionCards[sessionIndex];
-    if (!isRenderableCard(card)) {
-      void recoverPlayableSession("submit-invalid-card", sessionCards.length || SESSION_SIZE);
-      return;
-    }
-    const target = getTargetValue(card);
-    if (normalizeAnswer(inputEl.value) === normalizeAnswer(target)) {
-      showFeedbackBurst("success", true);
-      totalCharsTyped += target.length;
-      if (!forceCorrection) {
-        totalCorrect += 1;
-        streak += 1;
-        if (streak > bestStreak) {
-          bestStreak = streak;
-        }
-        showCombo();
-        showToast(getEncouragement(streak));
-      }
-      totalAttempts += 1;
-      inputEl.className = "correct";
-      updateStats();
-      setTimeout(() => {
-        sessionIndex += 1;
-        if (sessionIndex >= sessionCards.length) {
-          showSessionEnd();
-        } else {
-          loadCard();
-        }
-      }, 140);
-    } else {
-      showFeedbackBurst("error", false);
-      if (!forceCorrection) {
-        totalAttempts += 1;
-        streak = 0;
-      }
-      inputEl.className = "wrong";
-      forceCorrection = true;
-      updateStats();
-    }
+    event.preventDefault();
+    submitCurrentAnswer();
   });
 }
 

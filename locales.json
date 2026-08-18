@@ -51,6 +51,13 @@
     },
     "messages": {
       "languageDockAria": "Lernsprache wechseln",
+      "arrowDockAria": "Tastatur-Navigation",
+      "arrowActions": {
+        "up": "Modus",
+        "left": "Zurück",
+        "down": "Tausch",
+        "right": "Weiter"
+      },
       "languageNames": {
         "de": "Deutsch",
         "hr": "Hrvatski",
@@ -611,6 +618,13 @@
     },
     "messages": {
       "languageDockAria": "Promijeni jezik učenja",
+      "arrowDockAria": "Navigacija tipkovnicom",
+      "arrowActions": {
+        "up": "Način",
+        "left": "Natrag",
+        "down": "Zamijeni",
+        "right": "Dalje"
+      },
       "languageNames": {
         "de": "Deutsch",
         "hr": "Hrvatski",
@@ -1163,6 +1177,13 @@
     },
     "messages": {
       "languageDockAria": "Change learning language",
+      "arrowDockAria": "Keyboard navigation",
+      "arrowActions": {
+        "up": "Mode",
+        "left": "Back",
+        "down": "Swap",
+        "right": "Next"
+      },
       "languageNames": {
         "de": "Deutsch",
         "hr": "Hrvatski",
