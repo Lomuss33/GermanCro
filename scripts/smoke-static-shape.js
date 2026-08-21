@@ -55,7 +55,7 @@ assert(
 
 assert(tourSource.includes("setLearningMode(nextLanguage)"), "Popup language controls must change the learning mode");
 assert(tourSource.includes("function advanceTour()"), "Onboarding controls must share one safe advance path");
-assert(!tourSource.includes('finish("played")'), "The welcome Play button must enter the tour before closing");
+assert(tourSource.includes('finish("played")'), "The welcome Play button must retain its mouse-click action");
 assert(
   onboardingCss.includes(".onboarding-back-btn.is-hidden ~ .onboarding-primary-btn"),
   "The first tutorial step must expand its Next button when Back is hidden",

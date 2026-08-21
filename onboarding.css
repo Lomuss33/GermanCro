@@ -402,6 +402,11 @@ html.has-onboarding-open::-webkit-scrollbar {
   padding-right: calc(10px * var(--type-scale-control));
 }
 
+body:not(.layout-phone-portrait) .cat-panel-toolbar > .cat-panel-meta {
+  align-self: stretch;
+  justify-content: center;
+}
+
 .cat-panel-meta .new-game-row {
   grid-template-columns: minmax(0, 1fr) max-content;
 }

@@ -555,12 +555,16 @@ export function createFirstRunTour({
   }
 
   elements.primaryButton?.addEventListener("click", () => {
+    if (state === "welcome") {
+      finish("played");
+      return;
+    }
     advanceTour();
   });
 
   elements.secondaryButton?.addEventListener("click", () => {
     if (state === "welcome") {
-      advanceTour();
+      void renderStep(0);
     }
   });
 
@@ -583,9 +587,6 @@ export function createFirstRunTour({
         setLearningMode(nextLanguage);
         window.setTimeout(syncLanguageButtons, 180);
       }
-      if (state === "welcome") {
-        advanceTour();
-      }
     });
   });
 
@@ -597,21 +598,13 @@ export function createFirstRunTour({
       event.isComposing ||
       event.ctrlKey ||
       event.metaKey ||
-      event.altKey ||
-      event.key === "Tab" ||
-      event.key === "Escape"
+      event.altKey
     ) {
       return;
     }
 
-    const isNativeButtonActivation =
-      event.target instanceof HTMLButtonElement &&
-      (event.key === "Enter" || event.key === " ");
-    if (isNativeButtonActivation) {
-      return;
-    }
-
     event.preventDefault();
+    event.stopPropagation();
     advanceTour();
   });
 
