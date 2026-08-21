@@ -57,6 +57,14 @@ assert(tourSource.includes("setLearningMode(nextLanguage)"), "Popup language con
 assert(tourSource.includes("function advanceTour()"), "Onboarding controls must share one safe advance path");
 assert(tourSource.includes('finish("played")'), "The welcome Play button must retain its mouse-click action");
 assert(
+  onboardingCss.includes(".onboarding-dialog:not([open])"),
+  "A closed onboarding dialog must always be removed from layout",
+);
+assert(
+  tourSource.includes('dialog.classList.remove("is-welcome", "is-tour")'),
+  "Closing onboarding must clear its presentation mode classes",
+);
+assert(
   onboardingCss.includes(".onboarding-back-btn.is-hidden ~ .onboarding-primary-btn"),
   "The first tutorial step must expand its Next button when Back is hidden",
 );

@@ -1,6 +1,6 @@
 import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-18-prompt-fit1";
 import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-11-height-ui1";
-import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-21-onboarding7";
+import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-21-onboarding8";
 import {
   CARD_SCOPE_OPTIONS,
   MODE_SCOPE_MAP,

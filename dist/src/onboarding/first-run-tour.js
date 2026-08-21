@@ -504,7 +504,13 @@ export function createFirstRunTour({
     stepIndex = -1;
     document.body.classList.remove("has-onboarding-open");
     document.documentElement.classList.remove("has-onboarding-open");
+    elements.welcomeScrim?.classList.remove("is-visible");
     dialog.close(reason);
+    dialog.classList.remove("is-welcome", "is-tour");
+    elements.panel?.removeAttribute("style");
+    if (elements.panel) {
+      delete elements.panel.dataset.placement;
+    }
     window.scrollTo({ left: openingScrollX, top: openingScrollY, behavior: "auto" });
     onClose?.({ reason, replay: wasReplay, completedTour });
     if (

@@ -20,6 +20,11 @@
   background: transparent;
 }
 
+/* Never let a mode class override the native closed-dialog state. */
+.onboarding-dialog:not([open]) {
+  display: none !important;
+}
+
 html.has-onboarding-open {
   scrollbar-width: none;
 }
@@ -99,7 +104,7 @@ html.has-onboarding-open::-webkit-scrollbar {
   box-sizing: border-box;
 }
 
-.onboarding-dialog.is-welcome {
+.onboarding-dialog[open].is-welcome {
   display: grid;
   place-items: center;
   padding:
