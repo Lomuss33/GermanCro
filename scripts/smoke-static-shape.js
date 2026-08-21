@@ -36,16 +36,24 @@ assert(scriptMatch, "index.html must include a module script entry");
 assert(html.includes('href="onboarding.css?'), "index.html must load the onboarding stylesheet");
 assert(distHtml.includes('href="onboarding.css?'), "dist/index.html must load the onboarding stylesheet");
 
-for (const language of ["en", "de", "hr"]) {
+for (const { language, label, flag } of [
+  { language: "en", label: "English", flag: "🇬🇧" },
+  { language: "de", label: "German", flag: "🇩🇪" },
+  { language: "hr", label: "Croatian", flag: "🇭🇷" },
+]) {
   assert(
     html.includes(`data-learning-language="${language}"`),
     `index.html is missing the ${language} learning-language option`,
   );
+  assert(
+    html.includes(`<span class="onboarding-language-name">${label}</span>`),
+    `The ${language} learning-language option must show its full name`,
+  );
+  assert(
+    html.includes(`<span class="onboarding-language-flag" aria-hidden="true">${flag}</span>`),
+    `The ${language} learning-language option must show its flag above the name`,
+  );
 }
-assert(
-  html.includes('data-learning-language="hr" type="button" aria-pressed="false">HR</button>'),
-  "The onboarding learning-language option must be labelled HR",
-);
 assert(!html.includes("B/H/S"), "The onboarding popup must not use the B/H/S label");
 assert(
   html.indexOf('id="sliderUnitLabel"') < html.indexOf('id="sliderLabel"') &&

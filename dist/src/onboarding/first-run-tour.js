@@ -313,9 +313,14 @@ export function createFirstRunTour({
     elements.languageButtons.forEach((button) => {
       const buttonLanguage = normalizeTutorialLanguage(button.dataset.learningLanguage);
       const isActive = buttonLanguage === activeLearningMode;
+      const languageName = tutorialTranslate(`onboarding.languages.${buttonLanguage}`);
       button.classList.toggle("active", isActive);
       button.setAttribute("aria-pressed", String(isActive));
-      button.setAttribute("aria-label", tutorialTranslate(`onboarding.languages.${buttonLanguage}`));
+      button.setAttribute("aria-label", languageName);
+      const visibleName = button.querySelector(".onboarding-language-name");
+      if (visibleName) {
+        visibleName.textContent = languageName;
+      }
     });
   }
 
