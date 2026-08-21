@@ -5311,3 +5311,26 @@ body:not(.layout-phone-portrait) .answer-guide-foot > .action-row {
 body.layout-phone-portrait .answer-guide-foot > .action-row {
   margin-bottom: calc(-1px - var(--game-row-inline-padding));
 }
+
+/* Keep the input untouched; place the white edge emphasis on the guide itself. */
+#answerGuide.answer-guide {
+  border-color: rgba(255, 255, 255, 0.64);
+  box-shadow:
+    0 10px 28px rgba(2, 6, 23, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+#mainCard .answer-guide .skip-card-btn:not(:disabled),
+#mainCard .answer-guide .hint-btn {
+  color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.68);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 0 0 1px rgba(6, 10, 24, 0.82);
+}
+
+#mainCard .answer-guide .skip-card-btn:hover:not(:disabled),
+#mainCard .answer-guide .hint-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.09);
+}
