@@ -593,7 +593,6 @@ export function createFirstRunTour({
   document.addEventListener("keydown", (event) => {
     if (
       !isOpen() ||
-      event.defaultPrevented ||
       event.repeat ||
       event.isComposing ||
       event.ctrlKey ||
@@ -606,7 +605,7 @@ export function createFirstRunTour({
     event.preventDefault();
     event.stopPropagation();
     advanceTour();
-  });
+  }, { capture: true });
 
   dialog.addEventListener("cancel", (event) => {
     event.preventDefault();
