@@ -7,8 +7,11 @@ function stripUrlVersion(specifier) {
 }
 
 const html = await readText("index.html");
+const distHtml = await readText("dist/index.html");
 const css = await readText("style.css");
+const onboardingCss = await readText("onboarding.css");
 const appSource = await readText("src/bootstrap/init-app.js");
+const tourSource = await readText("src/onboarding/first-run-tour.js");
 
 for (const id of [
   "heroStage",
@@ -19,12 +22,67 @@ for (const id of [
   "hintBtn",
   "newGameBtn",
   "factsContent",
+  "onboardingDialog",
+  "onboardingTitle",
+  "onboardingPrimaryBtn",
+  "onboardingSecondaryBtn",
+  "tutorialReplayBtn",
 ]) {
   assert(html.includes(`id="${id}"`), `index.html is missing required id="${id}"`);
 }
 
 const scriptMatch = html.match(/<script type="module" src="([^\"]+)"><\/script>/);
 assert(scriptMatch, "index.html must include a module script entry");
+assert(html.includes('href="onboarding.css?'), "index.html must load the onboarding stylesheet");
+assert(distHtml.includes('href="onboarding.css?'), "dist/index.html must load the onboarding stylesheet");
+
+for (const language of ["en", "de", "hr"]) {
+  assert(
+    html.includes(`data-learning-language="${language}"`),
+    `index.html is missing the ${language} learning-language option`,
+  );
+}
+assert(
+  html.includes('data-learning-language="hr" type="button" aria-pressed="false">HR</button>'),
+  "The onboarding learning-language option must be labelled HR",
+);
+assert(!html.includes("B/H/S"), "The onboarding popup must not use the B/H/S label");
+assert(
+  html.indexOf('id="sliderUnitLabel"') < html.indexOf('id="sliderLabel"') &&
+    html.indexOf('id="sliderLabel"') < html.indexOf('id="sessionSizeSlider"'),
+  "The rounds control must place its value between the label and slider",
+);
+
+assert(tourSource.includes("setLearningMode(nextLanguage)"), "Popup language controls must change the learning mode");
+assert(tourSource.includes("function advanceTour()"), "Onboarding controls must share one safe advance path");
+assert(!tourSource.includes('finish("played")'), "The welcome Play button must enter the tour before closing");
+assert(
+  onboardingCss.includes(".onboarding-back-btn.is-hidden ~ .onboarding-primary-btn"),
+  "The first tutorial step must expand its Next button when Back is hidden",
+);
+assert(
+  tourSource.includes("const tutorialLanguage = resolveTutorialLanguage"),
+  "Tutorial copy language must be resolved independently from browser preferences",
+);
+assert(
+  !tourSource.includes("ONBOARDING_LANGUAGE_STORAGE_KEY"),
+  "Tutorial copy language must not be persisted from learning-language button clicks",
+);
+
+for (const id of ["onboardingDialog", "onboardingTitle", "onboardingPrimaryBtn", "tutorialReplayBtn"]) {
+  assert(distHtml.includes(`id="${id}"`), `dist/index.html is missing required id="${id}"`);
+}
+
+for (const relativePath of [
+  "onboarding.css",
+  "src/onboarding/first-run-tour.js",
+  "src/onboarding/tutorial-language.js",
+  "src/onboarding/tour-geometry.js",
+]) {
+  const sourceAsset = await readText(relativePath);
+  const distAsset = await readText(`dist/${relativePath}`);
+  assert(sourceAsset === distAsset, `Production mirror is stale: dist/${relativePath}`);
+}
 
 for (const flagEntity of ["&#127469;&#127479;", "&#127468;&#127463;", "&#127465;&#127466;"]) {
   assert(!html.includes(flagEntity), `index.html still contains native flag emoji entity ${flagEntity}`);

@@ -1,5 +1,6 @@
 import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-18-prompt-fit1";
 import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-11-height-ui1";
+import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-21-onboarding5";
 import {
   CARD_SCOPE_OPTIONS,
   MODE_SCOPE_MAP,
@@ -362,6 +363,9 @@ let factsPickerRenderKey = "";
 let locales = null;
 let hasBootstrappedApp = false;
 let sessionRecoveryNonce = 0;
+let firstRunTour = null;
+let onboardingPending = false;
+let onboardingOpenedAt = 0;
 
 const LEARNING_MODE_STORAGE_KEY = "germancro.learningMode";
 const PROMPT_ORDER_STORAGE_KEY = "germancro.promptOrderSwapped";
@@ -404,6 +408,7 @@ const arrowDockLabelEls = {
 };
 const appLoaderEl = document.getElementById("appLoader");
 const appLoaderSpinnerEl = document.getElementById("appLoaderSpinner");
+const onboardingDialogEl = document.getElementById("onboardingDialog");
 const installGuidePanelEl = document.getElementById("installGuidePanel");
 const installGuideBrowserPanelEl = document.getElementById("installGuideBrowserPanel");
 const installGuideBrowserEl = document.getElementById("installGuideBrowser");
@@ -442,6 +447,7 @@ const statsBarEl = document.querySelector(".stats-bar");
 const catCountEl = document.getElementById("catCount");
 const catButtonsLabelEl = document.getElementById("catButtonsLabel");
 const settingsPanelTitleEl = document.getElementById("settingsPanelTitle");
+const tutorialReplayBtnEl = document.getElementById("tutorialReplayBtn");
 const catPanelTitleEl = document.getElementById("catPanelTitle");
 const difficultyHardBtn = document.getElementById("difficultyHardBtn");
 const difficultyMediumBtn = document.getElementById("difficultyMediumBtn");
@@ -978,6 +984,8 @@ function focusAnswerInputAtEnd() {
 
 function isAnswerFocusBlocked() {
   return Boolean(
+    onboardingPending ||
+    firstRunTour?.isOpen() ||
     isSessionEndVisible() ||
     (authorPanelEl && !authorPanelEl.classList.contains("is-hidden"))
   );
@@ -1392,8 +1400,8 @@ function formatTemplate(template, params = {}) {
   ));
 }
 
-function t(path, params = {}) {
-  const current = getByPath(getLocaleBundle(), path);
+function t(path, params = {}, locale = getLocale()) {
+  const current = getByPath(getLocaleBundle(locale), path);
   if (current !== undefined) {
     return formatTemplate(current, params);
   }
@@ -1958,6 +1966,7 @@ function renderStaticUi() {
   setLocalizedText(sessionEndLabelEl, "messages.session.finished");
   setLocalizedText(restartBtnEl, "messages.session.newRound");
   setLocalizedText(settingsPanelTitleEl, "messages.actions.settings");
+  setLocalizedText(tutorialReplayBtnEl, "onboarding.controls.replay");
   setLocalizedText(catPanelTitleEl, "messages.categories.title");
   setLocalizedText(catButtonsLabelEl, "messages.categories.select");
   setLocalizedText(newGameBtn, "messages.categories.newGame");
@@ -1994,6 +2003,7 @@ function renderStaticUi() {
   setLocalizedText(siteFooterLinkEl, "footer");
   renderGrammarSection();
   scheduleCardTopbarLayoutSync();
+  firstRunTour?.refreshCopy();
 }
 
 function switchLearningMode(nextLanguage) {
@@ -2088,7 +2098,7 @@ async function fetchJson(url, fallback) {
 }
 
 async function loadLocales() {
-  return fetchJson("locales.json", null);
+  return fetchJson("locales.json?v=2026-08-21-onboarding4", null);
 }
 
 async function detectCapabilities() {
@@ -4341,7 +4351,7 @@ function loadCard(options = {}) {
   buildWordGrid(getTargetValue(card), restoredTypedValue);
   updateSearchLinks(card);
 
-  if (focusInput) {
+  if (focusInput && !isAnswerFocusBlocked()) {
     focusAnswerInputWithoutScroll();
   }
 }
@@ -4607,6 +4617,11 @@ function maybeShowInstallGuide() {
     return;
   }
 
+  if (onboardingPending || firstRunTour?.isOpen()) {
+    hideInstallGuide();
+    return;
+  }
+
   const context = detectInstallGuideContext();
   if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
     hideInstallGuide();
@@ -4627,6 +4642,42 @@ function initInstallGuide() {
   });
 
   maybeShowInstallGuide();
+}
+
+function initFirstRunTour() {
+  firstRunTour = createFirstRunTour({
+    dialog: onboardingDialogEl,
+    translate: t,
+    getLearningMode: getTargetLanguage,
+    setLearningMode: switchLearningMode,
+    focusAnswer: () => {
+      if (canConvenienceFocusAnswerInput()) {
+        focusAnswerInputWithoutScroll();
+      }
+    },
+    onOpen: () => {
+      onboardingPending = false;
+      onboardingOpenedAt = Date.now();
+      hideInstallGuide();
+    },
+    onClose: ({ replay }) => {
+      const onboardingDuration = onboardingOpenedAt
+        ? Math.max(0, Date.now() - onboardingOpenedAt)
+        : 0;
+      onboardingOpenedAt = 0;
+      onboardingPending = false;
+      if (replay) {
+        sessionStart += onboardingDuration;
+      } else {
+        sessionStart = Date.now();
+      }
+      updateStats();
+      window.setTimeout(maybeShowInstallGuide, 0);
+    },
+  });
+
+  onboardingPending = Boolean(firstRunTour?.shouldShow());
+  tutorialReplayBtnEl?.addEventListener("click", () => firstRunTour?.replay());
 }
 
 function getEncouragement(currentStreak) {
@@ -4824,7 +4875,15 @@ function initInputEvents() {
   }
 
   document.addEventListener("keydown", (event) => {
-    if (event.defaultPrevented || event.repeat || event.altKey || event.ctrlKey || event.metaKey) {
+    if (
+      event.defaultPrevented ||
+      event.repeat ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      onboardingPending ||
+      firstRunTour?.isOpen()
+    ) {
       return;
     }
 
@@ -4988,6 +5047,7 @@ async function initApp() {
   applyLearningTheme();
   renderStaticUi();
   createFlagColumns();
+  initFirstRunTour();
   initInstallGuide();
   initDifficultyControls();
   initInputEvents();
@@ -5011,6 +5071,9 @@ async function initApp() {
   buildTopicPanel();
   hasBootstrappedApp = true;
   await recoverPlayableSession("init-app", SESSION_SIZE);
+  if (onboardingPending) {
+    firstRunTour?.open();
+  }
 }
 
 window.startSession = startSession;

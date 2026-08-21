@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=overlays-content">
 <title>GermanCro</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="stylesheet" href="style.css?v=2026-08-19-trail-position8">
+    <link rel="stylesheet" href="style.css?v=2026-08-21-onboarding1">
+    <link rel="stylesheet" href="onboarding.css?v=2026-08-21-onboarding9">
 </head>
 <body>
 
@@ -15,6 +16,43 @@
   <div class="app-loader-spinner" id="appLoaderSpinner" aria-hidden="true"></div>
   <div class="app-loader-title">Lernen je Power!</div>
 </div>
+
+<dialog class="onboarding-dialog" id="onboardingDialog" aria-labelledby="onboardingTitle" aria-describedby="onboardingBody">
+  <div class="onboarding-welcome-scrim" aria-hidden="true"></div>
+  <div class="onboarding-scrim onboarding-scrim--top" aria-hidden="true"></div>
+  <div class="onboarding-scrim onboarding-scrim--left" aria-hidden="true"></div>
+  <div class="onboarding-scrim onboarding-scrim--right" aria-hidden="true"></div>
+  <div class="onboarding-scrim onboarding-scrim--bottom" aria-hidden="true"></div>
+  <div class="onboarding-spotlight" aria-hidden="true"></div>
+  <section class="onboarding-panel">
+    <div class="onboarding-panel-meta">
+      <span class="onboarding-progress is-hidden" id="onboardingProgress" aria-live="polite"></span>
+      <button class="onboarding-skip-btn is-hidden" id="onboardingSkipBtn" type="button">Skip tour</button>
+    </div>
+    <div class="onboarding-brand" aria-hidden="true"><span>German</span><strong>Cro</strong></div>
+    <h2 id="onboardingTitle" tabindex="-1">Ready to learn?</h2>
+    <p id="onboardingBody">Choose the language you want to learn. Start now or take the short tour.</p>
+    <div class="onboarding-feedback-key is-hidden" id="onboardingFeedbackKey">
+      <span><i class="is-correct" aria-hidden="true"></i><span id="onboardingFeedbackCorrect">Correct</span></span>
+      <span><i class="is-next" aria-hidden="true"></i><span id="onboardingFeedbackNext">Up next</span></span>
+      <span><i class="is-wrong" aria-hidden="true"></i><span id="onboardingFeedbackWrong">Try again</span></span>
+    </div>
+    <div class="onboarding-language-group" id="onboardingLanguageGroup" role="group" aria-labelledby="onboardingLanguageLabel">
+      <span class="onboarding-language-label" id="onboardingLanguageLabel">Learning language</span>
+      <div class="onboarding-language-options">
+        <button class="onboarding-language-btn" data-learning-language="en" type="button" aria-pressed="true">EN</button>
+        <button class="onboarding-language-btn" data-learning-language="de" type="button" aria-pressed="false">DE</button>
+        <button class="onboarding-language-btn" data-learning-language="hr" type="button" aria-pressed="false">HR</button>
+      </div>
+    </div>
+    <p class="onboarding-replay-note" id="onboardingReplayNote">You can reopen this guide anytime by choosing Tutorial in Settings.</p>
+    <div class="onboarding-actions">
+      <button class="onboarding-back-btn is-hidden" id="onboardingBackBtn" type="button">Back</button>
+      <button class="onboarding-secondary-btn" id="onboardingSecondaryBtn" type="button">Tour · 4 steps</button>
+      <button class="onboarding-primary-btn" id="onboardingPrimaryBtn" type="button">Start learning</button>
+    </div>
+  </section>
+</dialog>
 
 <div class="toast" id="toast"></div>
 
@@ -178,6 +216,7 @@
       <div class="new-game-row">
         <div class="session-slider-wrap">
           <span class="slider-prefix" id="sliderUnitLabel">rounds:</span>
+          <span class="slider-label"><span id="sliderLabel">10</span></span>
           <input
             type="range"
             id="sessionSizeSlider"
@@ -186,7 +225,6 @@
             step="5"
             value="10"
           />
-          <span class="slider-label"><span id="sliderLabel">10</span></span>
         </div>
         <div class="cat-count" id="catCount"></div>
       </div>
@@ -194,6 +232,7 @@
     <button class="new-game-btn" id="newGameBtn" type="button">
       Neues Spiel
     </button>
+    <button class="tutorial-replay-btn" id="tutorialReplayBtn" type="button">Tutorial</button>
   </div>
   <div class="cat-buttons-label" id="catButtonsLabel">Kategorien auswählen</div>
   <div class="cat-buttons" id="catButtons"></div>
@@ -271,6 +310,6 @@
   <a href="https://lomuss33.github.io/myWebsite/" target="_blank" rel="noopener noreferrer" id="siteFooterLink">made by Lovro Musi&#263;, in Gie&#223;en 2026, with &#9829;</a>
 </footer>
 
-  <script type="module" src="app.js?v=2026-08-19-trail-position3"></script>
+  <script type="module" src="app.js?v=2026-08-21-onboarding5"></script>
 </body>
 </html>

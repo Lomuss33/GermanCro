@@ -557,6 +557,52 @@
         "firefoxDesktop": "Lesezeichen speichern"
       }
     },
+    "onboarding": {
+      "welcome": {
+        "title": "Bereit zum Lernen?",
+        "body": "Wähle die Sprache, die du lernen möchtest. Starte direkt oder sieh dir zuerst die kurze Anleitung an.",
+        "languageLabel": "Lernsprache",
+        "replayNote": "Die Anleitung kannst du jederzeit über „Tutorial“ in den Einstellungen öffnen."
+      },
+      "languages": {
+        "en": "Englisch",
+        "de": "Deutsch",
+        "hr": "Kroatisch"
+      },
+      "progress": "Schritt {current} von {total}",
+      "steps": {
+        "prompts": {
+          "title": "Lies die beiden Hinweise",
+          "body": "Die große Zeile ist der Haupthinweis. Die kleinere ergänzt den Kontext; jede Flagge zeigt die Sprache."
+        },
+        "input": {
+          "title": "Tippe die Übersetzung",
+          "body": "Gib die passende Übersetzung ein. Groß- und Kleinschreibung ist nicht wichtig."
+        },
+        "feedback": {
+          "title": "Verstehe das Feedback",
+          "body": "Grün bedeutet richtig, Gelb zeigt den nächsten Buchstaben und Rot markiert, was du korrigieren solltest."
+        },
+        "actions": {
+          "title": "Wähle den nächsten Schritt",
+          "body": "Nutze den Tipp, überspringe die Karte oder drücke Enter, um deine Antwort zu prüfen und fortzufahren."
+        }
+      },
+      "feedback": {
+        "correct": "Richtig",
+        "next": "Als Nächstes",
+        "wrong": "Noch einmal"
+      },
+      "controls": {
+        "play": "Jetzt spielen",
+        "tour": "Kurztour · 4 Schritte",
+        "back": "Zurück",
+        "next": "Weiter",
+        "skip": "Tour überspringen",
+        "start": "Loslegen",
+        "replay": "Tutorial"
+      }
+    },
     "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
   },
   "hr": {
@@ -1107,6 +1153,52 @@
         "edgeDesktop": "... > Apps > Instaliraj",
         "chromeDesktop": "... > Instaliraj",
         "firefoxDesktop": "Spremi oznaku"
+      }
+    },
+    "onboarding": {
+      "welcome": {
+        "title": "Spremni za učenje?",
+        "body": "Odaberi jezik koji želiš učiti. Započni odmah ili prvo pogledaj kratki vodič.",
+        "languageLabel": "Jezik učenja",
+        "replayNote": "Vodič možeš ponovno otvoriti u postavkama u bilo kojem trenutku."
+      },
+      "languages": {
+        "en": "Engleski",
+        "de": "Njemački",
+        "hr": "Hrvatski"
+      },
+      "progress": "Korak {current} od {total}",
+      "steps": {
+        "prompts": {
+          "title": "Pročitaj obje natuknice",
+          "body": "Veći redak je glavna natuknica. Manji dodaje kontekst, a svaka zastava pokazuje jezik."
+        },
+        "input": {
+          "title": "Upiši prijevod",
+          "body": "Upiši odgovarajući prijevod. Velika i mala slova nisu važna."
+        },
+        "feedback": {
+          "title": "Razumij povratnu informaciju",
+          "body": "Zeleno znači točno, žuto otkriva sljedeće slovo, a crveno pokazuje što treba ispraviti."
+        },
+        "actions": {
+          "title": "Odaberi sljedeći korak",
+          "body": "Upotrijebi pomoć, preskoči karticu ili pritisni Enter za provjeru i nastavak."
+        }
+      },
+      "feedback": {
+        "correct": "Točno",
+        "next": "Sljedeće",
+        "wrong": "Pokušaj ponovno"
+      },
+      "controls": {
+        "play": "Započni",
+        "tour": "Vodič · 4 koraka",
+        "back": "Natrag",
+        "next": "Dalje",
+        "skip": "Preskoči vodič",
+        "start": "Kreni",
+        "replay": "Vodič"
       }
     },
     "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
@@ -1663,6 +1755,52 @@
         "edgeDesktop": "... > Apps > Install",
         "chromeDesktop": "... > Install",
         "firefoxDesktop": "Save bookmark"
+      }
+    },
+    "onboarding": {
+      "welcome": {
+        "title": "Ready to learn?",
+        "body": "Choose the language you want to learn. Start now or take the short tour.",
+        "languageLabel": "Learning language",
+        "replayNote": "You can reopen this guide anytime by choosing Tutorial in Settings."
+      },
+      "languages": {
+        "en": "English",
+        "de": "German",
+        "hr": "Croatian"
+      },
+      "progress": "Step {current} of {total}",
+      "steps": {
+        "prompts": {
+          "title": "Read both clues",
+          "body": "The larger line is the main clue. The smaller line adds context; each flag shows its language."
+        },
+        "input": {
+          "title": "Type the translation",
+          "body": "Enter the matching translation. Capitalization does not matter."
+        },
+        "feedback": {
+          "title": "Read the feedback",
+          "body": "Green means correct, yellow reveals the next letter, and red marks what to fix."
+        },
+        "actions": {
+          "title": "Choose your next move",
+          "body": "Use Hint, skip the card, or press Enter to check your answer and continue."
+        }
+      },
+      "feedback": {
+        "correct": "Correct",
+        "next": "Up next",
+        "wrong": "Try again"
+      },
+      "controls": {
+        "play": "Start learning",
+        "tour": "Tour · 4 steps",
+        "back": "Back",
+        "next": "Next",
+        "skip": "Skip tour",
+        "start": "Start learning",
+        "replay": "Tutorial"
       }
     },
     "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
