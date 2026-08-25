@@ -15,20 +15,20 @@
     },
     "topics": {
       "basics": "Alltag",
-      "vehicles": "Fahrzeuge",
-      "nature": "Natur",
-      "food": "Küche",
-      "travel": "Urlaub",
-      "work": "Arbeit",
-      "health": "Krankenhaus",
-      "people": "Menschen",
-      "shopping": "Einkaufen",
-      "developertech": "Softwareentwicklung",
+      "vehicles": "Mobilität",
+      "nature": "Natur & Umwelt",
+      "food": "Essen & Küche",
+      "travel": "Reisen",
+      "work": "Beruf & Arbeit",
+      "health": "Gesundheit",
+      "people": "Menschen & Beziehungen",
+      "shopping": "Einkaufen & Service",
+      "developertech": "Code & Software",
       "itnetwork": "IT & Netzwerke",
-      "agile_stakeholder": "Stakeholder & Formate",
-      "it_ops": "IT-Ops & Testing",
-      "personal_lms": "LMS & Qualifizierung",
-      "db_workplace": "DB-Arbeitskultur"
+      "agile_stakeholder": "Stakeholder & Kommunikation",
+      "it_ops": "IT-Betrieb & Tests",
+      "personal_lms": "Lernen & Qualifizierung",
+      "db_workplace": "Datenbanken & Arbeitswelt"
     },
     "scopes": {
       "all": "Alle 3",
@@ -93,6 +93,7 @@
         "hint": "Tipp",
         "skip": "Überspringen",
         "skipTitle": "Diese Karte später in dieser Runde zeigen",
+        "skipRemaining": "{count} Überspringen übrig",
         "enterHint": "zum Prüfen",
         "settings": "Einstellungen",
         "switchPrompt": "Tauschen",
@@ -540,6 +541,7 @@
       }
     },
     "installGuide": {
+      "browserPrefix": "auf",
       "fallbackBrowser": "Browser",
       "fallbackDesktop": "Desktop",
       "fallbackMobile": "Mobile",
@@ -560,9 +562,9 @@
     "onboarding": {
       "welcome": {
         "title": "Bereit zum Lernen?",
-        "body": "Wähle die Sprache, die du lernen möchtest. Starte direkt oder sieh dir zuerst die kurze Anleitung an.",
+        "body": "Wähle eine Lernsprache und starte direkt.",
         "languageLabel": "Lernsprache",
-        "replayNote": "Die Anleitung kannst du jederzeit über „Tutorial“ in den Einstellungen öffnen."
+        "replayNote": "[[lead]]Tipp:[[/lead]] Mit den Flaggen unten rechts wechselst du jederzeit die Lernsprache. Der [[pink]]pinke[[/pink]] Tutorial-Button öffnet diese Tour erneut."
       },
       "languages": {
         "en": "Englisch",
@@ -594,13 +596,14 @@
         "wrong": "Noch einmal"
       },
       "controls": {
-        "play": "Jetzt spielen",
+        "play": "Jetzt lernen",
         "tour": "Kurztour · 4 Schritte",
         "back": "Zurück",
         "next": "Weiter",
         "skip": "Tour überspringen",
         "start": "Loslegen",
-        "replay": "Tutorial"
+        "replay": "Tutorial",
+        "settings": "Einstellungen öffnen"
       }
     },
     "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
@@ -621,20 +624,20 @@
     },
     "topics": {
       "basics": "Osnove",
-      "vehicles": "Vozila",
-      "nature": "Priroda",
-      "food": "Kuhinja",
-      "travel": "Odmor",
-      "work": "Posao",
-      "health": "Bolnica",
-      "people": "Ljudi",
-      "shopping": "Kupovina",
-      "developertech": "Razvoj softvera",
+      "vehicles": "Mobilnost",
+      "nature": "Priroda i okoliš",
+      "food": "Hrana i kuhinja",
+      "travel": "Putovanja",
+      "work": "Posao i karijera",
+      "health": "Zdravlje",
+      "people": "Ljudi i odnosi",
+      "shopping": "Kupovina i usluge",
+      "developertech": "Kod i razvoj softvera",
       "itnetwork": "IT i mreže",
-      "agile_stakeholder": "Dionici i formati",
+      "agile_stakeholder": "Dionici i komunikacija",
       "it_ops": "IT operacije i testovi",
-      "personal_lms": "LMS i kvalifikacije",
-      "db_workplace": "DB kultura rada"
+      "personal_lms": "Učenje i kvalifikacije",
+      "db_workplace": "Baze podataka i radna kultura"
     },
     "scopes": {
       "all": "Sve 3",
@@ -699,6 +702,7 @@
         "hint": "Savjet",
         "skip": "Preskoči",
         "skipTitle": "Prikaži ovu karticu kasnije u ovoj rundi",
+        "skipRemaining": "Preostalo preskakanja: {count}",
         "enterHint": "za provjeru",
         "settings": "Postavke",
         "switchPrompt": "Zamijeni",
@@ -1138,6 +1142,7 @@
       }
     },
     "installGuide": {
+      "browserPrefix": "na",
       "fallbackBrowser": "Preglednik",
       "fallbackDesktop": "Desktop",
       "fallbackMobile": "Mobitel",
@@ -1158,9 +1163,9 @@
     "onboarding": {
       "welcome": {
         "title": "Spremni za učenje?",
-        "body": "Odaberi jezik koji želiš učiti. Započni odmah ili prvo pogledaj kratki vodič.",
+        "body": "Odaberi jezik učenja i odmah započni.",
         "languageLabel": "Jezik učenja",
-        "replayNote": "Vodič možeš ponovno otvoriti u postavkama u bilo kojem trenutku."
+        "replayNote": "[[lead]]Savjet:[[/lead]] Jezik učenja možeš promijeniti zastavicama dolje desno. Gumb [[pink]]ružičaste boje[[/pink]] „Vodič“ ponovno otvara ovu uputu."
       },
       "languages": {
         "en": "Engleski",
@@ -1192,13 +1197,14 @@
         "wrong": "Pokušaj ponovno"
       },
       "controls": {
-        "play": "Započni",
-        "tour": "Vodič · 4 koraka",
+        "play": "Započni učenje",
+        "tour": "Kratki vodič · 4 koraka",
         "back": "Natrag",
         "next": "Dalje",
         "skip": "Preskoči vodič",
         "start": "Kreni",
-        "replay": "Vodič"
+        "replay": "Vodič",
+        "settings": "Otvori postavke"
       }
     },
     "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
@@ -1219,20 +1225,20 @@
     },
     "topics": {
       "basics": "Basics",
-      "vehicles": "Vehicles",
-      "nature": "Nature",
-      "food": "Kitchen",
-      "travel": "Holiday",
-      "work": "Work",
-      "health": "Hospital",
-      "people": "People",
-      "shopping": "Shopping",
-      "developertech": "Software Development",
+      "vehicles": "Mobility",
+      "nature": "Nature & Environment",
+      "food": "Food & Kitchen",
+      "travel": "Travel",
+      "work": "Work & Career",
+      "health": "Health",
+      "people": "People & Relationships",
+      "shopping": "Shopping & Services",
+      "developertech": "Code & Software",
       "itnetwork": "IT & Networks",
-      "agile_stakeholder": "Stakeholders & Formats",
+      "agile_stakeholder": "Stakeholders & Communication",
       "it_ops": "IT Ops & Testing",
-      "personal_lms": "LMS & Qualification",
-      "db_workplace": "DB Work Culture"
+      "personal_lms": "Learning & Qualification",
+      "db_workplace": "Databases & Work Culture"
     },
     "scopes": {
       "all": "All 3",
@@ -1297,6 +1303,7 @@
         "hint": "Hint",
         "skip": "Skip",
         "skipTitle": "Show this card later in this round",
+        "skipRemaining": "{count} skips remaining",
         "enterHint": "to check",
         "settings": "Settings",
         "switchPrompt": "Swap",
@@ -1740,6 +1747,7 @@
       }
     },
     "installGuide": {
+      "browserPrefix": "on",
       "fallbackBrowser": "Browser",
       "fallbackDesktop": "Desktop",
       "fallbackMobile": "Mobile",
@@ -1760,9 +1768,9 @@
     "onboarding": {
       "welcome": {
         "title": "Ready to learn?",
-        "body": "Choose the language you want to learn. Start now or take the short tour.",
+        "body": "Choose a language and start practicing.",
         "languageLabel": "Learning language",
-        "replayNote": "You can reopen this guide anytime by choosing Tutorial in Settings."
+        "replayNote": "[[lead]]Tip:[[/lead]] Switch languages anytime with the flags in the bottom-right corner. The [[pink]]pink[[/pink]] Tutorial button opens this guide again."
       },
       "languages": {
         "en": "English",
@@ -1795,12 +1803,13 @@
       },
       "controls": {
         "play": "Start learning",
-        "tour": "Tour · 4 steps",
+        "tour": "Quick tour · 4 steps",
         "back": "Back",
         "next": "Next",
         "skip": "Skip tour",
         "start": "Start learning",
-        "replay": "Tutorial"
+        "replay": "Tutorial",
+        "settings": "Open settings"
       }
     },
     "footer": "made by Lovro Musić, in Gießen 2026, with ♥"

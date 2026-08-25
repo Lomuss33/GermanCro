@@ -1,31 +1,34 @@
 import { expandRect, getUnionRect, placeTourPanel } from "./tour-geometry.js?v=2026-08-21-onboarding1";
 import { normalizeTutorialLanguage, resolveTutorialLanguage } from "./tutorial-language.js?v=2026-08-21-onboarding2";
 
-export const ONBOARDING_STORAGE_KEY = "germancro.onboarding.v1";
+export const ONBOARDING_STORAGE_KEY = "germancro.onboarding.v2";
 
 const TOUR_STEPS = Object.freeze([
   Object.freeze({
     id: "prompts",
-    targets: Object.freeze([".prompt-row-main", ".prompt-row-sub"]),
+    targets: Object.freeze([
+      '[data-onboarding-target="prompt-main"]',
+      '[data-onboarding-target="prompt-secondary"]',
+    ]),
     titleKey: "onboarding.steps.prompts.title",
     bodyKey: "onboarding.steps.prompts.body",
   }),
   Object.freeze({
     id: "input",
-    targets: Object.freeze([".input-shell"]),
+    targets: Object.freeze(['[data-onboarding-target="answer-input"]']),
     titleKey: "onboarding.steps.input.title",
     bodyKey: "onboarding.steps.input.body",
   }),
   Object.freeze({
     id: "feedback",
-    targets: Object.freeze(["#answerGuide"]),
+    targets: Object.freeze(['[data-onboarding-target="answer-guide"]']),
     titleKey: "onboarding.steps.feedback.title",
     bodyKey: "onboarding.steps.feedback.body",
     showFeedbackKey: true,
   }),
   Object.freeze({
     id: "actions",
-    targets: Object.freeze(["#answerGuide .action-row"]),
+    targets: Object.freeze(['[data-onboarding-target="answer-actions"]']),
     titleKey: "onboarding.steps.actions.title",
     bodyKey: "onboarding.steps.actions.body",
   }),
@@ -134,6 +137,7 @@ export function createFirstRunTour({
     scrimRight: dialog.querySelector(".onboarding-scrim--right"),
     scrimBottom: dialog.querySelector(".onboarding-scrim--bottom"),
     brand: dialog.querySelector(".onboarding-brand"),
+    brandSegments: Array.from(dialog.querySelectorAll("[data-brand-segment]")),
     progress: dialog.querySelector("#onboardingProgress"),
     title: dialog.querySelector("#onboardingTitle"),
     body: dialog.querySelector("#onboardingBody"),
@@ -143,9 +147,12 @@ export function createFirstRunTour({
     feedbackWrong: dialog.querySelector("#onboardingFeedbackWrong"),
     languageGroup: dialog.querySelector("#onboardingLanguageGroup"),
     languageLabel: dialog.querySelector("#onboardingLanguageLabel"),
+    languageLabelText: dialog.querySelector(".onboarding-language-label-text"),
+    languageLabelLetters: dialog.querySelector(".onboarding-language-label-letters"),
     languageButtons: Array.from(dialog.querySelectorAll(".onboarding-language-btn")),
     backButton: dialog.querySelector("#onboardingBackBtn"),
     secondaryButton: dialog.querySelector("#onboardingSecondaryBtn"),
+    settingsButton: dialog.querySelector("#onboardingSettingsBtn"),
     primaryButton: dialog.querySelector("#onboardingPrimaryBtn"),
     skipButton: dialog.querySelector("#onboardingSkipBtn"),
     replayNote: dialog.querySelector("#onboardingReplayNote"),
@@ -310,6 +317,7 @@ export function createFirstRunTour({
   function syncLanguageButtons() {
     dialog.setAttribute("lang", tutorialLanguage);
     const activeLearningMode = normalizeTutorialLanguage(getLearningMode?.()) || "de";
+    syncBrandAccent(activeLearningMode);
     elements.languageButtons.forEach((button) => {
       const buttonLanguage = normalizeTutorialLanguage(button.dataset.learningLanguage);
       const isActive = buttonLanguage === activeLearningMode;
@@ -321,6 +329,14 @@ export function createFirstRunTour({
       if (visibleName) {
         visibleName.textContent = languageName;
       }
+    });
+  }
+
+  function syncBrandAccent(activeLanguage) {
+    const normalizedLanguage = normalizeTutorialLanguage(activeLanguage) || "de";
+    elements.brandSegments.forEach((segment) => {
+      const segmentLanguage = normalizeTutorialLanguage(segment.dataset.brandSegment);
+      segment.classList.toggle("is-accent", segmentLanguage === normalizedLanguage);
     });
   }
 
@@ -336,7 +352,62 @@ export function createFirstRunTour({
     }
   }
 
-  function renderWelcome() {
+  function renderLanguageLabel(label) {
+    const labelText = String(label || "");
+    if (elements.languageLabelText) {
+      elements.languageLabelText.textContent = labelText;
+    }
+    if (!elements.languageLabelLetters) {
+      if (elements.languageLabel) {
+        elements.languageLabel.textContent = labelText;
+      }
+      return;
+    }
+
+    const characters = Array.from(labelText);
+    const fragment = document.createDocumentFragment();
+    characters.forEach((character) => {
+      const letter = document.createElement("span");
+      letter.className = "onboarding-language-label-letter";
+      if (character === " ") {
+        letter.classList.add("is-space");
+        letter.setAttribute("aria-hidden", "true");
+      }
+      letter.textContent = character === " " ? "\u00a0" : character;
+      fragment.append(letter);
+    });
+    elements.languageLabelLetters.replaceChildren(fragment);
+  }
+
+  function renderReplayNote(note) {
+    if (!elements.replayNote) {
+      return;
+    }
+
+    const noteText = String(note || "");
+    const tokenPattern = /\[\[(lead|pink)\]\]([\s\S]*?)\[\[\/\1\]\]/g;
+    const fragment = document.createDocumentFragment();
+    let cursor = 0;
+    let match;
+
+    while ((match = tokenPattern.exec(noteText))) {
+      if (match.index > cursor) {
+        fragment.append(document.createTextNode(noteText.slice(cursor, match.index)));
+      }
+      const span = document.createElement("span");
+      span.className = `onboarding-replay-note-${match[1]}`;
+      span.textContent = match[2];
+      fragment.append(span);
+      cursor = tokenPattern.lastIndex;
+    }
+
+    if (cursor < noteText.length) {
+      fragment.append(document.createTextNode(noteText.slice(cursor)));
+    }
+    elements.replayNote.replaceChildren(fragment);
+  }
+
+  function renderWelcome({ focusTitle = true } = {}) {
     state = "welcome";
     stepIndex = -1;
     stopObservingTargets();
@@ -351,6 +422,7 @@ export function createFirstRunTour({
     elements.feedbackKey?.classList.add("is-hidden");
     elements.languageGroup?.classList.remove("is-hidden");
     elements.secondaryButton?.classList.remove("is-hidden");
+    elements.settingsButton?.classList.remove("is-hidden");
     elements.replayNote?.classList.remove("is-hidden");
 
     if (elements.title) {
@@ -360,20 +432,27 @@ export function createFirstRunTour({
       elements.body.textContent = tutorialTranslate("onboarding.welcome.body");
     }
     if (elements.languageLabel) {
-      elements.languageLabel.textContent = tutorialTranslate("onboarding.welcome.languageLabel");
+      renderLanguageLabel(tutorialTranslate("onboarding.welcome.languageLabel"));
     }
     if (elements.replayNote) {
-      elements.replayNote.textContent = tutorialTranslate("onboarding.welcome.replayNote");
+      renderReplayNote(tutorialTranslate("onboarding.welcome.replayNote"));
     }
     if (elements.secondaryButton) {
       elements.secondaryButton.textContent = tutorialTranslate("onboarding.controls.tour");
+    }
+    if (elements.settingsButton) {
+      const settingsLabel = tutorialTranslate("onboarding.controls.settings");
+      elements.settingsButton.textContent = settingsLabel;
+      elements.settingsButton.setAttribute("aria-label", settingsLabel);
     }
     if (elements.primaryButton) {
       elements.primaryButton.textContent = tutorialTranslate("onboarding.controls.play");
     }
     syncLanguageButtons();
     elements.panel?.removeAttribute("style");
-    window.requestAnimationFrame(() => elements.title?.focus({ preventScroll: true }));
+    if (focusTitle) {
+      window.requestAnimationFrame(() => elements.title?.focus({ preventScroll: true }));
+    }
   }
 
   async function renderStep(nextIndex) {
@@ -407,6 +486,7 @@ export function createFirstRunTour({
     elements.feedbackKey?.classList.toggle("is-hidden", !step.showFeedbackKey);
     elements.languageGroup?.classList.add("is-hidden");
     elements.secondaryButton?.classList.add("is-hidden");
+    elements.settingsButton?.classList.add("is-hidden");
     elements.replayNote?.classList.add("is-hidden");
 
     if (elements.progress) {
@@ -478,7 +558,7 @@ export function createFirstRunTour({
       return;
     }
     if (state === "welcome") {
-      renderWelcome();
+      renderWelcome({ focusTitle: false });
     } else if (state === "tour") {
       void renderStep(stepIndex);
     }
@@ -579,6 +659,12 @@ export function createFirstRunTour({
     }
   });
 
+  elements.settingsButton?.addEventListener("click", () => {
+    if (state === "welcome") {
+      finish("settings");
+    }
+  });
+
   elements.backButton?.addEventListener("click", () => {
     if (state === "tour" && stepIndex > 0) {
       void renderStep(stepIndex - 1);
@@ -595,13 +681,14 @@ export function createFirstRunTour({
         typeof setLearningMode === "function" &&
         nextLanguage !== normalizeTutorialLanguage(getLearningMode?.())
       ) {
+        syncBrandAccent(nextLanguage);
         setLearningMode(nextLanguage);
         window.setTimeout(syncLanguageButtons, 180);
       }
     });
   });
 
-  document.addEventListener("keydown", (event) => {
+  dialog.addEventListener("keydown", (event) => {
     if (
       !isOpen() ||
       event.repeat ||
@@ -609,6 +696,29 @@ export function createFirstRunTour({
       event.ctrlKey ||
       event.metaKey ||
       event.altKey
+    ) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      finish("skipped");
+      return;
+    }
+
+    const isSpaceKey = event.key === " " || event.key === "Spacebar";
+    const isArrowAdvanceKey = event.key === "ArrowLeft" || event.key === "ArrowRight";
+    const isAdvanceKey = event.key === "Enter" || isSpaceKey || isArrowAdvanceKey;
+    if (!isAdvanceKey) {
+      return;
+    }
+
+    const target = event.target;
+    if (
+      (event.key === "Enter" || isSpaceKey) &&
+      target instanceof Element &&
+      target.closest("button, a, input, textarea, select")
     ) {
       return;
     }

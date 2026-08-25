@@ -1,6 +1,6 @@
 import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-18-prompt-fit1";
 import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-11-height-ui1";
-import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-21-onboarding9";
+import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-25-onboarding15";
 import {
   CARD_SCOPE_OPTIONS,
   MODE_SCOPE_MAP,
@@ -15,7 +15,7 @@ import {
   normalizeSubcategory,
   normalizeTopic,
   sanitizeCard,
-} from "../../shared/card-schema.js?v=2026-08-10-topics2";
+} from "../../shared/card-schema.js?v=2026-08-10-topics5";
 
 const searchSites = [
   { name: "dict.cc", icon: "C", url: (w) => `https://www.dict.cc/?s=${encodeURIComponent(w)}` },
@@ -25,6 +25,7 @@ const searchSites = [
 ];
 
 const ASSET_REV = "2026-08-10-topics2";
+const FETCH_TIMEOUT_MS = 7000;
 const SESSION_SIZE = 10;
 const MAX_SESSION_SKIPS = 5;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
@@ -325,6 +326,7 @@ let bundledCards = [];
 let persistentCards = [];
 let sessionOnlyCards = [];
 let selectedTopics = null;
+let mixedTopicFeedbackTimer = 0;
 let capabilities = { persistentSave: false };
 
 let sessionCards = [];
@@ -347,7 +349,8 @@ let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
 let feedbackBurstPieces = [];
-let answerGuideMeasureTimer = 0;
+let answerGuideMeasureFrame = 0;
+let answerGuideResizeObserver = null;
 let cardTopbarLayoutRaf = 0;
 let learningMode = "de";
 let isPromptOrderSwapped = false;
@@ -374,6 +377,11 @@ const LANGUAGE_FLAG_CLASSES = {
   de: "language-flag-icon--de",
   hr: "language-flag-icon--hr",
   en: "language-flag-icon--en",
+};
+const LANGUAGE_FLAG_SOURCES = {
+  de: "https://flagcdn.com/de.svg",
+  hr: "https://flagcdn.com/hr.svg",
+  en: "https://flagcdn.com/gb.svg",
 };
 const LANGUAGE_FLAG_CLASS_NAMES = Object.values(LANGUAGE_FLAG_CLASSES);
 const LANGUAGE_DOCK_LABELS = {
@@ -416,6 +424,7 @@ const legendWrongEl = document.getElementById("legendWrong");
 const skipCardBtnEl = document.getElementById("skipCardBtn");
 const skipCardBtnLabelEl = document.getElementById("skipCardBtnLabel");
 const skipCounterEl = document.getElementById("skipCounter");
+const enterKeyBtnEl = document.getElementById("enterKeyBtn");
 const promptHeadTitleEl = document.getElementById("promptHeadTitle");
 const inputEl = document.getElementById("answer");
 const wordGrid = document.getElementById("wordGrid");
@@ -423,6 +432,8 @@ const answerTerminalStatusRowEl = document.getElementById("answerTerminalStatusR
 const answerTerminalStatusEl = document.getElementById("answerTerminalStatus");
 const answerGuideEl = document.getElementById("answerGuide");
 const answerGuideBodyEl = answerGuideEl?.querySelector(".answer-guide-body") || null;
+const answerGuideTrailFlagEl = answerGuideEl?.querySelector(".answer-guide-trail-flag") || null;
+const answerGuideActionRowEl = answerGuideEl?.querySelector(".action-row") || null;
 const answerGuideLabelEl = document.getElementById("answerGuideLabel");
 const answerGuideStatusEl = document.getElementById("answerGuideStatus");
 const answerGuideNoteEl = document.getElementById("answerGuideNote");
@@ -551,7 +562,6 @@ const ANSWER_GUIDE_SIZE_PROFILES = {
     tokenGap: 8,
     charGap: 3,
     separatorMinWidth: 28,
-    separatorPaddingInline: 6,
     spaceSeparatorGap: 6,
   },
   compact: {
@@ -560,7 +570,6 @@ const ANSWER_GUIDE_SIZE_PROFILES = {
     tokenGap: 6,
     charGap: 2,
     separatorMinWidth: 22,
-    separatorPaddingInline: 5,
     spaceSeparatorGap: 5,
   },
   dense: {
@@ -569,7 +578,6 @@ const ANSWER_GUIDE_SIZE_PROFILES = {
     tokenGap: 4,
     charGap: 2,
     separatorMinWidth: 18,
-    separatorPaddingInline: 4,
     spaceSeparatorGap: 4,
   },
   "dense-minus": {
@@ -578,7 +586,6 @@ const ANSWER_GUIDE_SIZE_PROFILES = {
     tokenGap: 3,
     charGap: 1,
     separatorMinWidth: 16,
-    separatorPaddingInline: 3,
     spaceSeparatorGap: 3,
   },
 };
@@ -795,7 +802,6 @@ function setAnswerGuideResponsiveVars(tier) {
   answerGuideEl.style.setProperty("--answer-guide-token-gap", `${Math.round(profile.tokenGap * controlScale)}px`);
   answerGuideEl.style.setProperty("--answer-guide-char-gap", `${Math.round(profile.charGap * controlScale)}px`);
   answerGuideEl.style.setProperty("--answer-guide-separator-min-width", `${Math.round(profile.separatorMinWidth * controlScale)}px`);
-  answerGuideEl.style.setProperty("--answer-guide-separator-padding-inline", `${Math.round(profile.separatorPaddingInline * controlScale)}px`);
   answerGuideEl.style.setProperty("--answer-guide-space-separator-gap", `${Math.round(profile.spaceSeparatorGap * controlScale)}px`);
   answerGuideEl.dataset.answerGuideScale = tier;
 }
@@ -830,20 +836,18 @@ function measureAnswerGuideBodyHeight() {
 }
 
 function syncAnswerGuideTrailPosition() {
-  const trailFlag = answerGuideEl?.querySelector(".answer-guide-trail-flag");
-  if (!trailFlag || !answerGuideBodyEl || !mainCard || !skipCardBtnEl) {
+  if (!answerGuideTrailFlagEl || !answerGuideBodyEl || !answerGuideActionRowEl || !skipCardBtnEl) {
     return;
   }
 
-  const guideRect = answerGuideEl.getBoundingClientRect();
   const skipRect = skipCardBtnEl.getBoundingClientRect();
+  const actionRect = answerGuideActionRowEl.getBoundingClientRect();
   const bodyRect = answerGuideBodyEl.getBoundingClientRect();
-  const flagHeight = trailFlag.getBoundingClientRect().height;
-  const midpoint = (guideRect.top + skipRect.top) / 2;
+  const midpoint = (skipRect.bottom + actionRect.bottom) / 2;
   const relativeTop = midpoint - bodyRect.top;
 
-  if ([guideRect.top, skipRect.top, bodyRect.top, flagHeight, relativeTop].every(Number.isFinite)) {
-    trailFlag.style.setProperty("--answer-guide-trail-top", `${relativeTop}px`);
+  if ([skipRect.bottom, actionRect.bottom, bodyRect.top, relativeTop].every(Number.isFinite)) {
+    answerGuideTrailFlagEl.style.setProperty("--answer-guide-trail-top", `${relativeTop}px`);
   }
 }
 
@@ -865,16 +869,29 @@ function getAnswerGuideLengthBucket(length) {
 
 function scheduleAnswerGuideMeasure(reason) {
   void reason;
-  if (answerGuideMeasureTimer || !answerGuideEl || !answerGuideBodyEl || !wordGrid) {
+  if (answerGuideMeasureFrame || !answerGuideEl || !answerGuideBodyEl || !wordGrid) {
     return;
   }
 
-  answerGuideMeasureTimer = window.setTimeout(() => {
-    answerGuideMeasureTimer = 0;
+  answerGuideMeasureFrame = window.requestAnimationFrame(() => {
+    answerGuideMeasureFrame = 0;
     measureAnswerGuideBodyHeight();
     applyAnswerGuideResponsiveSizing();
     syncAnswerGuideTrailPosition();
-  }, 0);
+  });
+}
+
+function initAnswerGuideResizeObserver() {
+  if (!answerGuideEl || !answerGuideBodyEl || typeof window.ResizeObserver !== "function") {
+    return;
+  }
+
+  answerGuideResizeObserver?.disconnect();
+  answerGuideResizeObserver = new window.ResizeObserver(() => {
+    scheduleAnswerGuideMeasure("answer-guide-resize");
+  });
+  answerGuideResizeObserver.observe(answerGuideEl);
+  answerGuideResizeObserver.observe(answerGuideBodyEl);
 }
 
 function applyAnswerGuideResponsiveSizing() {
@@ -1569,17 +1586,27 @@ function skipCurrentCard() {
 }
 
 function updateSkipCardButtonState() {
-  if (!skipCardBtnEl) {
+  const hasPlayableCard = hasActivePlayableCard();
+  if (enterKeyBtnEl) {
+    enterKeyBtnEl.disabled = !hasPlayableCard;
+  }
+  if (hintBtnEl) {
+    hintBtnEl.disabled = !hasPlayableCard;
+  }
+
+  if (skipCardBtnEl) {
+    skipCardBtnEl.disabled = !canSkipCurrentCard();
+  }
+  if (!skipCounterEl) {
     return;
   }
 
-  skipCardBtnEl.disabled = !canSkipCurrentCard();
-  if (skipCounterEl) {
-    const remainingSkips = Math.max(0, MAX_SESSION_SKIPS - sessionSkipsUsed);
-    skipCounterEl.textContent = String(remainingSkips);
-    skipCounterEl.setAttribute("aria-label", `${remainingSkips} skips remaining`);
-    skipCounterEl.title = `${remainingSkips} skips remaining`;
-  }
+  const remainingSkips = Math.max(0, MAX_SESSION_SKIPS - sessionSkipsUsed);
+  const remainingLabel = t("messages.actions.skipRemaining", { count: remainingSkips });
+  skipCounterEl.textContent = String(remainingSkips);
+  skipCounterEl.classList.toggle("is-depleted", remainingSkips === 0);
+  skipCounterEl.setAttribute("aria-label", remainingLabel);
+  skipCounterEl.title = remainingLabel;
 }
 
 function renderHintButtonLabel() {
@@ -1588,8 +1615,10 @@ function renderHintButtonLabel() {
   }
 
   const textEl = hintBtnEl.querySelector(".hint-btn-text");
+  const hintLabel = t("messages.actions.hint");
+  hintBtnEl.setAttribute("aria-label", hintLabel);
   if (textEl && hintBtnEl.querySelector(".button-icon-emoji")) {
-    textEl.textContent = t("messages.actions.hint");
+    textEl.textContent = hintLabel;
     return;
   }
 
@@ -1602,12 +1631,9 @@ function renderHintButtonLabel() {
 
   const labelEl = document.createElement("span");
   labelEl.className = "hint-btn-text";
-  labelEl.textContent = t("messages.actions.hint");
+  labelEl.textContent = hintLabel;
 
   hintBtnEl.append(iconEl, document.createTextNode(" "), labelEl);
-  return;
-
-  hintBtnEl.innerHTML = `<span class="button-icon button-icon-emoji" aria-hidden="true">💡</span> <span>${t("messages.actions.hint")}</span>`;
 }
 
 function joinLocalizedList(items, conjunction = ", ") {
@@ -1702,6 +1728,7 @@ function setLanguageFlagIcon(targetEl, language) {
 
   const resolvedLanguage = LANGUAGE_FLAG_CLASSES[language] ? language : "de";
   const flagClass = LANGUAGE_FLAG_CLASSES[resolvedLanguage];
+  const flagSource = LANGUAGE_FLAG_SOURCES[resolvedLanguage];
 
   Array.from(targetEl.childNodes).forEach((node) => {
     if (node.nodeType === 3) {
@@ -1713,14 +1740,25 @@ function setLanguageFlagIcon(targetEl, language) {
   let flagEl = flagIcons[0] || null;
   flagIcons.slice(1).forEach((node) => node.remove());
 
-  if (!flagEl) {
-    flagEl = document.createElement("span");
-    targetEl.prepend(flagEl);
+  if (!flagEl || flagEl.tagName !== "IMG") {
+    const imageEl = document.createElement("img");
+    if (flagEl) {
+      imageEl.className = flagEl.className;
+      flagEl.replaceWith(imageEl);
+    } else {
+      targetEl.prepend(imageEl);
+    }
+    flagEl = imageEl;
   }
 
   flagEl.classList.add(LANGUAGE_FLAG_BASE_CLASS);
   LANGUAGE_FLAG_CLASS_NAMES.forEach((className) => flagEl.classList.remove(className));
   flagEl.classList.add(flagClass);
+  flagEl.src = flagSource;
+  flagEl.alt = "";
+  flagEl.loading = "eager";
+  flagEl.decoding = "async";
+  flagEl.draggable = false;
   flagEl.setAttribute("aria-hidden", "true");
   targetEl.dataset.flagLanguage = resolvedLanguage;
 }
@@ -1898,6 +1936,12 @@ function renderStaticUi() {
     skipCardBtnEl.setAttribute("aria-label", t("messages.actions.skip"));
     skipCardBtnEl.setAttribute("title", t("messages.actions.skipTitle"));
   }
+  if (enterKeyBtnEl) {
+    const enterActionLabel = t("messages.actions.enterHint");
+    const enterButtonLabel = `Enter ${enterActionLabel}`;
+    enterKeyBtnEl.setAttribute("aria-label", enterButtonLabel);
+    enterKeyBtnEl.setAttribute("title", enterButtonLabel);
+  }
   setLocalizedText(promptHeadTitleEl, "messages.prompt.card");
   if (inputEl) {
     inputEl.placeholder = t("messages.prompt.placeholder");
@@ -2025,15 +2069,27 @@ function togglePromptOrder() {
 }
 
 async function fetchJson(url, fallback) {
+  let timeoutId = 0;
+  const controller = typeof AbortController === "function" ? new AbortController() : null;
   try {
     const cacheSafeUrl = url.includes("?") ? `${url}&v=${ASSET_REV}` : `${url}?v=${ASSET_REV}`;
-    const response = await fetch(cacheSafeUrl, { cache: "no-store" });
+    if (controller) {
+      timeoutId = window.setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    }
+    const response = await fetch(cacheSafeUrl, {
+      cache: "no-store",
+      ...(controller ? { signal: controller.signal } : {}),
+    });
     if (!response.ok) {
       return fallback;
     }
     return await response.json();
   } catch (error) {
     return fallback;
+  } finally {
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
   }
 }
 
@@ -2042,8 +2098,16 @@ async function loadLocales() {
 }
 
 async function detectCapabilities() {
+  let timeoutId = 0;
+  const controller = typeof AbortController === "function" ? new AbortController() : null;
   try {
-    const response = await fetch("./api/capabilities", { cache: "no-store" });
+    if (controller) {
+      timeoutId = window.setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    }
+    const response = await fetch("./api/capabilities", {
+      cache: "no-store",
+      ...(controller ? { signal: controller.signal } : {}),
+    });
     if (!response.ok) {
       return { persistentSave: false };
     }
@@ -2054,6 +2118,10 @@ async function detectCapabilities() {
     };
   } catch (error) {
     return { persistentSave: false };
+  } finally {
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+    }
   }
 }
 
@@ -2132,19 +2200,55 @@ function fillAuthoringSelects() {
   fillSelectOptions(addCardScopeEl, CARD_SCOPE_OPTIONS, getScopeLabel, CARD_SCOPE_OPTIONS[0]);
 }
 
+function setTopicButtonContent(button, label, icon = "•") {
+  const iconEl = document.createElement("span");
+  iconEl.className = "cat-btn-icon";
+  iconEl.setAttribute("aria-hidden", "true");
+
+  const glyphEl = document.createElement("span");
+  glyphEl.className = "cat-btn-icon-glyph";
+  glyphEl.textContent = icon;
+  iconEl.appendChild(glyphEl);
+
+  const labelEl = document.createElement("span");
+  labelEl.className = "cat-btn-label";
+  labelEl.textContent = label;
+
+  button.replaceChildren(iconEl, labelEl);
+}
+
+function playMixedTopicReselectFeedback() {
+  const button = document.querySelector("#catButtons .cat-btn.mixed.active");
+  if (!button) {
+    return;
+  }
+
+  window.clearTimeout(mixedTopicFeedbackTimer);
+  button.classList.remove("is-reselecting");
+  void button.offsetWidth;
+  button.classList.add("is-reselecting");
+  mixedTopicFeedbackTimer = window.setTimeout(() => {
+    button.classList.remove("is-reselecting");
+    mixedTopicFeedbackTimer = 0;
+  }, 220);
+}
+
 function buildTopicPanel() {
   const container = document.getElementById("catButtons");
   container.innerHTML = "";
 
   const mixBtn = document.createElement("button");
+  mixBtn.type = "button";
   mixBtn.className = `cat-btn mixed${selectedTopics === null ? " active" : ""}`;
-  if (selectedTopics === null) {
-    mixBtn.style.background = "#e8ff47";
-  }
-  mixBtn.textContent = t("messages.categories.mixed");
+  mixBtn.setAttribute("aria-pressed", String(selectedTopics === null));
+  setTopicButtonContent(mixBtn, t("messages.categories.mixed"), "🧩");
   mixBtn.onclick = () => {
+    const wasAlreadySelected = selectedTopics === null;
     selectedTopics = null;
     buildTopicPanel();
+    if (wasAlreadySelected) {
+      playMixedTopicReselectFeedback();
+    }
   };
   container.appendChild(mixBtn);
 
@@ -2152,8 +2256,11 @@ function buildTopicPanel() {
     const color = getTopicColor(topic);
     const isActive = selectedTopics !== null && selectedTopics.has(topic);
     const btn = document.createElement("button");
+    btn.type = "button";
     btn.className = `cat-btn${isActive ? " active" : ""}`;
-    btn.textContent = getTopicLabel(topic);
+    btn.dataset.topic = topic;
+    btn.setAttribute("aria-pressed", String(isActive));
+    setTopicButtonContent(btn, getTopicLabel(topic), TOPIC_CONFIG[topic]?.icon);
     btn.style.borderColor = `${color}70`;
     btn.style.color = isActive ? "#000" : color;
     if (isActive) {
@@ -3351,10 +3458,34 @@ function scrollFactsPanelTopIntoView() {
   scheduleFactsScroll(factsPanelEl);
 }
 
-function initFactsPanel() {
-  updateFactsModeButtons();
-  updateStatePickerVisibility();
+function refreshFactsPanelData() {
+  const hasGermanyFacts = Boolean(germanyFacts);
+  const hasEuropeFacts = Boolean(europeFacts?.countries?.length);
+  const hasWorldFacts = Boolean(worldFacts?.countries?.length);
 
+  factsCountryBtn.disabled = !hasGermanyFacts;
+  factsStatesBtn.disabled = !hasEuropeFacts;
+  factsWorldBtn.disabled = !hasWorldFacts;
+
+  if (!hasGermanyFacts && !hasEuropeFacts && !hasWorldFacts) {
+    updateFactsModeButtons();
+    updateStatePickerVisibility();
+    renderFactsError();
+    return;
+  }
+
+  if (factsMode === "germany" && !hasGermanyFacts) {
+    factsMode = hasEuropeFacts ? "europe" : "world";
+  } else if (factsMode === "europe" && !hasEuropeFacts) {
+    factsMode = hasGermanyFacts ? "germany" : "world";
+  } else if (factsMode === "world" && !hasWorldFacts) {
+    factsMode = hasGermanyFacts ? "germany" : "europe";
+  }
+
+  renderFactsSelection();
+}
+
+function initFactsPanel() {
   factsCountryBtn.addEventListener("click", () => {
     factsMode = "germany";
     selectedStateId = null;
@@ -3386,31 +3517,7 @@ function initFactsPanel() {
     scrollFactsPanelTopIntoView();
   });
 
-  if (!germanyFacts && !europeFacts && !worldFacts) {
-    factsCountryBtn.disabled = true;
-    factsStatesBtn.disabled = true;
-    factsWorldBtn.disabled = true;
-    renderFactsError();
-    return;
-  }
-
-  if (!germanyFacts && europeFacts) {
-    factsMode = "europe";
-  }
-
-  if (!germanyFacts && !europeFacts && worldFacts) {
-    factsMode = "world";
-  }
-
-  if (germanyFacts && !europeFacts) {
-    factsStatesBtn.disabled = true;
-  }
-
-  if (!worldFacts) {
-    factsWorldBtn.disabled = true;
-  }
-
-  renderFactsSelection();
+  refreshFactsPanelData();
 }
 
 function getCorrectPrefixLength(target, typed) {
@@ -4439,7 +4546,10 @@ function renderInstallGuide() {
   const resolvedPath = localizedPath === `installGuide.paths.${context.installPathKey}`
     ? t("installGuide.paths.default")
     : localizedPath;
-  const browserText = `${context.browserLabel}: ${resolvedPath}`;
+  const browserPrefix = t("installGuide.browserPrefix");
+  const browserText = browserPrefix === "installGuide.browserPrefix"
+    ? `${context.browserLabel}: ${resolvedPath}`
+    : `${browserPrefix} ${context.browserLabel}: ${resolvedPath}`;
   const stepsText = t("installGuide.cta");
 
   installGuideBrowserEl.textContent = browserText;
@@ -4577,6 +4687,8 @@ function initInstallGuide() {
 }
 
 function initFirstRunTour() {
+  let restoreSessionEndAfterReplay = false;
+
   firstRunTour = createFirstRunTour({
     dialog: onboardingDialogEl,
     translate: t,
@@ -4587,12 +4699,16 @@ function initFirstRunTour() {
         focusAnswerInputWithoutScroll();
       }
     },
-    onOpen: () => {
+    onOpen: ({ replay }) => {
+      restoreSessionEndAfterReplay = Boolean(replay && isSessionEndVisible());
+      if (restoreSessionEndAfterReplay) {
+        setGameSurfaceMode(false);
+      }
       onboardingPending = false;
       onboardingOpenedAt = Date.now();
       hideInstallGuide();
     },
-    onClose: ({ replay }) => {
+    onClose: ({ replay, reason }) => {
       const onboardingDuration = onboardingOpenedAt
         ? Math.max(0, Date.now() - onboardingOpenedAt)
         : 0;
@@ -4602,6 +4718,18 @@ function initFirstRunTour() {
         sessionStart += onboardingDuration;
       } else {
         sessionStart = Date.now();
+      }
+      if (restoreSessionEndAfterReplay) {
+        setGameSurfaceMode(true);
+        restoreSessionEndAfterReplay = false;
+      }
+      if (reason === "settings") {
+        const settingsPanel = document.getElementById("catPanel");
+        settingsPanel?.scrollIntoView({
+          behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth",
+          block: "start",
+          inline: "nearest",
+        });
       }
       updateStats();
       window.setTimeout(maybeShowInstallGuide, 0);
@@ -4772,6 +4900,14 @@ function initInputEvents() {
     });
   }
 
+  enterKeyBtnEl?.addEventListener("click", () => {
+    if (!sessionCards.length) {
+      return;
+    }
+    submitCurrentAnswer();
+    focusAnswerInputAtEnd();
+  });
+
   document.addEventListener("keydown", (event) => {
     if (
       event.defaultPrevented ||
@@ -4879,7 +5015,7 @@ function initInputEvents() {
     previousTypedValue = typedValue;
   });
 
-  document.getElementById("hintBtn").addEventListener("click", () => {
+  hintBtnEl?.addEventListener("click", () => {
     if (!sessionCards.length) {
       return;
     }
@@ -4892,6 +5028,7 @@ function initInputEvents() {
     const target = getTargetValue(sessionCards[sessionIndex]);
     const reveal = getHintRevealValue(target, inputEl.value);
     inputEl.value = reveal;
+    inputEl.className = "";
     buildWordGrid(target, reveal, {
       terminalHit: isExactTypedMatch(target, reveal) ? "success" : null,
     });
@@ -4936,14 +5073,16 @@ async function initApp() {
   syncSessionSizeLabel();
   learningMode = loadLearningMode();
   isPromptOrderSwapped = loadPromptOrderPreference();
-  const [loadedLocales, baseCards, loadedPersistentCards, currentCapabilities, loadedFacts, loadedEuropeFacts, loadedWorldFacts] = await Promise.all([
+  const factsPromise = Promise.all([
+    loadGermanyFacts(),
+    loadEuropeFacts(),
+    loadWorldFacts(),
+  ]);
+  const [loadedLocales, baseCards, loadedPersistentCards, currentCapabilities] = await Promise.all([
     loadLocales(),
     fetchJson("cards.json", []),
     fetchJson("cards.user.json", []),
     detectCapabilities(),
-    loadGermanyFacts(),
-    loadEuropeFacts(),
-    loadWorldFacts(),
   ]);
 
   locales = loadedLocales || {};
@@ -4954,11 +5093,9 @@ async function initApp() {
   initInstallGuide();
   initDifficultyControls();
   initInputEvents();
+  initAnswerGuideResizeObserver();
   initAuthoringForm();
   capabilities = currentCapabilities;
-  germanyFacts = loadedFacts;
-  europeFacts = loadedEuropeFacts;
-  worldFacts = loadedWorldFacts;
   bundledCards = Array.isArray(baseCards)
     ? baseCards.map(sanitizeCard).filter(Boolean)
     : [];
@@ -4977,6 +5114,13 @@ async function initApp() {
   if (onboardingPending) {
     firstRunTour?.open();
   }
+
+  void factsPromise.then(([loadedFacts, loadedEuropeFacts, loadedWorldFacts]) => {
+    germanyFacts = loadedFacts;
+    europeFacts = loadedEuropeFacts;
+    worldFacts = loadedWorldFacts;
+    refreshFactsPanelData();
+  });
 }
 
 window.startSession = startSession;

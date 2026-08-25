@@ -7,21 +7,21 @@ export const SUBCATEGORY_ALIASES = {
 };
 
 export const TOPIC_CONFIG = {
-  basics: { color: "#60a5fa" },
-  vehicles: { color: "#fb923c" },
-  nature: { color: "#4ade80" },
-  food: { color: "#f87171" },
-  travel: { color: "#facc15" },
-  work: { color: "#818cf8" },
-  health: { color: "#22d3ee" },
-  people: { color: "#f472b6" },
-  shopping: { color: "#34d399" },
-  developertech: { color: "#0284c7" },
-  itnetwork: { color: "#65a30d" },
-  agile_stakeholder: { color: "#a855f7" },
-  it_ops: { color: "#0f766e" },
-  personal_lms: { color: "#e11d48" },
-  db_workplace: { color: "#dc2626" },
+  basics: { color: "#60a5fa", icon: "📚" },
+  vehicles: { color: "#fb923c", icon: "🚗" },
+  nature: { color: "#4ade80", icon: "🌿" },
+  food: { color: "#f87171", icon: "🍽️" },
+  travel: { color: "#facc15", icon: "✈️" },
+  work: { color: "#818cf8", icon: "💼" },
+  health: { color: "#22d3ee", icon: "🏥" },
+  people: { color: "#f472b6", icon: "👥" },
+  shopping: { color: "#34d399", icon: "🛍️" },
+  developertech: { color: "#0284c7", icon: "💻" },
+  itnetwork: { color: "#65a30d", icon: "🌐" },
+  agile_stakeholder: { color: "#a855f7", icon: "🤝" },
+  it_ops: { color: "#0f766e", icon: "⚙️" },
+  personal_lms: { color: "#e11d48", icon: "🎓" },
+  db_workplace: { color: "#dc2626", icon: "🗄️" },
 };
 
 export const TOPIC_OPTIONS = Object.keys(TOPIC_CONFIG);

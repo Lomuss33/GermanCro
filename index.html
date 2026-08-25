@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=overlays-content">
 <title>GermanCro</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="stylesheet" href="style.css?v=2026-08-21-answer-frame">
-    <link rel="stylesheet" href="onboarding.css?v=2026-08-21-onboarding12">
+  <link rel="stylesheet" href="style.css?v=2026-08-25-mixed-topic-press3">
+    <link rel="stylesheet" href="onboarding.css?v=2026-08-25-onboarding24">
 </head>
 <body>
 
@@ -29,35 +29,43 @@
       <span class="onboarding-progress is-hidden" id="onboardingProgress" aria-live="polite"></span>
       <button class="onboarding-skip-btn is-hidden" id="onboardingSkipBtn" type="button">Skip tour</button>
     </div>
-    <div class="onboarding-brand" aria-hidden="true"><span>German</span><strong>Cro</strong></div>
-    <h2 id="onboardingTitle" tabindex="-1">Ready to learn?</h2>
-    <p id="onboardingBody">Choose the language you want to learn. Start now or take the short tour.</p>
+    <div class="onboarding-heading">
+      <h2 id="onboardingTitle" tabindex="-1">Ready to learn?</h2>
+      <div class="onboarding-brand" aria-hidden="true">
+        <span data-brand-segment="de">Ger</span><span data-brand-segment="en">man</span><span data-brand-segment="hr">Cro</span>
+      </div>
+    </div>
+    <p id="onboardingBody">Choose a language and start practicing.</p>
     <div class="onboarding-feedback-key is-hidden" id="onboardingFeedbackKey">
       <span><i class="is-correct" aria-hidden="true"></i><span id="onboardingFeedbackCorrect">Correct</span></span>
       <span><i class="is-next" aria-hidden="true"></i><span id="onboardingFeedbackNext">Up next</span></span>
       <span><i class="is-wrong" aria-hidden="true"></i><span id="onboardingFeedbackWrong">Try again</span></span>
     </div>
     <div class="onboarding-language-group" id="onboardingLanguageGroup" role="group" aria-labelledby="onboardingLanguageLabel">
-      <span class="onboarding-language-label" id="onboardingLanguageLabel">Learning language</span>
+      <span class="onboarding-language-label" id="onboardingLanguageLabel">
+        <span class="visually-hidden onboarding-language-label-text">Learning language</span>
+        <span class="onboarding-language-label-letters" aria-hidden="true">Learning language</span>
+      </span>
       <div class="onboarding-language-options">
         <button class="onboarding-language-btn" data-learning-language="en" type="button" aria-pressed="true">
-          <span class="onboarding-language-flag" aria-hidden="true">🇬🇧</span>
+          <img class="onboarding-language-flag language-flag-icon language-flag-icon--en" src="https://flagcdn.com/gb.svg" alt="" decoding="async" aria-hidden="true">
           <span class="onboarding-language-name">English</span>
         </button>
         <button class="onboarding-language-btn" data-learning-language="de" type="button" aria-pressed="false">
-          <span class="onboarding-language-flag" aria-hidden="true">🇩🇪</span>
+          <img class="onboarding-language-flag language-flag-icon language-flag-icon--de" src="https://flagcdn.com/de.svg" alt="" decoding="async" aria-hidden="true">
           <span class="onboarding-language-name">German</span>
         </button>
         <button class="onboarding-language-btn" data-learning-language="hr" type="button" aria-pressed="false">
-          <span class="onboarding-language-flag" aria-hidden="true">🇭🇷</span>
+          <img class="onboarding-language-flag language-flag-icon language-flag-icon--hr" src="https://flagcdn.com/hr.svg" alt="" decoding="async" aria-hidden="true">
           <span class="onboarding-language-name">Croatian</span>
         </button>
       </div>
     </div>
-    <p class="onboarding-replay-note" id="onboardingReplayNote">You can reopen this guide anytime by choosing Tutorial in Settings.</p>
+    <p class="onboarding-replay-note" id="onboardingReplayNote"><span class="onboarding-replay-note-lead">Tip:</span> Switch languages anytime with the flags in the bottom-right corner. The <span class="onboarding-replay-note-pink">pink</span> Tutorial button opens this guide again.</p>
     <div class="onboarding-actions">
       <button class="onboarding-back-btn is-hidden" id="onboardingBackBtn" type="button">Back</button>
-      <button class="onboarding-secondary-btn" id="onboardingSecondaryBtn" type="button">Tour · 4 steps</button>
+      <button class="onboarding-secondary-btn" id="onboardingSecondaryBtn" type="button">Quick tour · 4 steps</button>
+      <button class="onboarding-settings-btn" id="onboardingSettingsBtn" type="button">Open settings</button>
       <button class="onboarding-primary-btn" id="onboardingPrimaryBtn" type="button">Start learning</button>
     </div>
   </section>
@@ -67,15 +75,15 @@
 
 <div class="language-dock" id="languageDock" aria-label="Lernsprache wechseln">
   <button class="language-dock-btn" data-lang="de" type="button" aria-label="Deutsch">
-    <span class="language-dock-flag language-dock-flag--de" aria-hidden="true"></span>
+    <img class="language-dock-flag language-dock-flag--de" src="https://flagcdn.com/de.svg" alt="" decoding="async" aria-hidden="true">
     <span class="language-dock-label">DE</span>
   </button>
   <button class="language-dock-btn" data-lang="hr" type="button" aria-label="Hrvatski">
-    <span class="language-dock-flag language-dock-flag--hr" aria-hidden="true"></span>
+    <img class="language-dock-flag language-dock-flag--hr" src="https://flagcdn.com/hr.svg" alt="" decoding="async" aria-hidden="true">
     <span class="language-dock-label">HR</span>
   </button>
   <button class="language-dock-btn" data-lang="en" type="button" aria-label="English">
-    <span class="language-dock-flag language-dock-flag--en" aria-hidden="true"></span>
+    <img class="language-dock-flag language-dock-flag--en" src="https://flagcdn.com/gb.svg" alt="" decoding="async" aria-hidden="true">
     <span class="language-dock-label">GB</span>
   </button>
 </div>
@@ -158,40 +166,40 @@
     <div class="prompt-head">
       <div class="prompt-head-title" id="promptHeadTitle">Karte</div>
     </div>
-    <div class="prompt-row prompt-row-main">
-      <button class="prompt-flag" id="promptPrimaryFlag" type="button"><span class="language-flag-icon language-flag-icon--hr" aria-hidden="true"></span></button>
+    <div class="prompt-row prompt-row-main" data-onboarding-target="prompt-main">
+      <button class="prompt-flag" id="promptPrimaryFlag" type="button"><img class="language-flag-icon language-flag-icon--hr" src="https://flagcdn.com/hr.svg" alt="" decoding="async" aria-hidden="true"></button>
       <div class="prompt-copy">
         <div class="prompt-text" id="promptText"></div>
       </div>
     </div>
-    <div class="prompt-row prompt-row-sub">
-      <button class="prompt-flag prompt-flag-sub" id="promptSecondaryFlag" type="button"><span class="language-flag-icon language-flag-icon--en" aria-hidden="true"></span></button>
+    <div class="prompt-row prompt-row-sub" data-onboarding-target="prompt-secondary">
+      <button class="prompt-flag prompt-flag-sub" id="promptSecondaryFlag" type="button"><img class="language-flag-icon language-flag-icon--en" src="https://flagcdn.com/gb.svg" alt="" decoding="async" aria-hidden="true"></button>
       <div class="prompt-copy">
         <div class="prompt-sub" id="promptSub"></div>
       </div>
     </div>
-    <div class="input-shell">
-      <span class="input-flag" aria-hidden="true"><span class="language-flag-icon language-flag-icon--de" aria-hidden="true"></span></span>
-      <input id="answer" type="text" autocomplete="off" spellcheck="false" placeholder="Antwort eingeben..." />
+    <div class="input-shell" data-onboarding-target="answer-input">
+      <span class="input-flag" aria-hidden="true"><img class="language-flag-icon language-flag-icon--de" src="https://flagcdn.com/de.svg" alt="" decoding="async" aria-hidden="true"></span>
+      <input id="answer" type="text" autocomplete="off" spellcheck="false" enterkeyhint="done" aria-keyshortcuts="Enter" placeholder="Antwort eingeben..." aria-controls="answerGuide" aria-describedby="answerGuideStatus answerGuideNote" />
       <div class="answer-terminal-status-row" id="answerTerminalStatusRow" aria-hidden="true">
         <div class="answer-terminal-status-badge" id="answerTerminalStatus"></div>
       </div>
     </div>
-    <div class="answer-guide" id="answerGuide">
+    <div class="answer-guide" id="answerGuide" data-onboarding-target="answer-guide" role="region" aria-labelledby="answerGuideLabel" aria-describedby="answerGuideStatus answerGuideNote">
       <div class="answer-guide-head">
         <div class="answer-guide-label" id="answerGuideLabel">Antwortverlauf</div>
-        <div class="answer-guide-status" id="answerGuideStatus" aria-live="polite"></div>
+        <div class="answer-guide-status" id="answerGuideStatus" role="status" aria-live="polite" aria-atomic="true"></div>
       </div>
       <div class="answer-guide-body">
         <span class="answer-guide-trail-flag" aria-hidden="true"></span>
-        <div class="word-grid" id="wordGrid"></div>
+        <div class="word-grid" id="wordGrid" aria-hidden="true"></div>
       </div>
       <div class="answer-guide-foot">
         <div class="answer-guide-note" id="answerGuideNote"></div>
-        <div class="action-row">
-          <div class="skip-action"><button class="skip-card-btn" id="skipCardBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#9197;&#65039;</span> <span id="skipCardBtnLabel">Skip</span></button><span class="skip-counter" id="skipCounter" aria-live="polite">5</span></div>
-          <div class="enter-hint"><span class="key-badge">Enter</span> <span id="enterHintLabel">zum Pr&uuml;fen</span></div>
-          <button class="hint-btn" id="hintBtn"><span class="button-icon button-icon-emoji" aria-hidden="true">&#128161;</span> <span>Tipp</span></button>
+        <div class="action-row" data-onboarding-target="answer-actions">
+          <div class="skip-action"><button class="skip-card-btn" id="skipCardBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#9197;&#65039;</span> <span id="skipCardBtnLabel">Skip</span> <span class="skip-counter" id="skipCounter" aria-live="polite">5</span></button></div>
+          <div class="enter-hint"><button class="key-badge" id="enterKeyBtn" type="button" aria-keyshortcuts="Enter">Enter</button> <span id="enterHintLabel">zum Pr&uuml;fen</span></div>
+          <button class="hint-btn" id="hintBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#128161;</span> <span>Tipp</span></button>
         </div>
       </div>
     </div>
@@ -319,6 +327,6 @@
   <a href="https://lomuss33.github.io/myWebsite/" target="_blank" rel="noopener noreferrer" id="siteFooterLink">made by Lovro Musi&#263;, in Gie&#223;en 2026, with &#9829;</a>
 </footer>
 
-  <script type="module" src="app.js?v=2026-08-21-onboarding9"></script>
+  <script type="module" src="app.js?v=2026-08-25-onboarding-copy-tip3"></script>
 </body>
 </html>
