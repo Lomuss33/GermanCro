@@ -71,6 +71,6 @@ const worldFacts = await readJson("world-facts.json");
 validateGermanyFacts(germanyFacts);
 validateUnionFacts(europeFacts, "europe-facts.json");
 validateUnionFacts(worldFacts, "world-facts.json");
-validateCountryNotablePeople(["germany", ...europeFacts.countries.map((country) => country.id), ...worldFacts.countries.map((country) => country.id)]);
+validateCountryNotablePeople(["germany", "europe", "world", ...europeFacts.countries.map((country) => country.id), ...worldFacts.countries.map((country) => country.id)]);
 
 console.log("validate:facts passed");

@@ -2,7 +2,7 @@
   "union": {
     "name": "EU",
     "official_name": "Europäische Union",
-    "capital": "Bruessel",
+      "capital": "Brüssel",
     "largest_city": "Berlin",
     "anthem": "Ode an die Freude",
     "founded": "1993 (Europäische Union)",
@@ -16,9 +16,9 @@
     "time_zone": "UTC+00:00 bis UTC+02:00",
     "internet_tld": ".eu",
     "gdp_nominal": "ca. 17 Billionen EUR",
-    "overview": "Europa verbindet sehr unterschiedliche Sprachräume, Landschaften und politische Traditionen. Die Europäische Union bildet dabei einen zentralen politischen und wirtschaftlichen Rahmen für große Teile des Kontinents.",
-    "overview_hr": "Europa povezuje vrlo različita jezična područja, krajolike i političke tradicije. Europska unija čini središnji politički i gospodarski okvir za velike dijelove kontinenta.",
-    "overview_en": "Europe connects very different language areas, landscapes and political traditions. The European Union forms a central political and economic framework for large parts of the continent.",
+      "overview": "Die Europäische Union vereint 27 Mitgliedstaaten in einem gemeinsamen politischen und wirtschaftlichen Raum. Binnenmarkt, Freizügigkeit und gemeinsame Regeln prägen ihren Alltag; ihre Institutionen arbeiten vor allem in Brüssel, Straßburg und Luxemburg. Zwischen Atlantik, Ostsee, Alpen und Mittelmeer trifft dabei eine außergewöhnliche sprachliche, kulturelle und landschaftliche Vielfalt zusammen.",
+      "overview_hr": "Europska unija okuplja 27 država članica u zajedničkom političkom i gospodarskom prostoru. Jedinstveno tržište, slobodno kretanje i zajednička pravila oblikuju njezin svakodnevni rad, a institucije djeluju ponajprije u Bruxellesu, Strasbourgu i Luxembourgu. Između Atlantika, Baltičkog mora, Alpa i Sredozemlja susreću se iznimna jezična, kulturna i krajobrazna raznolikost.",
+      "overview_en": "The European Union brings 27 member states together in a shared political and economic area. Its single market, freedom of movement and common rules shape everyday cooperation, while its institutions work chiefly in Brussels, Strasbourg and Luxembourg. From the Atlantic and Baltic to the Alps and Mediterranean, it brings together exceptional linguistic, cultural and geographic diversity.",
     "neighboring_countries": [
       "Atlantik",
       "Mittelmeer",

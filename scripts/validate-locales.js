@@ -14,6 +14,8 @@ const requiredPaths = [
   "facts.featured.overview",
   "facts.featured.worldOverview",
   "facts.values.worldOverviewText",
+  "facts.values.googleSearchAria",
+  "facts.values.googleCardSearchAria",
   "facts.lists.notablePeople",
   "facts.lists.science",
   "facts.lists.politics",

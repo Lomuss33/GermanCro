@@ -3006,7 +3006,7 @@ function normalizeFactsField(field) {
   return null;
 }
 
-function createFactsField(field) {
+function createFactsField(field, contextName = "") {
   const normalized = normalizeFactsField(field);
   if (!normalized) {
     return null;
@@ -3017,10 +3017,18 @@ function createFactsField(field) {
     return null;
   }
 
-  const card = document.createElement("div");
+  const card = document.createElement(featured ? "div" : "a");
   card.className = "facts-card";
   if (featured) {
     card.classList.add("featured");
+  } else {
+    const searchTerm = [label, String(value), contextName].filter(isNonEmptyValue).join(" ");
+    card.classList.add("facts-card-link");
+    card.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
+    card.target = "_blank";
+    card.rel = "noopener noreferrer";
+    card.title = t("facts.values.googleCardSearchAria", { search: searchTerm });
+    card.setAttribute("aria-label", t("facts.values.googleCardSearchAria", { search: searchTerm }));
   }
 
   const cardLabel = document.createElement("div");
@@ -3065,9 +3073,15 @@ function createFactsList(label, items) {
   items
     .filter((item) => isNonEmptyValue(item))
     .forEach((item) => {
-      const chip = document.createElement("span");
-      chip.className = "facts-chip";
-      chip.textContent = String(item);
+      const searchTerm = String(item);
+      const chip = document.createElement("a");
+      chip.className = "facts-chip facts-chip-link";
+      chip.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
+      chip.target = "_blank";
+      chip.rel = "noopener noreferrer";
+      chip.textContent = searchTerm;
+      chip.title = t("facts.values.googleSearchAria", { item: searchTerm });
+      chip.setAttribute("aria-label", t("facts.values.googleSearchAria", { item: searchTerm }));
       list.appendChild(chip);
     });
 
@@ -3254,7 +3268,7 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
       return;
     }
 
-    const field = createFactsField(fieldData);
+    const field = createFactsField(fieldData, title);
     if (field) {
       grid.appendChild(field);
     }
@@ -3349,7 +3363,10 @@ function renderEuropeOverview(unionData) {
       [t("facts.lists.highlights"), translateFactList(unionData.highlights)],
       [t("facts.lists.nature"), translateFactList(unionData.nature)],
       [t("facts.lists.seas"), translateFactList(unionData.neighboring_countries)],
-      ]
+      ],
+      "",
+      "",
+      getCountryPeopleLists("europe")
     );
   }
 
@@ -3379,7 +3396,8 @@ function renderWorldOverview(unionData) {
       [t("facts.lists.seas"), translateFactList(unionData.neighboring_countries)],
       ],
       "",
-      OFFICIAL_LINKS.world
+      OFFICIAL_LINKS.world,
+      getCountryPeopleLists("world")
     );
   }
 

@@ -1,5 +1,7 @@
 export const COUNTRY_NOTABLE_PEOPLE = Object.freeze({
   germany: { science: ["Max Planck", "Albert Einstein", "Robert Koch"], politics: ["Konrad Adenauer", "Otto von Bismarck", "Willy Brandt"], art: ["Johann Wolfgang von Goethe", "Ludwig van Beethoven", "Käthe Kollwitz"], engineering: ["Werner von Siemens", "Konrad Zuse", "Carl Benz"] },
+  europe: { science: ["Marie Curie", "Albert Einstein", "Ada Lovelace"], politics: ["Robert Schuman", "Simone Veil", "Konrad Adenauer"], art: ["Leonardo da Vinci", "Ludwig van Beethoven", "Pablo Picasso"], engineering: ["Nikola Tesla", "Isambard Kingdom Brunel", "Guglielmo Marconi"] },
+  world: { science: ["Marie Curie", "Tu Youyou", "A. P. J. Abdul Kalam"], politics: ["Dag Hammarskjöld", "Eleanor Roosevelt", "Kofi Annan"], art: ["Pablo Picasso", "Maya Angelou", "Akira Kurosawa"], engineering: ["Nikola Tesla", "Grace Hopper", "Fazlur Rahman Khan"] },
 
   frankreich: { science: ["Louis Pasteur", "Marie Curie", "Blaise Pascal"], politics: ["Charles de Gaulle", "Napoleon Bonaparte", "Simone Veil"], art: ["Claude Monet", "Victor Hugo", "Édith Piaf"], engineering: ["Gustave Eiffel", "André Citroën", "Louis Blériot"] },
   spanien: { science: ["Santiago Ramón y Cajal", "Severo Ochoa", "Margarita Salas"], politics: ["Adolfo Suárez", "Isabella I. von Kastilien", "Felipe González"], art: ["Pablo Picasso", "Miguel de Cervantes", "Salvador Dalí"], engineering: ["Leonardo Torres Quevedo", "Juan de la Cierva", "Isaac Peral"] },
