@@ -18,6 +18,8 @@
     "gdp_nominal": "ca. 110 Billionen USD",
     "secretary_general": "António Guterres",
     "overview": "Die Vereinten Nationen verbinden nahezu alle souveränen Staaten der Erde. Hauptsitz ist New York City; zentrale Organe koordinieren Frieden, Entwicklung, humanitäre Hilfe und internationales Recht.",
+    "overview_hr": "Ujedinjeni narodi povezuju gotovo sve suverene države na zemlji. Sjedište je New York City; središnja tijela koordiniraju mir, razvoj, humanitarnu pomoć i međunarodno pravo.",
+    "overview_en": "The United Nations connects almost all sovereign states on earth. Headquarters is New York City; central bodies coordinate peace, development, humanitarian aid and international law.",
     "neighboring_countries": [
       "Pazifik",
       "Atlantik",
@@ -62,6 +64,8 @@
       "internet_tld": ".ca",
       "landlocked": "Nein",
       "overview": "Indigene Nationen besiedeln das Gebiet Kanadas seit Jahrtausenden; ab dem 16. Jahrhundert folgten französische und britische Kolonien. Die Konföderation von 1867 legte den Grundstein des heutigen Bundesstaats, der seine staatliche Eigenständigkeit schrittweise ausbaute. Energie und Bergbau, Automobil- und Luftfahrtindustrie, Forstwirtschaft, Landwirtschaft, Technologie und Finanzdienste tragen die Wirtschaft. Die Rocky Mountains, der arktische Norden, die Großen Seen und die historischen Zentren von Québec verbinden monumentale Natur mit vielschichtigem Kulturerbe.",
+      "overview_hr": "Autohtoni narodi nastanjuju područje Kanade tisućama godina; Francuske i britanske kolonije uslijedile su od 16. stoljeća. Konfederacija iz 1867. postavila je temelje današnjoj saveznoj državi, koja je postupno širila svoju državnu neovisnost. Energija i rudarstvo, automobilska industrija i zrakoplovstvo, šumarstvo, poljoprivreda, tehnologija i financijske usluge održavaju gospodarstvo. Stjenovite planine, arktički sjever, Velika jezera i povijesna središta Quebeca spajaju monumentalnu prirodu s raznolikom kulturnom baštinom.",
+      "overview_en": "Indigenous nations have inhabited the territory of Canada for thousands of years; French and British colonies followed from the 16th century. The Confederacy of 1867 laid the foundation for today's federal state, which gradually expanded its state independence. Energy and mining, automotive and aviation, forestry, agriculture, technology and financial services sustain the economy. The Rocky Mountains, the Arctic North, the Great Lakes and the historic centers of Quebec combine monumental nature with a diverse cultural heritage.",
       "neighboring_countries": [
         "USA"
       ],
@@ -95,6 +99,8 @@
       "internet_tld": ".us",
       "landlocked": "Nein",
       "overview": "Indigene Kulturen prägten Nordamerika lange vor der Entstehung europäischer Kolonien an der Atlantikküste. Dreizehn Kolonien erklärten 1776 ihre Unabhängigkeit; die Verfassung von 1787 und der Bürgerkrieg von 1861 bis 1865 formten den modernen Bundesstaat. Technologie, Finanzwesen, Luft- und Raumfahrt, Pharma, Energie, Landwirtschaft und hochentwickelte Fertigung prägen die weltweit vernetzte Wirtschaft. Yellowstone, Grand Canyon, indigene Kulturlandschaften und die Architektur- und Musikmetropolen des Landes stehen für außergewöhnliche natürliche und kulturelle Vielfalt.",
+      "overview_hr": "Autohtone kulture oblikovale su Sjevernu Ameriku davno prije pojave europskih kolonija na obali Atlantika. Trinaest kolonija proglasilo je neovisnost 1776.; Ustav iz 1787. i građanski rat od 1861. do 1865. formirali su modernu saveznu državu. Tehnologija, financije, zrakoplovstvo, farmaceutski proizvodi, energija, poljoprivreda i napredna proizvodnja oblikuju globalno povezano gospodarstvo. Yellowstone, Grand Canyon, autohtoni kulturni krajolici te arhitektonske i glazbene metropole zemlje predstavljaju iznimnu prirodnu i kulturnu raznolikost.",
+      "overview_en": "Indigenous cultures shaped North America long before the emergence of European colonies on the Atlantic coast. Thirteen colonies declared independence in 1776; the Constitution of 1787 and the Civil War of 1861 to 1865 formed the modern federal state. Technology, finance, aerospace, pharmaceuticals, energy, agriculture and advanced manufacturing shape the globally connected economy. Yellowstone, the Grand Canyon, indigenous cultural landscapes and the country's architectural and music metropolises represent extraordinary natural and cultural diversity.",
       "neighboring_countries": [
         "Kanada",
         "Mexiko"
@@ -128,6 +134,8 @@
       "internet_tld": ".cn",
       "landlocked": "Nein",
       "overview": "Chinas dynastische Zivilisation reicht mehrere Jahrtausende zurück, wobei die politische Reichseinigung 221 vor unserer Zeitrechnung einen entscheidenden Wendepunkt bildete. Auf die Republikgründung von 1912 folgte 1949 die Volksrepublik, die seit den Reformen ab 1978 einen tiefgreifenden wirtschaftlichen Wandel erlebte. Elektronik, Maschinenbau, Stahl, Chemie, Elektrofahrzeuge, Solartechnik und digitale Dienstleistungen prägen die Industrie. Große Mauer, Verbotene Stadt, Karstlandschaften, Himalaya und die Flusssysteme von Jangtse und Huang He bilden ein monumentales Kultur- und Naturerbe.",
+      "overview_hr": "Kineska dinastička civilizacija seže nekoliko tisućljeća unatrag, a političko ujedinjenje carstva 221. godine prije Krista bilo je ključna prekretnica. Nakon osnivanja republike 1912. uslijedila je Narodna Republika 1949., koja je doživjela duboke gospodarske promjene od reformi 1978. Elektronika, strojarstvo, čelik, kemikalije, električna vozila, solarna tehnologija i digitalne usluge karakteriziraju industriju. Veliki zid, Zabranjeni grad, krški krajolici, Himalaja i riječni sustavi Yangtze i Huang He čine monumentalnu kulturnu i prirodnu baštinu.",
+      "overview_en": "China's dynastic civilization dates back several millennia, with the political unification of the empire in 221 BCE being a crucial turning point. The founding of the republic in 1912 was followed by the People's Republic in 1949, which has experienced profound economic change since the reforms in 1978. Electronics, mechanical engineering, steel, chemicals, electric vehicles, solar technology and digital services characterize the industry. The Great Wall, Forbidden City, karst landscapes, Himalayas and the Yangtze and Huang He river systems form a monumental cultural and natural heritage.",
       "neighboring_countries": [
         "Mongolei",
         "Russland",
@@ -159,6 +167,8 @@
       "internet_tld": ".br",
       "landlocked": "Nein",
       "overview": "Zahlreiche indigene Gesellschaften lebten im heutigen Brasilien, bevor Portugal das Gebiet ab 1500 kolonialisierte. Die Unabhängigkeit folgte 1822, die Republik 1889 und die Rückkehr zur Demokratie 1985. Agrarwirtschaft, Bergbau, Erdöl, Luftfahrt- und Automobilindustrie, Lebensmittelproduktion und Dienstleistungen tragen die größte Volkswirtschaft Südamerikas. Amazonas, Pantanal, Iguaçu-Wasserfälle sowie die historischen Zentren von Salvador und Brasília verbinden globale Naturwerte mit vielfältigem Kulturerbe.",
+      "overview_hr": "Brojna autohtona društva živjela su na području današnjeg Brazila prije nego što je Portugal kolonizirao to područje u 16. stoljeću. Neovisnost je uslijedila 1822., republika 1889. i povratak demokraciji 1985. Poljoprivreda, rudarstvo, naftna, zrakoplovna i automobilska industrija, proizvodnja hrane i usluge podupiru najveće gospodarstvo Južne Amerike. Amazona, Pantanal, slapovi Iguaçu i povijesni centri Salvadora i Brasílije spajaju globalne prirodne vrijednosti s raznolikom kulturnom baštinom.",
+      "overview_en": "Numerous indigenous societies lived in what is now Brazil before Portugal colonized the area in the 1500s. Independence followed in 1822, the republic in 1889 and the return to democracy in 1985. Agriculture, mining, petroleum, aviation and automobile industries, food production and services support South America's largest economy. The Amazon, Pantanal, Iguaçu Falls and the historic centers of Salvador and Brasília combine global natural values ​​with diverse cultural heritage.",
       "neighboring_countries": [
         "Argentinien",
         "Bolivien",
@@ -193,6 +203,8 @@
       "internet_tld": ".au",
       "landlocked": "Nein",
       "overview": "Aboriginal- und Torres-Strait-Islander-Kulturen bestehen seit Zehntausenden Jahren, bevor 1788 die britische Kolonisierung begann. Sechs Kolonien schlossen sich 1901 zum Australischen Bund zusammen, der seine staatliche Eigenständigkeit im 20. Jahrhundert festigte. Bergbau, Landwirtschaft, Finanz- und Unternehmensdienste, Bildung, Tourismus und moderne Technologien prägen die Wirtschaft. Great Barrier Reef, Uluṟu, die tasmanische Wildnis und Sydneys Architektur verbinden einzigartiges Naturerbe mit lebendigen indigenen und modernen Kulturen.",
+      "overview_hr": "Kulture Aboridžina i otočana Torresovog tjesnaca postojale su desecima tisuća godina prije početka britanske kolonizacije 1788. Šest kolonija udružilo se 1901. u Australsku konfederaciju, koja je učvrstila svoju državnu neovisnost u 20. stoljeću. Rudarstvo, poljoprivreda, financijske i poslovne usluge, obrazovanje, turizam i moderne tehnologije oblikuju gospodarstvo. Veliki koraljni greben, Uluṟu, tasmanijska divljina i arhitektura Sydneya kombiniraju jedinstvenu prirodnu baštinu sa živopisnom autohtonom i modernom kulturom.",
+      "overview_en": "Aboriginal and Torres Strait Islander cultures have existed for tens of thousands of years before British colonization began in 1788. Six colonies joined together in 1901 to form the Australian Confederation, which consolidated its state independence in the 20th century. Mining, agriculture, financial and business services, education, tourism and modern technologies shape the economy. Great Barrier Reef, Uluṟu, the Tasmanian wilderness and Sydney's architecture combine unique natural heritage with vibrant indigenous and modern cultures.",
       "neighboring_countries": [
         "Indonesien",
         "Papua-Neuguinea",
@@ -225,6 +237,8 @@
       "internet_tld": ".in",
       "landlocked": "Nein",
       "overview": "Von der Indus-Kultur über große hinduistische, buddhistische und islamische Reiche entwickelte sich auf dem Subkontinent eine außergewöhnlich vielfältige Zivilisation. Nach britischer Kolonialherrschaft wurde Indien 1947 unabhängig und 1950 eine demokratische Republik. Informationstechnologie und Unternehmensdienste, Pharma, Automobilbau, Textilien, Stahl, Landwirtschaft und Raumfahrt prägen die Wirtschaft. Taj Mahal, Varanasi, die Tempelstätten des Südens, Himalaya und Westghats verbinden tiefes Kulturerbe mit großer biologischer Vielfalt.",
+      "overview_hr": "Na potkontinentu se razvila iznimno raznolika civilizacija, od civilizacije Inda do velikih hinduističkih, budističkih i islamskih carstava. Nakon britanske kolonijalne vladavine, Indija je postala neovisna 1947., a demokratska republika 1950. Informacijska tehnologija i poslovne usluge, farmaceutski proizvodi, proizvodnja automobila, tekstil, čelik, poljoprivreda i svemirska putovanja oblikuju gospodarstvo. Taj Mahal, Varanasi, hramovi na jugu, Himalaja i zapadni Gati spajaju duboku kulturnu baštinu s velikom biološkom raznolikošću.",
+      "overview_en": "An extraordinarily diverse civilization developed on the subcontinent, from the Indus Civilization to large Hindu, Buddhist and Islamic empires. After British colonial rule, India became independent in 1947 and a democratic republic in 1950. Information technology and business services, pharmaceuticals, automobile manufacturing, textiles, steel, agriculture and space travel shape the economy. Taj Mahal, Varanasi, the temple sites of the South, Himalayas and Western Ghats combine deep cultural heritage with great biological diversity.",
       "neighboring_countries": [
         "Pakistan",
         "China",
@@ -257,6 +271,8 @@
       "internet_tld": ".ar",
       "landlocked": "Nein",
       "overview": "Indigene Gesellschaften und die spanische Kolonialherrschaft prägten das Gebiet des späteren Vizekönigreichs Río de la Plata. Argentinien erklärte 1816 seine Unabhängigkeit, konsolidierte sich im 19. Jahrhundert als Nationalstaat und kehrte 1983 zur Demokratie zurück. Landwirtschaft und Lebensmittel, Energie, Bergbau, Automobilbau, Biotechnologie und wissensintensive Dienstleistungen sind zentrale Wirtschaftsbereiche. Die Anden mit dem Aconcagua, Patagonien, die Iguaçu-Wasserfälle und Buenos Aires verbinden große Naturkontraste mit markanter Kultur.",
+      "overview_hr": "Domorodačka društva i španjolska kolonijalna vladavina oblikovali su područje onoga što je kasnije postalo vicekraljevstvo Río de la Plata. Argentina je proglasila neovisnost 1816., konsolidirala se kao nacionalna država u 19. stoljeću i vratila se demokraciji 1983. Poljoprivreda i hrana, energija, rudarstvo, proizvodnja automobila, biotehnologija i usluge koje temelje na znanju ključni su gospodarski sektori. Ande s Aconcaguom, Patagonijom, slapovima Iguaçu i Buenos Airesom spajaju velike prirodne kontraste s osebujnom kulturom.",
+      "overview_en": "Indigenous societies and Spanish colonial rule shaped the area of ​​what later became the Viceroyalty of Río de la Plata. Argentina declared independence in 1816, consolidated itself as a nation-state in the 19th century, and returned to democracy in 1983. Agriculture and food, energy, mining, automobile manufacturing, biotechnology and knowledge-intensive services are key economic sectors. The Andes with the Aconcagua, Patagonia, the Iguaçu Waterfalls and Buenos Aires combine great natural contrasts with distinctive culture.",
       "neighboring_countries": [
         "Chile",
         "Bolivien",
@@ -288,6 +304,8 @@
       "internet_tld": ".dz",
       "landlocked": "Nein",
       "overview": "Numidische, römische, arabisch-islamische und osmanische Herrschaftsperioden hinterließen in Algerien vielfältige Spuren. Frankreich begann 1830 die Kolonisierung, die nach einem langen Unabhängigkeitskrieg 1962 endete. Erdöl und Erdgas, Petrochemie, Bergbau, Bauwirtschaft, Landwirtschaft und Lebensmittelproduktion tragen die Wirtschaft. Die Kasbah von Algier, die römischen Ruinen von Timgad, Tassili n'Ajjer und die Sahara bilden ein außergewöhnliches Kultur- und Naturerbe.",
+      "overview_hr": "Numidsko, rimsko, arapsko-islamsko i osmansko razdoblje vladavine ostavilo je različite tragove u Alžiru. Francuska je započela kolonizaciju 1830., koja je završila 1962. nakon dugog rata za neovisnost. Nafta i plin, petrokemija, rudarstvo, građevinarstvo, poljoprivreda i proizvodnja hrane podržavaju gospodarstvo. Kasba u Alžiru, rimske ruševine Timgada, Tassili n'Ajjer i Sahara čine iznimnu kulturnu i prirodnu baštinu.",
+      "overview_en": "Numidian, Roman, Arab-Islamic and Ottoman periods of rule left a variety of traces in Algeria. France began colonization in 1830, which ended in 1962 after a long war of independence. Oil and gas, petrochemicals, mining, construction, agriculture and food production support the economy. The Kasbah of Algiers, the Roman ruins of Timgad, Tassili n'Ajjer and the Sahara form an exceptional cultural and natural heritage.",
       "neighboring_countries": [
         "Tunesien",
         "Libyen",
@@ -319,6 +337,8 @@
       "internet_tld": ".cd",
       "landlocked": "Nein",
       "overview": "Vorkoloniale Reiche wie Kongo, Luba und Lunda prägten Zentralafrika, bevor der Kongo-Freistaat ab 1885 und die belgische Kolonie ab 1908 eine Epoche brutaler Ausbeutung einleiteten. Das Land wurde 1960 unabhängig und trägt seit 1997 wieder den Namen Demokratische Republik Kongo. Kupfer- und Kobaltbergbau, Landwirtschaft, Wasserkraft, Telekommunikation und Handel bestimmen große Teile der Wirtschaft. Kongobecken, Virunga-Nationalpark, Kongostrom und die vielfältigen Musik- und Kunsttraditionen bilden ein Erbe von globaler Bedeutung.",
+      "overview_hr": "Pretkolonijalna carstva kao što su Kongo, Luba i Lunda oblikovala su Središnju Afriku prije nego što su Slobodna Država Kongo iz 1885. i belgijska kolonija iz 1908. uveli eru brutalne eksploatacije. Država je postala neovisna 1960. i ponovno se zove Demokratska Republika Kongo od 1997. Rudarstvo bakra i kobalta, poljoprivreda, hidroenergija, telekomunikacije i trgovina određuju velike dijelove gospodarstva. Bazen Konga, Nacionalni park Virunga, Kongoanska struja i raznolike glazbene i umjetničke tradicije čine baštinu od globalne važnosti.",
+      "overview_en": "Pre-colonial empires such as Congo, Luba and Lunda shaped Central Africa before the Congo Free State from 1885 and the Belgian colony from 1908 ushered in an era of brutal exploitation. The country became independent in 1960 and has been called the Democratic Republic of Congo again since 1997. Copper and cobalt mining, agriculture, hydropower, telecommunications and trade determine large parts of the economy. Congo Basin, Virunga National Park, Congo Current and the diverse musical and artistic traditions form a heritage of global importance.",
       "neighboring_countries": [
         "Republik Kongo",
         "Angola",
@@ -351,6 +371,8 @@
       "internet_tld": ".sa",
       "landlocked": "Nein",
       "overview": "Die Arabische Halbinsel war Schauplatz alter Handelsrouten und im 7. Jahrhundert Ursprung des Islam. Abdulaziz Ibn Saud vereinigte große Teile der Halbinsel und gründete 1932 das Königreich Saudi-Arabien. Erdöl und Petrochemie, Bergbau, Bauwirtschaft, Logistik, Finanzdienste und wachsender Tourismus prägen die Wirtschaft. Die heiligen Städte Mekka und Medina, Hegra bei AlUla, das Rote Meer und die Wüste Rub al-Chali verbinden religiöses, archäologisches und natürliches Erbe.",
+      "overview_hr": "Arapski poluotok bio je mjesto drevnih trgovačkih puteva i porijeklo islama u 7. stoljeću. Abdulaziz Ibn Saud ujedinio je velike dijelove poluotoka i osnovao Kraljevinu Saudijsku Arabiju 1932. Nafta i petrokemija, rudarstvo, građevinarstvo, logistika, financijske usluge i rastući turizam oblikuju gospodarstvo. Sveti gradovi Meka i Medina, Hegra u blizini AlUle, Crveno more i pustinja Rub al-Khali spajaju vjersku, arheološku i prirodnu baštinu.",
+      "overview_en": "The Arabian Peninsula was the site of ancient trade routes and the origin of Islam in the 7th century. Abdulaziz Ibn Saud united large parts of the peninsula and founded the Kingdom of Saudi Arabia in 1932. Petroleum and petrochemicals, mining, construction, logistics, financial services and growing tourism shape the economy. The holy cities of Mecca and Medina, Hegra near AlUla, the Red Sea and the Rub al-Khali desert combine religious, archaeological and natural heritage.",
       "neighboring_countries": [
         "Jordanien",
         "Irak",
@@ -382,6 +404,8 @@
       "internet_tld": ".mx",
       "landlocked": "Nein",
       "overview": "Olmeken, Maya, Zapoteken und Mexica schufen bedeutende Zivilisationen, bevor Spanien das Gebiet im 16. Jahrhundert eroberte. Mexiko erlangte 1821 die Unabhängigkeit, und die Revolution von 1910 bis 1920 formte den modernen Staat. Automobil- und Luftfahrtindustrie, Elektronik, Erdöl, Lebensmittelproduktion, Bergbau und Tourismus sind zentrale Wirtschaftsbereiche. Teotihuacán, Chichén Itzá, koloniale Altstädte, Cenoten und der Kupfercanyon verbinden herausragende Kulturstätten mit vielfältiger Natur.",
+      "overview_hr": "Olmec, Maya, Zapotec i Mexica stvorili su značajne civilizacije prije nego što je Španjolska osvojila ovo područje u 16. stoljeću. Meksiko je stekao neovisnost 1821., a revolucija od 1910. do 1920. formirala je modernu državu. Automobilska i zrakoplovna industrija, elektronika, nafta, proizvodnja hrane, rudarstvo i turizam ključni su gospodarski sektori. Teotihuacán, Chichén Itzá, kolonijalni stari gradovi, cenote i Copper Canyon spajaju izvanredna kulturna mjesta s raznolikom prirodom.",
+      "overview_en": "Olmec, Maya, Zapotec and Mexica created significant civilizations before Spain conquered the area in the 16th century. Mexico gained independence in 1821, and the revolution of 1910 to 1920 formed the modern state. Automotive and aviation industries, electronics, petroleum, food production, mining and tourism are key economic sectors. Teotihuacán, Chichén Itzá, colonial old towns, cenotes and the Copper Canyon combine outstanding cultural sites with diverse nature.",
       "neighboring_countries": [
         "USA",
         "Guatemala",
@@ -414,6 +438,8 @@
       "internet_tld": ".id",
       "landlocked": "Nein",
       "overview": "Maritime Reiche wie Srivijaya und Majapahit verbanden den indonesischen Archipel lange vor der niederländischen Kolonialherrschaft. Indonesien erklärte 1945 seine Unabhängigkeit, die 1949 international anerkannt wurde. Elektronik, Fahrzeugbau, Textilien, Lebensmittel, Palmöl, Bergbau, digitale Dienste und Tourismus tragen die Wirtschaft. Borobudur, Prambanan, Komodo, tropische Regenwälder und eine Kette aktiver Vulkane bilden ein außergewöhnliches Kultur- und Naturerbe.",
+      "overview_hr": "Pomorska carstva kao što su Srivijaya i Majapahit povezivala su indonezijski arhipelag davno prije nizozemske kolonijalne vladavine. Indonezija je 1945. proglasila svoju neovisnost, koja je međunarodno priznata 1949. Elektronika, proizvodnja vozila, tekstil, hrana, palmino ulje, rudarstvo, digitalne usluge i turizam podržavaju gospodarstvo. Borobudur, Prambanan, Komodo, tropske prašume i lanac aktivnih vulkana čine iznimnu kulturnu i prirodnu baštinu.",
+      "overview_en": "Maritime empires such as Srivijaya and Majapahit connected the Indonesian archipelago long before Dutch colonial rule. Indonesia declared its independence in 1945, which was internationally recognized in 1949. Electronics, vehicle manufacturing, textiles, food, palm oil, mining, digital services and tourism support the economy. Borobudur, Prambanan, Komodo, tropical rainforests and a chain of active volcanoes form an exceptional cultural and natural heritage.",
       "neighboring_countries": [
         "Malaysia",
         "Papua-Neuguinea",
@@ -446,6 +472,8 @@
       "internet_tld": ".sd",
       "landlocked": "Nein",
       "overview": "Die nubischen Königreiche von Kerma, Napata und Meroë machten den Sudan zu einem frühen Zentrum am Nil. Nach osmanisch-ägyptischer und britisch-ägyptischer Herrschaft wurde das Land 1956 unabhängig; 2011 spaltete sich Südsudan ab. Landwirtschaft und Viehzucht, Goldbergbau, Erdölverarbeitung, Gummi arabicum und Handel bilden wichtige Wirtschaftszweige. Die Pyramiden von Meroë, die Kulturlandschaften am Nil, das Rote Meer und die Wüstengebiete bewahren ein wenig bekanntes, bedeutendes Erbe.",
+      "overview_hr": "Nubijska kraljevstva Kerma, Napata i Meroë učinila su Sudan ranim središtem na Nilu. Nakon osmanske egipatske i britanske egipatske vladavine, zemlja je postala neovisna 1956.; Južni Sudan se odcijepio 2011. Poljoprivreda i stočarstvo, rudarstvo zlata, prerada nafte, arapska guma i trgovina važni su gospodarski sektori. Piramide Meroë, kulturni krajolici Nila, Crvenog mora i pustinjska područja čuvaju malo poznatu, a važnu baštinu.",
+      "overview_en": "The Nubian kingdoms of Kerma, Napata and Meroë made Sudan an early center on the Nile. After Ottoman Egyptian and British Egyptian rule, the country became independent in 1956; South Sudan seceded in 2011. Agriculture and livestock breeding, gold mining, petroleum processing, gum arabic and trade form important economic sectors. The pyramids of Meroë, the cultural landscapes of the Nile, the Red Sea and the desert areas preserve a little-known, important heritage.",
       "neighboring_countries": [
         "Ägypten",
         "Libyen",
@@ -477,6 +505,8 @@
       "internet_tld": ".ly",
       "landlocked": "Nein",
       "overview": "Phönizische, griechische, römische, arabische und osmanische Herrschaftsperioden prägten die libysche Küste und ihre Oasen. Nach italienischer Kolonialherrschaft wurde Libyen 1951 unabhängig; der Sturz des langjährigen Regimes 2011 leitete eine anhaltende politische Fragmentierung ein. Erdöl und Erdgas, Petrochemie, Bauwirtschaft, Handel und Dienstleistungen dominieren die Wirtschaft. Leptis Magna, Kyrene, die Felskunst des Akakus und die Landschaften von Mittelmeer und Sahara bilden ein außergewöhnliches Kultur- und Naturerbe.",
+      "overview_hr": "Feničko, grčko, rimsko, arapsko i osmansko razdoblje vladavine oblikovalo je libijsku obalu i njezine oaze. Nakon talijanske kolonijalne vladavine, Libija je 1951. postala neovisna; Pad dugogodišnjeg režima 2011. doveo je do kontinuirane političke fragmentacije. Nafta i plin, petrokemija, građevinarstvo, trgovina i usluge dominiraju gospodarstvom. Leptis Magna, Cyrene, umjetnost na stijenama Akakusa i krajolici Mediterana i Sahare čine iznimnu kulturnu i prirodnu baštinu.",
+      "overview_en": "Phoenician, Greek, Roman, Arab and Ottoman periods of rule shaped the Libyan coast and its oases. After Italian colonial rule, Libya became independent in 1951; The fall of the long-standing regime in 2011 ushered in ongoing political fragmentation. Oil and gas, petrochemicals, construction, trade and services dominate the economy. Leptis Magna, Cyrene, the rock art of Akakus and the landscapes of the Mediterranean and Sahara form an exceptional cultural and natural heritage.",
       "neighboring_countries": [
         "Tunesien",
         "Algerien",
@@ -509,6 +539,8 @@
       "internet_tld": ".ir",
       "landlocked": "Nein",
       "overview": "Seit den achämenidischen und sassanidischen Reichen steht Iran im Zentrum einer jahrtausendealten persischen Staatstradition. Die Safawiden begründeten ab 1501 einen schiitisch geprägten Staat, auf den die Pahlavi-Monarchie und 1979 die Islamische Republik folgten. Erdöl und Erdgas, Petrochemie, Automobilbau, Stahl, Bergbau, Landwirtschaft und Teppichproduktion prägen die Wirtschaft. Persepolis, Isfahan, persische Gärten, das Zagrosgebirge und die Wüste Lut verbinden monumentales Kulturerbe mit extremer Natur.",
+      "overview_hr": "Od Ahemenidskog i Sasanidskog carstva, Iran je bio središte tisućljetne perzijske državne tradicije. Safavidi su od 1501. nadalje utemeljili državu kojom su dominirali šijiti, nakon čega su 1979. uslijedili Pahlavi monarhija i Islamska Republika. Nafta i plin, petrokemija, proizvodnja automobila, čelik, rudarstvo, poljoprivreda i proizvodnja tepiha oblikuju gospodarstvo. Perzepolis, Isfahan, Perzijski vrtovi, planine Zagros i pustinja Lut spajaju monumentalnu kulturnu baštinu s ekstremnom prirodom.",
+      "overview_en": "Since the Achaemenid and Sassanid empires, Iran has been at the center of a millennia-old Persian state tradition. The Safavids founded a Shiite-dominated state from 1501 onwards, which was followed by the Pahlavi monarchy and the Islamic Republic in 1979. Oil and gas, petrochemicals, automobile manufacturing, steel, mining, agriculture and carpet production shape the economy. Persepolis, Isfahan, Persian Gardens, the Zagros Mountains and the Lut Desert combine monumental cultural heritage with extreme nature.",
       "neighboring_countries": [
         "Irak",
         "Türkei",
@@ -540,6 +572,8 @@
       "internet_tld": ".mn",
       "landlocked": "Ja",
       "overview": "Nomadische Reiche prägten die Steppe, bevor Dschingis Khan 1206 das Mongolische Reich begründete. Nach der Herrschaft der Qing-Dynastie erklärte die Mongolei 1911 ihre Unabhängigkeit und vollzog 1990 den Übergang zur Demokratie. Kupfer-, Kohle- und Goldbergbau, Viehzucht, Kaschmirproduktion, Transport und erneuerbare Energien tragen die Wirtschaft. Die Wüste Gobi, das Orchon-Tal, der Altai und die weiten Steppen bewahren nomadische Kultur und eindrucksvolle Natur.",
+      "overview_hr": "Nomadska carstva oblikovala su stepu prije nego što je Genghis Khan osnovao Mongolsko Carstvo 1206. Nakon vladavine dinastije Qing, Mongolija je proglasila svoju neovisnost 1911. i izvršila prijelaz na demokraciju 1990. Rudnici bakra, ugljena i zlata, uzgoj stoke, proizvodnja kašmira, transport i obnovljiva energija održavaju gospodarstvo. Pustinja Gobi, dolina Orkhon, Altaj i nepregledne stepe čuvaju nomadsku kulturu i impresivnu prirodu.",
+      "overview_en": "Nomadic empires shaped the steppe before Genghis Khan founded the Mongol Empire in 1206. After the rule of the Qing Dynasty, Mongolia declared its independence in 1911 and made the transition to democracy in 1990. Copper, coal and gold mining, livestock farming, cashmere production, transportation and renewable energy sustain the economy. The Gobi Desert, the Orkhon Valley, the Altai and the vast steppes preserve nomadic culture and impressive nature.",
       "neighboring_countries": [
         "Russland",
         "China"
@@ -569,6 +603,8 @@
       "internet_tld": ".jp",
       "landlocked": "Nein",
       "overview": "Aus einem frühen Kaiserreich entwickelte sich Japan über Jahrhunderte unter der Herrschaft regionaler Kriegereliten und Shogunate. Die Meiji-Restauration von 1868 leitete die rasche Modernisierung ein, während die Verfassung von 1947 den demokratischen Nachkriegsstaat begründete. Automobilbau, Elektronik, Maschinenbau, Robotik, Chemie, Pharma und Präzisionstechnik prägen die Wirtschaft. Kyoto und Nara, der Fuji, historische Pilgerwege und die vielfältigen Insel- und Küstenlandschaften verbinden Kultur und Natur.",
+      "overview_hr": "Od ranog carstva, Japan se stoljećima razvijao pod vlašću regionalnih ratničkih elita i šogunata. Meiji restauracija iz 1868. pokrenula je brzu modernizaciju, dok je Ustavom iz 1947. uspostavljena poslijeratna demokratska država. Automobilska industrija, elektronika, strojarstvo, robotika, kemija, farmacija i precizno inženjerstvo oblikuju gospodarstvo. Kyoto i Nara, planina Fuji, povijesne hodočasničke rute i raznoliki otočni i obalni krajolici spajaju kulturu i prirodu.",
+      "overview_en": "From an early empire, Japan developed over centuries under the rule of regional warrior elites and shogunates. The Meiji Restoration of 1868 initiated rapid modernization, while the Constitution of 1947 established the postwar democratic state. Automotive engineering, electronics, mechanical engineering, robotics, chemistry, pharmaceuticals and precision engineering shape the economy. Kyoto and Nara, Mount Fuji, historical pilgrimage routes and the diverse island and coastal landscapes combine culture and nature.",
       "neighboring_countries": [
         "Russland",
         "Südkorea",
@@ -598,6 +634,8 @@
       "internet_tld": ".kr",
       "landlocked": "Nein",
       "overview": "Alte koreanische Königreiche und die Joseon-Dynastie prägten Sprache, Verwaltung und Kultur über viele Jahrhunderte. Nach japanischer Kolonialherrschaft entstand 1948 die Republik Korea, die nach Krieg und autoritärer Entwicklung 1987 den demokratischen Übergang vollzog. Halbleiter, Elektronik, Automobilbau, Schiffbau, Batterien, Chemie und Kulturwirtschaft treiben die exportorientierte Wirtschaft. Seouls Paläste, buddhistische Bergklöster, die Vulkaninsel Jeju und der Seoraksan-Nationalpark verbinden lebendiges Erbe mit markanter Natur.",
+      "overview_hr": "Drevna korejska kraljevstva i dinastija Joseon stoljećima su oblikovali jezik, administraciju i kulturu. Nakon japanske kolonijalne vladavine, 1948. nastala je Republika Koreja, koja je nakon rata i autoritarnog razvoja završila demokratsku tranziciju 1987. Poluvodiči, elektronika, proizvodnja automobila, brodogradnja, baterije, kemikalije i kulturna industrija pokreću izvozno orijentirano gospodarstvo. Seulske palače, budistički planinski samostani, vulkanski otok Jeju i nacionalni park Seoraksan spajaju živopisnu baštinu s dojmljivom prirodom.",
+      "overview_en": "Ancient Korean kingdoms and the Joseon Dynasty shaped language, administration and culture for many centuries. After Japanese colonial rule, the Republic of Korea came into being in 1948, which, after war and authoritarian development, completed the democratic transition in 1987. Semiconductors, electronics, automobile manufacturing, shipbuilding, batteries, chemicals and cultural industries drive the export-oriented economy. Seoul's palaces, Buddhist mountain monasteries, the volcanic island of Jeju and Seoraksan National Park combine vibrant heritage with striking nature.",
       "neighboring_countries": [
         "Nordkorea",
         "Japan",
@@ -627,6 +665,8 @@
       "internet_tld": ".pk",
       "landlocked": "Nein",
       "overview": "Die Indus-Zivilisation, buddhistische Zentren und islamische Reiche hinterließen im Gebiet Pakistans bedeutende Spuren. Der Staat entstand 1947 aus Britisch-Indien; seit der Unabhängigkeit Bangladeschs 1971 besitzt er seine heutige territoriale Gestalt. Textilien, Landwirtschaft und Lebensmittel, Informationstechnologie, Zement, Düngemittel und chirurgische Instrumente sind wichtige Wirtschaftsbereiche. Mohenjo-Daro, Taxila, Lahores Baukunst sowie Karakorum und K2 verbinden frühe Hochkultur mit extremer Hochgebirgsnatur.",
+      "overview_hr": "Indska civilizacija, budistički centri i islamska carstva ostavili su značajne tragove na području Pakistana. Država je nastala iz Britanske Indije 1947.; Svoj sadašnji teritorijalni oblik ima od neovisnosti Bangladeša 1971. Tekstil, poljoprivreda i hrana, informacijska tehnologija, cement, gnojiva i kirurški instrumenti važni su gospodarski sektori. Mohenjo-Daro, Taxila, arhitektura Lahorea, kao i Karakoram i K2 spajaju ranu naprednu kulturu s prirodom ekstremnih visokih planina.",
+      "overview_en": "The Indus Civilization, Buddhist centers and Islamic empires left significant traces in the territory of Pakistan. The state emerged from British India in 1947; It has had its current territorial shape since Bangladesh's independence in 1971. Textiles, agriculture and food, information technology, cement, fertilizers and surgical instruments are important economic sectors. Mohenjo-Daro, Taxila, Lahore's architecture as well as Karakoram and K2 combine early advanced culture with extreme high mountain nature.",
       "neighboring_countries": [
         "Iran",
         "Afghanistan",
@@ -658,6 +698,8 @@
       "internet_tld": ".bd",
       "landlocked": "Nein",
       "overview": "Bengalen war über Jahrhunderte ein Zentrum regionaler Königreiche, des Mogulreichs und später der britischen Kolonialwirtschaft. Als Ostpakistan 1947 entstanden, erlangte Bangladesch nach einem Befreiungskrieg 1971 die Unabhängigkeit. Bekleidungs- und Textilindustrie, Landwirtschaft, Pharma, Schiffbau, Lederwaren und Informationstechnologie tragen die Wirtschaft. Die Sundarbans, das Ganges-Brahmaputra-Delta, historische Moscheen und die Teelandschaften von Sylhet prägen Natur und Kultur.",
+      "overview_hr": "Stoljećima je Bengal bio središte regionalnih kraljevstava, Mogulskog carstva i kasnije britanske kolonijalne ekonomije. Osnovan kao Istočni Pakistan 1947., Bangladeš je stekao neovisnost 1971. nakon oslobodilačkog rata. Odjevna i tekstilna industrija, poljoprivreda, farmaceutika, brodogradnja, kožna galanterija i informacijska tehnologija podržavaju gospodarstvo. Sundarbans, delta Ganges-Brahmaputra, povijesne džamije i krajolici čaja Sylheta oblikuju prirodu i kulturu.",
+      "overview_en": "For centuries, Bengal was a center of regional kingdoms, the Mughal Empire and later the British colonial economy. Formed as East Pakistan in 1947, Bangladesh gained independence in 1971 after a war of liberation. Clothing and textile industries, agriculture, pharmaceuticals, shipbuilding, leather goods and information technology support the economy. The Sundarbans, the Ganges-Brahmaputra Delta, historic mosques and the tea landscapes of Sylhet shape nature and culture.",
       "neighboring_countries": [
         "Indien",
         "Myanmar"
@@ -686,6 +728,8 @@
       "internet_tld": ".ng",
       "landlocked": "Nein",
       "overview": "Nok-Kultur sowie Reiche wie Benin, Oyo, Kanem-Bornu und das Sokoto-Kalifat prägten das Gebiet des heutigen Nigeria. Nach britischer Kolonialherrschaft wurde der Bundesstaat 1960 unabhängig und kehrte 1999 dauerhaft zur Zivilregierung zurück. Erdöl und Erdgas, Landwirtschaft, Telekommunikation, Finanztechnologie, Lebensmittelproduktion sowie Film- und Musikwirtschaft tragen die Wirtschaft. Osun-Osogbo, Sukur, der Niger-Benue-Raum und die Landschaften von Savanne bis Regenwald zeigen die kulturelle und natürliche Vielfalt.",
+      "overview_hr": "Nok kultura i carstva kao što su Benin, Oyo, Kanem-Bornu i Sokoto kalifat oblikovali su područje današnje Nigerije. Nakon britanske kolonijalne vladavine, država je postala neovisna 1960. i trajno se vratila pod civilnu vlast 1999. Nafta i plin, poljoprivreda, telekomunikacije, financijska tehnologija, proizvodnja hrane te film i glazba održavaju gospodarstvo. Osun-Osogbo, Sukur, regija Niger-Benue i krajolici od savane do prašume pokazuju kulturnu i prirodnu raznolikost.",
+      "overview_en": "Nok culture and empires such as Benin, Oyo, Kanem-Bornu and the Sokoto Caliphate shaped the area of ​​today's Nigeria. After British colonial rule, the state became independent in 1960 and returned permanently to civilian rule in 1999. Oil and gas, agriculture, telecommunications, financial technology, food production, and film and music sustain the economy. Osun-Osogbo, Sukur, the Niger-Benue region and the landscapes from savannah to rainforest show the cultural and natural diversity.",
       "neighboring_countries": [
         "Benin",
         "Niger",
@@ -716,6 +760,8 @@
       "internet_tld": ".et",
       "landlocked": "Ja",
       "overview": "Das Reich von Aksum und eine lange christliche Kaisertradition machten Äthiopien zu einem der ältesten Staaten Afrikas. Der Sieg von Adwa 1896 bewahrte die Unabhängigkeit weitgehend; nach dem Ende der Monarchie 1974 entstand 1995 die heutige föderale Ordnung. Landwirtschaft und Kaffee, Textilien und Leder, Bauwirtschaft, Luftverkehr, Wasserkraft und Dienstleistungen prägen die Wirtschaft. Lalibela, Aksum, die Simien-Berge, die Danakil-Senke und das Omo-Tal bilden ein außergewöhnliches Kultur- und Naturerbe.",
+      "overview_hr": "Aksumsko carstvo i duga kršćanska imperijalna tradicija učinili su Etiopiju jednom od najstarijih država u Africi. Pobjeda kod Adwe 1896. uvelike je očuvala neovisnost; Nakon raspada monarhije 1974., sadašnji federalni sustav uspostavljen je 1995. Poljoprivreda i kava, tekstil i koža, građevinarstvo, zračni promet, hidroenergija i usluge oblikuju gospodarstvo. Lalibela, Aksum, planine Simien, depresija Danakil i dolina Omo čine iznimnu kulturnu i prirodnu baštinu.",
+      "overview_en": "The Empire of Aksum and a long Christian imperial tradition made Ethiopia one of the oldest states in Africa. The victory at Adwa in 1896 largely preserved independence; After the end of the monarchy in 1974, the current federal system was established in 1995. Agriculture and coffee, textiles and leather, construction, air transport, hydropower and services shape the economy. Lalibela, Aksum, the Simien Mountains, the Danakil Depression and the Omo Valley form an exceptional cultural and natural heritage.",
       "neighboring_countries": [
         "Eritrea",
         "Dschibuti",
@@ -748,6 +794,8 @@
       "internet_tld": ".eg",
       "landlocked": "Nein",
       "overview": "Die pharaonische Zivilisation am Nil schuf über drei Jahrtausende einen der einflussreichsten Staaten der Antike. Griechisch-römische, christliche, islamische und osmanische Epochen folgten, bevor 1953 die moderne Republik entstand. Erdöl und Erdgas, Bauwirtschaft, Textilien, Lebensmittel, Tourismus und die Logistik am Suezkanal tragen die Wirtschaft. Pyramiden von Gizeh, Tempel von Luxor, das Niltal, die Wüsten und die Korallenriffe des Roten Meeres verbinden Weltkultur und Natur.",
+      "overview_hr": "Faraonska civilizacija na Nilu je kroz tri tisućljeća stvorila jednu od najutjecajnijih država antike. Uslijedila su grčko-rimska, kršćanska, islamska i osmanska era prije nego što se 1953. pojavila moderna republika. Nafta i plin, građevinarstvo, tekstil, hrana, turizam i logistika u Sueskom kanalu podržavaju gospodarstvo. Piramide u Gizi, hramovi u Luksoru, dolina Nila, pustinje i koraljni grebeni Crvenog mora spajaju svjetsku kulturu i prirodu.",
+      "overview_en": "The pharaonic civilization on the Nile created one of the most influential states of antiquity over three millennia. Greco-Roman, Christian, Islamic and Ottoman eras followed before the modern republic emerged in 1953. Oil and gas, construction, textiles, food, tourism and logistics at the Suez Canal support the economy. Pyramids of Giza, Temples of Luxor, the Nile Valley, the deserts and coral reefs of the Red Sea combine world culture and nature.",
       "neighboring_countries": [
         "Libyen",
         "Sudan",
@@ -777,6 +825,8 @@
       "internet_tld": ".za",
       "landlocked": "Nein",
       "overview": "Indigene Khoisan-Gesellschaften und afrikanische Königreiche bestanden lange vor der niederländischen und britischen Kolonisierung. Die Union Südafrika entstand 1910, das Apartheidsystem wurde ab 1948 institutionalisiert und 1994 durch eine demokratische Ordnung überwunden. Bergbau, Finanzdienste, Automobilbau, Landwirtschaft, Tourismus, Energie und moderne Dienstleistungen prägen die vielfältige Wirtschaft. Robben Island, die Wiege der Menschheit, die Kapflora, der Kruger-Nationalpark und die Drakensberge verbinden Geschichte und globale Biodiversität.",
+      "overview_hr": "Domorodačka kojsanska društva i afrička kraljevstva postojala su davno prije nizozemske i britanske kolonizacije. Južnoafrička unija osnovana je 1910., sustav apartheida institucionaliziran je od 1948. i prevladan je demokratskim poretkom 1994. Rudarstvo, financijske usluge, proizvodnja automobila, poljoprivreda, turizam, energija i moderne usluge oblikuju raznoliko gospodarstvo. Otok Robben, kolijevka čovječanstva, flora Capea, Nacionalni park Kruger i Drakensberg spajaju povijest i globalnu biološku raznolikost.",
+      "overview_en": "Indigenous Khoisan societies and African kingdoms existed long before Dutch and British colonization. The Union of South Africa was founded in 1910, the apartheid system was institutionalized from 1948 and was overcome by a democratic order in 1994. Mining, financial services, automobile manufacturing, agriculture, tourism, energy and modern services shape the diverse economy. Robben Island, the cradle of humanity, the Cape flora, the Kruger National Park and the Drakensberg combine history and global biodiversity.",
       "neighboring_countries": [
         "Namibia",
         "Botswana",
@@ -809,6 +859,8 @@
       "internet_tld": ".kz",
       "landlocked": "Ja",
       "overview": "Nomadische Steppenkulturen und das Kasachische Khanat prägten Zentralasien über Jahrhunderte. Nach der Eingliederung in das Russische Reich und sieben Jahrzehnten als Sowjetrepublik wurde Kasachstan 1991 unabhängig. Erdöl und Erdgas, Uran, Bergbau und Metallurgie, Landwirtschaft, Logistik und Raumfahrtdienstleistungen tragen die Wirtschaft. Charyn-Canyon, Tian-Shan-Gebirge, Tamgaly und die weiten Steppen entlang historischer Seidenstraßen verbinden Natur und Kultur.",
+      "overview_hr": "Nomadske stepske kulture i Kazahstanski kanat stoljećima su oblikovali središnju Aziju. Nakon što je uključen u Rusko Carstvo i sedam desetljeća kao sovjetska republika, Kazahstan je postao neovisan 1991. Nafta i prirodni plin, uran, rudarstvo i metalurgija, poljoprivreda, logistika i svemirske usluge održavaju gospodarstvo. Kanjon Charyn, planine Tian Shan, Tamgaly i nepregledne stepe duž povijesnih Puteva svile spajaju prirodu i kulturu.",
+      "overview_en": "Nomadic steppe cultures and the Kazakh Khanate shaped Central Asia for centuries. After being incorporated into the Russian Empire and seven decades as a Soviet republic, Kazakhstan became independent in 1991. Petroleum and natural gas, uranium, mining and metallurgy, agriculture, logistics and space services sustain the economy. Charyn Canyon, Tian Shan Mountains, Tamgaly and the vast steppes along the historic Silk Roads combine nature and culture.",
       "neighboring_countries": [
         "Russland",
         "China",
@@ -842,6 +894,8 @@
       "internet_tld": ".pe",
       "landlocked": "Nein",
       "overview": "Frühe Kulturen wie Caral, Nazca, Moche und Chimú gingen dem Inka-Reich voraus, das große Teile der Anden verband. Nach der spanischen Eroberung im 16. Jahrhundert errang Peru 1821 bis 1824 seine Unabhängigkeit. Kupfer- und Goldbergbau, Landwirtschaft und Lebensmittel, Fischerei, Textilien, Energie und Tourismus tragen die Wirtschaft. Machu Picchu, Cusco, die Nazca-Linien, Anden und Amazonasregenwald bilden ein Kultur- und Naturerbe von Weltrang.",
+      "overview_hr": "Rane kulture kao što su Caral, Nazca, Moche i Chimú prethodile su Carstvu Inka, koje je povezivalo velike dijelove Anda. Nakon španjolskog osvajanja u 16. stoljeću, Peru je stekao neovisnost od 1821. do 1824. Rudari bakra i zlata, poljoprivreda i hrana, ribarstvo, tekstil, energija i turizam podržavaju gospodarstvo. Machu Picchu, Cusco, linije Nazca, Ande i amazonska prašuma čine mjesto kulturne i prirodne baštine svjetske klase.",
+      "overview_en": "Early cultures such as Caral, Nazca, Moche and Chimú preceded the Inca Empire, which connected large parts of the Andes. After the Spanish conquest in the 16th century, Peru gained its independence from 1821 to 1824. Copper and gold mining, agriculture and food, fishing, textiles, energy and tourism support the economy. Machu Picchu, Cusco, the Nazca Lines, Andes and Amazon rainforest form a world-class cultural and natural heritage site.",
       "neighboring_countries": [
         "Ecuador",
         "Kolumbien",
@@ -873,6 +927,8 @@
       "internet_tld": ".co",
       "landlocked": "Nein",
       "overview": "Indigene Kulturen wie Muisca und Tairona prägten das Gebiet vor der spanischen Kolonisierung. Die Unabhängigkeitsbewegung führte 1819 zu Großkolumbien, aus dessen Entwicklung die heutige Republik hervorging. Erdöl und Kohle, Kaffee und Schnittblumen, Lebensmittel, Textilien, moderne Dienstleistungen und Kreativwirtschaft tragen die Wirtschaft. Cartagenas Altstadt, die Kaffee-Kulturlandschaft, die Anden, Amazonien sowie Karibik- und Pazifikküste bilden eine außergewöhnliche Vielfalt.",
+      "overview_hr": "Autohtone kulture kao što su Muisca i Tairona oblikovale su to područje prije španjolske kolonizacije. Pokret za neovisnost doveo je do Velike Kolumbije 1819., iz koje je proizašla današnja republika. Nafta i ugljen, kava i rezano cvijeće, hrana, tekstil, moderne usluge i kreativne industrije podržavaju gospodarstvo. Stari grad Cartagene, kulturni krajolik kave, Ande, Amazonija te karipska i pacifička obala čine nevjerojatnu raznolikost.",
+      "overview_en": "Indigenous cultures such as Muisca and Tairona shaped the area before Spanish colonization. The independence movement led to Greater Colombia in 1819, from which the current republic emerged. Petroleum and coal, coffee and cut flowers, food, textiles, modern services and the creative industries support the economy. Cartagena's old town, the coffee cultural landscape, the Andes, Amazonia and the Caribbean and Pacific coasts form an extraordinary diversity.",
       "neighboring_countries": [
         "Panama",
         "Venezuela",
@@ -904,6 +960,8 @@
       "internet_tld": ".cl",
       "landlocked": "Nein",
       "overview": "Indigene Völker, besonders die Mapuche, prägten das Gebiet lange vor der spanischen Kolonisierung. Chile errang 1818 die Unabhängigkeit und kehrte 1990 nach der Militärdiktatur von 1973 zur Demokratie zurück. Kupfer- und Lithiumabbau, Wein- und Lebensmittelwirtschaft, Forstwirtschaft, Lachszucht, Dienstleistungen und erneuerbare Energien prägen die Wirtschaft. Atacama, Rapa Nui, Valparaíso, die Anden und Patagoniens Nationalparks verbinden extreme Naturräume mit unverwechselbarem Kulturerbe.",
+      "overview_hr": "Autohtoni narodi, posebno Mapuche, oblikovali su ovo područje mnogo prije španjolske kolonizacije. Čile je stekao neovisnost 1818. i vratio se demokraciji 1990. nakon vojne diktature 1973. godine. Rudarstvo bakra i litija, vinska i prehrambena industrija, šumarstvo, uzgoj lososa, usluge i obnovljivi izvori energije oblikuju gospodarstvo. Nacionalni parkovi Atacama, Rapa Nui, Valparaíso, Ande i Patagonija spajaju ekstremna prirodna okruženja s prepoznatljivom kulturnom baštinom.",
+      "overview_en": "Indigenous peoples, especially the Mapuche, shaped the area long before Spanish colonization. Chile gained independence in 1818 and returned to democracy in 1990 after the 1973 military dictatorship. Copper and lithium mining, wine and food industries, forestry, salmon farming, services and renewable energies shape the economy. Atacama, Rapa Nui, Valparaíso, the Andes and Patagonia national parks combine extreme natural environments with distinctive cultural heritage.",
       "neighboring_countries": [
         "Peru",
         "Bolivien",
@@ -934,6 +992,8 @@
       "internet_tld": ".ve",
       "landlocked": "Nein",
       "overview": "Indigene Gesellschaften lebten im Gebiet des heutigen Venezuela, bevor es Teil des spanischen Kolonialreichs wurde. Die von Simón Bolívar geprägte Unabhängigkeitsbewegung siegte 1821; seit dem frühen 20. Jahrhundert bestimmte Erdöl die staatliche und wirtschaftliche Entwicklung. Erdöl und Petrochemie, Bergbau, Landwirtschaft, Lebensmittelproduktion und Dienstleistungen bilden die wichtigsten Wirtschaftsbereiche. Salto Ángel und Canaima, die Tafelberge, der Orinoco, die Llanos und die Karibikküste prägen das außergewöhnliche Naturerbe.",
+      "overview_hr": "Domorodačka društva živjela su na području današnje Venezuele prije nego što je postala dio španjolskog kolonijalnog carstva. Pokret za neovisnost pod vodstvom Simóna Bolívara pobijedio je 1821.; Od početka 20. stoljeća nafta je određivala vladu i gospodarski razvoj. Nafta i petrokemija, rudarstvo, poljoprivreda, proizvodnja hrane i usluge čine glavne gospodarske sektore. Salto Ángel i Canaima, Stolne planine, Orinoco, Llanos i karipska obala karakteriziraju iznimnu prirodnu baštinu.",
+      "overview_en": "Indigenous societies lived in what is now Venezuela before it became part of the Spanish colonial empire. The independence movement led by Simón Bolívar won in 1821; Since the early 20th century, oil has determined government and economic development. Petroleum and petrochemicals, mining, agriculture, food production and services form the main economic sectors. Salto Ángel and Canaima, the table mountains, the Orinoco, the Llanos and the Caribbean coast characterize the exceptional natural heritage.",
       "neighboring_countries": [
         "Kolumbien",
         "Brasilien",
@@ -963,6 +1023,8 @@
       "internet_tld": ".nz",
       "landlocked": "Nein",
       "overview": "Polynesische Seefahrer begründeten ab dem 13. Jahrhundert die Māori-Kultur in Aotearoa. Der Vertrag von Waitangi von 1840 leitete die britische Kolonialherrschaft ein, während Neuseeland im 20. Jahrhundert schrittweise volle staatliche Selbstständigkeit erlangte. Milch- und Fleischwirtschaft, Weinbau, Tourismus, Filmproduktion, Technologie und erneuerbare Energien tragen die Wirtschaft. Fiordland, Tongariro, die Geothermiegebiete von Rotorua und lebendige Māori-Traditionen verbinden dramatische Natur mit eigenständigem Kulturerbe.",
+      "overview_hr": "Polinezijski pomorci osnovali su kulturu Māori u Aotearoi iz 13. stoljeća. Ugovorom iz Waitangi iz 1840. započela je britanska kolonijalna vladavina, dok je Novi Zeland postupno postigao punu državnu neovisnost u 20. stoljeću. Uzgoj mlijeka i mesa, vinogradarstvo, turizam, filmska produkcija, tehnologija i obnovljivi izvori energije podupiru gospodarstvo. Fiordland, Tongariro, geotermalna područja Rotorue i živahne maorske tradicije kombiniraju dramatičnu prirodu s posebnom kulturnom baštinom.",
+      "overview_en": "Polynesian sailors founded the Māori culture in Aotearoa from the 13th century. The Treaty of Waitangi of 1840 initiated British colonial rule, while New Zealand gradually achieved full state independence in the 20th century. Dairy and meat farming, viticulture, tourism, film production, technology and renewable energies support the economy. Fiordland, Tongariro, the geothermal areas of Rotorua and vibrant Māori traditions combine dramatic nature with distinct cultural heritage.",
       "neighboring_countries": [
         "Australien",
         "Pazifik"
@@ -992,6 +1054,8 @@
       "internet_tld": ".th",
       "landlocked": "Nein",
       "overview": "Die Königreiche Sukhothai und Ayutthaya legten Grundlagen des thailändischen Staates, der später als Siam bekannt wurde. Thailand entging formaler europäischer Kolonisierung und wandelte sich 1932 zur konstitutionellen Monarchie. Automobil- und Elektronikindustrie, Lebensmittel und Landwirtschaft, Petrochemie, Tourismus und digitale Dienstleistungen prägen die Wirtschaft. Sukhothai, Ayutthaya, Bangkoks Tempel, die nördlichen Berglandschaften und tropischen Inseln verbinden reiches Kulturerbe mit vielfältiger Natur.",
+      "overview_hr": "Kraljevstva Sukhothai i Ayutthaya postavila su temelje tajlandske države, koja je kasnije postala poznata kao Siam. Tajland je izbjegao formalnu europsku kolonizaciju i postao ustavna monarhija 1932. Automobilska i elektronička industrija, hrana i poljoprivreda, petrokemija, turizam i digitalne usluge oblikuju gospodarstvo. Sukhothai, Ayutthaya, hramovi Bangkoka, sjeverni planinski krajolici i tropski otoci spajaju bogatu kulturnu baštinu s raznolikom prirodom.",
+      "overview_en": "The kingdoms of Sukhothai and Ayutthaya laid the foundations of the Thai state, which later became known as Siam. Thailand escaped formal European colonization and became a constitutional monarchy in 1932. The automotive and electronics industries, food and agriculture, petrochemicals, tourism and digital services shape the economy. Sukhothai, Ayutthaya, Bangkok's temples, the northern mountain landscapes and tropical islands combine rich cultural heritage with diverse nature.",
       "neighboring_countries": [
         "Myanmar",
         "Laos",
@@ -1022,6 +1086,8 @@
       "internet_tld": ".vn",
       "landlocked": "Nein",
       "overview": "Frühe vietnamesische Reiche entwickelten sich unter starkem chinesischem Einfluss und behaupteten über lange Dynastien eine eigene Staatstradition. Nach französischer Kolonialherrschaft, Teilung und Krieg wurde das Land 1976 wiedervereinigt. Elektronik, Textilien und Schuhe, Maschinenbau, Landwirtschaft und Lebensmittel, Möbelproduktion und digitale Dienstleistungen tragen die exportorientierte Wirtschaft. Hạ-Long-Bucht, Hội An, Huế, die Höhlen von Phong Nha und das Mekongdelta verbinden historisches Erbe mit eindrucksvoller Natur.",
+      "overview_hr": "Rana vijetnamska carstva razvila su se pod jakim kineskim utjecajem i zadržala su vlastitu državnu tradiciju tijekom dugih dinastija. Nakon francuske kolonijalne vladavine, podjela i rata, zemlja se ponovno ujedinila 1976. Elektronika, tekstil i obuća, strojarstvo, poljoprivreda i hrana, proizvodnja namještaja i digitalne usluge podržavaju izvozno orijentirano gospodarstvo. Hạ Long Bay, Hội An, Huế, špilje Phong Nha i delta Mekonga spajaju povijesno naslijeđe s impresivnom prirodom.",
+      "overview_en": "Early Vietnamese empires developed under strong Chinese influence and maintained their own state tradition over long dynasties. After French colonial rule, division and war, the country was reunified in 1976. Electronics, textiles and shoes, mechanical engineering, agriculture and food, furniture production and digital services support the export-oriented economy. Hạ Long Bay, Hội An, Huế, the caves of Phong Nha and the Mekong Delta combine historical heritage with impressive nature.",
       "neighboring_countries": [
         "China",
         "Laos",

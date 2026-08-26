@@ -262,26 +262,45 @@ html.has-onboarding-open::-webkit-scrollbar {
 }
 
 .onboarding-feedback-key {
-  display: flex;
+  display: grid;
   width: 100%;
   min-width: 0;
-  flex-wrap: wrap;
-  gap: 9px 15px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  column-gap: clamp(6px, 2.8vw, 15px);
+  row-gap: 8px;
   margin-top: 18px;
-  padding: 13px 14px;
+  padding: 13px clamp(8px, 2.8vw, 14px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
   background: rgba(0, 0, 0, 0.2);
 }
 
 .onboarding-feedback-key > span {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
   min-width: 0;
   align-items: center;
   gap: 7px;
   color: rgba(255, 255, 255, 0.84);
   font-size: 12px;
   font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.onboarding-feedback-key > span:nth-child(2) {
+  justify-content: center;
+  text-align: center;
+}
+
+.onboarding-feedback-key > span:nth-child(3) {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.onboarding-feedback-key > span > span {
+  min-width: 0;
+  max-width: calc(100% - 16px);
   overflow-wrap: anywhere;
 }
 
@@ -311,8 +330,8 @@ html.has-onboarding-open::-webkit-scrollbar {
   padding-bottom: 7px;
   border-bottom: 1px solid rgba(125, 211, 252, 0.28);
   color: #7dd3fc;
-  font-size: clamp(10px, 2.8vw, 12px);
-  font-weight: 850;
+  font-size: clamp(11px, 3.1vw, 13px);
+  font-weight: 900;
   line-height: 1.1;
   text-shadow: 0 0 12px rgba(125, 211, 252, 0.18);
   text-transform: uppercase;
@@ -334,8 +353,23 @@ html.has-onboarding-open::-webkit-scrollbar {
 }
 
 .onboarding-language-label-letter.is-space {
-  width: 0.42em;
-  flex-basis: 0.42em;
+  width: 0.63em;
+  flex-basis: 0.63em;
+}
+
+.cat-buttons {
+  position: relative;
+}
+
+.onboarding-category-preview-target {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .onboarding-language-options {

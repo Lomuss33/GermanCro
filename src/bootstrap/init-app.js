@@ -1,6 +1,7 @@
 import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-18-prompt-fit1";
 import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-11-height-ui1";
-import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-25-onboarding15";
+import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-26-tour-cats5";
+import { COUNTRY_NOTABLE_PEOPLE } from "../facts/notable-people.js";
 import {
   CARD_SCOPE_OPTIONS,
   MODE_SCOPE_MAP,
@@ -243,81 +244,97 @@ const STATE_NOTABLE_PEOPLE = {
     science: ["Albert Einstein", "Johannes Kepler", "Carl Benz"],
     politics: ["Theodor Heuss", "Carlo Schmid", "Winfried Kretschmann"],
     art: ["Friedrich Schiller", "Hermann Hesse", "Otto Dix"],
+    engineering: ["Carl Benz", "Gottlieb Daimler"],
   },
   bayern: {
     science: ["Werner Heisenberg", "Carl von Linde", "Rudolf Diesel"],
     politics: ["Franz Josef Strauss", "Kurt Eisner", "Markus Soeder"],
     art: ["Richard Wagner", "Franz Marc", "Oskar Maria Graf"],
+    engineering: ["Rudolf Diesel", "Oskar von Miller"],
   },
   berlin: {
     science: ["Albert Einstein", "Max Planck", "Rudolf Virchow"],
     politics: ["Willy Brandt", "Angela Merkel", "Walter Rathenau"],
     art: ["Marlene Dietrich", "Käthe Kollwitz", "Bertolt Brecht"],
+    engineering: ["Werner von Siemens", "Konrad Zuse"],
   },
   brandenburg: {
     science: ["Hermann von Helmholtz", "Hasso Plattner", "Karl Foerster"],
     politics: ["Matthias Platzeck", "Dietmar Woidke", "Manfred Stolpe"],
     art: ["Heinrich von Kleist", "Theodor Fontane", "Wolfgang Joop"],
+    engineering: ["Otto Lilienthal", "Hasso Plattner"],
   },
   bremen: {
     science: ["Heinrich Wilhelm Olbers", "Adolf Bastian"],
     politics: ["Hans Koschnick", "Henning Scherf", "Karl Carstens"],
     art: ["Paula Modersohn-Becker", "Loriot", "Wilhelm Wagenfeld"],
+    engineering: ["Ludwig Franzius", "Wilhelm Wagenfeld"],
   },
   hamburg: {
     science: ["Otto Stern", "Ernst Ruska", "Klaus Hasselmann"],
     politics: ["Helmut Schmidt", "Olaf Scholz", "Peter Tschentscher"],
     art: ["Johannes Brahms", "Udo Lindenberg", "Wolfgang Borchert"],
+    engineering: ["Fritz Schumacher", "Ernst Ruska"],
   },
   hessen: {
     science: ["Paul Ehrlich", "Robert Bunsen", "Otto Hahn"],
     politics: ["Joschka Fischer", "Georg-August Zinn", "Volker Bouffier"],
     art: ["Johann Wolfgang von Goethe", "Brüder Grimm", "Anne Frank"],
+    engineering: ["Konrad Zuse", "Ferdinand Braun"],
   },
   "mecklenburg-vorpommern": {
     science: ["Heinrich Schliemann", "Albrecht Kossel", "Otto Lilienthal"],
     politics: ["Angela Merkel", "Manuela Schwesig", "Joachim Gauck"],
     art: ["Caspar David Friedrich", "Fritz Reuter", "Uwe Johnson"],
+    engineering: ["Otto Lilienthal", "Ernst Ruska"],
   },
   niedersachsen: {
     science: ["Carl Friedrich Gauss", "Wilhelm Weber", "David Hilbert"],
     politics: ["Gerhard Schröder", "Christian Wulff", "Ernst Albrecht"],
     art: ["Wilhelm Busch", "Kurt Schwitters", "Niki de Saint Phalle"],
+    engineering: ["Heinrich Büssing", "Konrad Zuse"],
   },
   "nordrhein-westfalen": {
     science: ["Harald zur Hausen", "Max Born", "Julius Plücker"],
     politics: ["Konrad Adenauer", "Johannes Rau", "Armin Laschet"],
     art: ["Ludwig van Beethoven", "Heinrich Böll", "Joseph Beuys"],
+    engineering: ["Friedrich Alfred Krupp", "Carl Bosch"],
   },
   "rheinland-pfalz": {
     science: ["Johannes Gutenberg", "Hermann Staudinger", "Julius Richard Petri"],
     politics: ["Helmut Kohl", "Malu Dreyer", "Kurt Beck"],
     art: ["Hildegard von Bingen", "Max Slevogt", "Thomas Nast"],
+    engineering: ["Nikolaus Otto", "Karlheinz Brandenburg"],
   },
   saarland: {
     science: ["Peter Grünberg", "Wolfgang Wahlster"],
     politics: ["Oskar Lafontaine", "Heiko Maas", "Annegret Kramp-Karrenbauer"],
     art: ["Max Ophüls", "Nicole", "Gerd Dudenhöffer"],
+    engineering: ["Hermann Röchling", "Wolfgang Wahlster"],
   },
   sachsen: {
     science: ["Gottfried Wilhelm Leibniz", "Wilhelm Ostwald", "Manfred von Ardenne"],
     politics: ["August Bebel", "Kurt Biedenkopf", "Stanislaw Tillich"],
     art: ["Richard Wagner", "Erich Kästner", "Caspar David Friedrich"],
+    engineering: ["August Horch", "Manfred von Ardenne"],
   },
   "sachsen-anhalt": {
     science: ["Otto von Guericke", "Dorothea Erxleben", "Georg Cantor"],
     politics: ["Hans-Dietrich Genscher", "Reiner Haseloff", "Wolfgang Böhmer"],
     art: ["Georg Friedrich Händel", "Lyonel Feininger", "Johann Joachim Winckelmann"],
+    engineering: ["Hugo Junkers", "Otto von Guericke"],
   },
   "schleswig-holstein": {
     science: ["Max Planck", "Otto Diels", "Ferdinand Tönnies"],
     politics: ["Willy Brandt", "Heide Simonis", "Daniel Günther"],
     art: ["Thomas Mann", "Günter Grass", "Emil Nolde"],
+    engineering: ["Ernst Barlach", "Otto Diels"],
   },
   thueringen: {
     science: ["Carl Zeiss", "Ernst Abbe", "Johann Wolfgang Döbereiner"],
     politics: ["Bodo Ramelow", "Christine Lieberknecht", "Bernhard Vogel"],
     art: ["Johann Sebastian Bach", "Johann Wolfgang von Goethe", "Friedrich Schiller"],
+    engineering: ["Carl Zeiss", "Ernst Abbe"],
   },
 };
 
@@ -352,6 +369,7 @@ let answerGuideCompleteTimer = null;
 let feedbackBurstPieces = [];
 let answerGuideMeasureFrame = 0;
 let answerGuideResizeObserver = null;
+let onboardingCategoryPreviewResizeObserver = null;
 let cardTopbarLayoutRaf = 0;
 let learningMode = "de";
 let isPromptOrderSwapped = false;
@@ -534,6 +552,81 @@ const answerGuideSizingState = {
   lastMeasuredHeight: 0,
 };
 const factsPickerButtons = new Map();
+
+function initScrollSnapController() {
+  let settleTimer = 0;
+  let snapReleaseTimer = 0;
+  let isSnapping = false;
+
+  function getSnapPositions() {
+    const viewportHeight = Math.max(1, window.innerHeight || document.documentElement.clientHeight || 1);
+    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    const maxScrollY = Math.max(0, document.documentElement.scrollHeight - viewportHeight);
+    const getPosition = (element) => {
+      if (!element) {
+        return null;
+      }
+
+      const rect = element.getBoundingClientRect();
+      const rawPosition = scrollY + rect.top;
+
+      return Math.max(0, Math.min(maxScrollY, rawPosition));
+    };
+
+    const settingsPanelEl = document.getElementById("catPanel");
+    return [
+      { element: heroStageEl, position: 0 },
+      { element: mainCard, position: getPosition(mainCard) },
+      { element: settingsPanelEl, position: getPosition(settingsPanelEl) },
+      { element: searchPanelEl, position: getPosition(searchPanelEl) },
+      { element: factsPanelEl, position: getPosition(factsPanelEl) },
+    ].filter((target) => target.element && target.position !== null);
+  }
+
+  function settleScrollPosition() {
+    if (isSnapping || onboardingPending || firstRunTour?.isOpen()) {
+      return;
+    }
+
+    const viewportHeight = Math.max(1, window.innerHeight || document.documentElement.clientHeight || 1);
+    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    const snapThreshold = viewportHeight / 3;
+    const nearestTarget = getSnapPositions()
+      .map((target) => ({ ...target, distance: Math.abs(target.position - scrollY) }))
+      .filter((target) => target.distance <= snapThreshold)
+      .sort((left, right) => left.distance - right.distance)[0];
+
+    if (!nearestTarget || nearestTarget.distance < 1) {
+      return;
+    }
+
+    isSnapping = true;
+    window.clearTimeout(snapReleaseTimer);
+    snapReleaseTimer = window.setTimeout(() => {
+      isSnapping = false;
+    }, 800);
+    window.scrollTo({
+      top: nearestTarget.position,
+      behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth",
+    });
+  }
+
+  function scheduleSettle() {
+    window.clearTimeout(settleTimer);
+    settleTimer = window.setTimeout(settleScrollPosition, 140);
+  }
+
+  window.addEventListener("scroll", scheduleSettle, { passive: true });
+  window.addEventListener("scrollend", () => {
+    if (isSnapping) {
+      isSnapping = false;
+      window.clearTimeout(snapReleaseTimer);
+      return;
+    }
+    settleScrollPosition();
+  }, { passive: true });
+}
+
 const FEEDBACK_BURST_SYMBOLS = Object.freeze({
   success: Object.freeze({
     big: Object.freeze(["\u{1F389}", "\u2728", "\u2B50", "\u{1F4A5}", "\u{1F38A}", "\u2728", "\u2B50", "\u{1F389}", "\u{1F4AB}", "\u2728"]),
@@ -1232,7 +1325,7 @@ function renderSiteTitleLineContent({ line, startCharIndex }) {
 
 const siteTitleController = createPretextBlockController({
   element: siteTitleEl,
-  lineHeightRatio: 0.82,
+  lineHeightRatio: 1.05,
   fontFamily: "Tahoma, sans-serif",
   fontWeight: 800,
   targetWidthRatio: 0.98,
@@ -2293,9 +2386,64 @@ function playMixedTopicReselectFeedback() {
   }, 220);
 }
 
+function updateOnboardingCategoryPreviewTarget() {
+  const container = document.getElementById("catButtons");
+  const target = container?.querySelector('[data-onboarding-target="category-preview"]');
+  if (!container || !target) {
+    return;
+  }
+
+  const containerRect = container.getBoundingClientRect();
+  const rows = [];
+  Array.from(container.children)
+    .filter((button) => button.classList.contains("cat-btn"))
+    .forEach((button) => {
+      const rect = button.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) {
+        return;
+      }
+
+      const currentRow = rows[rows.length - 1];
+      if (!currentRow || Math.abs(rect.top - currentRow.top) > 1) {
+        rows.push({ top: rect.top, bottom: rect.bottom });
+      } else {
+        currentRow.bottom = Math.max(currentRow.bottom, rect.bottom);
+      }
+    });
+
+  const previewRows = rows.slice(0, 3);
+  if (!previewRows.length) {
+    target.style.height = "0px";
+    return;
+  }
+
+  const previewTop = previewRows[0].top - containerRect.top;
+  const previewBottom = previewRows[previewRows.length - 1].bottom - containerRect.top;
+  target.style.top = `${Math.max(0, previewTop)}px`;
+  target.style.height = `${Math.max(0, previewBottom - previewTop)}px`;
+}
+
+function initOnboardingCategoryPreviewTarget() {
+  updateOnboardingCategoryPreviewTarget();
+  window.addEventListener("resize", updateOnboardingCategoryPreviewTarget, { passive: true });
+  window.addEventListener("orientationchange", updateOnboardingCategoryPreviewTarget, { passive: true });
+
+  const container = document.getElementById("catButtons");
+  if (container && typeof ResizeObserver === "function") {
+    onboardingCategoryPreviewResizeObserver = new ResizeObserver(updateOnboardingCategoryPreviewTarget);
+    onboardingCategoryPreviewResizeObserver.observe(container);
+  }
+}
+
 function buildTopicPanel() {
   const container = document.getElementById("catButtons");
   container.innerHTML = "";
+
+  const previewTarget = document.createElement("span");
+  previewTarget.className = "onboarding-category-preview-target";
+  previewTarget.dataset.onboardingTarget = "category-preview";
+  previewTarget.setAttribute("aria-hidden", "true");
+  container.appendChild(previewTarget);
 
   const mixBtn = document.createElement("button");
   mixBtn.type = "button";
@@ -2344,6 +2492,8 @@ function buildTopicPanel() {
     };
     container.appendChild(btn);
   });
+
+  updateOnboardingCategoryPreviewTarget();
 
   const pool = getPool();
   catCountEl.textContent = `${pool.length} ${t("messages.categories.unit")}`;
@@ -2611,18 +2761,27 @@ function translateFactList(values) {
   return values.map((value) => translateFactScalar(value));
 }
 
-function buildGermanyOverview(countryData) {
-  if (getLocale() === "de" && isNonEmptyValue(countryData.overview)) {
-    return String(countryData.overview);
+function getLocalizedFactsOverview(factsData) {
+  if (!factsData || !isNonEmptyValue(factsData.overview)) {
+    return "";
   }
 
-  return t("facts.values.germanyOverviewText", {
-    statesCount: countryData.states_count,
-    neighbors: joinLocalizedList(translateFactList(countryData.neighboring_countries)),
-  });
+  const localizedOverview = factsData[`overview_${getLocale()}`];
+  return isNonEmptyValue(localizedOverview)
+    ? String(localizedOverview)
+    : String(factsData.overview);
+}
+
+function buildGermanyOverview(countryData) {
+  return getLocalizedFactsOverview(countryData) || t("facts.values.germanyOverviewText");
 }
 
 function buildEuropeOverview(unionData) {
+  const overview = getLocalizedFactsOverview(unionData);
+  if (overview) {
+    return overview;
+  }
+
   return t("facts.values.europeOverviewText", {
     memberStates: unionData.states_count,
     capital: translateFactScalar(unionData.capital),
@@ -2631,6 +2790,11 @@ function buildEuropeOverview(unionData) {
 }
 
 function buildWorldOverview(unionData) {
+  const overview = getLocalizedFactsOverview(unionData);
+  if (overview) {
+    return overview;
+  }
+
   return t("facts.values.worldOverviewText", {
     memberStates: unionData.member_states,
     headquarters: unionData.headquarters,
@@ -2654,8 +2818,9 @@ function buildStateProfileSummary(stateData) {
 }
 
 function buildStateOverview(stateData) {
-  if (getLocale() === "de" && isNonEmptyValue(stateData.overview)) {
-    return String(stateData.overview);
+  const overview = getLocalizedFactsOverview(stateData);
+  if (overview) {
+    return overview;
   }
 
   const location = buildStateLocationSummary(stateData);
@@ -2670,13 +2835,14 @@ function buildStateOverview(stateData) {
 }
 
 function buildCountryOverview(countryData) {
+  const overview = getLocalizedFactsOverview(countryData);
+  if (overview) {
+    return overview;
+  }
+
   const name = getLocalizedCountryNameById(countryData.id, countryData.name);
   const region = translateFactScalar(countryData.region);
   const capital = countryData.capital;
-
-  if (getLocale() === "de" && isNonEmptyValue(countryData.overview)) {
-    return String(countryData.overview);
-  }
 
   if (getLocale() === "hr") {
     return `${name} se nalazi u ${region}. Glavni grad je ${capital}.`;
@@ -2910,15 +3076,58 @@ function createFactsList(label, items) {
 }
 
 function getStatePeopleLists(stateId) {
-  const notablePeople = STATE_NOTABLE_PEOPLE[stateId] || {};
+  return getNotablePeopleLists(STATE_NOTABLE_PEOPLE[stateId]);
+}
+
+function getCountryPeopleLists(countryId) {
+  return getNotablePeopleLists(COUNTRY_NOTABLE_PEOPLE[countryId]);
+}
+
+function getNotablePeopleLists(notablePeople = {}) {
   return [
     [t("facts.lists.science"), notablePeople.science],
     [t("facts.lists.politics"), notablePeople.politics],
     [t("facts.lists.art"), notablePeople.art],
+    [t("facts.lists.engineering"), notablePeople.engineering],
   ];
 }
 
-function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = "", officialUrl = "") {
+function createNotablePeopleSection(groups) {
+  const peopleGroups = groups
+    .map(([label, values]) => ({ label, values: Array.isArray(values) ? values.filter(isNonEmptyValue) : [] }))
+    .filter(({ values }) => values.length);
+
+  if (!peopleGroups.length) {
+    return null;
+  }
+
+  const section = document.createElement("section");
+  section.className = "facts-notable-people";
+
+  const title = document.createElement("div");
+  title.className = "facts-notable-people-title";
+  title.textContent = t("facts.lists.notablePeople");
+  section.appendChild(title);
+
+  const groupsEl = document.createElement("div");
+  groupsEl.className = "facts-notable-people-groups";
+  peopleGroups.forEach(({ label, values }) => {
+    const group = createFactsList(label, values);
+    if (group) {
+      group.classList.add("facts-notable-people-group");
+      groupsEl.appendChild(group);
+    }
+  });
+
+  if (!groupsEl.children.length) {
+    return null;
+  }
+
+  section.appendChild(groupsEl);
+  return section;
+}
+
+function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = "", officialUrl = "", notablePeople = []) {
   factsContentEl.innerHTML = "";
 
   const view = document.createElement("div");
@@ -3057,6 +3266,11 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
     }
   });
 
+  const peopleSection = createNotablePeopleSection(notablePeople);
+  if (peopleSection) {
+    view.appendChild(peopleSection);
+  }
+
   factsContentEl.appendChild(view);
 }
 
@@ -3095,7 +3309,8 @@ function renderCountryFacts(countryData) {
       [t("facts.lists.nature"), translateFactList(countryData.nature)],
       ],
       TOURISM_LINKS.germany,
-      OFFICIAL_LINKS.germany
+      OFFICIAL_LINKS.germany,
+      getCountryPeopleLists("germany")
     );
   }
 
@@ -3189,10 +3404,10 @@ function renderStateFacts(stateData) {
       [t("facts.lists.borders"), translateFactList(stateData.bordering_countries)],
       [t("facts.lists.knownFor"), translateFactList(stateData.known_for)],
       [t("facts.lists.nature"), translateFactList(stateData.nature)],
-      ...getStatePeopleLists(stateData.id),
       ],
       TOURISM_LINKS.states[stateData.id] || "",
-      OFFICIAL_LINKS.states[stateData.id] || ""
+      OFFICIAL_LINKS.states[stateData.id] || "",
+      getStatePeopleLists(stateData.id)
     );
   }
 
@@ -3225,7 +3440,8 @@ function renderEuropeanCountryFacts(countryData) {
       [t("facts.lists.timezones"), countryData.timezones_list],
       ],
       TOURISM_LINKS.countries[countryData.id] || "",
-      OFFICIAL_LINKS.countries[countryData.id] || ""
+      OFFICIAL_LINKS.countries[countryData.id] || "",
+      getCountryPeopleLists(countryData.id)
     );
   }
 
@@ -3258,7 +3474,8 @@ function renderWorldCountryFacts(countryData) {
       [t("facts.lists.timezones"), countryData.timezones_list],
       ],
       TOURISM_LINKS.countries[countryData.id] || "",
-      OFFICIAL_LINKS.countries[countryData.id] || ""
+      OFFICIAL_LINKS.countries[countryData.id] || "",
+      getCountryPeopleLists(countryData.id)
     );
   }
 
@@ -5155,6 +5372,7 @@ function createFlagColumns() {
 }
 
 async function initApp() {
+  initScrollSnapController();
   syncSessionSizeLabel();
   learningMode = loadLearningMode();
   isPromptOrderSwapped = loadPromptOrderPreference();
@@ -5174,6 +5392,7 @@ async function initApp() {
   applyLearningTheme();
   renderStaticUi();
   createFlagColumns();
+  initOnboardingCategoryPreviewTarget();
   initFirstRunTour();
   initInstallGuide();
   initDifficultyControls();

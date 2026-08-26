@@ -21,16 +21,22 @@ const TOUR_STEPS = Object.freeze([
   }),
   Object.freeze({
     id: "feedback",
-    targets: Object.freeze(['[data-onboarding-target="answer-guide"]']),
+    targets: Object.freeze([
+      '[data-onboarding-target="answer-guide"]',
+      '[data-onboarding-target="answer-actions"]',
+    ]),
     titleKey: "onboarding.steps.feedback.title",
     bodyKey: "onboarding.steps.feedback.body",
     showFeedbackKey: true,
   }),
   Object.freeze({
-    id: "actions",
-    targets: Object.freeze(['[data-onboarding-target="answer-actions"]']),
-    titleKey: "onboarding.steps.actions.title",
-    bodyKey: "onboarding.steps.actions.body",
+    id: "settings",
+    targets: Object.freeze([
+      '[data-onboarding-target="round-settings"]',
+      '[data-onboarding-target="category-preview"]',
+    ]),
+    titleKey: "onboarding.steps.settings.title",
+    bodyKey: "onboarding.steps.settings.body",
   }),
 ]);
 
@@ -526,20 +532,24 @@ export function createFirstRunTour({
       const gap = isPhone ? 12 : 18;
       const targetPadding = isPhone ? 6 : 10;
       const panelHeight = elements.panel?.getBoundingClientRect().height || 0;
-      const topFits = union.top - targetPadding - gap - panelHeight >= edge;
-      const maximumTargetBottom = viewportHeight - edge - gap - panelHeight - targetPadding;
+      const minimumTargetTop = edge + targetPadding;
+      const maximumTargetBottom = Math.max(
+        minimumTargetTop,
+        viewportHeight - edge - gap - panelHeight - targetPadding,
+      );
+      let scrollDelta = 0;
 
-      if (!topFits && union.bottom > maximumTargetBottom) {
+      if (union.bottom > maximumTargetBottom) {
+        scrollDelta = union.bottom - maximumTargetBottom;
+      } else if (union.top < minimumTargetTop) {
+        scrollDelta = union.top - minimumTargetTop;
+      }
+
+      if (Math.abs(scrollDelta) > 1) {
         window.scrollBy({
-          top: Math.ceil(union.bottom - maximumTargetBottom),
+          top: Math.round(scrollDelta),
           left: 0,
           behavior: "auto",
-        });
-      } else if (union.top < edge || union.bottom > viewportHeight - edge) {
-        targets[0].scrollIntoView({
-          behavior: reduceMotionQuery?.matches ? "auto" : "smooth",
-          block: "center",
-          inline: "nearest",
         });
       }
     }
@@ -645,6 +655,12 @@ export function createFirstRunTour({
     void renderStep(stepIndex + 1);
   }
 
+  function goToPreviousTourStep() {
+    if (state === "tour" && stepIndex > 0) {
+      void renderStep(stepIndex - 1);
+    }
+  }
+
   elements.primaryButton?.addEventListener("click", () => {
     if (state === "welcome") {
       finish("played");
@@ -666,9 +682,7 @@ export function createFirstRunTour({
   });
 
   elements.backButton?.addEventListener("click", () => {
-    if (state === "tour" && stepIndex > 0) {
-      void renderStep(stepIndex - 1);
-    }
+    goToPreviousTourStep();
   });
 
   elements.skipButton?.addEventListener("click", () => finish("skipped"));
@@ -707,9 +721,18 @@ export function createFirstRunTour({
       return;
     }
 
+    if (event.key === "ArrowLeft") {
+      if (state !== "tour" || stepIndex <= 0) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      goToPreviousTourStep();
+      return;
+    }
+
     const isSpaceKey = event.key === " " || event.key === "Spacebar";
-    const isArrowAdvanceKey = event.key === "ArrowLeft" || event.key === "ArrowRight";
-    const isAdvanceKey = event.key === "Enter" || isSpaceKey || isArrowAdvanceKey;
+    const isAdvanceKey = event.key === "Enter" || isSpaceKey || event.key === "ArrowRight";
     if (!isAdvanceKey) {
       return;
     }

@@ -90,12 +90,17 @@ for (const target of [
   'data-onboarding-target="answer-input"',
   'data-onboarding-target="answer-guide"',
   'data-onboarding-target="answer-actions"',
+  'data-onboarding-target="round-settings"',
 ]) {
   assert(html.includes(target), `index.html is missing stable onboarding target ${target}`);
 }
 assert(tourSource.includes('dialog.addEventListener("keydown"'), "Onboarding keyboard handling must stay scoped to the dialog");
 assert(tourSource.includes('event.key === "Escape"'), "Escape must close onboarding");
-assert(tourSource.includes('event.key === "ArrowLeft"'), "Tour must advance with the left arrow");
+assert(
+  tourSource.includes('if (event.key === "ArrowLeft")') &&
+    tourSource.includes("function goToPreviousTourStep()"),
+  "Tour must go back with the left arrow",
+);
 assert(tourSource.includes('event.key === "ArrowRight"'), "Tour must advance with the right arrow");
 assert(tourSource.includes('event.key === " "'), "Tour must advance with the Space key");
 assert(!tourSource.includes('document.addEventListener("keydown"'), "Onboarding must not capture document-wide key events");
@@ -112,6 +117,12 @@ assert(
 assert(
   onboardingCss.includes(".onboarding-brand span.is-accent"),
   "The onboarding brand must style the selected language segment",
+);
+assert(
+  onboardingCss.includes("grid-template-columns: repeat(3, minmax(0, 1fr));") &&
+    onboardingCss.includes(".onboarding-feedback-key > span:nth-child(2)") &&
+    onboardingCss.includes(".onboarding-feedback-key > span:nth-child(3)"),
+  "The Step 3 feedback key must keep its three aligned responsive columns",
 );
 assert(
   onboardingCss.includes("color: #7dd3fc;") &&
@@ -149,6 +160,18 @@ assert(
 assert(
   appSource.includes('reason === "settings"') && appSource.includes("settingsPanel?.scrollIntoView"),
   "The startup settings control must scroll to the settings panel",
+);
+assert(
+  appSource.includes('dataset.onboardingTarget = "category-preview"') &&
+    appSource.includes("const previewRows = rows.slice(0, 3)") &&
+    appSource.includes("updateOnboardingCategoryPreviewTarget"),
+  "Step 4 must measure the first three responsive category rows",
+);
+assert(
+  tourSource.includes("const minimumTargetTop") &&
+    tourSource.includes("const maximumTargetBottom") &&
+    tourSource.includes('behavior: "auto"'),
+  "Tour steps must scroll their targets high enough to place the panel below",
 );
 assert(
   tourSource.includes('dialog.classList.remove("is-welcome", "is-tour")'),

@@ -17,6 +17,8 @@
     "internet_tld": ".eu",
     "gdp_nominal": "ca. 17 Billionen EUR",
     "overview": "Europa verbindet sehr unterschiedliche Sprachräume, Landschaften und politische Traditionen. Die Europäische Union bildet dabei einen zentralen politischen und wirtschaftlichen Rahmen für große Teile des Kontinents.",
+    "overview_hr": "Europa povezuje vrlo različita jezična područja, krajolike i političke tradicije. Europska unija čini središnji politički i gospodarski okvir za velike dijelove kontinenta.",
+    "overview_en": "Europe connects very different language areas, landscapes and political traditions. The European Union forms a central political and economic framework for large parts of the continent.",
     "neighboring_countries": [
       "Atlantik",
       "Mittelmeer",
@@ -59,6 +61,8 @@
       "internet_tld": ".fr",
       "landlocked": "Nein",
       "overview": "Aus dem westfränkischen Reich entwickelte sich eine Monarchie, die unter Kapetingern und Bourbonen zur europäischen Großmacht wurde. Die Revolution von 1789 beendete die alte Ordnung; seit 1958 bildet die Fünfte Republik den staatlichen Rahmen. Luft- und Raumfahrt, Automobilbau, Luxusgüter, Energie, Landwirtschaft und Tourismus sind tragende Wirtschaftszweige. Paris, Mont-Saint-Michel, die Loire-Schlösser, die Alpen und die vielfältigen Küsten verbinden herausragendes Kultur- und Naturerbe.",
+      "overview_hr": "Zapadnofranačko Carstvo razvilo se u monarhiju koja je postala glavna europska sila pod Kapetima i Bourbonima. Revolucija 1789. dokrajčila je stari poredak; Peta Republika formirala je nacionalni okvir od 1958. Zrakoplovstvo, proizvodnja automobila, luksuzna roba, energetika, poljoprivreda i turizam ključni su gospodarski sektori. Pariz, Mont-Saint-Michel, dvorci Loire, Alpe i raznolike obale spajaju izvanrednu kulturnu i prirodnu baštinu.",
+      "overview_en": "The West Frankish Empire developed into a monarchy that became a major European power under the Capetians and Bourbons. The revolution of 1789 ended the old order; The Fifth Republic has formed the national framework since 1958. Aerospace, automobile manufacturing, luxury goods, energy, agriculture and tourism are key economic sectors. Paris, Mont-Saint-Michel, the Loire castles, the Alps and the diverse coastlines combine outstanding cultural and natural heritage.",
       "neighboring_countries": [
         "Andorra",
         "Belgien",
@@ -106,6 +110,8 @@
       "internet_tld": ".es",
       "landlocked": "Nein",
       "overview": "Römische, westgotische, islamische und christliche Reiche prägten die Iberische Halbinsel über viele Jahrhunderte. Die dynastische Einigung am Ende des 15. Jahrhunderts leitete den Aufstieg zum Weltreich ein; seit 1978 ist Spanien eine parlamentarische Demokratie. Automobilbau, Tourismus, Ernährungswirtschaft, Chemie und erneuerbare Energien sind wichtige Branchen. Alhambra, Sagrada Família, Jakobsweg, Pyrenäen und die Inselwelten der Balearen und Kanaren zeigen seine kulturelle und natürliche Vielfalt.",
+      "overview_hr": "Rimsko, vizigotsko, islamsko i kršćansko carstvo stoljećima su oblikovalo Pirenejski poluotok. Dinastičko ujedinjenje na kraju 15. stoljeća pokrenulo je uspon do globalnog carstva; Španjolska je parlamentarna demokracija od 1978. Proizvodnja automobila, turizam, prehrambena industrija, kemikalije i obnovljivi izvori energije važne su industrije. Alhambra, Sagrada Família, Put svetog Jakova, Pireneji i otočni svijet Balearskih i Kanarskih otoka pokazuju svoju kulturnu i prirodnu raznolikost.",
+      "overview_en": "Roman, Visigothic, Islamic and Christian empires shaped the Iberian Peninsula for many centuries. The dynastic unification at the end of the 15th century initiated the rise to a global empire; Spain has been a parliamentary democracy since 1978. Automobile manufacturing, tourism, the food industry, chemicals and renewable energies are important industries. Alhambra, Sagrada Família, Way of St. James, Pyrenees and the island world of the Balearic and Canary Islands show its cultural and natural diversity.",
       "neighboring_countries": [
         "Andorra",
         "Frankreich",
@@ -141,6 +147,8 @@
       "internet_tld": ".uk",
       "landlocked": "Nein",
       "overview": "Aus angelsächsischen Königreichen entstand im frühen Mittelalter ein geeintes England. Die normannische Eroberung von 1066 veränderte Staat und Gesellschaft grundlegend, während die Union von 1707 das Königreich Großbritannien schuf. Finanz- und Unternehmensdienstleistungen, Luft- und Raumfahrt, Automobilbau, Biowissenschaften und Kreativwirtschaft prägen die Wirtschaft. Stonehenge, die Stadtlandschaften von London und Bath, der Lake District und die Kathedralen des Landes bilden ein reiches Kultur- und Naturerbe.",
+      "overview_hr": "Ujedinjena Engleska nastala je iz anglosaksonskih kraljevstava u ranom srednjem vijeku. Normansko osvajanje 1066. temeljito je preobrazilo državu i društvo, dok je Unija 1707. stvorila Kraljevstvo Velike Britanije. Financijske i poslovne usluge, zrakoplovstvo, proizvodnja automobila, biološke znanosti i kreativne industrije oblikuju gospodarstvo. Stonehenge, gradski pejzaži Londona i Batha, Lake District i katedrale u zemlji čine bogatu kulturnu i prirodnu baštinu.",
+      "overview_en": "A unified England emerged from Anglo-Saxon kingdoms in the early Middle Ages. The Norman Conquest of 1066 fundamentally transformed the state and society, while the Union of 1707 created the Kingdom of Great Britain. Financial and business services, aerospace, automotive manufacturing, life sciences and creative industries shape the economy. Stonehenge, the cityscapes of London and Bath, the Lake District and the country's cathedrals form a rich cultural and natural heritage.",
       "neighboring_countries": [
         "Schottland",
         "Wales"
@@ -169,6 +177,8 @@
       "internet_tld": ".se",
       "landlocked": "Nein",
       "overview": "Aus nordischen Königreichen der Wikingerzeit entwickelte sich im Mittelalter der schwedische Staat. Nach dem Austritt aus der Kalmarer Union 1523 stieg Schweden zur Großmacht auf und entwickelte später eine stabile parlamentarische Demokratie. Maschinenbau, Fahrzeugindustrie, Telekommunikation, Forstwirtschaft, Pharma und digitale Dienste tragen die exportorientierte Wirtschaft. Stockholms Inselstadt, Gotland, Lappland und die Schärenküsten verbinden historische Kulturlandschaften mit nordischer Wildnis.",
+      "overview_hr": "Švedska država razvila se iz nordijskih kraljevstava iz vikinškog doba u srednjem vijeku. Nakon što je 1523. napustila Kalmarsku uniju, Švedska je postala velika sila i kasnije razvila stabilnu parlamentarnu demokraciju. Strojarstvo, automobilska industrija, telekomunikacije, šumarstvo, farmacija i digitalne usluge podržavaju izvozno orijentirano gospodarstvo. Stockholmski otočni grad, Gotland, Laponija i arhipelag kombiniraju povijesne kulturne krajolike s nordijskom divljinom.",
+      "overview_en": "The Swedish state developed from the Nordic kingdoms of the Viking Age in the Middle Ages. After leaving the Kalmar Union in 1523, Sweden became a major power and later developed a stable parliamentary democracy. Mechanical engineering, the automotive industry, telecommunications, forestry, pharmaceuticals and digital services support the export-oriented economy. Stockholm's island city, Gotland, Lapland and the archipelago combine historical cultural landscapes with Nordic wilderness.",
       "neighboring_countries": [
         "Finnland",
         "Norwegen"
@@ -197,6 +207,8 @@
       "internet_tld": ".pl",
       "landlocked": "Nein",
       "overview": "Der Piastenstaat des 10. Jahrhunderts und die spätere polnisch-litauische Adelsrepublik formten eine bedeutende europäische Tradition. Nach den Teilungen von 1795 erlangte Polen 1918 seine Unabhängigkeit zurück und wandelte sich 1989 zur parlamentarischen Demokratie. Automobilzulieferung, Maschinenbau, Elektronik, Unternehmensdienstleistungen, Lebensmittelwirtschaft und Möbelproduktion sind starke Branchen. Krakau, das Salzbergwerk Wieliczka, der Białowieża-Urwald und die Masurische Seenplatte stehen für außergewöhnliches Kultur- und Naturerbe.",
+      "overview_hr": "Država Pjasta u 10. stoljeću i kasnija poljsko-litvanska plemićka republika tvorile su važnu europsku tradiciju. Nakon podjele 1795., Poljska je ponovno stekla neovisnost 1918. i prešla na parlamentarnu demokraciju 1989. Opskrba automobilima, strojarstvo, elektronika, poslovne usluge, prehrambena industrija i proizvodnja namještaja jake su industrije. Krakow, rudnik soli Wieliczka, prašuma Białowieża i područje Mazurskih jezera predstavljaju iznimnu kulturnu i prirodnu baštinu.",
+      "overview_en": "The Piast state of the 10th century and the later Polish-Lithuanian noble republic formed an important European tradition. After the partitions of 1795, Poland regained its independence in 1918 and transitioned to a parliamentary democracy in 1989. Automotive supply, mechanical engineering, electronics, business services, food industry and furniture production are strong industries. Krakow, the Wieliczka Salt Mine, the Białowieża Primeval Forest and the Masurian Lake District represent exceptional cultural and natural heritage.",
       "neighboring_countries": [
         "Weißrussland",
         "Tschechien",
@@ -230,6 +242,8 @@
       "internet_tld": ".at",
       "landlocked": "Ja",
       "overview": "Die habsburgischen Erblande machten Österreich über Jahrhunderte zum Zentrum eines europäischen Großreichs. Nach dem Ende Österreich-Ungarns 1918 entstand die Republik, deren staatliche Souveränität 1945 wiederhergestellt wurde. Maschinenbau, Fahrzeugzulieferung, Metallverarbeitung, Chemie, Holz- und Lebensmittelwirtschaft sowie Tourismus prägen die Wirtschaft. Wiens historisches Zentrum, Salzburg, die Wachau und die Alpenlandschaften verbinden imperiales Erbe mit eindrucksvoller Natur.",
+      "overview_hr": "Habsburške nasljedne zemlje činile su Austriju stoljećima središtem velikog europskog carstva. Nakon raspada Austro-Ugarske 1918. godine stvorena je republika čiji je državni suverenitet obnovljen 1945. godine. Strojarstvo, opskrba vozilima, obrada metala, kemijska, drvna i prehrambena industrija te turizam oblikuju gospodarstvo. Povijesno središte Beča, Salzburg, Wachau i alpski krajolici spajaju carsko naslijeđe s impresivnom prirodom.",
+      "overview_en": "The Habsburg hereditary lands made Austria the center of a major European empire for centuries. After the end of Austria-Hungary in 1918, the republic was created, whose state sovereignty was restored in 1945. Mechanical engineering, vehicle supply, metal processing, chemistry, wood and food industries as well as tourism shape the economy. Vienna's historical center, Salzburg, the Wachau and the Alpine landscapes combine imperial heritage with impressive nature.",
       "neighboring_countries": [
         "Tschechien",
         "Deutschland",
@@ -264,6 +278,8 @@
       "internet_tld": ".hu",
       "landlocked": "Ja",
       "overview": "Das um das Jahr 1000 gegründete Königreich Ungarn prägte Mitteleuropa und geriet später unter osmanische und habsburgische Herrschaft. Ab 1867 war Ungarn gleichberechtigter Teil Österreich-Ungarns; seit 1989 besteht wieder eine parlamentarische Republik. Automobilbau, Elektronik, Pharma, Lebensmittelwirtschaft, Logistik und Unternehmensdienste sind zentrale Branchen. Budapest am Donauufer, der Plattensee, die Puszta und historische Weinlandschaften bilden markante Kultur- und Naturräume.",
+      "overview_hr": "Kraljevina Ugarska, osnovana oko 1000. godine, oblikovala je Srednju Europu, a kasnije je došla pod osmansku i habsburšku vlast. Od 1867. Mađarska je bila ravnopravni dio Austro-Ugarske; Parlamentarna republika ponovno postoji od 1989. Automobilska industrija, elektronika, farmaceutski proizvodi, hrana, logistika i poslovne usluge ključne su industrije. Budimpešta na obalama Dunava, jezera Balaton, Puszta i povijesni vinski krajolici čine upečatljiva kulturna i prirodna područja.",
+      "overview_en": "The Kingdom of Hungary, founded around the year 1000, shaped Central Europe and later came under Ottoman and Habsburg rule. From 1867 Hungary was an equal part of Austria-Hungary; A parliamentary republic has existed again since 1989. Automotive, electronics, pharmaceuticals, food, logistics and business services are key industries. Budapest on the banks of the Danube, Lake Balaton, the Puszta and historic wine landscapes form striking cultural and natural areas.",
       "neighboring_countries": [
         "Österreich",
         "Kroatien",
@@ -297,6 +313,8 @@
       "internet_tld": ".hr",
       "landlocked": "Nein",
       "overview": "Das mittelalterliche kroatische Königreich ging später eine lange Verbindung mit der ungarischen und habsburgischen Krone ein. Nach Jahrzehnten in Jugoslawien erklärte Kroatien 1991 seine Unabhängigkeit und trat 2013 der Europäischen Union bei. Tourismus, Ernährungswirtschaft, Pharma, Informationstechnologie, Schiffbau und Energiewirtschaft tragen die Wirtschaft. Dubrovnik, der Diokletianpalast in Split, die Plitvicer Seen und die Inselwelt der Adria sind herausragende Kultur- und Naturgüter.",
+      "overview_hr": "Srednjovjekovno hrvatsko kraljevstvo kasnije je stupilo u dugu vezu s ugarskom i habsburškom krunom. Nakon desetljeća u Jugoslaviji, Hrvatska je proglasila neovisnost 1991. i pridružila se Europskoj uniji 2013. Turizam, prehrambena industrija, farmacija, informatička tehnologija, brodogradnja i energetika podupiru gospodarstvo. Dubrovnik, Dioklecijanova palača u Splitu, Plitvička jezera i jadranski otoci izuzetna su kulturna i prirodna dobra.",
+      "overview_en": "The medieval Croatian kingdom later entered into a long association with the Hungarian and Habsburg crowns. After decades in Yugoslavia, Croatia declared independence in 1991 and joined the European Union in 2013. Tourism, the food industry, pharmaceuticals, information technology, shipbuilding and the energy industry support the economy. Dubrovnik, Diocletian's Palace in Split, the Plitvice Lakes and the Adriatic islands are outstanding cultural and natural assets.",
       "neighboring_countries": [
         "Bosnien und Herzegowina",
         "Ungarn",
@@ -328,6 +346,8 @@
       "internet_tld": ".ba",
       "landlocked": "Nein",
       "overview": "Das mittelalterliche bosnische Königreich wurde im 15. Jahrhundert Teil des Osmanischen Reiches. Nach österreichisch-ungarischer Verwaltung und der jugoslawischen Epoche wurde Bosnien und Herzegowina 1992 unabhängig; das Dayton-Abkommen beendete 1995 den Krieg. Metallverarbeitung, Energie, Holz- und Möbelindustrie, Automobilzulieferung, Landwirtschaft und Tourismus prägen die Wirtschaft. Mostars Alte Brücke, Sarajevos vielschichtiges Stadtbild, der Una-Nationalpark und die Dinarischen Alpen zeigen das reiche Erbe des Landes.",
+      "overview_hr": "Srednjovjekovno bosansko kraljevstvo ušlo je u sastav Osmanskog carstva u 15. stoljeću. Nakon austrougarske uprave i jugoslavenske ere, Bosna i Hercegovina je postala neovisna 1992. godine; Daytonski sporazum okončao je rat 1995. Prerada metala, energetika, drvna industrija i industrija namještaja, automobilska oprema, poljoprivreda i turizam oblikuju gospodarstvo. Stari most u Mostaru, raznolik gradski pejzaž Sarajeva, Nacionalni park Una i Dinarski Alpi predstavljaju bogato naslijeđe ove zemlje.",
+      "overview_en": "The medieval Bosnian kingdom became part of the Ottoman Empire in the 15th century. After Austro-Hungarian administration and the Yugoslav era, Bosnia and Herzegovina became independent in 1992; the Dayton Agreement ended the war in 1995. Metal processing, energy, wood and furniture industries, automotive supplies, agriculture and tourism shape the economy. Mostar's Old Bridge, Sarajevo's diverse cityscape, Una National Park and the Dinaric Alps showcase the country's rich heritage.",
       "neighboring_countries": [
         "Kroatien",
         "Montenegro",
@@ -359,6 +379,8 @@
       "internet_tld": ".rs, .срб",
       "landlocked": "Ja",
       "overview": "Mittelalterliche serbische Reiche hinterließen bedeutende Klöster, bevor große Teile des Landes unter osmanische Herrschaft gerieten. Serbien wurde 1878 international als unabhängig anerkannt, gehörte später zu Jugoslawien und besteht seit 2006 als eigenständige Republik. Informationstechnologie, Automobilzulieferung, Landwirtschaft, Lebensmittelverarbeitung, Bergbau und Energie sind wichtige Wirtschaftszweige. Die Belgrader Festung, die Klöster von Studenica, der Đerdap-Durchbruch und der Tara-Nationalpark verbinden Geschichte und Natur.",
+      "overview_hr": "Srednjovjekovna srpska carstva ostavila su važne samostane prije nego što su veliki dijelovi zemlje došli pod osmansku vlast. Srbija je međunarodno priznata kao neovisna 1878., kasnije je pripala Jugoslaviji i postoji kao neovisna republika od 2006. Informacijska tehnologija, opskrba automobilima, poljoprivreda, prerada hrane, rudarstvo i energetika važne su industrije. Beogradska tvrđava, manastiri Studenica, Đerdapska klisura i Nacionalni park Tara spajaju povijest i prirodu.",
+      "overview_en": "Medieval Serbian empires left important monasteries before large parts of the country came under Ottoman rule. Serbia was internationally recognized as independent in 1878, later belonged to Yugoslavia and has existed as an independent republic since 2006. Information technology, automotive supply, agriculture, food processing, mining and energy are important industries. The Belgrade Fortress, the monasteries of Studenica, the Djerdap Gorge and the Tara National Park combine history and nature.",
       "neighboring_countries": [
         "Bosnien und Herzegowina",
         "Bulgarien",
@@ -393,6 +415,8 @@
       "internet_tld": ".mk",
       "landlocked": "Ja",
       "overview": "Das Gebiet Nordmazedoniens wurde von antiken, römischen, byzantinischen, slawischen und osmanischen Kulturen geprägt. Als jugoslawische Teilrepublik erlangte es 1991 die Unabhängigkeit und nahm 2019 seinen heutigen Staatsnamen an. Automobilkomponenten, Textilien, Nahrungsmittel, Metallverarbeitung, Landwirtschaft und Informationstechnologie bilden wichtige Wirtschaftsbereiche. Der Ohridsee mit seiner Altstadt, der Matka-Canyon und die Berglandschaften von Mavrovo vereinen Natur- und Kulturerbe.",
+      "overview_hr": "Područje Sjeverne Makedonije oblikovale su antička, rimska, bizantska, slavenska i osmanska kultura. Kao jugoslavenska republika stekla je neovisnost 1991., a sadašnje državno ime usvojila je 2019. Automobilske komponente, tekstil, hrana, metaloprerada, poljoprivreda i informacijska tehnologija čine važne gospodarske sektore. Ohridsko jezero sa svojim starim gradom, kanjon Matka i planinski krajolici Mavrova spajaju prirodnu i kulturnu baštinu.",
+      "overview_en": "The territory of North Macedonia was shaped by ancient, Roman, Byzantine, Slavic and Ottoman cultures. As a Yugoslavian republic, it gained independence in 1991 and adopted its current state name in 2019. Automotive components, textiles, food, metal processing, agriculture and information technology form important economic sectors. Lake Ohrid with its old town, the Matka Canyon and the mountain landscapes of Mavrovo combine natural and cultural heritage.",
       "neighboring_countries": [
         "Albanien",
         "Bulgarien",
@@ -424,6 +448,8 @@
       "internet_tld": ".al",
       "landlocked": "Nein",
       "overview": "Illyrische, römische, byzantinische und osmanische Herrschaftsperioden hinterließen in Albanien vielfältige Spuren. Das Land erklärte 1912 seine Unabhängigkeit und öffnete sich nach dem Ende der kommunistischen Diktatur 1991 schrittweise zur Demokratie. Textil- und Schuhproduktion, Energie, Landwirtschaft, Bergbau, Tourismus und digitale Dienstleistungen tragen die Wirtschaft. Butrint, Berat, Gjirokastra, die Albanischen Alpen und die Riviera bilden ein eindrucksvolles Kultur- und Naturensemble.",
+      "overview_hr": "Ilirska, rimska, bizantska i osmanska razdoblja vladavine ostavila su različite tragove u Albaniji. Zemlja je proglasila svoju neovisnost 1912. i postupno se otvorila demokraciji nakon kraja komunističke diktature 1991. Proizvodnja tekstila i obuće, energetika, poljoprivreda, rudarstvo, turizam i digitalne usluge podržavaju gospodarstvo. Butrint, Berat, Gjirokastra, Albanske Alpe i Rivijera čine impresivnu kulturnu i prirodnu cjelinu.",
+      "overview_en": "Illyrian, Roman, Byzantine and Ottoman periods of rule left a variety of traces in Albania. The country declared its independence in 1912 and gradually opened up to democracy after the end of the communist dictatorship in 1991. Textile and shoe production, energy, agriculture, mining, tourism and digital services support the economy. Butrint, Berat, Gjirokastra, the Albanian Alps and the Riviera form an impressive cultural and natural ensemble.",
       "neighboring_countries": [
         "Montenegro",
         "Griechenland",
@@ -454,6 +480,8 @@
       "internet_tld": ".gr",
       "landlocked": "Nein",
       "overview": "Die antiken griechischen Stadtstaaten, das hellenistische Zeitalter und das Byzantinische Reich prägten Europa und den Mittelmeerraum. Nach Jahrhunderten osmanischer Herrschaft erlangte Griechenland 1830 die Unabhängigkeit und kehrte 1974 dauerhaft zur Demokratie zurück. Schifffahrt, Tourismus, Lebensmittel- und Landwirtschaft, Energie, Pharma und Metallverarbeitung sind zentrale Wirtschaftszweige. Akropolis, Delphi, Meteora und die Inselwelten der Ägäis verbinden weltbekanntes Kulturerbe mit markanter Natur.",
+      "overview_hr": "Starogrčki gradovi-države, helenističko doba i Bizantsko Carstvo oblikovali su Europu i mediteransku regiju. Nakon stoljeća otomanske vladavine, Grčka je stekla neovisnost 1830. i trajno se vratila demokraciji 1974. Pomorstvo, turizam, hrana i poljoprivreda, energetika, farmaceutski proizvodi i obrada metala ključni su gospodarski sektori. Akropola, Delfi, Meteori i otočni svjetovi Egejskog mora spajaju svjetski poznatu kulturnu baštinu s upečatljivom prirodom.",
+      "overview_en": "The ancient Greek city-states, the Hellenistic era and the Byzantine Empire shaped Europe and the Mediterranean region. After centuries of Ottoman rule, Greece gained independence in 1830 and returned permanently to democracy in 1974. Shipping, tourism, food and agriculture, energy, pharmaceuticals and metal processing are key economic sectors. Acropolis, Delphi, Meteora and the island worlds of the Aegean Sea combine world-famous cultural heritage with striking nature.",
       "neighboring_countries": [
         "Albanien",
         "Bulgarien",
@@ -484,6 +512,8 @@
       "internet_tld": ".bg",
       "landlocked": "Nein",
       "overview": "Das 681 gegründete Erste Bulgarische Reich entwickelte eine bedeutende slawisch-orthodoxe Kultur. Nach fast fünf Jahrhunderten osmanischer Herrschaft wurde Bulgarien 1908 unabhängig und wandelte sich 1989 zur parlamentarischen Demokratie. Maschinenbau, Elektronik, Informationstechnologie, Lebensmittelverarbeitung, Pharma und Landwirtschaft prägen die Wirtschaft. Das Rila-Kloster, thrakische Gräber, das Pirin-Gebirge und die Schwarzmeerküste zeigen die historische und landschaftliche Vielfalt.",
+      "overview_hr": "Prvo bugarsko carstvo, osnovano 681., razvilo je značajnu slavensku pravoslavnu kulturu. Nakon gotovo pet stoljeća otomanske vladavine, Bugarska je postala neovisna 1908. i prešla na parlamentarnu demokraciju 1989. Strojarstvo, elektronika, informacijska tehnologija, prerada hrane, farmaceutski proizvodi i poljoprivreda oblikuju gospodarstvo. Manastir Rila, tračanske grobnice, planine Pirin i obala Crnog mora pokazuju povijesnu i slikovitu raznolikost.",
+      "overview_en": "The First Bulgarian Empire, founded in 681, developed a significant Slavic Orthodox culture. After nearly five centuries of Ottoman rule, Bulgaria became independent in 1908 and transitioned to a parliamentary democracy in 1989. Mechanical engineering, electronics, information technology, food processing, pharmaceuticals and agriculture shape the economy. The Rila Monastery, Thracian tombs, the Pirin Mountains and the Black Sea coast show the historical and scenic diversity.",
       "neighboring_countries": [
         "Griechenland",
         "Nordmazedonien",
@@ -515,6 +545,8 @@
       "internet_tld": ".tr",
       "landlocked": "Nein",
       "overview": "Anatolien war Heimat hethitischer, griechischer, römischer, byzantinischer und weiterer Hochkulturen. Aus einem anatolischen Fürstentum entstand das Osmanische Reich; 1923 gründete Mustafa Kemal Atatürk die Republik Türkei. Automobilbau, Textilien, Maschinenbau, Elektronik, Bauwirtschaft, Landwirtschaft und Tourismus sind tragende Branchen. Istanbul, Ephesos, Kappadokien, Pamukkale und die Küsten des Mittelmeers verbinden monumentales Kulturerbe mit außergewöhnlichen Landschaften.",
+      "overview_hr": "Anatolija je bila dom hetitske, grčke, rimske, bizantske i drugih naprednih kultura. Osmansko Carstvo nastalo je iz anadolske kneževine; Godine 1923. Mustafa Kemal Ataturk osnovao je Republiku Tursku. Proizvodnja automobila, tekstil, strojarstvo, elektronika, građevinarstvo, poljoprivreda i turizam ključne su industrije. Istanbul, Efez, Kapadokija, Pamukkale i obale Sredozemnog mora spajaju monumentalnu kulturnu baštinu s izvanrednim krajolicima.",
+      "overview_en": "Anatolia was home to Hittite, Greek, Roman, Byzantine and other advanced cultures. The Ottoman Empire emerged from an Anatolian principality; In 1923, Mustafa Kemal Ataturk founded the Republic of Türkiye. Automobile manufacturing, textiles, mechanical engineering, electronics, construction, agriculture and tourism are key industries. Istanbul, Ephesus, Cappadocia, Pamukkale and the coasts of the Mediterranean combine monumental cultural heritage with extraordinary landscapes.",
       "neighboring_countries": [
         "Armenien",
         "Aserbaidschan",
@@ -549,6 +581,8 @@
       "internet_tld": ".ro",
       "landlocked": "Nein",
       "overview": "Daker, Römer und die mittelalterlichen Fürstentümer Walachei, Moldau und Siebenbürgen prägten die rumänische Geschichte. Walachei und Moldau vereinigten sich 1859, die Unabhängigkeit wurde 1877 errungen und 1989 endete die kommunistische Herrschaft. Automobilbau, Informationstechnologie, Maschinenbau, Energie, Landwirtschaft und Lebensmittelverarbeitung sind wichtige Wirtschaftsbereiche. Das Donaudelta, die Karpaten, die Kirchenburgen Siebenbürgens und die Klöster der Bukowina bilden herausragende Natur- und Kulturräume.",
+      "overview_hr": "Dačani, Rimljani i srednjovjekovne kneževine Vlaške, Moldavije i Transilvanije oblikovale su rumunjsku povijest. Vlaška i Moldavija ujedinile su se 1859., neovisnost je stečena 1877., a komunistička vladavina završila je 1989. Proizvodnja automobila, informacijska tehnologija, strojarstvo, energetika, poljoprivreda i prerada hrane važni su gospodarski sektori. Delta Dunava, Karpati, utvrđene crkve u Transilvaniji i samostani u Bukovini čine izvanredna prirodna i kulturna područja.",
+      "overview_en": "Dacians, Romans and the medieval principalities of Wallachia, Moldavia and Transylvania shaped Romanian history. Wallachia and Moldova united in 1859, independence was won in 1877, and communist rule ended in 1989. Automobile manufacturing, information technology, mechanical engineering, energy, agriculture and food processing are important economic sectors. The Danube Delta, the Carpathians, the fortified churches of Transylvania and the monasteries of Bukovina form outstanding natural and cultural areas.",
       "neighboring_countries": [
         "Bulgarien",
         "Ungarn",
@@ -580,6 +614,8 @@
       "internet_tld": ".ua, .укр",
       "landlocked": "Nein",
       "overview": "Die Kyjiwer Rus, das Großfürstentum Litauen, Polen-Litauen, das Kosakenhetmanat und verschiedene Imperien prägten die Geschichte der Ukraine. Seit 1991 unabhängig, verteidigt das Land seine Souveränität gegen die 2014 begonnene und 2022 ausgeweitete russische Aggression. Landwirtschaft, Informationstechnologie, Metallurgie, Maschinenbau, Energie und Lebensmittelverarbeitung bilden wichtige Wirtschaftszweige. Kyjiws Sophienkathedrale, Lwiws Altstadt, die Karpaten und die Landschaften am Dnister stehen für ein reiches Kultur- und Naturerbe.",
+      "overview_hr": "Kijevska Rus, Velika Kneževina Litva, Poljska-Litva, Kozački Hetmanat i razna carstva oblikovala su povijest Ukrajine. Neovisna od 1991., zemlja brani svoj suverenitet od ruske agresije koja je započela 2014. i proširila se 2022. Poljoprivreda, informacijska tehnologija, metalurgija, strojarstvo, energetika i prerada hrane čine važne gospodarske sektore. Kijevska katedrala Svete Sofije, stari grad Lavova, Karpati i krajolici uz Dnjestar predstavljaju bogatu kulturnu i prirodnu baštinu.",
+      "overview_en": "Kyiv Rus, the Grand Duchy of Lithuania, Poland-Lithuania, the Cossack Hetmanate and various empires shaped the history of Ukraine. Independent since 1991, the country defends its sovereignty against Russian aggression that began in 2014 and expanded in 2022. Agriculture, information technology, metallurgy, mechanical engineering, energy and food processing form important economic sectors. Kyiv's St. Sophia Cathedral, Lviv's Old Town, the Carpathians and the landscapes along the Dniester represent a rich cultural and natural heritage.",
       "neighboring_countries": [
         "Weißrussland",
         "Ungarn",
@@ -613,6 +649,8 @@
       "internet_tld": ".ru, .su, .рф",
       "landlocked": "Nein",
       "overview": "Aus dem Moskauer Fürstentum entwickelte sich ein zentralisiertes Zarenreich, das 1721 zum Russischen Kaiserreich wurde. Die Revolution von 1917 führte zur Sowjetunion; seit deren Auflösung 1991 besteht die Russische Föderation. Erdöl und Erdgas, Bergbau und Metallurgie, Chemie, Rüstung, Luft- und Raumfahrt sowie Landwirtschaft prägen die Wirtschaft. Kreml und Sankt Petersburg, der Baikalsee, der Kaukasus und die Weiten Sibiriens verkörpern das monumentale Kultur- und Naturerbe.",
+      "overview_hr": "Moskovska kneževina razvila se u centralizirano Carsko Carstvo, koje je 1721. postalo Rusko Carstvo. Revolucija 1917. dovela je do Sovjetskog Saveza; Ruska Federacija postoji od svog raspada 1991. Nafta i prirodni plin, rudarstvo i metalurgija, kemikalije, naoružanje, zrakoplovstvo i poljoprivreda oblikuju gospodarstvo. Kremlj i Sankt Peterburg, Bajkalsko jezero, Kavkaz i prostranstva Sibira utjelovljuju spomeničku kulturnu i prirodnu baštinu.",
+      "overview_en": "The Moscow Principality developed into a centralized Tsarist Empire, which became the Russian Empire in 1721. The 1917 revolution led to the Soviet Union; The Russian Federation has existed since its dissolution in 1991. Petroleum and natural gas, mining and metallurgy, chemicals, armaments, aerospace and agriculture shape the economy. The Kremlin and Saint Petersburg, Lake Baikal, the Caucasus and the vastness of Siberia embody the monumental cultural and natural heritage.",
       "neighboring_countries": [
         "Aserbaidschan",
         "Weißrussland",
@@ -661,6 +699,8 @@
       "internet_tld": ".by",
       "landlocked": "Ja",
       "overview": "Die Gebiete des heutigen Belarus gehörten nacheinander zur Kyjiwer Rus, zum Großfürstentum Litauen, zu Polen-Litauen und zum Russischen Reich. Nach Jahrzehnten als Sowjetrepublik wurde Belarus 1991 unabhängig. Kalidüngemittel, Maschinen- und Fahrzeugbau, Chemie, Lebensmittelverarbeitung, Landwirtschaft und Informationstechnologie sind wichtige Wirtschaftsbereiche. Die Schlösser Mir und Njaswisch, der Białowieża-Urwald sowie ausgedehnte Seen- und Moorlandschaften prägen das Erbe des Landes.",
+      "overview_hr": "Područja današnje Bjelorusije sukcesivno su pripadala Kijevskoj Rusiji, Velikoj Kneževini Litvi, Poljsko-Litvanskoj i Ruskom Carstvu. Nakon desetljeća kao sovjetska republika, Bjelorusija je postala neovisna 1991. Kalijeva gnojiva, konstrukcija strojeva i vozila, kemija, prerada hrane, poljoprivreda i informacijska tehnologija važni su gospodarski sektori. Dvorci Mir i Njaswisch, džungla Białowieże i prostrani krajolici jezera i močvara karakteriziraju baštinu zemlje.",
+      "overview_en": "The territories of today's Belarus successively belonged to Kyiv Rus, the Grand Duchy of Lithuania, Poland-Lithuania and the Russian Empire. After decades as a Soviet republic, Belarus became independent in 1991. Potash fertilizers, mechanical and vehicle construction, chemistry, food processing, agriculture and information technology are important economic sectors. The Mir and Njaswisch castles, the Białowieża jungle and extensive lake and moor landscapes characterize the country's heritage.",
       "neighboring_countries": [
         "Lettland",
         "Litauen",
@@ -693,6 +733,8 @@
       "internet_tld": ".cz",
       "landlocked": "Ja",
       "overview": "Die böhmischen Länder bildeten ein bedeutendes Königreich im Heiligen Römischen Reich und standen später unter habsburgischer Herrschaft. 1918 entstand die Tschechoslowakei, aus deren friedlicher Teilung 1993 die Tschechische Republik hervorging. Automobilbau, Maschinenbau, Elektronik, Informationstechnologie, Chemie sowie Glas- und Lebensmittelproduktion tragen die exportstarke Wirtschaft. Prag, Český Krumlov, die böhmischen Kurstädte und die Felslandschaften des Böhmischen Paradieses verbinden Kultur und Natur.",
+      "overview_hr": "Češke su zemlje činile važno kraljevstvo u Svetom Rimskom Carstvu, a kasnije su bile pod vlašću Habsburgovaca. Čehoslovačka je osnovana 1918., a Češka je izašla iz svoje miroljubive podjele 1993. Proizvodnja automobila, strojarstvo, elektronika, informacijska tehnologija, kemija, kao i proizvodnja stakla i hrane podržavaju izvozno snažno gospodarstvo. Prag, Český Krumlov, češke toplice i stjenoviti krajolici češkog raja spajaju kulturu i prirodu.",
+      "overview_en": "The Bohemian lands formed an important kingdom in the Holy Roman Empire and were later under Habsburg rule. Czechoslovakia was founded in 1918, and the Czech Republic emerged from its peaceful division in 1993. Automobile manufacturing, mechanical engineering, electronics, information technology, chemistry as well as glass and food production support the export-strong economy. Prague, Český Krumlov, the Bohemian spa towns and the rocky landscapes of the Bohemian Paradise combine culture and nature.",
       "neighboring_countries": [
         "Österreich",
         "Deutschland",
@@ -724,6 +766,8 @@
       "internet_tld": ".sk",
       "landlocked": "Ja",
       "overview": "Nach dem frühmittelalterlichen Großmährischen Reich gehörte das Gebiet der Slowakei über Jahrhunderte zum Königreich Ungarn. 1918 wurde es Teil der Tschechoslowakei und erlangte durch deren friedliche Teilung 1993 die staatliche Unabhängigkeit. Automobilbau, Elektronik, Maschinenbau, Metallverarbeitung und Informationstechnologie prägen die stark industrialisierte Wirtschaft. Hohe Tatra, Zipser Burg, historische Bergbaustädte und weitläufige Karsthöhlen bilden das markante Natur- und Kulturerbe.",
+      "overview_hr": "Nakon ranosrednjovjekovnog Velikomoravskog carstva, teritorij Slovačke je stoljećima pripadao Kraljevini Mađarskoj. Godine 1918. postala je dio Čehoslovačke i stekla je državnu neovisnost svojom mirnom podjelom 1993. Proizvodnja automobila, elektronika, strojarstvo, obrada metala i informacijska tehnologija obilježavaju snažno industrijalizirano gospodarstvo. Visoke Tatre, dvorac Spis, povijesni rudarski gradovi i prostrane kraške špilje čine upečatljivu prirodnu i kulturnu baštinu.",
+      "overview_en": "After the early medieval Great Moravian Empire, the territory of Slovakia belonged to the Kingdom of Hungary for centuries. In 1918 it became part of Czechoslovakia and gained state independence through its peaceful partition in 1993. Automobile manufacturing, electronics, mechanical engineering, metal processing and information technology characterize the heavily industrialized economy. High Tatras, Spis Castle, historic mining towns and extensive karst caves form the striking natural and cultural heritage.",
       "neighboring_countries": [
         "Österreich",
         "Tschechien",
@@ -755,6 +799,8 @@
       "internet_tld": ".si",
       "landlocked": "Nein",
       "overview": "Die slowenischen Gebiete gehörten über Jahrhunderte zu den habsburgischen Ländern und wurden nach 1918 Teil Jugoslawiens. Slowenien erklärte 1991 seine Unabhängigkeit und trat 2004 der Europäischen Union bei. Pharma, Fahrzeugzulieferung, Elektrotechnik, Maschinenbau, Logistik und Tourismus sind wirtschaftlich bedeutend. Ljubljana, der Bleder See, die Škocjan-Höhlen, die Julischen Alpen und Piran verbinden alpine, karstige und mediterrane Kultur- und Naturräume.",
+      "overview_hr": "Slovenska su područja stoljećima bila dio habsburških zemalja, a nakon 1918. postala su dijelom Jugoslavije. Slovenija je proglasila neovisnost 1991. i pridružila se Europskoj uniji 2004. Farmaceutika, opskrba vozilima, elektrotehnika, strojarstvo, logistika i turizam su gospodarski važni. Ljubljana, Bledsko jezero, Škocjanske jame, Julijske Alpe i Piran spajaju alpska, kraška i mediteranska kulturna i prirodna područja.",
+      "overview_en": "The Slovenian territories were part of the Habsburg lands for centuries and became part of Yugoslavia after 1918. Slovenia declared its independence in 1991 and joined the European Union in 2004. Pharmaceuticals, vehicle supply, electrical engineering, mechanical engineering, logistics and tourism are economically important. Ljubljana, Lake Bled, the Škocjan Caves, the Julian Alps and Piran combine alpine, karst and Mediterranean cultural and natural areas.",
       "neighboring_countries": [
         "Österreich",
         "Kroatien",
@@ -785,6 +831,8 @@
       "internet_tld": ".it",
       "landlocked": "Nein",
       "overview": "Das Römische Reich und die späteren Stadtstaaten, Republiken und Fürstentümer hinterließen ein außergewöhnlich dichtes historisches Erbe. Die nationale Einigung wurde 1861 vollzogen; seit 1946 ist Italien eine Republik. Maschinenbau, Automobilindustrie, Mode und Luxusgüter, Lebensmittel, Pharma, Design und Tourismus prägen die Wirtschaft. Rom, Florenz, Venedig, die Dolomiten, die Amalfiküste und die archäologischen Stätten des Südens bilden ein einzigartiges Kultur- und Naturpanorama.",
+      "overview_hr": "Rimsko Carstvo i kasniji gradovi-države, republike i kneževine ostavili su za sobom iznimno bogato povijesno naslijeđe. Nacionalno ujedinjenje postignuto je 1861.; Italija je republika od 1946. Strojarstvo, automobilska industrija, moda i luksuzna roba, hrana, farmaceutski proizvodi, dizajn i turizam oblikuju gospodarstvo. Rim, Firenca, Venecija, Dolomiti, Amalfijska obala i arheološka nalazišta na jugu čine jedinstvenu kulturnu i prirodnu panoramu.",
+      "overview_en": "The Roman Empire and the later city-states, republics and principalities left behind an exceptionally rich historical legacy. National unification was achieved in 1861; Italy has been a republic since 1946. Mechanical engineering, the automotive industry, fashion and luxury goods, food, pharmaceuticals, design and tourism shape the economy. Rome, Florence, Venice, the Dolomites, the Amalfi Coast and the archaeological sites of the south form a unique cultural and natural panorama.",
       "neighboring_countries": [
         "Österreich",
         "Frankreich",
@@ -818,6 +866,8 @@
       "internet_tld": ".nl",
       "landlocked": "Nein",
       "overview": "Die nördlichen Niederlande lösten sich im 16. Jahrhundert von der spanischen Herrschaft und gründeten 1588 eine Republik. Nach ihrem maritimen Goldenen Zeitalter entstand 1815 das Königreich der Niederlande, das sich zu einer parlamentarischen Monarchie entwickelte. Agrartechnologie, Lebensmittelwirtschaft, Chemie, Halbleitertechnik, Logistik, Finanzwesen und kreative Industrien tragen die Wirtschaft. Amsterdams Grachten, die Windmühlen von Kinderdijk, das Wattenmeer und die historischen Polderlandschaften zeigen den engen Zusammenhang von Kultur und Wasserbau.",
+      "overview_hr": "Sjeverna Nizozemska odvojila se od španjolske vladavine u 16. stoljeću i osnovala republiku 1588. Nakon svog pomorskog zlatnog doba, Kraljevina Nizozemska pojavila se 1815., evoluirajući u parlamentarnu monarhiju. Poljoprivredna tehnologija, prehrambena industrija, kemija, tehnologija poluvodiča, logistika, financije i kreativne industrije podržavaju gospodarstvo. Amsterdamski kanali, vjetrenjače Kinderdijk, Waddensko more i povijesni krajolici poldera pokazuju blisku vezu između kulture i hidrotehnike.",
+      "overview_en": "The northern Netherlands broke away from Spanish rule in the 16th century and founded a republic in 1588. After its maritime golden age, the Kingdom of the Netherlands emerged in 1815, evolving into a parliamentary monarchy. Agricultural technology, food industry, chemistry, semiconductor technology, logistics, finance and creative industries support the economy. Amsterdam's canals, the Kinderdijk windmills, the Wadden Sea and the historic polder landscapes show the close connection between culture and hydraulic engineering.",
       "neighboring_countries": [
         "Belgien",
         "Deutschland"
@@ -846,6 +896,8 @@
       "internet_tld": ".be",
       "landlocked": "Nein",
       "overview": "Die belgischen Gebiete gehörten zu den burgundischen und habsburgischen Niederlanden und später zum Vereinigten Königreich der Niederlande. Nach der Unabhängigkeit von 1830 entwickelte sich Belgien schrittweise zu einem föderalen Staat. Chemie und Pharma, Lebensmittel, Metall- und Maschinenbau, Logistik, Finanzdienste und Diamanthandel sind wichtige Wirtschaftszweige. Brüssels Grand-Place, die Altstadt von Brügge, Jugendstilarchitektur und die Ardennen verbinden dichtes Kulturerbe mit abwechslungsreicher Natur.",
+      "overview_hr": "Belgijski teritoriji bili su dio Burgundske i Habsburške Nizozemske, a kasnije i Ujedinjenog Kraljevstva Nizozemske. Nakon stjecanja neovisnosti 1830. Belgija se postupno razvila u saveznu državu. Kemikalije i farmaceutski proizvodi, hrana, metalogradnja i strojarstvo, logistika, financijske usluge i trgovina dijamantima važni su gospodarski sektori. Bruxelles Grand Place, stari grad Bruges, secesijska arhitektura i Ardeni spajaju bogatu kulturnu baštinu s raznolikom prirodom.",
+      "overview_en": "The Belgian territories were part of the Burgundian and Habsburg Netherlands and later the United Kingdom of the Netherlands. After independence in 1830, Belgium gradually developed into a federal state. Chemicals and pharmaceuticals, food, metal and mechanical engineering, logistics, financial services and diamond trading are important economic sectors. Brussels' Grand Place, the old town of Bruges, Art Nouveau architecture and the Ardennes combine dense cultural heritage with varied nature.",
       "neighboring_countries": [
         "Frankreich",
         "Deutschland",
@@ -878,6 +930,8 @@
       "internet_tld": ".dk",
       "landlocked": "Nein",
       "overview": "Das dänische Königreich entstand in der Wikingerzeit und prägte über Unionen und Seehandel den nordischen Raum. Mit der Verfassung von 1849 wurde Dänemark zur konstitutionellen Monarchie und entwickelte eine stabile parlamentarische Demokratie. Schifffahrt und Logistik, Pharma, Lebensmittelwirtschaft, Windenergie, Maschinenbau und Design sind zentrale Branchen. Kopenhagen, die Runensteine von Jelling, das Wattenmeer und die Insel- und Küstenlandschaften stehen für das dänische Kultur- und Naturerbe.",
+      "overview_hr": "Dansko kraljevstvo pojavilo se u vikinško doba i oblikovalo nordijsku regiju kroz sindikate i pomorsku trgovinu. Ustavom iz 1849. Danska je postala ustavna monarhija i razvila stabilnu parlamentarnu demokraciju. Pomorstvo i logistika, farmaceutska industrija, prehrambena industrija, energija vjetra, strojarstvo i dizajn središnji su sektori. Kopenhagen, runsko kamenje Jelling, Waddensko more te otočni i obalni krajolici predstavljaju dansku kulturnu i prirodnu baštinu.",
+      "overview_en": "The Danish kingdom emerged in the Viking Age and shaped the Nordic region through unions and maritime trade. With the constitution of 1849, Denmark became a constitutional monarchy and developed a stable parliamentary democracy. Shipping and logistics, pharmaceuticals, food industry, wind energy, mechanical engineering and design are central sectors. Copenhagen, the Jelling runestones, the Wadden Sea and the island and coastal landscapes represent Denmark's cultural and natural heritage.",
       "neighboring_countries": [
         "Deutschland"
       ],
@@ -909,6 +963,8 @@
       "internet_tld": ".fi",
       "landlocked": "Nein",
       "overview": "Finnland gehörte jahrhundertelang zum schwedischen Reich und wurde 1809 ein autonomes Großfürstentum im Russischen Reich. Das Land erklärte 1917 seine Unabhängigkeit und bewahrte sie in den Kriegen des 20. Jahrhunderts. Maschinenbau, Forst- und Papierwirtschaft, Elektronik, saubere Technologien, Spieleentwicklung und Gesundheitswirtschaft prägen die Wirtschaft. Suomenlinna, die finnische Seenplatte, Lappland und das Schärenmeer verbinden Kulturgeschichte mit weitläufiger nordischer Natur.",
+      "overview_hr": "Finska je stoljećima bila dio Švedskog Carstva i postala je autonomno veliko vojvodstvo u Ruskom Carstvu 1809. godine. Država je proglasila svoju neovisnost 1917. i održala ju je kroz ratove 20. stoljeća. Strojarstvo, šumarstvo i industrija papira, elektronika, čiste tehnologije, razvoj igara i zdravstvo oblikuju gospodarstvo. Suomenlinna, finska jezerska oblast, Laponija i arhipelag spajaju kulturnu povijest s prostranom nordijskom prirodom.",
+      "overview_en": "Finland was part of the Swedish Empire for centuries and became an autonomous grand duchy in the Russian Empire in 1809. The country declared its independence in 1917 and maintained it through the wars of the 20th century. Mechanical engineering, forestry and paper industries, electronics, clean technologies, game development and healthcare shape the economy. Suomenlinna, the Finnish lake district, Lapland and the archipelago combine cultural history with extensive Nordic nature.",
       "neighboring_countries": [
         "Norwegen",
         "Schweden",
@@ -939,6 +995,8 @@
       "internet_tld": ".no",
       "landlocked": "Nein",
       "overview": "Aus den norwegischen Wikingerreichen entstand im Mittelalter ein geeintes Königreich. Nach langen Unionen mit Dänemark und Schweden erlangte Norwegen 1905 die volle Unabhängigkeit. Erdöl und Erdgas, Schifffahrt, Fischerei und Aquakultur, Wasserkraft, Metallindustrie und maritime Technologie tragen die Wirtschaft. Die westnorwegischen Fjorde, Lofoten, Stabkirchen und arktische Landschaften bilden ein spektakuläres Natur- und Kulturerbe.",
+      "overview_hr": "Iz norveških vikinških carstava u srednjem vijeku nastalo je jedinstveno kraljevstvo. Nakon dugih saveza s Danskom i Švedskom, Norveška je stekla punu neovisnost 1905. Nafta i plin, pomorstvo, ribarstvo i akvakultura, hidroenergija, metalna industrija i pomorska tehnologija podržavaju gospodarstvo. Zapadni norveški fjordovi, Lofoti, crkve od greda i arktički krajolici čine spektakularnu prirodnu i kulturnu baštinu.",
+      "overview_en": "A unified kingdom emerged from the Norwegian Viking empires in the Middle Ages. After long unions with Denmark and Sweden, Norway gained full independence in 1905. Oil and gas, shipping, fishing and aquaculture, hydropower, metal industry and maritime technology support the economy. The western Norwegian fjords, Lofoten, stave churches and arctic landscapes form a spectacular natural and cultural heritage.",
       "neighboring_countries": [
         "Finnland",
         "Schweden",
@@ -970,6 +1028,8 @@
       "internet_tld": ".ie",
       "landlocked": "Nein",
       "overview": "Gälische Königreiche und eine eigenständige Klosterkultur prägten Irland, bevor die englische Herrschaft schrittweise ausgebaut wurde. Der Irische Freistaat entstand 1922 und die Republik 1949, während Nordirland Teil des Vereinigten Königreichs blieb. Pharma und Medizintechnik, digitale Dienstleistungen, Finanzwesen, Lebensmittelwirtschaft und Luftfahrtleasing prägen die moderne Wirtschaft. Brú na Bóinne, Dublins Literaturtradition, die Cliffs of Moher und der Wild Atlantic Way verbinden tiefes Kulturerbe mit dramatischer Küstennatur.",
+      "overview_hr": "Galska kraljevstva i neovisna monaška kultura karakterizirali su Irsku prije nego što se engleska vladavina postupno proširila. Irska slobodna država nastala je 1922., a Republika 1949., dok je Sjeverna Irska ostala dio Ujedinjenog Kraljevstva. Farmaceutika i medicinska tehnologija, digitalne usluge, financije, prehrambena industrija i zrakoplovni leasing oblikuju moderno gospodarstvo. Brú na Bóinne, književna tradicija Dublina, Cliffs of Moher i Wild Atlantic Way spajaju duboko kulturno nasljeđe s dramatičnom obalnom prirodom.",
+      "overview_en": "Gaelic kingdoms and an independent monastic culture characterized Ireland before English rule was gradually expanded. The Irish Free State came into being in 1922 and the Republic in 1949, while Northern Ireland remained part of the United Kingdom. Pharmaceuticals and medical technology, digital services, finance, the food industry and aviation leasing shape the modern economy. Brú na Bóinne, Dublin's literary tradition, the Cliffs of Moher and the Wild Atlantic Way combine deep cultural heritage with dramatic coastal nature.",
       "neighboring_countries": [
         "Vereinigtes Königreich"
       ],
@@ -998,6 +1058,8 @@
       "internet_tld": ".ch",
       "landlocked": "Ja",
       "overview": "Aus mittelalterlichen Bündnissen der Eidgenossen entstand schrittweise die Schweizerische Eidgenossenschaft. Die Bundesverfassung von 1848 schuf den modernen Bundesstaat, dessen Neutralität und direkte Demokratie die weitere Entwicklung prägten. Pharma und Chemie, Präzisionsmaschinen, Uhren, Medizintechnik, Finanzdienste und hochwertige Lebensmittel tragen die Wirtschaft. Die Berner Altstadt, die Alpenregion Jungfrau-Aletsch, der Genfersee und historische Bahnlandschaften verbinden Kultur und Hochgebirgsnatur.",
+      "overview_hr": "Švicarska konfederacija postupno je nastala iz srednjovjekovnih saveza između konfederacija. Saveznim ustavom iz 1848. stvorena je moderna savezna država, čija su neutralnost i izravna demokracija oblikovali daljnji razvoj. Farmaceutski proizvodi i kemikalije, precizni strojevi, satovi, medicinska tehnologija, financijske usluge i visokokvalitetna hrana podržavaju gospodarstvo. Stari grad Berna, alpsko područje Jungfrau-Aletsch, Ženevsko jezero i povijesni krajolici željeznice spajaju kulturu i planinsku prirodu.",
+      "overview_en": "The Swiss Confederation gradually emerged from medieval alliances between the Confederates. The Federal Constitution of 1848 created the modern federal state, whose neutrality and direct democracy shaped further development. Pharmaceuticals and chemicals, precision machines, watches, medical technology, financial services and high-quality food support the economy. Bern's old town, the Jungfrau-Aletsch Alpine region, Lake Geneva and historic railway landscapes combine culture and high mountain nature.",
       "neighboring_countries": [
         "Deutschland",
         "Frankreich",
@@ -1032,6 +1094,8 @@
       "internet_tld": ".va",
       "landlocked": "Ja",
       "overview": "Die Geschichte des Kirchenstaats reicht in die Spätantike zurück und war über Jahrhunderte mit den Päpstlichen Staaten verbunden. Durch die Lateranverträge von 1929 entstand der souveräne Staat Vatikanstadt als Sitz des Heiligen Stuhls. Verwaltung, Museen, Verlags- und Medienarbeit sowie Pilger- und Besucherdienste bestimmen seine besondere Wirtschaftsstruktur. Petersdom, Sixtinische Kapelle, Vatikanische Museen und Gärten bilden eines der bedeutendsten Ensembles der europäischen Kunst- und Religionsgeschichte.",
+      "overview_hr": "Povijest Papinske države seže u kasnu antiku i stoljećima je bila povezana s Papinskom državom. Lateranskim ugovorom iz 1929. stvorena je suverena država Vatikan kao sjedište Svete Stolice. Administracija, muzeji, izdavaštvo i medijski rad te usluge hodočasnika i posjetitelja određuju njegovu posebnu gospodarsku strukturu. Bazilika svetog Petra, Sikstinska kapela, Vatikanski muzeji i vrtovi čine jednu od najvažnijih cjelina europske umjetnosti i religijske povijesti.",
+      "overview_en": "The history of the Papal States dates back to late antiquity and was linked to the Papal States for centuries. The Lateran Treaty of 1929 created the sovereign state of Vatican City as the seat of the Holy See. Administration, museums, publishing and media work as well as pilgrim and visitor services determine its special economic structure. St. Peter's Basilica, Sistine Chapel, Vatican Museums and gardens form one of the most important ensembles in European art and religious history.",
       "neighboring_countries": [
         "Italien"
       ],
@@ -1060,6 +1124,8 @@
       "internet_tld": ".pt",
       "landlocked": "Nein",
       "overview": "Portugal etablierte sich im 12. Jahrhundert als eigenständiges Königreich und schuf ab dem 15. Jahrhundert ein weitreichendes Seereich. Nach der Republikgründung 1910 führte die Nelkenrevolution von 1974 zur heutigen Demokratie. Automobilzulieferung, Maschinenbau, Textilien und Schuhe, Kork und Papier, erneuerbare Energien und Tourismus sind wichtige Branchen. Lissabon, Porto, Sintra, das Douro-Tal sowie die Vulkanlandschaften der Azoren verbinden maritimes Kulturerbe und Natur.",
+      "overview_hr": "Portugal se uspostavio kao neovisna kraljevina u 12. stoljeću i stvorio opsežno pomorsko carstvo od 15. stoljeća. Nakon utemeljenja republike 1910., Revolucija karanfila 1974. dovela je do današnje demokracije. Opskrba automobilima, strojarstvo, tekstil i obuća, pluto i papir, obnovljivi izvori energije i turizam važne su industrije. Lisabon, Porto, Sintra, dolina Douro i vulkanski krajolici Azora spajaju pomorsku kulturnu baštinu i prirodu.",
+      "overview_en": "Portugal established itself as an independent kingdom in the 12th century and created an extensive maritime empire from the 15th century. After the founding of the republic in 1910, the Carnation Revolution of 1974 led to today's democracy. Automotive supplies, mechanical engineering, textiles and shoes, cork and paper, renewable energies and tourism are important industries. Lisbon, Porto, Sintra, the Douro Valley and the volcanic landscapes of the Azores combine maritime cultural heritage and nature.",
       "neighboring_countries": [
         "Spanien"
       ],
@@ -1088,6 +1154,8 @@
       "internet_tld": ".me",
       "landlocked": "Nein",
       "overview": "Mittelalterliche Fürstentümer und eine lange Grenzlage zum Osmanischen Reich prägten die montenegrinische Staatstradition. 1878 international anerkannt, gehörte Montenegro später zu Jugoslawien und wurde 2006 erneut unabhängig. Tourismus, Energie, Landwirtschaft und Lebensmittelproduktion, Metallverarbeitung und maritime Dienstleistungen tragen die Wirtschaft. Die Bucht von Kotor, der Durmitor-Nationalpark, die Tara-Schlucht und das Kloster Ostrog bilden herausragende Kultur- und Naturräume.",
+      "overview_hr": "Srednjovjekovne kneževine i duga granica s Osmanskim Carstvom oblikovale su crnogorsku državnu tradiciju. Međunarodno priznata 1878., Crna Gora je kasnije pripala Jugoslaviji i ponovno postala neovisna 2006. Turizam, energetika, poljoprivreda i proizvodnja hrane, obrada metala i pomorske usluge podržavaju gospodarstvo. Boka Kotorska, Nacionalni park Durmitor, kanjon Tare i manastir Ostrog čine izuzetna kulturna i prirodna područja.",
+      "overview_en": "Medieval principalities and a long border with the Ottoman Empire shaped the Montenegrin state tradition. Internationally recognized in 1878, Montenegro later belonged to Yugoslavia and became independent again in 2006. Tourism, energy, agriculture and food production, metal processing and maritime services support the economy. The Bay of Kotor, Durmitor National Park, Tara Gorge and Ostrog Monastery form outstanding cultural and natural areas.",
       "neighboring_countries": [
         "Albanien",
         "Bosnien und Herzegowina",
@@ -1119,6 +1187,8 @@
       "internet_tld": ".lu",
       "landlocked": "Ja",
       "overview": "Aus einer mittelalterlichen Grafschaft um eine strategische Festung entwickelte sich das Großherzogtum Luxemburg. Seine Unabhängigkeit wurde im 19. Jahrhundert gefestigt, und nach 1945 gehörte es zu den Gründungsstaaten der europäischen Integration. Finanz- und Fondsmanagement, Informationstechnologie, Satelliten- und Raumfahrtwirtschaft, Logistik und spezialisierte Industrie tragen die Wirtschaft. Luxemburgs Altstadt und Festungswerke, die Burg Vianden, das Moseltal und die Ardennen verbinden europäische Geschichte mit abwechslungsreicher Landschaft.",
+      "overview_hr": "Veliko Vojvodstvo Luksemburg razvilo se iz srednjovjekovne grofovije oko strateške tvrđave. Svoju neovisnost učvrstila je u 19. stoljeću, a nakon 1945. bila je jedna od država utemeljiteljica europskih integracija. Upravljanje financijama i fondovima, informacijska tehnologija, satelitska i svemirska industrija, logistika i specijalizirane industrije podržavaju gospodarstvo. Luksemburški stari grad i utvrde, dvorac Vianden, dolina Moselle i Ardeni spajaju europsku povijest s raznolikim krajolikom.",
+      "overview_en": "The Grand Duchy of Luxembourg developed from a medieval county around a strategic fortress. Its independence was consolidated in the 19th century, and after 1945 it was one of the founding states of European integration. Financial and fund management, information technology, satellite and space industries, logistics and specialized industries support the economy. Luxembourg's old town and fortifications, Vianden Castle, the Moselle valley and the Ardennes combine European history with a varied landscape.",
       "neighboring_countries": [
         "Belgien",
         "Deutschland",
@@ -1150,6 +1220,8 @@
       "internet_tld": ".li",
       "landlocked": "Ja",
       "overview": "Das Fürstentum Liechtenstein entstand 1719 aus den Herrschaften Vaduz und Schellenberg. Mit dem Ende des Heiligen Römischen Reiches wurde es 1806 souverän und band sich im 20. Jahrhundert wirtschaftlich eng an die Schweiz. Präzisionsmaschinen, Dental- und Medizintechnik, Elektronik, Spezialchemie und Finanzdienstleistungen bilden die hochproduktive Wirtschaft. Das Rheintal, alpine Wandergebiete, Vaduz mit seinem Schloss und kleine historische Dörfer prägen das Kultur- und Landschaftsbild.",
+      "overview_hr": "Kneževina Lihtenštajn stvorena je 1719. od dominiona Vaduz i Schellenberg. S krajem Svetog Rimskog Carstva, postala je suverena 1806. i postala je usko gospodarski povezana sa Švicarskom u 20. stoljeću. Precizni strojevi, zubarska i medicinska tehnologija, elektronika, specijalne kemikalije i financijske usluge čine visokoproduktivno gospodarstvo. Dolina Rajne, planinska područja za planinarenje, Vaduz sa svojim dvorcem i malim povijesnim selima oblikuju kulturu i krajolik.",
+      "overview_en": "The Principality of Liechtenstein was created in 1719 from the dominions of Vaduz and Schellenberg. With the end of the Holy Roman Empire, it became sovereign in 1806 and became closely linked economically to Switzerland in the 20th century. Precision machines, dental and medical technology, electronics, specialty chemicals and financial services make up the highly productive economy. The Rhine Valley, alpine hiking areas, Vaduz with its castle and small historic villages shape the culture and landscape.",
       "neighboring_countries": [
         "Oesterreich",
         "Schweiz"
@@ -1178,6 +1250,8 @@
       "internet_tld": ".ad",
       "landlocked": "Ja",
       "overview": "Das 1278 vereinbarte Pareatge begründete die bis heute bestehende gemeinsame Herrschaft zweier Kofürsten über Andorra. Die Verfassung von 1993 machte das Land zu einem souveränen parlamentarischen Kofürstentum. Tourismus, Einzelhandel, Finanzdienste, Bauwirtschaft und Wintersport prägen die Wirtschaft. Das Madriu-Claror-Perafita-Tal, romanische Kirchen und die Hochgebirgslandschaften der Pyrenäen bilden das besondere Natur- und Kulturerbe.",
+      "overview_hr": "Pareatge dogovoren 1278. uspostavio je zajedničku vladavinu dva suprinčeva nad Andorom koja postoji i danas. Ustavom iz 1993. zemlja je postala suverena parlamentarna sukneževina. Turizam, maloprodaja, financijske usluge, građevinarstvo i zimski sportovi oblikuju gospodarstvo. Dolina Madriu-Claror-Perafita, romaničke crkve i visoki planinski krajolici Pireneja čine posebnu prirodnu i kulturnu baštinu.",
+      "overview_en": "The Pareatge agreed in 1278 established the joint rule of two co-princes over Andorra that still exists today. The 1993 constitution made the country a sovereign parliamentary co-principality. Tourism, retail, financial services, construction and winter sports shape the economy. The Madriu-Claror-Perafita valley, Romanesque churches and the high mountain landscapes of the Pyrenees form the special natural and cultural heritage.",
       "neighboring_countries": [
         "Spanien",
         "Frankreich"

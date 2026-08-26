@@ -395,9 +395,11 @@
         "neighborStates": "Nachbar-Bundesländer",
         "borders": "Grenzt an",
         "knownFor": "Bekannt für",
-        "science": "Bekannte Personen: Wissenschaft",
-        "politics": "Bekannte Personen: Politik",
-        "art": "Bekannte Personen: Kunst",
+        "notablePeople": "Bekannte Personen",
+        "science": "Wissenschaftler",
+        "politics": "Politiker",
+        "art": "Künstler",
+        "engineering": "Ingenieure",
         "languages": "Sprachen",
         "timezones": "Zeitzonen"
       },
@@ -532,7 +534,7 @@
         "no": "Nein",
         "officialSiteAria": "{name} offizielle Website in neuem Tab öffnen",
         "tourismAria": "{name} Tourismus in neuem Tab öffnen",
-        "germanyOverviewText": "Deutschland liegt im Herzen Europas. Hauptstadt und größte Stadt ist Berlin. Das Land hat {statesCount} Bundesländer und grenzt an {neighbors}.",
+        "germanyOverviewText": "Die deutsche Nationalstaatsbildung führte 1871 zur Gründung des Deutschen Kaiserreichs. Nach nationalsozialistischer Diktatur, Zweitem Weltkrieg und Teilung entstanden 1949 zwei deutsche Staaten, die sich 1990 wiedervereinigten. Automobilbau, Maschinenbau, Chemie, Elektrotechnik und wissensintensive Dienstleistungen bilden zentrale Säulen der Wirtschaft. Das UNESCO-Erbe von Aachen bis zur Museumsinsel, die Alpen, der Schwarzwald sowie Nord- und Ostseeküste zeigen die große kulturelle und landschaftliche Vielfalt.",
         "europeOverviewText": "Die EU verbindet {memberStates} Mitgliedstaaten. Politisches Zentrum ist {capital}; zentrale Institutionen sind {institutions}.",
         "stateLocationText": "{name} liegt im {region} Deutschlands. Hauptstadt ist {capital}.",
         "stateProfileText": "{name} ist bekannt für {knownFor}.",
@@ -575,7 +577,7 @@
       "steps": {
         "prompts": {
           "title": "Lies die beiden Hinweise",
-          "body": "Die große Zeile ist der Haupthinweis. Die kleinere ergänzt den Kontext; jede Flagge zeigt die Sprache."
+          "body": "Die große Zeile ist der Haupthinweis. Die kleinere Zeile liefert zusätzlichen Kontext. Die Flagge neben jeder Zeile zeigt die jeweilige Sprache."
         },
         "input": {
           "title": "Tippe die Übersetzung",
@@ -583,11 +585,11 @@
         },
         "feedback": {
           "title": "Verstehe das Feedback",
-          "body": "Grün bedeutet richtig, Gelb zeigt den nächsten Buchstaben und Rot markiert, was du korrigieren solltest."
+          "body": "Die Farblegende zeigt deinen Fortschritt: Grün bedeutet richtig, Gelb zeigt den nächsten Schritt und Rot markiert, was du korrigieren solltest. Nutze den Tipp, überspringe die Karte oder drücke Enter, um deine Antwort zu prüfen."
         },
-        "actions": {
-          "title": "Wähle den nächsten Schritt",
-          "body": "Nutze den Tipp, überspringe die Karte oder drücke Enter, um deine Antwort zu prüfen und fortzufahren."
+        "settings": {
+          "title": "Richte deine nächste Runde ein",
+          "body": "Wähle unten Schwierigkeit, Rundengröße und Kategorien. Mit „Neues Spiel“ startest du eine neue Runde."
         }
       },
       "feedback": {
@@ -606,7 +608,7 @@
         "settings": "Einstellungen öffnen"
       }
     },
-    "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
+    "footer": "made by Lovro Musić - contact@lovro-music.de - lovro.info"
   },
   "hr": {
     "meta": {
@@ -996,9 +998,11 @@
         "neighborStates": "Susjedne savezne zemlje",
         "borders": "Graniči s",
         "knownFor": "Poznato po",
-        "science": "Poznate osobe: znanost",
-        "politics": "Poznate osobe: politika",
-        "art": "Poznate osobe: umjetnost",
+        "notablePeople": "Poznate osobe",
+        "science": "Znanstvenici",
+        "politics": "Političari",
+        "art": "Umjetnici",
+        "engineering": "Inženjeri",
         "languages": "Jezici",
         "timezones": "Vremenske zone"
       },
@@ -1133,7 +1137,7 @@
         "no": "Ne",
         "officialSiteAria": "Otvori službenu stranicu za {name} u novoj kartici",
         "tourismAria": "Otvori turističku stranicu za {name} u novoj kartici",
-        "germanyOverviewText": "Njemačka se nalazi u srcu Europe. Glavni i najveći grad je Berlin. Država ima {statesCount} saveznih zemalja i graniči s {neighbors}.",
+        "germanyOverviewText": "Izgradnja njemačke nacionalne države dovela je 1871. do osnutka Njemačkog Carstva. Nakon nacionalsocijalističke diktature, Drugog svjetskog rata i podjele, 1949. nastale su dvije njemačke države koje su se 1990. ponovno ujedinile. Automobilska industrija, strojogradnja, kemijska industrija, elektrotehnika i usluge temeljene na znanju čine glavne stupove gospodarstva. UNESCO-ova baština od Aachena do Muzejskog otoka, Alpe, Schwarzwald te obale Sjevernog i Baltičkog mora pokazuju veliku kulturnu i krajobraznu raznolikost.",
         "europeOverviewText": "EU povezuje {memberStates} država članica. Političko središte je {capital}, a glavne institucije su {institutions}.",
         "stateLocationText": "{name} se nalazi u {region} Njemačke. Glavni grad je {capital}.",
         "stateProfileText": "{name} je poznat po {knownFor}.",
@@ -1176,7 +1180,7 @@
       "steps": {
         "prompts": {
           "title": "Pročitaj obje natuknice",
-          "body": "Veći redak je glavna natuknica. Manji dodaje kontekst, a svaka zastava pokazuje jezik."
+          "body": "Veći redak glavni je trag. Manji daje dodatni kontekst. Zastava uz svaki redak pokazuje njegov jezik."
         },
         "input": {
           "title": "Upiši prijevod",
@@ -1184,11 +1188,11 @@
         },
         "feedback": {
           "title": "Razumij povratnu informaciju",
-          "body": "Zeleno znači točno, žuto otkriva sljedeće slovo, a crveno pokazuje što treba ispraviti."
+          "body": "Legenda boja pokazuje tvoj napredak: zeleno znači točno, žuto pokazuje što slijedi, a crveno označava što treba ispraviti. Upotrijebi savjet, preskoči karticu ili pritisni Enter za provjeru odgovora."
         },
-        "actions": {
-          "title": "Odaberi sljedeći korak",
-          "body": "Upotrijebi pomoć, preskoči karticu ili pritisni Enter za provjeru i nastavak."
+        "settings": {
+          "title": "Postavi sljedeću rundu",
+          "body": "U postavkama ispod odaberi težinu, broj kartica i kategorije. Pritisni „Nova igra“ za pokretanje nove runde."
         }
       },
       "feedback": {
@@ -1207,7 +1211,7 @@
         "settings": "Otvori postavke"
       }
     },
-    "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
+    "footer": "made by Lovro Musić - contact@lovro-music.de - lovro.info"
   },
   "en": {
     "meta": {
@@ -1601,9 +1605,11 @@
         "neighborStates": "Neighboring states",
         "borders": "Borders",
         "knownFor": "Known for",
-        "science": "Notable people: science",
-        "politics": "Notable people: politics",
-        "art": "Notable people: art",
+        "notablePeople": "Notable people",
+        "science": "Scientists",
+        "politics": "Politicians",
+        "art": "Artists",
+        "engineering": "Engineers",
         "languages": "Languages",
         "timezones": "Time zones"
       },
@@ -1738,7 +1744,7 @@
         "no": "No",
         "officialSiteAria": "Open the official website for {name} in a new tab",
         "tourismAria": "Open tourism information for {name} in a new tab",
-        "germanyOverviewText": "Germany lies in the heart of Europe. The capital and largest city is Berlin. The country has {statesCount} federal states and borders {neighbors}.",
+        "germanyOverviewText": "The formation of the German nation-state led to the founding of the German Empire in 1871. After the Nazi dictatorship, World War II, and partition, two German states emerged in 1949 and reunified in 1990. Automotive manufacturing, mechanical engineering, chemicals, electrical engineering, and knowledge-intensive services are key pillars of the economy. UNESCO heritage from Aachen to Museum Island, the Alps, the Black Forest, and the North and Baltic Sea coasts reflect Germany's great cultural and landscape diversity.",
         "europeOverviewText": "The EU brings together {memberStates} member states. Its political center is {capital}, and key institutions include {institutions}.",
         "stateLocationText": "{name} lies in the {region} of Germany. Its capital is {capital}.",
         "stateProfileText": "{name} is known for {knownFor}.",
@@ -1781,7 +1787,7 @@
       "steps": {
         "prompts": {
           "title": "Read both clues",
-          "body": "The larger line is the main clue. The smaller line adds context; each flag shows its language."
+          "body": "The large line is the main clue. The smaller line gives you extra context. The flag beside each line shows its language."
         },
         "input": {
           "title": "Type the translation",
@@ -1789,11 +1795,11 @@
         },
         "feedback": {
           "title": "Read the feedback",
-          "body": "Green means correct, yellow reveals the next letter, and red marks what to fix."
+          "body": "The color key shows your progress: green means correct, yellow shows what comes next, and red marks what to fix. Use Hint for help, Skip to save the card for later, or Enter to check your answer."
         },
-        "actions": {
-          "title": "Choose your next move",
-          "body": "Use Hint, skip the card, or press Enter to check your answer and continue."
+        "settings": {
+          "title": "Set up your next round",
+          "body": "Use the settings below to choose the difficulty, round size, and categories. Press New game to start a fresh round."
         }
       },
       "feedback": {
@@ -1812,6 +1818,6 @@
         "settings": "Open settings"
       }
     },
-    "footer": "made by Lovro Musić, in Gießen 2026, with ♥"
+    "footer": "made by Lovro Musić - contact@lovro-music.de - lovro.info"
   }
 }
