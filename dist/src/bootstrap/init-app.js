@@ -4069,9 +4069,6 @@ function buildWordGrid(
   const correctPrefixLen = getCorrectPrefixLength(target, typed);
   const caretIndex = typed.length;
   const showTerminalStatus = target.length > 0 && caretIndex >= target.length;
-  const terminalStatusKind = showTerminalStatus && isExactTypedMatch(target, typed)
-    ? "success"
-    : "error";
   const tokens = getGuideTokens(target);
 
   tokens.forEach((token) => {
@@ -4215,16 +4212,7 @@ function buildWordGrid(
     });
   }
 
-  if (showTerminalStatus) {
-    const terminalStatus = document.createElement("div");
-    terminalStatus.className = `answer-guide-terminal-status is-${terminalStatusKind}`;
-    if (terminalHit && terminalHit === terminalStatusKind) {
-      terminalStatus.classList.add(`is-hit-${terminalHit}`);
-    }
-    terminalStatus.textContent = terminalStatusKind === "success" ? "♥" : "×";
-    terminalStatus.setAttribute("aria-hidden", "true");
-    wordGrid.appendChild(terminalStatus);
-  } else if (caretIndex > target.length || !target.length) {
+  if (!showTerminalStatus && (caretIndex > target.length || !target.length)) {
     const endCaret = document.createElement("div");
     endCaret.className = "answer-guide-inline-caret";
     endCaret.setAttribute("aria-hidden", "true");
