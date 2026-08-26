@@ -563,11 +563,9 @@ function initScrollSnapController() {
       return Math.max(0, Math.min(maxScrollY, rawPosition));
     };
 
-    const settingsPanelEl = document.getElementById("catPanel");
     return [
       { element: heroStageEl, position: 0 },
       { element: mainCard, position: getPosition(mainCard) },
-      { element: settingsPanelEl, position: getPosition(settingsPanelEl) },
       { element: searchPanelEl, position: getPosition(searchPanelEl) },
       { element: factsPanelEl, position: getPosition(factsPanelEl) },
     ].filter((target) => target.element && target.position !== null);
@@ -581,12 +579,19 @@ function initScrollSnapController() {
     const viewportHeight = Math.max(1, window.innerHeight || document.documentElement.clientHeight || 1);
     const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
     const snapThreshold = viewportHeight / 3;
+    const mainCardSnapThreshold = viewportHeight / 10;
     const nearestTarget = getSnapPositions()
       .map((target) => ({ ...target, distance: Math.abs(target.position - scrollY) }))
-      .filter((target) => target.distance <= snapThreshold)
       .sort((left, right) => left.distance - right.distance)[0];
 
     if (!nearestTarget || nearestTarget.distance < 1) {
+      return;
+    }
+
+    const targetThreshold = nearestTarget.element === mainCard
+      ? mainCardSnapThreshold
+      : snapThreshold;
+    if (nearestTarget.distance > targetThreshold) {
       return;
     }
 
@@ -3119,7 +3124,7 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
 
     if (isNonEmptyValue(tourismUrl)) {
       const tourismEl = document.createElement("a");
-      tourismEl.className = "facts-title-link";
+      tourismEl.className = "facts-title-link facts-title-link--tourism";
       tourismEl.href = tourismUrl;
       tourismEl.target = "_blank";
       tourismEl.rel = "noopener noreferrer";
@@ -3132,12 +3137,12 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
       if (isNonEmptyValue(tourismUrl)) {
         const websitesLabelEl = document.createElement("span");
         websitesLabelEl.className = "facts-title-link-separator";
-        websitesLabelEl.textContent = `: ${t("facts.links.websites")} :`;
+        websitesLabelEl.textContent = t("facts.links.websites");
         linksEl.appendChild(websitesLabelEl);
       }
 
       const officialEl = document.createElement("a");
-      officialEl.className = "facts-title-link";
+      officialEl.className = "facts-title-link facts-title-link--official";
       officialEl.href = officialUrl;
       officialEl.target = "_blank";
       officialEl.rel = "noopener noreferrer";
