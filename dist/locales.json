@@ -51,6 +51,13 @@
     },
     "messages": {
       "languageDockAria": "Lernsprache wechseln",
+      "arrowDockAria": "Tastatur-Navigation",
+      "arrowActions": {
+        "up": "Modus",
+        "left": "Zurück",
+        "down": "Tipp",
+        "right": "Skip"
+      },
       "languageNames": {
         "de": "Deutsch",
         "hr": "Hrvatski",
@@ -95,7 +102,7 @@
         "skipTitle": "Diese Karte später in dieser Runde zeigen",
         "skipRemaining": "{count} Überspringen übrig",
         "enterHint": "zum Prüfen",
-        "settings": "Einstellungen",
+        "settings": "Einstellungen für nächste Runde",
         "switchPrompt": "Tauschen",
         "switchPromptAria": "Obere und untere Übersetzung tauschen"
       },
@@ -110,10 +117,11 @@
       },
       "categories": {
         "title": "Themen auswählen",
+        "select": "Kategorien für nächste Runde auswählen",
         "mixed": "Alle Themen",
         "available": "{count} {unit} verfügbar",
         "unit": "Karten",
-        "newGame": "Neues Spiel"
+        "newGame": "START"
       },
       "search": {
         "title": "Deutschen Ausdruck nachschlagen",
@@ -292,44 +300,44 @@
           },
           "columns": [
             "Fall",
+            "Personalpronomen",
             "Männlich",
             "Weiblich",
             "Sächlich",
-            "Plural",
-            "Personalpronomen"
+            "Plural"
           ],
           "rows": [
             [
               "Nominativ",
+              "ich / wir",
               "der Fisch",
               "die Wand",
-              "das Heft",
-              "die Hefte",
-              "ich / wir"
+              "das Ei",
+              "die Eier"
             ],
             [
               "Genitiv",
+              "meiner / unser",
               "des Fisch(e)s",
               "der Wand",
-              "des Heft(e)s",
-              "der Hefte",
-              "meiner / unser"
+              "des Eies",
+              "der Eier"
             ],
             [
               "Dativ",
+              "mir / uns",
               "dem Fisch",
               "der Wand",
-              "dem Heft",
-              "den Heften",
-              "mir / uns"
+              "dem Ei",
+              "den Eiern"
             ],
             [
               "Akkusativ",
+              "mich / uns",
               "den Fisch",
               "die Wand",
-              "das Heft",
-              "die Hefte",
-              "mich / uns"
+              "das Ei",
+              "die Eier"
             ]
           ]
         }
@@ -565,8 +573,8 @@
     },
     "onboarding": {
       "welcome": {
-        "title": "Bereit zum Lernen?",
-        "body": "Wähle eine Lernsprache und starte direkt.",
+        "title": "Starte deine Lernkarte",
+        "body": "Wähle die Lernsprache für diese Karte und beginne direkt.",
         "languageLabel": "Lernsprache",
         "replayNote": "[[lead]]Tipp:[[/lead]] Mit den Flaggen unten rechts wechselst du jederzeit die Lernsprache. Der [[pink]]pinke[[/pink]] Tutorial-Button öffnet diese Tour erneut."
       },
@@ -664,6 +672,13 @@
     },
     "messages": {
       "languageDockAria": "Promijeni jezik učenja",
+      "arrowDockAria": "Navigacija tipkovnicom",
+      "arrowActions": {
+        "up": "Način",
+        "left": "Natrag",
+        "down": "Savjet",
+        "right": "Preskoči"
+      },
       "languageNames": {
         "de": "Deutsch",
         "hr": "Hrvatski",
@@ -708,7 +723,7 @@
         "skipTitle": "Prikaži ovu karticu kasnije u ovoj rundi",
         "skipRemaining": "Preostalo preskakanja: {count}",
         "enterHint": "za provjeru",
-        "settings": "Postavke",
+        "settings": "Postavke sljedeće igre",
         "switchPrompt": "Zamijeni",
         "switchPromptAria": "Zamijeni gornji i donji prijevod"
       },
@@ -723,10 +738,11 @@
       },
       "categories": {
         "title": "Odaberi teme",
+        "select": "Odaberi kategorije za sljedeću igru",
         "mixed": "Sve teme",
         "available": "{count} {unit} dostupno",
         "unit": "kartica",
-        "newGame": "Nova igra"
+        "newGame": "START"
       },
       "search": {
         "title": "Potraži njemački izraz",
@@ -844,52 +860,52 @@
           },
           "columns": [
             "Padež",
+            "Zamjenica",
             "Muški",
             "Ženski",
             "Srednji",
-            "Množina",
-            "Zamjenica"
+            "Množina"
           ],
           "rows": [
             [
               "Nominativ",
+              "ja / mi",
               "grad",
               "žena",
               "selo",
-              "gradovi",
-              "ja / mi"
+              "gradovi"
             ],
             [
               "Genitiv",
+              "mene / nas",
               "grada",
               "žene",
               "sela",
-              "gradova",
-              "mene / nas"
+              "gradova"
             ],
             [
               "Dativ",
+              "meni / nama",
               "gradu",
               "ženi",
               "selu",
-              "gradovima",
-              "meni / nama"
+              "gradovima"
             ],
             [
               "Akuzativ",
+              "mene / nas",
               "grad",
               "ženu",
               "selo",
-              "gradove",
-              "mene / nas"
+              "gradove"
             ],
             [
               "Lokativ",
+              "meni / nama",
               "gradu",
               "ženi",
               "selu",
-              "gradovima",
-              "meni / nama"
+              "gradovima"
             ],
             [
               "Instrumental",
@@ -1170,8 +1186,8 @@
     },
     "onboarding": {
       "welcome": {
-        "title": "Spremni za učenje?",
-        "body": "Odaberi jezik učenja i odmah započni.",
+        "title": "Pokreni svoju karticu",
+        "body": "Odaberi jezik učenja za ovu karticu i odmah započni.",
         "languageLabel": "Jezik učenja",
         "replayNote": "[[lead]]Savjet:[[/lead]] Jezik učenja možeš promijeniti zastavicama dolje desno. Gumb [[pink]]ružičaste boje[[/pink]] „Vodič“ ponovno otvara ovu uputu."
       },
@@ -1269,6 +1285,13 @@
     },
     "messages": {
       "languageDockAria": "Change learning language",
+      "arrowDockAria": "Keyboard navigation",
+      "arrowActions": {
+        "up": "Mode",
+        "left": "Back",
+        "down": "Hint",
+        "right": "Skip"
+      },
       "languageNames": {
         "de": "Deutsch",
         "hr": "Hrvatski",
@@ -1313,7 +1336,7 @@
         "skipTitle": "Show this card later in this round",
         "skipRemaining": "{count} skips remaining",
         "enterHint": "to check",
-        "settings": "Settings",
+        "settings": "Next game settings",
         "switchPrompt": "Swap",
         "switchPromptAria": "Swap the top and bottom translation"
       },
@@ -1328,10 +1351,11 @@
       },
       "categories": {
         "title": "Choose topics",
+        "select": "Select categories for the next round",
         "mixed": "All topics",
         "available": "{count} {unit} available",
         "unit": "cards",
-        "newGame": "New game"
+        "newGame": "START"
       },
       "search": {
         "title": "Look up a German expression",
@@ -1779,8 +1803,8 @@
     },
     "onboarding": {
       "welcome": {
-        "title": "Ready to learn?",
-        "body": "Choose a language and start practicing.",
+        "title": "Start this learning card",
+        "body": "Choose the learning language for this card and begin.",
         "languageLabel": "Learning language",
         "replayNote": "[[lead]]Tip:[[/lead]] Switch languages anytime with the flags in the bottom-right corner. The [[pink]]pink[[/pink]] Tutorial button opens this guide again."
       },

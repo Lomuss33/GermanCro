@@ -1,6 +1,6 @@
 import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-18-prompt-fit1";
-import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-11-height-ui1";
-import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-26-tour-cats5";
+import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-30-pronoun-column1";
+import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-30-launch-screen1";
 import { COUNTRY_NOTABLE_PEOPLE } from "../facts/notable-people.js";
 import {
   CARD_SCOPE_OPTIONS,
@@ -29,6 +29,7 @@ const ASSET_REV = "2026-08-10-topics2";
 const FETCH_TIMEOUT_MS = 7000;
 const SESSION_SIZE = 10;
 const MAX_SESSION_SKIPS = 5;
+const AUTO_SUBMIT_DELAY_MS = 3000;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const AUTOFILL_TRAILING_PUNCT = /[.!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
@@ -361,6 +362,7 @@ let sessionSkipCounts = new WeakMap();
 let sessionSkippedCards = new WeakSet();
 let cardStateByCard = new WeakMap();
 let pendingAdvanceTimer = 0;
+let autoSubmitTimer = 0;
 let scoredCardEvents = new WeakSet();
 let difficulty = "easy";
 let previousTypedValue = "";
@@ -476,6 +478,7 @@ const statsBarEl = document.querySelector(".stats-bar");
 const catCountEl = document.getElementById("catCount");
 const catButtonsLabelEl = document.getElementById("catButtonsLabel");
 const settingsPanelTitleEl = document.getElementById("settingsPanelTitle");
+const settingsPanelTitleTextEl = document.getElementById("settingsPanelTitleText");
 const tutorialReplayBtnEl = document.getElementById("tutorialReplayBtn");
 const catPanelTitleEl = document.getElementById("catPanelTitle");
 const difficultyHardBtn = document.getElementById("difficultyHardBtn");
@@ -1643,6 +1646,25 @@ function cancelPendingCardAdvance() {
   pendingAdvanceTimer = 0;
 }
 
+function cancelAutoSubmit() {
+  if (!autoSubmitTimer) {
+    return;
+  }
+
+  window.clearTimeout(autoSubmitTimer);
+  autoSubmitTimer = 0;
+}
+
+function scheduleAutoSubmit(target, card) {
+  cancelAutoSubmit();
+  autoSubmitTimer = window.setTimeout(() => {
+    autoSubmitTimer = 0;
+    if (sessionCards[sessionIndex] === card && isExactTypedMatch(target, inputEl.value)) {
+      submitCurrentAnswer();
+    }
+  }, AUTO_SUBMIT_DELAY_MS);
+}
+
 function saveCurrentCardState() {
   const card = sessionCards[sessionIndex];
   if (isRenderableCard(card)) {
@@ -1669,6 +1691,7 @@ function navigateToCardIndex(nextIndex) {
   }
 
   cancelPendingCardAdvance();
+  cancelAutoSubmit();
   saveCurrentCardState();
   sessionIndex = nextIndex;
   updateStats();
@@ -1707,6 +1730,7 @@ function skipCurrentCard() {
   }
 
   cancelPendingCardAdvance();
+  cancelAutoSubmit();
   saveCurrentCardState();
   skippedCount += 1;
   sessionSkipsUsed += 1;
@@ -2107,7 +2131,7 @@ function renderStaticUi() {
   setLocalizedText(enterHintLabelEl, "messages.actions.enterHint");
   setLocalizedText(sessionEndLabelEl, "messages.session.finished");
   setLocalizedText(restartBtnEl, "messages.session.newRound");
-  setLocalizedText(settingsPanelTitleEl, "messages.actions.settings");
+  setLocalizedText(settingsPanelTitleTextEl, "messages.actions.settings");
   setLocalizedText(tutorialReplayBtnEl, "onboarding.controls.replay");
   setLocalizedText(catPanelTitleEl, "messages.categories.title");
   setLocalizedText(catButtonsLabelEl, "messages.categories.select");
@@ -2475,9 +2499,13 @@ function buildTopicPanel() {
     btn.setAttribute("aria-pressed", String(isActive));
     setTopicButtonContent(btn, getTopicLabel(topic), TOPIC_CONFIG[topic]?.icon);
     btn.style.borderColor = `${color}70`;
-    btn.style.color = isActive ? "#000" : color;
-    if (isActive) {
-      btn.style.background = color;
+    btn.style.color = "#fff";
+    btn.style.background = isActive
+      ? color
+      : `linear-gradient(135deg, ${color}cc, ${color}78)`;
+    const iconEl = btn.querySelector(".cat-btn-icon");
+    if (iconEl) {
+      iconEl.style.color = color;
     }
     btn.onclick = () => {
       if (selectedTopics === null) {
@@ -4219,6 +4247,7 @@ function submitCurrentAnswer() {
   }
 
   const target = getTargetValue(card);
+  cancelAutoSubmit();
   const scoreAlreadyRecorded = scoredCardEvents.has(card);
   if (normalizeAnswer(inputEl.value) === normalizeAnswer(target)) {
     showFeedbackBurst("success", true);
@@ -4955,11 +4984,6 @@ function maybeShowInstallGuide() {
     return;
   }
 
-  if (onboardingPending || firstRunTour?.isOpen()) {
-    hideInstallGuide();
-    return;
-  }
-
   const context = detectInstallGuideContext();
   if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
     hideInstallGuide();
@@ -4985,8 +5009,14 @@ function initInstallGuide() {
 function initFirstRunTour() {
   let restoreSessionEndAfterReplay = false;
 
+  // Keep the launch screen owned by the learning card, even for older cached HTML.
+  if (mainCard && onboardingDialogEl?.parentElement !== mainCard) {
+    mainCard.prepend(onboardingDialogEl);
+  }
+
   firstRunTour = createFirstRunTour({
     dialog: onboardingDialogEl,
+    alwaysShow: true,
     translate: t,
     getLearningMode: getTargetLanguage,
     setLearningMode: switchLearningMode,
@@ -5002,7 +5032,7 @@ function initFirstRunTour() {
       }
       onboardingPending = false;
       onboardingOpenedAt = Date.now();
-      hideInstallGuide();
+      maybeShowInstallGuide();
     },
     onClose: ({ replay, reason }) => {
       const onboardingDuration = onboardingOpenedAt
@@ -5338,6 +5368,12 @@ function initInputEvents() {
     }
 
     previousTypedValue = typedValue;
+
+    if (currentExact) {
+      scheduleAutoSubmit(target, sessionCards[sessionIndex]);
+    } else {
+      cancelAutoSubmit();
+    }
   });
 
   hintBtnEl?.addEventListener("click", () => {

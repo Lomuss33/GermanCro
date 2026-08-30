@@ -3,16 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=overlays-content">
-<title>GermanCro | German vocabulary trainer for Croatian and English speakers</title>
-<meta name="description" content="Practice German vocabulary with Croatian and English support, typing drills, and fact cards in a fast single-page trainer.">
-<link rel="canonical" href="https://germancro.live/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="GermanCro | German vocabulary trainer for Croatian and English speakers">
-<meta property="og:description" content="Practice German vocabulary with Croatian and English support, typing drills, and fact cards in a fast single-page trainer.">
-<meta property="og:url" content="https://germancro.live/">
+<title>GermanCro</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-  <link rel="stylesheet" href="style.css?v=2026-08-26-footer5">
-    <link rel="stylesheet" href="onboarding.css?v=2026-08-26-tour-cats5">
+  <link rel="stylesheet" href="style.css?v=2026-08-30-category-fill1">
+    <link rel="stylesheet" href="onboarding.css?v=2026-08-30-start-flex2">
 </head>
 <body>
 
@@ -22,60 +16,6 @@
   <div class="app-loader-spinner" id="appLoaderSpinner" aria-hidden="true"></div>
   <div class="app-loader-title">Lernen je Power!</div>
 </div>
-
-<dialog class="onboarding-dialog" id="onboardingDialog" aria-labelledby="onboardingTitle" aria-describedby="onboardingBody">
-  <div class="onboarding-welcome-scrim" aria-hidden="true"></div>
-  <div class="onboarding-scrim onboarding-scrim--top" aria-hidden="true"></div>
-  <div class="onboarding-scrim onboarding-scrim--left" aria-hidden="true"></div>
-  <div class="onboarding-scrim onboarding-scrim--right" aria-hidden="true"></div>
-  <div class="onboarding-scrim onboarding-scrim--bottom" aria-hidden="true"></div>
-  <div class="onboarding-spotlight" aria-hidden="true"></div>
-  <section class="onboarding-panel">
-    <div class="onboarding-panel-meta">
-      <span class="onboarding-progress is-hidden" id="onboardingProgress" aria-live="polite"></span>
-      <button class="onboarding-skip-btn is-hidden" id="onboardingSkipBtn" type="button">Skip tour</button>
-    </div>
-    <div class="onboarding-heading">
-      <h2 id="onboardingTitle" tabindex="-1">Ready to learn?</h2>
-      <div class="onboarding-brand" aria-hidden="true">
-        <span data-brand-segment="de">Ger</span><span data-brand-segment="en">man</span><span data-brand-segment="hr">Cro</span>
-      </div>
-    </div>
-    <p id="onboardingBody">Choose a language and start practicing.</p>
-    <div class="onboarding-feedback-key is-hidden" id="onboardingFeedbackKey">
-      <span><i class="is-correct" aria-hidden="true"></i><span id="onboardingFeedbackCorrect">Correct</span></span>
-      <span><i class="is-next" aria-hidden="true"></i><span id="onboardingFeedbackNext">Up next</span></span>
-      <span><i class="is-wrong" aria-hidden="true"></i><span id="onboardingFeedbackWrong">Try again</span></span>
-    </div>
-    <div class="onboarding-language-group" id="onboardingLanguageGroup" role="group" aria-labelledby="onboardingLanguageLabel">
-      <span class="onboarding-language-label" id="onboardingLanguageLabel">
-        <span class="visually-hidden onboarding-language-label-text">Learning language</span>
-        <span class="onboarding-language-label-letters" aria-hidden="true">Learning language</span>
-      </span>
-      <div class="onboarding-language-options">
-        <button class="onboarding-language-btn" data-learning-language="en" type="button" aria-pressed="true">
-          <img class="onboarding-language-flag language-flag-icon language-flag-icon--en" src="https://flagcdn.com/gb.svg" alt="" decoding="async" aria-hidden="true">
-          <span class="onboarding-language-name">English</span>
-        </button>
-        <button class="onboarding-language-btn" data-learning-language="de" type="button" aria-pressed="false">
-          <img class="onboarding-language-flag language-flag-icon language-flag-icon--de" src="https://flagcdn.com/de.svg" alt="" decoding="async" aria-hidden="true">
-          <span class="onboarding-language-name">German</span>
-        </button>
-        <button class="onboarding-language-btn" data-learning-language="hr" type="button" aria-pressed="false">
-          <img class="onboarding-language-flag language-flag-icon language-flag-icon--hr" src="https://flagcdn.com/hr.svg" alt="" decoding="async" aria-hidden="true">
-          <span class="onboarding-language-name">Croatian</span>
-        </button>
-      </div>
-    </div>
-    <p class="onboarding-replay-note" id="onboardingReplayNote"><span class="onboarding-replay-note-lead">Tip:</span> Switch languages anytime with the flags in the bottom-right corner. The <span class="onboarding-replay-note-pink">pink</span> Tutorial button opens this guide again.</p>
-    <div class="onboarding-actions">
-      <button class="onboarding-back-btn is-hidden" id="onboardingBackBtn" type="button">Back</button>
-      <button class="onboarding-secondary-btn" id="onboardingSecondaryBtn" type="button">Quick tour · 4 steps</button>
-      <button class="onboarding-settings-btn" id="onboardingSettingsBtn" type="button">Open settings</button>
-      <button class="onboarding-primary-btn" id="onboardingPrimaryBtn" type="button">Start learning</button>
-    </div>
-  </section>
-</dialog>
 
 <div class="toast" id="toast"></div>
 
@@ -91,6 +31,25 @@
   <button class="language-dock-btn" data-lang="en" type="button" aria-label="English">
     <img class="language-dock-flag language-dock-flag--en" src="https://flagcdn.com/gb.svg" alt="" decoding="async" aria-hidden="true">
     <span class="language-dock-label">GB</span>
+  </button>
+</div>
+
+<div class="arrow-dock" id="arrowDock" aria-label="Tastatur-Navigation">
+  <button class="arrow-dock-btn arrow-dock-btn--up" data-arrow="ArrowUp" type="button" aria-label="Lernmodus wechseln">
+    <span class="arrow-dock-glyph" aria-hidden="true">↑</span>
+    <span class="arrow-dock-label" id="arrowDockLabelUp">Modus</span>
+  </button>
+  <button class="arrow-dock-btn arrow-dock-btn--left" data-arrow="ArrowLeft" type="button" aria-label="Zurück">
+    <span class="arrow-dock-glyph" aria-hidden="true">←</span>
+    <span class="arrow-dock-label" id="arrowDockLabelLeft">Zurück</span>
+  </button>
+  <button class="arrow-dock-btn arrow-dock-btn--down" data-arrow="ArrowDown" type="button" aria-label="Tipp anzeigen">
+    <span class="arrow-dock-glyph" aria-hidden="true">↓</span>
+    <span class="arrow-dock-label" id="arrowDockLabelDown">Tausch</span>
+  </button>
+  <button class="arrow-dock-btn arrow-dock-btn--right" data-arrow="ArrowRight" type="button" aria-label="Karte überspringen">
+    <span class="arrow-dock-glyph" aria-hidden="true">→</span>
+    <span class="arrow-dock-label" id="arrowDockLabelRight">Weiter</span>
   </button>
 </div>
 
@@ -139,6 +98,50 @@
 </div>
 
 <div class="card" id="mainCard">
+  <dialog class="onboarding-dialog" id="onboardingDialog" aria-labelledby="onboardingTitle" aria-describedby="onboardingBody">
+    <div class="onboarding-welcome-scrim" aria-hidden="true"></div>
+    <div class="onboarding-scrim onboarding-scrim--top" aria-hidden="true"></div>
+    <div class="onboarding-scrim onboarding-scrim--left" aria-hidden="true"></div>
+    <div class="onboarding-scrim onboarding-scrim--right" aria-hidden="true"></div>
+    <div class="onboarding-scrim onboarding-scrim--bottom" aria-hidden="true"></div>
+    <div class="onboarding-spotlight" aria-hidden="true"></div>
+    <section class="onboarding-panel">
+      <div class="onboarding-panel-meta">
+        <span class="onboarding-progress is-hidden" id="onboardingProgress" aria-live="polite"></span>
+        <button class="onboarding-skip-btn is-hidden" id="onboardingSkipBtn" type="button">Skip tour</button>
+      </div>
+      <div class="onboarding-heading">
+        <h2 id="onboardingTitle" tabindex="-1">Start this card</h2>
+        <div class="onboarding-brand" aria-hidden="true">
+          <span data-brand-segment="de">Ger</span><span data-brand-segment="en">man</span><span data-brand-segment="hr">Cro</span>
+        </div>
+      </div>
+      <p id="onboardingBody">Choose a language and start practicing.</p>
+      <div class="onboarding-feedback-key is-hidden" id="onboardingFeedbackKey">
+        <span><i class="is-correct" aria-hidden="true"></i><span id="onboardingFeedbackCorrect">Correct</span></span>
+        <span><i class="is-next" aria-hidden="true"></i><span id="onboardingFeedbackNext">Up next</span></span>
+        <span><i class="is-wrong" aria-hidden="true"></i><span id="onboardingFeedbackWrong">Try again</span></span>
+      </div>
+      <div class="onboarding-language-group" id="onboardingLanguageGroup" role="group" aria-labelledby="onboardingLanguageLabel">
+        <span class="onboarding-language-label" id="onboardingLanguageLabel">
+          <span class="visually-hidden onboarding-language-label-text">Learning language</span>
+          <span class="onboarding-language-label-letters" aria-hidden="true">Learning language</span>
+        </span>
+        <div class="onboarding-language-options">
+          <button class="onboarding-language-btn" data-learning-language="en" type="button" aria-pressed="true"><img class="onboarding-language-flag language-flag-icon language-flag-icon--en" src="https://flagcdn.com/gb.svg" alt="" decoding="async" aria-hidden="true"><span class="onboarding-language-name">English</span></button>
+          <button class="onboarding-language-btn" data-learning-language="de" type="button" aria-pressed="false"><img class="onboarding-language-flag language-flag-icon language-flag-icon--de" src="https://flagcdn.com/de.svg" alt="" decoding="async" aria-hidden="true"><span class="onboarding-language-name">German</span></button>
+          <button class="onboarding-language-btn" data-learning-language="hr" type="button" aria-pressed="false"><img class="onboarding-language-flag language-flag-icon language-flag-icon--hr" src="https://flagcdn.com/hr.svg" alt="" decoding="async" aria-hidden="true"><span class="onboarding-language-name">Croatian</span></button>
+        </div>
+      </div>
+      <p class="onboarding-replay-note" id="onboardingReplayNote"><span class="onboarding-replay-note-lead">Tip:</span> Switch languages anytime with the flags in the bottom-right corner. The <span class="onboarding-replay-note-pink">pink</span> Tutorial button opens this guide again.</p>
+      <div class="onboarding-actions">
+        <button class="onboarding-back-btn is-hidden" id="onboardingBackBtn" type="button">Back</button>
+        <button class="onboarding-secondary-btn" id="onboardingSecondaryBtn" type="button">Quick tour · 4 steps</button>
+        <button class="onboarding-settings-btn" id="onboardingSettingsBtn" type="button">Open settings</button>
+        <button class="onboarding-primary-btn" id="onboardingPrimaryBtn" type="button">Start learning</button>
+      </div>
+    </section>
+  </dialog>
   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   <div class="card-topbar">
     <span class="category-badge" id="categoryBadge"></span>
@@ -208,7 +211,7 @@
 
 <div class="cat-panel" id="catPanel">
   <div class="cat-panel-head">
-    <div class="cat-panel-title" id="settingsPanelTitle">Settings</div>
+    <div class="cat-panel-title" id="settingsPanelTitle"><span id="settingsPanelTitleText">Settings</span></div>
   </div>
   <div class="cat-panel-toolbar" data-onboarding-target="round-settings">
     <div class="difficulty-panel">
@@ -234,17 +237,20 @@
       </div>
     </div>
     <button class="new-game-btn" id="newGameBtn" type="button">
-      Neues Spiel
+      START
     </button>
     <button class="tutorial-replay-btn" id="tutorialReplayBtn" type="button">Tutorial</button>
   </div>
+  <div class="cat-buttons-label" id="catButtonsLabel">Kategorien für nächste Runde auswählen</div>
   <div class="cat-buttons" id="catButtons"></div>
+  <div class="cat-panel-bottom-actions">
+    <button class="author-toggle-btn" id="authorToggleBtn" type="button" aria-expanded="false">Neue Karten</button>
+  </div>
 </div>
 
 <div class="search-panel" id="searchPanel">
   <div class="search-tools-row">
     <div class="search-links" id="searchLinks"></div>
-    <button class="author-toggle-btn" id="authorToggleBtn" type="button" aria-expanded="false">Neue Karten</button>
   </div>
   <div class="grammar-section">
     <div class="grammar-grid" id="grammarGrid"></div>
@@ -313,6 +319,6 @@
   <a href="https://lovro.info/" target="_blank" rel="noopener noreferrer" id="siteFooterLink">made by Lovro Musić - contact@lovro-music.de - lovro.info</a>
 </footer>
 
-  <script type="module" src="app.js?v=2026-08-26-tour-cats5"></script>
+  <script type="module" src="app.js?v=2026-08-30-launch-screen1"></script>
 </body>
 </html>

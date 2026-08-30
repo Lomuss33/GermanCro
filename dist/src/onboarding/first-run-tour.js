@@ -125,6 +125,7 @@ export function createFirstRunTour({
   onOpen,
   onClose,
   storage,
+  alwaysShow = false,
 } = {}) {
   if (
     typeof HTMLDialogElement !== "function" ||
@@ -132,6 +133,27 @@ export function createFirstRunTour({
     typeof translate !== "function"
   ) {
     return null;
+  }
+
+  const cardHost = document.getElementById("mainCard");
+
+  function isCardStart() {
+    return dialog.parentElement === cardHost;
+  }
+
+  function promoteToGlobalTour() {
+    if (!cardHost || dialog.parentElement !== cardHost) {
+      return;
+    }
+    document.body.append(dialog);
+    dialog.classList.remove("is-card-start");
+    dialog.classList.add("is-global");
+    if (dialog.open) {
+      dialog.close();
+    }
+    dialog.showModal();
+    document.body.classList.add("has-onboarding-open");
+    document.documentElement.classList.add("has-onboarding-open");
   }
 
   const elements = {
@@ -186,7 +208,8 @@ export function createFirstRunTour({
   }
 
   function shouldShow() {
-    return !sessionSeen;
+    // The welcome state can act as the app's launch gate when enabled by the host.
+    return alwaysShow || !sessionSeen;
   }
 
   function resolveStepTargets(step = TOUR_STEPS[stepIndex]) {
@@ -606,7 +629,14 @@ export function createFirstRunTour({
     if (elements.panel) {
       delete elements.panel.dataset.placement;
     }
-    window.scrollTo({ left: openingScrollX, top: openingScrollY, behavior: "auto" });
+    if (!isCardStart()) {
+      window.scrollTo({ left: openingScrollX, top: openingScrollY, behavior: "auto" });
+    }
+    if (!isCardStart() && cardHost) {
+      cardHost.prepend(dialog);
+      dialog.classList.remove("is-global");
+    }
+    dialog.style.removeProperty("--onboarding-card-height");
     onClose?.({ reason, replay: wasReplay, completedTour });
     if (
       wasReplay &&
@@ -629,9 +659,24 @@ export function createFirstRunTour({
     previouslyFocusedElement = document.activeElement;
     openingScrollX = window.scrollX;
     openingScrollY = window.scrollY;
-    document.body.classList.add("has-onboarding-open");
-    document.documentElement.classList.add("has-onboarding-open");
-    dialog.showModal();
+    if (isReplay) {
+      promoteToGlobalTour();
+    } else {
+      cardHost?.prepend(dialog);
+      dialog.classList.add("is-card-start");
+      if (cardHost) {
+        dialog.style.setProperty("--onboarding-card-height", `${Math.ceil(cardHost.getBoundingClientRect().height)}px`);
+      }
+    }
+    if (!isCardStart()) {
+      document.body.classList.add("has-onboarding-open");
+      document.documentElement.classList.add("has-onboarding-open");
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+    } else {
+      dialog.show();
+    }
     onOpen?.({ replay });
     renderWelcome();
   }
@@ -642,6 +687,7 @@ export function createFirstRunTour({
 
   function advanceTour() {
     if (state === "welcome") {
+      promoteToGlobalTour();
       void renderStep(0);
       return;
     }
@@ -671,6 +717,7 @@ export function createFirstRunTour({
 
   elements.secondaryButton?.addEventListener("click", () => {
     if (state === "welcome") {
+      promoteToGlobalTour();
       void renderStep(0);
     }
   });

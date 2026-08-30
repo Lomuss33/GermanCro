@@ -184,13 +184,22 @@ function createCellElement({ className, role, text, layout, typography, height }
   }
   element.style.height = `${height}px`;
 
+  const isPronounHeader = role === "columnheader" && /personalpronomen|zamjenica/i.test(String(text));
+  const resolvedTypography = isPronounHeader
+    ? {
+        ...typography,
+        fontSize: typography.fontSize * 0.72,
+        lineHeight: typography.lineHeight * 0.84,
+      }
+    : typography;
+
   const inner = document.createElement("div");
   inner.className = "grammar-slider-cell-inner";
-  inner.style.fontFamily = typography.fontFamily;
-  inner.style.fontSize = `${typography.fontSize}px`;
-  inner.style.fontWeight = String(typography.fontWeight);
-  inner.style.lineHeight = `${typography.lineHeight}px`;
-  inner.appendChild(createCellLineElements(text, layout, typography));
+  inner.style.fontFamily = resolvedTypography.fontFamily;
+  inner.style.fontSize = `${resolvedTypography.fontSize}px`;
+  inner.style.fontWeight = String(resolvedTypography.fontWeight);
+  inner.style.lineHeight = `${resolvedTypography.lineHeight}px`;
+  inner.appendChild(createCellLineElements(text, layout, resolvedTypography));
   element.appendChild(inner);
 
   return element;

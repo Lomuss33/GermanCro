@@ -1,1 +1,1 @@
-import "./src/bootstrap/init-app.js?v=2026-08-26-tour-cats5";
+import "./src/bootstrap/init-app.js?v=2026-08-30-launch-screen1";

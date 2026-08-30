@@ -1,6 +1,6 @@
 import { createPretextBlockController } from "../../pretext-layout.js?v=2026-08-18-prompt-fit1";
-import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-11-height-ui1";
-import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-26-tour-cats5";
+import { createGrammarSliderTable } from "../../grammar-slider-table.js?v=2026-08-30-pronoun-column1";
+import { createFirstRunTour } from "../onboarding/first-run-tour.js?v=2026-08-30-launch-screen1";
 import { COUNTRY_NOTABLE_PEOPLE } from "../facts/notable-people.js";
 import {
   CARD_SCOPE_OPTIONS,
@@ -29,6 +29,7 @@ const ASSET_REV = "2026-08-10-topics2";
 const FETCH_TIMEOUT_MS = 7000;
 const SESSION_SIZE = 10;
 const MAX_SESSION_SKIPS = 5;
+const AUTO_SUBMIT_DELAY_MS = 3000;
 const SESSION_STORAGE_KEY = "germancro-session-cards";
 const AUTOFILL_TRAILING_PUNCT = /[.!?:;]/;
 const FACTS_IMAGE_ROOT = "assets/facts";
@@ -359,7 +360,9 @@ let sessionStart = 0;
 let totalCharsTyped = 0;
 let sessionSkipCounts = new WeakMap();
 let sessionSkippedCards = new WeakSet();
-let cardNavigationHistory = [];
+let cardStateByCard = new WeakMap();
+let pendingAdvanceTimer = 0;
+let autoSubmitTimer = 0;
 let scoredCardEvents = new WeakSet();
 let difficulty = "easy";
 let previousTypedValue = "";
@@ -423,6 +426,14 @@ const heroStageEl = document.getElementById("heroStage");
 const phoneGuideBarEl = document.getElementById("phoneGuideBar");
 const languageDockEl = document.getElementById("languageDock");
 const languageDockButtons = Array.from(document.querySelectorAll(".language-dock-btn"));
+const arrowDockEl = document.getElementById("arrowDock");
+const arrowDockButtons = Array.from(document.querySelectorAll(".arrow-dock-btn"));
+const arrowDockLabelEls = {
+  up: document.getElementById("arrowDockLabelUp"),
+  left: document.getElementById("arrowDockLabelLeft"),
+  down: document.getElementById("arrowDockLabelDown"),
+  right: document.getElementById("arrowDockLabelRight"),
+};
 const appLoaderEl = document.getElementById("appLoader");
 const appLoaderSpinnerEl = document.getElementById("appLoaderSpinner");
 const onboardingDialogEl = document.getElementById("onboardingDialog");
@@ -465,7 +476,9 @@ const mainCard = document.getElementById("mainCard");
 const progressTrackEl = document.querySelector(".progress-track");
 const statsBarEl = document.querySelector(".stats-bar");
 const catCountEl = document.getElementById("catCount");
+const catButtonsLabelEl = document.getElementById("catButtonsLabel");
 const settingsPanelTitleEl = document.getElementById("settingsPanelTitle");
+const settingsPanelTitleTextEl = document.getElementById("settingsPanelTitleText");
 const tutorialReplayBtnEl = document.getElementById("tutorialReplayBtn");
 const catPanelTitleEl = document.getElementById("catPanelTitle");
 const difficultyHardBtn = document.getElementById("difficultyHardBtn");
@@ -1624,34 +1637,79 @@ function getNextSkipCard() {
   return candidates.length ? shuffle(candidates)[0] : null;
 }
 
-function rememberCurrentCardState() {
-  const card = sessionCards[sessionIndex];
-  if (!isRenderableCard(card)) {
+function cancelPendingCardAdvance() {
+  if (!pendingAdvanceTimer) {
     return;
   }
 
-  cardNavigationHistory.push({
-    card,
-    typedValue: inputEl.value,
-    previousTypedValue,
-    forceCorrection,
-  });
+  window.clearTimeout(pendingAdvanceTimer);
+  pendingAdvanceTimer = 0;
+}
+
+function cancelAutoSubmit() {
+  if (!autoSubmitTimer) {
+    return;
+  }
+
+  window.clearTimeout(autoSubmitTimer);
+  autoSubmitTimer = 0;
+}
+
+function scheduleAutoSubmit(target, card) {
+  cancelAutoSubmit();
+  autoSubmitTimer = window.setTimeout(() => {
+    autoSubmitTimer = 0;
+    if (sessionCards[sessionIndex] === card && isExactTypedMatch(target, inputEl.value)) {
+      submitCurrentAnswer();
+    }
+  }, AUTO_SUBMIT_DELAY_MS);
+}
+
+function saveCurrentCardState() {
+  const card = sessionCards[sessionIndex];
+  if (isRenderableCard(card)) {
+    cardStateByCard.set(card, {
+      typedValue: inputEl.value,
+      previousTypedValue,
+      forceCorrection,
+    });
+  }
+}
+
+function getSavedCardState(card) {
+  return isRenderableCard(card) ? cardStateByCard.get(card) || null : null;
+}
+
+function navigateToCardIndex(nextIndex) {
+  if (!Number.isInteger(nextIndex) || nextIndex < 0 || nextIndex >= sessionCards.length) {
+    return false;
+  }
+
+  const nextCard = sessionCards[nextIndex];
+  if (!isRenderableCard(nextCard)) {
+    return false;
+  }
+
+  cancelPendingCardAdvance();
+  cancelAutoSubmit();
+  saveCurrentCardState();
+  sessionIndex = nextIndex;
+  updateStats();
+  setGameSurfaceMode(false);
+  loadCard({ restoreState: getSavedCardState(nextCard) });
+  return true;
 }
 
 function goBackToPreviousCard() {
-  const previousState = cardNavigationHistory.pop();
-  if (!previousState) {
-    return;
+  return navigateToCardIndex(sessionIndex - 1);
+}
+
+function goForwardToNextCard() {
+  if (sessionIndex >= sessionCards.length - 1) {
+    return false;
   }
 
-  const previousIndex = sessionCards.indexOf(previousState.card);
-  if (previousIndex < 0) {
-    return;
-  }
-
-  sessionIndex = previousIndex;
-  setGameSurfaceMode(false);
-  loadCard({ restoreState: previousState });
+  return navigateToCardIndex(sessionIndex + 1);
 }
 
 function incrementCardSkipCount(card) {
@@ -1671,7 +1729,9 @@ function skipCurrentCard() {
     return;
   }
 
-  rememberCurrentCardState();
+  cancelPendingCardAdvance();
+  cancelAutoSubmit();
+  saveCurrentCardState();
   skippedCount += 1;
   sessionSkipsUsed += 1;
   sessionSkippedCards.add(card);
@@ -1876,6 +1936,26 @@ function updateLanguageDock() {
     button.setAttribute("aria-pressed", String(language === getTargetLanguage()));
     button.setAttribute("aria-label", t(`messages.languageNames.${language}`));
   });
+  if (arrowDockEl) {
+    arrowDockEl.setAttribute("aria-label", t("messages.arrowDockAria"));
+  }
+  Object.entries(arrowDockLabelEls).forEach(([direction, labelEl]) => {
+    if (labelEl) {
+      labelEl.textContent = t(`messages.arrowActions.${direction}`);
+    }
+  });
+  const arrowDirections = {
+    ArrowUp: "up",
+    ArrowLeft: "left",
+    ArrowDown: "down",
+    ArrowRight: "right",
+  };
+  arrowDockButtons.forEach((button) => {
+    const direction = arrowDirections[button.dataset.arrow];
+    if (direction) {
+      button.setAttribute("aria-label", t(`messages.arrowActions.${direction}`));
+    }
+  });
 }
 
 function getLanguageDockZoomScale(dockViewportRatio) {
@@ -1918,6 +1998,7 @@ function applyLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
   const viewportHeight = Math.max(0, Math.round(nextViewport?.height || 0));
 
   languageDockEl.style.setProperty("--language-dock-zoom-scale", String(scale));
+  arrowDockEl?.style.setProperty("--language-dock-zoom-scale", String(scale));
   const dockRect = languageDockEl.getBoundingClientRect();
   const isTooLarge =
     viewportWidth < 280 ||
@@ -1925,6 +2006,7 @@ function applyLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
     dockRect.height > viewportHeight * 0.16;
   const isHidden = ratio < 0.52 && isTooLarge;
   languageDockEl.classList.toggle("is-zoom-hidden", isHidden);
+  arrowDockEl?.classList.toggle("is-zoom-hidden", isHidden);
 }
 
 function scheduleLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
@@ -2049,9 +2131,10 @@ function renderStaticUi() {
   setLocalizedText(enterHintLabelEl, "messages.actions.enterHint");
   setLocalizedText(sessionEndLabelEl, "messages.session.finished");
   setLocalizedText(restartBtnEl, "messages.session.newRound");
-  setLocalizedText(settingsPanelTitleEl, "messages.actions.settings");
+  setLocalizedText(settingsPanelTitleTextEl, "messages.actions.settings");
   setLocalizedText(tutorialReplayBtnEl, "onboarding.controls.replay");
   setLocalizedText(catPanelTitleEl, "messages.categories.title");
+  setLocalizedText(catButtonsLabelEl, "messages.categories.select");
   setLocalizedText(newGameBtn, "messages.categories.newGame");
   syncPromptOrderControls();
   setLocalizedText(difficultyEasyBtn, "difficulty.easy");
@@ -2094,6 +2177,7 @@ function switchLearningMode(nextLanguage) {
     return;
   }
 
+  saveCurrentCardState();
   document.body.classList.add("is-language-switching");
   if (siteTitleEl) {
     siteTitleEl.classList.remove("is-changing-in");
@@ -2415,9 +2499,13 @@ function buildTopicPanel() {
     btn.setAttribute("aria-pressed", String(isActive));
     setTopicButtonContent(btn, getTopicLabel(topic), TOPIC_CONFIG[topic]?.icon);
     btn.style.borderColor = `${color}70`;
-    btn.style.color = isActive ? "#000" : color;
-    if (isActive) {
-      btn.style.background = color;
+    btn.style.color = "#fff";
+    btn.style.background = isActive
+      ? color
+      : `linear-gradient(135deg, ${color}cc, ${color}78)`;
+    const iconEl = btn.querySelector(".cat-btn-icon");
+    if (iconEl) {
+      iconEl.style.color = color;
     }
     btn.onclick = () => {
       if (selectedTopics === null) {
@@ -4159,6 +4247,7 @@ function submitCurrentAnswer() {
   }
 
   const target = getTargetValue(card);
+  cancelAutoSubmit();
   const scoreAlreadyRecorded = scoredCardEvents.has(card);
   if (normalizeAnswer(inputEl.value) === normalizeAnswer(target)) {
     showFeedbackBurst("success", true);
@@ -4178,13 +4267,19 @@ function submitCurrentAnswer() {
     }
     inputEl.className = "correct";
     updateStats();
-    rememberCurrentCardState();
-    setTimeout(() => {
-      sessionIndex += 1;
-      if (sessionIndex >= sessionCards.length) {
+    saveCurrentCardState();
+    cancelPendingCardAdvance();
+    const completedCard = card;
+    pendingAdvanceTimer = window.setTimeout(() => {
+      pendingAdvanceTimer = 0;
+      if (sessionCards[sessionIndex] !== completedCard) {
+        return;
+      }
+
+      if (sessionIndex >= sessionCards.length - 1) {
         showSessionEnd();
       } else {
-        loadCard();
+        navigateToCardIndex(sessionIndex + 1);
       }
     }, 140);
     return;
@@ -4487,7 +4582,8 @@ function resetSessionProgress() {
   sessionStart = Date.now();
   sessionSkipCounts = new WeakMap();
   sessionSkippedCards = new WeakSet();
-  cardNavigationHistory = [];
+  cardStateByCard = new WeakMap();
+  cancelPendingCardAdvance();
   scoredCardEvents = new WeakSet();
 }
 
@@ -4611,10 +4707,11 @@ function loadCard(options = {}) {
   updateSkipCardButtonState();
 
   mainCard.classList.add("active");
-  const restoredTypedValue = restoreState?.typedValue || "";
+  const savedState = restoreState || getSavedCardState(card);
+  const restoredTypedValue = savedState?.typedValue || "";
   inputEl.value = restoredTypedValue;
-  previousTypedValue = restoreState?.previousTypedValue || restoredTypedValue;
-  forceCorrection = Boolean(restoreState?.forceCorrection);
+  previousTypedValue = savedState?.previousTypedValue || restoredTypedValue;
+  forceCorrection = Boolean(savedState?.forceCorrection);
   buildWordGrid(getTargetValue(card), restoredTypedValue);
   updateSearchLinks(card);
 
@@ -4887,11 +4984,6 @@ function maybeShowInstallGuide() {
     return;
   }
 
-  if (onboardingPending || firstRunTour?.isOpen()) {
-    hideInstallGuide();
-    return;
-  }
-
   const context = detectInstallGuideContext();
   if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
     hideInstallGuide();
@@ -4917,8 +5009,14 @@ function initInstallGuide() {
 function initFirstRunTour() {
   let restoreSessionEndAfterReplay = false;
 
+  // Keep the launch screen owned by the learning card, even for older cached HTML.
+  if (mainCard && onboardingDialogEl?.parentElement !== mainCard) {
+    mainCard.prepend(onboardingDialogEl);
+  }
+
   firstRunTour = createFirstRunTour({
     dialog: onboardingDialogEl,
+    alwaysShow: true,
     translate: t,
     getLearningMode: getTargetLanguage,
     setLearningMode: switchLearningMode,
@@ -4934,7 +5032,7 @@ function initFirstRunTour() {
       }
       onboardingPending = false;
       onboardingOpenedAt = Date.now();
-      hideInstallGuide();
+      maybeShowInstallGuide();
     },
     onClose: ({ replay, reason }) => {
       const onboardingDuration = onboardingOpenedAt
@@ -5122,6 +5220,40 @@ function initInputEvents() {
     });
   });
 
+  const arrowActions = {
+    ArrowRight: () => skipCurrentCard(),
+    ArrowLeft: () => goBackToPreviousCard(),
+    ArrowUp: () => switchLearningMode(cycleLearningMode()),
+    ArrowDown: () => hintBtnEl?.click(),
+  };
+
+  let arrowPressTimer = 0;
+  const lightArrowButton = (key) => {
+    const button = arrowDockButtons.find((candidate) => candidate.dataset.arrow === key);
+    if (!button) {
+      return;
+    }
+
+    button.classList.remove("is-pressed");
+    void button.offsetWidth;
+    button.classList.add("is-pressed");
+    window.clearTimeout(arrowPressTimer);
+    arrowPressTimer = window.setTimeout(() => {
+      button.classList.remove("is-pressed");
+    }, 180);
+  };
+
+  arrowDockButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const action = arrowActions[button.dataset.arrow];
+      if (!action) {
+        return;
+      }
+      lightArrowButton(button.dataset.arrow);
+      action();
+    });
+  });
+
   if (skipCardBtnEl) {
     skipCardBtnEl.addEventListener("click", () => {
       skipCurrentCard();
@@ -5149,18 +5281,13 @@ function initInputEvents() {
       return;
     }
 
-    const keyboardActions = {
-      ArrowRight: () => skipCurrentCard(),
-      ArrowLeft: () => goBackToPreviousCard(),
-      ArrowUp: () => switchLearningMode(cycleLearningMode()),
-      ArrowDown: () => togglePromptOrder(),
-    };
-    const action = keyboardActions[event.key];
+    const action = arrowActions[event.key];
     if (!action) {
       return;
     }
 
     event.preventDefault();
+    lightArrowButton(event.key);
     action();
   });
 
@@ -5241,6 +5368,12 @@ function initInputEvents() {
     }
 
     previousTypedValue = typedValue;
+
+    if (currentExact) {
+      scheduleAutoSubmit(target, sessionCards[sessionIndex]);
+    } else {
+      cancelAutoSubmit();
+    }
   });
 
   hintBtnEl?.addEventListener("click", () => {

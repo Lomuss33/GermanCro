@@ -604,8 +604,8 @@ body > * { position: relative; z-index: 1; }
   --language-dock-zoom-scale: 1;
   --language-dock-settings-scale: 1;
   position: fixed;
-  right: max(10px, env(safe-area-inset-right));
-  bottom: max(10px, env(safe-area-inset-bottom));
+  right: max(4px, env(safe-area-inset-right));
+  bottom: max(4px, env(safe-area-inset-bottom));
   display: flex;
   gap: 6px;
   padding: 6px;
@@ -839,6 +839,97 @@ body > * { position: relative; z-index: 1; }
   outline-offset: 2px;
 }
 
+.arrow-dock {
+  --arrow-dock-zoom-scale: 1;
+  position: fixed;
+  left: max(4px, env(safe-area-inset-left));
+  bottom: max(4px, env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: repeat(3, 48px);
+  grid-template-rows: repeat(2, 36px);
+  gap: 2.5px;
+  padding: 6px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  z-index: 12;
+  transform-origin: bottom left;
+  transform: scale(calc(var(--language-dock-zoom-scale, 1) * var(--arrow-dock-zoom-scale, 1)));
+}
+
+.arrow-dock-btn {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  padding: 3px 2px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: rgba(240, 240, 240, 0.92);
+  background: rgba(32, 43, 76, 0.78);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+  transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+}
+
+.arrow-dock-btn--up { grid-column: 2; grid-row: 1; }
+.arrow-dock-btn--left { grid-column: 1; grid-row: 2; }
+.arrow-dock-btn--down { grid-column: 2; grid-row: 2; }
+.arrow-dock-btn--right { grid-column: 3; grid-row: 2; }
+
+.arrow-dock-glyph {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.arrow-dock-label {
+  max-width: 100%;
+  overflow: hidden;
+  color: rgba(240, 240, 240, 0.68);
+  font-size: 8px;
+  letter-spacing: 0;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.arrow-dock-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(232, 255, 71, 0.52);
+  background: rgba(232, 255, 71, 0.2);
+}
+
+.arrow-dock-btn.is-pressed,
+.arrow-dock-btn:active {
+  transform: translateY(1px);
+  border-color: rgba(232, 255, 71, 0.92);
+  background: rgba(232, 255, 71, 0.34);
+  box-shadow: 0 0 14px rgba(232, 255, 71, 0.35), inset 0 0 0 1px rgba(232, 255, 71, 0.3);
+}
+
+.arrow-dock-btn:focus-visible {
+  outline: 2px solid rgba(232, 255, 71, 0.85);
+  outline-offset: 2px;
+}
+
+.arrow-dock.is-zoom-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .arrow-dock {
+    display: none;
+  }
+}
+
 .stats-bar {
   display: flex;
   align-items: center;
@@ -1050,11 +1141,14 @@ body > * { position: relative; z-index: 1; }
   margin-top: 8px;
   padding: 8px var(--game-row-inline-padding) 10px;
   box-sizing: border-box;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  border: 2px solid rgba(164, 174, 209, 0.28);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
     rgba(6, 10, 24, 0.54);
+  box-shadow:
+    0 10px 28px rgba(2, 6, 23, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
 }
 
 .answer-guide.is-success {
@@ -2077,6 +2171,18 @@ input.wrong {
   font-size: calc(7px * var(--type-scale-micro));
 }
 
+.answer-guide-foot > .action-row > .skip-action > .skip-card-btn,
+.answer-guide-foot > .action-row > .hint-btn {
+  position: relative;
+  z-index: 2;
+  border-color: rgba(165, 180, 252, 0.52);
+  box-shadow: 0 0 0 2px rgba(6, 10, 24, 0.72);
+}
+
+.answer-guide-foot > .action-row > .hint-btn {
+  border-color: rgba(110, 231, 183, 0.52);
+}
+
 .settings-btn,
 .switch-order-btn,
 .skip-card-btn {
@@ -2397,13 +2503,19 @@ input.wrong {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
+  justify-items: center;
+  justify-content: center;
   gap: 12px;
   margin-bottom: 14px;
+  width: 100%;
+  min-width: 0;
+  text-align: center;
 }
 
 .cat-panel-head .cat-panel-title {
   margin-bottom: 0;
-  justify-self: start;
+  justify-self: center;
+  text-align: center;
 }
 
 .search-panel-subtitle {
@@ -2430,6 +2542,14 @@ input.wrong {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
   gap: 8px 10px;
+}
+
+.cat-panel-bottom-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: calc(14px * var(--type-scale-control));
+  padding-top: calc(10px * var(--type-scale-control));
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .author-toggle-btn {
@@ -3039,22 +3159,29 @@ input.wrong {
   border-bottom: 1px solid var(--border);
   padding-bottom: 14px;
   margin-bottom: 16px;
+  width: 100%;
+  min-width: 0;
 }
 
 .cat-panel-toolbar > .difficulty-panel {
   grid-column: 2;
   grid-row: 1;
+  width: 100%;
+  min-width: 0;
 }
 
 .cat-panel-toolbar > .cat-panel-meta {
   grid-column: 2;
   grid-row: 2;
+  width: 100%;
+  min-width: 0;
 }
 
 .cat-panel-toolbar > .new-game-btn {
   grid-column: 1;
   grid-row: 1 / span 2;
   width: 100%;
+  min-width: 0;
   align-self: stretch;
 }
 
@@ -3067,6 +3194,7 @@ input.wrong {
   flex-wrap: wrap;
   flex: 0 1 auto;
   min-width: 0;
+  width: 100%;
 }
 
 .cat-btn,
@@ -3113,7 +3241,7 @@ input.wrong {
   place-items: center;
   width: calc(24px * var(--type-scale-control));
   height: calc(24px * var(--type-scale-control));
-  border: 1px solid currentColor;
+  border: none;
   border-radius: calc(8px * var(--type-scale-control));
   font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
   font-size: clamp(13px, 1.25em, 19px);
@@ -3212,6 +3340,8 @@ input.wrong {
   align-items: center;
   gap: calc(10px * var(--type-scale-control));
   flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
 }
 
 .new-game-btn {
@@ -3224,11 +3354,13 @@ input.wrong {
   cursor: pointer;
   letter-spacing: 0.02em;
   transition: transform 0.15s, box-shadow 0.15s;
+  background: #39ff14;
+  color: #061006;
 }
 
 .new-game-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(232, 255, 71, 0.3);
+  box-shadow: 0 4px 14px rgba(57, 255, 20, 0.45);
 }
 
 .new-game-btn:disabled {
@@ -3243,7 +3375,10 @@ input.wrong {
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: calc(10px * var(--type-scale-control));
-  width: min(100%, 280px);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .slider-prefix,
@@ -3267,7 +3402,7 @@ input.wrong {
 #sessionSizeSlider {
   -webkit-appearance: none;
   appearance: none;
-  width: 120px;
+  width: 100%;
   height: calc(4px * var(--type-scale-control));
   padding: 0;
   border: none;
@@ -4076,9 +4211,14 @@ input.wrong {
   gap: calc(8px * var(--type-scale-control));
   margin-bottom: 0;
   flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
 }
 
 .difficulty-panel button {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
   min-height: calc(34px * var(--type-scale-control));
   padding: calc(6px * var(--type-scale-control)) calc(14px * var(--type-scale-control));
   border-radius: calc(20px * var(--type-scale-control));
@@ -4109,6 +4249,23 @@ input.wrong {
 #difficultyMediumBtn::before { content: "🎯"; }
 #difficultyEasyBtn::before { content: "🌱"; }
 
+.cat-buttons {
+  width: 100%;
+  min-width: 0;
+  justify-content: stretch;
+}
+
+.cat-buttons-label {
+  margin: 0 0 calc(8px * var(--type-scale-control));
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: calc(12px * var(--type-scale-body));
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .difficulty-panel button.active {
   border: 2px solid #fff;
   color: #fff;
@@ -4120,6 +4277,31 @@ input.wrong {
 .difficulty-panel button[data-diff="hard"].active {
   background: #111;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
+.difficulty-panel button:not(.active) {
+  transition: transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.difficulty-panel button[data-diff="hard"]:not(.active):hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 5px 14px rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.difficulty-panel button[data-diff="medium"]:not(.active):hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(248, 113, 113, 0.82);
+  box-shadow: 0 5px 14px rgba(239, 68, 68, 0.16);
+  transform: translateY(-2px);
+}
+
+.difficulty-panel button[data-diff="easy"]:not(.active):hover {
+  background: rgba(132, 204, 22, 0.2);
+  border-color: rgba(190, 242, 100, 0.82);
+  box-shadow: 0 5px 14px rgba(132, 204, 22, 0.16);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 980px) {
@@ -4389,8 +4571,8 @@ input.wrong {
 
 @media (max-width: 430px) {
   .language-dock {
-    right: 8px;
-    bottom: 8px;
+    right: 4px;
+    bottom: 4px;
     gap: 5px;
     padding: 5px;
   }
@@ -5144,7 +5326,13 @@ body.layout-phone-portrait .search-panel-head {
 
 body.layout-phone-portrait .cat-panel-head {
   align-items: center;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+body.layout-phone-portrait .cat-panel-head .cat-panel-title {
+  justify-self: center;
+  text-align: center;
 }
 
 body.layout-phone-portrait .cat-panel,
@@ -5237,25 +5425,26 @@ body.layout-phone-portrait .session-slider-wrap .slider-label {
 
 body.layout-phone-portrait .cat-panel-toolbar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
-  align-items: stretch;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
 }
 
 body.layout-phone-portrait .cat-panel-toolbar > .difficulty-panel {
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 1;
 }
 
 body.layout-phone-portrait .cat-panel-toolbar > .cat-panel-meta {
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 2;
 }
 
 body.layout-phone-portrait .cat-panel-toolbar > .new-game-btn {
   grid-column: 1;
-  grid-row: 1 / span 2;
-  width: 100%;
-  align-self: stretch;
+  grid-row: 3;
+  width: min(100%, 280px);
+  align-self: center;
   padding-inline: calc(5px * var(--type-scale-control));
 }
 
@@ -5263,6 +5452,15 @@ body.layout-phone-portrait .cat-panel-meta,
 body.layout-phone-portrait .new-game-row {
   flex-direction: row;
   align-items: center;
+  justify-content: center;
+}
+
+body.layout-phone-portrait .cat-panel-meta {
+  width: 100%;
+}
+
+body.layout-phone-portrait .cat-buttons {
+  justify-content: stretch;
 }
 
 body.layout-phone-portrait .new-game-row {
@@ -5273,7 +5471,7 @@ body.layout-phone-portrait .new-game-row {
 
 body.layout-phone-portrait .new-game-row .session-slider-wrap {
   flex: 1 1 auto;
-  width: auto;
+  width: 100%;
 }
 
 body.layout-phone-portrait .new-game-row .cat-count {
@@ -5339,6 +5537,10 @@ body.layout-phone-portrait #gameArea {
 #mainCard .answer-guide .enter-hint,
 #mainCard .answer-guide .key-badge {
   font-size: clamp(8px, calc(9px * var(--game-text-scale)), 12px);
+}
+
+#settingsPanelTitleText {
+  white-space: nowrap;
 }
 
 #mainCard .prompt-row {
@@ -5713,6 +5915,49 @@ body[data-game-density="dense"] .answer-guide .word-grid {
 }
 
 
+/* Keep the round control generous while the card count stays beside it. */
+.new-game-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  min-width: 0;
+}
+
+.new-game-row .session-slider-wrap {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  flex: none;
+}
+
+.new-game-row .slider-label,
+.new-game-row .cat-count {
+  width: auto;
+}
+
+.new-game-row .cat-count {
+  min-width: max-content;
+  white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+  .new-game-row {
+    column-gap: calc(6px * var(--type-scale-control));
+  }
+
+  .new-game-row .session-slider-wrap {
+    gap: calc(6px * var(--type-scale-control));
+  }
+
+  .new-game-row .slider-prefix,
+  .new-game-row .slider-label,
+  .new-game-row .cat-count {
+    font-size: calc(11px * var(--type-scale-body));
+  }
+}
+
 body.layout-phone-portrait[data-game-density="compact"] .answer-guide-body,
 body.layout-phone-portrait[data-game-density="dense"] .answer-guide-body {
   padding-inline: 0;
@@ -5725,6 +5970,148 @@ body.layout-phone-portrait .answer-guide-trail-flag {
 body.layout-phone-portrait[data-game-density="compact"] .answer-guide-trail-flag,
 body.layout-phone-portrait[data-game-density="dense"] .answer-guide-trail-flag {
   margin-left: 0;
+}
+
+/* Category/settings panel palette: neutral copy is white, accents stay neon. */
+#catPanel {
+  color: #fff;
+}
+
+#catPanel .cat-panel-title,
+#catPanel .cat-buttons-label,
+#catPanel .cat-count,
+#catPanel .difficulty-panel button {
+  color: #fff;
+}
+
+#catPanel .tutorial-replay-btn {
+  color: var(--accent);
+}
+
+#catPanel .cat-btn:not(.active):hover,
+#catPanel .difficulty-panel button:not(.active):hover {
+  color: #fff;
+}
+
+#catPanel .cat-btn .cat-btn-label {
+  color: #fff;
+}
+
+#catPanel .cat-panel-bottom-actions .author-toggle-btn {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.72);
+}
+
+/* Replace the muted gold facts accent with a cleaner, warmer orange system. */
+.facts-panel::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 138, 61, 0.18) 12%, rgba(255, 138, 61, 0.96) 50%, rgba(255, 186, 120, 0.52) 82%, transparent);
+}
+
+.facts-switch-btn.active,
+.state-picker-btn.active {
+  background: linear-gradient(135deg, #ffad5c 0%, #f97316 100%);
+  box-shadow: 0 5px 16px rgba(249, 115, 22, 0.28);
+}
+
+.facts-card:not(.featured) .facts-card-label {
+  color: rgba(255, 157, 83, 0.98);
+  text-shadow: 0 0 8px rgba(255, 138, 61, 0.16);
+}
+
+.facts-card:not(.featured)::after {
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 138, 61, 0.98) 16%, rgba(255, 211, 170, 0.9) 42%, rgba(255, 138, 61, 0.48) 72%, transparent 100%);
+  box-shadow: 0 0 8px rgba(255, 138, 61, 0.2);
+}
+
+.facts-card:not(.featured):nth-child(even)::after {
+  background: linear-gradient(270deg, transparent 0%, rgba(255, 138, 61, 0.98) 16%, rgba(255, 211, 170, 0.9) 42%, rgba(255, 138, 61, 0.48) 72%, transparent 100%);
+}
+
+.facts-card:not(.featured):nth-child(3n)::after {
+  width: 62%;
+  align-self: flex-start;
+  background: linear-gradient(90deg, rgba(255, 138, 61, 0.92), rgba(255, 190, 126, 0.54) 55%, transparent);
+}
+
+.facts-card:not(.featured):nth-child(4n)::after {
+  width: 78%;
+  align-self: flex-end;
+  background: linear-gradient(270deg, rgba(255, 138, 61, 0.92), rgba(255, 190, 126, 0.54) 55%, transparent);
+}
+
+.facts-card:not(.featured):hover::after {
+  filter: brightness(1.18);
+  box-shadow: 0 0 12px rgba(255, 138, 61, 0.34);
+}
+
+/* Give the complete facts section the same polished dark-blue/metallic language
+   as the onboarding surface, without changing the onboarding dialog itself. */
+.facts-panel {
+  background-image:
+    radial-gradient(circle at 88% 8%, rgba(232, 255, 71, 0.12), transparent 34%),
+    linear-gradient(145deg, rgba(18, 29, 67, 0.984), rgba(5, 10, 29, 0.99));
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.34), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+
+.facts-controls,
+.facts-card.featured,
+.facts-title-links {
+  border-color: rgba(255, 255, 255, 0.18);
+  background-image:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.018)),
+    linear-gradient(145deg, rgba(18, 29, 67, 0.84), rgba(5, 10, 29, 0.9));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.facts-card.featured {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.facts-card:not(.featured) {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+
+.facts-card:not(.featured)::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.84) 18%, rgba(255, 138, 61, 0.96) 50%, rgba(255, 255, 255, 0.38) 82%, transparent);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.12), 0 0 8px rgba(255, 138, 61, 0.2);
+}
+
+.facts-card:not(.featured):nth-child(even)::after {
+  background: linear-gradient(270deg, transparent, rgba(255, 255, 255, 0.84) 18%, rgba(255, 138, 61, 0.96) 50%, rgba(255, 255, 255, 0.38) 82%, transparent);
+}
+
+.facts-card:not(.featured):nth-child(3n)::after,
+.facts-card:not(.featured):nth-child(4n)::after {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.78), rgba(255, 138, 61, 0.88) 48%, transparent);
+}
+
+.facts-card:not(.featured):nth-child(4n)::after {
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0.78), rgba(255, 138, 61, 0.88) 48%, transparent);
+}
+
+#searchPanel,
+#searchPanel * {
+  color: #fff;
+}
+
+#searchPanel .grammar-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#searchPanel .grammar-card-title {
+  width: 100%;
+  text-align: center;
+}
+
+#searchPanel .grammar-slider-mount,
+#searchPanel .grammar-table-wrap {
+  width: 100%;
 }
 
 body.layout-phone-portrait[data-game-density="compact"] .answer-guide-body,
@@ -5988,6 +6375,87 @@ body.layout-phone-portrait .answer-guide-foot > .action-row {
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.34),
     0 0 7px rgba(255, 71, 87, 0.26);
+}
+
+/* Keep the game surface bright and legible over the saturated card backdrop. */
+#mainCard {
+  color: rgba(255, 255, 255, 0.98);
+}
+
+#mainCard .prompt-text,
+#mainCard .prompt-sub,
+#mainCard .card-legend,
+#mainCard .card-legend-item > span:last-child,
+#mainCard .answer-guide .answer-guide-status,
+#mainCard .answer-guide .answer-guide-note,
+#mainCard .answer-guide .enter-hint {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+#mainCard .prompt-sub {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+#mainCard .answer-guide {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.045)),
+    rgba(25, 34, 68, 0.66);
+}
+
+#mainCard .input-shell input {
+  background: rgba(20, 29, 62, 0.84);
+  color: #fff;
+  caret-color: #fff;
+}
+
+#mainCard .answer-guide .key-badge {
+  color: #fff;
+  background: linear-gradient(180deg, rgba(72, 78, 102, 0.96), rgba(40, 46, 72, 0.96));
+}
+
+/* Extend the high-contrast panel palette through the rest of the page. */
+.search-panel,
+.author-panel,
+.facts-panel {
+  color: #fff;
+}
+
+.search-panel-title,
+.search-panel-subtitle,
+.grammar-section-title,
+.author-panel-title,
+.author-field span,
+.author-status,
+.facts-panel-title,
+.facts-panel-subtitle,
+.facts-view-subtitle,
+.search-link,
+.author-toggle-btn,
+.facts-switch-btn,
+.state-picker-btn {
+  color: #fff;
+}
+
+.search-link,
+.author-toggle-btn,
+.facts-switch-btn,
+.state-picker-btn {
+  border-color: rgba(255, 255, 255, 0.72);
+}
+
+.search-link:hover,
+.author-toggle-btn:hover,
+.facts-switch-btn:hover,
+.state-picker-btn:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(232, 255, 71, 0.14);
+}
+
+.facts-controls {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
+    rgba(20, 29, 62, 0.42);
 }
 
 @media (prefers-reduced-motion: reduce) {
