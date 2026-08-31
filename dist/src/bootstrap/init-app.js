@@ -5063,7 +5063,12 @@ function initFirstRunTour() {
   });
 
   onboardingPending = Boolean(firstRunTour?.shouldShow());
-  tutorialReplayBtnEl?.addEventListener("click", () => firstRunTour?.replay());
+  tutorialReplayBtnEl?.addEventListener("click", () => {
+    if (firstRunTour?.startWelcomeTour()) {
+      return;
+    }
+    firstRunTour?.replay();
+  });
 }
 
 function getEncouragement(currentStreak) {
@@ -5208,6 +5213,9 @@ function initAuthoringForm() {
 function initInputEvents() {
   sessionSizeSliderEl?.addEventListener("input", syncSessionSizeLabel);
   newGameBtn?.addEventListener("click", () => {
+    if (firstRunTour?.playFromWelcome()) {
+      return;
+    }
     startSession(getRequestedSessionSize());
   });
   restartBtnEl?.addEventListener("click", () => {

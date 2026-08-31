@@ -386,9 +386,9 @@ html.has-onboarding-open::-webkit-scrollbar {
 
 .onboarding-language-label {
   display: block;
-  width: 100%;
+  width: min(100%, 85%);
   min-width: 0;
-  margin-bottom: 10px;
+  margin: 0 auto 10px;
   padding-bottom: 7px;
   border-bottom: 1px solid rgba(125, 211, 252, 0.28);
   color: #7dd3fc;
@@ -445,8 +445,8 @@ html.has-onboarding-open::-webkit-scrollbar {
 .onboarding-language-btn {
   display: grid;
   min-width: 0;
-  min-height: 78px;
-  padding: 9px 6px 10px;
+  min-height: 86px;
+  padding: 10px 6px 12px;
   grid-template-rows: auto auto;
   place-items: center;
   align-content: center;
@@ -535,15 +535,16 @@ html.has-onboarding-open::-webkit-scrollbar {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
-.onboarding-dialog.is-welcome .onboarding-secondary-btn {
+.onboarding-dialog.is-welcome .onboarding-settings-btn {
   grid-column: 1;
   grid-row: 1;
   min-height: 72px;
 }
 
-.onboarding-dialog.is-welcome .onboarding-settings-btn {
+.onboarding-dialog.is-welcome .onboarding-secondary-btn {
   grid-column: 1;
   grid-row: 2;
+  min-height: 72px;
 }
 
 .onboarding-dialog.is-welcome .onboarding-primary-btn {
@@ -582,8 +583,8 @@ html.has-onboarding-open::-webkit-scrollbar {
 
 .onboarding-secondary-btn {
   border: 1px solid rgba(255, 150, 184, 0.72);
-  background: linear-gradient(180deg, rgba(255, 150, 184, 0.2), rgba(255, 150, 184, 0.09));
-  color: #fff;
+  background: linear-gradient(180deg, rgba(255, 150, 184, 0.25), rgba(255, 150, 184, 0.13));
+  color: var(--accent);
   box-shadow: 0 8px 20px rgba(255, 120, 160, 0.1);
 }
 
@@ -887,8 +888,8 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   }
 
   .onboarding-dialog.is-welcome .onboarding-language-btn {
-    min-height: 62px;
-    padding-block: 5px;
+    min-height: 70px;
+    padding-block: 7px;
   }
 
   .onboarding-dialog.is-welcome .onboarding-language-flag.language-flag-icon {
@@ -910,8 +911,8 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
 }
 
 .onboarding-dialog.is-welcome .onboarding-actions button {
-  min-height: 40px;
-  padding: 8px 9px;
+  min-height: 46px;
+  padding: 10px 9px;
   border-radius: 10px;
   font-size: 12px;
   line-height: 1.1;
@@ -923,16 +924,16 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   min-height: 48px;
 }
 
-.onboarding-dialog.is-welcome .onboarding-secondary-btn {
+.onboarding-dialog.is-welcome .onboarding-settings-btn {
   grid-column: 1;
   grid-row: 2;
-  min-height: 40px;
+  min-height: 46px;
 }
 
-.onboarding-dialog.is-welcome .onboarding-settings-btn {
+.onboarding-dialog.is-welcome .onboarding-secondary-btn {
   grid-column: 2;
   grid-row: 2;
-  min-height: 40px;
+  min-height: 46px;
 }
 
 /* The launch screen is the card surface itself, not a modal inside the card. */
@@ -950,11 +951,13 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   width: 100%;
   height: 100%;
   max-height: none;
-  padding: clamp(12px, 3vw, 20px) clamp(12px, 3vw, 20px) 4px;
+  padding: clamp(12px, 3vw, 20px);
   border-radius: inherit;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  align-content: stretch;
+  row-gap: clamp(10px, 2.2vh, 16px);
   overflow: hidden;
   transform: none;
   overflow: clip;
@@ -963,14 +966,47 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   scrollbar-width: none;
 }
 
+.onboarding-dialog.is-card-start.is-welcome .onboarding-heading {
+  margin-bottom: 0;
+  align-self: end;
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-panel > p:not(.onboarding-replay-note) {
+  margin: 0;
+  max-width: 46ch;
+  align-self: start;
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-group {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: stretch;
+  margin: 0;
+  min-height: 0;
+  height: 100%;
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-options {
+  min-height: clamp(70px, 24%, 132px);
+  height: 100%;
+  align-items: stretch;
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn {
+  min-height: clamp(70px, 100%, 132px);
+  height: 100%;
+  align-content: center;
+}
+
 .onboarding-dialog.is-card-start.is-welcome .onboarding-actions {
   position: static;
   display: grid;
   flex: 0 0 auto;
   min-height: 0;
   width: 100%;
-  margin-top: auto;
-  padding-top: 8px;
+  margin-top: 0;
+  align-self: end;
+  padding-top: 2px;
   padding-bottom: 0;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 6px;
@@ -997,16 +1033,16 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
 .onboarding-dialog.is-card-start.is-welcome .onboarding-settings-btn {
   position: static;
   width: auto;
-  min-height: 40px;
+  min-height: 46px;
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-secondary-btn {
-  grid-column: 1;
+  grid-column: 2;
   grid-row: 2;
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-settings-btn {
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 2;
 }
 

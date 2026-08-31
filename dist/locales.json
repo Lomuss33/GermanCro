@@ -573,8 +573,8 @@
     },
     "onboarding": {
       "welcome": {
-        "title": "Starte deine Lernkarte",
-        "body": "Wähle die Lernsprache für diese Karte und beginne direkt.",
+        "title": "Starte deine erste Runde",
+        "body": "Wähle die Lernsprache und starte direkt ins Spiel.",
         "languageLabel": "Lernsprache",
         "replayNote": "[[lead]]Tipp:[[/lead]] Mit den Flaggen unten rechts wechselst du jederzeit die Lernsprache. Der [[pink]]pinke[[/pink]] Tutorial-Button öffnet diese Tour erneut."
       },
@@ -1186,8 +1186,8 @@
     },
     "onboarding": {
       "welcome": {
-        "title": "Pokreni svoju karticu",
-        "body": "Odaberi jezik učenja za ovu karticu i odmah započni.",
+        "title": "Pokreni svoju prvu rundu",
+        "body": "Odaberi jezik učenja i odmah uskoči u igru.",
         "languageLabel": "Jezik učenja",
         "replayNote": "[[lead]]Savjet:[[/lead]] Jezik učenja možeš promijeniti zastavicama dolje desno. Gumb [[pink]]ružičaste boje[[/pink]] „Vodič“ ponovno otvara ovu uputu."
       },
@@ -1803,8 +1803,8 @@
     },
     "onboarding": {
       "welcome": {
-        "title": "Start this learning card",
-        "body": "Choose the learning language for this card and begin.",
+        "title": "Start your first round",
+        "body": "Choose the learning language and jump into the game.",
         "languageLabel": "Learning language",
         "replayNote": "[[lead]]Tip:[[/lead]] Switch languages anytime with the flags in the bottom-right corner. The [[pink]]pink[[/pink]] Tutorial button opens this guide again."
       },

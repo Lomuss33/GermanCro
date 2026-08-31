@@ -9,7 +9,9 @@ function stripUrlVersion(specifier) {
 const html = await readText("index.html");
 const distHtml = await readText("dist/index.html");
 const css = await readText("style.css");
+const normalizedCss = css.replace(/\r\n/g, "\n");
 const onboardingCss = await readText("onboarding.css");
+const normalizedOnboardingCss = onboardingCss.replace(/\r\n/g, "\n");
 const appSource = await readText("src/bootstrap/init-app.js");
 const tourSource = await readText("src/onboarding/first-run-tour.js");
 
@@ -111,50 +113,50 @@ assert(
   "A closed onboarding dialog must always be removed from layout",
 );
 assert(
-  onboardingCss.includes("pointer-events: auto"),
+  normalizedOnboardingCss.includes("pointer-events: auto"),
   "Startup language flag images must remain mouse-targetable",
 );
 assert(
-  onboardingCss.includes(".onboarding-brand span.is-accent"),
+  normalizedOnboardingCss.includes(".onboarding-brand span.is-accent"),
   "The onboarding brand must style the selected language segment",
 );
 assert(
-  onboardingCss.includes("grid-template-columns: repeat(3, minmax(0, 1fr));") &&
-    onboardingCss.includes(".onboarding-feedback-key > span:nth-child(2)") &&
-    onboardingCss.includes(".onboarding-feedback-key > span:nth-child(3)"),
+  normalizedOnboardingCss.includes("grid-template-columns: repeat(3, minmax(0, 1fr));") &&
+    normalizedOnboardingCss.includes(".onboarding-feedback-key > span:nth-child(2)") &&
+    normalizedOnboardingCss.includes(".onboarding-feedback-key > span:nth-child(3)"),
   "The Step 3 feedback key must keep its three aligned responsive columns",
 );
 assert(
-  onboardingCss.includes("color: #7dd3fc;") &&
-    onboardingCss.includes("justify-content: space-between;") &&
-    onboardingCss.includes(".onboarding-language-label-letter.is-space"),
+  normalizedOnboardingCss.includes("color: #7dd3fc;") &&
+    normalizedOnboardingCss.includes("justify-content: space-between;") &&
+    normalizedOnboardingCss.includes(".onboarding-language-label-letter.is-space"),
   "The onboarding language label must distribute individual letters across the full width",
 );
 assert(
-  onboardingCss.includes(".onboarding-dialog.is-welcome .onboarding-settings-btn"),
+  normalizedOnboardingCss.includes(".onboarding-dialog.is-welcome .onboarding-settings-btn"),
   "The startup settings button must have a welcome-popup layout rule",
 );
 assert(
-  onboardingCss.includes(".onboarding-dialog.is-welcome .onboarding-primary-btn {\n  grid-column: 2;\n  grid-row: 1 / span 2;\n  min-height: 96px;"),
+  normalizedOnboardingCss.includes(".onboarding-dialog.is-welcome .onboarding-primary-btn {\n  grid-column: 2;\n  grid-row: 1 / span 2;\n  min-height: 96px;"),
   "The welcome Start learning button must be twice the base action height",
 );
 assert(
-  onboardingCss.includes(".onboarding-dialog.is-welcome .onboarding-secondary-btn {\n  grid-column: 1;\n  grid-row: 1;\n  min-height: 72px;"),
+  normalizedOnboardingCss.includes(".onboarding-dialog.is-welcome .onboarding-settings-btn {\n  grid-column: 1;\n  grid-row: 1;\n  min-height: 72px;"),
   "The welcome Tour button must use the middle action height",
 );
 assert(
-  onboardingCss.includes(".onboarding-secondary-btn {\n  border: 1px solid rgba(255, 150, 184, 0.72);") &&
-    onboardingCss.includes(".onboarding-secondary-btn {\n  border: 1px solid rgba(255, 150, 184, 0.72);\n  background: linear-gradient(180deg, rgba(255, 150, 184, 0.2), rgba(255, 150, 184, 0.09));\n  color: #fff;"),
-  "The Tour button must keep the pink style with white text",
+  normalizedOnboardingCss.includes(".onboarding-secondary-btn {\n  border: 1px solid rgba(255, 150, 184, 0.72);") &&
+    normalizedOnboardingCss.includes(".onboarding-secondary-btn {\n  border: 1px solid rgba(255, 150, 184, 0.72);\n  background: linear-gradient(180deg, rgba(255, 150, 184, 0.25), rgba(255, 150, 184, 0.13));\n  color: var(--accent);"),
+  "The Tour button must match the pink tutorial replay styling",
 );
 assert(
-  onboardingCss.includes(".onboarding-settings-btn,\n.onboarding-back-btn {\n  border: 1px solid rgba(255, 255, 255, 0.22);"),
+  normalizedOnboardingCss.includes(".onboarding-settings-btn,\n.onboarding-back-btn {\n  border: 1px solid rgba(255, 255, 255, 0.22);"),
   "The startup Settings button must keep the neutral secondary style",
 );
 assert(
-  onboardingCss.includes(".tutorial-replay-btn") &&
-    onboardingCss.includes("background: linear-gradient(180deg, rgba(255, 150, 184, 0.25), rgba(255, 150, 184, 0.13));") &&
-    onboardingCss.includes(".onboarding-replay-note-pink"),
+  normalizedOnboardingCss.includes(".tutorial-replay-btn") &&
+    normalizedOnboardingCss.includes("background: linear-gradient(180deg, rgba(255, 150, 184, 0.25), rgba(255, 150, 184, 0.13));") &&
+    normalizedOnboardingCss.includes(".onboarding-replay-note-pink"),
   "The page Tutorial button and popup tip must share the pink treatment",
 );
 assert(
@@ -215,7 +217,7 @@ for (const flagEntity of ["&#127469;&#127479;", "&#127468;&#127463;", "&#127465;
 }
 
 for (const className of ["language-flag-icon--de", "language-flag-icon--hr", "language-flag-icon--en"]) {
-  assert(css.includes(`.${className}`), `style.css is missing .${className}`);
+  assert(normalizedCss.includes(`.${className}`), `style.css is missing .${className}`);
 }
 for (const [className, color] of [
   ["language-flag-icon--de", "#ffce00"],
@@ -223,7 +225,7 @@ for (const [className, color] of [
   ["language-flag-icon--en", "#c8102e"],
 ]) {
   assert(
-    css.includes(`.${className} {\n  border-width: 2px;\n  border-color: ${color};`),
+    normalizedCss.includes(`.${className} {\n  border-width: 2px;\n  border-color: ${color};`),
     `style.css is missing the 2px ${color} border for .${className}`,
   );
 }

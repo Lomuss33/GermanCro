@@ -685,10 +685,26 @@ export function createFirstRunTour({
     open({ isReplay: true });
   }
 
+  function startWelcomeTour() {
+    if (state !== "welcome") {
+      return false;
+    }
+    promoteToGlobalTour();
+    void renderStep(0);
+    return true;
+  }
+
+  function playFromWelcome() {
+    if (state !== "welcome") {
+      return false;
+    }
+    finish("played");
+    return true;
+  }
+
   function advanceTour() {
     if (state === "welcome") {
-      promoteToGlobalTour();
-      void renderStep(0);
+      startWelcomeTour();
       return;
     }
     if (state !== "tour") {
@@ -709,7 +725,7 @@ export function createFirstRunTour({
 
   elements.primaryButton?.addEventListener("click", () => {
     if (state === "welcome") {
-      finish("played");
+      playFromWelcome();
       return;
     }
     advanceTour();
@@ -717,8 +733,7 @@ export function createFirstRunTour({
 
   elements.secondaryButton?.addEventListener("click", () => {
     if (state === "welcome") {
-      promoteToGlobalTour();
-      void renderStep(0);
+      startWelcomeTour();
     }
   });
 
@@ -813,7 +828,9 @@ export function createFirstRunTour({
     isOpen,
     open,
     refreshCopy,
+    playFromWelcome,
     replay: replayTour,
+    startWelcomeTour,
     shouldShow,
   });
 }
