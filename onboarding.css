@@ -979,22 +979,25 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-language-group {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  align-content: stretch;
+  grid-template-rows: auto auto;
+  align-content: center;
+  align-self: center;
   margin: 0;
   min-height: 0;
-  height: 100%;
+  width: 100%;
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-language-options {
-  min-height: clamp(70px, 24%, 132px);
-  height: 100%;
+  min-height: 0;
+  height: clamp(76px, 22vh, 108px);
+  max-height: min(108px, 100%);
   align-items: stretch;
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn {
-  min-height: clamp(70px, 100%, 132px);
+  min-height: 76px;
   height: 100%;
+  max-height: 108px;
   align-content: center;
 }
 
