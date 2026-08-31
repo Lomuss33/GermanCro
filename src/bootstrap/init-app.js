@@ -2873,6 +2873,96 @@ function getLocalizedCountryNameById(id, fallback = "") {
   return getFactsBundle().names?.countries?.[id] || fallback;
 }
 
+const EUROPE_STATE_FORMS = Object.freeze({
+  frankreich: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
+  spanien: ["Parlamentarische Monarchie", "parlamentarna monarhija", "parliamentary monarchy"],
+  england: ["Teil des Vereinigten Königreichs", "dio Ujedinjenog Kraljevstva", "part of the United Kingdom"],
+  schweden: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
+  polen: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  oesterreich: ["Bundesstaatliche parlamentarische Republik", "savezna parlamentarna republika", "federal parliamentary republic"],
+  ungarn: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  kroatien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  "bosnien-herzegowina": ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  serbien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  nordmazedonien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  albanien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  griechenland: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  bulgarien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  tuerkei: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  rumaenien: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
+  ukraine: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
+  russland: ["Föderale semipräsidentielle Republik", "savezna polupredsjednička republika", "federal semi-presidential republic"],
+  weissrussland: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  tschechien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  slowakei: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  slowenien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  italien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  niederlande: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
+  belgien: ["Föderale konstitutionelle Monarchie", "savezna ustavna monarhija", "federal constitutional monarchy"],
+  daenemark: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
+  finnland: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  norwegen: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
+  irland: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  schweiz: ["Föderale direktoriale Republik", "savezna direktorialna republika", "federal directorial republic"],
+  vatikanstadt: ["Wahlmonarchie", "izborna monarhija", "elective monarchy"],
+  portugal: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
+  montenegro: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  luxemburg: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
+  liechtenstein: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
+  andorra: ["Parlamentarisches Kofürstentum", "parlamentarna suvladavina knezova", "parliamentary co-principality"],
+});
+
+function getEuropeanStateForm(countryId, fallback = "") {
+  const forms = EUROPE_STATE_FORMS[countryId];
+  if (!forms) {
+    return translateFactScalar(fallback);
+  }
+  return forms[{ de: 0, hr: 1, en: 2 }[getLocale()] ?? 0];
+}
+
+const WORLD_STATE_FORMS = Object.freeze({
+  kanada: ["Föderale parlamentarische konstitutionelle Monarchie", "savezna parlamentarna ustavna monarhija", "federal parliamentary constitutional monarchy"],
+  usa: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
+  china: ["Kommunistisch geführter Staat", "država pod vodstvom Komunističke partije", "communist party-led state"],
+  brasilien: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
+  australien: ["Föderale parlamentarische konstitutionelle Monarchie", "savezna parlamentarna ustavna monarhija", "federal parliamentary constitutional monarchy"],
+  indien: ["Föderale parlamentarische Republik", "savezna parlamentarna republika", "federal parliamentary republic"],
+  argentinien: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
+  algerien: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  "dr-kongo": ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
+  "saudi-arabien": ["Absolute Monarchie", "apsolutna monarhija", "absolute monarchy"],
+  mexiko: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
+  indonesien: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  sudan: ["Militärisch geführte Übergangsregierung", "vojno vođena prijelazna vlada", "military-led transitional government"],
+  libyen: ["Übergangsregierung", "prijelazna vlada", "transitional government"],
+  iran: ["Theokratische Republik", "teokratska republika", "theocratic republic"],
+  mongolei: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
+  japan: ["Parlamentarische konstitutionelle Monarchie", "parlamentarna ustavna monarhija", "parliamentary constitutional monarchy"],
+  suedkorea: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  pakistan: ["Föderale parlamentarische Republik", "savezna parlamentarna republika", "federal parliamentary republic"],
+  bangladesch: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  nigeria: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
+  aethiopien: ["Föderale parlamentarische Republik", "savezna parlamentarna republika", "federal parliamentary republic"],
+  aegypten: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  suedafrika: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
+  kasachstan: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  peru: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  kolumbien: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  chile: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
+  venezuela: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
+  neuseeland: ["Parlamentarische konstitutionelle Monarchie", "parlamentarna ustavna monarhija", "parliamentary constitutional monarchy"],
+  thailand: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
+  vietnam: ["Kommunistisch geführter Staat", "država pod vodstvom Komunističke partije", "communist party-led state"],
+});
+
+function getWorldStateForm(countryId, fallback = "") {
+  const forms = WORLD_STATE_FORMS[countryId];
+  if (!forms) {
+    return translateFactScalar(fallback);
+  }
+  return forms[{ de: 0, hr: 1, en: 2 }[getLocale()] ?? 0];
+}
+
 function translateCountryOrRegionName(value) {
   const factsBundle = getFactsBundle();
   const normalizedValue = normalizeFactLookupKey(value);
@@ -3268,14 +3358,14 @@ function createFactsList(label, items, variant = "", contextName = "") {
     .forEach((item) => {
     const itemText = String(item);
     const searchTerm = ["neighbors", "borders"].includes(variant)
-      ? `${contextName} border ${itemText}`.trim()
+      ? `${itemText} border ${contextName}`.trim()
       : itemText;
       const chip = document.createElement("a");
       chip.className = "facts-chip facts-chip-link";
       chip.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
       chip.target = "_blank";
       chip.rel = "noopener noreferrer";
-      chip.textContent = searchTerm;
+      chip.textContent = itemText;
       chip.title = t("facts.values.googleSearchAria", { item: searchTerm });
       chip.setAttribute("aria-label", t("facts.values.googleSearchAria", { item: searchTerm }));
       list.appendChild(chip);
@@ -3463,7 +3553,13 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
 
   const grid = document.createElement("div");
   grid.className = "facts-grid";
-  fields.forEach((fieldData) => {
+  const stateFormLabel = t("facts.fields.stateForm");
+  const orderedFields = [...fields].sort((left, right) => {
+    const leftIsStateForm = normalizeFactsField(left)?.label === stateFormLabel;
+    const rightIsStateForm = normalizeFactsField(right)?.label === stateFormLabel;
+    return Number(leftIsStateForm) - Number(rightIsStateForm);
+  });
+  orderedFields.forEach((fieldData) => {
     if (normalizeFactsField(fieldData)?.featured) {
       return;
     }
@@ -3643,7 +3739,7 @@ function renderEuropeanCountryFacts(countryData) {
     [
       [t("facts.fields.capital"), countryData.capital],
       [t("facts.fields.region"), translateFactScalar(countryData.region)],
-      [t("facts.fields.stateForm"), translateFactScalar(countryData.state_form)],
+      [t("facts.fields.stateForm"), getEuropeanStateForm(countryData.id, countryData.state_form)],
       [t("facts.fields.population"), countryData.population],
       [t("facts.fields.area"), countryData.area_km2],
       [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
@@ -3677,7 +3773,7 @@ function renderWorldCountryFacts(countryData) {
     [
       [t("facts.fields.capital"), countryData.capital],
       [t("facts.fields.region"), translateFactScalar(countryData.region)],
-      [t("facts.fields.stateForm"), translateFactScalar(countryData.state_form)],
+      [t("facts.fields.stateForm"), getWorldStateForm(countryData.id, countryData.state_form)],
       [t("facts.fields.population"), countryData.population],
       [t("facts.fields.area"), countryData.area_km2],
       [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
