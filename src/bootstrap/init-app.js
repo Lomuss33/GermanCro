@@ -3188,6 +3188,14 @@ function normalizeFactsField(field) {
   return null;
 }
 
+function getFactsSearchTerm(label, value, contextName = "") {
+  const valueText = String(value ?? "").trim();
+  const isNumericValue = valueText !== "" && (/^\d/.test(valueText) || /^[\d\s.,%+\-€$£]+$/.test(valueText));
+  return [label, isNumericValue ? "" : valueText, contextName]
+    .filter(isNonEmptyValue)
+    .join(" ");
+}
+
 function createFactsField(field, contextName = "") {
   const normalized = normalizeFactsField(field);
   if (!normalized) {
@@ -3204,7 +3212,7 @@ function createFactsField(field, contextName = "") {
   if (featured) {
     card.classList.add("featured");
   } else {
-    const searchTerm = [label, String(value), contextName].filter(isNonEmptyValue).join(" ");
+    const searchTerm = getFactsSearchTerm(label, value, contextName);
     card.classList.add("facts-card-link");
     card.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
     card.target = "_blank";
@@ -3237,7 +3245,7 @@ function splitFactsOverviewSentences(value) {
     .filter(Boolean);
 }
 
-function createFactsList(label, items, variant = "") {
+function createFactsList(label, items, variant = "", contextName = "") {
   if (!Array.isArray(items) || !items.length) {
     return null;
   }
@@ -3258,7 +3266,10 @@ function createFactsList(label, items, variant = "") {
   items
     .filter((item) => isNonEmptyValue(item))
     .forEach((item) => {
-      const searchTerm = String(item);
+    const itemText = String(item);
+    const searchTerm = ["neighbors", "borders"].includes(variant)
+      ? `${contextName} border ${itemText}`.trim()
+      : itemText;
       const chip = document.createElement("a");
       chip.className = "facts-chip facts-chip-link";
       chip.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
@@ -3316,7 +3327,7 @@ function createNotablePeopleSection(groups) {
   const groupsEl = document.createElement("div");
   groupsEl.className = "facts-notable-people-groups";
   peopleGroups.forEach(({ label, values }) => {
-    const group = createFactsList(label, values);
+    const group = createFactsList(label, values, "", "");
     if (group) {
       group.classList.add("facts-notable-people-group");
       groupsEl.appendChild(group);
@@ -3468,7 +3479,7 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
   }
 
   lists.forEach(([label, values, variant], listIndex) => {
-    const list = createFactsList(label, values, variant);
+    const list = createFactsList(label, values, variant, title);
     if (list) {
       list.style.setProperty("--list-accent", factsPalette[listIndex]);
       view.appendChild(list);
@@ -3514,7 +3525,7 @@ function renderCountryFacts(countryData) {
     ],
     [
       [t("facts.lists.nature"), translateFactList(countryData.nature)],
-      [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries)],
+      [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries), "neighbors"],
       [t("facts.lists.highlights"), translateFactList(countryData.highlights)],
       ],
       TOURISM_LINKS.germany,
@@ -3613,8 +3624,8 @@ function renderStateFacts(stateData) {
       },
     ],
     [
-      [t("facts.lists.neighborStates"), translateFactList(stateData.neighboring_states)],
-      [t("facts.lists.borders"), translateFactList(stateData.bordering_countries)],
+      [t("facts.lists.neighborStates"), translateFactList(stateData.neighboring_states), "neighbors"],
+      [t("facts.lists.borders"), translateFactList(stateData.bordering_countries), "borders"],
       [t("facts.lists.knownFor"), translateFactList(stateData.known_for)],
       [t("facts.lists.nature"), translateFactList(stateData.nature)],
       ],
@@ -3648,7 +3659,7 @@ function renderEuropeanCountryFacts(countryData) {
       },
     ],
     [
-      [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries)],
+      [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries), "neighbors"],
       [t("facts.lists.languages"), translateFactList(countryData.languages_list)],
       [t("facts.lists.timezones"), countryData.timezones_list],
       ],
@@ -3682,7 +3693,7 @@ function renderWorldCountryFacts(countryData) {
       },
     ],
     [
-      [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries)],
+      [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries), "neighbors"],
       [t("facts.lists.languages"), translateFactList(countryData.languages_list)],
       [t("facts.lists.timezones"), countryData.timezones_list],
       ],
