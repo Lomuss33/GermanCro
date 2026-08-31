@@ -415,6 +415,18 @@ let languageSwitchCleanupTimer = 0;
 let firstRunTour = null;
 let onboardingPending = false;
 let onboardingOpenedAt = 0;
+let lastFactsPaletteHue = -1;
+
+function getRandomFactsPalette(colorCount = 3) {
+  let hue = Math.floor(Math.random() * 360);
+  if (lastFactsPaletteHue >= 0 && Math.abs(hue - lastFactsPaletteHue) < 42) {
+    hue = (hue + 137) % 360;
+  }
+  lastFactsPaletteHue = hue;
+  return Array.from({ length: colorCount }, (_, index) =>
+    `hsl(${(hue + index * 137) % 360} ${96 - (index % 3) * 2}% ${62 + (index % 2) * 3}%)`
+  );
+}
 
 const LEARNING_MODE_STORAGE_KEY = "germancro.learningMode";
 const PROMPT_ORDER_STORAGE_KEY = "germancro.promptOrderSwapped";
@@ -3225,13 +3237,16 @@ function splitFactsOverviewSentences(value) {
     .filter(Boolean);
 }
 
-function createFactsList(label, items) {
+function createFactsList(label, items, variant = "") {
   if (!Array.isArray(items) || !items.length) {
     return null;
   }
 
   const section = document.createElement("section");
   section.className = "facts-list-section";
+  if (variant) {
+    section.classList.add(`facts-${variant}`);
+  }
 
   const title = document.createElement("div");
   title.className = "facts-list-title";
@@ -3274,16 +3289,16 @@ function getCountryPeopleLists(countryId) {
 
 function getNotablePeopleLists(notablePeople = {}) {
   return [
-    [t("facts.lists.science"), notablePeople.science],
-    [t("facts.lists.politics"), notablePeople.politics],
-    [t("facts.lists.art"), notablePeople.art],
-    [t("facts.lists.engineering"), notablePeople.engineering],
+    [t("facts.lists.science"), notablePeople.science, "people-science"],
+    [t("facts.lists.engineering"), notablePeople.engineering, "people-engineering"],
+    [t("facts.lists.art"), notablePeople.art, "people-art"],
+    [t("facts.lists.politics"), notablePeople.politics, "people-politics"],
   ];
 }
 
 function createNotablePeopleSection(groups) {
   const peopleGroups = groups
-    .map(([label, values]) => ({ label, values: Array.isArray(values) ? values.filter(isNonEmptyValue) : [] }))
+    .map(([label, values, variant]) => ({ label, variant, values: Array.isArray(values) ? values.filter(isNonEmptyValue) : [] }))
     .filter(({ values }) => values.length);
 
   if (!peopleGroups.length) {
@@ -3321,6 +3336,10 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
 
   const view = document.createElement("div");
   view.className = "facts-view";
+  const factsPalette = getRandomFactsPalette(Math.max(3, lists.length));
+  view.style.setProperty("--facts-color-a", factsPalette[0]);
+  view.style.setProperty("--facts-color-b", factsPalette[1]);
+  view.style.setProperty("--facts-color-c", factsPalette[2]);
 
   const head = document.createElement("div");
   head.className = "facts-view-head";
@@ -3448,9 +3467,10 @@ function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = 
     view.appendChild(grid);
   }
 
-  lists.forEach(([label, values]) => {
-    const list = createFactsList(label, values);
+  lists.forEach(([label, values, variant], listIndex) => {
+    const list = createFactsList(label, values, variant);
     if (list) {
+      list.style.setProperty("--list-accent", factsPalette[listIndex]);
       view.appendChild(list);
     }
   });
@@ -3493,9 +3513,9 @@ function renderCountryFacts(countryData) {
       },
     ],
     [
+      [t("facts.lists.nature"), translateFactList(countryData.nature)],
       [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries)],
       [t("facts.lists.highlights"), translateFactList(countryData.highlights)],
-      [t("facts.lists.nature"), translateFactList(countryData.nature)],
       ],
       TOURISM_LINKS.germany,
       OFFICIAL_LINKS.germany,

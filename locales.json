@@ -620,7 +620,7 @@
         "settings": "Einstellungen öffnen"
       }
     },
-    "footer": "made by Lovro Musić - contact@lovro-music.de - lovro.info"
+    "footer": "Lovro Musić · lovro.info"
   },
   "hr": {
     "meta": {
@@ -1235,7 +1235,7 @@
         "settings": "Otvori postavke"
       }
     },
-    "footer": "made by Lovro Musić - contact@lovro-music.de - lovro.info"
+    "footer": "Lovro Musić · lovro.info"
   },
   "en": {
     "meta": {
@@ -1854,6 +1854,6 @@
         "settings": "Open settings"
       }
     },
-    "footer": "made by Lovro Musić - contact@lovro-music.de - lovro.info"
+    "footer": "Lovro Musić · lovro.info"
   }
 }

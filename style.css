@@ -2544,21 +2544,23 @@ input.wrong {
 
 .site-footer a,
 .site-footer a:visited {
-  display: inline-block;
-  width: 100%;
+  display: inline-flex;
+  width: auto;
   max-width: 100%;
-  padding: 5px 8px 6px;
+  padding: 5px 15px 6px;
   font-family: var(--font-display);
   font-size: clamp(8px, calc(7px * var(--type-scale-micro) + 0.9vw), 14px);
-  font-weight: 600;
+  font-weight: 550;
   line-height: 1.25;
   letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.92);
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.92);
-  -webkit-text-stroke: 0.15em #050505;
-  paint-order: stroke fill;
+  color: rgba(245, 248, 224, 0.86);
+  -webkit-text-fill-color: currentColor;
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border: 0;
+  border-radius: 0;
+  clip-path: polygon(7% 0, 93% 0, 100% 50%, 93% 100%, 7% 100%, 0 50%);
+  background: rgba(18, 28, 64, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   overflow-wrap: anywhere;
   white-space: nowrap;
   text-align: center;
@@ -2575,10 +2577,9 @@ input.wrong {
 }
 
 .site-footer a:hover {
-  color: #000000;
-  -webkit-text-fill-color: #000000;
-  -webkit-text-stroke-color: rgba(255, 255, 255, 0.94);
-  border-color: rgba(0, 0, 0, 0.16);
+  color: #f8fbe9;
+  -webkit-text-fill-color: currentColor;
+  background: rgba(18, 28, 64, 0.34);
   animation: footerBounce 0.42s cubic-bezier(0.2, 0.9, 0.2, 1.15);
   transform: translateY(-2px) scale(1.02);
 }
@@ -6954,8 +6955,8 @@ body.layout-phone-portrait .card-topbar {
 
 #mainCard .input-shell input {
   border-color: rgba(255, 255, 255, 0.82);
-  text-align: left;
-  text-indent: max(0px, calc(33.333% - var(--game-row-inline-padding) - var(--game-emoji-pill-width) - var(--game-row-column-gap)));
+  text-align: center;
+  text-indent: 0;
   letter-spacing: 0.06em;
   padding-left: calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap));
   padding-right: calc(var(--game-row-inline-padding) + var(--game-emoji-pill-width) + var(--game-row-column-gap));
@@ -6963,11 +6964,10 @@ body.layout-phone-portrait .card-topbar {
 }
 
 #mainCard .input-shell input::placeholder {
-  text-align: center;
-  text-indent: 0;
+  color: rgba(255, 255, 255, 0.3);
   font-weight: 250;
   letter-spacing: 0.19em;
-  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
 }
 
 #mainCard .input-shell input:focus {
@@ -7177,4 +7177,773 @@ body.layout-phone-portrait .card-topbar {
 
 @media (prefers-reduced-motion: reduce) {
   #answerGuide.answer-guide .key-badge.is-key-pressed { animation: none; }
+}
+
+/* Facts view finish: a calmer neon-glass system that belongs to the game UI. */
+.facts-panel {
+  --facts-accent: #e8ff47;
+  --facts-cyan: #22d3ee;
+  --facts-violet: #a78bfa;
+  background:
+    radial-gradient(90% 38% at 8% 0%, rgba(34, 211, 238, 0.13), transparent 72%),
+    radial-gradient(70% 32% at 100% 12%, rgba(167, 139, 250, 0.14), transparent 72%),
+    linear-gradient(145deg, rgba(18, 29, 67, 0.98), rgba(5, 10, 29, 0.99));
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.34), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.facts-panel::before {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--facts-cyan) 25%, var(--facts-accent) 50%, var(--facts-violet) 75%, transparent);
+  box-shadow: 0 0 14px rgba(34, 211, 238, 0.34);
+}
+
+.facts-panel-title,
+.facts-view-name { color: #fff; text-shadow: 0 0 18px rgba(232, 255, 71, 0.18); }
+.facts-panel-subtitle,
+.facts-view-subtitle { color: rgba(235, 241, 255, 0.78); }
+
+.facts-controls {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025)), rgba(8, 15, 42, 0.72);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 14px 30px rgba(0, 0, 0, 0.22);
+}
+
+.facts-switch-btn,
+.state-picker-btn {
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.035);
+  transition: transform 160ms ease, color 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.facts-switch-btn:hover,
+.facts-switch-btn:focus-visible,
+.state-picker-btn:hover,
+.state-picker-btn:focus-visible {
+  color: #07101b;
+  border-color: #fff;
+  background: #fff;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.facts-switch-btn.active,
+.state-picker-btn.active {
+  color: #07101b;
+  border-color: var(--facts-accent);
+  background: linear-gradient(135deg, #f7ff9a, var(--facts-accent));
+  box-shadow: 0 0 0 2px rgba(232, 255, 71, 0.14), 0 0 20px rgba(232, 255, 71, 0.24);
+}
+
+.facts-switch-btn.active:hover,
+.state-picker-btn.active:hover { transform: translateY(-2px); filter: brightness(1.06); }
+
+.state-picker-btn { border-radius: 10px; }
+.state-picker-btn.has-flag { background: rgba(34, 211, 238, 0.055); }
+.state-picker-btn.has-flag:hover,
+.state-picker-btn.has-flag:focus-visible { background: rgba(34, 211, 238, 0.92); }
+.state-picker-btn-flag { filter: saturate(1.12) contrast(1.08); }
+
+.facts-title-links {
+  border: 0;
+  padding-inline: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.facts-title-link,
+.facts-title-link:visited {
+  border: 1px solid rgba(34, 211, 238, 0.62);
+  background: rgba(34, 211, 238, 0.1);
+  color: #dffcff;
+}
+.facts-title-link--official,
+.facts-title-link--official:visited {
+  border-color: rgba(167, 139, 250, 0.7);
+  background: rgba(167, 139, 250, 0.12);
+  color: #f2edff;
+}
+
+.facts-grid { gap: 10px; }
+.facts-card {
+  --card-accent: var(--facts-cyan);
+  width: min(100%, 680px);
+  padding: 10px 14px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: 3px solid var(--card-accent);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.018)), rgba(8, 15, 42, 0.58);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16), 0 1px 0 rgba(255, 255, 255, 0.07) inset;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.facts-card:nth-child(3n) { --card-accent: var(--facts-accent); }
+.facts-card:nth-child(4n) { --card-accent: var(--facts-violet); }
+.facts-card:nth-child(even) { border-left: 1px solid rgba(255, 255, 255, 0.14); border-right: 3px solid var(--card-accent); }
+.facts-card:not(.featured)::after { display: none; }
+.facts-card:not(.featured) .facts-card-label { color: var(--card-accent); text-shadow: 0 0 10px color-mix(in srgb, var(--card-accent) 28%, transparent); }
+.facts-card:not(.featured) .facts-card-label::before { background: var(--card-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--card-accent) 18%, transparent), 0 0 10px var(--card-accent); }
+.facts-card:not(.featured) .facts-card-value { color: #fff; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.42); }
+.facts-card.featured { border-color: rgba(232, 255, 71, 0.32); background: linear-gradient(135deg, rgba(232, 255, 71, 0.11), rgba(34, 211, 238, 0.045)), rgba(8, 15, 42, 0.7); }
+
+.facts-card-link:hover,
+.facts-card-link:focus-visible { transform: translateY(-3px); border-color: var(--card-accent); background: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 12%, transparent), rgba(255, 255, 255, 0.04)), rgba(8, 15, 42, 0.76); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.24), 0 0 18px color-mix(in srgb, var(--card-accent) 18%, transparent); }
+.facts-card:nth-child(even).facts-card-link:hover,
+.facts-card:nth-child(even).facts-card-link:focus-visible { transform: translateY(-3px); }
+
+@media (max-width: 600px) {
+  .facts-card { padding: 9px 11px 11px; border-radius: 10px; }
+  .facts-card:not(.featured) .facts-card-label { font-size: clamp(10px, 2.7vw, 12px); }
+  .facts-card:not(.featured) .facts-card-value { font-size: clamp(16px, 4.4vw, 20px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .facts-switch-btn, .state-picker-btn, .facts-card { transition: none; }
+}
+
+/* Extend the same structure through every lower facts/list section. */
+.facts-list-section,
+.facts-notable-people-group {
+  --list-accent: var(--facts-cyan);
+  width: min(100%, 680px);
+  padding: 12px 14px 14px;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: 3px solid var(--list-accent);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.015)), rgba(8, 15, 42, 0.48);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.13), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+}
+
+.facts-list-section:nth-of-type(3n),
+.facts-notable-people-group:nth-child(3n) { --list-accent: var(--facts-accent); }
+.facts-list-section:nth-of-type(4n),
+.facts-notable-people-group:nth-child(4n) { --list-accent: var(--facts-violet); }
+.facts-list-section:nth-of-type(even),
+.facts-notable-people-group:nth-child(even) { border-left: 1px solid rgba(255, 255, 255, 0.14); border-right: 3px solid var(--list-accent); }
+.facts-list-section::after,
+.facts-notable-people-group::after { display: none; }
+.facts-list-title,
+.facts-notable-people-title { color: var(--list-accent); text-shadow: 0 0 10px color-mix(in srgb, var(--list-accent) 26%, transparent); }
+.facts-list-title::before { background: var(--list-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--list-accent) 18%, transparent), 0 0 10px var(--list-accent); }
+
+.facts-chip-list { gap: 7px; }
+.facts-chip {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+.facts-chip-link:hover,
+.facts-chip-link:focus-visible { border-color: var(--list-accent); background: color-mix(in srgb, var(--list-accent) 16%, rgba(8, 15, 42, 0.8)); color: #fff; box-shadow: 0 0 14px color-mix(in srgb, var(--list-accent) 22%, transparent); transform: translateY(-2px); }
+
+@media (max-width: 600px) {
+  .facts-list-section, .facts-notable-people-group { padding: 10px 11px 12px; border-radius: 10px; }
+  .facts-chip { font-size: clamp(13px, 3.4vw, 15px); }
+}
+
+/* Clear parent containers make each facts collection easy to scan and target. */
+.facts-grid,
+.facts-notable-people-groups {
+  width: 100%;
+  max-width: 760px;
+  padding: 12px;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(34, 211, 238, 0.055), rgba(167, 139, 250, 0.035)), rgba(4, 10, 30, 0.42);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16), 0 1px 0 rgba(255, 255, 255, 0.07) inset;
+}
+
+.facts-notable-people-groups { align-self: center; }
+.facts-grid .facts-card,
+.facts-notable-people-groups .facts-notable-people-group { width: 100%; max-width: none; }
+
+@media (max-width: 600px) {
+  .facts-grid, .facts-notable-people-groups { padding: 8px; border-radius: 11px; }
+}
+
+/* Use the exact established site surface for facts, without stacked competing fills. */
+.facts-panel {
+  background-color: rgba(10, 18, 46, 0.7);
+  background-image:
+    linear-gradient(rgba(18, 28, 64, 0.78), rgba(10, 18, 44, 0.66)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.02)),
+    radial-gradient(115% 88% at 0% 0%, rgba(255, 86, 86, 0.44), transparent 38%),
+    radial-gradient(92% 68% at 100% 0%, rgba(255, 214, 86, 0.4), transparent 34%),
+    radial-gradient(100% 86% at 0% 100%, rgba(72, 164, 255, 0.38), transparent 36%),
+    radial-gradient(90% 74% at 100% 100%, rgba(72, 240, 190, 0.28), transparent 34%),
+    radial-gradient(108% 64% at 50% 0%, rgba(255, 98, 202, 0.24), transparent 42%);
+  backdrop-filter: blur(8px) saturate(1.38) brightness(1.03);
+}
+
+.facts-panel .facts-view { background: transparent; }
+.facts-grid,
+.facts-notable-people-groups { background: rgba(10, 18, 46, 0.28); }
+.facts-card,
+.facts-list-section,
+.facts-notable-people-group { background: rgba(10, 18, 46, 0.46); }
+.facts-card.featured { background: linear-gradient(135deg, rgba(232, 255, 71, 0.09), rgba(34, 211, 238, 0.035)), rgba(10, 18, 46, 0.54); }
+
+/* Give every facts compartment its own recognizable neon signal. */
+.facts-list-section:nth-of-type(1), .facts-notable-people-group:nth-child(1) { --list-accent: #22d3ee; }
+.facts-list-section:nth-of-type(2), .facts-notable-people-group:nth-child(2) { --list-accent: #ff4fa3; }
+.facts-list-section:nth-of-type(3), .facts-notable-people-group:nth-child(3) { --list-accent: #e8ff47; }
+.facts-list-section:nth-of-type(4), .facts-notable-people-group:nth-child(4) { --list-accent: #ff9f43; }
+.facts-list-section:nth-of-type(5), .facts-notable-people-group:nth-child(5) { --list-accent: #a78bfa; }
+.facts-list-section:nth-of-type(6), .facts-notable-people-group:nth-child(6) { --list-accent: #39ff88; }
+.facts-list-section:nth-of-type(7), .facts-notable-people-group:nth-child(7) { --list-accent: #ff5c7a; }
+.facts-list-section:nth-of-type(8), .facts-notable-people-group:nth-child(8) { --list-accent: #60a5fa; }
+.facts-list-section, .facts-notable-people-group { background: linear-gradient(135deg, color-mix(in srgb, var(--list-accent) 6%, transparent), transparent 62%), rgba(10, 18, 46, 0.46); }
+.facts-chip { border-color: color-mix(in srgb, var(--list-accent) 34%, rgba(255, 255, 255, 0.2)); background: color-mix(in srgb, var(--list-accent) 7%, rgba(10, 18, 46, 0.6)); }
+
+.facts-notable-people-title {
+  width: auto;
+  min-height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: clamp(11px, calc(12px * var(--type-scale-body)), 14px);
+  letter-spacing: 0.1em;
+  line-height: 1.15;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(232, 255, 71, 0.32);
+}
+.facts-notable-people-title::before,
+.facts-notable-people-title::after {
+  content: "";
+  width: clamp(28px, 8vw, 64px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #22d3ee, #e8ff47);
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.35);
+}
+.facts-notable-people-title::after { background: linear-gradient(90deg, #e8ff47, #a78bfa, transparent); }
+
+/* Notable-people categories: distinct neon signals, white-first typography. */
+.facts-notable-people-groups {
+  border-color: rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(80% 25% at 0% 0%, rgba(34, 211, 238, 0.11), transparent 72%),
+    radial-gradient(80% 25% at 100% 100%, rgba(255, 79, 163, 0.09), transparent 72%),
+    rgba(10, 18, 46, 0.3);
+}
+.facts-notable-people-group .facts-list-title {
+  color: #fff;
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--list-accent) 48%, transparent);
+}
+.facts-notable-people-group .facts-chip-link { color: rgba(255, 255, 255, 0.98); }
+
+/* Notable people intentionally use a different visual language from fact cards:
+   category departments, not repeated rows. */
+.facts-notable-people-groups {
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.facts-notable-people-group,
+.facts-notable-people-group:nth-child(even) {
+  width: 100%;
+  padding: 10px 12px 11px;
+  border: 0;
+  border-top: 2px solid var(--list-accent);
+  border-radius: 3px 3px 10px 10px;
+  background: linear-gradient(115deg, color-mix(in srgb, var(--list-accent) 16%, transparent), transparent 62%), rgba(5, 12, 35, 0.64);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--list-accent) 13%, transparent), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+.facts-notable-people-group:nth-child(1) { --list-accent: #22d3ee; }
+.facts-notable-people-group:nth-child(2) { --list-accent: #ff4fa3; }
+.facts-notable-people-group:nth-child(3) { --list-accent: #ff9f43; }
+.facts-notable-people-group:nth-child(4) { --list-accent: #a78bfa; }
+.facts-notable-people-group .facts-list-title,
+.facts-notable-people-group:nth-child(even) .facts-list-title {
+  flex-direction: row;
+  align-self: flex-start;
+  color: var(--list-accent);
+  font-size: clamp(10px, calc(11px * var(--type-scale-body)), 13px);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--list-accent) 54%, transparent);
+}
+.facts-notable-people-group .facts-list-title::before {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 1.2em;
+}
+.facts-notable-people-group:nth-child(1) .facts-list-title::before { content: "✦"; }
+.facts-notable-people-group:nth-child(2) .facts-list-title::before { content: "◆"; }
+.facts-notable-people-group:nth-child(3) .facts-list-title::before { content: "✿"; }
+.facts-notable-people-group:nth-child(4) .facts-list-title::before { content: "⚙"; }
+.facts-notable-people-group .facts-chip-list { align-self: stretch; justify-content: flex-start; }
+.facts-notable-people-group:nth-child(even) .facts-chip-list { justify-content: flex-end; }
+.facts-notable-people-group .facts-chip { border-color: color-mix(in srgb, var(--list-accent) 48%, transparent); border-radius: 4px; background: rgba(255, 255, 255, 0.045); }
+.facts-notable-people-group .facts-chip-link:hover,
+.facts-notable-people-group .facts-chip-link:focus-visible { background: var(--list-accent); color: #07101b; box-shadow: 0 0 16px color-mix(in srgb, var(--list-accent) 48%, transparent); }
+
+/* Category-specific treatment for the primary facts lists. */
+#factsContent > .facts-view > .facts-list-section:nth-of-type(1) { --list-accent: #22d3ee; background-image: radial-gradient(circle at 8% 20%, rgba(34, 211, 238, 0.2) 0 2px, transparent 3px), radial-gradient(circle at 28% 70%, rgba(34, 211, 238, 0.12) 0 1px, transparent 2px), linear-gradient(135deg, rgba(34, 211, 238, 0.1), transparent 58%); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(2) { --list-accent: #a78bfa; background-image: repeating-linear-gradient(135deg, rgba(167, 139, 250, 0.08) 0 1px, transparent 1px 9px), linear-gradient(135deg, rgba(167, 139, 250, 0.1), transparent 60%); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(3) { --list-accent: #ff9f43; background-image: radial-gradient(ellipse at 92% 18%, rgba(255, 159, 67, 0.2), transparent 42%), linear-gradient(120deg, rgba(255, 159, 67, 0.1), transparent 62%); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(4) { --list-accent: #ff4fa3; background-image: repeating-linear-gradient(0deg, rgba(255, 79, 163, 0.06) 0 1px, transparent 1px 8px), linear-gradient(135deg, rgba(255, 79, 163, 0.1), transparent 60%); }
+#factsContent > .facts-view > .facts-list-section .facts-list-title { color: var(--list-accent); text-shadow: 0 0 12px color-mix(in srgb, var(--list-accent) 48%, transparent); }
+
+/* Two separate systems: fact lists above, famous-person directory below. */
+#factsContent > .facts-view > .facts-list-section:not(.facts-notable-people-group) {
+  border-radius: 4px 10px 10px 4px;
+  background-color: rgba(10, 18, 46, 0.46);
+}
+
+.facts-notable-people {
+  width: 100%;
+  max-width: 760px;
+  align-self: center;
+  margin-top: 8px;
+  padding: 16px 12px 12px;
+  border: 1px solid rgba(255, 79, 163, 0.3);
+  border-radius: 16px;
+  background:
+    radial-gradient(70% 45% at 8% 0%, rgba(255, 79, 163, 0.16), transparent 72%),
+    radial-gradient(65% 45% at 100% 100%, rgba(167, 139, 250, 0.14), transparent 72%),
+    rgba(5, 10, 31, 0.58);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.2), 0 0 24px rgba(255, 79, 163, 0.08) inset;
+}
+.facts-notable-people-title {
+  margin-bottom: 12px;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(255, 79, 163, 0.45), 0 0 20px rgba(167, 139, 250, 0.25);
+}
+.facts-notable-people-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 8px;
+  padding: 0;
+}
+.facts-notable-people-group,
+.facts-notable-people-group:nth-child(even) {
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+  align-items: flex-start;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--list-accent) 55%, transparent);
+  border-top: 3px solid var(--list-accent);
+  border-radius: 9px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 13%, transparent), rgba(8, 15, 42, 0.72));
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.16), 0 0 14px color-mix(in srgb, var(--list-accent) 12%, transparent) inset;
+}
+.facts-notable-people-group::before { display: none; }
+.facts-notable-people-group .facts-list-title,
+.facts-notable-people-group:nth-child(even) .facts-list-title {
+  align-self: flex-start;
+  flex-direction: row;
+  margin-bottom: 2px;
+}
+.facts-notable-people-group .facts-chip-list,
+.facts-notable-people-group:nth-child(even) .facts-chip-list { justify-content: flex-start; }
+.facts-notable-people-group .facts-chip { border-radius: 5px; }
+
+/* Semantic people-list themes: the class follows the category name, not its position. */
+.facts-notable-people {
+  margin-top: 10px;
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.facts-notable-people-groups { background: transparent; }
+.facts-people-science { --list-accent: #22d3ee; background-image: radial-gradient(circle at 14% 20%, rgba(34, 211, 238, 0.22) 0 2px, transparent 3px), radial-gradient(circle at 32% 62%, rgba(96, 165, 250, 0.18) 0 1px, transparent 2px) !important; }
+.facts-people-engineering { --list-accent: #a78bfa; background-image: repeating-linear-gradient(135deg, rgba(167, 139, 250, 0.1) 0 1px, transparent 1px 8px) !important; }
+.facts-people-art { --list-accent: #ff9f43; background-image: radial-gradient(ellipse at 88% 18%, rgba(255, 159, 67, 0.24), transparent 44%), linear-gradient(120deg, rgba(255, 79, 163, 0.08), transparent 65%) !important; }
+.facts-people-politics { --list-accent: #ff4fa3; background-image: repeating-linear-gradient(0deg, rgba(255, 79, 163, 0.08) 0 1px, transparent 1px 8px) !important; }
+.facts-people-science .facts-list-title::before { content: "⚛"; }
+.facts-people-engineering .facts-list-title::before { content: "⚙"; }
+.facts-people-art .facts-list-title::before { content: "🎨"; }
+.facts-people-politics .facts-list-title::before { content: "🏛"; }
+.facts-people-science .facts-chip { border-color: rgba(34, 211, 238, 0.62); }
+.facts-people-engineering .facts-chip { border-color: rgba(167, 139, 250, 0.62); }
+.facts-people-art .facts-chip { border-color: rgba(255, 159, 67, 0.62); }
+.facts-people-politics .facts-chip { border-color: rgba(255, 79, 163, 0.62); }
+
+/* Primary facts-list palette requested by the visual grouping. */
+#factsContent > .facts-view > .facts-list-section:nth-of-type(1) {
+  --list-accent: #39ff14;
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.2), rgba(57, 255, 20, 0.045) 62%), rgba(10, 42, 28, 0.72);
+  border-left-color: #39ff14;
+  box-shadow: 0 0 18px rgba(57, 255, 20, 0.16) inset;
+}
+#factsContent > .facts-view > .facts-list-section:nth-of-type(2) {
+  --list-accent: #aeb7c6;
+  background: linear-gradient(135deg, rgba(174, 183, 198, 0.2), rgba(174, 183, 198, 0.045) 62%), rgba(35, 42, 56, 0.76);
+  border-right-color: #aeb7c6;
+  box-shadow: 0 0 18px rgba(174, 183, 198, 0.14) inset;
+}
+#factsContent > .facts-view > .facts-list-section:nth-of-type(3) {
+  --list-accent: #b87532;
+  background: linear-gradient(135deg, rgba(184, 117, 50, 0.22), rgba(184, 117, 50, 0.045) 62%), rgba(57, 30, 18, 0.78);
+  border-left-color: #b87532;
+  box-shadow: 0 0 18px rgba(184, 117, 50, 0.16) inset;
+}
+#factsContent > .facts-view > .facts-list-section .facts-list-title { color: #fff; text-shadow: 0 0 10px color-mix(in srgb, var(--list-accent) 55%, transparent); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(2) {
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.2), rgba(148, 163, 184, 0.08) 42%, rgba(34, 211, 238, 0.09) 72%, rgba(10, 18, 46, 0.2)), rgba(45, 54, 70, 0.78);
+  box-shadow: 0 0 18px rgba(203, 213, 225, 0.16) inset, 0 0 12px rgba(34, 211, 238, 0.08);
+}
+
+/* Let the panel show through; the selectable values carry the bold color. */
+#factsContent > .facts-view > .facts-list-section {
+  background-color: rgba(10, 18, 46, 0.2);
+  background-image: none;
+  box-shadow: none;
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip {
+  padding: 5px 9px;
+  border: 1px solid var(--list-accent);
+  border-radius: 7px;
+  background: var(--list-accent);
+  color: #07101b;
+  font-weight: 850;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16) inset, 0 0 12px color-mix(in srgb, var(--list-accent) 42%, transparent);
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:hover,
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:focus-visible {
+  background: color-mix(in srgb, var(--list-accent) 78%, white 22%);
+  color: #000;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--list-accent) 24%, transparent), 0 0 20px color-mix(in srgb, var(--list-accent) 68%, transparent);
+}
+
+/* Final balance: translucent information surfaces, saturated controls. */
+#factsContent > .facts-view > .facts-list-section {
+  background-color: rgba(10, 18, 46, 0.14);
+  background-image: linear-gradient(135deg, color-mix(in srgb, var(--list-accent) 10%, transparent), transparent 66%);
+  box-shadow: none;
+}
+#factsContent > .facts-view > .facts-list-section:nth-of-type(1) { background-image: linear-gradient(135deg, rgba(57, 255, 20, 0.1), rgba(34, 211, 238, 0.035) 48%, transparent 72%); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(2) { background-image: linear-gradient(115deg, rgba(226, 232, 240, 0.1), rgba(34, 211, 238, 0.04) 58%, transparent 78%); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(3) { background-image: linear-gradient(135deg, rgba(184, 117, 50, 0.11), rgba(255, 79, 163, 0.035) 58%, transparent 78%); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(1) .facts-chip { background: linear-gradient(135deg, #b7ff6b, #39ff14 55%, #22d3ee); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(2) .facts-chip { background: linear-gradient(135deg, #f8fafc, #aeb7c6 52%, #67e8f9); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(3) .facts-chip { background: linear-gradient(135deg, #ffd08a, #b87532 55%, #ff6b9d); }
+
+/* Each country render supplies a fresh curated three-color palette. */
+#factsContent > .facts-view > .facts-list-section:nth-of-type(1) { border-left-color: var(--facts-color-a) !important; }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(2) { border-right-color: var(--facts-color-b) !important; }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(3) { border-left-color: var(--facts-color-c) !important; }
+#factsContent > .facts-view > .facts-list-section .facts-chip { background: linear-gradient(135deg, color-mix(in srgb, var(--list-accent) 48%, white 12%), var(--list-accent) 58%, color-mix(in srgb, var(--list-accent) 52%, #111827 48%)) !important; }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(odd) { border-left-color: var(--list-accent) !important; }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(even) { border-right-color: var(--list-accent) !important; }
+
+/* Middle-opacity glass: transparent enough to show the site gradient, solid enough for reading. */
+#factsContent > .facts-view > .facts-grid {
+  background-color: rgba(10, 18, 46, 0.2);
+  background-image: radial-gradient(circle at 8% 8%, rgba(34, 211, 238, 0.08), transparent 28%), radial-gradient(circle at 92% 18%, rgba(255, 79, 163, 0.07), transparent 26%), radial-gradient(circle at 12% 86%, rgba(57, 255, 136, 0.06), transparent 28%), radial-gradient(circle at 88% 88%, rgba(167, 139, 250, 0.07), transparent 28%);
+}
+#factsContent > .facts-view > .facts-grid .facts-card {
+  background-color: rgba(8, 15, 42, 0.38);
+  background-image: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 6%, transparent), transparent 64%);
+}
+
+/* Transparent framed list groups with clearly drawn neon edges. */
+#factsContent > .facts-view > .facts-list-section .facts-chip-list {
+  width: 100%;
+  padding: 5px;
+  border: 2px solid color-mix(in srgb, var(--list-accent) 82%, white 18%);
+  border-radius: 10px;
+  background: rgba(8, 15, 42, 0.08);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 0 14px color-mix(in srgb, var(--list-accent) 18%, transparent);
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip {
+  border: 2px solid var(--list-accent);
+  background: color-mix(in srgb, var(--list-accent) 15%, transparent);
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.72);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12) inset, 0 0 10px color-mix(in srgb, var(--list-accent) 28%, transparent);
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:hover,
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:focus-visible {
+  background: color-mix(in srgb, var(--list-accent) 32%, transparent);
+  color: #fff;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--list-accent) 65%, white 35%);
+}
+
+/* Extra-transparent pass: let the shared panel gradient dominate. */
+#factsContent > .facts-view > .facts-list-section .facts-chip-list {
+  background: rgba(8, 15, 42, 0.035);
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip {
+  background: color-mix(in srgb, var(--list-accent) 18%, transparent);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.09) inset, 0 0 8px color-mix(in srgb, var(--list-accent) 18%, transparent);
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:hover,
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:focus-visible {
+  background: color-mix(in srgb, var(--list-accent) 7%, transparent);
+}
+
+/* Let the shared site gradient remain the dominant background. */
+#factsContent > .facts-view > .facts-list-section {
+  background-color: rgba(10, 18, 46, 0.045);
+  background-image: linear-gradient(135deg, color-mix(in srgb, var(--list-accent) 4%, transparent), transparent 70%);
+}
+#factsContent > .facts-view > .facts-list-section:nth-of-type(1) { background-image: linear-gradient(135deg, rgba(57, 255, 20, 0.045), rgba(34, 211, 238, 0.018) 48%, transparent 74%); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(2) { background-image: linear-gradient(115deg, rgba(226, 232, 240, 0.05), rgba(34, 211, 238, 0.02) 58%, transparent 80%); }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(3) { background-image: linear-gradient(135deg, rgba(184, 117, 50, 0.05), rgba(255, 79, 163, 0.018) 58%, transparent 80%); }
+
+@media (max-width: 600px) {
+  .facts-notable-people { padding: 13px 8px 9px; border-radius: 12px; }
+  .facts-notable-people-groups { grid-template-columns: 1fr; gap: 6px; }
+}
+
+/* Pair the category rails: Wissenschaftler + Künstler left, Politiker + Ingenieure right. */
+.facts-notable-people-group,
+.facts-notable-people-group:nth-child(even) { position: relative; border-top: 0; }
+.facts-notable-people-group::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 58%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--list-accent), transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--list-accent) 58%, transparent);
+}
+.facts-notable-people-group:nth-child(even)::before {
+  left: auto;
+  right: 0;
+  background: linear-gradient(270deg, var(--list-accent), transparent);
+}
+.facts-notable-people-group:nth-child(even) .facts-list-title {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+/* Compact facts density: preserve contrast while removing visual and spatial noise. */
+.facts-view { gap: 11px; }
+.facts-grid,
+.facts-notable-people-groups { gap: 6px; padding: 6px; border-color: rgba(255, 255, 255, 0.1); box-shadow: none; }
+.facts-card,
+.facts-list-section,
+.facts-notable-people-group {
+  width: 100%;
+  max-width: none;
+  padding: 7px 10px 8px;
+  border: 0;
+  border-left: 2px solid var(--card-accent, var(--list-accent, var(--facts-cyan)));
+  border-radius: 7px;
+  box-shadow: none;
+}
+
+/* Let facts cards form two independent, content-friendly columns when they fit. */
+.facts-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+}
+
+body.layout-phone-portrait .facts-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+}
+
+/* A varied but dark enough color system keeps every fact distinct and readable. */
+.facts-grid {
+  container-type: inline-size;
+  container-name: facts-grid;
+  border-color: rgba(125, 211, 252, 0.18);
+  background:
+    radial-gradient(circle at 8% 8%, rgba(34, 211, 238, 0.16), transparent 28%),
+    radial-gradient(circle at 92% 18%, rgba(255, 79, 163, 0.14), transparent 26%),
+    radial-gradient(circle at 12% 86%, rgba(57, 255, 136, 0.12), transparent 28%),
+    radial-gradient(circle at 88% 88%, rgba(167, 139, 250, 0.14), transparent 28%),
+    rgba(10, 18, 46, 0.34);
+}
+
+.facts-grid > .facts-card:nth-child(8n + 1) { --card-accent: #22d3ee; }
+.facts-grid > .facts-card:nth-child(8n + 2) { --card-accent: #ff4fa3; }
+.facts-grid > .facts-card:nth-child(8n + 3) { --card-accent: #e8ff47; }
+.facts-grid > .facts-card:nth-child(8n + 4) { --card-accent: #ff9f43; }
+.facts-grid > .facts-card:nth-child(8n + 5) { --card-accent: #a78bfa; }
+.facts-grid > .facts-card:nth-child(8n + 6) { --card-accent: #39ff88; }
+.facts-grid > .facts-card:nth-child(8n + 7) { --card-accent: #ff5c7a; }
+.facts-grid > .facts-card:nth-child(8n) { --card-accent: #60a5fa; }
+
+.facts-grid > .facts-card:not(.featured) {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 10%, transparent), transparent 58%), rgba(8, 15, 42, 0.62);
+}
+
+/* The full facts collection is a multi-row reading surface, so keep every card calm and centered. */
+.facts-grid > .facts-card,
+.facts-grid > .facts-card:nth-child(even) {
+  justify-self: stretch;
+  align-items: center;
+  text-align: center;
+  border-left: 2px solid var(--card-accent, var(--facts-cyan));
+  border-right: 0;
+}
+
+/* Two columns read as a balanced left/right pair. */
+.facts-grid > .facts-card:nth-child(odd) {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.facts-grid > .facts-card:nth-child(even) {
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* When the grid becomes a taller single-column flow, center its content. */
+@container facts-grid (max-width: 400px) {
+  .facts-grid > .facts-card,
+  .facts-grid > .facts-card:nth-child(even) {
+    justify-self: stretch;
+    align-items: center;
+    text-align: center;
+    border-left: 2px solid var(--card-accent, var(--facts-cyan));
+    border-right: 0;
+  }
+}
+
+/* Three-column desktop layouts read best with a consistent centered treatment. */
+@container facts-grid (min-width: 600px) {
+  .facts-grid > .facts-card,
+  .facts-grid > .facts-card:nth-child(even) {
+    justify-self: stretch;
+    align-items: center;
+    text-align: center;
+    border-left: 2px solid var(--card-accent, var(--facts-cyan));
+    border-right: 0;
+  }
+}
+.facts-card:nth-child(even),
+.facts-list-section:nth-of-type(even),
+.facts-notable-people-group:nth-child(even) {
+  border-left: 0;
+  border-right: 2px solid var(--card-accent, var(--list-accent, var(--facts-cyan)));
+}
+.facts-card:not(.featured) .facts-card-label,
+.facts-list-title { font-size: clamp(11px, calc(12px * var(--type-scale-body)), 13px); font-weight: 820; letter-spacing: 0.08em; }
+.facts-card:not(.featured) .facts-card-value { font-size: clamp(14px, calc(16px * var(--type-scale-body)), 18px); line-height: 1.16; }
+.facts-card.featured .facts-card-value { font-size: clamp(14px, calc(15px * var(--type-scale-body)), 17px); line-height: 1.25; }
+.facts-card-link:hover, .facts-card-link:focus-visible { box-shadow: 0 0 14px color-mix(in srgb, var(--card-accent) 18%, transparent); }
+.facts-chip { padding: 4px 7px; border-radius: 6px; font-size: clamp(12px, calc(13px * var(--type-scale-body)), 14px); }
+.facts-chip-list { gap: 5px; }
+
+/* Notable-people decorations consistently live on the right edge. */
+.facts-notable-people-groups > .facts-notable-people-group,
+.facts-notable-people-groups > .facts-notable-people-group:nth-child(even) {
+  border-left: 0;
+  border-right: 3px solid var(--list-accent, var(--facts-cyan));
+}
+
+/* Facts cards use one consistent centered reading style at every breakpoint. */
+.facts-grid > .facts-card,
+.facts-grid > .facts-card:nth-child(odd),
+.facts-grid > .facts-card:nth-child(even) {
+  justify-self: stretch;
+  align-items: center !important;
+  text-align: center !important;
+  border-left: 2px solid var(--card-accent, var(--facts-cyan));
+  border-right: 0;
+}
+
+.facts-card.featured.facts-head-overview {
+  background:
+    linear-gradient(135deg, rgba(34, 211, 238, 0.025), rgba(167, 139, 250, 0.015) 52%, transparent),
+    rgba(3, 7, 20, 0.14);
+  border-color: rgba(125, 211, 252, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.015), 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* Four notable-people sections: transparent glass, colored depth, and a light 3D edge. */
+.facts-notable-people-groups > .facts-notable-people-group {
+  overflow: hidden;
+  transform: translateZ(0);
+  border: 1px solid color-mix(in srgb, var(--list-accent) 38%, transparent);
+  border-left: 3px solid var(--list-accent);
+  border-radius: 10px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 13%, transparent), transparent 48%),
+    rgba(5, 10, 28, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 4px 0 color-mix(in srgb, var(--list-accent) 18%, transparent),
+    0 10px 18px rgba(0, 0, 0, 0.2);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.facts-notable-people-groups > .facts-notable-people-group::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  width: 56%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--list-accent) 72%, white), transparent);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.facts-notable-people-groups > .facts-notable-people-group:hover {
+  transform: translateY(-2px) perspective(500px) rotateX(1deg);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 19%, transparent), transparent 52%),
+    rgba(5, 10, 28, 0.38);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 5px 0 color-mix(in srgb, var(--list-accent) 24%, transparent),
+    0 14px 24px rgba(0, 0, 0, 0.28),
+    0 0 18px color-mix(in srgb, var(--list-accent) 16%, transparent);
+}
+
+@media (max-width: 600px) {
+  .facts-view { gap: 8px; }
+  .facts-grid, .facts-notable-people-groups { gap: 5px; padding: 5px; }
+  .facts-card, .facts-list-section, .facts-notable-people-group { padding: 6px 8px 7px; }
+}
+
+/* Definitive facts-list state: translucent surfaces, visible neon frames. */
+#factsContent > .facts-view > .facts-list-section {
+  background-color: rgba(10, 18, 46, 0.08) !important;
+  background-image: linear-gradient(135deg, color-mix(in srgb, var(--list-accent) 6%, transparent), transparent 72%) !important;
+  box-shadow: none !important;
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip-list {
+  background: rgba(8, 15, 42, 0.04) !important;
+  border: 2px solid color-mix(in srgb, var(--list-accent) 82%, white 18%) !important;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 0 12px color-mix(in srgb, var(--list-accent) 18%, transparent) !important;
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip {
+  background: color-mix(in srgb, var(--list-accent) 14%, transparent) !important;
+  border: 2px solid var(--list-accent) !important;
+  color: #fff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.72);
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:hover,
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:focus-visible {
+  background: color-mix(in srgb, var(--list-accent) 28%, transparent) !important;
+  color: #fff !important;
+}
+
+/* The list itself stays edge-free; only its contents and soft atmosphere glow. */
+#factsContent > .facts-view > .facts-list-section .facts-chip-list {
+  border: 0 !important;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--list-accent) 7%, transparent), transparent 72%) !important;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--list-accent) 15%, transparent) inset !important;
+}
+
+/* Selected facts filters return to the unmistakable neon-yellow state. */
+.facts-panel .facts-switch-btn.active,
+.facts-panel .state-picker-btn.active {
+  background: #e8ff47 !important;
+  border-color: #e8ff47 !important;
+  color: #07101b !important;
+  box-shadow: 0 0 0 2px rgba(232, 255, 71, 0.2), 0 0 18px rgba(232, 255, 71, 0.32) !important;
 }
