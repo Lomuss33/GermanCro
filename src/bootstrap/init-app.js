@@ -388,6 +388,7 @@ let difficulty = "easy";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
+let enterKeyPulseTimer = 0;
 let feedbackBurstPieces = [];
 let answerGuideMeasureFrame = 0;
 let answerGuideResizeObserver = null;
@@ -1219,7 +1220,7 @@ function shouldTapFocusAnswerInput(target) {
     return false;
   }
 
-  if (!gameArea?.contains(target)) {
+  if (!mainCard?.contains(target)) {
     return false;
   }
 
@@ -1633,7 +1634,7 @@ function renderCardBadge(card) {
   metaEl.textContent = getSubcategoryLabel(card.subcategory);
   metaEl.style.setProperty("--subcategory-color", getSubcategoryColor(card.subcategory));
 
-  categoryEl.append(topicEl, metaEl);
+  categoryEl.append(metaEl, topicEl);
   categoryEl.style.color = color;
   categoryEl.style.setProperty("--category-color", color);
   categoryEl.style.removeProperty("border-color");
@@ -5610,10 +5611,25 @@ function initInputEvents() {
     });
   }
 
+  function pulseEnterKeyBadge() {
+    if (!enterKeyBtnEl) {
+      return;
+    }
+    window.clearTimeout(enterKeyPulseTimer);
+    enterKeyBtnEl.classList.remove("is-key-pressed");
+    void enterKeyBtnEl.offsetWidth;
+    enterKeyBtnEl.classList.add("is-key-pressed");
+    enterKeyPulseTimer = window.setTimeout(() => {
+      enterKeyBtnEl.classList.remove("is-key-pressed");
+      enterKeyPulseTimer = 0;
+    }, 300);
+  }
+
   enterKeyBtnEl?.addEventListener("click", () => {
     if (!sessionCards.length) {
       return;
     }
+    pulseEnterKeyBadge();
     submitCurrentAnswer();
     focusAnswerInputAtEnd();
   });
@@ -5658,7 +5674,7 @@ function initInputEvents() {
     insertTextIntoAnswerInput(event.key);
   });
 
-  gameArea?.addEventListener("click", (event) => {
+  mainCard?.addEventListener("click", (event) => {
     if (!shouldTapFocusAnswerInput(event.target)) {
       return;
     }
@@ -5767,6 +5783,9 @@ function initInputEvents() {
       return;
     }
     event.preventDefault();
+    if (!event.repeat) {
+      pulseEnterKeyBadge();
+    }
     submitCurrentAnswer();
   });
 }

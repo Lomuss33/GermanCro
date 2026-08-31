@@ -386,6 +386,7 @@ let difficulty = "easy";
 let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
+let enterKeyPulseTimer = 0;
 let feedbackBurstPieces = [];
 let answerGuideMeasureFrame = 0;
 let answerGuideResizeObserver = null;
@@ -5559,10 +5560,25 @@ function initInputEvents() {
     });
   }
 
+  function pulseEnterKeyBadge() {
+    if (!enterKeyBtnEl) {
+      return;
+    }
+    window.clearTimeout(enterKeyPulseTimer);
+    enterKeyBtnEl.classList.remove("is-key-pressed");
+    void enterKeyBtnEl.offsetWidth;
+    enterKeyBtnEl.classList.add("is-key-pressed");
+    enterKeyPulseTimer = window.setTimeout(() => {
+      enterKeyBtnEl.classList.remove("is-key-pressed");
+      enterKeyPulseTimer = 0;
+    }, 300);
+  }
+
   enterKeyBtnEl?.addEventListener("click", () => {
     if (!sessionCards.length) {
       return;
     }
+    pulseEnterKeyBadge();
     submitCurrentAnswer();
     focusAnswerInputAtEnd();
   });
@@ -5712,6 +5728,9 @@ function initInputEvents() {
       return;
     }
     event.preventDefault();
+    if (!event.repeat) {
+      pulseEnterKeyBadge();
+    }
     submitCurrentAnswer();
   });
 }
