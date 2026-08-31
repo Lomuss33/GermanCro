@@ -952,7 +952,7 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   height: 100%;
   max-height: none;
   padding: clamp(12px, 3vw, 20px);
-  border-radius: inherit;
+  border-radius: calc(14px * var(--type-scale-control));
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto minmax(0, 1fr) auto;
@@ -964,6 +964,18 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   overscroll-behavior: auto;
   touch-action: pan-y;
   scrollbar-width: none;
+}
+
+/* The launch screen is the same card surface with different content. */
+.onboarding-dialog.is-card-start.is-welcome .onboarding-panel {
+  /* The parent card owns the surface. A second painted layer can drift by a
+     pixel during refresh and expose a visible buffer around this content. */
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-heading {
@@ -1049,10 +1061,112 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   grid-row: 2;
 }
 
+/* Responsive launch actions: readable labels without changing the card geometry. */
+.onboarding-dialog.is-card-start.is-welcome .onboarding-actions button {
+  font-size: clamp(13px, calc(10px + 0.42vw), 16px);
+  line-height: 1.15;
+  letter-spacing: 0.005em;
+}
+
+@media (max-width: 360px) {
+  .onboarding-dialog.is-card-start.is-welcome .onboarding-actions button {
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .onboarding-welcome-scrim,
   .onboarding-scrim,
   .onboarding-spotlight {
     transition: none;
+  }
+}
+
+/* Language choices: stable geometry with tactile, card-local feedback. */
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn {
+  position: relative;
+  box-sizing: border-box;
+  isolation: isolate;
+  min-height: 76px;
+  padding: 8px 5px;
+  grid-template-rows: 40px auto;
+  gap: 5px;
+  overflow: hidden;
+  border-width: 2px;
+  border-color: rgba(255, 255, 255, 0.28);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.025));
+  transition: transform 0.18s cubic-bezier(0.2, 0.85, 0.3, 1.2), filter 0.18s ease, border-color 0.18s ease, box-shadow 0.22s ease;
+  will-change: transform, filter, box-shadow;
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn::before {
+  content: "";
+  position: absolute;
+  inset: -45% 35% 45% -20%;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: rotate(12deg) translateX(-120%);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:hover,
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:focus-visible {
+  z-index: 2;
+  transform: translateY(-3px) scale(1.025);
+  filter: brightness(1.16) saturate(1.12);
+  border-color: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 0 0 2px rgba(125, 211, 252, 0.16), 0 10px 22px rgba(0, 0, 0, 0.28);
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:hover::before,
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:focus-visible::before {
+  transform: rotate(12deg) translateX(280%);
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:active {
+  transform: translateY(1px) scale(0.96);
+  filter: brightness(0.96);
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn.active {
+  border-color: var(--accent);
+  background: linear-gradient(150deg, rgba(232, 255, 71, 0.5), rgba(232, 255, 71, 0.16));
+  color: #071006;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42), 0 0 0 2px rgba(232, 255, 71, 0.12), 0 0 22px rgba(232, 255, 71, 0.24);
+  animation: onboardingLanguageGlow 3.2s ease-in-out infinite;
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn.active:hover,
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn.active:focus-visible {
+  filter: brightness(1.2) saturate(1.18);
+  border-color: #f4ff9a;
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-flag.language-flag-icon {
+  width: 54px;
+  height: 36px;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.38));
+  transition: transform 0.18s cubic-bezier(0.2, 0.85, 0.3, 1.2), filter 0.18s ease;
+}
+
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:hover .onboarding-language-flag,
+.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:focus-visible .onboarding-language-flag {
+  transform: scale(1.08) rotate(-2deg);
+  filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.44));
+}
+
+@keyframes onboardingLanguageGlow {
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42), 0 0 0 2px rgba(232, 255, 71, 0.12), 0 0 16px rgba(232, 255, 71, 0.18); }
+  50% { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52), 0 0 0 2px rgba(232, 255, 71, 0.22), 0 0 25px rgba(232, 255, 71, 0.34); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn,
+  .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn.active {
+    animation: none;
+    transition: none;
+    transform: none;
   }
 }

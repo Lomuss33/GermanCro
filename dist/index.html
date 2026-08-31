@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=overlays-content">
 <title>GermanCro</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-  <link rel="stylesheet" href="style.css?v=2026-08-30-category-fill1">
-    <link rel="stylesheet" href="onboarding.css?v=2026-08-30-start-flex2">
+  <link rel="stylesheet" href="style.css?v=2026-08-31-wordclass-default1">
+    <link rel="stylesheet" href="onboarding.css?v=2026-08-31-type-scale1">
 </head>
 <body>
 
@@ -77,15 +77,15 @@
   </div>
 
 <div class="stats-bar">
-  <div class="stat stat-streak">
-    <div class="stat-value"><span id="streakNum">0</span><span class="flame">&#128293;</span></div>
-    <div class="stat-label" id="statLabelStreak">Streak</div>
-  </div>
   <div class="stat stat-remaining">
     <div class="stat-value" id="remainingVal">-</div>
     <div class="stat-label" id="statLabelRemaining">&Uuml;brig</div>
   </div>
   <div class="stats-right">
+    <div class="stat stat-streak">
+      <div class="stat-value"><span id="streakNum">0</span><span class="flame">&#128293;</span></div>
+      <div class="stat-label" id="statLabelStreak">Streak</div>
+    </div>
     <div class="stat stat-accuracy">
       <div class="stat-value" id="accuracyVal">&mdash;</div>
       <div class="stat-label" id="statLabelAccuracy">Genauigkeit</div>
@@ -243,6 +243,10 @@
   </div>
   <div class="cat-buttons-label" id="catButtonsLabel">Kategorien für nächste Runde auswählen</div>
   <div class="cat-buttons" id="catButtons"></div>
+  <section class="subcategory-filter" aria-labelledby="subcategoryFilterLabel">
+    <div class="cat-buttons-label subcategory-filter-label" id="subcategoryFilterLabel">Wortart auswählen</div>
+    <div class="subcategory-buttons" id="subcategoryButtons"></div>
+  </section>
   <div class="cat-panel-bottom-actions">
     <button class="author-toggle-btn" id="authorToggleBtn" type="button" aria-expanded="false">Neue Karten</button>
   </div>

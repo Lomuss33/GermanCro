@@ -106,7 +106,7 @@ assert(
 assert(tourSource.includes('event.key === "ArrowRight"'), "Tour must advance with the right arrow");
 assert(tourSource.includes('event.key === " "'), "Tour must advance with the Space key");
 assert(!tourSource.includes('document.addEventListener("keydown"'), "Onboarding must not capture document-wide key events");
-assert(appSource.includes("const factsPromise = Promise.all("), "Optional facts must load independently from critical app boot");
+assert(appSource.includes("async function loadFactsOnDemand()") && !appSource.includes("const factsPromise = Promise.all("), "Optional facts must load on demand outside critical app boot");
 assert(appSource.includes("const FETCH_TIMEOUT_MS = 7000"), "Startup requests must have a bounded timeout");
 assert(
   onboardingCss.includes(".onboarding-dialog:not([open])"),
@@ -192,8 +192,8 @@ assert(
   "Tutorial copy language must not be persisted from learning-language button clicks",
 );
 assert(
-  !appSource.includes("alwaysShow: true"),
-  "The launch onboarding must not be forced to reopen after it has been seen",
+  appSource.includes("alwaysShow: true"),
+  "The launch onboarding must reopen on every browser refresh",
 );
 assert(
   appSource.includes("window.clearTimeout(pendingLanguageSwitchTimer);") &&
@@ -215,7 +215,7 @@ for (const id of ["onboardingDialog", "onboardingTitle", "onboardingPrimaryBtn",
 const distTourSource = await readText("dist/src/onboarding/first-run-tour.js");
 const distAppSource = await readText("dist/src/bootstrap/init-app.js");
 assert(distTourSource.includes('dialog.addEventListener("keydown"'), "dist onboarding keyboard handling is stale");
-assert(distAppSource.includes("const factsPromise = Promise.all("), "dist optional facts boot is stale");
+assert(distAppSource.includes("async function loadFactsOnDemand()") && !distAppSource.includes("const factsPromise = Promise.all("), "dist optional facts boot is stale");
 
 for (const relativePath of [
   "onboarding.css",

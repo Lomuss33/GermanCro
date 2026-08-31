@@ -211,7 +211,14 @@ export function createFirstRunTour({
     if (!cardHost || !isCardStart()) {
       return;
     }
-    dialog.style.setProperty("--onboarding-card-height", `${Math.ceil(cardHost.getBoundingClientRect().height)}px`);
+    const height = `${Math.ceil(cardHost.getBoundingClientRect().height)}px`;
+    dialog.style.setProperty("--onboarding-card-height", height);
+    cardHost.style.setProperty("--onboarding-card-height", height);
+  }
+
+  function refreshCardStartHeight() {
+    cardHost?.style.removeProperty("--onboarding-card-height");
+    syncCardStartHeight();
   }
 
   function shouldShow() {
@@ -645,6 +652,7 @@ export function createFirstRunTour({
       dialog.classList.remove("is-global");
     }
     dialog.style.removeProperty("--onboarding-card-height");
+    cardHost?.style.removeProperty("--onboarding-card-height");
     onClose?.({ reason, replay: wasReplay, completedTour });
     if (
       wasReplay &&
@@ -687,10 +695,6 @@ export function createFirstRunTour({
     renderWelcome();
   }
 
-  function replayTour() {
-    open({ isReplay: true });
-  }
-
   function startWelcomeTour() {
     if (state !== "welcome") {
       return false;
@@ -698,6 +702,17 @@ export function createFirstRunTour({
     promoteToGlobalTour();
     void renderStep(0);
     return true;
+  }
+
+  function startTutorial() {
+    if (state === "welcome") {
+      return startWelcomeTour();
+    }
+    if (state !== "idle") {
+      return false;
+    }
+    open({ isReplay: true });
+    return startWelcomeTour();
   }
 
   function playFromWelcome() {
@@ -824,16 +839,16 @@ export function createFirstRunTour({
     finish("skipped");
   });
   window.addEventListener("resize", () => {
-    syncCardStartHeight();
+    refreshCardStartHeight();
     scheduleLayout();
   }, { passive: true });
   window.addEventListener("orientationchange", () => {
-    syncCardStartHeight();
+    refreshCardStartHeight();
     scheduleLayout();
   }, { passive: true });
   window.addEventListener("scroll", scheduleLayout, { passive: true, capture: true });
   window.visualViewport?.addEventListener("resize", () => {
-    syncCardStartHeight();
+    refreshCardStartHeight();
     scheduleLayout();
   }, { passive: true });
   window.visualViewport?.addEventListener("scroll", scheduleLayout, { passive: true });
@@ -844,8 +859,8 @@ export function createFirstRunTour({
     open,
     playFromWelcome,
     refreshCopy,
-    replay: replayTour,
     shouldShow,
+    startTutorial,
     startWelcomeTour,
   });
 }

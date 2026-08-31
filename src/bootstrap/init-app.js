@@ -344,6 +344,24 @@ let bundledCards = [];
 let persistentCards = [];
 let sessionOnlyCards = [];
 let selectedTopics = null;
+const DEFAULT_SUBCATEGORIES = new Set(SUBCATEGORY_OPTIONS.filter((subcategory) => (
+  subcategory !== "Ausdruck" && subcategory !== "Satz"
+)));
+let selectedSubcategories = new Set(DEFAULT_SUBCATEGORIES);
+const SUBCATEGORY_COLORS = Object.freeze([
+  "#60a5fa", "#fb923c", "#4ade80", "#f87171", "#facc15", "#a78bfa", "#22d3ee", "#f472b6",
+]);
+const SUBCATEGORY_ICONS = Object.freeze({
+  all: "✨",
+  Nomen: "📦",
+  Verb: "⚡",
+  Adjektiv: "🎨",
+  Adverb: "🚀",
+  "Präposition": "🧭",
+  "Konjunktion": "🔗",
+  Ausdruck: "💬",
+  Satz: "📝",
+});
 let mixedTopicFeedbackTimer = 0;
 let capabilities = { persistentSave: false };
 
@@ -357,6 +375,8 @@ let skippedCount = 0;
 let sessionSkipsUsed = 0;
 let forceCorrection = false;
 let sessionStart = 0;
+let roundTimerStarted = false;
+let roundTimerInterval = 0;
 let totalCharsTyped = 0;
 let sessionSkipCounts = new WeakMap();
 let sessionSkippedCards = new WeakSet();
@@ -378,6 +398,8 @@ let isPromptOrderSwapped = false;
 let germanyFacts = null;
 let europeFacts = null;
 let worldFacts = null;
+let factsLoadPromise = null;
+let factsLoaded = false;
 let factsMode = "germany";
 let selectedStateId = null;
 let selectedEuropeCountryId = null;
@@ -408,6 +430,10 @@ const LANGUAGE_FLAG_SOURCES = {
   en: "https://flagcdn.com/gb.svg",
 };
 const LANGUAGE_FLAG_CLASS_NAMES = Object.values(LANGUAGE_FLAG_CLASSES);
+
+document.addEventListener("visibilitychange", () => {
+  document.body.classList.toggle("is-page-hidden", document.hidden);
+}, { passive: true });
 const LANGUAGE_DOCK_LABELS = {
   de: "DE",
   hr: "HR",
@@ -466,6 +492,8 @@ const answerGuideEl = document.getElementById("answerGuide");
 const answerGuideBodyEl = answerGuideEl?.querySelector(".answer-guide-body") || null;
 const answerGuideTrailFlagEl = answerGuideEl?.querySelector(".answer-guide-trail-flag") || null;
 const answerGuideActionRowEl = answerGuideEl?.querySelector(".action-row") || null;
+const roundTimerEl = document.getElementById("roundTimer");
+const finalTimeEl = document.getElementById("finalTime");
 const answerGuideLabelEl = document.getElementById("answerGuideLabel");
 const answerGuideStatusEl = document.getElementById("answerGuideStatus");
 const answerGuideNoteEl = document.getElementById("answerGuideNote");
@@ -480,6 +508,8 @@ const progressTrackEl = document.querySelector(".progress-track");
 const statsBarEl = document.querySelector(".stats-bar");
 const catCountEl = document.getElementById("catCount");
 const catButtonsLabelEl = document.getElementById("catButtonsLabel");
+const subcategoryFilterLabelEl = document.getElementById("subcategoryFilterLabel");
+const subcategoryButtonsEl = document.getElementById("subcategoryButtons");
 const settingsPanelTitleEl = document.getElementById("settingsPanelTitle");
 const settingsPanelTitleTextEl = document.getElementById("settingsPanelTitleText");
 const tutorialReplayBtnEl = document.getElementById("tutorialReplayBtn");
@@ -536,6 +566,10 @@ let appLoaderStartedAt = Date.now();
 let grammarSliderControllers = [];
 let languageDockZoomFrame = 0;
 let installGuideLayoutFrame = 0;
+let statsAnimationFrame = 0;
+let statsAnimationToken = 0;
+let previousStatsSnapshot = null;
+const statsAnimationTimers = new WeakMap();
 const viewportProfile = {
   width: 0,
   height: 0,
@@ -563,6 +597,9 @@ function initScrollSnapController() {
   let settleTimer = 0;
   let snapReleaseTimer = 0;
   let isSnapping = false;
+  let lastScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+  let lastScrollAt = performance.now();
+  let lastScrollVelocity = 0;
 
   function getSnapPositions() {
     const viewportHeight = Math.max(1, window.innerHeight || document.documentElement.clientHeight || 1);
@@ -594,6 +631,15 @@ function initScrollSnapController() {
 
     const viewportHeight = Math.max(1, window.innerHeight || document.documentElement.clientHeight || 1);
     const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    // Momentum scrolling can briefly pause between large wheel/touchpad
+    // deltas. Do not start a second scroll animation while that motion is
+    // still settling; it makes the card and its measured grid fight the
+    // browser's scroll position.
+    if (lastScrollVelocity > 0.8) {
+      lastScrollVelocity = 0;
+      scheduleSettle(260);
+      return;
+    }
     const snapThreshold = viewportHeight / 3;
     const mainCardSnapThreshold = viewportHeight / 10;
     const nearestTarget = getSnapPositions()
@@ -618,23 +664,33 @@ function initScrollSnapController() {
     }, 800);
     window.scrollTo({
       top: nearestTarget.position,
-      behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth",
+      // An immediate correction avoids a second compositor animation racing
+      // with native wheel/touchpad momentum.
+      behavior: "auto",
     });
   }
 
-  function scheduleSettle() {
+  function scheduleSettle(delay = 260) {
     window.clearTimeout(settleTimer);
-    settleTimer = window.setTimeout(settleScrollPosition, 140);
+    settleTimer = window.setTimeout(settleScrollPosition, delay);
   }
 
-  window.addEventListener("scroll", scheduleSettle, { passive: true });
+  window.addEventListener("scroll", () => {
+    const now = performance.now();
+    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    const elapsed = Math.max(1, now - lastScrollAt);
+    lastScrollVelocity = Math.abs(scrollY - lastScrollY) / elapsed;
+    lastScrollY = scrollY;
+    lastScrollAt = now;
+    scheduleSettle();
+  }, { passive: true });
   window.addEventListener("scrollend", () => {
     if (isSnapping) {
       isSnapping = false;
       window.clearTimeout(snapReleaseTimer);
       return;
     }
-    settleScrollPosition();
+    scheduleSettle(80);
   }, { passive: true });
 }
 
@@ -1541,6 +1597,11 @@ function getSubcategoryLabel(subcategory) {
   return t(`categories.${subcategory}`);
 }
 
+function getSubcategoryColor(subcategory) {
+  const index = SUBCATEGORY_OPTIONS.indexOf(subcategory);
+  return index >= 0 ? SUBCATEGORY_COLORS[index] : "#ffffff";
+}
+
 function getScopeLabel(scope) {
   return t(`scopes.${scope}`);
 }
@@ -1554,6 +1615,7 @@ function renderCardBadge(card) {
 
   if (!card) {
     categoryEl.style.removeProperty("color");
+    categoryEl.style.removeProperty("--category-color");
     categoryEl.style.removeProperty("border-color");
     categoryEl.style.removeProperty("background");
     scheduleCardTopbarLayoutSync();
@@ -1568,12 +1630,14 @@ function renderCardBadge(card) {
 
   const metaEl = document.createElement("span");
   metaEl.className = "category-badge-meta";
-  metaEl.textContent = `· ${getSubcategoryLabel(card.subcategory)}`;
+  metaEl.textContent = getSubcategoryLabel(card.subcategory);
+  metaEl.style.setProperty("--subcategory-color", getSubcategoryColor(card.subcategory));
 
   categoryEl.append(topicEl, metaEl);
   categoryEl.style.color = color;
-  categoryEl.style.borderColor = `${color}55`;
-  categoryEl.style.background = `${color}14`;
+  categoryEl.style.setProperty("--category-color", color);
+  categoryEl.style.removeProperty("border-color");
+  categoryEl.style.removeProperty("background");
   scheduleCardTopbarLayoutSync();
 }
 
@@ -1740,7 +1804,7 @@ function skipCurrentCard() {
   sessionSkippedCards.add(card);
   incrementCardSkipCount(card);
   streak = 0;
-  updateStats();
+  updateStats({ event: "skip" });
 
   sessionCards[sessionIndex] = replacementCard;
   loadCard();
@@ -2138,6 +2202,7 @@ function renderStaticUi() {
   setLocalizedText(tutorialReplayBtnEl, "onboarding.controls.replay");
   setLocalizedText(catPanelTitleEl, "messages.categories.title");
   setLocalizedText(catButtonsLabelEl, "messages.categories.select");
+  setLocalizedText(subcategoryFilterLabelEl, "messages.categories.classSelect");
   setLocalizedText(newGameBtn, "messages.categories.newGame");
   syncPromptOrderControls();
   setLocalizedText(difficultyEasyBtn, "difficulty.easy");
@@ -2279,7 +2344,7 @@ async function fetchJson(url, fallback) {
       timeoutId = window.setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
     }
     const response = await fetch(cacheSafeUrl, {
-      cache: "no-store",
+      cache: url === "cards.user.json" ? "no-store" : "default",
       ...(controller ? { signal: controller.signal } : {}),
     });
     if (!response.ok) {
@@ -2497,6 +2562,7 @@ function buildTopicPanel() {
   const mixBtn = document.createElement("button");
   mixBtn.type = "button";
   mixBtn.className = `cat-btn mixed${selectedTopics === null ? " active" : ""}`;
+  mixBtn.style.setProperty("--cat-color", "#e8ff47");
   mixBtn.setAttribute("aria-pressed", String(selectedTopics === null));
   setTopicButtonContent(mixBtn, t("messages.categories.mixed"), "🧩");
   mixBtn.onclick = () => {
@@ -2518,14 +2584,15 @@ function buildTopicPanel() {
     btn.dataset.topic = topic;
     btn.setAttribute("aria-pressed", String(isActive));
     setTopicButtonContent(btn, getTopicLabel(topic), TOPIC_CONFIG[topic]?.icon);
+    btn.style.setProperty("--cat-color", color);
     btn.style.borderColor = `${color}70`;
-    btn.style.color = "#fff";
+    btn.style.color = isActive ? "#07101b" : "#fff";
     btn.style.background = isActive
       ? color
-      : `linear-gradient(135deg, ${color}cc, ${color}78)`;
+      : `linear-gradient(135deg, ${color}b8, ${color}52), linear-gradient(180deg, rgba(18, 28, 64, 0.88), rgba(8, 14, 34, 0.94))`;
     const iconEl = btn.querySelector(".cat-btn-icon");
     if (iconEl) {
-      iconEl.style.color = color;
+      iconEl.style.color = isActive ? "#07101b" : color;
     }
     btn.onclick = () => {
       if (selectedTopics === null) {
@@ -2548,16 +2615,70 @@ function buildTopicPanel() {
 
   updateOnboardingCategoryPreviewTarget();
 
+  buildSubcategoryPanel();
+
   const pool = getPool();
   catCountEl.textContent = `${pool.length} ${t("messages.categories.unit")}`;
   newGameBtn.disabled = pool.length === 0;
+}
+
+function buildSubcategoryPanel() {
+  if (!subcategoryButtonsEl) {
+    return;
+  }
+
+  subcategoryButtonsEl.replaceChildren();
+  const options = [null, ...SUBCATEGORY_OPTIONS];
+  options.forEach((subcategory, index) => {
+    const isActive = subcategory === null
+      ? selectedSubcategories === null
+      : selectedSubcategories?.has(subcategory) === true;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `subcategory-btn${subcategory === null ? " subcategory-btn-all" : ""}${isActive ? " active" : ""}`;
+    if (subcategory) {
+      button.style.setProperty("--subcategory-color", SUBCATEGORY_COLORS[index - 1]);
+    }
+    button.dataset.subcategory = subcategory || "all";
+    button.setAttribute("aria-pressed", String(isActive));
+    const icon = document.createElement("span");
+    icon.className = "subcategory-btn-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = SUBCATEGORY_ICONS[subcategory || "all"];
+    const label = document.createElement("span");
+    label.className = "subcategory-btn-label";
+    label.textContent = subcategory ? getSubcategoryLabel(subcategory) : t("messages.categories.classAll");
+    button.replaceChildren(icon, label);
+    button.addEventListener("click", () => {
+      if (subcategory === null) {
+        selectedSubcategories = null;
+      } else {
+        if (selectedSubcategories === null) {
+          selectedSubcategories = new Set();
+        }
+        if (selectedSubcategories.has(subcategory)) {
+          selectedSubcategories.delete(subcategory);
+          if (selectedSubcategories.size === 0) {
+            selectedSubcategories = null;
+          }
+        } else {
+          selectedSubcategories.add(subcategory);
+        }
+      }
+      buildTopicPanel();
+    });
+    subcategoryButtonsEl.appendChild(button);
+  });
 }
 
 function getPool() {
   const topicFiltered = selectedTopics === null
     ? allCards
     : allCards.filter((card) => selectedTopics.has(card.topic));
-  return topicFiltered.filter(isCardScopeCompatible);
+  const subcategoryFiltered = selectedSubcategories === null
+    ? topicFiltered
+    : topicFiltered.filter((card) => selectedSubcategories.has(card.subcategory));
+  return subcategoryFiltered.filter(isCardScopeCompatible);
 }
 
 function updateSearchLinks(card) {
@@ -3811,9 +3932,9 @@ function refreshFactsPanelData() {
   const hasEuropeFacts = Boolean(europeFacts?.countries?.length);
   const hasWorldFacts = Boolean(worldFacts?.countries?.length);
 
-  factsCountryBtn.disabled = !hasGermanyFacts;
-  factsStatesBtn.disabled = !hasEuropeFacts;
-  factsWorldBtn.disabled = !hasWorldFacts;
+  factsCountryBtn.disabled = factsLoaded && !hasGermanyFacts;
+  factsStatesBtn.disabled = factsLoaded && !hasEuropeFacts;
+  factsWorldBtn.disabled = factsLoaded && !hasWorldFacts;
 
   if (!hasGermanyFacts && !hasEuropeFacts && !hasWorldFacts) {
     updateFactsModeButtons();
@@ -3833,15 +3954,37 @@ function refreshFactsPanelData() {
   renderFactsSelection();
 }
 
+async function loadFactsOnDemand() {
+  if (factsLoaded) {
+    return;
+  }
+  if (!factsLoadPromise) {
+    factsLoadPromise = Promise.all([
+      loadGermanyFacts(),
+      loadEuropeFacts(),
+      loadWorldFacts(),
+    ]).then(([loadedGermanyFacts, loadedEuropeFacts, loadedWorldFacts]) => {
+      germanyFacts = loadedGermanyFacts;
+      europeFacts = loadedEuropeFacts;
+      worldFacts = loadedWorldFacts;
+      factsLoaded = true;
+      refreshFactsPanelData();
+    });
+  }
+  await factsLoadPromise;
+}
+
 function initFactsPanel() {
-  factsCountryBtn.addEventListener("click", () => {
+  factsCountryBtn.addEventListener("click", async () => {
+    await loadFactsOnDemand();
     factsMode = "germany";
     selectedStateId = null;
     renderFactsSelection();
     scrollFactsPanelTopIntoView();
   });
 
-  factsStatesBtn.addEventListener("click", () => {
+  factsStatesBtn.addEventListener("click", async () => {
+    await loadFactsOnDemand();
     if (!europeFacts || !europeFacts.countries.length) {
       renderFactsError();
       return;
@@ -3853,7 +3996,8 @@ function initFactsPanel() {
     scrollFactsPanelTopIntoView();
   });
 
-  factsWorldBtn.addEventListener("click", () => {
+  factsWorldBtn.addEventListener("click", async () => {
+    await loadFactsOnDemand();
     if (!worldFacts || !worldFacts.countries.length) {
       renderFactsError();
       return;
@@ -3866,6 +4010,18 @@ function initFactsPanel() {
   });
 
   refreshFactsPanelData();
+  if (factsPanelEl && typeof IntersectionObserver === "function") {
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) {
+        return;
+      }
+      observer.disconnect();
+      void loadFactsOnDemand();
+    }, { rootMargin: "240px 0px" });
+    observer.observe(factsPanelEl);
+  } else {
+    void loadFactsOnDemand();
+  }
 }
 
 function getCorrectPrefixLength(target, typed) {
@@ -4286,7 +4442,7 @@ function submitCurrentAnswer() {
       }
     }
     inputEl.className = "correct";
-    updateStats();
+    updateStats({ event: "correct" });
     saveCurrentCardState();
     cancelPendingCardAdvance();
     const completedCard = card;
@@ -4313,7 +4469,7 @@ function submitCurrentAnswer() {
   }
   inputEl.className = "wrong";
   forceCorrection = true;
-  updateStats();
+  updateStats({ event: "error" });
 }
 
 function isExactTypedMatch(target, typed) {
@@ -4590,6 +4746,41 @@ function shuffle(cards) {
   return shuffled;
 }
 
+function formatRoundTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function updateRoundTimer() {
+  if (!roundTimerEl || !sessionStart) {
+    return;
+  }
+  const elapsedSeconds = Math.max(0, Math.floor((Date.now() - sessionStart) / 1000));
+  roundTimerEl.textContent = formatRoundTime(elapsedSeconds);
+}
+
+function startRoundTimer() {
+  if (roundTimerStarted) {
+    return;
+  }
+  roundTimerStarted = true;
+  sessionStart = Date.now();
+  if (roundTimerInterval) {
+    window.clearInterval(roundTimerInterval);
+  }
+  updateRoundTimer();
+  roundTimerInterval = window.setInterval(updateRoundTimer, 1000);
+}
+
+function stopRoundTimer() {
+  if (roundTimerInterval) {
+    window.clearInterval(roundTimerInterval);
+    roundTimerInterval = 0;
+  }
+  updateRoundTimer();
+}
+
 function resetSessionProgress() {
   sessionIndex = 0;
   streak = 0;
@@ -4599,7 +4790,11 @@ function resetSessionProgress() {
   skippedCount = 0;
   sessionSkipsUsed = 0;
   totalCharsTyped = 0;
-  sessionStart = Date.now();
+  sessionStart = 0;
+  roundTimerStarted = false;
+  if (roundTimerEl) {
+    roundTimerEl.textContent = formatRoundTime(0);
+  }
   sessionSkipCounts = new WeakMap();
   sessionSkippedCards = new WeakSet();
   cardStateByCard = new WeakMap();
@@ -4673,6 +4868,14 @@ async function recoverPlayableSession(reason = "unknown", requestedSize = SESSIO
     }
   }
 
+  if (selectedSubcategories !== null) {
+    selectedSubcategories = new Set(DEFAULT_SUBCATEGORIES);
+    buildTopicPanel();
+    if (rebuildSessionFromCards(getPool())) {
+      return true;
+    }
+  }
+
   await loadCriticalCardsWithRetry();
   if (recoveryNonce !== sessionRecoveryNonce) {
     return false;
@@ -4701,6 +4904,8 @@ async function startSession(size) {
   } else {
     await recoverPlayableSession("start-session", count);
   }
+
+  animateStatsOnStart();
 
   const scrollTarget = heroStageEl || mainCard;
   scrollTarget.scrollIntoView({
@@ -4740,12 +4945,41 @@ function loadCard(options = {}) {
   }
 }
 
-function updateStats() {
+function replayStatsClass(element, className, duration = 720) {
+  if (!element) {
+    return;
+  }
+
+  const currentTimer = statsAnimationTimers.get(element);
+  if (currentTimer) {
+    window.clearTimeout(currentTimer);
+  }
+  ["is-rise", "is-drop", "is-improving", "is-declining", "is-count-change", "is-event-success", "is-event-error", "is-event-skip"].forEach((transientClass) => {
+    element.classList.remove(transientClass);
+  });
+  element.classList.remove(className);
+  void element.offsetWidth;
+  element.classList.add(className);
+  statsAnimationTimers.set(element, window.setTimeout(() => {
+    element.classList.remove(className);
+    statsAnimationTimers.delete(element);
+  }, duration));
+}
+
+function updateStats({ event = "update" } = {}) {
   const streakEl = document.getElementById("streakNum");
   const correctEl = document.getElementById("correctVal");
   const remainingEl = document.getElementById("remainingVal");
   const accuracyEl = document.getElementById("accuracyVal");
   const wpmEl = document.getElementById("wpmVal");
+
+  const nextSnapshot = {
+    streak,
+    correct: totalCorrect,
+    remaining: sessionCards.length ? sessionCards.length - sessionIndex : null,
+    accuracy: totalAttempts ? Math.round((totalCorrect / totalAttempts) * 100) : null,
+    wpm: null,
+  };
 
   if (streakEl) {
     streakEl.textContent = streak;
@@ -4754,24 +4988,105 @@ function updateStats() {
     correctEl.textContent = totalCorrect;
   }
   if (remainingEl) {
-    remainingEl.textContent = sessionCards.length
-      ? String(sessionCards.length - sessionIndex)
-      : "—";
+    remainingEl.textContent = nextSnapshot.remaining !== null ? String(nextSnapshot.remaining) : "—";
   }
 
-  const accuracy = totalAttempts ? Math.round((totalCorrect / totalAttempts) * 100) : null;
   if (accuracyEl) {
-    accuracyEl.textContent = accuracy !== null ? `${accuracy}%` : "—";
+    accuracyEl.textContent = nextSnapshot.accuracy !== null ? `${nextSnapshot.accuracy}%` : "—";
   }
 
   const minutes = (Date.now() - sessionStart) / 60000;
-  const wpm = minutes > 0 && totalCharsTyped > 0
+  nextSnapshot.wpm = minutes > 0 && totalCharsTyped > 0
     ? Math.round((totalCharsTyped / 5) / minutes)
     : null;
   if (wpmEl) {
-    wpmEl.textContent = wpm || "—";
+    wpmEl.textContent = nextSnapshot.wpm || "—";
   }
 
+  const previous = previousStatsSnapshot;
+  previousStatsSnapshot = nextSnapshot;
+  if (!previous || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+    return;
+  }
+
+  const statFor = (element) => element?.closest(".stat");
+  const streakStat = statFor(streakEl);
+  const remainingStat = statFor(remainingEl);
+  const accuracyStat = statFor(accuracyEl);
+  const wpmStat = statFor(wpmEl);
+
+  if (nextSnapshot.streak !== previous.streak) {
+    replayStatsClass(streakStat, nextSnapshot.streak > previous.streak ? "is-rise" : "is-drop");
+  }
+  if (nextSnapshot.remaining !== previous.remaining) {
+    replayStatsClass(remainingStat, "is-count-change");
+  }
+  if (nextSnapshot.accuracy !== previous.accuracy && nextSnapshot.accuracy !== null) {
+    replayStatsClass(accuracyStat, nextSnapshot.accuracy > (previous.accuracy ?? -1) ? "is-improving" : "is-declining");
+  }
+  if (nextSnapshot.wpm !== previous.wpm && nextSnapshot.wpm !== null) {
+    replayStatsClass(wpmStat, nextSnapshot.wpm > (previous.wpm ?? -1) ? "is-rise" : "is-count-change");
+  }
+
+  const eventClass = event === "correct" ? "is-event-success" : event === "error" ? "is-event-error" : event === "skip" ? "is-event-skip" : null;
+  if (eventClass) {
+    replayStatsClass(statsBarEl, eventClass, 880);
+  }
+}
+
+function animateStatsOnStart() {
+  if (!statsBarEl) {
+    return;
+  }
+
+  const animationToken = ++statsAnimationToken;
+  if (statsAnimationFrame) {
+    window.cancelAnimationFrame(statsAnimationFrame);
+    statsAnimationFrame = 0;
+  }
+
+  statsBarEl.classList.remove("is-starting");
+  statsBarEl.querySelectorAll(".stat").forEach((stat) => stat.classList.remove("is-starting"));
+
+  // Force a style boundary so pressing START twice reliably replays the
+  // entrance animation instead of leaving the stats in their final state.
+  void statsBarEl.offsetWidth;
+  statsBarEl.classList.add("is-starting");
+  statsBarEl.querySelectorAll(".stat").forEach((stat, index) => {
+    stat.style.setProperty("--stat-delay", `${index * 90}ms`);
+    stat.classList.add("is-starting");
+  });
+
+  const remainingEl = document.getElementById("remainingVal");
+  const target = Number.parseInt(remainingEl?.textContent || "", 10);
+  if (remainingEl && Number.isFinite(target) && target > 0 && !window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+    const startedAt = performance.now();
+    const duration = 720;
+    const tick = (now) => {
+      if (animationToken !== statsAnimationToken) {
+        return;
+      }
+      const progress = Math.min(1, (now - startedAt) / duration);
+      const eased = 1 - ((1 - progress) ** 3);
+      remainingEl.textContent = String(Math.max(1, Math.round(target * eased)));
+      if (progress < 1) {
+        statsAnimationFrame = window.requestAnimationFrame(tick);
+      } else {
+        statsAnimationFrame = 0;
+      }
+    };
+    statsAnimationFrame = window.requestAnimationFrame(tick);
+  }
+
+  window.setTimeout(() => {
+    if (animationToken === statsAnimationToken) {
+      statsBarEl.classList.remove("is-starting");
+      statsBarEl.querySelectorAll(".stat").forEach((stat) => {
+        stat.classList.remove("is-starting");
+        stat.style.removeProperty("--stat-delay");
+      });
+    }
+  }, 1500);
 }
 
 function showCombo() {
@@ -5036,6 +5351,7 @@ function initFirstRunTour() {
 
   firstRunTour = createFirstRunTour({
     dialog: onboardingDialogEl,
+    alwaysShow: true,
     translate: t,
     getLearningMode: getTargetLanguage,
     setLearningMode: switchLearningMode,
@@ -5051,6 +5367,8 @@ function initFirstRunTour() {
       }
       onboardingPending = false;
       onboardingOpenedAt = Date.now();
+      gameArea?.setAttribute("inert", "");
+      sessionEndEl?.setAttribute("inert", "");
       maybeShowInstallGuide();
     },
     onClose: ({ replay, reason }) => {
@@ -5059,6 +5377,8 @@ function initFirstRunTour() {
         : 0;
       onboardingOpenedAt = 0;
       onboardingPending = false;
+      gameArea?.removeAttribute("inert");
+      sessionEndEl?.removeAttribute("inert");
       if (replay) {
         sessionStart += onboardingDuration;
       } else {
@@ -5083,10 +5403,7 @@ function initFirstRunTour() {
 
   onboardingPending = Boolean(firstRunTour?.shouldShow());
   tutorialReplayBtnEl?.addEventListener("click", () => {
-    if (firstRunTour?.startWelcomeTour()) {
-      return;
-    }
-    firstRunTour?.replay();
+    firstRunTour?.startTutorial();
   });
 }
 
@@ -5096,6 +5413,7 @@ function getEncouragement(currentStreak) {
 }
 
 function showSessionEnd() {
+  stopRoundTimer();
   progFill.style.width = "100%";
   setGameSurfaceMode(true);
   updateSkipCardButtonState();
@@ -5103,7 +5421,12 @@ function showSessionEnd() {
   const pct = Math.round((totalCorrect / sessionCards.length) * 100);
   document.getElementById("finalScore").textContent = `${pct}%`;
 
-  const secs = Math.round((Date.now() - sessionStart) / 1000);
+  const secs = roundTimerStarted && sessionStart
+    ? Math.round((Date.now() - sessionStart) / 1000)
+    : 0;
+  if (finalTimeEl) {
+    finalTimeEl.textContent = `⏱ ${formatRoundTime(secs)}`;
+  }
   const wpm = secs > 0 ? Math.round((totalCharsTyped / 5) / (secs / 60)) : 0;
   document.getElementById("finalDetails").textContent =
     t("messages.session.finalDetails", {
@@ -5348,6 +5671,10 @@ function initInputEvents() {
       return;
     }
 
+    if (!roundTimerStarted && inputEl.value.length > 0) {
+      startRoundTimer();
+    }
+
     if (!isRenderableCard(sessionCards[sessionIndex])) {
       void recoverPlayableSession("input-invalid-card", sessionCards.length || SESSION_SIZE);
       return;
@@ -5462,11 +5789,6 @@ async function initApp() {
   syncSessionSizeLabel();
   learningMode = loadLearningMode();
   isPromptOrderSwapped = loadPromptOrderPreference();
-  const factsPromise = Promise.all([
-    loadGermanyFacts(),
-    loadEuropeFacts(),
-    loadWorldFacts(),
-  ]);
   const [loadedLocales, baseCards, loadedPersistentCards, currentCapabilities] = await Promise.all([
     loadLocales(),
     fetchJson("cards.json", []),
@@ -5505,12 +5827,6 @@ async function initApp() {
     firstRunTour?.open();
   }
 
-  void factsPromise.then(([loadedFacts, loadedEuropeFacts, loadedWorldFacts]) => {
-    germanyFacts = loadedFacts;
-    europeFacts = loadedEuropeFacts;
-    worldFacts = loadedWorldFacts;
-    refreshFactsPanelData();
-  });
 }
 
 window.startSession = startSession;

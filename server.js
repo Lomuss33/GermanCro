@@ -130,9 +130,9 @@ async function serveStatic(res, pathname) {
     };
 
     if ([".html", ".css", ".js", ".json", ".svg", ".txt"].includes(ext)) {
-      headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
-      headers.Pragma = "no-cache";
-      headers.Expires = "0";
+      headers["Cache-Control"] = ext === ".html"
+        ? "no-cache, must-revalidate"
+        : "public, max-age=3600, must-revalidate";
     }
 
     res.writeHead(200, headers);

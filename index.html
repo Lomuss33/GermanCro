@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=overlays-content">
 <title>GermanCro</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-  <link rel="stylesheet" href="style.css?v=2026-08-30-category-fill1">
-    <link rel="stylesheet" href="onboarding.css?v=2026-08-30-start-flex2">
+  <link rel="stylesheet" href="style.css?v=2026-08-31-round-timer5">
+    <link rel="stylesheet" href="onboarding.css?v=2026-08-31-shared-surface1">
 </head>
 <body>
 
@@ -77,15 +77,15 @@
   </div>
 
 <div class="stats-bar">
-  <div class="stat stat-streak">
-    <div class="stat-value"><span id="streakNum">0</span><span class="flame">&#128293;</span></div>
-    <div class="stat-label" id="statLabelStreak">Streak</div>
-  </div>
   <div class="stat stat-remaining">
     <div class="stat-value" id="remainingVal">-</div>
     <div class="stat-label" id="statLabelRemaining">&Uuml;brig</div>
   </div>
   <div class="stats-right">
+    <div class="stat stat-streak">
+      <div class="stat-value"><span id="streakNum">0</span><span class="flame">&#128293;</span></div>
+      <div class="stat-label" id="statLabelStreak">Streak</div>
+    </div>
     <div class="stat stat-accuracy">
       <div class="stat-value" id="accuracyVal">&mdash;</div>
       <div class="stat-label" id="statLabelAccuracy">Genauigkeit</div>
@@ -186,6 +186,7 @@
       </div>
       <div class="answer-guide-foot">
         <div class="answer-guide-note" id="answerGuideNote"></div>
+        <div class="round-timer" id="roundTimer" aria-label="Round time">00:00</div>
         <div class="action-row" data-onboarding-target="answer-actions">
           <div class="skip-action"><button class="skip-card-btn" id="skipCardBtn" type="button"><span class="button-icon button-icon-emoji" aria-hidden="true">&#9197;&#65039;</span> <span id="skipCardBtnLabel">Skip</span> <span class="skip-counter" id="skipCounter" aria-live="polite">5</span></button></div>
           <div class="enter-hint"><button class="key-badge" id="enterKeyBtn" type="button" aria-keyshortcuts="Enter">Enter</button> <span id="enterHintLabel">zum Pr&uuml;fen</span></div>
@@ -200,6 +201,7 @@
   <div class="session-end" id="sessionEnd">
     <div class="score-label" id="sessionEndLabel">Sitzung beendet</div>
     <div class="big-score" id="finalScore"></div>
+    <div class="session-end-time" id="finalTime"></div>
     <div class="session-end-details" id="finalDetails"></div>
     <div class="session-end-emoji" id="finalEmoji"></div>
     <button class="restart-btn" id="restartBtn" type="button">Neue Runde</button>
@@ -243,6 +245,10 @@
   </div>
   <div class="cat-buttons-label" id="catButtonsLabel">Kategorien für nächste Runde auswählen</div>
   <div class="cat-buttons" id="catButtons"></div>
+  <section class="subcategory-filter" aria-labelledby="subcategoryFilterLabel">
+    <div class="cat-buttons-label subcategory-filter-label" id="subcategoryFilterLabel">Wortart auswählen</div>
+    <div class="subcategory-buttons" id="subcategoryButtons"></div>
+  </section>
   <div class="cat-panel-bottom-actions">
     <button class="author-toggle-btn" id="authorToggleBtn" type="button" aria-expanded="false">Neue Karten</button>
   </div>
@@ -319,6 +325,6 @@
   <a href="https://lovro.info/" target="_blank" rel="noopener noreferrer" id="siteFooterLink">made by Lovro Musić - contact@lovro-music.de - lovro.info</a>
 </footer>
 
-  <script type="module" src="app.js?v=2026-08-30-launch-screen1"></script>
+  <script type="module" src="app.js?v=2026-08-31-round-timer2"></script>
 </body>
 </html>

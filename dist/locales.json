@@ -66,7 +66,7 @@
       "stats": {
         "streak": "Streak",
         "remaining": "Übrig",
-        "accuracy": "Genauigkeit",
+        "accuracy": "ACC",
         "wpm": "WPM"
       },
       "legend": {
@@ -118,6 +118,8 @@
       "categories": {
         "title": "Themen auswählen",
         "select": "Kategorien für nächste Runde auswählen",
+        "classSelect": "Wortart auswählen",
+        "classAll": "Alle Wortarten",
         "mixed": "Alle Themen",
         "available": "{count} {unit} verfügbar",
         "unit": "Karten",
@@ -687,7 +689,7 @@
       "stats": {
         "streak": "Niz",
         "remaining": "Preostalo",
-        "accuracy": "Točnost",
+        "accuracy": "ACC",
         "wpm": "WPM"
       },
       "legend": {
@@ -739,6 +741,8 @@
       "categories": {
         "title": "Odaberi teme",
         "select": "Odaberi kategorije za sljedeću igru",
+        "classSelect": "Odaberi vrstu riječi",
+        "classAll": "Sve vrste riječi",
         "mixed": "Sve teme",
         "available": "{count} {unit} dostupno",
         "unit": "kartica",
@@ -1300,7 +1304,7 @@
       "stats": {
         "streak": "Streak",
         "remaining": "Remaining",
-        "accuracy": "Accuracy",
+        "accuracy": "ACC",
         "wpm": "WPM"
       },
       "legend": {
@@ -1352,6 +1356,8 @@
       "categories": {
         "title": "Choose topics",
         "select": "Select categories for the next round",
+        "classSelect": "Choose a word class",
+        "classAll": "All word classes",
         "mixed": "All topics",
         "available": "{count} {unit} available",
         "unit": "cards",
