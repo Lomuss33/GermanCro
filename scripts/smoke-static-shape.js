@@ -191,6 +191,22 @@ assert(
   !tourSource.includes("ONBOARDING_LANGUAGE_STORAGE_KEY"),
   "Tutorial copy language must not be persisted from learning-language button clicks",
 );
+assert(
+  !appSource.includes("alwaysShow: true"),
+  "The launch onboarding must not be forced to reopen after it has been seen",
+);
+assert(
+  appSource.includes("window.clearTimeout(pendingLanguageSwitchTimer);") &&
+    appSource.includes("const languageSwitchToken = ++pendingLanguageSwitchToken;") &&
+    appSource.includes("if (languageSwitchToken !== pendingLanguageSwitchToken) {"),
+  "Learning-language switches must cancel stale delayed updates to avoid race conditions",
+);
+assert(
+  tourSource.includes("function syncCardStartHeight()") &&
+    tourSource.includes('window.addEventListener("resize", () => {') &&
+    tourSource.includes("syncCardStartHeight();"),
+  "The card-start onboarding height must resync on viewport changes",
+);
 
 for (const id of ["onboardingDialog", "onboardingTitle", "onboardingPrimaryBtn", "tutorialReplayBtn"]) {
   assert(distHtml.includes(`id="${id}"`), `dist/index.html is missing required id="${id}"`);

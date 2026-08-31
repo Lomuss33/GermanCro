@@ -386,6 +386,9 @@ let factsPickerRenderKey = "";
 let locales = null;
 let hasBootstrappedApp = false;
 let sessionRecoveryNonce = 0;
+let pendingLanguageSwitchTimer = 0;
+let pendingLanguageSwitchToken = 0;
+let languageSwitchCleanupTimer = 0;
 let firstRunTour = null;
 let onboardingPending = false;
 let onboardingOpenedAt = 0;
@@ -2177,6 +2180,9 @@ function switchLearningMode(nextLanguage) {
     return;
   }
 
+  window.clearTimeout(pendingLanguageSwitchTimer);
+  window.clearTimeout(languageSwitchCleanupTimer);
+  const languageSwitchToken = ++pendingLanguageSwitchToken;
   saveCurrentCardState();
   document.body.classList.add("is-language-switching");
   if (siteTitleEl) {
@@ -2184,7 +2190,12 @@ function switchLearningMode(nextLanguage) {
     siteTitleEl.classList.add("is-changing-out");
   }
 
-  window.setTimeout(async () => {
+  pendingLanguageSwitchTimer = window.setTimeout(async () => {
+    pendingLanguageSwitchTimer = 0;
+    if (languageSwitchToken !== pendingLanguageSwitchToken) {
+      return;
+    }
+
     learningMode = nextLanguage;
     saveLearningMode();
     applyLearningTheme();
@@ -2198,6 +2209,9 @@ function switchLearningMode(nextLanguage) {
       loadCard({ focusInput: false });
     } else {
       await recoverPlayableSession("language-switch", sessionCards.length || SESSION_SIZE);
+      if (languageSwitchToken !== pendingLanguageSwitchToken) {
+        return;
+      }
     }
 
     if (siteTitleEl) {
@@ -2206,7 +2220,13 @@ function switchLearningMode(nextLanguage) {
       window.setTimeout(() => siteTitleEl.classList.remove("is-changing-in"), 340);
     }
 
-    window.setTimeout(() => document.body.classList.remove("is-language-switching"), 180);
+    languageSwitchCleanupTimer = window.setTimeout(() => {
+      if (languageSwitchToken !== pendingLanguageSwitchToken) {
+        return;
+      }
+      document.body.classList.remove("is-language-switching");
+      languageSwitchCleanupTimer = 0;
+    }, 180);
   }, 85);
 }
 
@@ -5016,7 +5036,6 @@ function initFirstRunTour() {
 
   firstRunTour = createFirstRunTour({
     dialog: onboardingDialogEl,
-    alwaysShow: true,
     translate: t,
     getLearningMode: getTargetLanguage,
     setLearningMode: switchLearningMode,

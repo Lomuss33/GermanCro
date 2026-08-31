@@ -207,6 +207,13 @@ export function createFirstRunTour({
     return dialog.open && state !== "idle";
   }
 
+  function syncCardStartHeight() {
+    if (!cardHost || !isCardStart()) {
+      return;
+    }
+    dialog.style.setProperty("--onboarding-card-height", `${Math.ceil(cardHost.getBoundingClientRect().height)}px`);
+  }
+
   function shouldShow() {
     // The welcome state can act as the app's launch gate when enabled by the host.
     return alwaysShow || !sessionSeen;
@@ -478,6 +485,7 @@ export function createFirstRunTour({
       elements.primaryButton.textContent = tutorialTranslate("onboarding.controls.play");
     }
     syncLanguageButtons();
+    syncCardStartHeight();
     elements.panel?.removeAttribute("style");
     if (focusTitle) {
       window.requestAnimationFrame(() => elements.title?.focus({ preventScroll: true }));
@@ -664,9 +672,7 @@ export function createFirstRunTour({
     } else {
       cardHost?.prepend(dialog);
       dialog.classList.add("is-card-start");
-      if (cardHost) {
-        dialog.style.setProperty("--onboarding-card-height", `${Math.ceil(cardHost.getBoundingClientRect().height)}px`);
-      }
+      syncCardStartHeight();
     }
     if (!isCardStart()) {
       document.body.classList.add("has-onboarding-open");
@@ -817,20 +823,29 @@ export function createFirstRunTour({
     event.preventDefault();
     finish("skipped");
   });
-  window.addEventListener("resize", scheduleLayout, { passive: true });
-  window.addEventListener("orientationchange", scheduleLayout, { passive: true });
+  window.addEventListener("resize", () => {
+    syncCardStartHeight();
+    scheduleLayout();
+  }, { passive: true });
+  window.addEventListener("orientationchange", () => {
+    syncCardStartHeight();
+    scheduleLayout();
+  }, { passive: true });
   window.addEventListener("scroll", scheduleLayout, { passive: true, capture: true });
-  window.visualViewport?.addEventListener("resize", scheduleLayout, { passive: true });
+  window.visualViewport?.addEventListener("resize", () => {
+    syncCardStartHeight();
+    scheduleLayout();
+  }, { passive: true });
   window.visualViewport?.addEventListener("scroll", scheduleLayout, { passive: true });
   reduceMotionQuery?.addEventListener?.("change", scheduleLayout);
 
   return Object.freeze({
     isOpen,
     open,
-    refreshCopy,
     playFromWelcome,
+    refreshCopy,
     replay: replayTour,
-    startWelcomeTour,
     shouldShow,
+    startWelcomeTour,
   });
 }
