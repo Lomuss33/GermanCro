@@ -7719,6 +7719,15 @@ body.layout-phone-portrait .card-topbar {
   border-radius: 0;
 }
 
+/* People categories are always one full-width item per row. */
+.facts-notable-people-groups {
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-auto-flow: row !important;
+}
+.facts-notable-people-groups > .facts-notable-people-group {
+  grid-column: 1 / -1 !important;
+}
+
 /* Primary facts-list palette requested by the visual grouping. */
 #factsContent > .facts-view > .facts-list-section:nth-of-type(1) {
   --list-accent: #39ff14;
