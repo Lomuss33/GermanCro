@@ -199,11 +199,19 @@
   </div>
 
   <div class="session-end" id="sessionEnd">
-    <div class="score-label" id="sessionEndLabel">Sitzung beendet</div>
+    <div class="session-end-header">
+      <div class="score-label" id="sessionEndLabel">Sitzung beendet</div>
+      <div class="session-end-emoji" id="finalEmoji"></div>
+    </div>
     <div class="big-score" id="finalScore"></div>
-    <div class="session-end-time" id="finalTime"></div>
-    <div class="session-end-details" id="finalDetails"></div>
-    <div class="session-end-emoji" id="finalEmoji"></div>
+    <div class="session-end-metrics" role="list" aria-label="Session results">
+      <div class="session-end-metric" role="listitem"><span id="finalCorrectLabel">Correct</span><strong id="finalCorrect"></strong></div>
+      <div class="session-end-metric" role="listitem"><span id="finalSkippedLabel">Skipped</span><strong id="finalSkipped"></strong></div>
+      <div class="session-end-metric" role="listitem"><span id="finalStreakLabel">Best streak</span><strong id="finalStreak"></strong></div>
+      <div class="session-end-metric" role="listitem"><span id="finalWpmLabel">WPM</span><strong id="finalWpm"></strong></div>
+      <div class="session-end-metric session-end-metric-time" role="listitem"><span id="finalTimeLabel">Time</span><strong id="finalTime"></strong></div>
+    </div>
+    <div class="session-end-details visually-hidden" id="finalDetails"></div>
     <button class="restart-btn" id="restartBtn" type="button">Neue Runde</button>
   </div>
   </div>

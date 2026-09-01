@@ -573,7 +573,16 @@ const factsPanelEl = document.querySelector(".facts-panel");
 const hintBtnEl = document.getElementById("hintBtn");
 const enterHintLabelEl = document.getElementById("enterHintLabel");
 const sessionEndLabelEl = document.getElementById("sessionEndLabel");
+const finalCorrectLabelEl = document.getElementById("finalCorrectLabel");
+const finalSkippedLabelEl = document.getElementById("finalSkippedLabel");
+const finalStreakLabelEl = document.getElementById("finalStreakLabel");
+const finalWpmLabelEl = document.getElementById("finalWpmLabel");
+const finalTimeLabelEl = document.getElementById("finalTimeLabel");
 const restartBtnEl = document.getElementById("restartBtn");
+const finalCorrectEl = document.getElementById("finalCorrect");
+const finalSkippedEl = document.getElementById("finalSkipped");
+const finalStreakEl = document.getElementById("finalStreak");
+const finalWpmEl = document.getElementById("finalWpm");
 const siteFooterLinkEl = document.getElementById("siteFooterLink");
 let appLoaderStartedAt = Date.now();
 let grammarSliderControllers = [];
@@ -1280,6 +1289,7 @@ function setGameSurfaceMode(showSessionEnd) {
 
   gameArea.style.display = showSessionEnd ? "none" : "";
   sessionEndEl.style.display = showSessionEnd ? "flex" : "none";
+  mainCard?.classList.toggle("is-session-ended", showSessionEnd);
 }
 
 function syncViewportProfile() {
@@ -2210,6 +2220,11 @@ function renderStaticUi() {
   renderHintButtonLabel();
   setLocalizedText(enterHintLabelEl, "messages.actions.enterHint");
   setLocalizedText(sessionEndLabelEl, "messages.session.finished");
+  setLocalizedText(finalCorrectLabelEl, "messages.session.correct");
+  setLocalizedText(finalSkippedLabelEl, "messages.session.skipped");
+  setLocalizedText(finalStreakLabelEl, "messages.session.bestStreak");
+  setLocalizedText(finalWpmLabelEl, "messages.session.wpm");
+  setLocalizedText(finalTimeLabelEl, "messages.session.time");
   setLocalizedText(restartBtnEl, "messages.session.newRound");
   setLocalizedText(settingsPanelTitleTextEl, "messages.actions.settings");
   setLocalizedText(tutorialReplayBtnEl, "onboarding.controls.replay");
@@ -5553,9 +5568,13 @@ function showSessionEnd() {
     ? Math.round((Date.now() - sessionStart) / 1000)
     : 0;
   if (finalTimeEl) {
-    finalTimeEl.textContent = `⏱ ${formatRoundTime(secs)}`;
+    finalTimeEl.textContent = formatRoundTime(secs);
   }
   const wpm = secs > 0 ? Math.round((totalCharsTyped / 5) / (secs / 60)) : 0;
+  if (finalCorrectEl) finalCorrectEl.textContent = `${totalCorrect}/${sessionCards.length}`;
+  if (finalSkippedEl) finalSkippedEl.textContent = String(skippedCount);
+  if (finalStreakEl) finalStreakEl.textContent = String(bestStreak);
+  if (finalWpmEl) finalWpmEl.textContent = String(wpm);
   document.getElementById("finalDetails").textContent =
     t("messages.session.finalDetails", {
       correct: totalCorrect,
