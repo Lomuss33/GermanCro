@@ -647,7 +647,10 @@ function initScrollSnapController() {
   }
 
   function settleScrollPosition() {
-    if (isSnapping || onboardingPending || firstRunTour?.isOpen()) {
+    // Facts replace their compact loading state with a much taller reading
+    // surface. Never calculate or apply a snap against that temporary page
+    // geometry.
+    if (isSnapping || !factsLoaded || onboardingPending || firstRunTour?.isOpen()) {
       return;
     }
 
@@ -4153,18 +4156,10 @@ function initFactsPanel() {
   });
 
   refreshFactsPanelData();
-  if (factsPanelEl && typeof IntersectionObserver === "function") {
-    const observer = new IntersectionObserver((entries) => {
-      if (!entries.some((entry) => entry.isIntersecting)) {
-        return;
-      }
-      observer.disconnect();
-      void loadFactsOnDemand();
-    }, { rootMargin: "240px 0px" });
-    observer.observe(factsPanelEl);
-  } else {
-    void loadFactsOnDemand();
-  }
+  // Start this optional request during the loader's minimum display time.
+  // It remains outside the critical bootstrap Promise, but normally settles
+  // before a user can reach the facts panel.
+  void loadFactsOnDemand();
 }
 
 function getCorrectPrefixLength(target, typed) {

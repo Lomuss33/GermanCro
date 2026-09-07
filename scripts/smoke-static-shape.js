@@ -10,6 +10,7 @@ const html = await readText("index.html");
 const distHtml = await readText("dist/index.html");
 const css = await readText("style.css");
 const normalizedCss = css.replace(/\r\n/g, "\n");
+const distCss = await readText("dist/style.css");
 const onboardingCss = await readText("onboarding.css");
 const normalizedOnboardingCss = onboardingCss.replace(/\r\n/g, "\n");
 const appSource = await readText("src/bootstrap/init-app.js");
@@ -106,7 +107,20 @@ assert(
 assert(tourSource.includes('event.key === "ArrowRight"'), "Tour must advance with the right arrow");
 assert(tourSource.includes('event.key === " "'), "Tour must advance with the Space key");
 assert(!tourSource.includes('document.addEventListener("keydown"'), "Onboarding must not capture document-wide key events");
-assert(appSource.includes("async function loadFactsOnDemand()") && !appSource.includes("const factsPromise = Promise.all("), "Optional facts must load on demand outside critical app boot");
+assert(
+  appSource.includes("async function loadFactsOnDemand()") &&
+    appSource.includes("void loadFactsOnDemand();") &&
+    !appSource.includes("const factsPromise = Promise.all("),
+  "Optional facts must start eagerly outside the critical app boot Promise",
+);
+assert(
+  appSource.includes("isSnapping || !factsLoaded || onboardingPending"),
+  "Scroll snapping must wait for stable facts-panel geometry",
+);
+assert(
+  !normalizedCss.includes("content-visibility: auto") && !distCss.includes("content-visibility: auto"),
+  "Dynamic panels must not be culled while scrolling",
+);
 assert(appSource.includes("const FETCH_TIMEOUT_MS = 7000"), "Startup requests must have a bounded timeout");
 assert(
   onboardingCss.includes(".onboarding-dialog:not([open])"),
@@ -215,7 +229,13 @@ for (const id of ["onboardingDialog", "onboardingTitle", "onboardingPrimaryBtn",
 const distTourSource = await readText("dist/src/onboarding/first-run-tour.js");
 const distAppSource = await readText("dist/src/bootstrap/init-app.js");
 assert(distTourSource.includes('dialog.addEventListener("keydown"'), "dist onboarding keyboard handling is stale");
-assert(distAppSource.includes("async function loadFactsOnDemand()") && !distAppSource.includes("const factsPromise = Promise.all("), "dist optional facts boot is stale");
+assert(
+  distAppSource.includes("async function loadFactsOnDemand()") &&
+    distAppSource.includes("void loadFactsOnDemand();") &&
+    distAppSource.includes("isSnapping || !factsLoaded || onboardingPending") &&
+    !distAppSource.includes("const factsPromise = Promise.all("),
+  "dist optional facts and scroll-stability behavior is stale",
+);
 
 for (const relativePath of [
   "onboarding.css",
