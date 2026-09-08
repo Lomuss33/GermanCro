@@ -1,0 +1,292 @@
+/* Shared color hierarchy. Keep the flag and existing panel backgrounds intact. */
+:root {
+  --ui-ink: #f4f7ff;
+  --ui-secondary: #c3cee3;
+  --ui-line: rgba(195, 206, 227, 0.24);
+  --ui-lime: #e8ff47;
+  --ui-pink: #ff9abc;
+  --ui-cyan: #7dd3fc;
+  --ui-dark: #10182b;
+}
+
+#catPanel, #searchPanel, body > .facts-panel {
+  border-color: var(--ui-line);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+#onboardingDialog .onboarding-title,
+#catPanel .cat-panel-title,
+.facts-panel .facts-title {
+  color: var(--ui-ink);
+  text-shadow: none;
+}
+
+#onboardingDialog .onboarding-copy,
+#catPanel .cat-count,
+#catPanel .cat-buttons-label,
+.site-title-row .title-guide {
+  color: var(--ui-secondary);
+  text-shadow: none;
+}
+
+#onboardingDialog .onboarding-language-label,
+#searchPanel .grammar-card-title {
+  color: var(--ui-cyan);
+  text-shadow: none;
+}
+
+/* Solid lime is reserved for the main action; selected options use a tint. */
+#catPanel .new-game-btn,
+#onboardingDialog.onboarding-dialog .onboarding-primary-btn {
+  background: var(--ui-lime);
+  border-color: var(--ui-lime);
+  color: var(--ui-dark);
+  text-shadow: none;
+  box-shadow: 0 4px 16px rgba(232, 255, 71, 0.14);
+}
+
+#catPanel .new-game-btn:hover,
+#onboardingDialog.onboarding-dialog .onboarding-primary-btn:hover {
+  background: #f1ff8a;
+  border-color: #f1ff8a;
+  filter: none;
+}
+
+#catPanel .tutorial-replay-btn,
+#onboardingDialog.onboarding-dialog .onboarding-secondary-btn {
+  background: rgba(255, 154, 188, 0.12);
+  border-color: rgba(255, 154, 188, 0.5);
+  color: #ffd2e2;
+  text-shadow: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+#onboardingDialog.onboarding-dialog .onboarding-settings-btn,
+#catPanel .cat-panel-bottom-actions .author-toggle-btn {
+  background: rgba(10, 18, 46, 0.35);
+  border-color: var(--ui-line);
+  color: var(--ui-secondary);
+  box-shadow: none;
+}
+
+#onboardingDialog.onboarding-dialog .onboarding-language-btn {
+  border-color: var(--ui-line);
+  color: var(--ui-ink);
+  box-shadow: none;
+}
+#onboardingDialog.onboarding-dialog .onboarding-language-btn.active {
+  background: linear-gradient(150deg, rgba(232, 255, 71, 0.18), rgba(232, 255, 71, 0.06));
+  border-color: var(--ui-lime);
+  color: var(--ui-lime);
+  box-shadow: inset 0 0 0 1px rgba(232, 255, 71, 0.12);
+  animation: none;
+}
+#onboardingDialog .onboarding-language-btn.active .onboarding-language-name {
+  color: var(--ui-lime);
+  text-shadow: none;
+}
+
+/* Retain every topic hue, with readable selection and restrained emphasis.
+   Existing category states use !important, so these overrides match them. */
+#catPanel #catButtons { grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
+#catPanel #catButtons .cat-btn {
+  filter: none;
+  text-shadow: none;
+  box-shadow: none;
+  animation: none;
+}
+#catPanel #catButtons .cat-btn:not(.active) {
+  border-color: color-mix(in srgb, var(--cat-color) 48%, #536078) !important;
+  background: rgba(10, 18, 46, 0.24) !important;
+}
+#catPanel #catButtons .cat-btn.active {
+  background: var(--cat-color) !important;
+  border-color: var(--cat-color) !important;
+  color: var(--ui-dark) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+#catPanel #catButtons .cat-btn:not(.active) .cat-btn-label {
+  color: var(--ui-ink) !important;
+}
+#catPanel #catButtons .cat-btn.active .cat-btn-label {
+  color: var(--ui-dark) !important;
+}
+#catPanel .subcategory-btn { box-shadow: none; text-shadow: none; }
+#catPanel .subcategory-btn.active { color: var(--ui-dark); box-shadow: none; }
+#catPanel .difficulty-panel button.active { color: var(--ui-dark); text-shadow: none; }
+#catPanel .difficulty-panel button[data-diff="hard"].active { color: var(--ui-ink); }
+
+/* Reference content uses cyan headings and white body copy. */
+#searchPanel .search-link {
+  background: rgba(125, 211, 252, 0.07);
+  border-color: rgba(125, 211, 252, 0.3);
+  color: var(--ui-ink);
+  box-shadow: none;
+}
+#searchPanel .search-link-icon,
+#searchPanel .grammar-slider-header-cell .grammar-slider-line,
+#searchPanel .grammar-slider-rowheader-cell .grammar-slider-line {
+  color: var(--ui-cyan);
+}
+#searchPanel .grammar-slider-data-cell .grammar-slider-line { color: var(--ui-ink); }
+#searchPanel .grammar-card { border-color: var(--ui-line); box-shadow: none; }
+
+.facts-panel .facts-card-label,
+.facts-panel .facts-card-value,
+.facts-panel .facts-list-title,
+.facts-panel .facts-notable-people-title { text-shadow: none; }
+.facts-panel .facts-card-value { color: var(--ui-ink); }
+.facts-panel .facts-notable-people-group { box-shadow: none; }
+.facts-panel .facts-chip-link { animation: none; box-shadow: none; text-shadow: none; }
+.facts-panel .facts-notable-people-group .facts-chip-link {
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--list-accent) 55%, transparent);
+  color: var(--ui-ink);
+}
+.facts-panel .facts-switch-btn.active,
+.facts-panel .state-picker-btn.active {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+}
+.facts-panel .facts-chip-link:hover,
+#searchPanel .search-link:hover {
+  color: #fff;
+  border-color: currentColor;
+}
+
+/* One clear keyboard focus treatment across all selected regions. */
+:is(#onboardingDialog, #catPanel, #searchPanel, .facts-panel, .site-title-row, .site-footer)
+:is(button, a, input):focus-visible {
+  outline: 2px solid var(--ui-cyan);
+  outline-offset: 3px;
+}
+.site-footer #siteFooterLink {
+  color: var(--ui-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: 0 1px 4px #000;
+  text-decoration-color: rgba(195, 206, 227, 0.45);
+}
+.site-footer #siteFooterLink:hover { color: var(--ui-cyan); }
+
+/* Neon glass: generous reading sizes, luminous edges, dark text surfaces. */
+#searchPanel {
+  --grammar-header-font-size: 14px;
+  --grammar-header-line-height: 20px;
+  --grammar-row-header-font-size: 15px;
+  --grammar-row-header-line-height: 22px;
+  --grammar-cell-font-size: 16px;
+  --grammar-cell-line-height: 24px;
+  --grammar-header-padding-y: 10px;
+  --grammar-row-header-padding-y: 9px;
+  --grammar-cell-padding-y: 9px;
+}
+#searchPanel .grammar-card {
+  --reference-accent: #48e5ff;
+  background: linear-gradient(145deg, rgba(72,229,255,.12), rgba(8,16,40,.88) 48%);
+  border: 1px solid color-mix(in srgb, var(--reference-accent) 55%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 0 22px color-mix(in srgb, var(--reference-accent) 10%, transparent);
+  border-radius: 18px;
+}
+#searchPanel .grammar-card:nth-child(2) { --reference-accent: #ff8ad8; }
+#searchPanel .grammar-card:nth-child(3) { --reference-accent: #bca2ff; }
+#searchPanel .grammar-card-title {
+  font-size: 20px;
+  line-height: 1.4;
+  padding-block: 8px 12px;
+  color: var(--reference-accent);
+  text-shadow: 0 0 18px color-mix(in srgb, var(--reference-accent) 35%, transparent);
+}
+#searchPanel .grammar-slider-table-row:first-child {
+  background: color-mix(in srgb, var(--reference-accent) 14%, #101a34);
+}
+#searchPanel .grammar-slider-table-row:nth-child(2n) { background: rgba(255,255,255,.04); }
+#searchPanel .grammar-slider-table-row:hover { background: rgba(125,211,252,.09); }
+#searchPanel .grammar-slider-header-cell .grammar-slider-line,
+#searchPanel .grammar-slider-rowheader-cell .grammar-slider-line {
+  color: color-mix(in srgb, var(--reference-accent) 65%, white);
+  letter-spacing: .015em;
+  text-transform: none;
+}
+#searchPanel .grammar-slider-data-cell .grammar-slider-line { color: #fff; }
+#searchPanel .search-link {
+  min-height: 36px;
+  font-size: 13px;
+  background: linear-gradient(145deg, rgba(72,229,255,.2), rgba(9,19,44,.75));
+  border-color: #48e5ff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 0 12px rgba(72,229,255,.12);
+}
+#catPanel, #searchPanel, body > .facts-panel {
+  border-color: rgba(125,211,252,.48);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.24), 0 14px 40px rgba(0,0,0,.3), 0 0 24px rgba(72,229,255,.09);
+}
+#catPanel .cat-panel-title { color: #8eecff; text-shadow: 0 0 18px rgba(72,229,255,.3); }
+#catPanel .cat-buttons-label { color: #eee5ff; font-size: 14px; line-height: 1.4; }
+#catPanel #catButtons .cat-btn {
+  min-height: 48px;
+  font-size: 14px;
+  border-radius: 14px;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+#catPanel #catButtons .cat-btn:not(.active) {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--cat-color) 25%, #101b35), rgba(8,16,38,.88)) !important;
+  border-color: color-mix(in srgb, var(--cat-color) 80%, white) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 0 12px color-mix(in srgb, var(--cat-color) 15%, transparent);
+}
+#catPanel #catButtons .cat-btn.active {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--cat-color) 70%, white), var(--cat-color)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 0 18px color-mix(in srgb, var(--cat-color) 30%, transparent);
+}
+#catPanel #catButtons .cat-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 2px rgba(255,255,255,.18), 0 0 22px color-mix(in srgb, var(--cat-color) 35%, transparent);
+}
+#catPanel .subcategory-btn { min-height: 40px; font-size: 13px; border-radius: 10px; }
+#catPanel .subcategory-btn.active { box-shadow: 0 0 14px color-mix(in srgb, var(--subcategory-color, #e8ff47) 25%, transparent); }
+#onboardingDialog.onboarding-dialog .onboarding-language-btn {
+  background: linear-gradient(145deg, rgba(125,211,252,.17), rgba(12,20,43,.6));
+  border-color: rgba(125,211,252,.55);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 6px 18px rgba(0,0,0,.2);
+}
+#onboardingDialog.onboarding-dialog .onboarding-language-btn.active {
+  background: linear-gradient(145deg, rgba(232,255,71,.28), rgba(12,25,35,.8));
+  border-color: #e8ff47;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 0 24px rgba(232,255,71,.22);
+}
+#catPanel .new-game-btn,
+#onboardingDialog.onboarding-dialog .onboarding-primary-btn {
+  background: linear-gradient(110deg, #e8ff47, #b8ff65);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 0 25px rgba(232,255,71,.28);
+}
+#catPanel .tutorial-replay-btn,
+#onboardingDialog.onboarding-dialog .onboarding-secondary-btn {
+  background: linear-gradient(135deg, rgba(255,90,190,.32), rgba(86,32,98,.5));
+  border-color: #ff8ad8;
+  color: #ffe5f5;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 0 18px rgba(255,90,190,.16);
+}
+.facts-panel .facts-grid > .facts-card {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--card-accent) 18%, #111b33), rgba(8,15,35,.85));
+  border: 1px solid color-mix(in srgb, var(--card-accent) 55%, transparent);
+  border-top: 2px solid var(--card-accent);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 0 14px color-mix(in srgb, var(--card-accent) 9%, transparent);
+}
+.facts-panel .facts-grid > .facts-card .facts-card-label { font-size: 13px; line-height: 1.5; letter-spacing: .04em; }
+.facts-panel .facts-grid > .facts-card .facts-card-value { font-size: 18px; line-height: 1.45; color: #fff; }
+.facts-panel .facts-head-overview .facts-card-value { font-size: 16px; line-height: 1.65; }
+.facts-panel .facts-chip-link { font-size: 14px; line-height: 1.5; padding: 7px 10px; }
+.facts-panel .facts-notable-people-groups > .facts-notable-people-group {
+  border: 1px solid color-mix(in srgb, var(--list-accent) 55%, transparent);
+  border-left: 3px solid var(--list-accent);
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 0 18px color-mix(in srgb, var(--list-accent) 12%, transparent);
+}
+.facts-panel .facts-notable-people-group .facts-chip-link {
+  border-radius: 8px;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 20%, #111b33), rgba(8,15,35,.8));
+}
+@media (prefers-reduced-motion: reduce) {
+  #catPanel #catButtons .cat-btn { transition: none; }
+  #catPanel #catButtons .cat-btn:hover { transform: none; }
+}

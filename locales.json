@@ -188,7 +188,7 @@
             "mobileVisibleDataColumns": 2
           },
           "columns": [
-            "Pers.",
+            "Person",
             "Futur",
             "Präs.",
             "Prät.",
@@ -256,7 +256,7 @@
             "mobileVisibleDataColumns": 2
           },
           "columns": [
-            "Pers.",
+            "Person",
             "Aktiv Präs.",
             "Passiv Präs."
           ],
@@ -1436,7 +1436,7 @@
             "mobileVisibleDataColumns": 2
           },
           "columns": [
-            "Pers.",
+            "Person",
             "Fut.",
             "Pres.",
             "Past",
@@ -1504,7 +1504,7 @@
             "mobileVisibleDataColumns": 2
           },
           "columns": [
-            "Pers.",
+            "Person",
             "Active pres.",
             "Passive pres."
           ],

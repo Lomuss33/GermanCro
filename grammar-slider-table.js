@@ -184,14 +184,8 @@ function createCellElement({ className, role, text, layout, typography, height }
   }
   element.style.height = `${height}px`;
 
-  const isPronounHeader = role === "columnheader" && /personalpronomen|zamjenica/i.test(String(text));
-  const resolvedTypography = isPronounHeader
-    ? {
-        ...typography,
-        fontSize: typography.fontSize * 0.72,
-        lineHeight: typography.lineHeight * 0.84,
-      }
-    : typography;
+  // Use the same typography that measured the wrapped lines and row height.
+  const resolvedTypography = typography;
 
   const inner = document.createElement("div");
   inner.className = "grammar-slider-cell-inner";

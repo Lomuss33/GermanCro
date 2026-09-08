@@ -25,7 +25,7 @@ const searchSites = [
   { name: "Leo", icon: "L", url: (w) => `https://dict.leo.org/german-english/${encodeURIComponent(w)}` },
 ];
 
-const ASSET_REV = "2026-08-10-topics2";
+const ASSET_REV = "2026-09-08-readable-grammar";
 const FETCH_TIMEOUT_MS = 7000;
 const SESSION_SIZE = 10;
 const MAX_SESSION_SKIPS = 5;
