@@ -26,6 +26,13 @@ function getPrepared(text, font) {
 }
 
 function getLineLayout(text, font, maxWidth, lineHeight) {
+  // Keep the compound boundary when this German heading needs two lines.
+  if (text === "Personalpronomen") {
+    const whole = layoutWithLines(getPrepared(text, font), maxWidth, lineHeight);
+    return whole.lineCount > 1
+      ? { lines: [{ text: "Personal-" }, { text: "pronomen" }], lineCount: 2 }
+      : whole;
+  }
   const safeWidth = Math.max(1, Math.round(maxWidth * 100) / 100);
   const cacheKey = `${font}\n${lineHeight}\n${safeWidth}\n${text}`;
   if (!lineLayoutCache.has(cacheKey)) {

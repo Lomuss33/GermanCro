@@ -290,3 +290,97 @@
   #catPanel #catButtons .cat-btn { transition: none; }
   #catPanel #catButtons .cat-btn:hover { transform: none; }
 }
+
+/* Consistent blue glass; neon stays on edges and labels. */
+:root {
+  --glass-blue: 8, 19, 43;
+  --glass-sheen: linear-gradient(145deg, rgba(180,210,255,.07), transparent 65%);
+  --glass-panel: rgba(var(--glass-blue), .68);
+  --glass-inset: rgba(var(--glass-blue), .18);
+  --glass-control: rgba(var(--glass-blue), .3);
+  --glass-popup: rgba(var(--glass-blue), .84);
+  --reading-glass: var(--glass-sheen), var(--glass-panel);
+}
+body #mainCard, body #catPanel, body #searchPanel, body > .facts-panel,
+body .author-panel, #onboardingDialog.onboarding-dialog .onboarding-panel,
+#mainCard .session-end {
+  background: var(--reading-glass) !important;
+  background-blend-mode: normal;
+  backdrop-filter: blur(14px) saturate(115%);
+  -webkit-backdrop-filter: blur(14px) saturate(115%);
+}
+#searchPanel .grammar-card, .facts-panel .facts-grid,
+.facts-panel .facts-grid > .facts-card, .facts-panel .facts-head-overview,
+#factsContent > .facts-view > .facts-list-section,
+.facts-panel .facts-notable-people-groups,
+.facts-panel .facts-notable-people-groups > .facts-notable-people-group {
+  background: var(--glass-sheen), var(--glass-inset) !important;
+}
+#factsContent .facts-chip-list, .facts-panel .facts-notable-people-group .facts-chip-link {
+  background: var(--glass-control) !important;
+}
+#searchPanel {
+  --grammar-header-font-size: 13px;
+  --grammar-header-line-height: 19px;
+  --grammar-row-header-font-size: 14px;
+  --grammar-row-header-line-height: 21px;
+  --grammar-cell-font-size: 15px;
+  --grammar-cell-line-height: 22px;
+}
+#searchPanel .grammar-card-title { font-size: 18px; }
+#searchPanel .grammar-slider-table-row:first-child { background: rgba(140,181,238,.1); }
+#catPanel #catButtons .cat-btn { font-size: 13px; }
+#catPanel #catButtons .cat-btn-label { word-break: normal; overflow-wrap: normal; hyphens: auto; }
+.facts-panel .facts-grid > .facts-card .facts-card-value { font-size: 16px; overflow-wrap: anywhere; }
+
+/* Structural wrappers carry no extra tint: avoid stacking opaque layers. */
+body .facts-panel :is(.facts-view, .facts-content, .facts-grid, .facts-notable-people-groups),
+body #catPanel :is(.cat-panel-toolbar, .subcategory-filter),
+body #searchPanel .grammar-section {
+  background: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body .facts-panel .facts-controls,
+body .facts-panel .state-picker-wrap,
+body #catPanel .cat-panel-head,
+body #mainCard .answer-guide {
+  background: var(--glass-sheen), var(--glass-inset) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body .facts-panel :is(.facts-switch-btn, .state-picker-btn):not(.active),
+body #searchPanel .search-link,
+body #catPanel #catButtons .cat-btn:not(.active),
+body #catPanel .subcategory-btn:not(.active),
+body #onboardingDialog .onboarding-language-btn:not(.active),
+body #onboardingDialog :is(.onboarding-secondary-btn, .onboarding-settings-btn, .onboarding-back-btn),
+body #catPanel .tutorial-replay-btn {
+  background: var(--glass-sheen), var(--glass-control) !important;
+}
+/* Floating dialogs need more tint; embedded dialogs already sit on glass. */
+body #onboardingDialog.onboarding-dialog .onboarding-panel {
+  background: var(--glass-sheen), var(--glass-popup) !important;
+}
+body #onboardingDialog.onboarding-dialog.is-card-start .onboarding-panel,
+body #mainCard .session-end {
+  background: var(--glass-sheen), var(--glass-control) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
+  background: rgba(var(--glass-blue), .32);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Desktop width is independent of viewport-height typography scaling. */
+@media (min-width: 900px) and (min-aspect-ratio: 1/1) {
+  :root { --panel-width: min(calc(100vw - 64px), 880px); }
+}
+@media (min-width: 1600px) and (min-aspect-ratio: 1/1) {
+  :root { --panel-width: min(calc(100vw - 96px), 940px); }
+}
+@media (max-aspect-ratio: 3/4) {
+  :root { --panel-width: calc(100vw - 16px); }
+}
