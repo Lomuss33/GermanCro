@@ -1,19 +1,25 @@
 import path from "node:path";
 
-import { assert, fileExists, readText, repoRoot } from "./shared-utils.js";
+import { assert, fileExists, readText, repoRoot } from "../scripts/shared-utils.js";
 
 function stripUrlVersion(specifier) {
   return specifier.split("?")[0].split("#")[0];
 }
 
 const html = await readText("index.html");
-const distHtml = await readText("dist/index.html");
-const css = await readText("style.css");
+async function readStyles(file) {
+  const source = await readText(file);
+  const imports = [...source.matchAll(/@import "([^"]+)";/g)];
+  if (!imports.length) return source;
+  return (await Promise.all(imports.map(([, specifier]) => readStyles(path.posix.join(path.posix.dirname(file), specifier))))).join("");
+}
+const css = await readStyles("style.css");
 const normalizedCss = css.replace(/\r\n/g, "\n");
-const distCss = await readText("dist/style.css");
-const onboardingCss = await readText("onboarding.css");
+const onboardingCss = await readStyles("onboarding.css");
 const normalizedOnboardingCss = onboardingCss.replace(/\r\n/g, "\n");
-const appSource = await readText("src/bootstrap/init-app.js");
+const appSource = (await Promise.all([
+  "src/bootstrap/init-app.js", "src/facts/controller.js", "src/config/app.js", "src/ui/language-flags.js",
+].map(readText))).join("\n");
 const tourSource = await readText("src/onboarding/first-run-tour.js");
 
 for (const id of [
@@ -38,7 +44,6 @@ for (const id of [
 const scriptMatch = html.match(/<script type="module" src="([^\"]+)"><\/script>/);
 assert(scriptMatch, "index.html must include a module script entry");
 assert(html.includes('href="onboarding.css?'), "index.html must load the onboarding stylesheet");
-assert(distHtml.includes('href="onboarding.css?'), "dist/index.html must load the onboarding stylesheet");
 
 for (const { language, label, flagCode } of [
   { language: "en", label: "English", flagCode: "gb" },
@@ -114,11 +119,11 @@ assert(
   "Optional facts must start eagerly outside the critical app boot Promise",
 );
 assert(
-  appSource.includes("isSnapping || !factsLoaded || onboardingPending"),
+  appSource.includes("isSnapping || !factsController.isLoaded || onboardingPending"),
   "Scroll snapping must wait for stable facts-panel geometry",
 );
 assert(
-  !normalizedCss.includes("content-visibility: auto") && !distCss.includes("content-visibility: auto"),
+  !normalizedCss.includes("content-visibility: auto"),
   "Dynamic panels must not be culled while scrolling",
 );
 assert(appSource.includes("const FETCH_TIMEOUT_MS = 7000"), "Startup requests must have a bounded timeout");
@@ -221,32 +226,6 @@ assert(
     tourSource.includes("syncCardStartHeight();"),
   "The card-start onboarding height must resync on viewport changes",
 );
-
-for (const id of ["onboardingDialog", "onboardingTitle", "onboardingPrimaryBtn", "tutorialReplayBtn"]) {
-  assert(distHtml.includes(`id="${id}"`), `dist/index.html is missing required id="${id}"`);
-}
-
-const distTourSource = await readText("dist/src/onboarding/first-run-tour.js");
-const distAppSource = await readText("dist/src/bootstrap/init-app.js");
-assert(distTourSource.includes('dialog.addEventListener("keydown"'), "dist onboarding keyboard handling is stale");
-assert(
-  distAppSource.includes("async function loadFactsOnDemand()") &&
-    distAppSource.includes("void loadFactsOnDemand();") &&
-    distAppSource.includes("isSnapping || !factsLoaded || onboardingPending") &&
-    !distAppSource.includes("const factsPromise = Promise.all("),
-  "dist optional facts and scroll-stability behavior is stale",
-);
-
-for (const relativePath of [
-  "onboarding.css",
-  "src/onboarding/first-run-tour.js",
-  "src/onboarding/tutorial-language.js",
-  "src/onboarding/tour-geometry.js",
-]) {
-  const sourceAsset = await readText(relativePath);
-  const distAsset = await readText(`dist/${relativePath}`);
-  assert(sourceAsset === distAsset, `Production mirror is stale: dist/${relativePath}`);
-}
 
 for (const flagEntity of ["&#127469;&#127479;", "&#127468;&#127463;", "&#127465;&#127466;"]) {
   assert(!html.includes(flagEntity), `index.html still contains native flag emoji entity ${flagEntity}`);

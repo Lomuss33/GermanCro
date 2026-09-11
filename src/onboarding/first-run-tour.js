@@ -1,5 +1,5 @@
-import { expandRect, getUnionRect, placeTourPanel } from "./tour-geometry.js?v=2026-08-21-onboarding1";
-import { normalizeTutorialLanguage, resolveTutorialLanguage } from "./tutorial-language.js?v=2026-08-21-onboarding2";
+import { expandRect, getUnionRect, placeTourPanel } from "./tour-geometry.js";
+import { normalizeTutorialLanguage, resolveTutorialLanguage } from "./tutorial-language.js";
 
 export const ONBOARDING_STORAGE_KEY = "germancro.onboarding.v2";
 

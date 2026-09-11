@@ -1,0 +1,1025 @@
+.answer-guide {
+  --answer-guide-text-scale: 1;
+  --answer-guide-meta-scale: 1;
+  --answer-guide-token-gap: 8px;
+  --answer-guide-char-gap: 3px;
+  --answer-guide-caret-token-inset: 2px;
+  --answer-guide-caret-inline-overhang: 1px;
+  --answer-guide-separator-min-width: 28px;
+  --answer-guide-space-separator-gap: 6px;
+}
+
+.answer-guide .word-grid {
+  gap: 6px var(--answer-guide-token-gap);
+  align-items: flex-end;
+}
+
+.answer-guide .word-group {
+  gap: var(--answer-guide-char-gap);
+}
+
+.answer-guide .wchar-letter {
+  font-size: calc(12px * var(--answer-guide-text-scale, 1));
+}
+
+.answer-guide .word-separator {
+  min-width: var(--answer-guide-separator-min-width, 28px);
+  align-self: flex-end;
+  opacity: 0.8;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  color: inherit;
+  text-shadow: none;
+}
+
+.answer-guide .word-separator.is-space,
+.answer-guide .word-separator.is-comma {
+  min-width: calc(var(--answer-guide-separator-min-width, 28px) * 0.72);
+  margin-inline: calc(var(--answer-guide-space-separator-gap, 6px) * 0.5);
+  padding-inline: 0;
+}
+
+.answer-guide .word-separator.is-space .word-separator-letter,
+.answer-guide .word-separator.is-comma .word-separator-letter {
+  min-width: 0;
+  font-size: calc(10px * var(--answer-guide-text-scale, 1));
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.answer-guide .word-separator.is-space .word-separator-line {
+  --answer-guide-space-line-color: rgba(208, 216, 230, 0.6);
+  width: 58%;
+  min-width: 0;
+  height: 1px;
+  border-bottom: 0;
+  background:
+    linear-gradient(to right, var(--answer-guide-space-line-color) 0 76%, transparent 76% 100%),
+    linear-gradient(to right, var(--answer-guide-space-line-color) 0 76%, transparent 76% 100%),
+    linear-gradient(to right, var(--answer-guide-space-line-color) 0 76%, transparent 76% 100%),
+    linear-gradient(to right, var(--answer-guide-space-line-color) 0 76%, transparent 76% 100%),
+    linear-gradient(to right, var(--answer-guide-space-line-color) 0 76%, transparent 76% 100%);
+  background-repeat: no-repeat;
+  background-size: 14% 1px;
+  background-position: 0 50%, 21.5% 50%, 43% 50%, 64.5% 50%, 86% 50%;
+}
+
+.answer-guide .word-separator.is-comma .word-separator-line {
+  width: 58%;
+  min-width: 0;
+  border-bottom-style: dashed;
+  border-bottom-color: rgba(208, 216, 230, 0.6);
+}
+
+.answer-guide .word-separator.is-space.state-next .word-separator-line {
+  --answer-guide-space-line-color: #d0bc67;
+}
+
+.answer-guide .word-separator.is-space.state-ok .word-separator-line {
+  --answer-guide-space-line-color: #4aa88f;
+}
+
+.answer-guide .word-separator.is-space.state-bad .word-separator-line {
+  --answer-guide-space-line-color: #cb6f76;
+}
+
+.answer-guide .word-separator.is-space.state-bad .word-separator-letter,
+.answer-guide .word-separator.is-comma.state-bad .word-separator-letter {
+  color: #e7c2c9;
+}
+
+.answer-guide .word-separator.is-overflow {
+  min-width: var(--answer-guide-separator-min-width, 28px);
+}
+
+.answer-guide .word-separator.state-next,
+.answer-guide .word-separator.state-ok,
+.answer-guide .word-separator.state-bad,
+.answer-guide .word-separator.state-hit,
+.answer-guide .word-separator.state-miss {
+  opacity: 1;
+}
+
+.answer-guide .answer-guide-label {
+  font-size: calc(6px * var(--answer-guide-meta-scale, 1));
+  overflow-wrap: anywhere;
+}
+
+.answer-guide .answer-guide-status {
+  font-size: calc(7px * var(--answer-guide-meta-scale, 1));
+  overflow-wrap: anywhere;
+}
+
+.answer-guide .answer-guide-note {
+  font-size: calc(6px * var(--answer-guide-meta-scale, 1));
+  overflow-wrap: anywhere;
+}
+
+.answer-guide .answer-guide-terminal-status {
+  font-size: calc(13px * var(--answer-guide-text-scale, 1));
+}
+
+.answer-guide .word-separator-letter {
+  font-size: calc(12px * var(--answer-guide-text-scale, 1));
+  font-weight: 700;
+  color: rgba(234, 240, 252, 0.82);
+}
+
+.answer-guide .word-separator-line {
+  border-bottom-color: rgba(208, 216, 230, 0.72);
+}
+
+.answer-guide .word-separator.state-next .word-separator-letter {
+  color: #f0e3a7;
+  text-shadow: 0 0 6px rgba(240, 227, 167, 0.08);
+}
+
+.answer-guide .word-separator.state-next .word-separator-line {
+  border-bottom-color: #d0bc67;
+  border-bottom-width: 2px;
+}
+
+.answer-guide .word-separator.state-ok .word-separator-letter {
+  color: #c6e7d1;
+  text-shadow: 0 0 6px rgba(198, 231, 209, 0.08);
+}
+
+.answer-guide .word-separator.state-ok .word-separator-line {
+  border-bottom-color: #4aa88f;
+}
+
+.answer-guide .word-separator.state-bad .word-separator-letter {
+  color: #e7c2c9;
+  text-shadow: 0 0 6px rgba(231, 194, 201, 0.08);
+}
+
+.answer-guide .word-separator.state-bad .word-separator-line {
+  border-bottom-color: #cb6f76;
+  border-bottom-width: 2px;
+}
+
+body.layout-phone-portrait .answer-guide .answer-guide-label {
+  font-size: calc(6px * var(--game-text-scale) * var(--answer-guide-meta-scale, 1));
+}
+
+body.layout-phone-portrait .answer-guide .answer-guide-status {
+  font-size: calc(6px * var(--game-text-scale) * var(--answer-guide-meta-scale, 1));
+}
+
+body.layout-phone-portrait .answer-guide .answer-guide-note {
+  font-size: calc(6px * var(--game-text-scale) * var(--answer-guide-meta-scale, 1));
+}
+
+body.layout-phone-portrait .answer-guide .wchar-letter {
+  font-size: calc(12px * var(--game-text-scale) * var(--answer-guide-text-scale, 1));
+}
+
+body.layout-phone-portrait .answer-guide .word-separator {
+  min-width: var(--answer-guide-separator-min-width, 28px);
+}
+
+body.layout-phone-portrait .answer-guide .word-separator-letter {
+  font-size: calc(12px * var(--game-text-scale) * var(--answer-guide-text-scale, 1));
+}
+
+body.layout-phone-portrait .answer-guide .word-separator.is-comma .word-separator-letter {
+  font-size: calc(16px * var(--game-text-scale) * var(--answer-guide-text-scale, 1));
+}
+
+body.layout-phone-portrait .answer-guide .answer-guide-terminal-status {
+  font-size: calc(13px * var(--game-text-scale) * var(--answer-guide-text-scale, 1));
+}
+
+body:not(.layout-phone-portrait)[data-game-density="compact"] .prompt-row,
+body:not(.layout-phone-portrait)[data-game-density="dense"] .prompt-row {
+  grid-template-columns: var(--game-emoji-pill-width) minmax(0, 1fr);
+  column-gap: var(--game-row-column-gap);
+}
+
+body:not(.layout-phone-portrait)[data-game-density="compact"] .prompt-flag,
+body:not(.layout-phone-portrait)[data-game-density="dense"] .prompt-flag {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  justify-self: start;
+}
+
+body:not(.layout-phone-portrait)[data-game-density="compact"] .prompt-copy,
+body:not(.layout-phone-portrait)[data-game-density="dense"] .prompt-copy {
+  padding: 0 0 4px;
+}
+
+body:not(.layout-phone-portrait)[data-game-density="compact"] .prompt-copy::before,
+body:not(.layout-phone-portrait)[data-game-density="dense"] .prompt-copy::before {
+  left: 0;
+  right: 0;
+}
+
+body[data-game-density="compact"] .answer-guide-body,
+body[data-game-density="dense"] .answer-guide-body {
+  display: grid;
+  grid-template-columns: var(--game-emoji-pill-width) minmax(0, 1fr);
+  column-gap: var(--game-row-column-gap);
+  align-items: center;
+  padding-inline: var(--game-row-inline-padding);
+}
+
+body[data-game-density="compact"] .answer-guide-trail-flag,
+body[data-game-density="dense"] .answer-guide-trail-flag {
+  position: absolute;
+  left: calc(var(--game-emoji-stack-edge-inset) - var(--game-row-inline-padding));
+  transform: translateY(-50%);
+}
+
+body:not(.layout-phone-portrait)[data-game-density="compact"] .answer-guide .word-grid,
+body:not(.layout-phone-portrait)[data-game-density="dense"] .answer-guide .word-grid {
+  grid-column: 2;
+}
+
+body[data-game-density="compact"] .answer-guide .word-grid,
+body[data-game-density="dense"] .answer-guide .word-grid {
+  min-width: 0;
+  justify-content: center;
+}
+
+.card-topbar.is-legend-stacked {
+  flex-wrap: wrap;
+  row-gap: 8px;
+  overflow-x: visible;
+  overflow-y: visible;
+  align-items: flex-start;
+}
+
+.card-topbar.is-legend-stacked .card-legend {
+  flex: 0 0 auto;
+  width: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  text-align: right;
+}
+
+.card-topbar.is-legend-stacked .card-legend-item {
+  justify-content: flex-end;
+}
+
+@media (max-width: 390px) {
+  .card-topbar.is-legend-stacked {
+    row-gap: 6px;
+  }
+
+  .card-topbar.is-legend-stacked .card-legend {
+    flex: 1 0 100%;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4px 6px;
+  }
+}
+
+
+/* Keep the round control generous while the card count stays beside it. */
+.new-game-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  min-width: 0;
+}
+
+.new-game-row .session-slider-wrap {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  flex: none;
+}
+
+.new-game-row .slider-label,
+.new-game-row .cat-count {
+  width: auto;
+}
+
+.new-game-row .cat-count {
+  min-width: max-content;
+  white-space: nowrap;
+}
+
+@media (max-width: 360px) {
+  .new-game-row {
+    column-gap: calc(6px * var(--type-scale-control));
+  }
+
+  .new-game-row .session-slider-wrap {
+    gap: calc(6px * var(--type-scale-control));
+  }
+
+  .new-game-row .slider-prefix,
+  .new-game-row .slider-label,
+  .new-game-row .cat-count {
+    font-size: calc(11px * var(--type-scale-body));
+  }
+}
+
+body.layout-phone-portrait[data-game-density="compact"] .answer-guide-body,
+body.layout-phone-portrait[data-game-density="dense"] .answer-guide-body {
+  padding-inline: 0;
+}
+
+body.layout-phone-portrait .answer-guide-trail-flag {
+  margin-left: 0;
+}
+
+body.layout-phone-portrait[data-game-density="compact"] .answer-guide-trail-flag,
+body.layout-phone-portrait[data-game-density="dense"] .answer-guide-trail-flag {
+  margin-left: 0;
+}
+
+/* Category/settings panel palette: neutral copy is white, accents stay neon. */
+#catPanel {
+  color: #fff;
+}
+
+#catPanel .cat-panel-title,
+#catPanel .cat-buttons-label,
+#catPanel .cat-count,
+#catPanel .difficulty-panel button {
+  color: #fff;
+}
+
+#catPanel .tutorial-replay-btn {
+  color: var(--accent);
+}
+
+#catPanel .cat-btn:not(.active):hover,
+#catPanel .difficulty-panel button:not(.active):hover {
+  color: #fff;
+}
+
+#catPanel .cat-btn .cat-btn-label {
+  color: #000;
+}
+
+#catPanel .cat-panel-bottom-actions .author-toggle-btn {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.72);
+}
+
+/* Replace the muted gold facts accent with a cleaner, warmer orange system. */
+.facts-panel::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 138, 61, 0.18) 12%, rgba(255, 138, 61, 0.96) 50%, rgba(255, 186, 120, 0.52) 82%, transparent);
+}
+
+.facts-switch-btn.active,
+.state-picker-btn.active {
+  background: linear-gradient(135deg, #ffad5c 0%, #f97316 100%);
+  box-shadow: 0 5px 16px rgba(249, 115, 22, 0.28);
+}
+
+.facts-card:not(.featured) .facts-card-label {
+  color: rgba(255, 157, 83, 0.98);
+  text-shadow: 0 0 8px rgba(255, 138, 61, 0.16);
+}
+
+.facts-card:not(.featured)::after {
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 138, 61, 0.98) 16%, rgba(255, 211, 170, 0.9) 42%, rgba(255, 138, 61, 0.48) 72%, transparent 100%);
+  box-shadow: 0 0 8px rgba(255, 138, 61, 0.2);
+}
+
+.facts-card:not(.featured):nth-child(even)::after {
+  background: linear-gradient(270deg, transparent 0%, rgba(255, 138, 61, 0.98) 16%, rgba(255, 211, 170, 0.9) 42%, rgba(255, 138, 61, 0.48) 72%, transparent 100%);
+}
+
+.facts-card:not(.featured):nth-child(3n)::after {
+  width: 62%;
+  align-self: flex-start;
+  background: linear-gradient(90deg, rgba(255, 138, 61, 0.92), rgba(255, 190, 126, 0.54) 55%, transparent);
+}
+
+.facts-card:not(.featured):nth-child(4n)::after {
+  width: 78%;
+  align-self: flex-end;
+  background: linear-gradient(270deg, rgba(255, 138, 61, 0.92), rgba(255, 190, 126, 0.54) 55%, transparent);
+}
+
+.facts-card:not(.featured):hover::after {
+  filter: brightness(1.18);
+  box-shadow: 0 0 12px rgba(255, 138, 61, 0.34);
+}
+
+/* Give the complete facts section the same polished dark-blue/metallic language
+   as the onboarding surface, without changing the onboarding dialog itself. */
+.facts-panel {
+  background-image:
+    radial-gradient(circle at 88% 8%, rgba(232, 255, 71, 0.12), transparent 34%),
+    linear-gradient(145deg, rgba(18, 29, 67, 0.984), rgba(5, 10, 29, 0.99));
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.34), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+
+.facts-controls,
+.facts-card.featured,
+.facts-title-links {
+  border-color: rgba(255, 255, 255, 0.18);
+  background-image:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.018)),
+    linear-gradient(145deg, rgba(18, 29, 67, 0.84), rgba(5, 10, 29, 0.9));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.facts-card.featured {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.facts-card:not(.featured) {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+
+.facts-card:not(.featured)::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.84) 18%, rgba(255, 138, 61, 0.96) 50%, rgba(255, 255, 255, 0.38) 82%, transparent);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.12), 0 0 8px rgba(255, 138, 61, 0.2);
+}
+
+.facts-card:not(.featured):nth-child(even)::after {
+  background: linear-gradient(270deg, transparent, rgba(255, 255, 255, 0.84) 18%, rgba(255, 138, 61, 0.96) 50%, rgba(255, 255, 255, 0.38) 82%, transparent);
+}
+
+.facts-card:not(.featured):nth-child(3n)::after,
+.facts-card:not(.featured):nth-child(4n)::after {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.78), rgba(255, 138, 61, 0.88) 48%, transparent);
+}
+
+.facts-card:not(.featured):nth-child(4n)::after {
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0.78), rgba(255, 138, 61, 0.88) 48%, transparent);
+}
+
+#searchPanel,
+#searchPanel * {
+  color: #fff;
+}
+
+#searchPanel .grammar-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#searchPanel .grammar-card-title {
+  width: 100%;
+  text-align: center;
+}
+
+#searchPanel .grammar-slider-mount,
+#searchPanel .grammar-table-wrap {
+  width: 100%;
+}
+
+body.layout-phone-portrait[data-game-density="compact"] .answer-guide-body,
+body.layout-phone-portrait[data-game-density="dense"] .answer-guide-body {
+  grid-template-columns: minmax(0, 1fr);
+  position: relative;
+}
+
+body.layout-phone-portrait[data-game-density="compact"] .answer-guide .word-grid,
+body.layout-phone-portrait[data-game-density="dense"] .answer-guide .word-grid {
+  grid-column: 1;
+  width: calc(100% - (2 * (var(--game-emoji-pill-width) + (3px * var(--type-scale-control)))));
+  min-width: 0;
+  max-width: 100%;
+  justify-self: center;
+}
+
+body.layout-phone-portrait[data-game-density="compact"] .answer-guide-trail-flag,
+body.layout-phone-portrait[data-game-density="dense"] .answer-guide-trail-flag {
+  position: absolute;
+  left: calc(-5.08px * var(--type-scale-control));
+  top: 50%;
+  margin-left: 0;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+body.layout-phone-portrait.has-expanded-answer-guide #gameArea {
+  grid-template-rows:
+    minmax(var(--game-emoji-pill-height), max-content)
+    minmax(var(--game-emoji-pill-height), max-content)
+    auto auto;
+}
+
+body.layout-phone-portrait #gameArea {
+  align-content: start;
+  flex: 0 0 auto;
+  grid-template-rows:
+    minmax(var(--game-emoji-pill-height), max-content)
+    minmax(var(--game-emoji-pill-height), max-content)
+    auto auto;
+}
+
+body.layout-phone-portrait .answer-guide-body {
+  flex: 0 0 auto;
+}
+
+body.layout-phone-portrait .answer-guide-foot > .action-row {
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  width: calc(100% + var(--game-row-inline-padding) + var(--game-row-inline-padding));
+  margin-inline: calc(0px - var(--game-row-inline-padding));
+  margin-bottom: calc(0px - var(--game-row-inline-padding));
+  align-items: end;
+}
+
+body.layout-phone-portrait .answer-guide-foot > .action-row > .enter-hint {
+  align-self: end;
+  margin-bottom: 2px;
+}
+
+@media (max-width: 390px) {
+  body.layout-phone-portrait .site-title-row.has-install-guides {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    column-gap: 5px;
+    row-gap: 4px;
+  }
+
+  body.layout-phone-portrait .site-title-row.has-install-guides > .site-title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 100%;
+    justify-self: center;
+  }
+
+  body.layout-phone-portrait .site-title-row.has-install-guides > .title-guide-left {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  body.layout-phone-portrait .site-title-row.has-install-guides > .title-guide-right {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+body:not(.layout-phone-portrait) .answer-guide-foot > .action-row,
+body.layout-phone-portrait .answer-guide-foot > .action-row {
+  width: calc(100% + (2 * var(--game-row-inline-padding)) + 4px);
+  margin-inline: calc(0px - var(--game-row-inline-padding) - 2px);
+  margin-bottom: calc(0px - var(--game-row-inline-padding));
+  align-self: stretch;
+  position: relative;
+  z-index: 1;
+}
+
+body:not(.layout-phone-portrait) .answer-guide-foot > .action-row {
+  margin-bottom: calc(clamp(0px, calc(1.67vh - 12px), 6px) - var(--game-row-inline-padding));
+}
+
+.answer-guide-foot > .action-row > .skip-action,
+.answer-guide-foot > .action-row > .hint-btn {
+  align-self: end;
+}
+
+.answer-guide-foot > .action-row > .skip-action > .skip-card-btn,
+.answer-guide-foot > .action-row > .hint-btn {
+  box-shadow: 0 0 0 1px rgba(6, 10, 24, 0.82);
+}
+
+body.layout-phone-portrait .answer-guide-foot > .action-row {
+  margin-bottom: calc(-1px - var(--game-row-inline-padding));
+}
+
+/* Keep the guide below the answer field and reserve its lower center for Enter. */
+#answerGuide.answer-guide {
+  position: relative;
+  isolation: isolate;
+}
+
+#answerGuide.answer-guide > .answer-guide-foot > .action-row {
+  position: static;
+  min-height: clamp(30px, calc(26px + 0.5vw), 36px);
+  width: 100%;
+  margin-inline: 0;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+
+.answer-guide-foot > .action-row > .skip-action,
+.answer-guide-foot > .action-row > .hint-btn {
+  position: absolute;
+  top: -2px;
+  z-index: 2;
+  align-self: start;
+}
+
+.answer-guide-foot > .action-row > .skip-action {
+  left: 0;
+}
+
+.answer-guide-foot > .action-row > .hint-btn {
+  right: 0;
+}
+
+#answerGuide.answer-guide > .answer-guide-foot > .action-row > .enter-hint {
+  grid-column: 2;
+  align-self: end;
+  margin-bottom: calc(-1px * var(--type-scale-control));
+}
+
+.answer-guide-foot > .action-row > .enter-hint > .key-badge {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 0 0 0 1px rgba(6, 10, 24, 0.82), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.answer-guide-foot > .action-row > .skip-action > .skip-card-btn,
+.answer-guide-foot > .action-row > .hint-btn {
+  border-radius: 0;
+}
+
+.answer-guide-foot > .action-row > .skip-action > .skip-card-btn {
+  border-top-left-radius: 16px;
+}
+
+.answer-guide-foot > .action-row > .hint-btn {
+  border-top-right-radius: 16px;
+}
+
+body.layout-phone-portrait .answer-guide-foot > .action-row {
+  min-height: calc(42px * var(--type-scale-control));
+}
+
+#answerGuide.answer-guide .skip-card-btn:focus-visible,
+#answerGuide.answer-guide .hint-btn:focus-visible,
+#answerGuide.answer-guide .key-badge:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  z-index: 3;
+}
+
+/* Keep the input untouched; place the white edge emphasis on the guide itself. */
+#answerGuide.answer-guide {
+  border-color: rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 10px 28px rgba(2, 6, 23, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.13) inset;
+}
+
+/* Keep the live progress announcement accessible while preserving the guide's rhythm. */
+#answerGuide.answer-guide > .answer-guide-head {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Keep the trail clear of the top-corner controls at every responsive tier. */
+#answerGuide.answer-guide > .answer-guide-body {
+  padding-top: clamp(10px, calc(12px * var(--type-scale-control)), 14px);
+}
+
+#mainCard .answer-guide .skip-card-btn:not(:disabled),
+#mainCard .answer-guide .hint-btn {
+  color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.68);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 0 0 1px rgba(6, 10, 24, 0.82);
+}
+
+#mainCard .answer-guide .skip-card-btn:hover:not(:disabled),
+#mainCard .answer-guide .hint-btn:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.86);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+/* Give both translation separators and their legend one quiet, bright visual system. */
+#mainCard .prompt-copy::before {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(245, 248, 255, 0.34) 8%,
+    rgba(250, 252, 255, 0.52) 50%,
+    rgba(245, 248, 255, 0.34) 92%,
+    transparent 100%
+  );
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+#mainCard .card-legend {
+  color: rgba(248, 250, 255, 0.94);
+  font-weight: 650;
+  letter-spacing: 0.01em;
+}
+
+#mainCard .card-legend-item {
+  gap: 6px;
+  line-height: 1.15;
+}
+
+#mainCard .card-legend-item > span:last-child {
+  color: rgba(248, 250, 255, 0.94);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+#mainCard .card-legend-dot {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.34),
+    0 0 6px rgba(255, 255, 255, 0.12);
+}
+
+#mainCard .card-legend-dot.is-green {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.34),
+    0 0 7px rgba(74, 222, 128, 0.28);
+}
+
+#mainCard .card-legend-dot.is-yellow {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.34),
+    0 0 7px rgba(232, 255, 71, 0.26);
+}
+
+#mainCard .card-legend-dot.is-red {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.34),
+    0 0 7px rgba(255, 71, 87, 0.26);
+}
+
+/* Keep the game surface bright and legible over the saturated card backdrop. */
+#mainCard {
+  color: rgba(255, 255, 255, 0.98);
+}
+
+#mainCard .prompt-text,
+#mainCard .prompt-sub,
+#mainCard .card-legend,
+#mainCard .card-legend-item > span:last-child,
+#mainCard .answer-guide .answer-guide-status,
+#mainCard .answer-guide .answer-guide-note,
+#mainCard .answer-guide .enter-hint {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+#mainCard .prompt-sub {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+#mainCard .answer-guide {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.045)),
+    rgba(25, 34, 68, 0.66);
+}
+
+#mainCard .input-shell input {
+  background: rgba(20, 29, 62, 0.84);
+  color: #fff;
+  caret-color: #fff;
+}
+
+#mainCard .answer-guide .key-badge {
+  color: #fff;
+  background: linear-gradient(180deg, rgba(72, 78, 102, 0.96), rgba(40, 46, 72, 0.96));
+}
+
+/* Extend the high-contrast panel palette through the rest of the page. */
+.search-panel,
+.author-panel,
+.facts-panel {
+  color: #fff;
+}
+
+.search-panel-title,
+.search-panel-subtitle,
+.grammar-section-title,
+.author-panel-title,
+.author-field span,
+.author-status,
+.facts-panel-title,
+.facts-panel-subtitle,
+.facts-view-subtitle,
+.search-link,
+.author-toggle-btn,
+.facts-switch-btn,
+.state-picker-btn {
+  color: #fff;
+}
+
+.search-link,
+.author-toggle-btn,
+.facts-switch-btn,
+.state-picker-btn {
+  border-color: rgba(255, 255, 255, 0.72);
+}
+
+.search-link:hover,
+.author-toggle-btn:hover,
+.facts-switch-btn:hover,
+.state-picker-btn:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(232, 255, 71, 0.14);
+}
+
+.facts-controls {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
+    rgba(20, 29, 62, 0.42);
+}
+
+/* Keep dense facts navigation legible, but prevent it from dominating small screens. */
+.facts-controls .facts-switch-btn {
+  font-size: clamp(12px, calc(10px + 0.22vw), 14px);
+}
+
+.facts-controls .state-picker-btn {
+  font-size: clamp(10px, calc(9px + 0.16vw), 12px);
+}
+
+@media (max-width: 430px) {
+  .facts-controls .facts-switch-btn {
+    font-size: 12px;
+  }
+
+  .facts-controls .state-picker-btn {
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .answer-guide.is-complete-hit,
+  .answer-guide.is-complete-hit .wchar.state-ok .wchar-letter,
+  .answer-guide.is-complete-hit .wchar.state-auto .wchar-letter,
+  .answer-guide.is-complete-hit .wchar.state-ok .wchar-line,
+  .answer-guide.is-complete-hit .wchar.state-auto .wchar-line,
+  .answer-guide.is-complete-hit .answer-guide-terminal-status.is-success,
+  .answer-guide .answer-guide-inline-caret,
+  .answer-guide .wchar.state-caret::before,
+  .answer-guide .word-separator.state-caret::before,
+  .answer-guide .wchar.state-caret-after::after,
+  .answer-guide .word-separator.state-caret-after::after {
+    animation: none;
+  }
+
+  #answerGuide.answer-guide .skip-card-btn,
+  #answerGuide.answer-guide .hint-btn,
+  #answerGuide.answer-guide .key-badge {
+    transition: none;
+  }
+
+  #answerGuide.answer-guide .key-badge:active {
+    transform: none;
+  }
+}
+
+/* Keep the generated category labels aligned with the button contrast states. */
+#catButtons .cat-btn:not(.active) .cat-btn-label {
+  color: #fff !important;
+}
+
+#catButtons .cat-btn.active .cat-btn-label {
+  color: #07101b !important;
+}
+
+/* Split the category and type into two independent, responsive chips. */
+.category-badge {
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  color: var(--category-color, #fff);
+}
+
+.category-badge-main,
+.category-badge-meta {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--category-color, #fff) 52%, transparent);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 4px 12px rgba(0, 0, 0, 0.14);
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.category-badge-main {
+  color: var(--category-color, #fff);
+  background: color-mix(in srgb, var(--category-color, #fff) 12%, transparent);
+}
+
+.category-badge-meta {
+  color: color-mix(in srgb, var(--subcategory-color, #fff) 82%, #fff);
+  border-color: color-mix(in srgb, var(--subcategory-color, #fff) 64%, transparent);
+  background: color-mix(in srgb, var(--subcategory-color, #fff) 13%, transparent);
+  font-size: 0.88em;
+  letter-spacing: 0.08em;
+}
+
+body.layout-phone-portrait .category-badge {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+body.layout-phone-portrait .category-badge-main,
+body.layout-phone-portrait .category-badge-meta {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow-wrap: anywhere;
+}
+
+/* Reserve room for two-line chips up front so translated/long labels cannot
+   resize the topbar and push the game surface downward. */
+.card-topbar {
+  min-height: calc(44px * var(--type-height-scale));
+  align-items: flex-start;
+}
+
+.category-badge-main,
+.category-badge-meta {
+  min-height: calc(30px * var(--type-height-scale));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.layout-phone-portrait .card-topbar {
+  align-items: flex-start;
+}
+
+/* Prefer one-line labels. The topbar's layout controller moves the legend
+   below when this natural width no longer fits beside it. */
+.category-badge {
+  flex: 0 0 auto;
+  width: max-content;
+  max-width: 100%;
+}
+
+.category-badge-main,
+.category-badge-meta {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.card-topbar.is-legend-stacked .category-badge {
+  width: 100%;
+  flex: 1 1 100%;
+}
+
+/* A stacked topbar may move rows, but neither group should become a giant
+   empty-width block. Keep the legend horizontal whenever its labels allow. */
+.card-topbar.is-legend-stacked {
+  flex-wrap: nowrap;
+  row-gap: 6px;
+  align-items: center;
+}
+
+.card-topbar.is-legend-stacked .category-badge {
+  width: max-content;
+  max-width: 100%;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.card-topbar.is-legend-stacked .card-legend {
+  width: auto;
+  max-width: 100%;
+  flex: 0 0 auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+/* Read each legend entry as label → traffic-light lamp. */
+.card-legend-item > .card-legend-dot {
+  order: 2;
+}
+
+.card-legend-item > span:last-child {
+  order: 1;
+}
+
+/* Keep the launch window anchored while translated copy changes its wrapping.
+   The viewport handlers refresh this value for genuine resizes. */
+#mainCard:has(> #onboardingDialog.is-card-start.is-welcome) {
+  height: var(--onboarding-card-height);
+  min-height: var(--onboarding-card-height);
+  flex: 0 0 auto;
+}
+

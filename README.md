@@ -1,5 +1,15 @@
 # GermanCro
 
+## Development and production
+
+Run `npm ci`, then `npm start` for development. Use `npm run check` for all validation
+and tests, `npm run build` to generate the optimized site in `build/`, and
+`npm run preview` to inspect it at `http://localhost:3001`.
+
+See [the architecture guide](docs/ARCHITECTURE.md) for source ownership, CSS ordering,
+performance safeguards and deployment. `dist/` is a preserved historical snapshot;
+new releases should use the generated `build/` directory.
+
 GermanCro is a browser-based German trainer with Croatian and English support. The learner sees two prompt languages, types the German answer, and gets live character-by-character feedback.
 
 ## Current card model

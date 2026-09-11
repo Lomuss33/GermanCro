@@ -6781,6 +6781,7 @@ body.layout-phone-portrait .answer-guide-foot > .action-row {
 /* Mirror a real Enter-key press on the on-screen keycap. The animation only
    changes composited properties, so it never changes the guide's layout. */
 #answerGuide.answer-guide .key-badge.is-key-pressed {
+  transform-origin: center bottom;
   animation: enterKeyBadgePress 300ms cubic-bezier(0.22, 0.9, 0.3, 1.18);
   border-color: #fff;
   box-shadow:
@@ -6790,10 +6791,10 @@ body.layout-phone-portrait .answer-guide-foot > .action-row {
 }
 
 @keyframes enterKeyBadgePress {
-  0% { transform: translateY(0) scale(1); }
-  28% { transform: translateY(2px) scale(0.93); }
-  62% { transform: translateY(-1px) scale(1.06); }
-  100% { transform: translateY(0) scale(1); }
+  0% { transform: scaleY(1); }
+  28% { transform: scaleY(0.96); }
+  62% { transform: scaleY(1.1); }
+  100% { transform: scaleY(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6876,8 +6877,8 @@ body.layout-phone-portrait .answer-guide-foot > .action-row {
 #mainCard #categoryBadge.category-badge { gap: 8px; align-items: baseline; }
 #mainCard #categoryBadge .category-badge-main, #mainCard #categoryBadge .category-badge-meta { min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; line-height: 1.1; }
 #mainCard #categoryBadge .category-badge-main { color: var(--category-color, #fff); font-weight: 850; letter-spacing: 0.055em; }
-#mainCard #categoryBadge .category-badge-meta { position: relative; padding-left: 8px; color: var(--subcategory-color, rgba(255, 255, 255, 0.86)); font-weight: 750; letter-spacing: 0.065em; }
-#mainCard #categoryBadge .category-badge-meta::before { content: "/"; position: absolute; left: 0; color: rgba(255, 255, 255, 0.38); font-weight: 500; }
+#mainCard #categoryBadge .category-badge-meta { position: relative; padding-right: 8px; color: var(--subcategory-color, rgba(255, 255, 255, 0.86)); font-weight: 750; letter-spacing: 0.065em; }
+#mainCard #categoryBadge .category-badge-meta::after { content: "/"; position: absolute; right: 0; color: rgba(255, 255, 255, 0.38); font-weight: 500; }
 
 /* Facts view finish: cohesive dark-blue depth with restrained neon signals. */
 .facts-panel {

@@ -5569,6 +5569,25 @@ function initInputEvents() {
     });
   });
 
+  // Grow inward from the shared frame corner; never translate the attached edges.
+  for (const button of [skipCardBtnEl, hintBtnEl]) {
+    if (!button) continue;
+    let cornerPulse;
+    button.addEventListener("click", () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      cornerPulse?.cancel();
+      cornerPulse = button.animate(
+        [
+          { transform: "scale(1)", offset: 0 },
+          { transform: "scale(0.97)", offset: 0.28 },
+          { transform: "scale(1.06)", offset: 0.62 },
+          { transform: "scale(1)", offset: 1 }
+        ],
+        { duration: 300, easing: "cubic-bezier(0.22, 0.9, 0.3, 1.18)" }
+      );
+    });
+  }
+
   if (skipCardBtnEl) {
     skipCardBtnEl.addEventListener("click", () => {
       skipCurrentCard();

@@ -2,6 +2,10 @@
 
 This document is for developers and future agents who need to add cards or extend the card taxonomy.
 
+For the refactored module layout, commands and production workflow, see
+[Architecture](docs/ARCHITECTURE.md). Edit `src/` and `server/`; do not hand-mirror changes
+into the historical `dist/` directory. `npm run build` generates the release in `build/`.
+
 ## Local run
 
 Run the app from the repo root with a local web server:
@@ -30,7 +34,7 @@ That enables `POST /api/cards` and writes to `cards.user.json`.
 - `server.js`: save API using the shared card validation
 - `locales.json`: display labels for topics, subcategories, and scopes
 - `index.html`: add-card form fields
-- `style.css`: badge and authoring-form layout
+- `src/styles/`: badge, authoring-form and responsive layouts; root CSS files are compatibility entries
 
 ## Card contract
 
@@ -163,5 +167,5 @@ When you introduce a new subcategory, update all of these together:
 ## Notes
 
 - Static hosting remains read-only.
-- There is no automated test suite or CI yet.
+- Run `npm run check` for the automated test suite, validators and production-build checks; CI runs the same command.
 - If text looks garbled, check the editor encoding before editing content.

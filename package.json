@@ -4,11 +4,21 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
+    "build": "node scripts/build.js",
+    "preview": "node server.js --production",
+    "check:modules": "node scripts/check-modules.js",
+    "test": "node --test tests/*.test.js",
+    "test:build": "node tests/test-build.js",
     "validate:cards": "node scripts/validate-cards.js",
     "validate:facts": "node scripts/validate-facts.js",
     "validate:locales": "node scripts/validate-locales.js",
-    "test:onboarding": "node --test scripts/tour-geometry.test.js scripts/tutorial-language.test.js",
-    "smoke": "node scripts/smoke-static-shape.js",
-    "check": "npm run validate:cards && npm run validate:facts && npm run validate:locales && npm run test:onboarding && npm run smoke"
+    "test:onboarding": "node --test tests/tour-geometry.test.js tests/tutorial-language.test.js",
+    "smoke": "node tests/smoke-static-shape.js",
+    "check": "npm run validate:cards && npm run validate:facts && npm run validate:locales && npm test && npm run check:modules && npm run smoke && npm run build && npm run test:build"
+  },
+  "devDependencies": {
+    "acorn": "^8.18.0",
+    "esbuild": "^0.28.2",
+    "eslint-scope": "^9.1.2"
   }
 }
