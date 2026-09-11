@@ -380,7 +380,7 @@
   isolation: isolate;
   box-sizing: border-box;
   transform: none;
-  will-change: transform, filter, box-shadow;
+  will-change: auto;
   font-size: clamp(10.5px, calc(11.5px * var(--type-scale-body)), 12.5px);
   padding-block: 4px;
   color: #fff !important;
@@ -1461,4 +1461,3 @@ body.layout-phone-portrait .facts-chip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-

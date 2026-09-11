@@ -837,7 +837,7 @@ body.layout-phone-portrait .facts-grid {
 /* Four notable-people sections: transparent glass, colored depth, and a light 3D edge. */
 .facts-notable-people-groups > .facts-notable-people-group {
   overflow: hidden;
-  transform: translateZ(0);
+  transform: none;
   border: 1px solid color-mix(in srgb, var(--list-accent) 38%, transparent);
   border-left: 3px solid var(--list-accent);
   border-radius: 10px;

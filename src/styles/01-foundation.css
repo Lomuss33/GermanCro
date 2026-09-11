@@ -1125,8 +1125,9 @@ body > * { position: relative; z-index: 1; }
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  contain: paint;
-  transform: translateZ(0);
+  /* Tall interactive panels must repaint normally as they enter the viewport. */
+  contain: none;
+  transform: none;
   background-color: var(--surface);
   background:
     linear-gradient(180deg, rgba(18, 28, 64, 0.78), rgba(10, 18, 44, 0.66)),
@@ -1142,4 +1143,3 @@ body > * { position: relative; z-index: 1; }
   -webkit-backdrop-filter: blur(8px) saturate(138%) brightness(1.03);
   background-blend-mode: normal, screen, screen, screen, screen, screen, normal;
 }
-

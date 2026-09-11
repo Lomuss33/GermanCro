@@ -403,7 +403,7 @@ export function renderGrammarSliderTable({
     if (measurement.isMobile) {
       track.classList.add("is-horizontal");
       track.style.width = `${mobileTrackWidth}px`;
-      track.style.transform = `translate3d(${mobileTranslateX}px, 0, 0)`;
+      track.style.transform = `translateX(${mobileTranslateX}px)`;
 
       measurement.groups.forEach((group) => {
         const page = document.createElement("div");
@@ -439,7 +439,7 @@ export function renderGrammarSliderTable({
     } else {
       track.classList.add("is-horizontal", "is-seamless");
       track.style.width = `${desktopTrackWidth}px`;
-      track.style.transform = `translate3d(${desktopTranslateX}px, 0, 0)`;
+      track.style.transform = `translateX(${desktopTranslateX}px)`;
 
       const page = document.createElement("div");
       page.className = `grammar-slider-page ${isHeader ? "grammar-slider-header-page" : "grammar-slider-body-page"} is-seamless`;
