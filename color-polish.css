@@ -623,3 +623,95 @@ body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
 @media (prefers-reduced-motion: reduce) {
   #factsContent > .facts-view > .facts-list-section .facts-chip { transition: none; }
 }
+
+/* Mobile panels use the available screen width; padding belongs inside. */
+@media (max-width: 700px) {
+  body #mainCard,
+  body #mainCard :is(#gameArea, .stats-bar, .card-topbar, .progress-track, .progress-fill,
+    .prompt-main, .prompt-secondary, .input-shell, #answer, #answerGuide,
+    .answer-guide-body, .answer-guide-foot, .action-row, .key-badge,
+    .answer-terminal-status-badge, .session-end, .session-end-metric, button),
+  body #mainCard :is(.input-shell, #answerGuide, .progress-track, .progress-fill, button)::before,
+  body #mainCard :is(.input-shell, #answerGuide, .progress-track, .progress-fill, button)::after {
+    border-radius: 0 !important;
+  }
+  :root { --panel-width: 100%; }
+  body { padding-inline: 0; }
+  body #heroStage,
+  body #mainCard,
+  body #catPanel,
+  body #searchPanel,
+  body .author-panel,
+  body > .facts-panel,
+  body > .site-footer {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    border-radius: 0;
+  }
+  body #catPanel,
+  body #searchPanel,
+  body .author-panel,
+  body > .facts-panel {
+    padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));
+  }
+  body > .facts-panel { --facts-overview-inline-bleed: 0px; }
+  /* Section backgrounds reach the screen edge; only their content is inset. */
+  body #searchPanel,
+  body > .facts-panel {
+    padding-inline: 0 !important;
+    border-inline: 0;
+  }
+  body #heroStage, body #mainCard, body #catPanel, body .author-panel {
+    border-inline: 0;
+  }
+  #searchPanel .grammar-section,
+  #searchPanel .grammar-grid,
+  #factsContent .facts-grid,
+  #factsContent .facts-view-head {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: 0;
+    border-inline: 0;
+  }
+  #searchPanel .search-tools-row,
+  body .facts-panel .facts-controls,
+  #factsContent .facts-notable-people {
+    padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));
+  }
+  #searchPanel .grammar-card,
+  #factsContent > .facts-view > .facts-list-section {
+    border-inline: 0;
+    padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));
+  }
+  body #onboardingDialog.onboarding-dialog .onboarding-panel,
+  body #mainCard .session-end,
+  #catPanel .cat-panel-head,
+  #searchPanel .grammar-card,
+  #searchPanel .grammar-slider-table,
+  body .facts-panel .facts-controls,
+  body .facts-panel .state-picker-wrap,
+  #factsContent .facts-view,
+  #factsContent .facts-view-head,
+  #factsContent .facts-head-overview,
+  #factsContent .facts-grid,
+  #factsContent .facts-card,
+  #factsContent > .facts-view > .facts-list-section,
+  #factsContent .facts-notable-people,
+  #factsContent .facts-notable-people-group {
+    border-radius: 0 !important;
+  }
+  #factsContent,
+  #factsContent > .facts-view,
+  #factsContent > .facts-view > .facts-list-section,
+  #factsContent .facts-notable-people,
+  #factsContent .facts-grid,
+  #searchPanel .grammar-card {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin-inline: 0;
+    align-self: stretch;
+  }
+}
