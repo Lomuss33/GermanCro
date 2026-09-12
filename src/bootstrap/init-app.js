@@ -163,7 +163,7 @@ import { LANGUAGE_SEQUENCE, LANGUAGE_DOCK_LABELS, LANGUAGE_TITLES } from "../con
 import { DEFAULT_SUBCATEGORIES, SUBCATEGORY_COLORS, SUBCATEGORY_ICONS } from "../config/categories.js";
 import { searchSites } from "../search/sites.js";
 import { createPretextBlockController } from "../layout/pretext.js";
-import { createGrammarSliderTable } from "../grammar/table.js";
+import { renderGrammarReference } from "../grammar/reference-view.js";
 import { createFirstRunTour } from "../onboarding/first-run-tour.js";
 
 import {
@@ -1509,70 +1509,12 @@ function applyLearningTheme() {
 }
 
 function renderGrammarSection() {
-  if (!grammarGridEl) {
-    return;
-  }
-
-  grammarSliderControllers.forEach((controller) => controller?.destroy?.());
-  grammarSliderControllers = [];
-  grammarGridEl.innerHTML = "";
-  const cards = getLocaleBundle()?.grammar?.cards || [];
-
-  cards.forEach((card) => {
-    const section = document.createElement("section");
-    section.className = "grammar-card";
-
-    const title = document.createElement("div");
-    title.className = "grammar-card-title";
-    title.textContent = card.title;
-    section.appendChild(title);
-
-    if (card?.interaction?.mode === "fixed_first_slider") {
-      section.classList.add("grammar-card--interactive");
-
-      const mount = document.createElement("div");
-      mount.className = "grammar-slider-mount";
-      section.appendChild(mount);
-      grammarGridEl.appendChild(section);
-
-      const controller = createGrammarSliderTable({ root: mount, card });
-      if (controller) {
-        grammarSliderControllers.push(controller);
-      }
-      return;
-    }
-
-    const wrap = document.createElement("div");
-    wrap.className = "grammar-table-wrap";
-
-    const table = document.createElement("table");
-    table.className = "grammar-table";
-
-    const thead = document.createElement("thead");
-    const headRow = document.createElement("tr");
-    card.columns.forEach((column) => {
-      const th = document.createElement("th");
-      th.textContent = column;
-      headRow.appendChild(th);
-    });
-    thead.appendChild(headRow);
-    table.appendChild(thead);
-
-    const tbody = document.createElement("tbody");
-    card.rows.forEach((row) => {
-      const tr = document.createElement("tr");
-      row.forEach((cell, index) => {
-        const td = document.createElement(index === 0 ? "th" : "td");
-        td.textContent = cell;
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    wrap.appendChild(table);
-    section.appendChild(wrap);
-    grammarGridEl.appendChild(section);
-  });
+  if (!grammarGridEl) return;
+  grammarSliderControllers.forEach(controller => controller?.destroy?.());
+  grammarGridEl.replaceChildren();
+  grammarSliderControllers = renderGrammarReference(
+    grammarGridEl, getLocaleBundle()?.grammar?.cards || [], getLocale()
+  );
 }
 
 function renderStaticUi() {

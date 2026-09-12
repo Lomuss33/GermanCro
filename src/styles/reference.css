@@ -1,0 +1,211 @@
+/* Teaching content stays in normal flow: no paint containment or filter on text. */
+#searchPanel .grammar-lesson[hidden] { display: none !important; }
+#searchPanel .grammar-reference-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 8px;
+  margin-top: 20px;
+}
+#searchPanel .grammar-reference-filter {
+  min-width: 0;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid rgba(125, 211, 252, .45);
+  border-radius: 8px;
+  background: rgba(var(--glass-blue), .3);
+  color: #e4efff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.4;
+  white-space: normal;
+  cursor: pointer;
+}
+#searchPanel .grammar-reference-filter[aria-pressed="true"] {
+  background: #e8ff47;
+  border-color: #e8ff47;
+  color: #0b1725;
+}
+#searchPanel .grammar-reference-filter:focus-visible {
+  outline: 2px solid #7dd3fc;
+  outline-offset: 3px;
+}
+#searchPanel .grammar-reference-status {
+  margin: 10px 0 6px;
+  color: #dce7f8;
+  font-size: 12px;
+  font-weight: 700;
+}
+#searchPanel .grammar-reference-level-note,
+#searchPanel .grammar-lesson-source {
+  margin: 0;
+  color: #bdcce2;
+  font-size: 12px;
+  line-height: 1.6;
+}
+#searchPanel .grammar-lesson-source { text-underline-offset: 3px; }
+#searchPanel .grammar-lesson-body,
+#searchPanel .grammar-lesson-heading {
+  width: 100%;
+  min-width: 0;
+}
+#searchPanel .grammar-grid--reference {
+  gap: 18px;
+}
+#searchPanel .grammar-reference-intro {
+  width: 100%;
+  padding: 18px 4px 8px;
+  text-align: left;
+}
+#searchPanel .grammar-reference-kicker,
+#searchPanel .grammar-lesson-level {
+  margin: 0 0 8px;
+  color: var(--reference-accent, #7dd3fc);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+#searchPanel .grammar-reference-title {
+  max-width: 26ch;
+  font-size: clamp(22px, 3.5vw, 30px);
+  line-height: 1.2;
+  color: #f4f7ff;
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+#searchPanel :is(.grammar-reference-description, .grammar-lesson-description, .grammar-lesson-tip p) {
+  max-width: 75ch;
+  margin: 0;
+  color: #dce7f8;
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+#searchPanel .grammar-reference-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 16px 0 12px;
+  color: #e8ff47;
+  font-size: 12px;
+  font-weight: 700;
+}
+#searchPanel .grammar-reference-lookup {
+  color: #b8c9df;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0;
+}
+#searchPanel .grammar-lesson {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+  padding: 18px;
+  border-color: color-mix(in srgb, var(--reference-accent) 40%, transparent);
+}
+#searchPanel .grammar-lesson .grammar-card-title {
+  margin: 0;
+  color: var(--reference-accent);
+  font-size: clamp(17px, 2.5vw, 21px);
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+#searchPanel .grammar-lesson-body {
+  display: grid;
+  gap: 16px;
+  padding-top: 14px;
+}
+#searchPanel .grammar-lesson-examples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 8px;
+}
+#searchPanel .grammar-lesson-example {
+  min-width: 0;
+  padding: 10px 12px;
+  border-left: 2px solid var(--reference-accent);
+  background: rgba(var(--glass-blue), .22);
+}
+#searchPanel .grammar-lesson-example-label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--reference-accent);
+  font-size: 11px;
+  font-weight: 750;
+}
+#searchPanel .grammar-lesson-example p {
+  margin: 0;
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.5;
+}
+#searchPanel .grammar-lesson-tip {
+  padding: 12px;
+  background: rgba(var(--glass-blue), .18);
+  border-top: 1px solid rgba(195, 206, 227, .2);
+}
+#searchPanel .grammar-lesson-tip strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #e8ff47;
+  font-size: 12px;
+}
+#searchPanel .grammar-lesson-practice {
+  border: 1px solid rgba(132, 234, 208, .3);
+  background: rgba(var(--glass-blue), .18);
+  color: #dffbf4;
+  font-size: 14px;
+  line-height: 1.6;
+}
+#searchPanel .grammar-lesson-practice summary {
+  padding: 12px;
+  cursor: pointer;
+}
+#searchPanel .grammar-lesson-answer {
+  margin: 0;
+  padding: 0 12px 12px;
+  color: #fff;
+}
+#searchPanel .grammar-lesson-summary {
+  position: relative;
+  padding-right: 32px;
+  cursor: pointer;
+  list-style: none;
+}
+#searchPanel .grammar-lesson-summary::-webkit-details-marker { display: none; }
+#searchPanel .grammar-lesson-summary::after {
+  content: "+";
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  color: var(--reference-accent);
+  font-size: 24px;
+  transform: translateY(-50%);
+}
+#searchPanel .grammar-lesson[open] > .grammar-lesson-summary::after { content: "−"; }
+#searchPanel .grammar-lesson-action {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #c3cee3;
+}
+#searchPanel :is(.grammar-lesson-summary, .grammar-lesson-practice summary):focus-visible {
+  outline: 2px solid #7dd3fc;
+  outline-offset: 4px;
+}
+@media (max-width: 700px) {
+  #searchPanel .grammar-reference-intro,
+  #searchPanel .grammar-lesson {
+    padding: 16px max(12px, env(safe-area-inset-left)) 16px max(12px, env(safe-area-inset-right));
+    border-radius: 0;
+    border-inline: 0;
+  }
+  #searchPanel .grammar-reference-steps { gap: 8px 12px; }
+}
