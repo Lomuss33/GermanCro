@@ -18,12 +18,8 @@ export function renderGrammarReference(root, baseCards, language) {
   root.classList.toggle("grammar-grid--reference", german);
   if (german) {
     const intro = element("header", "grammar-reference-intro");
-    intro.append(element("p", "grammar-reference-kicker", "DEIN LERNWERKZEUG"));
     intro.append(element("h2", "grammar-reference-title", GERMAN_REFERENCE_INTRO.title));
     intro.append(element("p", "grammar-reference-description", GERMAN_REFERENCE_INTRO.description));
-    const steps = element("div", "grammar-reference-steps");
-    GERMAN_REFERENCE_INTRO.steps.forEach(text => steps.append(element("span", "", text)));
-    intro.append(steps, element("p", "grammar-reference-lookup", GERMAN_REFERENCE_INTRO.lookup));
     filterBar = element("div", "grammar-reference-filters");
     filterBar.setAttribute("role", "group");
     filterBar.setAttribute("aria-label", "Lernschwerpunkt auswählen");
@@ -44,7 +40,8 @@ export function renderGrammarReference(root, baseCards, language) {
     }
     resultStatus = element("p", "grammar-reference-status", `${cards.length} Themen · Alle Stufen`);
     resultStatus.setAttribute("role", "status");
-    intro.append(filterBar, resultStatus, element("p", "grammar-reference-level-note", GERMAN_REFERENCE_INTRO.levelNote));
+    // Keep filter-result announcements for screen readers without repeating the UI.
+    intro.append(filterBar, resultStatus);
     root.append(intro);
   }
 

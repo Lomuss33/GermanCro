@@ -1,10 +1,32 @@
 /* Teaching content stays in normal flow: no paint containment or filter on text. */
+#searchPanel .search-tools-row {
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+}
+#searchPanel #searchLinks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100%;
+  align-items: stretch;
+}
+#searchPanel #searchLinks .search-link {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  justify-content: center;
+  white-space: normal;
+  text-align: center;
+}
+@media (max-width: 480px) {
+  #searchPanel #searchLinks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 #searchPanel .grammar-lesson[hidden] { display: none !important; }
 #searchPanel .grammar-reference-filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
   gap: 8px;
-  margin-top: 20px;
+  margin-top: 14px;
 }
 #searchPanel .grammar-reference-filter {
   min-width: 0;
@@ -31,12 +53,15 @@
   outline-offset: 3px;
 }
 #searchPanel .grammar-reference-status {
-  margin: 10px 0 6px;
-  color: #dce7f8;
-  font-size: 12px;
-  font-weight: 700;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
-#searchPanel .grammar-reference-level-note,
 #searchPanel .grammar-lesson-source {
   margin: 0;
   color: #bdcce2;
@@ -57,7 +82,6 @@
   padding: 18px 4px 8px;
   text-align: left;
 }
-#searchPanel .grammar-reference-kicker,
 #searchPanel .grammar-lesson-level {
   margin: 0 0 8px;
   color: var(--reference-accent, #7dd3fc);
@@ -68,12 +92,13 @@
   text-transform: uppercase;
 }
 #searchPanel .grammar-reference-title {
-  max-width: 26ch;
+  width: 100%;
+  max-width: none;
   font-size: clamp(22px, 3.5vw, 30px);
   line-height: 1.2;
   color: #f4f7ff;
   margin: 0 0 12px;
-  text-wrap: balance;
+  text-wrap: wrap;
 }
 #searchPanel :is(.grammar-reference-description, .grammar-lesson-description, .grammar-lesson-tip p) {
   max-width: 75ch;
@@ -83,21 +108,6 @@
   line-height: 1.65;
   overflow-wrap: break-word;
   hyphens: auto;
-}
-#searchPanel .grammar-reference-steps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 18px;
-  margin: 16px 0 12px;
-  color: #e8ff47;
-  font-size: 12px;
-  font-weight: 700;
-}
-#searchPanel .grammar-reference-lookup {
-  color: #b8c9df;
-  font-size: 12px;
-  line-height: 1.6;
-  margin: 0;
 }
 #searchPanel .grammar-lesson {
   display: block;
@@ -207,5 +217,4 @@
     border-radius: 0;
     border-inline: 0;
   }
-  #searchPanel .grammar-reference-steps { gap: 8px 12px; }
 }

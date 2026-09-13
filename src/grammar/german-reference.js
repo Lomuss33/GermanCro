@@ -7,11 +7,8 @@ const slider = {
 };
 
 export const GERMAN_REFERENCE_INTRO = {
-  title: "Deutsch von A1 bis C2. Klar, sicher, präzise.",
-  description: "Nachschlagen, auffrischen, weiterdenken: von den ersten Satzmustern bis zu differenzierter Argumentation und feinen Bedeutungsnuancen. Wähle deinen Schwerpunkt – Grundlagen bleiben auf jeder Stufe nützlich.",
-  levelNote: "Die Stufen dienen zur Orientierung, nicht als starre Grenzen oder vollständiger Prüfungslehrplan. C2 heißt auch: einfach, treffend und situationsgerecht formulieren.",
-  steps: ["1 · Regel lesen", "2 · Beispiel vergleichen", "3 · Selbst ausprobieren"],
-  lookup: "Ein Wort ist unklar? Diese Wörterbücher suchen nach dem Wort aus deiner aktuellen Lernkarte.",
+  title: "Deutsch A1–C2",
+  description: "Regeln, Beispiele und Übungen auf einen Blick.",
 };
 
 const additions = {
