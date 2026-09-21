@@ -1,0 +1,60 @@
+/* The guides always flank the title; only their own text may wrap. */
+#heroStage > .site-title-row.has-install-guides {
+  flex: 0 0 auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(40%, 22.5rem)) minmax(0, 1fr);
+  column-gap: min(1.5%, 0.625rem);
+  row-gap: 0;
+  align-items: center;
+  padding-block: 0.375rem;
+}
+
+#heroStage > .site-title-row.has-install-guides > .site-title {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+#heroStage > .site-title-row.has-install-guides > .title-guide {
+  box-sizing: border-box;
+  grid-row: 1;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  padding: 0.375rem min(6%, 0.75rem);
+  border-radius: 8px;
+  align-self: stretch;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  opacity: 1;
+}
+
+#heroStage .title-guide :is(.title-guide-browser, .title-guide-steps) {
+  min-width: 0;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: #dce5f0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: none;
+  text-wrap: pretty;
+}
+
+#heroStage .has-roomy-guides .title-guide :is(.title-guide-browser, .title-guide-steps) {
+  font-size: 1rem;
+}
+
+#heroStage > .site-title-row.has-install-guides > .title-guide-left {
+  grid-column: 1;
+}
+
+#heroStage > .site-title-row.has-install-guides > .title-guide-right {
+  grid-column: 3;
+  text-align: right;
+}

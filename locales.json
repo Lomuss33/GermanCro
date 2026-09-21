@@ -51,6 +51,11 @@
     },
     "messages": {
       "languageDockAria": "Lernsprache wechseln",
+      "roundProgress": {
+        "label": "Rundenfortschritt",
+        "value": "{completed} von {total} Karten abgeschlossen ({percent} %)",
+        "empty": "Noch keine Karten in dieser Runde"
+      },
       "arrowDockAria": "Tastatur-Navigation",
       "arrowActions": {
         "up": "Modus",
@@ -679,6 +684,11 @@
     },
     "messages": {
       "languageDockAria": "Promijeni jezik učenja",
+      "roundProgress": {
+        "label": "Napredak kruga",
+        "value": "{completed} od {total} kartica dovr\u0161eno ({percent} %)",
+        "empty": "Jo\u0161 nema kartica u ovom krugu"
+      },
       "arrowDockAria": "Navigacija tipkovnicom",
       "arrowActions": {
         "up": "Način",
@@ -1299,6 +1309,11 @@
     },
     "messages": {
       "languageDockAria": "Change learning language",
+      "roundProgress": {
+        "label": "Round progress",
+        "value": "{completed} of {total} cards completed ({percent}%)",
+        "empty": "No cards in this round yet"
+      },
       "arrowDockAria": "Keyboard navigation",
       "arrowActions": {
         "up": "Mode",

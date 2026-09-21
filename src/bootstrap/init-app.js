@@ -27,6 +27,12 @@ import {
   isExactTypedMatch,
 } from "../game/answer-analysis.js";
 import {
+  calculateWpmMetrics,
+  countInsertedTypingUnits,
+  countTypingUnits,
+  formatWpm,
+} from "../game/typing-metrics.js";
+import {
   clampNumber,
   getScaledFontPx,
   computeResponsiveTypeProfile,
@@ -203,10 +209,12 @@ let sessionStart = 0;
 let roundTimerStarted = false;
 let roundTimerInterval = 0;
 let totalCharsTyped = 0;
+let totalTypingUnits = 0;
 let sessionSkipCounts = new WeakMap();
 let sessionSkippedCards = new WeakSet();
 let cardStateByCard = new WeakMap();
 let pendingAdvanceTimer = 0;
+let pendingFinishAt = 0;
 let autoSubmitTimer = 0;
 let scoredCardEvents = new WeakSet();
 let difficulty = "easy";
@@ -214,6 +222,7 @@ let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
 let enterKeyPulseTimer = 0;
+let lastEnterPressAt = 0;
 let feedbackBurstPieces = [];
 let answerGuideMeasureFrame = 0;
 let answerGuideResizeObserver = null;
@@ -466,7 +475,7 @@ function getPromptFitProfile({ text, width, height, density, kind }) {
 function getSiteTitleFitProfile() {
   return {
     maxLines: 1,
-    minFontPx: 18,
+    minFontPx: siteTitleRowEl?.classList.contains("has-install-guides") ? 10 : 18,
     maxFontPx: 52,
   };
 }
@@ -1150,6 +1159,7 @@ function getNextSkipCard() {
 }
 
 function cancelPendingCardAdvance() {
+  pendingFinishAt = 0;
   if (!pendingAdvanceTimer) {
     return;
   }
@@ -1585,6 +1595,7 @@ function switchLearningMode(nextLanguage) {
   }
 
   window.clearTimeout(pendingLanguageSwitchTimer);
+  cancelPendingCardAdvance();
   window.clearTimeout(languageSwitchCleanupTimer);
   const languageSwitchToken = ++pendingLanguageSwitchToken;
   saveCurrentCardState();
@@ -2213,7 +2224,11 @@ function updateAnswerTerminalStatus(target, typed, terminalHit = null) {
   answerTerminalStatusEl.textContent = terminalStatusKind === "success" ? "\u2665" : "\u2715";
 }
 
-function submitCurrentAnswer() {
+function submitCurrentAnswer({ finishNow = false } = {}) {
+  if (pendingFinishAt) {
+    if (finishNow) showSessionEnd();
+    return;
+  }
   if (!sessionCards.length) {
     return;
   }
@@ -2231,7 +2246,7 @@ function submitCurrentAnswer() {
     showFeedbackBurst("success", true);
     if (!scoreAlreadyRecorded) {
       scoredCardEvents.add(card);
-      totalCharsTyped += target.length;
+      totalCharsTyped += countTypingUnits(target);
       totalAttempts += 1;
       if (!forceCorrection) {
         totalCorrect += 1;
@@ -2248,6 +2263,11 @@ function submitCurrentAnswer() {
     saveCurrentCardState();
     cancelPendingCardAdvance();
     const completedCard = card;
+    const isLastCard = sessionIndex === sessionCards.length - 1;
+    if (isLastCard) {
+      pendingFinishAt = Date.now();
+      updateRoundTimer();
+    }
     pendingAdvanceTimer = window.setTimeout(() => {
       pendingAdvanceTimer = 0;
       if (sessionCards[sessionIndex] !== completedCard) {
@@ -2259,7 +2279,7 @@ function submitCurrentAnswer() {
       } else {
         navigateToCardIndex(sessionIndex + 1);
       }
-    }, 140);
+    }, isLastCard ? 5000 : 140);
     return;
   }
 
@@ -2539,8 +2559,55 @@ function updateRoundTimer() {
   if (!roundTimerEl || !sessionStart) {
     return;
   }
-  const elapsedSeconds = Math.max(0, Math.floor((Date.now() - sessionStart) / 1000));
+  const elapsedSeconds = Math.max(0, Math.floor(((pendingFinishAt || Date.now()) - sessionStart) / 1000));
   roundTimerEl.textContent = formatRoundTime(elapsedSeconds);
+}
+
+function getSessionTypingElapsedMs(referenceTime = Date.now()) {
+  return roundTimerStarted && sessionStart
+    ? Math.max(0, (pendingFinishAt || referenceTime) - sessionStart)
+    : 0;
+}
+
+function getSessionTypingMetrics(referenceTime = Date.now()) {
+  return calculateWpmMetrics({
+    typedUnits: totalTypingUnits,
+    acceptedUnits: totalCharsTyped,
+    elapsedMs: getSessionTypingElapsedMs(referenceTime),
+  });
+}
+
+function formatEnterBurstTime(ms) {
+  const safeMs = Math.max(0, Number(ms) || 0);
+  const totalSeconds = Math.floor(safeMs / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const tenths = Math.floor((safeMs % 1000) / 100);
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${tenths}`;
+}
+
+function showEnterTimeBurst() {
+  if (!answerGuideActionRowEl || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+    return;
+  }
+
+  const pressedAt = Date.now();
+  const roundTimeMs = getSessionTypingElapsedMs(pressedAt);
+  const intervalMs = lastEnterPressAt ? pressedAt - lastEnterPressAt : null;
+  lastEnterPressAt = pressedAt;
+
+  const createBurst = (text, className, removeAfter = 1250) => {
+    const burst = document.createElement("span");
+    burst.className = `enter-time-burst ${className}`;
+    burst.textContent = text;
+    answerGuideActionRowEl.appendChild(burst);
+    window.setTimeout(() => burst.remove(), removeAfter);
+  };
+
+  createBurst(formatEnterBurstTime(roundTimeMs), "enter-time-burst-now");
+  if (intervalMs !== null) {
+    createBurst(`+${formatEnterBurstTime(intervalMs)}`, "enter-time-burst-delta", 1450);
+  }
 }
 
 function startRoundTimer() {
@@ -2564,6 +2631,59 @@ function stopRoundTimer() {
   updateRoundTimer();
 }
 
+function renderRoundProgress({ reset = false, empty = false } = {}) {
+  const track = progFill?.parentElement;
+  if (!track) return;
+  const total = empty ? 0 : sessionCards.length;
+  const completed = empty ? 0 : sessionCards.reduce(
+    (count, card) => count + Number(scoredCardEvents.has(card)), 0,
+  );
+  const percent = total ? Math.min(100, completed / total * 100) : 0;
+  const previous = Number(track.dataset.completed || 0);
+  const changed = reset || track.dataset.completed !== String(completed) ||
+    track.dataset.total !== String(total);
+  const valueText = total
+    ? t("messages.roundProgress.value", { completed, total, percent: Math.round(percent) })
+    : t("messages.roundProgress.empty");
+
+  track.setAttribute("aria-label", t("messages.roundProgress.label"));
+  track.setAttribute("aria-valuemax", String(total || 1));
+  track.setAttribute("aria-valuenow", String(completed));
+  track.setAttribute("aria-valuetext", valueText);
+  track.title = valueText;
+  track.classList.toggle("is-complete", total > 0 && completed === total);
+  track.classList.toggle("is-empty", completed === 0);
+  track.style.setProperty("--progress-percent", `${percent}%`);
+  // Large rounds use quarter marks rather than unreadably dense card divisions.
+  track.style.setProperty("--progress-step", `${100 / (total > 20 ? 4 : Math.max(1, total))}%`);
+  track.dataset.completed = String(completed);
+  track.dataset.total = String(total);
+  if (!changed) return;
+
+  const from = getComputedStyle(progFill).clipPath;
+  progFill.getAnimations().forEach((animation) => animation.cancel());
+  track.getAnimations().forEach((animation) => animation.cancel());
+  const to = `inset(0 ${100 - percent}% 0 0)`;
+  progFill.style.removeProperty("width");
+  progFill.style.clipPath = to;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reset && !reduceMotion) {
+    progFill.animate([{ clipPath: from }, { clipPath: to }], {
+      duration: 420, easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+    });
+    if (completed > previous) {
+      progFill.animate([
+        { backgroundPosition: "-50% 0%, 0% 0%" },
+        { backgroundPosition: "150% 0%, 0% 0%" },
+      ], { duration: 850, delay: 120, easing: "ease-in-out" });
+      track.animate([
+        { boxShadow: "0 0 0 1px rgba(232,255,71,0.4), -3px 0 12px rgba(34,211,238,0.22), 3px 0 12px rgba(255,122,200,0.25)" },
+        { boxShadow: "0 0 0 1px rgba(232,255,71,0), -3px 0 12px rgba(34,211,238,0), 3px 0 12px rgba(255,122,200,0)" },
+      ], { duration: completed === total ? 900 : 550, easing: "ease-out" });
+    }
+  }
+}
+
 function resetSessionProgress() {
   sessionIndex = 0;
   streak = 0;
@@ -2573,6 +2693,8 @@ function resetSessionProgress() {
   skippedCount = 0;
   sessionSkipsUsed = 0;
   totalCharsTyped = 0;
+  totalTypingUnits = 0;
+  lastEnterPressAt = 0;
   sessionStart = 0;
   roundTimerStarted = false;
   if (roundTimerEl) {
@@ -2583,6 +2705,7 @@ function resetSessionProgress() {
   cardStateByCard = new WeakMap();
   cancelPendingCardAdvance();
   scoredCardEvents = new WeakSet();
+  renderRoundProgress({ reset: true });
 }
 
 function clearSessionUi() {
@@ -2593,7 +2716,6 @@ function clearSessionUi() {
   clearTimeout(answerGuideCompleteTimer);
   answerGuideEl?.classList.remove("is-complete-hit");
   forceCorrection = false;
-  progFill.style.width = "0%";
   renderCardBadge(null);
   updateSearchLinks(null);
   buildWordGrid("", "");
@@ -2619,6 +2741,7 @@ async function recoverPlayableSession(reason = "unknown", requestedSize = SESSIO
   const recoveryNonce = ++sessionRecoveryNonce;
   const nextSessionSize = resolveSessionSize(requestedSize, sessionCards.length || SESSION_SIZE);
   clearSessionUi();
+  renderRoundProgress({ reset: true, empty: true });
 
   const currentCard = sessionCards[sessionIndex];
   if (isRenderableCard(currentCard)) {
@@ -2709,7 +2832,7 @@ function loadCard(options = {}) {
 
   clearSessionUi();
   renderPrompt(card);
-  progFill.style.width = `${(sessionIndex / sessionCards.length) * 100}%`;
+  renderRoundProgress();
 
   renderCardBadge(card);
   updateSkipCardButtonState();
@@ -2750,6 +2873,7 @@ function replayStatsClass(element, className, duration = 720) {
 }
 
 function updateStats({ event = "update" } = {}) {
+  renderRoundProgress();
   const streakEl = document.getElementById("streakNum");
   const correctEl = document.getElementById("correctVal");
   const remainingEl = document.getElementById("remainingVal");
@@ -2778,12 +2902,19 @@ function updateStats({ event = "update" } = {}) {
     accuracyEl.textContent = nextSnapshot.accuracy !== null ? `${nextSnapshot.accuracy}%` : "—";
   }
 
-  const minutes = (Date.now() - sessionStart) / 60000;
-  nextSnapshot.wpm = minutes > 0 && totalCharsTyped > 0
-    ? Math.round((totalCharsTyped / 5) / minutes)
-    : null;
+  const typingMetrics = getSessionTypingMetrics();
+  nextSnapshot.wpm = typingMetrics.displayedWpm === null
+    ? null
+    : Math.round(typingMetrics.displayedWpm * 10) / 10;
   if (wpmEl) {
-    wpmEl.textContent = nextSnapshot.wpm || "—";
+    const wpmText = formatWpm(nextSnapshot.wpm);
+    const grossText = formatWpm(typingMetrics.grossWpm);
+    const acceptedText = formatWpm(typingMetrics.acceptedWpm);
+    const stat = wpmEl.closest(".stat");
+    wpmEl.textContent = wpmText;
+    stat?.style.setProperty("--wpm-level", `${Math.round(typingMetrics.level * 100)}%`);
+    stat?.setAttribute("aria-label", `${wpmText} WPM`);
+    stat?.setAttribute("title", `Live WPM: ${wpmText} · Gross: ${grossText} · Correct: ${acceptedText}`);
   }
 
   const previous = previousStatsSnapshot;
@@ -2995,8 +3126,8 @@ function renderInstallGuide() {
     : `${browserPrefix} ${context.browserLabel}: ${resolvedPath}`;
   const stepsText = t("installGuide.cta");
 
-  installGuideBrowserEl.textContent = browserText;
-  installGuideStepsEl.textContent = stepsText;
+  if (installGuideBrowserEl.textContent !== browserText) installGuideBrowserEl.textContent = browserText;
+  if (installGuideStepsEl.textContent !== stepsText) installGuideStepsEl.textContent = stepsText;
   renderPhoneInstallGuide(browserText, stepsText);
 }
 
@@ -3012,22 +3143,6 @@ function setInstallGuidePillVisible(element, isVisible) {
   element?.classList.toggle("is-hidden", !isVisible);
 }
 
-function measureInstallGuidePillFits(element) {
-  if (!element || !element.parentElement) {
-    return false;
-  }
-
-  const panel = element.parentElement;
-  if (panel.classList.contains("is-hidden")) {
-    return false;
-  }
-
-  if (element.clientWidth <= 0 || element.clientHeight <= 0) {
-    return false;
-  }
-
-  return element.scrollHeight <= element.clientHeight + 1;
-}
 
 function cancelInstallGuideLayoutFrame() {
   if (!installGuideLayoutFrame) {
@@ -3038,28 +3153,6 @@ function cancelInstallGuideLayoutFrame() {
   installGuideLayoutFrame = 0;
 }
 
-function finalizeDesktopInstallGuideLayout() {
-  installGuideLayoutFrame = 0;
-
-  if (!installGuidePanelEl || !installGuideBrowserPanelEl || !installGuideBrowserEl || !installGuideStepsEl || !phoneGuideBarEl) {
-    return;
-  }
-
-  const context = detectInstallGuideContext();
-  if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
-    hideInstallGuide();
-    return;
-  }
-
-  phoneGuideBarEl.classList.add("is-hidden");
-
-  const browserFits = measureInstallGuidePillFits(installGuideBrowserEl);
-  const stepsFits = measureInstallGuidePillFits(installGuideStepsEl);
-
-  setInstallGuidePillVisible(installGuideBrowserPanelEl, browserFits);
-  setInstallGuidePillVisible(installGuidePanelEl, stepsFits);
-  setDesktopInstallGuideShellVisible(browserFits || stepsFits);
-}
 
 function applyInstallGuideLayout() {
   installGuideLayoutFrame = 0;
@@ -3076,12 +3169,15 @@ function applyInstallGuideLayout() {
 
   renderInstallGuide();
 
+  const width = siteTitleRowEl?.clientWidth || 0;
+  const rootSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  siteTitleRowEl?.classList.toggle("has-roomy-guides", width >= 46 * rootSize);
   phoneGuideBarEl.classList.add("is-hidden");
   setDesktopInstallGuideShellVisible(true);
   setInstallGuidePillVisible(installGuideBrowserPanelEl, true);
   setInstallGuidePillVisible(installGuidePanelEl, true);
 
-  installGuideLayoutFrame = window.requestAnimationFrame(finalizeDesktopInstallGuideLayout);
+  siteTitleController?.relayout();
 }
 
 function scheduleInstallGuideLayout() {
@@ -3121,6 +3217,21 @@ function initInstallGuide() {
     showToast(t("messages.toasts.install"));
   });
 
+  // Observe width, not height: wrapping must not trigger a layout feedback loop.
+  if (typeof ResizeObserver === "function" && siteTitleRowEl) {
+    let previousMetrics = "";
+    const observer = new ResizeObserver(() => {
+      const metrics = `${siteTitleRowEl.clientWidth}:${getComputedStyle(document.documentElement).fontSize}`;
+      if (metrics === previousMetrics) return;
+      previousMetrics = metrics;
+      scheduleInstallGuideLayout();
+    });
+    observer.observe(siteTitleRowEl);
+    observer.observe(document.documentElement);
+  }
+  window.addEventListener("resize", scheduleInstallGuideLayout, { passive: true });
+  document.fonts?.ready.then(scheduleInstallGuideLayout);
+  document.fonts?.addEventListener("loadingdone", scheduleInstallGuideLayout);
   maybeShowInstallGuide();
 }
 
@@ -3196,8 +3307,11 @@ function getEncouragement(currentStreak) {
 }
 
 function showSessionEnd() {
+  const finishedAt = pendingFinishAt || Date.now();
+  cancelPendingCardAdvance();
+  cancelAutoSubmit();
   stopRoundTimer();
-  progFill.style.width = "100%";
+  renderRoundProgress();
   setGameSurfaceMode(true);
   updateSkipCardButtonState();
 
@@ -3205,23 +3319,27 @@ function showSessionEnd() {
   document.getElementById("finalScore").textContent = `${pct}%`;
 
   const secs = roundTimerStarted && sessionStart
-    ? Math.round((Date.now() - sessionStart) / 1000)
+    ? Math.round((finishedAt - sessionStart) / 1000)
     : 0;
   if (finalTimeEl) {
     finalTimeEl.textContent = formatRoundTime(secs);
   }
-  const wpm = secs > 0 ? Math.round((totalCharsTyped / 5) / (secs / 60)) : 0;
+  const typingMetrics = getSessionTypingMetrics(finishedAt);
+  const wpm = typingMetrics.displayedWpm === null
+    ? 0
+    : Math.round(typingMetrics.displayedWpm * 10) / 10;
+  const wpmText = formatWpm(wpm);
   if (finalCorrectEl) finalCorrectEl.textContent = `${totalCorrect}/${sessionCards.length}`;
   if (finalSkippedEl) finalSkippedEl.textContent = String(skippedCount);
   if (finalStreakEl) finalStreakEl.textContent = String(bestStreak);
-  if (finalWpmEl) finalWpmEl.textContent = String(wpm);
+  if (finalWpmEl) finalWpmEl.textContent = wpmText;
   document.getElementById("finalDetails").textContent =
     t("messages.session.finalDetails", {
       correct: totalCorrect,
       total: sessionCards.length,
       skipped: skippedCount,
       streak: bestStreak,
-      wpm,
+      wpm: wpmText,
       secs,
     });
   document.getElementById("finalEmoji").textContent =
@@ -3435,8 +3553,9 @@ function initInputEvents() {
       return;
     }
     pulseEnterKeyBadge();
-    submitCurrentAnswer();
-    focusAnswerInputAtEnd();
+    showEnterTimeBurst();
+    submitCurrentAnswer({ finishNow: true });
+    if (!mainCard.classList.contains("is-session-ended")) focusAnswerInputAtEnd();
   });
 
   document.addEventListener("keydown", (event) => {
@@ -3502,6 +3621,10 @@ function initInputEvents() {
 
     const target = getTargetValue(sessionCards[sessionIndex]);
     const typedValue = inputEl.value;
+    const addedTypingUnits = countInsertedTypingUnits(previousTypedValue, typedValue);
+    if (addedTypingUnits > 0) {
+      totalTypingUnits += addedTypingUnits;
+    }
     const previousPrefix = getCorrectPrefixLength(target, previousTypedValue);
     const currentPrefix = getCorrectPrefixLength(target, typedValue);
     const previousExact = isExactTypedMatch(target, previousTypedValue);
@@ -3582,14 +3705,25 @@ function initInputEvents() {
     }
   });
 
+  document.addEventListener("keydown", (event) => {
+    if (!pendingFinishAt || event.key !== "Enter" || event.repeat ||
+        event.isComposing || event.ctrlKey || event.altKey || event.metaKey ||
+        firstRunTour?.isOpen()) return;
+    event.preventDefault();
+    event.stopPropagation();
+    pulseEnterKeyBadge();
+    showEnterTimeBurst();
+    showSessionEnd();
+  }, { capture: true });
+
   inputEl.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" || !sessionCards.length) {
       return;
     }
     event.preventDefault();
-    if (!event.repeat) {
-      pulseEnterKeyBadge();
-    }
+    if (event.repeat || event.isComposing) return;
+    pulseEnterKeyBadge();
+    showEnterTimeBurst();
     submitCurrentAnswer();
   });
 }

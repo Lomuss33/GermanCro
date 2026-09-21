@@ -4,6 +4,7 @@ import { BoundedCache } from "../src/core/bounded-cache.js";
 import { getByPath, formatTemplate, getCardValue, formatRoundTime } from "../src/core/text.js";
 import { getSecureRandomInt, shuffle } from "../src/core/random.js";
 import { getCorrectPrefixLength, getGuideTokens, getGuideWordTokens, getGuideWordTokenAt, getGuidePreviousWordToken, getFreshCorrectIndexes, getFreshWrongIndexes, isExactTypedMatch } from "../src/game/answer-analysis.js";
+import { calculateWpmMetrics, countInsertedTypingUnits, countTypingUnits, formatWpm, getInsertedText } from "../src/game/typing-metrics.js";
 import { computeResponsiveTypeProfile, getGameDensityProfile, getNextDenserDensity } from "../src/layout/type-profiles.js";
 
 test("layout cache is bounded and retains recently used entries", () => {
@@ -46,6 +47,26 @@ test("typing feedback only reports newly changed positions", () => {
   assert.deepEqual([...getFreshCorrectIndexes("Haus", "Hxx", "Haus")], [1,2,3]);
   assert.deepEqual([...getFreshWrongIndexes("Haus", "Hx", "Hxy")], [2]);
   assert.deepEqual([...getFreshWrongIndexes("Haus", "Hxy", "H")], []);
+});
+test("typing metrics count inserted visible units and calculate standard WPM", () => {
+  assert.equal(countTypingUnits("Äpfel"), 5);
+  assert.equal(countTypingUnits("👍🏽"), 1);
+  assert.equal(getInsertedText("Haus", "Haus!"), "!");
+  assert.equal(countInsertedTypingUnits("Haus", "Haus!"), 1);
+  assert.equal(countInsertedTypingUnits("abc", "axc"), 1);
+  assert.equal(countInsertedTypingUnits("abcd", "acd"), 0);
+
+  const metrics = calculateWpmMetrics({
+    typedUnits: 250,
+    acceptedUnits: 200,
+    elapsedMs: 60000,
+  });
+  assert.equal(metrics.grossWpm, 50);
+  assert.equal(metrics.acceptedWpm, 40);
+  assert.equal(metrics.displayedWpm, 50);
+  assert.equal(metrics.precision, 0.8);
+  assert.match(formatWpm(42.25), /^42[.,]3$/);
+  assert.equal(formatWpm(null), "—");
 });
 test("responsive type and density stay bounded across phone and desktop widths", () => {
   for (const [width,height] of [[320,568],[390,844],[1440,900],[2560,1440]]) {
