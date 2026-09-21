@@ -1,4 +1,6 @@
 import { expandRect, getUnionRect, placeTourPanel } from "./tour-geometry.js";
+import { LANGUAGE_TITLES } from "../config/languages.js";
+import { renderSiteTitleLineContent } from "../ui/site-title.js";
 import { normalizeTutorialLanguage, resolveTutorialLanguage } from "./tutorial-language.js";
 
 export const ONBOARDING_STORAGE_KEY = "germancro.onboarding.v2";
@@ -39,6 +41,30 @@ const TOUR_STEPS = Object.freeze([
     bodyKey: "onboarding.steps.settings.body",
   }),
 ]);
+
+const WELCOME_COPY = Object.freeze({
+  de: Object.freeze({
+    body: "Deine n\u00e4chste Runde beginnt hier.",
+    languageLabel: "Welche Sprache m\u00f6chtest du \u00fcben?",
+    play: "{language} \u00fcben",
+    tour: "Kurze Einf\u00fchrung",
+    settings: "Runde anpassen",
+  }),
+  hr: Object.freeze({
+    body: "Tvoj sljede\u0107i krug po\u010dinje ovdje.",
+    languageLabel: "Koji jezik \u017eeli\u0161 vje\u017ebati?",
+    play: "Vje\u017ebaj: {language}",
+    tour: "Kratki vodi\u010d",
+    settings: "Prilagodi krug",
+  }),
+  en: Object.freeze({
+    body: "Your next round starts here.",
+    languageLabel: "Which language do you want to practise?",
+    play: "Practise {language}",
+    tour: "Quick tour",
+    settings: "Customise round",
+  }),
+});
 
 function safelyReadSeenState(storage) {
   try {
@@ -357,10 +383,20 @@ export function createFirstRunTour({
     return translate(path, params, tutorialLanguage);
   }
 
+  function welcomeText(key) {
+    return WELCOME_COPY[tutorialLanguage]?.[key] || WELCOME_COPY.hr[key] || "";
+  }
+
   function syncLanguageButtons() {
     dialog.setAttribute("lang", tutorialLanguage);
     const activeLearningMode = normalizeTutorialLanguage(getLearningMode?.()) || "de";
     syncBrandAccent(activeLearningMode);
+    if (state === "welcome" && elements.title) {
+      const title = LANGUAGE_TITLES[activeLearningMode] || LANGUAGE_TITLES.de;
+      elements.title.classList.add("site-title");
+      elements.title.setAttribute("aria-label", title);
+      elements.title.replaceChildren(renderSiteTitleLineContent({ line: { text: title } }));
+    }
     elements.languageButtons.forEach((button) => {
       const buttonLanguage = normalizeTutorialLanguage(button.dataset.learningLanguage);
       const isActive = buttonLanguage === activeLearningMode;
@@ -373,6 +409,10 @@ export function createFirstRunTour({
         visibleName.textContent = languageName;
       }
     });
+    if (state === "welcome" && elements.primaryButton) {
+      const language = tutorialTranslate(`onboarding.languages.${activeLearningMode}`);
+      elements.primaryButton.textContent = welcomeText("play").replace("{language}", language);
+    }
   }
 
   function syncBrandAccent(activeLanguage) {
@@ -407,19 +447,7 @@ export function createFirstRunTour({
       return;
     }
 
-    const characters = Array.from(labelText);
-    const fragment = document.createDocumentFragment();
-    characters.forEach((character) => {
-      const letter = document.createElement("span");
-      letter.className = "onboarding-language-label-letter";
-      if (character === " ") {
-        letter.classList.add("is-space");
-        letter.setAttribute("aria-hidden", "true");
-      }
-      letter.textContent = character === " " ? "\u00a0" : character;
-      fragment.append(letter);
-    });
-    elements.languageLabelLetters.replaceChildren(fragment);
+    elements.languageLabelLetters.textContent = labelText;
   }
 
   function renderReplayNote(note) {
@@ -468,28 +496,25 @@ export function createFirstRunTour({
     elements.settingsButton?.classList.remove("is-hidden");
     elements.replayNote?.classList.remove("is-hidden");
 
-    if (elements.title) {
-      elements.title.textContent = tutorialTranslate("onboarding.welcome.title");
-    }
     if (elements.body) {
-      elements.body.textContent = tutorialTranslate("onboarding.welcome.body");
+      elements.body.textContent = welcomeText("body");
     }
     if (elements.languageLabel) {
-      renderLanguageLabel(tutorialTranslate("onboarding.welcome.languageLabel"));
+      renderLanguageLabel(welcomeText("languageLabel"));
     }
     if (elements.replayNote) {
       renderReplayNote(tutorialTranslate("onboarding.welcome.replayNote"));
     }
     if (elements.secondaryButton) {
-      elements.secondaryButton.textContent = tutorialTranslate("onboarding.controls.tour");
+      elements.secondaryButton.textContent = welcomeText("tour");
     }
     if (elements.settingsButton) {
-      const settingsLabel = tutorialTranslate("onboarding.controls.settings");
+      const settingsLabel = welcomeText("settings");
       elements.settingsButton.textContent = settingsLabel;
       elements.settingsButton.setAttribute("aria-label", settingsLabel);
     }
     if (elements.primaryButton) {
-      elements.primaryButton.textContent = tutorialTranslate("onboarding.controls.play");
+      elements.primaryButton.textContent = welcomeText("play");
     }
     syncLanguageButtons();
     syncCardStartHeight();
@@ -518,6 +543,8 @@ export function createFirstRunTour({
     }
 
     state = "tour";
+    elements.title?.classList.remove("site-title");
+    elements.title?.removeAttribute("aria-label");
     stepIndex = resolvedIndex;
     const step = TOUR_STEPS[stepIndex];
     dialog.classList.remove("is-welcome");

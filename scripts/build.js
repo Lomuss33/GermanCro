@@ -13,6 +13,7 @@ const result = await build({
   entryNames: "[name]-[hash]",
   chunkNames: "chunks/[name]-[hash]",
   bundle: true,
+  loader: { ".svg": "dataurl" },
   splitting: true,
   format: "esm",
   target: ["es2022"],

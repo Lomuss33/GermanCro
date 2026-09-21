@@ -1,4 +1,4 @@
-export const LANGUAGE_SEQUENCE = ["de", "hr", "en"];
+export const LANGUAGE_SEQUENCE = ["de", "en", "hr"];
 
 export const LANGUAGE_DOCK_LABELS = {
   de: "DE",
@@ -7,7 +7,7 @@ export const LANGUAGE_DOCK_LABELS = {
 };
 
 export const LANGUAGE_TITLES = {
-  de: "Germancro",
-  hr: "Crogerman",
-  en: "Mancroger",
+  de: "GERManCro",
+  hr: "GerManCRO",
+  en: "GerMANCro",
 };

@@ -1,0 +1,305 @@
+/* Launch content only. Card dimensions remain owned by the layout system. */
+body #onboardingDialog.is-card-start.is-welcome .onboarding-panel {
+  container: welcome / size;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 10px;
+  background: var(--glass-sheen), rgba(var(--glass-blue), 0.3) !important;
+  color: #f6f7f8;
+  backdrop-filter: blur(8px) saturate(115%);
+  -webkit-backdrop-filter: blur(8px) saturate(115%);
+}
+
+#onboardingDialog.is-card-start.is-welcome :is(.onboarding-heading, .onboarding-language-group, .onboarding-actions) {
+  width: 100%;
+  max-width: 620px;
+  justify-self: center;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-heading {
+  grid-template-columns: 1fr;
+  align-self: end;
+  margin: 0;
+  padding-top: 8px;
+  text-align: center;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-brand { display: none; }
+
+#onboardingDialog.is-card-start.is-welcome h2 {
+  font-size: 52px;
+  line-height: 1.12;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+
+#onboardingDialog.is-card-start.is-welcome h2.site-title {
+  font-family: Tahoma, sans-serif;
+  font-weight: 800;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid rgba(210, 231, 255, 0.38);
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(232, 255, 120, 0.65), inset 0 -1px 0 rgba(165, 220, 232, 0.3);
+  background: linear-gradient(90deg, transparent, #a5dce8, #e8ff78, #efaccc, transparent) top center / 76% 2px no-repeat;
+}
+
+#onboardingDialog.is-card-start.is-welcome #onboardingBody {
+  max-width: none;
+  margin: 0;
+  color: #aeb6c2;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-group {
+  gap: 16px;
+  align-self: center;
+  margin: 0;
+}
+
+body #onboardingDialog.is-card-start.is-welcome .onboarding-language-label {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #f6f7f8;
+  text-align: center;
+  text-transform: none;
+  text-shadow: none;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-label-letters { display: block; }
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-label-letter { letter-spacing: 0; }
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-options {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  height: 116px;
+  max-height: none;
+  gap: 12px;
+}
+
+body #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn {
+  position: relative;
+  grid-template-rows: 42px auto;
+  gap: 10px;
+  height: 100%;
+  max-height: none;
+  min-height: 0;
+  padding: 16px 8px 12px;
+  border: 1px solid #59616d;
+  border-bottom-width: 3px;
+  border-radius: 8px !important;
+  background: var(--glass-sheen), rgba(var(--glass-blue), 0.35) !important;
+  color: #f6f7f8;
+  box-shadow: 0 3px 0 #101318;
+  animation: none;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+  will-change: auto;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-btn::before { content: none; }
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-btn::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #89929e;
+  border-radius: 50% !important;
+}
+
+body #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn.active {
+  border-color: #d4e987;
+  background: rgba(232, 243, 188, 0.88) !important;
+  color: #20271b;
+  box-shadow: 0 3px 0 #778b45;
+  animation: none;
+}
+
+body #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn.active .onboarding-language-name {
+  color: #20271b;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-btn.active::after {
+  border-color: #344820;
+  background: #344820;
+  box-shadow: inset 0 0 0 3px #e8f3bc;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-name {
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-flag.language-flag-icon {
+  width: 51px;
+  height: 34px;
+  filter: drop-shadow(0 3px 2px #0003);
+  transition: transform 180ms ease;
+}
+
+body #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn:hover {
+  transform: translateY(-2px);
+  border-color: #e2e8ee;
+  filter: none;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-btn:hover .onboarding-language-flag {
+  transform: rotate(-5deg) translateY(-2px);
+}
+
+body #onboardingDialog.is-card-start.is-welcome .onboarding-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  padding: 0;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 8px !important;
+  min-height: 44px;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.25;
+  letter-spacing: 0;
+  font-weight: 650;
+  text-shadow: none;
+  transition: background 160ms ease, transform 160ms ease, border-color 160ms ease;
+}
+
+body #onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-height: 56px;
+  background: #e8ff78 !important;
+  border: 1px solid #e8ff78;
+  border-bottom: 3px solid #aec642;
+  color: #202615;
+  box-shadow: 0 3px 0 #101318;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+body #onboardingDialog.is-card-start.is-welcome :is(.onboarding-secondary-btn, .onboarding-settings-btn) {
+  grid-row: 2;
+  background: var(--glass-sheen), rgba(var(--glass-blue), 0.3) !important;
+  border: 1px solid #4b535e;
+  color: #c8d0dc;
+  box-shadow: none;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-secondary-btn { grid-column: 1; }
+#onboardingDialog.is-card-start.is-welcome .onboarding-settings-btn { grid-column: 2; }
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-actions button::before,
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn::after {
+  content: "";
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  background: currentColor;
+  mask: var(--welcome-icon) center / contain no-repeat;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-actions .onboarding-primary-btn::before { content: none; }
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn { --welcome-icon: url("../../assets/icons/arrow-right.svg"); }
+#onboardingDialog.is-card-start.is-welcome .onboarding-secondary-btn { --welcome-icon: url("../../assets/icons/circle-help.svg"); }
+#onboardingDialog.is-card-start.is-welcome .onboarding-settings-btn { --welcome-icon: url("../../assets/icons/sliders-horizontal.svg"); }
+#onboardingDialog.is-card-start.is-welcome .onboarding-secondary-btn::before { color: #efaccc; }
+#onboardingDialog.is-card-start.is-welcome .onboarding-settings-btn::before { color: #a5dce8; }
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn::after { transition: transform 180ms ease; }
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn:hover::after { transform: translateX(4px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  #onboardingDialog.is-card-start.is-welcome .onboarding-heading,
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-group,
+  #onboardingDialog.is-card-start.is-welcome .onboarding-actions {
+    animation: welcome-arrive 320ms ease-out both;
+  }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-group { animation-delay: 50ms; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-actions { animation-delay: 100ms; }
+}
+
+@keyframes welcome-arrive {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body #onboardingDialog.is-card-start.is-welcome .onboarding-actions button:hover {
+  border-color: #eef2f5;
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+body #onboardingDialog.is-card-start.is-welcome button:active { transform: translateY(2px); }
+body #onboardingDialog.is-card-start.is-welcome button:focus-visible {
+  outline: 3px solid #9bdcea;
+  outline-offset: 4px;
+}
+
+@container welcome (max-width: 440px) {
+  #onboardingDialog.is-card-start.is-welcome h2 { font-size: 38px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-options { gap: 8px; height: 100px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-name { font-size: 13px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-label { font-size: 14px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-actions { column-gap: 8px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-actions button { gap: 6px; font-size: 12px; padding-inline: 7px; }
+  body #onboardingDialog.is-card-start.is-welcome .onboarding-actions .onboarding-primary-btn { font-size: 16px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn::after { top: 6px; right: 6px; width: 11px; height: 11px; }
+}
+
+@container welcome (max-height: 420px) {
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-group { gap: 12px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-options { height: 96px; }
+}
+
+@container welcome (max-height: 350px) {
+  #onboardingDialog.is-card-start.is-welcome .onboarding-heading { padding-top: 0; }
+  #onboardingDialog.is-card-start.is-welcome h2 { font-size: 38px; }
+  #onboardingDialog.is-card-start.is-welcome #onboardingBody { font-size: 13px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-group { gap: 8px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-options { height: 82px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn { grid-template-rows: 30px auto; gap: 5px; padding-block: 8px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-language-flag.language-flag-icon { width: 42px; height: 28px; }
+  body #onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn { min-height: 46px; }
+}
+
+@container welcome (max-width: 320px) {
+  #onboardingDialog.is-card-start.is-welcome h2 { font-size: 34px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body #onboardingDialog.is-card-start.is-welcome button,
+  body #onboardingDialog.is-card-start.is-welcome button::after,
+  body #onboardingDialog.is-card-start.is-welcome button .onboarding-language-flag {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+}
+
+/* The mobile game reset also targets every descendant button. */
+body #mainCard #onboardingDialog.is-card-start.is-welcome button {
+  border-radius: 8px !important;
+}
+body #mainCard #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn::after {
+  border-radius: 50% !important;
+}

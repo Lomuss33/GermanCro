@@ -36,5 +36,5 @@ for (const file of files) {
     if (result.warnings.length) throw new Error(`${file}: ${result.warnings.map(w => w.text).join(", ")}`);
   }
 }
-await build({ absWorkingDir: repoRoot, entryPoints: ["app.js", "src/styles/index.css"], outdir: "build/check", bundle: true, write: false, logLevel: "silent" });
+await build({ absWorkingDir: repoRoot, entryPoints: ["app.js", "src/styles/index.css"], outdir: "build/check", bundle: true, loader: { ".svg": "dataurl" }, write: false, logLevel: "silent" });
 console.log(`Module boundaries, imports and stylesheet syntax passed (${files.length} source files).`);

@@ -1,4 +1,5 @@
 import { createFactsController } from "../facts/controller.js";
+import { renderSiteTitleLineContent } from "../ui/site-title.js";
 import {
   SESSION_SIZE,
   MAX_SESSION_SKIPS,
@@ -463,12 +464,10 @@ function getPromptFitProfile({ text, width, height, density, kind }) {
 }
 
 function getSiteTitleFitProfile() {
-  const { displayScale } = getResponsiveTypeProfile();
-
   return {
     maxLines: 1,
-    minFontPx: getScaledFontPx(10, displayScale),
-    maxFontPx: getScaledFontPx(38, displayScale),
+    minFontPx: 18,
+    maxFontPx: 52,
   };
 }
 
@@ -877,19 +876,6 @@ function initViewportProfile() {
   }
 
   syncViewportProfile();
-}
-
-function renderSiteTitleLineContent({ line, startCharIndex }) {
-  const fragment = document.createDocumentFragment();
-  Array.from(line.text).forEach((letter, index) => {
-    const globalIndex = startCharIndex + index;
-    const span = document.createElement("span");
-    span.className = `site-title-letter band-${Math.min(3, Math.floor(globalIndex / 3) + 1)}`;
-    span.dataset.letter = letter;
-    span.textContent = letter;
-    fragment.appendChild(span);
-  });
-  return fragment;
 }
 
 const siteTitleController = createPretextBlockController({
@@ -1603,10 +1589,10 @@ function switchLearningMode(nextLanguage) {
   const languageSwitchToken = ++pendingLanguageSwitchToken;
   saveCurrentCardState();
   document.body.classList.add("is-language-switching");
-  if (siteTitleEl) {
-    siteTitleEl.classList.remove("is-changing-in");
-    siteTitleEl.classList.add("is-changing-out");
-  }
+  document.querySelectorAll(".site-title").forEach((title) => {
+    title.classList.remove("is-changing-in");
+    title.classList.add("is-changing-out");
+  });
 
   pendingLanguageSwitchTimer = window.setTimeout(async () => {
     pendingLanguageSwitchTimer = 0;
@@ -1632,11 +1618,11 @@ function switchLearningMode(nextLanguage) {
       }
     }
 
-    if (siteTitleEl) {
-      siteTitleEl.classList.remove("is-changing-out");
-      siteTitleEl.classList.add("is-changing-in");
-      window.setTimeout(() => siteTitleEl.classList.remove("is-changing-in"), 340);
-    }
+    document.querySelectorAll(".site-title").forEach((title) => {
+      title.classList.remove("is-changing-out");
+      title.classList.add("is-changing-in");
+      window.setTimeout(() => title.classList.remove("is-changing-in"), 340);
+    });
 
     languageSwitchCleanupTimer = window.setTimeout(() => {
       if (languageSwitchToken !== pendingLanguageSwitchToken) {

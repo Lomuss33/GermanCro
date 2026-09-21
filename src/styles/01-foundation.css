@@ -462,7 +462,7 @@ body > * { position: relative; z-index: 1; }
   margin-inline: auto;
   font-size: var(--pretext-font-size, clamp(18px, 3.2vw, 24px));
   font-weight: 800;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   line-height: var(--pretext-line-height, 1.05);
   user-select: none;
   text-align: center;
@@ -478,69 +478,91 @@ body > * { position: relative; z-index: 1; }
   position: relative;
   padding-bottom: 0.01em;
   overflow: visible;
-  color: var(--title-mid);
-  -webkit-text-fill-color: var(--title-mid);
-  -webkit-text-stroke: 0.012em rgba(255, 255, 255, 0.78);
-  text-shadow:
-    0 0 0.4px rgba(255, 255, 255, 0.84),
-    0 1px 0 color-mix(in srgb, var(--title-shine) 40%, transparent),
-    0 2px 0 rgba(10, 10, 10, 0.22),
-    0 5px 10px rgba(0, 0, 0, 0.15),
-    0 0 8px color-mix(in srgb, var(--title-mid) 18%, transparent);
-  filter: saturate(1.18) brightness(1.01) contrast(1.08);
+  color: var(--title-accent, #ffce00);
+  background-image: var(--title-flag);
+  background-size: 300% 100%;
+  background-position: var(--title-flag-position, 50%) center;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.9px rgba(15, 23, 35, 0.32);
+  text-shadow: none;
+  filter: none;
   transform: translateZ(0);
 }
 
-.site-title-letter::before,
-.site-title-letter::after {
-  content: attr(data-letter);
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.site-title-letter::before {
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.01em rgba(255, 255, 255, 0.66);
-  background-image: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--title-shine) 88%, #ffffff 12%) 0%,
-    color-mix(in srgb, var(--title-mid) 98%, var(--title-shine) 2%) 20%,
-    var(--title-mid) 58%,
-    color-mix(in srgb, var(--title-mid) 84%, var(--title-deep) 16%) 82%,
-    var(--title-deep) 100%
-  );
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-clip: text;
-  -webkit-background-clip: text;
-  opacity: 1;
-}
-
-.site-title-letter::after {
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  opacity: 0;
-}
-
+/* Fixed national palettes: soft transitions retain the flag's structure. */
 .site-title-letter.band-1 {
-  --title-shine: color-mix(in srgb, var(--wave-top-color) 30%, #ffffff 70%);
-  --title-mid: color-mix(in srgb, var(--wave-top-color) 88%, #59616d 12%);
-  --title-deep: color-mix(in srgb, var(--wave-top-color) 96%, #06080b 4%);
+  --title-accent: #ffce00;
+  --title-flag: linear-gradient(180deg,
+    #3e4249 0%, #292c32 29%, #e42f3d 38%,
+    #ef3b45 61%, #ffd13b 71%, #ffdb58 100%);
 }
 
 .site-title-letter.band-2 {
-  --title-shine: color-mix(in srgb, var(--wave-mid-color) 36%, #ffffff 64%);
-  --title-mid: color-mix(in srgb, var(--wave-mid-color) 94%, #ffd9e1 6%);
-  --title-deep: color-mix(in srgb, var(--wave-mid-color) 96%, #30040d 4%);
+  --title-accent: #ef5267;
+  --title-flag:
+    linear-gradient(180deg, transparent 39%, #efeff5 43%,
+      #e9364f 47% 56%, #efeff5 60%, transparent 64%),
+    linear-gradient(90deg, transparent 39%, #efeff5 43%,
+      #e9364f 47% 53%, #efeff5 57%, transparent 61%),
+    linear-gradient(24deg, transparent 39%, #e3e7f0 43%,
+      #e9364f 47% 51%, #e3e7f0 55%, transparent 59%),
+    linear-gradient(-24deg, #3263b4 39%, #e3e7f0 44%,
+      #e9364f 48% 52%, #e3e7f0 56%, #3263b4 61%);
 }
 
 .site-title-letter.band-3 {
-  --title-shine: color-mix(in srgb, var(--wave-bottom-color) 38%, #ffffff 62%);
-  --title-mid: color-mix(in srgb, var(--wave-bottom-color) 94%, #fff1ad 6%);
-  --title-deep: color-mix(in srgb, var(--wave-bottom-color) 96%, #462900 4%);
+  --title-accent: #5b8de9;
+  --title-flag: linear-gradient(180deg,
+    #f04b55 0%, #ed3545 29%, #f0f2f7 39%,
+    #f0f2f7 61%, #487ce0 71%, #396bd0 100%);
+}
+
+.site-title-letter::after {
+  content: none;
+}
+
+/* Hairline contrast without a blurred halo or stacked shadow. */
+.site-title-letter::before {
+  content: attr(data-letter);
+  position: absolute;
+  inset: 0;
+  color: rgba(211, 224, 235, 0.72);
+  background: linear-gradient(180deg, rgba(225, 242, 255, 0.08), transparent 40%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.45px currentColor;
+  text-shadow: none;
+  filter: none;
+  pointer-events: none;
+}
+
+body:not([data-learning-mode]) .site-title-letter.band-1::after,
+body[data-learning-mode="de"] .site-title-letter.band-1::after,
+body[data-learning-mode="en"] .site-title-letter.band-2::after,
+body[data-learning-mode="hr"] .site-title-letter.band-3::after {
+  content: "";
+  position: absolute;
+  bottom: -0.08em;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  box-shadow: none;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-title-letter {
+    transition: filter 200ms ease;
+  }
+  .site-title:hover .site-title-letter {
+    filter: brightness(1.05);
+  }
 }
 
 .site-title.is-changing-out {

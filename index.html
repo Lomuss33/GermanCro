@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=overlays-content">
-<title>GermanCro</title>
+<title>GerManCro</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
   <link rel="stylesheet" href="style.css?v=2026-08-31-notable-one-column1">
     <link rel="stylesheet" href="onboarding.css?v=2026-08-31-shared-surface1">
@@ -25,13 +25,13 @@
     <img class="language-dock-flag language-dock-flag--de" src="https://flagcdn.com/de.svg" alt="" decoding="async" aria-hidden="true">
     <span class="language-dock-label">DE</span>
   </button>
-  <button class="language-dock-btn" data-lang="hr" type="button" aria-label="Hrvatski">
-    <img class="language-dock-flag language-dock-flag--hr" src="https://flagcdn.com/hr.svg" alt="" decoding="async" aria-hidden="true">
-    <span class="language-dock-label">HR</span>
-  </button>
   <button class="language-dock-btn" data-lang="en" type="button" aria-label="English">
     <img class="language-dock-flag language-dock-flag--en" src="https://flagcdn.com/gb.svg" alt="" decoding="async" aria-hidden="true">
     <span class="language-dock-label">GB</span>
+  </button>
+  <button class="language-dock-btn" data-lang="hr" type="button" aria-label="Hrvatski">
+    <img class="language-dock-flag language-dock-flag--hr" src="https://flagcdn.com/hr.svg" alt="" decoding="async" aria-hidden="true">
+    <span class="language-dock-label">HR</span>
   </button>
 </div>
 
@@ -60,16 +60,16 @@
       <div class="title-guide-browser" id="installGuideBrowser"></div>
     </div>
 
-    <div class="site-title" aria-label="Germancro">
-      <span class="site-title-letter t-w">G</span>
-      <span class="site-title-letter t-w">e</span>
-      <span class="site-title-letter t-w">r</span>
-      <span class="site-title-letter t-r">m</span>
-      <span class="site-title-letter t-r">a</span>
-      <span class="site-title-letter t-r">n</span>
-      <span class="site-title-letter t-g">c</span>
-      <span class="site-title-letter t-g">r</span>
-      <span class="site-title-letter t-g">o</span>
+    <div class="site-title" aria-label="GerManCro">
+      <span class="site-title-letter band-1" data-letter="G">G</span>
+      <span class="site-title-letter band-1" data-letter="e">e</span>
+      <span class="site-title-letter band-1" data-letter="r">r</span>
+      <span class="site-title-letter band-2" data-letter="M">M</span>
+      <span class="site-title-letter band-2" data-letter="a">a</span>
+      <span class="site-title-letter band-2" data-letter="n">n</span>
+      <span class="site-title-letter band-3" data-letter="C">C</span>
+      <span class="site-title-letter band-3" data-letter="r">r</span>
+      <span class="site-title-letter band-3" data-letter="o">o</span>
     </div>
 
     <div class="title-guide title-guide-right is-hidden" id="installGuidePanel" aria-live="polite">
@@ -112,9 +112,9 @@
         <button class="onboarding-skip-btn is-hidden" id="onboardingSkipBtn" type="button">Skip tour</button>
       </div>
       <div class="onboarding-heading">
-        <h2 id="onboardingTitle" tabindex="-1">Start your first round</h2>
+        <h2 id="onboardingTitle" tabindex="-1">GerManCro</h2>
         <div class="onboarding-brand" aria-hidden="true">
-          <span data-brand-segment="de">Ger</span><span data-brand-segment="en">man</span><span data-brand-segment="hr">Cro</span>
+          <span data-brand-segment="de">Ger</span><span data-brand-segment="en">Man</span><span data-brand-segment="hr">Cro</span>
         </div>
       </div>
       <p id="onboardingBody">Choose a learning language and jump into the game.</p>
@@ -129,17 +129,17 @@
           <span class="onboarding-language-label-letters" aria-hidden="true">Learning language</span>
         </span>
         <div class="onboarding-language-options">
-          <button class="onboarding-language-btn" data-learning-language="en" type="button" aria-pressed="true"><img class="onboarding-language-flag language-flag-icon language-flag-icon--en" src="https://flagcdn.com/gb.svg" alt="" decoding="async" aria-hidden="true"><span class="onboarding-language-name">English</span></button>
-          <button class="onboarding-language-btn" data-learning-language="de" type="button" aria-pressed="false"><img class="onboarding-language-flag language-flag-icon language-flag-icon--de" src="https://flagcdn.com/de.svg" alt="" decoding="async" aria-hidden="true"><span class="onboarding-language-name">German</span></button>
+          <button class="onboarding-language-btn" data-learning-language="de" type="button" aria-pressed="true"><img class="onboarding-language-flag language-flag-icon language-flag-icon--de" src="https://flagcdn.com/de.svg" alt="" decoding="async" aria-hidden="true"><span class="onboarding-language-name">German</span></button>
+          <button class="onboarding-language-btn" data-learning-language="en" type="button" aria-pressed="false"><img class="onboarding-language-flag language-flag-icon language-flag-icon--en" src="https://flagcdn.com/gb.svg" alt="" decoding="async" aria-hidden="true"><span class="onboarding-language-name">English</span></button>
           <button class="onboarding-language-btn" data-learning-language="hr" type="button" aria-pressed="false"><img class="onboarding-language-flag language-flag-icon language-flag-icon--hr" src="https://flagcdn.com/hr.svg" alt="" decoding="async" aria-hidden="true"><span class="onboarding-language-name">Croatian</span></button>
         </div>
       </div>
       <p class="onboarding-replay-note" id="onboardingReplayNote"><span class="onboarding-replay-note-lead">Tip:</span> Switch languages anytime with the flags in the bottom-right corner. The <span class="onboarding-replay-note-pink">pink</span> Tutorial button opens this guide again.</p>
       <div class="onboarding-actions">
         <button class="onboarding-back-btn is-hidden" id="onboardingBackBtn" type="button">Back</button>
+        <button class="onboarding-primary-btn" id="onboardingPrimaryBtn" type="button">Start learning</button>
         <button class="onboarding-secondary-btn" id="onboardingSecondaryBtn" type="button">Quick tour · 4 steps</button>
         <button class="onboarding-settings-btn" id="onboardingSettingsBtn" type="button">Open settings</button>
-        <button class="onboarding-primary-btn" id="onboardingPrimaryBtn" type="button">Start learning</button>
       </div>
     </section>
   </dialog>
@@ -297,12 +297,12 @@
         <input id="newCardDe" type="text" placeholder="z. B. die Entscheidung" required>
       </label>
       <label class="author-field">
-        <span id="authorLabelHr">Kroatisch</span>
-        <input id="newCardHr" type="text" placeholder="z. B. odluka" required>
-      </label>
-      <label class="author-field">
         <span id="authorLabelEn">Englisch</span>
         <input id="newCardEn" type="text" placeholder="z. B. decision" required>
+      </label>
+      <label class="author-field">
+        <span id="authorLabelHr">Kroatisch</span>
+        <input id="newCardHr" type="text" placeholder="z. B. odluka" required>
       </label>
     </div>
 
