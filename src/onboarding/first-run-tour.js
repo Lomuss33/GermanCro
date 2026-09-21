@@ -421,6 +421,7 @@ export function createFirstRunTour({
   function syncTitleProgress() {
     elements.title?.querySelectorAll(".site-title-letter").forEach((letter, index) => {
       letter.classList.toggle("is-title-filled", index < titleProgress);
+      letter.classList.toggle("is-title-next", index === titleProgress);
     });
   }
 
