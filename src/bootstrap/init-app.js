@@ -222,7 +222,7 @@ let previousTypedValue = "";
 let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
 let enterKeyPulseTimer = 0;
-let lastEnterPressAt = 0;
+let currentCardShownAt = 0;
 let feedbackBurstPieces = [];
 let answerGuideMeasureFrame = 0;
 let answerGuideResizeObserver = null;
@@ -2560,7 +2560,30 @@ function updateRoundTimer() {
     return;
   }
   const elapsedSeconds = Math.max(0, Math.floor(((pendingFinishAt || Date.now()) - sessionStart) / 1000));
-  roundTimerEl.textContent = formatRoundTime(elapsedSeconds);
+  setRoundTimerText(formatRoundTime(elapsedSeconds));
+}
+
+function getRoundTimerValueEl() {
+  if (!roundTimerEl) {
+    return null;
+  }
+
+  let valueEl = roundTimerEl.querySelector(".round-timer-value");
+  if (!valueEl) {
+    valueEl = document.createElement("span");
+    valueEl.className = "round-timer-value";
+    valueEl.textContent = roundTimerEl.textContent || formatRoundTime(0);
+    roundTimerEl.textContent = "";
+    roundTimerEl.appendChild(valueEl);
+  }
+  return valueEl;
+}
+
+function setRoundTimerText(text) {
+  const valueEl = getRoundTimerValueEl();
+  if (valueEl) {
+    valueEl.textContent = text;
+  }
 }
 
 function getSessionTypingElapsedMs(referenceTime = Date.now()) {
@@ -2587,27 +2610,24 @@ function formatEnterBurstTime(ms) {
 }
 
 function showEnterTimeBurst() {
-  if (!answerGuideActionRowEl || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+  if (!roundTimerEl || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
     return;
   }
 
   const pressedAt = Date.now();
   const roundTimeMs = getSessionTypingElapsedMs(pressedAt);
-  const intervalMs = lastEnterPressAt ? pressedAt - lastEnterPressAt : null;
-  lastEnterPressAt = pressedAt;
+  const cardTimeMs = currentCardShownAt ? pressedAt - currentCardShownAt : roundTimeMs;
 
-  const createBurst = (text, className, removeAfter = 1250) => {
+  const createBurst = (text, className, removeAfter = 2800) => {
     const burst = document.createElement("span");
     burst.className = `enter-time-burst ${className}`;
     burst.textContent = text;
-    answerGuideActionRowEl.appendChild(burst);
+    roundTimerEl.appendChild(burst);
     window.setTimeout(() => burst.remove(), removeAfter);
   };
 
-  createBurst(formatEnterBurstTime(roundTimeMs), "enter-time-burst-now");
-  if (intervalMs !== null) {
-    createBurst(`+${formatEnterBurstTime(intervalMs)}`, "enter-time-burst-delta", 1450);
-  }
+  createBurst(formatEnterBurstTime(cardTimeMs), "enter-time-burst-card");
+  createBurst(formatEnterBurstTime(roundTimeMs), "enter-time-burst-total", 3200);
 }
 
 function startRoundTimer() {
@@ -2694,12 +2714,10 @@ function resetSessionProgress() {
   sessionSkipsUsed = 0;
   totalCharsTyped = 0;
   totalTypingUnits = 0;
-  lastEnterPressAt = 0;
+  currentCardShownAt = 0;
   sessionStart = 0;
   roundTimerStarted = false;
-  if (roundTimerEl) {
-    roundTimerEl.textContent = formatRoundTime(0);
-  }
+  setRoundTimerText(formatRoundTime(0));
   sessionSkipCounts = new WeakMap();
   sessionSkippedCards = new WeakSet();
   cardStateByCard = new WeakMap();
@@ -2831,6 +2849,7 @@ function loadCard(options = {}) {
   }
 
   clearSessionUi();
+  currentCardShownAt = Date.now();
   renderPrompt(card);
   renderRoundProgress();
 
