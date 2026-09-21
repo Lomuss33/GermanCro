@@ -16,8 +16,7 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-panel {
 }
 
 #onboardingDialog.is-card-start.is-welcome .onboarding-heading {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0;
+  grid-template-columns: 1fr;
   align-self: end;
   margin: 0;
   padding-top: 8px;
@@ -241,7 +240,7 @@ body #onboardingDialog.is-card-start.is-welcome :is(.onboarding-secondary-btn, .
 
 @keyframes welcome-arrive {
   from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: none; }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 body #onboardingDialog.is-card-start.is-welcome .onboarding-actions button:hover {

@@ -467,8 +467,8 @@ body > * { position: relative; z-index: 1; }
   user-select: none;
   text-align: center;
   white-space: nowrap;
-  perspective: none;
-  transform-style: flat;
+  perspective: 900px;
+  transform-style: preserve-3d;
   min-width: 0;
 }
 
@@ -486,11 +486,10 @@ body > * { position: relative; z-index: 1; }
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.5px rgba(211, 224, 235, 0.72);
-  paint-order: stroke fill;
+  -webkit-text-stroke: 0.9px rgba(15, 23, 35, 0.32);
   text-shadow: none;
   filter: none;
-  transform: none;
+  transform: translateZ(0);
 }
 
 /* Fixed national palettes: soft transitions retain the flag's structure. */
@@ -521,17 +520,40 @@ body > * { position: relative; z-index: 1; }
     #f0f2f7 61%, #487ce0 71%, #396bd0 100%);
 }
 
-/* Paint each glyph once; avoid overlapping clipped glyphs in Firefox. */
-.site-title-letter::before,
 .site-title-letter::after {
   content: none;
 }
 
-body:not([data-learning-mode]) .site-title-letter.band-1,
-body[data-learning-mode="de"] .site-title-letter.band-1,
-body[data-learning-mode="en"] .site-title-letter.band-2,
-body[data-learning-mode="hr"] .site-title-letter.band-3 {
-  box-shadow: 0 2px 0 var(--title-accent);
+/* Hairline contrast without a blurred halo or stacked shadow. */
+.site-title-letter::before {
+  content: attr(data-letter);
+  position: absolute;
+  inset: 0;
+  color: rgba(211, 224, 235, 0.72);
+  background: linear-gradient(180deg, rgba(225, 242, 255, 0.08), transparent 40%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.45px currentColor;
+  text-shadow: none;
+  filter: none;
+  pointer-events: none;
+}
+
+body:not([data-learning-mode]) .site-title-letter.band-1::after,
+body[data-learning-mode="de"] .site-title-letter.band-1::after,
+body[data-learning-mode="en"] .site-title-letter.band-2::after,
+body[data-learning-mode="hr"] .site-title-letter.band-3::after {
+  content: "";
+  position: absolute;
+  bottom: -0.08em;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  box-shadow: none;
+  opacity: 0.8;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -591,13 +613,13 @@ body[data-learning-mode="hr"] .site-title-letter.band-3 {
 }
 
 @keyframes titleSwipeOut {
-  from { opacity: 1; transform: none; }
-  to { opacity: 0; transform: translateX(-12px); }
+  from { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0deg) scale(1); }
+  to { opacity: 0; transform: translate3d(-33%, 0, 0) rotateX(10deg) scale(0.96); }
 }
 
 @keyframes titleSwipeIn {
-  from { opacity: 0; transform: translateX(12px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translate3d(33%, 0, 0) rotateX(-10deg) scale(0.96); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0deg) scale(1); }
 }
 
 .language-dock {
