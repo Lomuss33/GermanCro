@@ -213,6 +213,8 @@ export function createFirstRunTour({
   };
 
   let state = "idle";
+  let titleProgress = 0;
+  const titleSequence = "germancro";
   let stepIndex = -1;
   let replay = false;
   let layoutFrame = 0;
@@ -396,6 +398,7 @@ export function createFirstRunTour({
       elements.title.classList.add("site-title");
       elements.title.setAttribute("aria-label", title);
       elements.title.replaceChildren(renderSiteTitleLineContent({ line: { text: title } }));
+      syncTitleProgress();
     }
     elements.languageButtons.forEach((button) => {
       const buttonLanguage = normalizeTutorialLanguage(button.dataset.learningLanguage);
@@ -414,6 +417,33 @@ export function createFirstRunTour({
       elements.primaryButton.textContent = welcomeText("play").replace("{language}", language);
     }
   }
+
+  function syncTitleProgress() {
+    elements.title?.querySelectorAll(".site-title-letter").forEach((letter, index) => {
+      letter.classList.toggle("is-title-filled", index < titleProgress);
+    });
+  }
+
+  window.addEventListener("keydown", (event) => {
+    if (!isOpen() || state !== "welcome" || !isCardStart() ||
+        event.repeat || event.isComposing || event.ctrlKey || event.metaKey || event.altKey ||
+        titleProgress >= titleSequence.length ||
+        event.target?.closest?.("input, textarea, select, [contenteditable]:not([contenteditable='false'])") ||
+        event.key.toLowerCase() !== titleSequence[titleProgress]) {
+      return;
+    }
+    titleProgress += 1;
+    syncTitleProgress();
+    if (titleProgress === titleSequence.length && !reduceMotionQuery?.matches) {
+      elements.title?.querySelectorAll(".site-title-letter").forEach((letter, index) => {
+        letter.animate([
+          { transform: "translateY(0)", filter: "brightness(1)" },
+          { transform: "translateY(-7px)", filter: "brightness(1.2)", offset: 0.4 },
+          { transform: "translateY(0)", filter: "brightness(1)" },
+        ], { duration: 650, delay: index * 65, easing: "ease-in-out" });
+      });
+    }
+  }, { capture: true });
 
   function syncBrandAccent(activeLanguage) {
     const normalizedLanguage = normalizeTutorialLanguage(activeLanguage) || "de";
@@ -699,6 +729,7 @@ export function createFirstRunTour({
       return;
     }
     replay = Boolean(isReplay);
+    titleProgress = 0;
     previouslyFocusedElement = document.activeElement;
     openingScrollX = window.scrollX;
     openingScrollY = window.scrollY;

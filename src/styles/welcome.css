@@ -37,6 +37,23 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-panel {
   font-weight: 800;
 }
 
+#onboardingDialog.is-card-start.is-welcome .site-title-letter:not(.is-title-filled) {
+  background-image: none;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.7px rgba(211, 224, 235, 0.8);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #onboardingDialog.is-card-start.is-welcome .site-title-letter.is-title-filled {
+    animation: welcome-letter-fill 260ms ease-out;
+  }
+}
+
+@keyframes welcome-letter-fill {
+  from { background-size: 300% 0%; }
+  to { background-size: 300% 100%; }
+}
+
 #onboardingDialog.is-card-start.is-welcome .onboarding-panel::after {
   content: "";
   position: absolute;
