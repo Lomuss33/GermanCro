@@ -104,93 +104,11 @@ body {
 
 .de-flag {
   position: fixed;
-  inset: 0 -2px;
-  display: flex;
-  gap: 0;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
   opacity: 0.98;
   overflow: hidden;
-}
-
-.de-flag-col {
-  flex: 1 0 auto;
-  min-width: 0;
-  background: linear-gradient(
-    to bottom,
-    var(--wave-top-color) 0% 33.3%,
-    var(--wave-mid-color) 33.3% 66.6%,
-    var(--wave-bottom-color) 66.6% 100%
-  );
-  background-size: 100% 125%;
-  background-position: 0% 50%;
-  animation: wave 5s ease-in-out infinite alternate;
-}
-
-.de-flag-col + .de-flag-col {
-  margin-left: -2px;
-}
-
-body[data-learning-mode="en"] .de-flag-col {
-  background:
-    repeating-linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.92) 0 3px,
-      rgba(255, 255, 255, 0) 3px 34px
-    ),
-    repeating-linear-gradient(
-      180deg,
-      rgba(200, 16, 46, 0.95) 8px 11px,
-      rgba(200, 16, 46, 0) 11px 34px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.14) 0 1px,
-      rgba(255, 255, 255, 0) 1px 42px
-    ),
-    repeating-linear-gradient(
-      45deg,
-      rgba(255, 255, 255, 0.18) 0 2px,
-      rgba(255, 255, 255, 0) 2px 76px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(255, 255, 255, 0.18) 0 2px,
-      rgba(255, 255, 255, 0) 2px 76px
-    ),
-    repeating-linear-gradient(
-      45deg,
-      rgba(200, 16, 46, 0.22) 22px 25px,
-      rgba(200, 16, 46, 0) 25px 84px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(200, 16, 46, 0.22) 22px 25px,
-      rgba(200, 16, 46, 0) 25px 84px
-    ),
-    linear-gradient(
-      180deg,
-      rgba(10, 36, 112, 0.98),
-      rgba(1, 33, 105, 0.96)
-    );
-  background-size:
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    180px 180px,
-    180px 180px,
-    180px 180px,
-    180px 180px,
-    100% 150%;
-  background-position:
-    0 0,
-    0 0,
-    0 0,
-    center,
-    center,
-    center,
-    center,
-    0% 50%;
 }
 
 body[data-learning-mode="hr"] {
@@ -221,11 +139,6 @@ body[data-learning-mode="en"] {
   --title-band-3-shine: #ffd84a;
   --title-band-3-mid: #c78200;
   --title-band-3-deep: #4b2900;
-}
-
-@keyframes wave {
-  from { background-position: 0% calc(50% - var(--billow, 4px)); }
-  to { background-position: 0% calc(50% + var(--billow, 4px)); }
 }
 
 body::before {
@@ -284,8 +197,8 @@ body > * { position: relative; z-index: 1; }
   justify-content: center;
   gap: 18px;
   background: linear-gradient(180deg, rgba(5, 7, 15, 0.9), rgba(8, 10, 18, 0.94));
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   transition: opacity 220ms ease, visibility 220ms ease;
 }
 
@@ -432,8 +345,8 @@ body > * { position: relative; z-index: 1; }
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(8, 10, 18, 0.28);
-  backdrop-filter: blur(8px) saturate(120%);
-  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .phone-guide-bar.is-hidden {
@@ -634,8 +547,8 @@ body[data-learning-mode="hr"] .site-title-letter.band-3::after {
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(10, 18, 46, 0.52);
-  backdrop-filter: blur(10px) saturate(130%);
-  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.16);
   z-index: 12;
   transform-origin: bottom right;
@@ -1161,7 +1074,7 @@ body[data-learning-mode="hr"] .site-title-letter.band-3::after {
     radial-gradient(108% 64% at 50% 0%, rgba(255, 98, 202, 0.24), transparent 42%),
     var(--surface);
   border-radius: 14px;
-  backdrop-filter: blur(8px) saturate(138%) brightness(1.03);
-  -webkit-backdrop-filter: blur(8px) saturate(138%) brightness(1.03);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   background-blend-mode: normal, screen, screen, screen, screen, screen, normal;
 }

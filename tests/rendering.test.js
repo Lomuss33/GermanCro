@@ -16,7 +16,7 @@ test("scrolling panel content is not paint-contained or forced into 3D layers", 
   assert.match(glass, /z-index: -1;/);
   assert.match(glass, /pointer-events: none;/);
   assert.match(glass, /background: var\(--reading-glass\);/);
-  assert.match(glass, /backdrop-filter: blur\(14px\)/);
+  assert.match(glass, /backdrop-filter: none/);
 });
 
 test("grammar rows and category buttons do not reserve persistent compositor layers", async () => {

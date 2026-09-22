@@ -59,8 +59,8 @@ html.has-onboarding-open::-webkit-scrollbar {
 .onboarding-welcome-scrim,
 .onboarding-scrim {
   background: rgba(1, 4, 15, 0.84);
-  -webkit-backdrop-filter: blur(4px) saturate(0.76);
-  backdrop-filter: blur(4px) saturate(0.76);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .onboarding-welcome-scrim {

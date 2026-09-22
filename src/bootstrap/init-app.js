@@ -1,3 +1,5 @@
+import { createWordGridRenderer, describeWordGrid } from "../game/word-grid.js";
+import { initVisualEffects } from "../ui/visual-effects.js";
 import { createFactsController } from "../facts/controller.js";
 import { renderSiteTitleLineContent } from "../ui/site-title.js";
 import {
@@ -16,9 +18,6 @@ import { fetchJson, detectCapabilities } from "../core/http.js";
 import {
   getCorrectPrefixLength,
   getGuideSeparatorKind,
-  isGuideSeparatorChar,
-  getGuideSeparatorSymbol,
-  getGuideTokens,
   getGuideWordTokens,
   getGuideWordTokenAt,
   getGuidePreviousWordToken,
@@ -1514,6 +1513,7 @@ function renderGrammarSection() {
 }
 
 function renderStaticUi() {
+  visualEffects?.sync();
   setLocalizedText(statLabelStreakEl, "messages.stats.streak");
   setLocalizedText(statLabelRemainingEl, "messages.stats.remaining");
   setLocalizedText(statLabelAccuracyEl, "messages.stats.accuracy");
@@ -2384,6 +2384,8 @@ function showFeedbackBurst(kind, isBig = false) {
   }, isBig ? 980 : 760);
 }
 
+const renderWordGrid = createWordGridRenderer(wordGrid);
+
 function buildWordGrid(
   target,
   typed,
@@ -2393,160 +2395,10 @@ function buildWordGrid(
     terminalHit = null,
   } = {}
 ) {
-  wordGrid.innerHTML = "";
-  const { hints, autofill } = getCharMeta(target);
-  const correctPrefixLen = getCorrectPrefixLength(target, typed);
-  const caretIndex = typed.length;
-  const showTerminalStatus = target.length > 0 && caretIndex >= target.length;
-  const tokens = getGuideTokens(target);
-
-  tokens.forEach((token) => {
-    if (token.type === "separator") {
-      const separator = document.createElement("div");
-      const letter = document.createElement("div");
-      const line = document.createElement("div");
-      const typedSeparator = typed[token.start];
-      const separatorLabel = getGuideSeparatorLabel(token.char);
-
-      separator.className = "word-separator wchar";
-      separator.dataset.separatorKind = token.kind;
-      separator.classList.add(`is-${token.kind}`);
-      separator.setAttribute("aria-label", separatorLabel);
-      separator.setAttribute("title", separatorLabel);
-
-      letter.className = "word-separator-letter wchar-letter";
-      line.className = "word-separator-line wchar-line";
-      letter.textContent =
-        typedSeparator !== undefined && typedSeparator !== token.char
-          ? "x"
-          : getGuideSeparatorSymbol(token.char);
-      separator.appendChild(letter);
-      separator.appendChild(line);
-
-      if (typedSeparator !== undefined) {
-        separator.classList.add(typedSeparator === token.char ? "state-ok" : "state-bad");
-      } else if (token.start === correctPrefixLen) {
-        separator.classList.add("state-next");
-      }
-
-      if (freshCorrectIndexes.has(token.start)) {
-        separator.classList.add("state-hit");
-      }
-
-      if (freshWrongIndexes.has(token.start)) {
-        separator.classList.add("state-miss");
-      }
-
-      if (token.start === caretIndex) {
-        separator.classList.add("state-caret");
-      }
-
-      if (!showTerminalStatus && token.end === caretIndex && caretIndex === target.length) {
-        separator.classList.add("state-caret-after");
-      }
-
-      wordGrid.appendChild(separator);
-      return;
-    }
-
-    const group = document.createElement("div");
-    group.className = "word-group";
-
-    for (let idx = token.start; idx < token.end; idx += 1) {
-      const targetChar = target[idx];
-      const typedChar = typed[idx];
-      const wrap = document.createElement("div");
-      const letter = document.createElement("div");
-      const line = document.createElement("div");
-
-      wrap.className = "wchar";
-      letter.className = "wchar-letter";
-      line.className = "wchar-line";
-
-      if (autofill.has(idx)) {
-        letter.textContent = targetChar;
-        wrap.classList.add("state-auto");
-      } else if (typedChar !== undefined) {
-        const isCorrectChar = typedChar.toLowerCase() === targetChar.toLowerCase();
-        letter.textContent = isCorrectChar ? targetChar : "x";
-        wrap.classList.add(isCorrectChar ? "state-ok" : "state-bad");
-        if (freshCorrectIndexes.has(idx)) {
-          wrap.classList.add("state-hit");
-        }
-        if (freshWrongIndexes.has(idx)) {
-          wrap.classList.add("state-miss");
-        }
-      } else if (difficulty === "easy" && idx >= correctPrefixLen && idx < correctPrefixLen + 3) {
-        letter.textContent = targetChar;
-        wrap.classList.add("state-hint");
-      } else if (hints.has(idx)) {
-        letter.textContent = targetChar;
-        wrap.classList.add("state-hint");
-      } else if (difficulty !== "hard" && idx === correctPrefixLen) {
-        letter.textContent = targetChar;
-        wrap.classList.add("state-next");
-      } else {
-        letter.textContent = "_";
-        wrap.classList.add("state-hidden");
-      }
-
-      if (idx === caretIndex) {
-        wrap.classList.add("state-caret");
-      }
-
-      if (!showTerminalStatus && idx + 1 === caretIndex && caretIndex === target.length) {
-        wrap.classList.add("state-caret-after");
-      }
-
-      wrap.appendChild(letter);
-      wrap.appendChild(line);
-      group.appendChild(wrap);
-    }
-
-    wordGrid.appendChild(group);
-  });
-
-  if (typed.length > target.length) {
-    typed.slice(target.length).split("").forEach((extraChar) => {
-      if (isGuideSeparatorChar(extraChar)) {
-        const extraSeparator = document.createElement("div");
-        const letter = document.createElement("div");
-        const line = document.createElement("div");
-        const separatorLabel = getGuideSeparatorLabel(extraChar, { overflow: true });
-        extraSeparator.className = "word-separator wchar state-bad is-overflow";
-        extraSeparator.dataset.separatorKind = getGuideSeparatorKind(extraChar);
-        extraSeparator.classList.add(`is-${getGuideSeparatorKind(extraChar)}`);
-        extraSeparator.setAttribute("aria-label", separatorLabel);
-        extraSeparator.setAttribute("title", separatorLabel);
-        letter.className = "word-separator-letter wchar-letter";
-        line.className = "word-separator-line wchar-line";
-        letter.textContent = "x";
-        extraSeparator.appendChild(letter);
-        extraSeparator.appendChild(line);
-        wordGrid.appendChild(extraSeparator);
-        return;
-      }
-
-      const overflowWrap = document.createElement("div");
-      const overflowLetter = document.createElement("div");
-      const overflowLine = document.createElement("div");
-
-      overflowWrap.className = "wchar state-bad";
-      overflowLetter.className = "wchar-letter";
-      overflowLine.className = "wchar-line";
-      overflowLetter.textContent = "x";
-      overflowWrap.appendChild(overflowLetter);
-      overflowWrap.appendChild(overflowLine);
-      wordGrid.appendChild(overflowWrap);
-    });
-  }
-
-  if (!showTerminalStatus && (caretIndex > target.length || !target.length)) {
-    const endCaret = document.createElement("div");
-    endCaret.className = "answer-guide-inline-caret";
-    endCaret.setAttribute("aria-hidden", "true");
-    wordGrid.appendChild(endCaret);
-  }
+  renderWordGrid(target, describeWordGrid(target, typed, {
+    ...getCharMeta(target), difficulty, separatorLabel: getGuideSeparatorLabel,
+    freshCorrectIndexes, freshWrongIndexes,
+  }));
 
   answerGuideSizingState.target = String(target ?? "");
   answerGuideSizingState.typed = String(typed ?? "");
@@ -3747,18 +3599,7 @@ function initInputEvents() {
   });
 }
 
-function createFlagColumns() {
-  const flagEl = document.getElementById("deFlag");
-  for (let i = 0; i < 28; i += 1) {
-    const col = document.createElement("div");
-    col.className = "de-flag-col";
-    col.style.animationDelay = `${-(i / 20) * 3}s`;
-    const baseBillow = (i / 4) * 11.2 + 4;
-    const billow = i >= 25 ? baseBillow * 1.3 : baseBillow;
-    col.style.setProperty("--billow", `${billow}px`);
-    flagEl.appendChild(col);
-  }
-}
+let visualEffects = null;
 
 async function initApp() {
   initScrollSnapController();
@@ -3775,7 +3616,9 @@ async function initApp() {
   locales = loadedLocales || {};
   applyLearningTheme();
   renderStaticUi();
-  createFlagColumns();
+  visualEffects = initVisualEffects({
+    button: document.getElementById("visualEffectsBtn"), getLanguage: getLocale,
+  });
   initOnboardingCategoryPreviewTarget();
   initFirstRunTour();
   initInstallGuide();

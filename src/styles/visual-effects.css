@@ -1,0 +1,127 @@
+/* Static flag and prismatic glass. Scroll fractures animate a bounded set of
+   tiles with transforms only; idle backgrounds have no animation work. */
+:root {
+  --glass-panel: rgba(8, 19, 43, .9);
+  --glass-popup: rgba(8, 19, 43, .97);
+  --glass-sheen: linear-gradient(125deg, rgba(195, 230, 255, .1), transparent 32%, rgba(153, 130, 255, .035) 72%, transparent);
+}
+body { --glass-accent: 100, 211, 255; }
+body[data-learning-mode="hr"] { --glass-accent: 190, 161, 255; }
+body[data-learning-mode="en"] { --glass-accent: 255, 143, 192; }
+
+/* Static flag tiles reveal the circuit grid only while pulled out of place. */
+.de-flag {
+  --flag-art: linear-gradient(to bottom, var(--wave-top-color) 0% 33.333%, var(--wave-mid-color) 33.333% 66.666%, var(--wave-bottom-color) 66.666% 100%);
+  background: repeating-linear-gradient(0deg, transparent 0 27px, #7dd3fc12 27px 28px),
+    repeating-linear-gradient(90deg, transparent 0 27px, #7dd3fc12 27px 28px), #070d1c;
+}
+body[data-learning-mode="en"] .de-flag { --flag-art: url("../../assets/flags/gb.svg"); }
+.flag-fragment {
+  position: absolute;
+  background-image: var(--flag-art);
+  background-size: var(--flag-width) var(--flag-height);
+  background-repeat: no-repeat;
+  transform-origin: center;
+}
+.flag-fragment::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, #ffffff04, transparent 45%, #00000005);
+}
+.flag-fragment::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid #8aeaff;
+  box-shadow: -3px 0 0 #58e8ff99, 3px 0 0 #ff68ae88, inset 0 1px 0 #ffffff70;
+  opacity: 0;
+}
+.flag-fragment.is-detached { z-index: 1; }
+.flag-fragment.is-detached::after { opacity: .8; }
+.de-flag::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 25% 12%, #ffffff12, transparent 55%),
+    linear-gradient(115deg, transparent 30%, #080f2329 85%);
+}
+
+body #mainCard::before, body #catPanel::after, body #searchPanel::after,
+body > .facts-panel::after, body .author-panel::after {
+  background:
+    radial-gradient(ellipse 65% 230px at 0 0, rgba(var(--glass-accent), .16), transparent),
+    radial-gradient(ellipse 45% 190px at 100% 100%, rgba(169, 119, 255, .09), transparent),
+    var(--reading-glass);
+  box-shadow: inset 0 1px 0 rgba(215, 240, 255, .28), inset 1px 0 0 rgba(var(--glass-accent), .14);
+}
+body #mainCard, body #catPanel, body #searchPanel, body > .facts-panel, body .author-panel {
+  border-color: rgba(var(--glass-accent), .4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .22), 0 0 0 1px rgba(8, 15, 35, .18);
+}
+body #onboardingDialog.onboarding-dialog .onboarding-panel,
+body #onboardingDialog.is-card-start.is-welcome .onboarding-panel,
+body #mainCard .session-end {
+  background: radial-gradient(ellipse at 0 0, rgba(var(--glass-accent), .16), transparent 65%),
+    var(--glass-sheen), var(--glass-popup) !important;
+  box-shadow: inset 0 1px 0 rgba(220, 240, 255, .25), 0 18px 42px rgba(0, 0, 0, .25);
+}
+body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
+  background: rgba(5, 12, 29, .56);
+}
+
+/* Interaction light is local and brief; no page-sized animated surfaces. */
+#catPanel #catButtons .cat-btn {
+  transition: transform 160ms ease;
+}
+#catPanel #catButtons .cat-btn:active { transform: translateY(1px) scale(.98); }
+.wchar.state-ok .wchar-line {
+  border-bottom-color: #78e5bb;
+  box-shadow: 0 2px 6px rgba(91, 230, 186, .18);
+}
+.wchar.state-hit .wchar-letter { color: #dcfff0; }
+.wchar.state-caret .wchar-line { border-bottom-color: #9ee9ff; }
+
+.visual-effects-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid rgba(125, 211, 252, .4);
+  border-radius: 12px;
+  background: rgba(8, 19, 43, .7);
+  color: #deefff;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.visual-effects-btn::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+.visual-effects-btn[aria-pressed="true"]::before { background: #b8ff9b; border-color: #b8ff9b; }
+.visual-effects-btn:hover { border-color: #b9eaff; }
+.visual-effects-btn:disabled { cursor: default; opacity: .75; }
+#catPanel .cat-panel-bottom-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+
+:root[data-effects="reduced"] *,
+:root[data-effects="reduced"] *::before,
+:root[data-effects="reduced"] *::after {
+  animation-duration: .001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .001ms !important;
+  scroll-behavior: auto !important;
+}
+:root[data-effects="reduced"] { --glass-panel: #101d32; --glass-popup: #101d32; }
+@media (prefers-reduced-transparency: reduce) {
+  :root { --glass-panel: #101d32; --glass-popup: #101d32; }
+}

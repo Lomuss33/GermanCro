@@ -196,7 +196,7 @@
     radial-gradient(100% 86% at 0% 100%, rgba(72, 164, 255, 0.38), transparent 36%),
     radial-gradient(90% 74% at 100% 100%, rgba(72, 240, 190, 0.28), transparent 34%),
     radial-gradient(108% 64% at 50% 0%, rgba(255, 98, 202, 0.24), transparent 42%);
-  backdrop-filter: blur(8px) saturate(1.38) brightness(1.03);
+  backdrop-filter: none;
 }
 
 .facts-panel .facts-view { background: transparent; }

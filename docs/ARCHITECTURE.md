@@ -67,7 +67,8 @@ No hosting configuration or live deployment was changed by this refactor.
 ## CSS and visual compatibility
 
 `src/styles/index.css` declares the exact cascade order. The numbered files retain the
-original order; onboarding comes next, and `theme.css` is last. The guide-sizing file
+original order; onboarding and the theme follow, with feature refinements and
+`visual-effects.css` last. The guide-sizing file
 also retains the intervening cross-panel refinements.
 
 This extraction intentionally does **not** reorder overlapping selectors, introduce
@@ -78,6 +79,19 @@ segmentation does not add production stylesheet requests.
 
 ## Performance and verification
 
+- `ui/scroll-flag.js` partitions a static flag into 27?35 irregular tiles. Passive
+  scroll events trigger short transform-only fractures, with at most six pieces
+  detached at once. All animations are released after reassembly; no idle loop.
+  Geometry is rebuilt only on viewport resize, not on scroll. The three language
+  backgrounds stay aligned across tile boundaries.
+- Panels use tinted gradients and edge lighting instead of live backdrop filters.
+  Avoid animating background positions or restoring page-sized blur layers.
+- `ui/visual-effects.js` immediately settles fragments when the window loses focus
+  or the document is hidden. The localized Reduced effects toggle persists locally;
+  system reduced motion/transparency preferences take priority. `visual-effects.css`
+  is included by both the root compatibility stylesheet and production CSS entry.
+- `game/word-grid.js` retains letter nodes between keystrokes and updates changed
+  feedback only. A new target resets its cache; removed overflow nodes are released.
 - esbuild bundles/minifies JavaScript and CSS, produces content-hashed filenames and
   external source maps. No application framework or runtime dependency was added.
 - The Node server gzips text, caches at most 16 small text assets, supports ETags/HEAD,

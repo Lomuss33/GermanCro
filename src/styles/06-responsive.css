@@ -11,8 +11,8 @@
 @media (max-width: 720px) {
   .app-loader {
     background: linear-gradient(180deg, rgba(5, 7, 15, 0.68), rgba(8, 10, 18, 0.74));
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   body {
@@ -354,7 +354,6 @@
     transition-duration: 0.001ms !important;
   }
 
-  .de-flag-col,
   .app-loader-spinner,
   .app-loader-dot,
   .flame {
