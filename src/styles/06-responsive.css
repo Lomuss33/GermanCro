@@ -760,9 +760,9 @@ body.layout-phone-portrait .site-title-row {
 
 body.layout-phone-portrait .site-title-row.has-install-guides {
   grid-template-columns:
-    minmax(0, 1fr)
-    clamp(calc(190px * var(--type-height-scale)), 48vw, calc(360px * var(--type-height-scale)))
-    minmax(0, 1fr);
+    minmax(0, 0.48fr)
+    minmax(0, 2.05fr)
+    minmax(0, 0.48fr);
 }
 
 body.layout-phone-portrait .site-title {

@@ -544,13 +544,13 @@ body.layout-phone-portrait .answer-guide-foot > .action-row > .enter-hint {
 
 @media (max-width: 390px) {
   body.layout-phone-portrait .site-title-row.has-install-guides {
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-    column-gap: 5px;
-    row-gap: 4px;
+    grid-template-columns: minmax(0, 0.44fr) minmax(0, 2.12fr) minmax(0, 0.44fr);
+    column-gap: 2px;
+    row-gap: 0;
   }
 
   body.layout-phone-portrait .site-title-row.has-install-guides > .site-title {
-    grid-column: 1 / -1;
+    grid-column: 2;
     grid-row: 1;
     width: 100%;
     justify-self: center;
@@ -558,12 +558,12 @@ body.layout-phone-portrait .answer-guide-foot > .action-row > .enter-hint {
 
   body.layout-phone-portrait .site-title-row.has-install-guides > .title-guide-left {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 1;
   }
 
   body.layout-phone-portrait .site-title-row.has-install-guides > .title-guide-right {
-    grid-column: 2;
-    grid-row: 2;
+    grid-column: 3;
+    grid-row: 1;
   }
 }
 
@@ -1022,4 +1022,3 @@ body.layout-phone-portrait .card-topbar {
   min-height: var(--onboarding-card-height);
   flex: 0 0 auto;
 }
-

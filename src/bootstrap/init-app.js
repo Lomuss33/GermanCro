@@ -370,10 +370,11 @@ function getPromptFitProfile({ text, width, height, density, kind }) {
 function getSiteTitleFitProfile() {
   const hasGuides = siteTitleRowEl?.classList.contains("has-install-guides");
   const viewportWidth = Math.max(0, window.innerWidth || document.documentElement.clientWidth || 0);
+  const guidedMaxFontPx = viewportWidth >= 900 ? 38 : 37;
   return {
     maxLines: 1,
     minFontPx: hasGuides ? 10 : 16,
-    maxFontPx: hasGuides ? 26 : viewportWidth >= 900 ? 38 : 28,
+    maxFontPx: hasGuides ? guidedMaxFontPx : viewportWidth >= 900 ? 38 : 28,
   };
 }
 

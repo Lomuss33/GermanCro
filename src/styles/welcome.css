@@ -33,35 +33,45 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-panel {
 }
 
 #onboardingDialog.is-card-start.is-welcome h2.site-title {
-  font-family: Tahoma, sans-serif;
-  font-weight: 800;
+  font-family: "Segoe UI Black", "Arial Black", Tahoma, sans-serif;
+  font-weight: 900;
 }
 
 #onboardingDialog.is-card-start.is-welcome .site-title-letter:not(.is-title-filled) {
-  background-image: none;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.7px rgba(211, 224, 235, 0.8);
+  background-image: none !important;
+  -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: .82px rgba(255, 255, 255, .94) !important;
+  text-shadow:
+    0 .7px 0 rgba(0, 0, 0, .32),
+    0 0 4px rgba(255, 255, 255, .28);
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  #onboardingDialog.is-card-start.is-welcome .site-title-letter.is-title-next::before {
+  #onboardingDialog.is-card-start.is-welcome .site-title-letter.is-title-next::after {
     animation: welcome-caret-blink 1.1s step-end infinite;
   }
   #onboardingDialog.is-card-start.is-welcome .site-title-letter.is-title-filled {
-    animation: welcome-letter-fill 260ms ease-out;
+    animation:
+      welcome-letter-fill 260ms ease-out,
+      titleFlagWave var(--title-flag-duration, 3.1s) cubic-bezier(0.45, 0, 0.22, 1) infinite;
+    animation-delay: 0s, var(--title-flag-delay, 0s);
   }
 }
 
-#onboardingDialog.is-card-start.is-welcome .site-title-letter.is-title-next::before {
+#onboardingDialog.is-card-start.is-welcome .site-title-letter.is-title-next::after {
   content: "";
+  display: block;
   position: absolute;
-  left: -2px;
-  top: 12%;
-  width: 1px;
-  height: 78%;
-  border-radius: 1px;
-  background: #fff;
-  box-shadow: none;
+  left: 10%;
+  right: 10%;
+  bottom: -3px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff315d, #ffffff, #2094ff);
+  box-shadow:
+    0 0 5px rgba(255, 255, 255, .72),
+    0 0 9px rgba(95, 244, 255, .42);
   pointer-events: none;
 }
 
