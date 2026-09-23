@@ -748,7 +748,7 @@ body.layout-phone-portrait #heroStage {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: calc(6px * var(--type-height-scale));
+  gap: 0;
 }
 
 body.layout-phone-portrait .site-title-row {
@@ -767,7 +767,7 @@ body.layout-phone-portrait .site-title-row.has-install-guides {
 
 body.layout-phone-portrait .site-title {
   width: 100%;
-  font-size: var(--pretext-font-size, clamp(18px, 6vw, 24px));
+  font-size: var(--pretext-font-size, clamp(16px, 5.2vw, 21px));
   line-height: var(--pretext-line-height, 1.05);
 }
 

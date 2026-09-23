@@ -78,7 +78,7 @@ export function createScrollFlag(root) {
   let resizeFrame = 0;
   let lastY = window.scrollY;
   let distance = 0;
-  let lastBurst = -Infinity;
+  let nextBurstAt = 0;
   let viewportWidth = 0;
   let viewportHeight = 0;
   const allowed = () => document.documentElement.dataset.effects !== "reduced"
@@ -138,7 +138,7 @@ export function createScrollFlag(root) {
   function fracture() {
     frame = 0;
     const now = performance.now();
-    if (!allowed() || Math.abs(distance) < 18 || now - lastBurst < 240) return;
+    if (!allowed() || Math.abs(distance) < 18 || now < nextBurstAt) return;
     const direction = Math.sign(distance);
     const intensity = Math.min(1.6, .7 + Math.abs(distance) / 400);
     distance = 0;
@@ -148,7 +148,7 @@ export function createScrollFlag(root) {
     scored.sort((a, b) => b.rank - a.rank);
     const count = Math.min(6 - active.size, 3 + Math.floor(Math.random() * 2));
     if (count <= 0) return;
-    lastBurst = now;
+    nextBurstAt = now + 210 + Math.random() * 120;
     const chosen = scored.slice(0, Math.min(2, count)).map(tile => tile.node);
     while (chosen.length < count) {
       const tile = makeTile(createFlagCutout(viewportWidth, viewportHeight), true);
@@ -160,7 +160,7 @@ export function createScrollFlag(root) {
       node.style.zIndex = String(1 + Math.floor(Math.random() * 4));
       const cadence = ["smooth", "coarse", "stepped"][(index + Math.floor(now / 720)) % 3];
       const motion = createFlagMotion(direction, intensity, cadence);
-      const animation = node.animate(motion.frames, motion.options);
+      const animation = node.animate(motion.frames, { ...motion.options, delay: index * 12 + Math.random() * 24 });
       active.set(node, animation);
       animation.onfinish = () => {
         restore(node);

@@ -119,8 +119,8 @@ assert(
   "Optional facts must start eagerly outside the critical app boot Promise",
 );
 assert(
-  appSource.includes("isSnapping || !factsController.isLoaded || onboardingPending"),
-  "Scroll snapping must wait for stable facts-panel geometry",
+  !appSource.includes("initScrollSnapController") && !appSource.includes("settleScrollPosition"),
+  "Native content scrolling must not be overridden by automatic snapping",
 );
 assert(
   !normalizedCss.includes("content-visibility: auto"),

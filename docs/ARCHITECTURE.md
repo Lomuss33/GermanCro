@@ -79,9 +79,13 @@ segmentation does not add production stylesheet requests.
 
 ## Performance and verification
 
-- `ui/scroll-flag.js` partitions a static flag into 27?35 irregular tiles. Passive
+- `ui/scroll-flag.js` partitions a static flag into 27-35 irregular tiles. Passive
   scroll events trigger short transform-only fractures, with at most six pieces
-  detached at once. All animations are released after reassembly; no idle loop.
+  detached at once, including overlapping temporary cutouts. Sizes range from tiny
+  chips and scanlines to large slabs. Smooth, four-step and eight-step motion all
+  last 720ms. Cutouts are removed and animations released after reassembly.
+  There is no idle loop. The background alone uses layout/paint containment;
+  content keeps native scrolling with no automatic snapping or wheel interception.
   Geometry is rebuilt only on viewport resize, not on scroll. The three language
   backgrounds stay aligned across tile boundaries.
 - Panels use tinted gradients and edge lighting instead of live backdrop filters.
@@ -100,8 +104,7 @@ segmentation does not add production stylesheet requests.
 - Text measurement caches use LRU limits: 256 prompt preparations, 512 grammar
   preparations and 1,024 grammar line layouts. Resize/long-session memory no longer
   grows indefinitely in these application-owned caches.
-- Facts still load eagerly **outside** the critical startup promise. Scrolling still
-  waits for facts geometry; dynamic panels still do not use `content-visibility: auto`.
+- Facts still load eagerly **outside** the critical startup promise. Content uses native scrolling; dynamic panels still do not use `content-visibility: auto`.
 - `npm run check` validates JSON contracts, runs behavior/server tests, checks unresolved
   module references and CSS syntax, builds the site, and verifies generated assets/data.
 

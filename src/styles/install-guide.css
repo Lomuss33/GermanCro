@@ -1,11 +1,11 @@
 /* The guides always flank the title; only their own text may wrap. */
 #heroStage > .site-title-row.has-install-guides {
   flex: 0 0 auto;
-  grid-template-columns: minmax(0, 1fr) minmax(0, min(40%, 22.5rem)) minmax(0, 1fr);
-  column-gap: min(1.5%, 0.625rem);
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, min(36%, 21rem)) minmax(0, 1.08fr);
+  column-gap: clamp(0.125rem, 0.75vw, 0.375rem);
   row-gap: 0;
   align-items: center;
-  padding-block: 0.375rem;
+  padding-block: 0.03125rem;
 }
 
 #heroStage > .site-title-row.has-install-guides > .site-title {
@@ -21,8 +21,8 @@
   min-height: 0;
   height: auto;
   max-height: none;
-  padding: 0.375rem min(6%, 0.75rem);
-  border-radius: 8px;
+  padding: 0.125rem min(4%, 0.5rem);
+  border-radius: 6px;
   align-self: stretch;
   align-items: center;
   justify-content: flex-start;
@@ -35,8 +35,8 @@
   height: auto;
   max-height: none;
   overflow: visible;
-  font-size: 0.875rem;
-  line-height: 1.45;
+  font-size: clamp(0.625rem, 1.75vw, 0.75rem);
+  line-height: 1.15;
   letter-spacing: 0;
   color: #dce5f0;
   white-space: normal;
@@ -47,7 +47,7 @@
 }
 
 #heroStage .has-roomy-guides .title-guide :is(.title-guide-browser, .title-guide-steps) {
-  font-size: 1rem;
+  font-size: clamp(0.6875rem, 1.9vw, 0.8125rem);
 }
 
 #heroStage > .site-title-row.has-install-guides > .title-guide-left {

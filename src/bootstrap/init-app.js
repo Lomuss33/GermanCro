@@ -274,110 +274,6 @@ const answerGuideSizingState = {
   lastMeasuredHeight: 0,
 };
 
-function initScrollSnapController() {
-  let settleTimer = 0;
-  let snapReleaseTimer = 0;
-  let isSnapping = false;
-  let lastScrollY = window.scrollY || document.documentElement.scrollTop || 0;
-  let lastScrollAt = performance.now();
-  let lastScrollVelocity = 0;
-
-  function getSnapPositions() {
-    const viewportHeight = Math.max(1, window.innerHeight || document.documentElement.clientHeight || 1);
-    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-    const maxScrollY = Math.max(0, document.documentElement.scrollHeight - viewportHeight);
-    const getPosition = (element) => {
-      if (!element) {
-        return null;
-      }
-
-      const rect = element.getBoundingClientRect();
-      const rawPosition = scrollY + rect.top;
-
-      return Math.max(0, Math.min(maxScrollY, rawPosition));
-    };
-
-    return [
-      { element: heroStageEl, position: 0 },
-      { element: mainCard, position: getPosition(mainCard) },
-      { element: searchPanelEl, position: getPosition(searchPanelEl) },
-      { element: factsPanelEl, position: getPosition(factsPanelEl) },
-    ].filter((target) => target.element && target.position !== null);
-  }
-
-  function settleScrollPosition() {
-    // Facts replace their compact loading state with a much taller reading
-    // surface. Never calculate or apply a snap against that temporary page
-    // geometry.
-    if (isSnapping || !factsController.isLoaded || onboardingPending || firstRunTour?.isOpen()) {
-      return;
-    }
-
-    const viewportHeight = Math.max(1, window.innerHeight || document.documentElement.clientHeight || 1);
-    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-    // Momentum scrolling can briefly pause between large wheel/touchpad
-    // deltas. Do not start a second scroll animation while that motion is
-    // still settling; it makes the card and its measured grid fight the
-    // browser's scroll position.
-    if (lastScrollVelocity > 0.8) {
-      lastScrollVelocity = 0;
-      scheduleSettle(260);
-      return;
-    }
-    const snapThreshold = viewportHeight / 3;
-    const mainCardSnapThreshold = viewportHeight / 10;
-    const nearestTarget = getSnapPositions()
-      .map((target) => ({ ...target, distance: Math.abs(target.position - scrollY) }))
-      .sort((left, right) => left.distance - right.distance)[0];
-
-    if (!nearestTarget || nearestTarget.distance < 1) {
-      return;
-    }
-
-    const targetThreshold = nearestTarget.element === mainCard
-      ? mainCardSnapThreshold
-      : snapThreshold;
-    if (nearestTarget.distance > targetThreshold) {
-      return;
-    }
-
-    isSnapping = true;
-    window.clearTimeout(snapReleaseTimer);
-    snapReleaseTimer = window.setTimeout(() => {
-      isSnapping = false;
-    }, 800);
-    window.scrollTo({
-      top: nearestTarget.position,
-      // An immediate correction avoids a second compositor animation racing
-      // with native wheel/touchpad momentum.
-      behavior: "auto",
-    });
-  }
-
-  function scheduleSettle(delay = 260) {
-    window.clearTimeout(settleTimer);
-    settleTimer = window.setTimeout(settleScrollPosition, delay);
-  }
-
-  window.addEventListener("scroll", () => {
-    const now = performance.now();
-    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-    const elapsed = Math.max(1, now - lastScrollAt);
-    lastScrollVelocity = Math.abs(scrollY - lastScrollY) / elapsed;
-    lastScrollY = scrollY;
-    lastScrollAt = now;
-    scheduleSettle();
-  }, { passive: true });
-  window.addEventListener("scrollend", () => {
-    if (isSnapping) {
-      isSnapping = false;
-      window.clearTimeout(snapReleaseTimer);
-      return;
-    }
-    scheduleSettle(80);
-  }, { passive: true });
-}
-
 const FEEDBACK_BURST_SYMBOLS = Object.freeze({
   success: Object.freeze({
     big: Object.freeze(["\u{1F389}", "\u2728", "\u2B50", "\u{1F4A5}", "\u{1F38A}", "\u2728", "\u2B50", "\u{1F389}", "\u{1F4AB}", "\u2728"]),
@@ -472,10 +368,12 @@ function getPromptFitProfile({ text, width, height, density, kind }) {
 }
 
 function getSiteTitleFitProfile() {
+  const hasGuides = siteTitleRowEl?.classList.contains("has-install-guides");
+  const viewportWidth = Math.max(0, window.innerWidth || document.documentElement.clientWidth || 0);
   return {
     maxLines: 1,
-    minFontPx: siteTitleRowEl?.classList.contains("has-install-guides") ? 10 : 18,
-    maxFontPx: 52,
+    minFontPx: hasGuides ? 10 : 16,
+    maxFontPx: hasGuides ? 26 : viewportWidth >= 900 ? 38 : 28,
   };
 }
 
@@ -888,7 +786,7 @@ function initViewportProfile() {
 
 const siteTitleController = createPretextBlockController({
   element: siteTitleEl,
-  lineHeightRatio: 1.05,
+  lineHeightRatio: 0.92,
   fontFamily: "Tahoma, sans-serif",
   fontWeight: 800,
   targetWidthRatio: 0.98,
@@ -3602,7 +3500,6 @@ function initInputEvents() {
 let visualEffects = null;
 
 async function initApp() {
-  initScrollSnapController();
   syncSessionSizeLabel();
   learningMode = loadLearningMode();
   isPromptOrderSwapped = loadPromptOrderPreference();

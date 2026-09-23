@@ -44,21 +44,21 @@ const TOUR_STEPS = Object.freeze([
 
 const WELCOME_COPY = Object.freeze({
   de: Object.freeze({
-    body: "Deine n\u00e4chste Runde beginnt hier.",
+    body: "",
     languageLabel: "Welche Sprache m\u00f6chtest du \u00fcben?",
     play: "{language} \u00fcben",
     tour: "Kurze Einf\u00fchrung",
     settings: "Runde anpassen",
   }),
   hr: Object.freeze({
-    body: "Tvoj sljede\u0107i krug po\u010dinje ovdje.",
+    body: "",
     languageLabel: "Koji jezik \u017eeli\u0161 vje\u017ebati?",
     play: "Vje\u017ebaj: {language}",
     tour: "Kratki vodi\u010d",
     settings: "Prilagodi krug",
   }),
   en: Object.freeze({
-    body: "Your next round starts here.",
+    body: "",
     languageLabel: "Which language do you want to practise?",
     play: "Practise {language}",
     tour: "Quick tour",
@@ -212,6 +212,12 @@ export function createFirstRunTour({
     replayNote: dialog.querySelector("#onboardingReplayNote"),
   };
 
+  const titleHome = {
+    parent: elements.title?.parentNode || null,
+    nextSibling: elements.title?.nextSibling || null,
+  };
+  let promotedTitle = false;
+
   let state = "idle";
   let titleProgress = 0;
   const titleSequence = "germancro";
@@ -242,11 +248,65 @@ export function createFirstRunTour({
     const height = `${Math.ceil(cardHost.getBoundingClientRect().height)}px`;
     dialog.style.setProperty("--onboarding-card-height", height);
     cardHost.style.setProperty("--onboarding-card-height", height);
+    syncWelcomeAnchorMetrics();
   }
 
   function refreshCardStartHeight() {
     cardHost?.style.removeProperty("--onboarding-card-height");
+    clearWelcomeAnchorMetrics();
     syncCardStartHeight();
+  }
+
+  function setWelcomeMetric(name, value) {
+    dialog.style.setProperty(name, value);
+    cardHost?.style.setProperty(name, value);
+  }
+
+  function clearWelcomeAnchorMetrics() {
+    [
+      "--onboarding-input-left",
+      "--onboarding-input-top",
+      "--onboarding-input-width",
+      "--onboarding-input-height",
+      "--onboarding-guide-left",
+      "--onboarding-guide-top",
+      "--onboarding-guide-width",
+      "--onboarding-guide-height",
+      "--onboarding-language-top",
+      "--onboarding-language-height",
+    ].forEach((name) => {
+      dialog.style.removeProperty(name);
+      cardHost?.style.removeProperty(name);
+    });
+  }
+
+  function syncWelcomeAnchorMetrics() {
+    const input = document.getElementById("answer")?.closest(".input-shell");
+    const guide = document.getElementById("answerGuide");
+    if (!cardHost || !input || !guide) {
+      clearWelcomeAnchorMetrics();
+      return;
+    }
+    const cardRect = cardHost.getBoundingClientRect();
+    const inputRect = input.getBoundingClientRect();
+    const guideRect = guide.getBoundingClientRect();
+    if (cardRect.width <= 0 || cardRect.height <= 0 || inputRect.height <= 0 || guideRect.height <= 0) {
+      clearWelcomeAnchorMetrics();
+      return;
+    }
+    const inputTop = Math.max(0, inputRect.top - cardRect.top);
+    const languageTop = Math.max(12, Math.min(70, inputTop - 130));
+    const languageHeight = Math.max(92, inputTop - languageTop - 14);
+    setWelcomeMetric("--onboarding-input-left", `${Math.max(0, inputRect.left - cardRect.left)}px`);
+    setWelcomeMetric("--onboarding-input-top", `${inputTop}px`);
+    setWelcomeMetric("--onboarding-input-width", `${Math.max(0, inputRect.width)}px`);
+    setWelcomeMetric("--onboarding-input-height", `${Math.max(0, inputRect.height)}px`);
+    setWelcomeMetric("--onboarding-guide-left", `${Math.max(0, guideRect.left - cardRect.left)}px`);
+    setWelcomeMetric("--onboarding-guide-top", `${Math.max(0, guideRect.top - cardRect.top)}px`);
+    setWelcomeMetric("--onboarding-guide-width", `${Math.max(0, guideRect.width)}px`);
+    setWelcomeMetric("--onboarding-guide-height", `${Math.max(0, guideRect.height)}px`);
+    setWelcomeMetric("--onboarding-language-top", `${languageTop}px`);
+    setWelcomeMetric("--onboarding-language-height", `${languageHeight}px`);
   }
 
   function shouldShow() {
@@ -425,6 +485,44 @@ export function createFirstRunTour({
     });
   }
 
+  function promoteWelcomeTitle() {
+    if (!isCardStart() || !elements.title) {
+      restoreWelcomeTitle();
+      return;
+    }
+    const titleRow = document.querySelector("#heroStage > .site-title-row");
+    const appTitle = titleRow?.querySelector(".site-title:not(#onboardingTitle)");
+    if (!titleRow || !appTitle) {
+      restoreWelcomeTitle();
+      return;
+    }
+    const appTitleStyles = window.getComputedStyle(appTitle);
+    titleRow.style.setProperty("--promoted-title-font-size", appTitleStyles.fontSize);
+    titleRow.style.setProperty("--promoted-title-line-height", appTitleStyles.lineHeight);
+    if (elements.title.parentElement !== titleRow) {
+      appTitle.after(elements.title);
+    }
+    promotedTitle = true;
+    document.body.classList.add("has-promoted-onboarding-title");
+  }
+
+  function restoreWelcomeTitle() {
+    if (!promotedTitle && elements.title?.parentNode === titleHome.parent) {
+      return;
+    }
+    if (titleHome.parent && elements.title) {
+      if (titleHome.nextSibling?.parentNode === titleHome.parent) {
+        titleHome.parent.insertBefore(elements.title, titleHome.nextSibling);
+      } else {
+        titleHome.parent.append(elements.title);
+      }
+    }
+    promotedTitle = false;
+    document.body.classList.remove("has-promoted-onboarding-title");
+    document.querySelector("#heroStage > .site-title-row")?.style.removeProperty("--promoted-title-font-size");
+    document.querySelector("#heroStage > .site-title-row")?.style.removeProperty("--promoted-title-line-height");
+  }
+
   window.addEventListener("keydown", (event) => {
     if (!isOpen() || state !== "welcome" || !isCardStart() ||
         event.repeat || event.isComposing || event.ctrlKey || event.metaKey || event.altKey ||
@@ -547,8 +645,9 @@ export function createFirstRunTour({
     if (elements.primaryButton) {
       elements.primaryButton.textContent = welcomeText("play");
     }
-    syncLanguageButtons();
+    promoteWelcomeTitle();
     syncCardStartHeight();
+    syncLanguageButtons();
     elements.panel?.removeAttribute("style");
     if (focusTitle) {
       window.requestAnimationFrame(() => elements.title?.focus({ preventScroll: true }));
@@ -557,6 +656,7 @@ export function createFirstRunTour({
 
   async function renderStep(nextIndex) {
     const token = ++renderToken;
+    restoreWelcomeTitle();
     let resolvedIndex = nextIndex;
     let targets = [];
 
@@ -691,6 +791,7 @@ export function createFirstRunTour({
       layoutFrame = 0;
     }
     const wasReplay = replay;
+    restoreWelcomeTitle();
     state = "idle";
     stepIndex = -1;
     document.body.classList.remove("has-onboarding-open");
@@ -711,6 +812,7 @@ export function createFirstRunTour({
     }
     dialog.style.removeProperty("--onboarding-card-height");
     cardHost?.style.removeProperty("--onboarding-card-height");
+    clearWelcomeAnchorMetrics();
     onClose?.({ reason, replay: wasReplay, completedTour });
     if (
       wasReplay &&
@@ -758,6 +860,7 @@ export function createFirstRunTour({
     if (state !== "welcome") {
       return false;
     }
+    restoreWelcomeTitle();
     promoteToGlobalTour();
     void renderStep(0);
     return true;

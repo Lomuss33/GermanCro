@@ -7,18 +7,6 @@ html {
   scroll-padding-block-start: 0;
 }
 
-#heroStage,
-#mainCard,
-.search-panel,
-.facts-panel {
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
-}
-
-#mainCard {
-  scroll-snap-stop: always;
-}
-
 body #answerGuide .answer-guide-trail-flag {
   top: var(--answer-guide-trail-top, 50%);
 }
@@ -373,7 +361,7 @@ body > * { position: relative; z-index: 1; }
   justify-self: center;
   position: relative;
   margin-inline: auto;
-  font-size: var(--pretext-font-size, clamp(18px, 3.2vw, 24px));
+  font-size: var(--pretext-font-size, clamp(16px, 2.4vw, 20px));
   font-weight: 800;
   letter-spacing: 0;
   line-height: var(--pretext-line-height, 1.05);
@@ -389,7 +377,7 @@ body > * { position: relative; z-index: 1; }
   flex: 0 1 auto;
   display: inline-block;
   position: relative;
-  padding-bottom: 0.01em;
+  padding-bottom: 0;
   overflow: visible;
   color: var(--title-accent, #ffce00);
   background-image: var(--title-flag);
@@ -399,9 +387,9 @@ body > * { position: relative; z-index: 1; }
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.9px rgba(15, 23, 35, 0.32);
+  -webkit-text-stroke: 1.22px #000;
   text-shadow: none;
-  filter: none;
+  filter: drop-shadow(0 0 2.5px rgba(255, 255, 255, 0.17)) drop-shadow(0 0.5px 1px rgba(255, 255, 255, 0.09));
   transform: translateZ(0);
 }
 
@@ -437,35 +425,19 @@ body > * { position: relative; z-index: 1; }
   content: none;
 }
 
-/* Hairline contrast without a blurred halo or stacked shadow. */
+/* Hairline contrast without changing the flag fill. */
 .site-title-letter::before {
   content: attr(data-letter);
   position: absolute;
   inset: 0;
-  color: rgba(211, 224, 235, 0.72);
-  background: linear-gradient(180deg, rgba(225, 242, 255, 0.08), transparent 40%);
+  color: #000;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 40%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.45px currentColor;
+  -webkit-text-stroke: 0.64px currentColor;
   text-shadow: none;
   filter: none;
-  pointer-events: none;
-}
-
-body:not([data-learning-mode]) .site-title-letter.band-1::after,
-body[data-learning-mode="de"] .site-title-letter.band-1::after,
-body[data-learning-mode="en"] .site-title-letter.band-2::after,
-body[data-learning-mode="hr"] .site-title-letter.band-3::after {
-  content: "";
-  position: absolute;
-  bottom: -0.08em;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: currentColor;
-  box-shadow: none;
-  opacity: 0.8;
   pointer-events: none;
 }
 
