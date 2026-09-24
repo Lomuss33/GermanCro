@@ -36,6 +36,7 @@ for (const file of ["cards.json", "cards.user.json", "locales.json", "germany-fa
   await fs.copyFile(path.join(repoRoot, file), path.join(outputRoot, file));
 }
 await fs.cp(path.join(repoRoot, "assets"), path.join(outputRoot, "assets"), { recursive: true });
+await fs.cp(path.join(repoRoot, "api"), path.join(outputRoot, "api"), { recursive: true });
 await fs.writeFile(path.join(outputRoot, "meta.json"), JSON.stringify(result.metafile, null, 2));
 for (const file of [script, css]) {
   const data = await fs.readFile(path.join(repoRoot, file));

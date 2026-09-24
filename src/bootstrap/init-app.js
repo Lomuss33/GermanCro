@@ -184,6 +184,16 @@ import {
   sanitizeCard,
 } from "../../shared/card-schema.js";
 
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Tab") {
+    document.body.classList.add("is-keyboard-navigation");
+  }
+}, { passive: true });
+
+window.addEventListener("pointerdown", () => {
+  document.body.classList.remove("is-keyboard-navigation");
+}, { passive: true });
+
 let allCards = [];
 let bundledCards = [];
 let persistentCards = [];
@@ -1417,6 +1427,10 @@ function renderStaticUi() {
   setLocalizedText(statLabelRemainingEl, "messages.stats.remaining");
   setLocalizedText(statLabelAccuracyEl, "messages.stats.accuracy");
   setLocalizedText(statLabelWpmEl, "messages.stats.wpm");
+  if (statsBarEl) {
+    const remainingLabelLength = (statLabelRemainingEl?.textContent || "").trim().length;
+    statsBarEl.dataset.remainingLabel = remainingLabelLength > 6 ? "long" : "short";
+  }
   setLocalizedAriaLabel(cardLegendEl, "messages.legend.aria");
   setLocalizedText(legendCorrectEl, "messages.legend.correct");
   setLocalizedText(legendNextEl, "messages.legend.next");

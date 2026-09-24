@@ -128,23 +128,25 @@
 /* Game HUD: quiet container, crisp values, and a readable progress signal. */
 #mainCard .stats-bar {
   color: rgba(255, 255, 255, 0.96);
-  gap: clamp(8px, 1.8vw, 14px);
+  column-gap: clamp(4px, 1.15vw, 10px);
+  row-gap: 0;
+  margin-bottom: clamp(3px, 0.85vh, 7px);
 }
 
 #mainCard .card-topbar {
-  margin-bottom: calc(8px * var(--type-height-scale));
+  margin-bottom: clamp(4px, calc(8px * var(--type-height-scale)), 9px);
 }
 
 #mainCard .stat {
   position: relative;
   align-items: baseline;
-  gap: 5px;
+  gap: clamp(2px, 0.7vw, 5px);
 }
 
 #mainCard .stat-label {
   color: rgba(255, 255, 255, 0.9);
   font-weight: 750;
-  letter-spacing: 0.055em;
+  letter-spacing: clamp(0.015em, 0.28vw, 0.055em);
 }
 
 #mainCard .stat-value {
@@ -191,7 +193,7 @@
   box-sizing: border-box;
   isolation: isolate;
   height: calc(12px * var(--type-height-scale));
-  margin-bottom: calc(10px * var(--type-height-scale));
+  margin-bottom: clamp(5px, calc(10px * var(--type-height-scale)), 11px);
   overflow: hidden;
   border: 1px solid rgba(165, 220, 232, 0.35);
   border-radius: 3px;

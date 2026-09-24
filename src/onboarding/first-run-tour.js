@@ -608,7 +608,7 @@ export function createFirstRunTour({
     elements.replayNote.replaceChildren(fragment);
   }
 
-  function renderWelcome({ focusTitle = true } = {}) {
+  function renderWelcome({ focusTitle = false } = {}) {
     state = "welcome";
     stepIndex = -1;
     stopObservingTargets();

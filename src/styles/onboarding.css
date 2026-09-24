@@ -1112,7 +1112,7 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:hover,
-.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:focus-visible {
+body.is-keyboard-navigation .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:focus-visible {
   z-index: 2;
   transform: translateY(-3px) scale(1.025);
   filter: brightness(1.16) saturate(1.12);
@@ -1121,7 +1121,7 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:hover::before,
-.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:focus-visible::before {
+body.is-keyboard-navigation .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:focus-visible::before {
   transform: rotate(12deg) translateX(280%);
 }
 
@@ -1139,7 +1139,7 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn.active:hover,
-.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn.active:focus-visible {
+body.is-keyboard-navigation .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn.active:focus-visible {
   filter: brightness(1.2) saturate(1.18);
   border-color: #f4ff9a;
 }
@@ -1152,7 +1152,7 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:hover .onboarding-language-flag,
-.onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:focus-visible .onboarding-language-flag {
+body.is-keyboard-navigation .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn:focus-visible .onboarding-language-flag {
   transform: scale(1.08) rotate(-2deg);
   filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.44));
 }

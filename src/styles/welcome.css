@@ -306,6 +306,10 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-actions button:hover
 
 body #onboardingDialog.is-card-start.is-welcome button:active { transform: translateY(2px); }
 body #onboardingDialog.is-card-start.is-welcome button:focus-visible {
+  outline: none;
+}
+
+body.is-keyboard-navigation #onboardingDialog.is-card-start.is-welcome button:focus-visible {
   outline: 3px solid #9bdcea;
   outline-offset: 4px;
 }

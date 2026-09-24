@@ -57,6 +57,11 @@ body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTit
   pointer-events: auto;
 }
 
+body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTitle.site-title:focus,
+body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTitle.site-title:focus-visible {
+  outline: none;
+}
+
 @media (min-width: 900px) {
   body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTitle.site-title {
     font-size: 38px;

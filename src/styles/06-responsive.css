@@ -45,8 +45,9 @@
   }
 
   .stats-bar {
-    gap: 6px;
-    margin-bottom: 8px;
+    column-gap: clamp(4px, 1.2vw, 6px);
+    row-gap: 0;
+    margin-bottom: clamp(4px, 1vh, 8px);
   }
 
   .stat-streak,
@@ -65,7 +66,7 @@
   .stats-right {
     justify-content: flex-end;
     align-items: center;
-    gap: 8px;
+    gap: clamp(4px, 1.35vw, 8px);
   }
 
   .stat-value {
@@ -495,8 +496,9 @@ body.is-page-hidden * {
   }
 
   .stats-bar {
-    overflow: visible;
-    flex-wrap: wrap;
+    overflow: hidden;
+    flex-wrap: nowrap;
+    grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
     justify-content: flex-start;
     white-space: nowrap;
   }
@@ -587,8 +589,8 @@ body.is-page-hidden * {
   body.layout-phone-portrait .card-topbar {
     flex-direction: row;
     justify-content: space-between;
-    gap: 14px;
-    margin-bottom: 30px;
+    gap: clamp(6px, calc(12px * var(--type-height-scale)), 14px);
+    margin-bottom: clamp(6px, calc(18px * var(--type-height-scale)), 30px);
     text-align: left;
   }
 
@@ -785,35 +787,43 @@ body.layout-phone-portrait #mainCard {
 body.layout-phone-portrait .stats-bar {
   justify-content: flex-start;
   align-self: stretch;
-  flex-wrap: wrap;
-  gap: calc(12px * var(--type-height-scale));
-  row-gap: calc(8px * var(--type-height-scale));
-  margin-bottom: calc(6px * var(--type-height-scale));
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  column-gap: clamp(3px, calc(8px * var(--type-height-scale)), 9px);
+  row-gap: 0;
+  margin-bottom: clamp(3px, calc(5px * var(--type-height-scale)), 6px);
   margin-inline: 0;
   text-align: left;
   white-space: nowrap;
-  overflow: visible;
+  overflow: hidden;
 }
 
 body.layout-phone-portrait .stats-right {
   justify-content: flex-end;
   flex-wrap: nowrap;
-  gap: calc(18px * var(--type-height-scale));
+  gap: clamp(3px, calc(12px * var(--type-height-scale)), 14px);
   margin-left: auto;
+  min-width: 0;
+  overflow: hidden;
 }
 
 body.layout-phone-portrait .stat {
-  gap: calc(6px * var(--type-height-scale));
+  gap: clamp(2px, calc(4px * var(--type-height-scale)), 5px);
   justify-content: flex-start;
+  min-width: 0;
 }
 
 body.layout-phone-portrait .stat-value {
-  font-size: calc(20px * var(--type-scale-body));
+  font-size: clamp(13px, calc(18px * var(--type-scale-body)), 20px);
 }
 
 body.layout-phone-portrait .stat-label {
-  font-size: calc(13px * var(--type-scale-micro));
-  letter-spacing: 0.05em;
+  font-size: clamp(6px, calc(10px * var(--type-scale-micro)), 12px);
+  letter-spacing: clamp(0.01em, 0.25vw, 0.04em);
+}
+
+body.layout-phone-portrait .stats-bar[data-remaining-label="long"] .stat-remaining .stat-label {
+  font-size: clamp(5.5px, calc(8px * var(--type-scale-micro)), 10px);
+  letter-spacing: 0.005em;
 }
 
 body.layout-phone-portrait .flame {

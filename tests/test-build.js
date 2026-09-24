@@ -15,9 +15,11 @@ for(const [,file] of [...scripts,...styles]) {
   assert.ok(source.length > 1000);
   if(file.endsWith(".css")) assert.doesNotMatch(source,/@import\s/);
 }
-for(const file of ["cards.json","cards.user.json","locales.json","germany-facts.json","europe-facts.json","world-facts.json"]) {
+for(const file of ["cards.json","cards.user.json","locales.json","germany-facts.json","europe-facts.json","world-facts.json","api/capabilities"]) {
   assert.equal(await fs.readFile(path.join(root,file),"utf8"),await fs.readFile(path.join(repoRoot,file),"utf8"));
 }
+const staticCapabilities=JSON.parse(await fs.readFile(path.join(root,"api","capabilities"),"utf8"));
+assert.equal(staticCapabilities.persistentSave,false);
 const meta=JSON.parse(await fs.readFile(path.join(root,"meta.json"),"utf8"));
 const sourceBytes=Object.entries(meta.inputs).filter(([file])=>file.split("?")[0].endsWith(".js")).reduce((sum,[,info])=>sum+info.bytes,0);
 const outputBytes=Object.entries(meta.outputs).filter(([file])=>file.endsWith(".js")).reduce((sum,[,info])=>sum+info.bytes,0);
