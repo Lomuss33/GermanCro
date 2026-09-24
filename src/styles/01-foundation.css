@@ -1141,16 +1141,26 @@ body > * { position: relative; z-index: 1; }
 }
 
 .stat {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   align-items: center;
+  justify-content: start;
   gap: clamp(2px, 0.85vw, 6px);
   min-width: 0;
+  min-height: clamp(16px, calc(22px * var(--type-scale-body)), 25px);
+  white-space: nowrap;
 }
 
 .stat-streak {
   order: 0;
   align-items: center;
+  --streak-fire-scale: 0;
+  --streak-fire-opacity: 0;
+  --streak-fire-gap: 0px;
+}
+
+.stat-streak .stat-value {
+  gap: var(--streak-fire-gap, 0px);
 }
 
 .stat-remaining {
@@ -1161,28 +1171,36 @@ body > * { position: relative; z-index: 1; }
   display: flex;
   order: 3;
   justify-content: flex-end;
+  align-items: center;
   gap: clamp(4px, 1.7vw, 18px);
   min-width: 0;
   margin-left: auto;
   overflow: hidden;
 }
 
+.stats-right .stat {
+  flex: 0 1 auto;
+}
+
 .stat-value {
   order: 2;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   font-size: clamp(14px, calc(21px * var(--type-scale-body)), 23px);
   font-weight: 800;
   line-height: 1;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .stat-label {
   order: 1;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   font-size: clamp(7px, calc(12px * var(--type-scale-micro)), 13px);
   text-transform: uppercase;
   letter-spacing: clamp(0.02em, 0.35vw, 0.06em);
@@ -1198,14 +1216,20 @@ body > * { position: relative; z-index: 1; }
 }
 
 .flame {
-  font-size: calc(18px * var(--type-scale-body));
+  --flame-max-size: calc(22px * var(--type-scale-body));
   display: inline-block;
+  inline-size: calc(var(--flame-max-size) * var(--streak-fire-scale, 0));
+  font-size: var(--flame-max-size);
+  line-height: 1;
+  opacity: var(--streak-fire-opacity, 0);
+  transform-origin: center 70%;
   animation: flicker 1.5s infinite alternate;
+  will-change: transform, opacity;
 }
 
 @keyframes flicker {
-  0% { transform: scaleY(1) rotate(-2deg); }
-  100% { transform: scaleY(1.08) rotate(2deg); }
+  0% { transform: scale(var(--streak-fire-scale, 0)) scaleY(1) rotate(-2deg); }
+  100% { transform: scale(var(--streak-fire-scale, 0)) scaleY(1.08) rotate(2deg); }
 }
 
 .card,

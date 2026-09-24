@@ -2674,6 +2674,17 @@ function updateStats({ event = "update" } = {}) {
 
   if (streakEl) {
     streakEl.textContent = streak;
+    const streakStat = streakEl.closest(".stat");
+    const fireStep = Math.min(Math.max(streak, 0), 10);
+    const fireScale = fireStep === 0
+      ? 0
+      : 0.26 + (Math.sqrt(fireStep / 10) * 1.04);
+    streakStat?.style.setProperty("--streak-fire-scale", fireScale.toFixed(3));
+    streakStat?.style.setProperty("--streak-fire-opacity", fireStep === 0 ? "0" : Math.min(1, 0.25 + fireStep * 0.1).toFixed(2));
+    streakStat?.style.setProperty("--streak-fire-gap", fireStep === 0 ? "0px" : "4px");
+  }
+  if (!streakEl) {
+    document.querySelector(".stat-streak")?.style.setProperty("--streak-fire-scale", "0");
   }
   if (correctEl) {
     correctEl.textContent = totalCorrect;

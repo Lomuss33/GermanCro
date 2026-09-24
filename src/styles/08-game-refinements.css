@@ -139,7 +139,7 @@
 
 #mainCard .stat {
   position: relative;
-  align-items: baseline;
+  align-items: center;
   gap: clamp(2px, 0.7vw, 5px);
 }
 
@@ -147,9 +147,12 @@
   color: rgba(255, 255, 255, 0.9);
   font-weight: 750;
   letter-spacing: clamp(0.015em, 0.28vw, 0.055em);
+  line-height: 1;
 }
 
 #mainCard .stat-value {
+  line-height: 1;
+  translate: 0 -0.07em;
   color: #e8ff47;
   text-shadow: 0 0 8px rgba(232, 255, 71, 0.72), 0 0 18px rgba(232, 255, 71, 0.38), 0 0 28px rgba(255, 71, 184, 0.18);
 }
@@ -178,8 +181,8 @@
 }
 
 .stats-bar .stat-wpm .stat-value {
-  min-width: 4ch;
-  justify-content: flex-end;
+  min-width: 0;
+  justify-content: center;
   letter-spacing: 0;
 }
 

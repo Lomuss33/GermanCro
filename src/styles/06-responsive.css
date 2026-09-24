@@ -79,7 +79,7 @@
   }
 
   .flame {
-    font-size: calc(12px * var(--type-scale-body));
+    --flame-max-size: calc(17px * var(--type-scale-body));
   }
 
   .prompt-head {
@@ -827,7 +827,7 @@ body.layout-phone-portrait .stats-bar[data-remaining-label="long"] .stat-remaini
 }
 
 body.layout-phone-portrait .flame {
-  font-size: calc(17px * var(--type-scale-body));
+  --flame-max-size: calc(24px * var(--type-scale-body));
 }
 
 body.layout-phone-portrait .progress-track {
