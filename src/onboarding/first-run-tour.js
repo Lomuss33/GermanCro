@@ -295,7 +295,8 @@ export function createFirstRunTour({
       return;
     }
     const inputTop = Math.max(0, inputRect.top - cardRect.top);
-    const languageTop = Math.max(12, Math.min(70, inputTop - 130));
+    const bottomBuffer = Math.max(8, Math.min(24, cardRect.bottom - guideRect.bottom));
+    const languageTop = bottomBuffer;
     const languageHeight = Math.max(92, inputTop - languageTop - 14);
     setWelcomeMetric("--onboarding-input-left", `${Math.max(0, inputRect.left - cardRect.left)}px`);
     setWelcomeMetric("--onboarding-input-top", `${inputTop}px`);

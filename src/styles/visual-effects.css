@@ -139,19 +139,19 @@ body.has-promoted-onboarding-title #onboardingTitle .site-title-letter {
 body.has-promoted-onboarding-title #onboardingTitle .site-title-letter:nth-child(1) {
   --onboarding-title-fill: #05070d;
   --onboarding-title-edge: #fff200;
-  -webkit-text-stroke-width: 1.15px !important;
+  -webkit-text-stroke-width: 2.3px !important;
 }
 
 body.has-promoted-onboarding-title #onboardingTitle .site-title-letter:nth-child(2) {
   --onboarding-title-fill: #ffffff;
   --onboarding-title-edge: #ff174f;
-  -webkit-text-stroke-width: 1px !important;
+  -webkit-text-stroke-width: 2px !important;
 }
 
 body.has-promoted-onboarding-title #onboardingTitle .site-title-letter:nth-child(3) {
   --onboarding-title-fill: #ff174f;
   --onboarding-title-edge: #05070d;
-  -webkit-text-stroke-width: 1.05px !important;
+  -webkit-text-stroke-width: 2.1px !important;
 }
 
 body.has-promoted-onboarding-title #onboardingTitle .site-title-letter:nth-child(4) {
@@ -233,9 +233,15 @@ body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .o
   width: var(--onboarding-input-width, calc(100% - 32px));
   height: var(--onboarding-language-height, 112px);
   display: grid;
-  align-content: center;
-  gap: clamp(8px, 2vh, 14px);
+  grid-template-rows: minmax(24px, auto) minmax(0, 1fr);
+  align-content: stretch;
+  gap: clamp(8px, 1.8vh, 14px);
   margin: 0;
+}
+
+body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-language-options {
+  height: 100%;
+  min-height: 0;
 }
 
 body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-actions {
@@ -264,13 +270,26 @@ body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .o
   left: var(--onboarding-input-left, clamp(12px, 3vw, 20px));
   top: var(--onboarding-input-top, 184px);
   width: var(--onboarding-input-width, calc(100% - 32px));
-  height: var(--onboarding-input-height, 56px);
+  height: max(
+    var(--onboarding-input-height, 56px),
+    calc(
+      var(--onboarding-guide-top, 240px)
+      + var(--onboarding-guide-height, 112px)
+      - clamp(42px, calc(var(--onboarding-guide-height, 112px) * .38), 52px)
+      - clamp(10px, 2.2vh, 16px)
+      - var(--onboarding-input-top, 184px)
+    )
+  );
   min-height: 0;
 }
 
 body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-secondary-btn,
 body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-settings-btn {
-  top: var(--onboarding-guide-top, 240px);
+  top: calc(
+    var(--onboarding-guide-top, 240px)
+    + var(--onboarding-guide-height, 112px)
+    - clamp(42px, calc(var(--onboarding-guide-height, 112px) * .38), 52px)
+  );
   width: calc((var(--onboarding-guide-width, calc(100% - 32px)) - clamp(10px, 3vw, 18px)) / 2);
   height: clamp(42px, calc(var(--onboarding-guide-height, 112px) * .38), 52px);
   min-height: 0;

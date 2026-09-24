@@ -106,7 +106,10 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-panel {
 }
 
 #onboardingDialog.is-card-start.is-welcome .onboarding-language-group {
-  gap: 16px;
+  display: grid;
+  grid-template-rows: minmax(24px, auto) minmax(0, 1fr);
+  align-content: stretch;
+  gap: clamp(8px, 1.8vh, 14px);
   align-self: center;
   margin: 0;
 }
@@ -124,6 +127,7 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-language-label {
   line-height: 1.4;
   font-weight: 600;
   letter-spacing: 0;
+  align-self: start;
 }
 
 #onboardingDialog.is-card-start.is-welcome .onboarding-language-label-letters { display: block; }
@@ -131,19 +135,22 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-language-label {
 
 #onboardingDialog.is-card-start.is-welcome .onboarding-language-options {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  height: 116px;
+  height: 100%;
   max-height: none;
   gap: 12px;
+  align-self: stretch;
+  min-height: 96px;
 }
 
 body #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn {
   position: relative;
-  grid-template-rows: 42px auto;
-  gap: 10px;
+  grid-template-rows: minmax(34px, .8fr) auto;
+  align-content: center;
+  gap: clamp(6px, 1.5vh, 10px);
   height: 100%;
   max-height: none;
   min-height: 0;
-  padding: 16px 8px 12px;
+  padding: clamp(10px, 2.1vh, 18px) 8px clamp(10px, 1.6vh, 14px);
   border: 1px solid #59616d;
   border-bottom-width: 3px;
   border-radius: 8px !important;
