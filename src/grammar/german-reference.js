@@ -126,7 +126,9 @@ const extraCards = [
 export function getGermanReferenceCards(baseCards) {
   return [
     ...baseCards.map(card => {
-      const lesson = { ...card, ...additions[card.id], band: "A" };
+      // Keep the reference intro visible while every lesson starts as a closed
+      // dropdown. The learner can choose the lesson that should expand below it.
+      const lesson = { ...card, ...additions[card.id], band: "A", collapsed: true };
       if (card.id === "grammar_tenses_primary") {
         // Show the two most immediately useful forms first, without changing conjugations.
         lesson.columns = ["Person", "Präsens", "Perfekt", "Präteritum", "Plusquamperfekt", "Futur I"];

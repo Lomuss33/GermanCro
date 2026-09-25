@@ -27,10 +27,20 @@ export function renderGrammarReference(root, baseCards, language) {
       const button = element("button", "grammar-reference-filter", label);
       button.type = "button";
       button.dataset.band = band;
-      button.setAttribute("aria-pressed", String(band === "all"));
+      button.setAttribute("aria-pressed", "false");
       button.addEventListener("click", () => {
-        filterBar.querySelectorAll("button").forEach(other => other.setAttribute("aria-pressed", String(other === button)));
-        sections.forEach(section => { section.hidden = band !== "all" && section.dataset.band !== band; });
+        const wasSelected = button.getAttribute("aria-pressed") === "true";
+        filterBar.querySelectorAll("button").forEach(other => {
+          other.setAttribute("aria-pressed", String(!wasSelected && other === button));
+        });
+        sections.forEach(section => {
+          section.hidden = wasSelected || (band !== "all" && section.dataset.band !== band);
+          if (section.hidden) section.open = false;
+        });
+        if (wasSelected) {
+          resultStatus.textContent = "W\u00e4hle eine Stufe aus";
+          return;
+        }
         const visible = sections.filter(section => !section.hidden);
         resultStatus.textContent = `${visible.length} Themen · ${label}`;
         // A direct entry into a level opens its first lesson, without moving focus.
@@ -38,7 +48,7 @@ export function renderGrammarReference(root, baseCards, language) {
       });
       filterBar.append(button);
     }
-    resultStatus = element("p", "grammar-reference-status", `${cards.length} Themen · Alle Stufen`);
+    resultStatus = element("p", "grammar-reference-status", "Wähle eine Stufe aus");
     resultStatus.setAttribute("role", "status");
     // Keep filter-result announcements for screen readers without repeating the UI.
     intro.append(filterBar, resultStatus);
@@ -49,6 +59,7 @@ export function renderGrammarReference(root, baseCards, language) {
     const section = element(card.collapsed ? "details" : "section", "grammar-card");
     section.classList.toggle("grammar-lesson", german);
     section.dataset.band = card.band || "";
+    if (german) section.hidden = true;
     sections.push(section);
     if (german) section.style.setProperty("--reference-accent", ["#7dd3fc", "#ff8ad8", "#bca2ff", "#84ead0", "#e8ff47", "#ffbd85"][index % 6]);
     if (card.collapsed) section.classList.add("grammar-lesson--expandable");
