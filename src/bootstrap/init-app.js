@@ -673,6 +673,25 @@ function renderPhoneInstallGuide(browserText, stepsText) {
   phoneGuideBarEl.replaceChildren(browserLine, stepsLine);
 }
 
+function setAuxiliaryControlsInert(inert) {
+  const controls = document.querySelectorAll(
+    "#languageDock, #arrowDock, #catPanel, #authorPanel, #searchPanel, body > .facts-panel, body > .site-footer"
+  );
+  controls.forEach((control) => {
+    control.inert = inert;
+    if (inert) {
+      control.setAttribute("inert", "");
+    } else {
+      control.removeAttribute("inert");
+    }
+  });
+  const searchToolsPanel = document.getElementById("searchToolsPanel");
+  if (searchToolsPanel) {
+    searchToolsPanel.setAttribute("aria-disabled", String(inert));
+    searchToolsPanel.dataset.interactionLocked = String(inert);
+  }
+}
+
 function isSessionEndVisible() {
   return Boolean(sessionEndEl) && window.getComputedStyle(sessionEndEl).display !== "none";
 }
@@ -685,6 +704,7 @@ function setGameSurfaceMode(showSessionEnd) {
   gameArea.style.display = showSessionEnd ? "none" : "";
   sessionEndEl.style.display = showSessionEnd ? "flex" : "none";
   mainCard?.classList.toggle("is-session-ended", showSessionEnd);
+  setAuxiliaryControlsInert(showSessionEnd);
 }
 
 function syncViewportProfile() {
@@ -1891,6 +1911,16 @@ function getPool() {
   return subcategoryFiltered.filter(isCardScopeCompatible);
 }
 
+searchLinksEl?.addEventListener("click", (event) => {
+  const link = event.target.closest("a.search-link");
+  const panel = searchLinksEl.closest("#searchToolsPanel");
+  if (!link || panel?.getAttribute("aria-disabled") !== "true") {
+    return;
+  }
+  event.preventDefault();
+  event.stopPropagation();
+});
+
 function updateSearchLinks(card) {
   searchLinksEl.innerHTML = "";
   if (!card) {
@@ -1905,7 +1935,11 @@ function updateSearchLinks(card) {
     link.href = site.url(query);
     link.target = "_blank";
     link.rel = "noopener";
-    link.innerHTML = `<span class="search-link-icon">${site.icon}</span><span>${site.name}</span>`;
+    link.setAttribute("aria-label", `${site.name} – open in a new tab`);
+    link.title = `Open ${site.name} in a new tab`;
+    link.innerHTML =
+      `<span class="search-link-main"><span class="search-link-name">${site.name}</span></span>` +
+      `<span class="search-link-arrow" aria-hidden="true">&#8599;</span>`;
     searchLinksEl.appendChild(link);
   });
 }
@@ -3058,6 +3092,7 @@ function initFirstRunTour() {
       onboardingOpenedAt = Date.now();
       gameArea?.setAttribute("inert", "");
       sessionEndEl?.setAttribute("inert", "");
+      setAuxiliaryControlsInert(true);
       maybeShowInstallGuide();
     },
     onClose: ({ replay, reason }) => {
@@ -3068,6 +3103,7 @@ function initFirstRunTour() {
       onboardingPending = false;
       gameArea?.removeAttribute("inert");
       sessionEndEl?.removeAttribute("inert");
+      setAuxiliaryControlsInert(false);
       if (replay) {
         sessionStart += onboardingDuration;
       } else {

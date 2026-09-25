@@ -9,7 +9,7 @@
   --ui-dark: #10182b;
 }
 
-#catPanel, #searchPanel, body > .facts-panel {
+#catPanel, #searchPanel, #searchToolsPanel, body > .facts-panel {
   border-color: var(--ui-line);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
@@ -117,13 +117,15 @@
 #catPanel .difficulty-panel button[data-diff="hard"].active { color: var(--ui-ink); }
 
 /* Reference content uses cyan headings and white body copy. */
-#searchPanel .search-link {
+#searchPanel .search-link,
+#searchToolsPanel .search-link {
   background: rgba(125, 211, 252, 0.07);
   border-color: rgba(125, 211, 252, 0.3);
   color: var(--ui-ink);
   box-shadow: none;
 }
 #searchPanel .search-link-icon,
+#searchToolsPanel .search-link-icon,
 #searchPanel .grammar-slider-header-cell .grammar-slider-line,
 #searchPanel .grammar-slider-rowheader-cell .grammar-slider-line {
   color: var(--ui-cyan);
@@ -148,13 +150,14 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
 }
 .facts-panel .facts-chip-link:hover,
-#searchPanel .search-link:hover {
+#searchPanel .search-link:hover,
+#searchToolsPanel .search-link:hover {
   color: #fff;
   border-color: currentColor;
 }
 
 /* One clear keyboard focus treatment across all selected regions. */
-:is(#onboardingDialog, #catPanel, #searchPanel, .facts-panel, .site-title-row, .site-footer)
+:is(#onboardingDialog, #catPanel, #searchPanel, #searchToolsPanel, .facts-panel, .site-title-row, .site-footer)
 :is(button, a, input):focus-visible {
   outline: 2px solid var(--ui-cyan);
   outline-offset: 3px;
@@ -208,14 +211,15 @@
   text-transform: none;
 }
 #searchPanel .grammar-slider-data-cell .grammar-slider-line { color: #fff; }
-#searchPanel .search-link {
+#searchPanel .search-link,
+#searchToolsPanel .search-link {
   min-height: 36px;
   font-size: 13px;
   background: linear-gradient(145deg, rgba(72,229,255,.2), rgba(9,19,44,.75));
   border-color: #48e5ff;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 0 12px rgba(72,229,255,.12);
 }
-#catPanel, #searchPanel, body > .facts-panel {
+#catPanel, #searchPanel, #searchToolsPanel, body > .facts-panel {
   border-color: rgba(125,211,252,.48);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.24), 0 14px 40px rgba(0,0,0,.3), 0 0 24px rgba(72,229,255,.09);
 }
@@ -301,7 +305,7 @@
   --glass-popup: rgba(var(--glass-blue), .84);
   --reading-glass: var(--glass-sheen), var(--glass-panel);
 }
-body #mainCard, body #catPanel, body #searchPanel, body > .facts-panel,
+body #mainCard, body #catPanel, body #searchPanel, body #searchToolsPanel, body > .facts-panel,
 body .author-panel, #onboardingDialog.onboarding-dialog .onboarding-panel,
 #mainCard .session-end {
   background: var(--reading-glass) !important;
@@ -312,13 +316,13 @@ body .author-panel, #onboardingDialog.onboarding-dialog .onboarding-panel,
 /* Static glass decoration stays inside each panel's isolated stack.
    Borders, content, hit targets and control animations remain on the panel;
    visual-effects.css supplies the highlights without live backdrop sampling. */
-body #mainCard, body #catPanel, body #searchPanel,
+body #mainCard, body #catPanel, body #searchPanel, body #searchToolsPanel,
 body > .facts-panel, body .author-panel {
   background: transparent !important;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
-body #mainCard::before, body #catPanel::after, body #searchPanel::after,
+body #mainCard::before, body #catPanel::after, body #searchPanel::after, body #searchToolsPanel::after,
 body > .facts-panel::after, body .author-panel::after {
   content: "";
   position: absolute;
@@ -373,6 +377,7 @@ body #mainCard .answer-guide {
 }
 body .facts-panel :is(.facts-switch-btn, .state-picker-btn):not(.active),
 body #searchPanel .search-link,
+body #searchToolsPanel .search-link,
 body #catPanel #catButtons .cat-btn:not(.active),
 body #catPanel .subcategory-btn:not(.active),
 body #onboardingDialog .onboarding-language-btn:not(.active),
@@ -681,6 +686,7 @@ body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
   body { padding-inline: 0; }
   body #heroStage,
   body #mainCard,
+  body #searchToolsPanel,
   body #catPanel,
   body #searchPanel,
   body .author-panel,
@@ -692,6 +698,7 @@ body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
     border-radius: 0;
   }
   body #catPanel,
+  body #searchToolsPanel,
   body #searchPanel,
   body .author-panel,
   body > .facts-panel {
@@ -700,11 +707,12 @@ body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
   body > .facts-panel { --facts-overview-inline-bleed: 0px; }
   /* Section backgrounds reach the screen edge; only their content is inset. */
   body #searchPanel,
+  body #searchToolsPanel,
   body > .facts-panel {
     padding-inline: 0 !important;
     border-inline: 0;
   }
-  body #heroStage, body #mainCard, body #catPanel, body .author-panel {
+  body #heroStage, body #mainCard, body #catPanel, body #searchToolsPanel, body .author-panel {
     border-inline: 0;
   }
   #searchPanel .grammar-section,
@@ -717,7 +725,7 @@ body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
     padding-inline: 0;
     border-inline: 0;
   }
-  #searchPanel .search-tools-row,
+  #searchToolsPanel .search-tools-row,
   body .facts-panel .facts-controls,
   #factsContent .facts-notable-people {
     padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));
