@@ -23,7 +23,7 @@ export function renderGrammarReference(root, baseCards, language) {
     filterBar = element("div", "grammar-reference-filters");
     filterBar.setAttribute("role", "group");
     filterBar.setAttribute("aria-label", "Lernschwerpunkt auswählen");
-    for (const [band, label] of [["all", "Alle Stufen"], ["A", "A1–A2 · Grundlagen"], ["B", "B1–B2 · Ausbau"], ["C", "C1–C2 · Feinschliff"]]) {
+    for (const [band, label] of [["all", "Alle Stufen"], ["A", "A1–A2"], ["B", "B1–B2"], ["C", "C1–C2"]]) {
       const button = element("button", "grammar-reference-filter", label);
       button.type = "button";
       button.dataset.band = band;

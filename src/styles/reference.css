@@ -209,13 +209,11 @@
 #searchPanel .grammar-reference-filters {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 14px;
-}
-@media (max-width: 700px) {
-  #searchPanel .grammar-reference-filters {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  width: 100%;
+  min-width: 0;
+  grid-column: 1 / -1;
+  gap: 8px;
+  margin-top: 8px;
 }
 #searchPanel .grammar-reference-filter {
   --filter-accent: #7dd3fc;
@@ -223,8 +221,8 @@
   isolation: isolate;
   overflow: hidden;
   min-width: 0;
-  min-height: 58px;
-  padding: 10px 50px 10px 14px;
+  min-height: 48px;
+  padding: 8px 12px;
   border: 1px solid color-mix(in srgb, var(--filter-accent) 58%, rgba(255, 255, 255, .2));
   border-radius: 14px;
   background:
@@ -339,11 +337,18 @@
   min-width: 0;
 }
 #searchPanel .grammar-grid--reference {
-  gap: 18px;
+  grid-template-columns: minmax(0, 1fr);
+  container-type: inline-size;
+  gap: 10px;
 }
 #searchPanel .grammar-reference-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: clamp(16px, 3vw, 36px);
+  row-gap: 6px;
   width: 100%;
-  padding: 18px 4px 8px;
+  min-width: 0;
+  padding: 6px 4px 2px;
   text-align: left;
 }
 #searchPanel .grammar-lesson-level {
@@ -357,21 +362,36 @@
 }
 #searchPanel .grammar-reference-title {
   width: 100%;
+  min-width: 0;
   max-width: none;
-  font-size: clamp(22px, 3.5vw, 30px);
+  font-size: clamp(14px, 1.35vw, 18px);
   line-height: 1.2;
   color: #f4f7ff;
-  margin: 0 0 12px;
-  text-wrap: wrap;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#searchPanel .grammar-reference-description {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #searchPanel :is(.grammar-reference-description, .grammar-lesson-description, .grammar-lesson-tip p) {
   max-width: 75ch;
   margin: 0;
   color: #dce7f8;
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 13px;
+  line-height: 1.5;
   overflow-wrap: break-word;
   hyphens: auto;
+}
+@container (min-width: 680px) {
+  #searchPanel .grammar-reference-intro {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+    align-items: center;
+  }
 }
 #searchPanel .grammar-lesson {
   display: block;
@@ -475,7 +495,9 @@
   outline-offset: 4px;
 }
 @media (max-width: 700px) {
-  #searchPanel .grammar-reference-intro,
+  #searchPanel .grammar-reference-intro {
+    padding: 6px 12px 2px;
+  }
   #searchPanel .grammar-lesson {
     padding: 16px max(12px, env(safe-area-inset-left)) 16px max(12px, env(safe-area-inset-right));
     border-radius: 0;

@@ -7,8 +7,8 @@ const slider = {
 };
 
 export const GERMAN_REFERENCE_INTRO = {
-  title: "Deutsch A1–C2",
-  description: "Regeln, Beispiele und Übungen auf einen Blick.",
+  title: "Grammatik, die im Alltag weiterhilft!",
+  description: "Regeln, Beispiele & Übungen – passend zu deinem Lernziel.",
 };
 
 const additions = {
