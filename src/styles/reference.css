@@ -44,22 +44,6 @@
   white-space: normal;
   text-align: center;
 }
-@media (max-width: 480px) {
-  #searchToolsPanel #searchLinks { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  #searchToolsPanel #searchLinks .search-link {
-    min-height: 32px;
-    padding: 4px 5px;
-    border-radius: 9px;
-  }
-  #searchToolsPanel #searchLinks .search-link-main { justify-items: center; }
-  #searchToolsPanel #searchLinks .search-link-name {
-    font-size: clamp(9px, 2.7vw, 11px);
-    letter-spacing: .01em;
-    line-height: 1.05;
-    text-align: center;
-  }
-  #searchToolsPanel #searchLinks .search-link-arrow { display: none; }
-}
 @media (max-width: 700px) {
   #searchToolsPanel {
     grid-template-columns: 1fr;
@@ -499,54 +483,60 @@
   }
 }
 
-/* Keep the four phone lookup links to one compact, readable row. */
-@media (max-width: 480px) {
-  #searchToolsPanel #searchLinks {
-    align-content: start;
-    grid-auto-rows: max-content;
-    min-height: 0;
-    height: auto;
-  }
-  #searchToolsPanel #searchLinks .search-link {
-    display: grid;
-    position: relative;
-    grid-template-columns: minmax(0, 1fr);
-    align-items: center;
-    height: clamp(32px, calc(34px * var(--type-scale-control)), 42px);
-    min-height: 0;
-    padding: 4px 14px 4px 6px;
-    overflow: hidden;
-    border-radius: 9px;
-    text-align: center;
-  }
-  #searchToolsPanel #searchLinks .search-link-main {
-    position: relative;
-    z-index: 1;
-    justify-items: center;
-    width: 100%;
-  }
-  #searchToolsPanel #searchLinks .search-link-name {
-    font-size: clamp(9px, calc(10px * var(--type-scale-body)), 12px);
-    font-weight: 750;
-    line-height: 1.05;
-    letter-spacing: 0;
-    text-align: center;
-  }
-  #searchToolsPanel #searchLinks .search-link-arrow {
-    display: grid;
-    position: absolute;
-    z-index: 0;
-    top: 50%;
-    right: 4px;
-    width: auto;
-    height: auto;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    font-size: 13px;
-    line-height: 1;
-    opacity: .55;
-    transform: translateY(-50%);
-  }
+/* One bounded chip system across phones, tablets and desktop widths. */
+#searchToolsPanel #searchLinks {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: max-content;
+  align-content: start;
+  min-height: 0;
+  height: auto;
+}
+#searchToolsPanel #searchLinks .search-link {
+  display: grid;
+  position: relative;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  height: clamp(36px, calc(36px * var(--type-scale-control)), 42px);
+  min-height: 0;
+  padding: 3px 15px 3px 7px;
+  border-radius: clamp(9px, .8vw, 13px);
+  text-align: center;
+}
+#searchToolsPanel #searchLinks .search-link-main {
+  position: relative;
+  z-index: 1;
+  justify-items: center;
+  width: 100%;
+  min-width: 0;
+}
+#searchToolsPanel #searchLinks .search-link-name {
+  font-size: clamp(9px, calc(9px * var(--type-scale-body)), 11px);
+  font-weight: 750;
+  line-height: 1.05;
+  letter-spacing: .015em;
+  text-align: center;
+}
+#searchToolsPanel #searchLinks .search-link-arrow {
+  display: grid;
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: 5px;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: clamp(12px, calc(13px * var(--type-scale-control)), 16px);
+  line-height: 1;
+  opacity: .48;
+  transform: translateY(-50%);
+}
+#searchToolsPanel #searchLinks .search-link::after {
+  left: 8px;
+  width: 28px;
+}
+@media (max-width: 360px) {
+  #searchToolsPanel #searchLinks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

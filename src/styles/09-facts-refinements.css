@@ -1034,9 +1034,13 @@ body.layout-phone-portrait #mainCard.is-session-ended {
   font-size: clamp(17px, 2.4vw, 24px);
 }
 
-#mainCard.is-session-ended .session-end .restart-btn {
-  min-height: 48px;
+#mainCard.is-session-ended .session-end-actions {
   margin-top: 14px;
+}
+
+#mainCard.is-session-ended .session-end-actions .restart-btn {
+  min-height: 48px;
+  margin-top: 0;
 }
 
 @media (max-height: 560px) {
@@ -1058,9 +1062,13 @@ body.layout-phone-portrait #mainCard.is-session-ended {
     padding: 6px;
   }
 
-  #mainCard.is-session-ended .session-end .restart-btn {
-    min-height: 44px;
+  #mainCard.is-session-ended .session-end-actions {
     margin-top: 10px;
+  }
+
+  #mainCard.is-session-ended .session-end-actions .restart-btn {
+    min-height: 44px;
+    margin-top: 0;
   }
 }
 

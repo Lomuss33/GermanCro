@@ -151,7 +151,8 @@ html.has-onboarding-open::-webkit-scrollbar {
 /* The welcome state is the launch screen for the current learning card. */
 .onboarding-dialog.is-welcome .onboarding-panel {
   padding: clamp(20px, 4vw, 30px);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* The card is a fixed learning window: keep its launch state fully visible. */
@@ -438,8 +439,32 @@ html.has-onboarding-open::-webkit-scrollbar {
   display: grid;
   width: 100%;
   min-width: 0;
+  max-width: 100%;
+  justify-self: stretch;
+  margin-inline: 0;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 9px;
+}
+
+/* In the promoted welcome layout, keep all three choices on the same full
+   inner width as the action buttons rather than inheriting the input width. */
+body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-language-group {
+  left: 0;
+  right: 0;
+  width: auto;
+  padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));
+  box-sizing: border-box;
+}
+
+body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-language-options {
+  width: 100%;
+  max-width: none;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn {
+  width: 100%;
+  min-width: 0;
 }
 
 .onboarding-language-btn {
@@ -958,10 +983,10 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   align-content: stretch;
   row-gap: clamp(10px, 2.2vh, 16px);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   transform: none;
-  overflow: clip;
-  overscroll-behavior: auto;
+  overscroll-behavior: contain;
   touch-action: pan-y;
   scrollbar-width: none;
 }
@@ -1004,6 +1029,30 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   height: clamp(76px, 22vh, 108px);
   max-height: min(108px, 100%);
   align-items: stretch;
+}
+
+/* Keep the language row full-width even if the promoted-title state is skipped
+   during a resize or the title cannot be moved into the hero row. */
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-group {
+  width: 100% !important;
+  min-width: 0;
+  max-width: none;
+  align-self: stretch !important;
+  justify-self: stretch;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-options {
+  width: 100% !important;
+  min-width: 0;
+  max-width: none;
+  align-self: stretch;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-language-btn {
+  width: 100% !important;
+  min-width: 0;
+  justify-self: stretch;
 }
 
 .onboarding-dialog.is-card-start.is-welcome .onboarding-language-btn {

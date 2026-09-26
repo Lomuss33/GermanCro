@@ -234,7 +234,13 @@ export function createFirstRunTour({
   const tutorialLanguage = resolveTutorialLanguage(getBrowserLanguagePreferences(preferredLanguages));
   const reduceMotionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)") || null;
   const resizeObserver = typeof ResizeObserver === "function"
-    ? new ResizeObserver(() => scheduleLayout())
+    ? new ResizeObserver(() => {
+      if (state === "welcome" && isCardStart()) {
+        syncCardStartHeight();
+        return;
+      }
+      scheduleLayout();
+    })
     : null;
 
   function isOpen() {
@@ -258,8 +264,12 @@ export function createFirstRunTour({
   }
 
   function setWelcomeMetric(name, value) {
-    dialog.style.setProperty(name, value);
-    cardHost?.style.setProperty(name, value);
+    if (dialog.style.getPropertyValue(name) !== value) {
+      dialog.style.setProperty(name, value);
+    }
+    if (cardHost?.style.getPropertyValue(name) !== value) {
+      cardHost?.style.setProperty(name, value);
+    }
   }
 
   function clearWelcomeAnchorMetrics() {
@@ -283,27 +293,28 @@ export function createFirstRunTour({
   function syncWelcomeAnchorMetrics() {
     const input = document.getElementById("answer")?.closest(".input-shell");
     const guide = document.getElementById("answerGuide");
-    if (!cardHost || !input || !guide) {
+    const panel = elements.panel;
+    if (!cardHost || !panel || !input || !guide) {
       clearWelcomeAnchorMetrics();
       return;
     }
-    const cardRect = cardHost.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
     const inputRect = input.getBoundingClientRect();
     const guideRect = guide.getBoundingClientRect();
-    if (cardRect.width <= 0 || cardRect.height <= 0 || inputRect.height <= 0 || guideRect.height <= 0) {
+    if (panelRect.width <= 0 || panelRect.height <= 0 || inputRect.height <= 0 || guideRect.height <= 0) {
       clearWelcomeAnchorMetrics();
       return;
     }
-    const inputTop = Math.max(0, inputRect.top - cardRect.top);
-    const bottomBuffer = Math.max(8, Math.min(24, cardRect.bottom - guideRect.bottom));
+    const inputTop = Math.max(0, inputRect.top - panelRect.top);
+    const bottomBuffer = Math.max(8, Math.min(24, panelRect.bottom - guideRect.bottom));
     const languageTop = bottomBuffer;
     const languageHeight = Math.max(92, inputTop - languageTop - 14);
-    setWelcomeMetric("--onboarding-input-left", `${Math.max(0, inputRect.left - cardRect.left)}px`);
+    setWelcomeMetric("--onboarding-input-left", `${Math.max(0, inputRect.left - panelRect.left)}px`);
     setWelcomeMetric("--onboarding-input-top", `${inputTop}px`);
     setWelcomeMetric("--onboarding-input-width", `${Math.max(0, inputRect.width)}px`);
     setWelcomeMetric("--onboarding-input-height", `${Math.max(0, inputRect.height)}px`);
-    setWelcomeMetric("--onboarding-guide-left", `${Math.max(0, guideRect.left - cardRect.left)}px`);
-    setWelcomeMetric("--onboarding-guide-top", `${Math.max(0, guideRect.top - cardRect.top)}px`);
+    setWelcomeMetric("--onboarding-guide-left", `${Math.max(0, guideRect.left - panelRect.left)}px`);
+    setWelcomeMetric("--onboarding-guide-top", `${Math.max(0, guideRect.top - panelRect.top)}px`);
     setWelcomeMetric("--onboarding-guide-width", `${Math.max(0, guideRect.width)}px`);
     setWelcomeMetric("--onboarding-guide-height", `${Math.max(0, guideRect.height)}px`);
     setWelcomeMetric("--onboarding-language-top", `${languageTop}px`);
@@ -649,6 +660,17 @@ export function createFirstRunTour({
     promoteWelcomeTitle();
     syncCardStartHeight();
     syncLanguageButtons();
+    if (resizeObserver && isCardStart()) {
+      resizeObserver.disconnect();
+      observedTargets = [
+        cardHost,
+        elements.panel,
+        elements.languageGroup,
+        document.getElementById("answer")?.closest(".input-shell"),
+        document.getElementById("answerGuide"),
+      ].filter(Boolean);
+      observedTargets.forEach((target) => resizeObserver.observe(target));
+    }
     elements.panel?.removeAttribute("style");
     if (focusTitle) {
       window.requestAnimationFrame(() => elements.title?.focus({ preventScroll: true }));
@@ -822,7 +844,7 @@ export function createFirstRunTour({
       previouslyFocusedElement.isConnected
     ) {
       previouslyFocusedElement.focus({ preventScroll: true });
-    } else {
+    } else if (reason !== "settings") {
       focusAnswer?.();
     }
     previouslyFocusedElement = null;

@@ -158,6 +158,7 @@ import {
   finalWpmLabelEl,
   finalTimeLabelEl,
   restartBtnEl,
+  sessionSettingsBtnEl,
   finalCorrectEl,
   finalSkippedEl,
   finalStreakEl,
@@ -199,6 +200,7 @@ let bundledCards = [];
 let persistentCards = [];
 let sessionOnlyCards = [];
 let selectedTopics = null;
+let extendedRoundSize = false;
 
 let selectedSubcategories = new Set(DEFAULT_SUBCATEGORIES);
 
@@ -673,18 +675,9 @@ function renderPhoneInstallGuide(browserText, stepsText) {
   phoneGuideBarEl.replaceChildren(browserLine, stepsLine);
 }
 
-function setAuxiliaryControlsInert(inert) {
-  const controls = document.querySelectorAll(
-    "#languageDock, #arrowDock, #catPanel, #authorPanel, #searchPanel, body > .facts-panel, body > .site-footer"
-  );
-  controls.forEach((control) => {
-    control.inert = inert;
-    if (inert) {
-      control.setAttribute("inert", "");
-    } else {
-      control.removeAttribute("inert");
-    }
-  });
+function setExternalLookupInert(inert) {
+  // Settings and reference panels stay usable behind onboarding/session-end
+  // surfaces; only external navigation is paused while those surfaces are up.
   const searchToolsPanel = document.getElementById("searchToolsPanel");
   if (searchToolsPanel) {
     searchToolsPanel.setAttribute("aria-disabled", String(inert));
@@ -704,7 +697,7 @@ function setGameSurfaceMode(showSessionEnd) {
   gameArea.style.display = showSessionEnd ? "none" : "";
   sessionEndEl.style.display = showSessionEnd ? "flex" : "none";
   mainCard?.classList.toggle("is-session-ended", showSessionEnd);
-  setAuxiliaryControlsInert(showSessionEnd);
+  setExternalLookupInert(showSessionEnd);
 }
 
 function syncViewportProfile() {
@@ -1262,6 +1255,30 @@ function syncSessionSizeLabel() {
   }
 }
 
+function updateRoundSizeControl(availableCount) {
+  const available = Math.max(0, Math.floor(Number(availableCount) || 0));
+  const sliderMax = extendedRoundSize ? Math.max(5, available) : 50;
+  if (sessionSizeSliderEl) {
+    sessionSizeSliderEl.min = "5";
+    sessionSizeSliderEl.max = String(sliderMax);
+    sessionSizeSliderEl.step = extendedRoundSize ? "1" : "5";
+    const currentValue = Number(sessionSizeSliderEl.value) || 5;
+    sessionSizeSliderEl.value = String(Math.max(5, Math.min(sliderMax, currentValue)));
+    syncSessionSizeLabel();
+  }
+
+  if (catCountEl) {
+    const unit = t("messages.categories.unit");
+    const action = t(extendedRoundSize
+      ? "messages.categories.roundLimitLock"
+      : "messages.categories.roundLimitUnlock");
+    catCountEl.textContent = `${available} ${unit}`;
+    catCountEl.setAttribute("aria-pressed", String(extendedRoundSize));
+    catCountEl.setAttribute("aria-label", `${available} ${unit}. ${action}`);
+    catCountEl.title = action;
+  }
+}
+
 function getTargetLanguage() {
   return learningMode;
 }
@@ -1479,6 +1496,7 @@ function renderStaticUi() {
   setLocalizedText(finalStreakLabelEl, "messages.session.bestStreak");
   setLocalizedText(finalWpmLabelEl, "messages.session.wpm");
   setLocalizedText(finalTimeLabelEl, "messages.session.time");
+  setLocalizedText(sessionSettingsBtnEl, "messages.actions.settings");
   setLocalizedText(restartBtnEl, "messages.session.newRound");
   setLocalizedText(settingsPanelTitleTextEl, "messages.actions.settings");
   setLocalizedText(tutorialReplayBtnEl, "onboarding.controls.replay");
@@ -1848,7 +1866,7 @@ function buildTopicPanel() {
   buildSubcategoryPanel();
 
   const pool = getPool();
-  catCountEl.textContent = `${pool.length} ${t("messages.categories.unit")}`;
+  updateRoundSizeControl(pool.length);
   newGameBtn.disabled = pool.length === 0;
 }
 
@@ -1922,12 +1940,14 @@ searchLinksEl?.addEventListener("click", (event) => {
 });
 
 function updateSearchLinks(card) {
-  searchLinksEl.innerHTML = "";
-  if (!card) {
+  if (!searchLinksEl) {
     return;
   }
 
-  const query = String(card.de || card.en || "").trim();
+  searchLinksEl.innerHTML = "";
+  // Keep all four lookup actions available between cards and before the first
+  // round. A missing active card should never make the whole control row vanish.
+  const query = String(card?.de || card?.en || promptEl?.textContent || "Deutsch").trim();
 
   searchSites.forEach((site) => {
     const link = document.createElement("a");
@@ -3092,7 +3112,7 @@ function initFirstRunTour() {
       onboardingOpenedAt = Date.now();
       gameArea?.setAttribute("inert", "");
       sessionEndEl?.setAttribute("inert", "");
-      setAuxiliaryControlsInert(true);
+      setExternalLookupInert(true);
       maybeShowInstallGuide();
     },
     onClose: ({ replay, reason }) => {
@@ -3103,7 +3123,7 @@ function initFirstRunTour() {
       onboardingPending = false;
       gameArea?.removeAttribute("inert");
       sessionEndEl?.removeAttribute("inert");
-      setAuxiliaryControlsInert(false);
+      setExternalLookupInert(false);
       if (replay) {
         sessionStart += onboardingDuration;
       } else {
@@ -3120,6 +3140,7 @@ function initFirstRunTour() {
           block: "start",
           inline: "nearest",
         });
+        settingsPanel?.querySelector("button:not(:disabled), input:not(:disabled)")?.focus({ preventScroll: true });
       }
       updateStats();
       window.setTimeout(maybeShowInstallGuide, 0);
@@ -3290,6 +3311,10 @@ function initAuthoringForm() {
 
 function initInputEvents() {
   sessionSizeSliderEl?.addEventListener("input", syncSessionSizeLabel);
+  catCountEl?.addEventListener("click", () => {
+    extendedRoundSize = !extendedRoundSize;
+    updateRoundSizeControl(getPool().length);
+  });
   newGameBtn?.addEventListener("click", () => {
     if (firstRunTour?.playFromWelcome()) {
       return;
@@ -3298,6 +3323,13 @@ function initInputEvents() {
   });
   restartBtnEl?.addEventListener("click", () => {
     startSession(getRequestedSessionSize());
+  });
+  sessionSettingsBtnEl?.addEventListener("click", () => {
+    document.getElementById("catPanel")?.scrollIntoView({
+      behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth",
+      block: "start",
+      inline: "nearest",
+    });
   });
 
   languageDockButtons.forEach((button) => {
@@ -3562,6 +3594,7 @@ function initInputEvents() {
 let visualEffects = null;
 
 async function initApp() {
+  updateSearchLinks(null);
   syncSessionSizeLabel();
   learningMode = loadLearningMode();
   isPromptOrderSwapped = loadPromptOrderPreference();

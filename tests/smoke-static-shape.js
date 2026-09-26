@@ -17,6 +17,7 @@ const css = await readStyles("style.css");
 const normalizedCss = css.replace(/\r\n/g, "\n");
 const onboardingCss = await readStyles("onboarding.css");
 const normalizedOnboardingCss = onboardingCss.replace(/\r\n/g, "\n");
+const visualEffectsCss = (await readText("src/styles/visual-effects.css")).replace(/\r\n/g, "\n");
 const appSource = (await Promise.all([
   "src/bootstrap/init-app.js", "src/facts/controller.js", "src/config/app.js", "src/ui/language-flags.js",
 ].map(readText))).join("\n");
@@ -132,6 +133,17 @@ assert(
   "A closed onboarding dialog must always be removed from layout",
 );
 assert(
+  normalizedOnboardingCss.includes(".onboarding-dialog.is-card-start.is-welcome .onboarding-panel {\n  position: absolute;") &&
+    normalizedOnboardingCss.includes("overflow-y: auto;") &&
+    normalizedOnboardingCss.includes("overscroll-behavior: contain;"),
+  "The welcome panel must allow vertical scrolling instead of clipping controls on short viewports",
+);
+assert(
+  tourSource.includes('else if (reason !== "settings")') &&
+    appSource.includes('settingsPanel?.querySelector("button:not(:disabled), input:not(:disabled)")?.focus({ preventScroll: true });'),
+  "Opening settings from onboarding must keep focus in settings rather than returning to the game input",
+);
+assert(
   normalizedOnboardingCss.includes("pointer-events: auto"),
   "Startup language flag images must remain mouse-targetable",
 );
@@ -225,6 +237,21 @@ assert(
     tourSource.includes('window.addEventListener("resize", () => {') &&
     tourSource.includes("syncCardStartHeight();"),
   "The card-start onboarding height must resync on viewport changes",
+);
+assert(
+  tourSource.includes("const panelRect = panel.getBoundingClientRect();") &&
+    tourSource.includes('inputRect.left - panelRect.left') &&
+    tourSource.includes('state === "welcome" && isCardStart()') &&
+    tourSource.includes("resizeObserver.observe(target)"),
+  "Welcome language choices must stay anchored to the panel through responsive reflows",
+);
+assert(
+  visualEffectsCss.includes("left: 0;\n  right: 0;") &&
+    visualEffectsCss.includes("padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));") &&
+    visualEffectsCss.includes("grid-template-columns: repeat(3, minmax(0, 1fr));") &&
+    normalizedOnboardingCss.includes("#onboardingDialog.is-card-start.is-welcome .onboarding-language-group {\n  width: 100% !important;") &&
+    normalizedOnboardingCss.includes("#onboardingDialog.is-card-start.is-welcome .onboarding-language-btn {\n  width: 100% !important;"),
+  "Welcome language choices must fill the same balanced inner width with or without title promotion",
 );
 
 for (const flagEntity of ["&#127469;&#127479;", "&#127468;&#127463;", "&#127465;&#127466;"]) {

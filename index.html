@@ -213,7 +213,10 @@
       <div class="session-end-metric session-end-metric-time" role="listitem"><span id="finalTimeLabel">Time</span><strong id="finalTime"></strong></div>
     </div>
     <div class="session-end-details visually-hidden" id="finalDetails"></div>
-    <button class="restart-btn" id="restartBtn" type="button">Neue Runde</button>
+    <div class="session-end-actions">
+      <button class="session-settings-btn" id="sessionSettingsBtn" type="button">Settings</button>
+      <button class="restart-btn" id="restartBtn" type="button">Neue Runde</button>
+    </div>
   </div>
   </div>
 </div>
@@ -251,7 +254,7 @@
             value="10"
           />
         </div>
-        <div class="cat-count" id="catCount"></div>
+        <button class="cat-count" id="catCount" type="button" aria-pressed="false">0 cards</button>
       </div>
     </div>
     <button class="new-game-btn" id="newGameBtn" type="button">
@@ -259,11 +262,13 @@
     </button>
     <button class="tutorial-replay-btn" id="tutorialReplayBtn" type="button">Tutorial</button>
   </div>
-  <div class="cat-buttons-label" id="catButtonsLabel">Kategorien für nächste Runde auswählen</div>
-  <div class="cat-buttons" id="catButtons"></div>
-  <section class="subcategory-filter" aria-labelledby="subcategoryFilterLabel">
-    <div class="cat-buttons-label subcategory-filter-label" id="subcategoryFilterLabel">Wortart auswählen</div>
-    <div class="subcategory-buttons" id="subcategoryButtons"></div>
+  <section class="category-selection" aria-labelledby="catButtonsLabel">
+    <h2 class="cat-buttons-label" id="catButtonsLabel">Kategorien für nächste Runde auswählen</h2>
+    <div class="cat-buttons" id="catButtons"></div>
+    <section class="subcategory-filter" aria-labelledby="subcategoryFilterLabel">
+      <div class="cat-buttons-label subcategory-filter-label" id="subcategoryFilterLabel">Wortart auswählen</div>
+      <div class="subcategory-buttons" id="subcategoryButtons"></div>
+    </section>
   </section>
   <div class="cat-panel-bottom-actions">
     <button class="visual-effects-btn" id="visualEffectsBtn" type="button" aria-pressed="false">Weniger Effekte</button>

@@ -236,6 +236,8 @@ export const finalTimeLabelEl = document.getElementById("finalTimeLabel");
 
 export const restartBtnEl = document.getElementById("restartBtn");
 
+export const sessionSettingsBtnEl = document.getElementById("sessionSettingsBtn");
+
 export const finalCorrectEl = document.getElementById("finalCorrect");
 
 export const finalSkippedEl = document.getElementById("finalSkipped");

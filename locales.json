@@ -132,6 +132,8 @@
         "classAll": "Alle Wortarten",
         "mixed": "Alle Themen",
         "available": "{count} {unit} verfügbar",
+        "roundLimitUnlock": "Unlock round sizes above 50",
+        "roundLimitLock": "Limit rounds to 50",
         "unit": "Karten",
         "newGame": "START"
       },
@@ -765,6 +767,8 @@
         "classAll": "Sve vrste riječi",
         "mixed": "Sve teme",
         "available": "{count} {unit} dostupno",
+        "roundLimitUnlock": "Otključaj runde veće od 50",
+        "roundLimitLock": "Ograniči rundu na 50",
         "unit": "kartica",
         "newGame": "START"
       },
@@ -1390,6 +1394,8 @@
         "classAll": "All word classes",
         "mixed": "All topics",
         "available": "{count} {unit} available",
+        "roundLimitUnlock": "Unlock round sizes above 50",
+        "roundLimitLock": "Limit rounds to 50",
         "unit": "cards",
         "newGame": "START"
       },
