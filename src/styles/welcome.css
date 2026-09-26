@@ -151,12 +151,12 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn {
   max-height: none;
   min-height: 0;
   padding: clamp(10px, 2.1vh, 18px) 8px clamp(10px, 1.6vh, 14px);
-  border: 1px solid #59616d;
+  border: 1px solid rgba(145, 203, 239, .62);
   border-bottom-width: 3px;
   border-radius: 8px !important;
-  background: var(--glass-sheen), rgba(var(--glass-blue), 0.35) !important;
-  color: #f6f7f8;
-  box-shadow: 0 3px 0 #101318;
+  background: linear-gradient(145deg, rgba(87, 171, 225, .16), rgba(12, 28, 55, .76)) !important;
+  color: #eaf5ff;
+  box-shadow: 0 3px 0 #101318, inset 0 1px 0 rgba(230, 248, 255, .16);
   animation: none;
   transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
   will-change: auto;
@@ -176,21 +176,21 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn {
 }
 
 body #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn.active {
-  border-color: #d4e987;
-  background: rgba(232, 243, 188, 0.88) !important;
-  color: #20271b;
-  box-shadow: 0 3px 0 #778b45;
+  border-color: rgba(157, 255, 190, .94);
+  background: linear-gradient(145deg, rgba(87, 224, 142, .32), rgba(18, 77, 69, .86)) !important;
+  color: #f5fff8;
+  box-shadow: 0 3px 0 #101318, inset 0 1px 0 rgba(239, 255, 244, .34), 0 0 22px rgba(71, 230, 147, .18);
   animation: none;
 }
 
 body #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn.active .onboarding-language-name {
-  color: #20271b;
+  color: #f5fff8;
 }
 
 #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn.active::after {
-  border-color: #344820;
-  background: #344820;
-  box-shadow: inset 0 0 0 3px #e8f3bc;
+  border-color: #a9ffc3;
+  background: #60e895;
+  box-shadow: 0 0 10px rgba(96, 232, 149, .72), inset 0 0 0 3px #15533f;
 }
 
 #onboardingDialog.is-card-start.is-welcome .onboarding-language-name {
@@ -251,11 +251,11 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn {
   padding: 0;
   gap: 0;
   align-items: stretch;
-  background: linear-gradient(115deg, #8df3aa 0%, #51d995 48%, #35c9ad 100%) !important;
-  border: 1px solid rgba(224, 255, 235, .9);
-  border-bottom: 3px solid #248d70;
+  background: linear-gradient(115deg, #36c47c 0%, #168b70 48%, #147e91 100%) !important;
+  border: 1px solid rgba(197, 255, 216, .86);
+  border-bottom: 3px solid #105c5d;
   color: #fff;
-  box-shadow: 0 3px 0 #101318, inset 0 1px 0 rgba(255, 255, 255, .72), 0 8px 28px rgba(72, 239, 171, .24);
+  box-shadow: 0 3px 0 #101318, inset 0 1px 0 rgba(255, 255, 255, .46), 0 8px 28px rgba(48, 224, 155, .24);
   font-size: 18px;
   font-weight: 800;
 }
@@ -425,9 +425,9 @@ body #onboardingDialog.is-card-start.is-welcome :is(.onboarding-secondary-btn, .
 
 #onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn:hover {
   border-color: #fff;
-  border-bottom-color: #248d70;
-  background: linear-gradient(115deg, #a2ffbb 0%, #64e8a5 48%, #47dcc0 100%) !important;
-  box-shadow: 0 3px 0 #101318, inset 0 1px 0 rgba(255, 255, 255, .86), 0 10px 30px rgba(72, 239, 171, .34);
+  border-bottom-color: #105c5d;
+  background: linear-gradient(115deg, #4cdb91 0%, #20a986 48%, #1e9aad 100%) !important;
+  box-shadow: 0 3px 0 #101318, inset 0 1px 0 rgba(255, 255, 255, .62), 0 10px 30px rgba(48, 224, 155, .32);
   filter: none;
 }
 

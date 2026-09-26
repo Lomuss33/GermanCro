@@ -716,6 +716,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     if (!list.children.length) {
       return null;
     }
+    list.dataset.count = String(list.children.length);
 
     section.appendChild(title);
     section.appendChild(list);
@@ -758,8 +759,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
 
     const groupsEl = document.createElement("div");
     groupsEl.className = "facts-notable-people-groups";
-    peopleGroups.forEach(({ label, values }) => {
-      const group = createFactsList(label, values, "", "");
+    peopleGroups.forEach(({ label, variant, values }) => {
+      const group = createFactsList(label, values, variant, "");
       if (group) {
         group.classList.add("facts-notable-people-group");
         groupsEl.appendChild(group);

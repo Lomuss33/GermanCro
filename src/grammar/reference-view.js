@@ -13,13 +13,27 @@ export function renderGrammarReference(root, baseCards, language) {
   const german = language === "de";
   const cards = german ? getGermanReferenceCards(baseCards) : baseCards;
   const sections = [];
+  const introCopy = {
+    de: GERMAN_REFERENCE_INTRO,
+    en: {
+      title: "English grammar for everyday use",
+      description: "Clear rules, examples, and practice for your English learning goals.",
+    },
+    hr: {
+      title: "Hrvatska gramatika za svakodnevnu uporabu",
+      description: "Jasna pravila, primjeri i vježbe za sigurniju uporabu hrvatskog jezika.",
+    },
+  }[language] || {
+    title: "Grammar for everyday use",
+    description: "Clear rules, examples, and practice for your learning goals.",
+  };
   let filterBar;
   let resultStatus;
-  root.classList.toggle("grammar-grid--reference", german);
+  root.classList.add("grammar-grid--reference");
+  const intro = element("header", "grammar-reference-intro");
+  intro.append(element("h2", "grammar-reference-title", introCopy.title));
+  intro.append(element("p", "grammar-reference-description", introCopy.description));
   if (german) {
-    const intro = element("header", "grammar-reference-intro");
-    intro.append(element("h2", "grammar-reference-title", GERMAN_REFERENCE_INTRO.title));
-    intro.append(element("p", "grammar-reference-description", GERMAN_REFERENCE_INTRO.description));
     filterBar = element("div", "grammar-reference-filters");
     filterBar.setAttribute("role", "group");
     filterBar.setAttribute("aria-label", "Lernschwerpunkt auswählen");
@@ -52,8 +66,8 @@ export function renderGrammarReference(root, baseCards, language) {
     resultStatus.setAttribute("role", "status");
     // Keep filter-result announcements for screen readers without repeating the UI.
     intro.append(filterBar, resultStatus);
-    root.append(intro);
   }
+  root.append(intro);
 
   cards.forEach((card, index) => {
     const section = element(card.collapsed ? "details" : "section", "grammar-card");

@@ -2,9 +2,9 @@ import { createScrollFlag } from "./scroll-flag.js";
 
 const STORAGE_KEY = "germancro-visual-effects";
 const COPY = {
-  de: ["Weniger Effekte", "Bewegung und Leuchteffekte reduzieren"],
-  en: ["Reduced effects", "Reduce motion and lighting effects"],
-  hr: ["Manje efekata", "Smanji animacije i svjetlosne efekte"],
+  de: ["Effekte", "Bewegung und Leuchteffekte reduzieren"],
+  en: ["Effects", "Reduce motion and lighting effects"],
+  hr: ["Efekti", "Smanji animacije i svjetlosne efekte"],
 };
 
 export function initVisualEffects({ button, getLanguage }) {
@@ -19,9 +19,12 @@ export function initVisualEffects({ button, getLanguage }) {
     flag.sync();
     const [label, title] = COPY[getLanguage()] || COPY.en;
     if (button) {
-      button.textContent = label;
+      const reduced = isReduced();
+      const titleEl = button.querySelector(".visual-effects-title");
+      if (titleEl) titleEl.textContent = label;
+      else button.textContent = label;
       button.title = title;
-      button.setAttribute("aria-pressed", String(isReduced()));
+      button.setAttribute("aria-pressed", String(reduced));
       // System accessibility preferences remain authoritative.
       button.disabled = motion.matches || transparency.matches;
     }

@@ -48,10 +48,10 @@ body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTit
   width: 100%;
   margin: 0;
   font-family: "Segoe UI Black", "Arial Black", Tahoma, sans-serif;
-  font-size: clamp(35px, 10.55vw, 37px);
+  font-size: var(--promoted-title-font-size, var(--pretext-font-size, clamp(16px, 5.2vw, 21px)));
   font-weight: 900;
   letter-spacing: -0.058em;
-  line-height: .92;
+  line-height: var(--promoted-title-line-height, var(--pretext-line-height, 1.05));
   text-align: center;
   overflow-wrap: normal;
   pointer-events: auto;
@@ -60,12 +60,6 @@ body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTit
 body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTitle.site-title:focus,
 body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTitle.site-title:focus-visible {
   outline: none;
-}
-
-@media (min-width: 900px) {
-  body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTitle.site-title {
-    font-size: 38px;
-  }
 }
 
 body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTitle.site-title::before {
@@ -427,29 +421,59 @@ body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
 .visual-effects-btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
-  min-height: 40px;
-  padding: 8px 14px;
-  border: 1px solid rgba(125, 211, 252, .4);
-  border-radius: 12px;
-  background: rgba(8, 19, 43, .7);
-  color: #deefff;
+  width: 112px;
+  min-height: 34px;
+  padding: 5px 9px 5px 11px;
+  border: 1px solid rgba(125, 211, 252, .32);
+  border-radius: 10px;
+  background: linear-gradient(120deg, rgba(23, 46, 76, .88), rgba(8, 19, 43, .82));
+  color: #e8f5ff;
   font: inherit;
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 750;
+  line-height: 1;
+  white-space: nowrap;
   cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 3px 10px rgba(0, 0, 0, .14);
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 .visual-effects-btn::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border: 1px solid currentColor;
-  border-radius: 50%;
+  content: "✦";
+  color: #8ceaff;
+  font-size: 14px;
+  line-height: 1;
+  text-shadow: 0 0 9px rgba(72, 229, 255, .48);
+  transition: color 160ms ease, transform 220ms ease, text-shadow 160ms ease;
 }
-.visual-effects-btn[aria-pressed="true"]::before { background: #b8ff9b; border-color: #b8ff9b; }
-.visual-effects-btn:hover { border-color: #b9eaff; }
+.visual-effects-switch {
+  display: inline-flex;
+  align-items: center;
+  width: 25px;
+  height: 14px;
+  padding: 2px;
+  border: 1px solid rgba(173, 198, 220, .26);
+  border-radius: 999px;
+  background: rgba(2, 9, 24, .72);
+  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.visual-effects-switch > span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #9eb1c5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+  transition: transform 240ms cubic-bezier(.22, .68, .25, 1), background 180ms ease;
+}
+.visual-effects-btn[aria-pressed="true"]::before { color: #bcff9b; transform: rotate(-12deg) scale(1.08); text-shadow: 0 0 10px rgba(184, 255, 155, .58); }
+.visual-effects-btn[aria-pressed="true"] .visual-effects-switch { border-color: rgba(184, 255, 155, .58); background: rgba(96, 156, 72, .34); box-shadow: 0 0 10px rgba(184, 255, 155, .12); }
+.visual-effects-btn[aria-pressed="true"] .visual-effects-switch > span { transform: translateX(11px); background: #c7ff9f; }
+.visual-effects-btn:hover { border-color: rgba(185, 234, 255, .72); background: linear-gradient(120deg, rgba(29, 61, 91, .94), rgba(10, 25, 52, .9)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 0 14px rgba(72, 229, 255, .12); }
+.visual-effects-btn:active { transform: translateY(1px) scale(.98); }
+.visual-effects-btn:focus-visible { outline: 2px solid #9cecff; outline-offset: 2px; }
 .visual-effects-btn:disabled { cursor: default; opacity: .75; }
-#catPanel .cat-panel-bottom-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+#catPanel .cat-panel-bottom-actions { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
 
 /* Round setup: one compact control dock with a clear choice → adjust → start flow. */
 body #catPanel .cat-panel-toolbar {
@@ -749,7 +773,7 @@ body #catPanel .category-selection > .cat-buttons-label {
   font-size: clamp(11px, calc(12px * var(--type-scale-body)), 16px);
   line-height: 1.35;
   letter-spacing: .055em;
-  text-align: left;
+  text-align: center;
   text-wrap: pretty;
 }
 body #catPanel .category-selection > #catButtons {
@@ -791,7 +815,7 @@ body #catPanel .category-selection .subcategory-filter-label {
   font-size: clamp(13px, calc(14px * var(--type-scale-body)), 17px);
   line-height: 1.3;
   letter-spacing: .055em;
-  text-align: left;
+  text-align: center;
 }
 body #catPanel .category-selection .subcategory-buttons {
   display: grid;
@@ -897,4 +921,24 @@ body #catPanel .category-selection .subcategory-btn:not(.subcategory-btn-all).ac
 :root[data-effects="reduced"] { --glass-panel: #101d32; --glass-popup: #101d32; }
 @media (prefers-reduced-transparency: reduce) {
   :root { --glass-panel: #101d32; --glass-popup: #101d32; }
+}
+
+/* The science and art cards are intentionally static on hover; their links remain usable. */
+#factsContent :is(.facts-people-science, .facts-people-art),
+#factsContent :is(.facts-people-science, .facts-people-art):hover,
+#factsContent :is(.facts-people-science, .facts-people-art):focus-within {
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  transition: none !important;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 12%, transparent), transparent 62%),
+    rgba(5, 12, 35, .42) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 18px color-mix(in srgb, var(--list-accent) 10%, transparent) !important;
+}
+#factsContent :is(.facts-people-science, .facts-people-art) * {
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  transition: none !important;
 }

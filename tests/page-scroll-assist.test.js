@@ -20,6 +20,26 @@ test("all panels use the same alignment range and the nearest panel wins", () =>
   assert.equal(findPanelSnapTarget([{ element: game, isMainCard: true, position: 250 }], 49, 600), null);
 });
 
+test("panel snap follows the user's scroll direction instead of pulling backward", () => {
+  const previousPanel = { id: "previous" };
+  const nextPanel = { id: "next" };
+  const targets = [
+    { element: previousPanel, position: 300 },
+    { element: nextPanel, position: 450 },
+  ];
+
+  assert.equal(findPanelSnapTarget(targets, 340, 600, 1)?.element, nextPanel);
+  assert.equal(findPanelSnapTarget(targets, 340, 600, -1)?.element, previousPanel);
+});
+
+test("panel snap only corrects a close miss", () => {
+  const panel = { id: "panel" };
+  const targets = [{ element: panel, position: 300 }];
+
+  assert.equal(findPanelSnapTarget(targets, 180, 600)?.element, panel);
+  assert.equal(findPanelSnapTarget(targets, 179, 600), null);
+});
+
 test("page scroll position follows the browser's canonical scrolling element", () => {
   const documentElement = { scrollTop: 0 };
   const body = { scrollTop: 240 };

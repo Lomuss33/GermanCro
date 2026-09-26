@@ -1,0 +1,96 @@
+/* Canonical people-directory contract.
+   Category classes own the visual identity; DOM position must not change it. */
+#factsContent .facts-notable-people-groups > .facts-notable-people-group,
+#factsContent .facts-notable-people-groups > .facts-notable-people-group:nth-child(even) {
+  grid-column: 1 / -1 !important;
+  width: 100%;
+  min-width: 0;
+  min-height: 96px;
+  box-sizing: border-box;
+  align-self: stretch !important;
+  align-items: stretch !important;
+  gap: 8px;
+  padding: 12px;
+  text-align: left !important;
+  border: 1px solid color-mix(in srgb, var(--list-accent) 42%, transparent) !important;
+  border-left: 3px solid var(--list-accent) !important;
+  border-right: 1px solid color-mix(in srgb, var(--list-accent) 24%, transparent) !important;
+  border-radius: 10px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 12%, transparent), transparent 62%),
+    rgba(5, 12, 35, .42) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 18px color-mix(in srgb, var(--list-accent) 10%, transparent) !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Keep the category palette semantic instead of letting nth-child rules win. */
+#factsContent .facts-notable-people-groups > .facts-people-science {
+  --list-accent: #22d3ee;
+  background:
+    radial-gradient(circle at 14% 20%, rgba(34, 211, 238, .16) 0 2px, transparent 3px),
+    linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 12%, transparent), transparent 62%),
+    rgba(5, 12, 35, .42) !important;
+}
+#factsContent .facts-notable-people-groups > .facts-people-engineering {
+  --list-accent: #a78bfa;
+  background:
+    repeating-linear-gradient(135deg, rgba(167, 139, 250, .08) 0 1px, transparent 1px 8px),
+    linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 12%, transparent), transparent 62%),
+    rgba(5, 12, 35, .42) !important;
+}
+#factsContent .facts-notable-people-groups > .facts-people-art {
+  --list-accent: #ff9f43;
+  background:
+    radial-gradient(ellipse at 88% 18%, rgba(255, 159, 67, .16), transparent 44%),
+    linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 12%, transparent), transparent 62%),
+    rgba(5, 12, 35, .42) !important;
+}
+#factsContent .facts-notable-people-groups > .facts-people-politics {
+  --list-accent: #ff4fa3;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 79, 163, .06) 0 1px, transparent 1px 8px),
+    linear-gradient(145deg, color-mix(in srgb, var(--list-accent) 12%, transparent), transparent 62%),
+    rgba(5, 12, 35, .42) !important;
+}
+
+/* A long name must stay inside its equal-width chip and cannot change card height. */
+#factsContent .facts-notable-people-group .facts-chip-list,
+#factsContent .facts-notable-people-group:nth-child(even) .facts-chip-list {
+  align-self: stretch !important;
+  justify-content: flex-start !important;
+}
+#factsContent .facts-notable-people-group .facts-chip-link,
+#factsContent .facts-notable-people-group .facts-chip-link:hover,
+#factsContent .facts-notable-people-group .facts-chip-link:focus-visible {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+/* Decorative headings remain centered and symmetric in every category. */
+#factsContent .facts-notable-people-group .facts-list-title,
+#factsContent .facts-notable-people-group:nth-child(even) .facts-list-title {
+  align-self: stretch !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  text-align: center !important;
+}
+
+/* Grid rows are sized by their tallest card; every card in that row fills it. */
+#factsContent > .facts-view > .facts-grid {
+  align-items: stretch !important;
+}
+#factsContent > .facts-view > .facts-grid > .facts-card,
+#factsContent > .facts-view > .facts-grid > .facts-card:nth-child(even) {
+  align-self: stretch !important;
+  height: auto;
+  box-sizing: border-box;
+}

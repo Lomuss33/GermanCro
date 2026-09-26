@@ -1,29 +1,28 @@
 /* Teaching content stays in normal flow: no paint containment or filter on text. */
 #searchToolsPanel {
   display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 #searchToolsPanel .search-tools-label {
   position: relative;
-  color: #dce7f8;
-  font-size: 10px;
+  justify-self: center;
+  color: #e8ff47;
+  background: linear-gradient(90deg, #7dd3fc, #e8ff47 48%, #ff8ad8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  max-width: 100%;
+  font-size: clamp(7px, 1.9vw, 12px);
   font-weight: 850;
-  letter-spacing: .12em;
+  letter-spacing: .06em;
   line-height: 1.2;
   text-transform: uppercase;
   white-space: nowrap;
-}
-#searchToolsPanel .search-tools-label::after {
-  content: "";
-  display: block;
-  width: 32px;
-  height: 2px;
-  margin-top: 7px;
-  border-radius: 999px;
-  background: #7dd3fc;
-  box-shadow: 0 0 12px rgba(125, 211, 252, .7);
+  text-wrap: nowrap;
+  text-align: center;
+  text-shadow: 0 0 18px rgba(232, 255, 71, .24);
 }
 #searchToolsPanel .search-tools-row {
   grid-template-columns: minmax(0, 1fr);
@@ -51,8 +50,8 @@
     gap: 9px;
   }
   #searchToolsPanel .search-tools-label {
-    justify-self: start;
-    margin-inline: max(10px, env(safe-area-inset-left));
+    justify-self: center;
+    margin-inline: 0;
   }
 }
 
@@ -348,7 +347,7 @@
   row-gap: 6px;
   width: 100%;
   min-width: 0;
-  padding: 6px 4px 2px;
+  padding: 1px 4px 2px;
   text-align: left;
 }
 #searchPanel .grammar-lesson-level {
@@ -368,6 +367,7 @@
   line-height: 1.2;
   color: #f4f7ff;
   margin: 0;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -496,7 +496,7 @@
 }
 @media (max-width: 700px) {
   #searchPanel .grammar-reference-intro {
-    padding: 6px 12px 2px;
+    padding: 1px 12px 2px;
   }
   #searchPanel .grammar-lesson {
     padding: 16px max(12px, env(safe-area-inset-left)) 16px max(12px, env(safe-area-inset-right));

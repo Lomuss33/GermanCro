@@ -1,6 +1,6 @@
 /* Compatibility entry. */
-@import "./src/styles/theme.css";
+@import "./src/styles/theme.css?v=2026-09-26-hover-lock3";
 @import "./src/styles/reference.css";
 @import "./src/styles/welcome.css";
 @import "./src/styles/install-guide.css";
-@import "./src/styles/visual-effects.css";
+@import "./src/styles/visual-effects.css?v=2026-09-26-hover-lock3";

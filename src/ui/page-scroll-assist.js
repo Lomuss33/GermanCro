@@ -1,4 +1,6 @@
-const PANEL_SNAP_FRACTION = 1 / 3;
+const PANEL_SNAP_FRACTION = 0.2;
+const PANEL_SNAP_MAX_DISTANCE = 180;
+const SCROLL_IDLE_DELAY = 420;
 
 export function readPageScrollY(windowRef, documentRef) {
   const root = documentRef.scrollingElement;
@@ -11,16 +13,22 @@ export function readPageScrollY(windowRef, documentRef) {
   );
 }
 
-export function findPanelSnapTarget(targets, scrollY, viewportHeight) {
+export function findPanelSnapTarget(targets, scrollY, viewportHeight, direction = 0) {
   const height = Math.max(1, viewportHeight || 1);
+  const threshold = Math.min(PANEL_SNAP_MAX_DISTANCE, height * PANEL_SNAP_FRACTION);
   return targets
     .filter((target) => target?.element && Number.isFinite(target.position))
     .map((target) => ({
       ...target,
       distance: Math.abs(target.position - scrollY),
-      threshold: height * PANEL_SNAP_FRACTION,
+      threshold,
+      offset: target.position - scrollY,
     }))
-    .filter((target) => target.distance >= 1 && target.distance <= target.threshold)
+    .filter((target) => (
+      target.distance >= 1 &&
+      target.distance <= target.threshold &&
+      (direction === 0 || Math.sign(target.offset) === direction)
+    ))
     .sort((left, right) => left.distance - right.distance)[0] || null;
 }
 
@@ -29,8 +37,7 @@ export function initPageScrollAssist({ targets, shouldPause = () => false }) {
   let snapReleaseTimer = 0;
   let isSnapping = false;
   let previousScrollY = readPageScrollY(window, document);
-  let previousScrollAt = performance.now();
-  let scrollVelocity = 0;
+  let lastScrollDirection = 0;
 
   function getTargetPositions() {
     const scrollY = readPageScrollY(window, document);
@@ -54,18 +61,11 @@ export function initPageScrollAssist({ targets, shouldPause = () => false }) {
     if (isSnapping || shouldPause() || document.hidden) return;
 
     const scrollY = readPageScrollY(window, document);
-    // Let wheel/touch momentum finish before correcting a near-miss alignment.
-    if (scrollVelocity > 0.8) {
-      scrollVelocity = 0;
-      scheduleSettle(260);
-      return;
-    }
-    scrollVelocity = 0;
-
     const target = findPanelSnapTarget(
       getTargetPositions(),
       scrollY,
       window.innerHeight || document.documentElement.clientHeight,
+      lastScrollDirection,
     );
     if (!target) return;
 
@@ -84,7 +84,7 @@ export function initPageScrollAssist({ targets, shouldPause = () => false }) {
     }
   }
 
-  function scheduleSettle(delay = 220) {
+  function scheduleSettle(delay = SCROLL_IDLE_DELAY) {
     window.clearTimeout(settleTimer);
     settleTimer = window.setTimeout(settleScrollPosition, delay);
   }
@@ -97,12 +97,14 @@ export function initPageScrollAssist({ targets, shouldPause = () => false }) {
       event.target !== document.documentElement &&
       event.target !== document.body
     ) return;
-    const now = performance.now();
     const scrollY = readPageScrollY(window, document);
-    const elapsed = Math.max(1, now - previousScrollAt);
-    scrollVelocity = Math.abs(scrollY - previousScrollY) / elapsed;
+    if (isSnapping) {
+      previousScrollY = scrollY;
+      return;
+    }
+    const movement = scrollY - previousScrollY;
+    if (movement !== 0) lastScrollDirection = Math.sign(movement);
     previousScrollY = scrollY;
-    previousScrollAt = now;
     scheduleSettle();
   }
 
@@ -123,7 +125,6 @@ export function initPageScrollAssist({ targets, shouldPause = () => false }) {
       window.clearTimeout(snapReleaseTimer);
       return;
     }
-    scrollVelocity = 0;
-    scheduleSettle(100);
+    scheduleSettle(140);
   }, { capture: true, passive: true });
 }
