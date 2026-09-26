@@ -172,6 +172,7 @@ import { searchSites } from "../search/sites.js";
 import { createPretextBlockController } from "../layout/pretext.js";
 import { renderGrammarReference } from "../grammar/reference-view.js";
 import { createFirstRunTour } from "../onboarding/first-run-tour.js";
+import { initPageScrollAssist } from "../ui/page-scroll-assist.js";
 
 import {
   CARD_SCOPE_OPTIONS,
@@ -3634,6 +3635,16 @@ async function initApp() {
   buildTopicPanel();
   hasBootstrappedApp = true;
   await recoverPlayableSession("init-app", SESSION_SIZE);
+  initPageScrollAssist({
+    targets: () => [
+      { element: heroStageEl },
+      { element: mainCard, isMainCard: true },
+      { element: document.getElementById("catPanel") },
+      { element: searchPanelEl },
+      { element: factsPanelEl, requiresLoadedContent: true, isLoaded: () => factsController.isLoaded },
+    ],
+    shouldPause: () => onboardingPending || firstRunTour?.isOpen(),
+  });
   if (onboardingPending) {
     firstRunTour?.open();
   }

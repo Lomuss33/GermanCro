@@ -120,8 +120,8 @@ assert(
   "Optional facts must start eagerly outside the critical app boot Promise",
 );
 assert(
-  !appSource.includes("initScrollSnapController") && !appSource.includes("settleScrollPosition"),
-  "Native content scrolling must not be overridden by automatic snapping",
+  appSource.includes("initPageScrollAssist") && appSource.includes("shouldPause: () => onboardingPending"),
+  "Panel scroll assistance must be initialized and stay inactive during onboarding",
 );
 assert(
   !normalizedCss.includes("content-visibility: auto"),
