@@ -1,14 +1,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { findPanelSnapTarget } from "../src/ui/page-scroll-assist.js";
+import { findPanelSnapTarget, readPageScrollY } from "../src/ui/page-scroll-assist.js";
 
 test("panel scroll assist only corrects a near miss", () => {
   const panel = { id: "settings" };
   assert.equal(findPanelSnapTarget([{ element: panel, position: 300 }], 180, 600)?.element, panel);
-  assert.equal(findPanelSnapTarget([{ element: panel, position: 300 }], 150, 600), null);
+  assert.equal(findPanelSnapTarget([{ element: panel, position: 300 }], 99, 600), null);
 });
 
-test("the game card uses a tighter snap range and the nearest panel wins", () => {
+test("all panels use the same alignment range and the nearest panel wins", () => {
   const game = { id: "game" };
   const settings = { id: "settings" };
   const target = findPanelSnapTarget([
@@ -17,5 +17,24 @@ test("the game card uses a tighter snap range and the nearest panel wins", () =>
   ], 200, 600);
 
   assert.equal(target?.element, settings);
-  assert.equal(findPanelSnapTarget([{ element: game, isMainCard: true, position: 250 }], 180, 600), null);
+  assert.equal(findPanelSnapTarget([{ element: game, isMainCard: true, position: 250 }], 49, 600), null);
+});
+
+test("page scroll position follows the browser's canonical scrolling element", () => {
+  const documentElement = { scrollTop: 0 };
+  const body = { scrollTop: 240 };
+  const scrollingElement = { scrollTop: 120 };
+
+  assert.equal(readPageScrollY({ scrollY: 0 }, {
+    scrollingElement,
+    documentElement,
+    body,
+  }), 120);
+});
+
+test("page scroll position falls back to body for body-rooted documents", () => {
+  assert.equal(readPageScrollY({ scrollY: 0 }, {
+    documentElement: { scrollTop: 0 },
+    body: { scrollTop: 240 },
+  }), 240);
 });

@@ -240,16 +240,162 @@ body #onboardingDialog.is-card-start.is-welcome .onboarding-actions {
 }
 
 body #onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   grid-column: 1 / -1;
   grid-row: 1;
   min-height: 56px;
-  background: #e8ff78 !important;
-  border: 1px solid #e8ff78;
-  border-bottom: 3px solid #aec642;
-  color: #202615;
-  box-shadow: 0 3px 0 #101318;
+  padding: 0;
+  gap: 0;
+  align-items: stretch;
+  background: linear-gradient(115deg, #8df3aa 0%, #51d995 48%, #35c9ad 100%) !important;
+  border: 1px solid rgba(224, 255, 235, .9);
+  border-bottom: 3px solid #248d70;
+  color: #fff;
+  box-shadow: 0 3px 0 #101318, inset 0 1px 0 rgba(255, 255, 255, .72), 0 8px 28px rgba(72, 239, 171, .24);
   font-size: 18px;
   font-weight: 800;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-icon {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: grid;
+  width: clamp(96px, 12vw, 132px);
+  place-items: center;
+  margin: 0;
+  border: 0;
+  border-right: 1px solid rgba(239, 255, 244, .42);
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 17% 16%, rgba(255, 255, 255, .92) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 82% 22%, rgba(255, 255, 255, .82) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 81% 82%, rgba(255, 255, 255, .72) 0 1px, transparent 1.7px),
+    linear-gradient(180deg, rgba(255, 255, 255, .11), transparent 46%, rgba(13, 88, 61, .1));
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, .2);
+  transition: background-color 180ms ease;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-icon::before {
+  content: "";
+  width: clamp(70px, 9vw, 96px);
+  height: clamp(70px, 9vw, 96px);
+  background: url("../../assets/icons/play-launch.svg") center / contain no-repeat;
+  filter: drop-shadow(0 2px 2px rgba(5, 31, 18, .34));
+  transform: translateX(0) scale(1);
+  transition: transform 360ms cubic-bezier(.2, .8, .2, 1), filter 220ms ease;
+  transform-origin: center;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-copy {
+  display: grid;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  align-content: center;
+  justify-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-hint {
+  color: rgba(255, 255, 255, .92);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .12em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 48, 33, .5);
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-label {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-size: inherit;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0, 48, 33, .5), 0 0 12px rgba(255, 255, 255, .24);
+  box-shadow: none;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-settings {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 0;
+  display: grid;
+  box-sizing: border-box;
+  width: clamp(112px, 20vw, 186px);
+  padding-right: 14px;
+  gap: 5px;
+  justify-items: end;
+  color: #fff;
+  line-height: 1.15;
+  text-align: right;
+  text-shadow: 0 1px 3px rgba(0, 48, 33, .42);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-settings-difficulty {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: clamp(10px, 1.1vw, 12px);
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-settings-types,
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-settings-difficulty {
+  position: relative;
+  width: 100%;
+  padding-bottom: 4px;
+}
+
+#onboardingDialog.is-card-start.is-welcome :is(.onboarding-primary-settings-types, .onboarding-primary-settings-difficulty)::after {
+  content: "";
+  position: absolute;
+  right: -14px;
+  bottom: 0;
+  width: calc(100% + 14px);
+  height: 1px;
+  background: rgba(255, 255, 255, .48);
+  pointer-events: none;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-settings-types {
+  overflow: hidden;
+  color: rgba(255, 255, 255, .94);
+  font-size: clamp(9px, 1vw, 10.5px);
+  font-weight: 700;
+  letter-spacing: .025em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-settings-rounds {
+  max-width: 100%;
+  overflow: hidden;
+  color: rgba(255, 255, 255, .9);
+  font-size: clamp(10px, 1.05vw, 11px);
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 body #onboardingDialog.is-card-start.is-welcome :is(.onboarding-secondary-btn, .onboarding-settings-btn) {
@@ -263,8 +409,7 @@ body #onboardingDialog.is-card-start.is-welcome :is(.onboarding-secondary-btn, .
 #onboardingDialog.is-card-start.is-welcome .onboarding-secondary-btn { grid-column: 1; }
 #onboardingDialog.is-card-start.is-welcome .onboarding-settings-btn { grid-column: 2; }
 
-#onboardingDialog.is-card-start.is-welcome .onboarding-actions button::before,
-#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn::after {
+#onboardingDialog.is-card-start.is-welcome .onboarding-actions button:not(.onboarding-primary-btn)::before {
   content: "";
   width: 19px;
   height: 19px;
@@ -273,15 +418,38 @@ body #onboardingDialog.is-card-start.is-welcome :is(.onboarding-secondary-btn, .
   mask: var(--welcome-icon) center / contain no-repeat;
 }
 
-#onboardingDialog.is-card-start.is-welcome .onboarding-actions .onboarding-primary-btn::before { content: none; }
-#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn { --welcome-icon: url("../../assets/icons/arrow-right.svg"); }
 #onboardingDialog.is-card-start.is-welcome .onboarding-secondary-btn { --welcome-icon: url("../../assets/icons/circle-help.svg"); }
 #onboardingDialog.is-card-start.is-welcome .onboarding-settings-btn { --welcome-icon: url("../../assets/icons/sliders-horizontal.svg"); }
 #onboardingDialog.is-card-start.is-welcome .onboarding-secondary-btn::before { color: #efaccc; }
 #onboardingDialog.is-card-start.is-welcome .onboarding-settings-btn::before { color: #a5dce8; }
 
-#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn::after { transition: transform 180ms ease; }
-#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn:hover::after { transform: translateX(4px); }
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn:hover {
+  border-color: #fff;
+  border-bottom-color: #248d70;
+  background: linear-gradient(115deg, #a2ffbb 0%, #64e8a5 48%, #47dcc0 100%) !important;
+  box-shadow: 0 3px 0 #101318, inset 0 1px 0 rgba(255, 255, 255, .86), 0 10px 30px rgba(72, 239, 171, .34);
+  filter: none;
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn:is(:hover, :focus-visible) .onboarding-primary-icon::before {
+  transform: translateX(clamp(18px, 3vw, 30px)) scale(1.1);
+  filter: drop-shadow(0 3px 5px rgba(5, 31, 18, .42)) brightness(1.08);
+}
+
+#onboardingDialog.is-card-start.is-welcome .onboarding-primary-btn.is-launching .onboarding-primary-icon::before {
+  animation: welcome-play-launch 210ms cubic-bezier(.18, .82, .28, 1) both;
+}
+
+@keyframes welcome-play-launch {
+  from {
+    opacity: 1;
+    transform: translateX(clamp(18px, 3vw, 30px)) scale(1.1);
+  }
+  to {
+    opacity: .28;
+    transform: translateX(calc(50cqw - clamp(48px, 6vw, 66px))) scale(.72);
+  }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   #onboardingDialog.is-card-start.is-welcome .onboarding-heading,
@@ -322,6 +490,13 @@ body.is-keyboard-navigation #onboardingDialog.is-card-start.is-welcome button:fo
   #onboardingDialog.is-card-start.is-welcome .onboarding-actions { column-gap: 8px; }
   #onboardingDialog.is-card-start.is-welcome .onboarding-actions button { gap: 6px; font-size: 12px; padding-inline: 7px; }
   body #onboardingDialog.is-card-start.is-welcome .onboarding-actions .onboarding-primary-btn { font-size: 16px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-primary-icon { width: 76px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-primary-icon::before { width: 60px; height: 60px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-primary-copy { gap: 3px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-primary-hint { font-size: 9px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-primary-settings { right: 0; width: 104px; padding-right: 9px; gap: 3px; }
+  #onboardingDialog.is-card-start.is-welcome .onboarding-primary-settings-types { font-size: 8px; }
+  #onboardingDialog.is-card-start.is-welcome :is(.onboarding-primary-settings-types, .onboarding-primary-settings-difficulty)::after { right: -9px; width: calc(100% + 9px); }
   #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn::after { top: 6px; right: 6px; width: 11px; height: 11px; }
 }
 
@@ -348,6 +523,7 @@ body.is-keyboard-navigation #onboardingDialog.is-card-start.is-welcome button:fo
 @media (prefers-reduced-motion: reduce) {
   body #onboardingDialog.is-card-start.is-welcome button,
   body #onboardingDialog.is-card-start.is-welcome button::after,
+  #onboardingDialog.is-card-start.is-welcome .onboarding-primary-icon::before,
   body #onboardingDialog.is-card-start.is-welcome button .onboarding-language-flag {
     animation: none;
     transition: none;

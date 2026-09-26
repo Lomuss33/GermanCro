@@ -47,6 +47,8 @@ const WELCOME_COPY = Object.freeze({
     body: "",
     languageLabel: "Welche Sprache m\u00f6chtest du \u00fcben?",
     play: "{language} \u00fcben",
+    click: "Klicke hier, um",
+    press: "Dr\u00fccke hier, um",
     tour: "Kurze Einf\u00fchrung",
     settings: "Runde anpassen",
   }),
@@ -54,6 +56,8 @@ const WELCOME_COPY = Object.freeze({
     body: "",
     languageLabel: "Koji jezik \u017eeli\u0161 vje\u017ebati?",
     play: "Vje\u017ebaj: {language}",
+    click: "Klikni ovdje za",
+    press: "Pritisni za",
     tour: "Kratki vodi\u010d",
     settings: "Prilagodi krug",
   }),
@@ -61,6 +65,8 @@ const WELCOME_COPY = Object.freeze({
     body: "",
     languageLabel: "Which language do you want to practise?",
     play: "Practise {language}",
+    click: "Click here to",
+    press: "Press here to",
     tour: "Quick tour",
     settings: "Customise round",
   }),
@@ -212,6 +218,89 @@ export function createFirstRunTour({
     replayNote: dialog.querySelector("#onboardingReplayNote"),
   };
 
+  const primaryButtonIcon = elements.primaryButton
+    ? document.createElement("span")
+    : null;
+  const primaryButtonLabel = elements.primaryButton
+    ? document.createElement("span")
+    : null;
+  const primaryButtonCopy = elements.primaryButton
+    ? document.createElement("span")
+    : null;
+  const primaryButtonHint = elements.primaryButton
+    ? document.createElement("span")
+    : null;
+  if (primaryButtonIcon) {
+    primaryButtonIcon.className = "onboarding-primary-icon";
+    primaryButtonIcon.setAttribute("aria-hidden", "true");
+  }
+  if (primaryButtonLabel) {
+    primaryButtonLabel.className = "onboarding-primary-label";
+    primaryButtonCopy.className = "onboarding-primary-copy";
+    primaryButtonHint.className = "onboarding-primary-hint";
+    primaryButtonCopy.append(primaryButtonHint, primaryButtonLabel);
+    elements.primaryButton.replaceChildren(primaryButtonIcon, primaryButtonCopy);
+  }
+  const primarySettingsSummary = elements.primaryButton
+    ? document.createElement("span")
+    : null;
+  if (primarySettingsSummary) {
+    const wordTypeText = document.createElement("span");
+    const difficultyText = document.createElement("span");
+    const roundText = document.createElement("span");
+    primarySettingsSummary.className = "onboarding-primary-settings";
+    primarySettingsSummary.setAttribute("aria-hidden", "true");
+    wordTypeText.className = "onboarding-primary-settings-types";
+    difficultyText.className = "onboarding-primary-settings-difficulty";
+    roundText.className = "onboarding-primary-settings-rounds";
+    primarySettingsSummary.append(wordTypeText, difficultyText, roundText);
+    elements.primaryButton.append(primarySettingsSummary);
+
+    const syncSettingsSummary = () => {
+      const activeTypes = Array.from(document.querySelectorAll("#subcategoryButtons button.active"));
+      const allTypesSelected = activeTypes.some((button) => button.dataset.subcategory === "all");
+      const selectedTypeNames = allTypesSelected
+        ? []
+        : activeTypes
+          .map((button) => button.querySelector(".subcategory-btn-label")?.textContent?.trim())
+          .filter(Boolean);
+      const activeDifficulty = document.querySelector(".difficulty-panel button.active");
+      const slider = document.querySelector("#sessionSizeSlider");
+      const sliderValue = document.querySelector("#sliderLabel");
+      const sliderUnit = document.querySelector("#sliderUnitLabel")?.textContent
+        ?.replace(/:\s*$/, "")
+        .trim();
+      difficultyText.textContent = activeDifficulty?.textContent?.trim() || "";
+      const rounds = sliderValue?.textContent?.trim() || slider?.value || "";
+      roundText.textContent = [rounds, sliderUnit].filter(Boolean).join(" ");
+      const visibleTypes = allTypesSelected
+        ? "Alle"
+        : selectedTypeNames.length > 2
+          ? `${selectedTypeNames.slice(0, 2).join(", ")} +${selectedTypeNames.length - 2}`
+          : selectedTypeNames.join(", ") || "—";
+      wordTypeText.textContent = `Wortarten: ${visibleTypes}`;
+      wordTypeText.title = allTypesSelected
+        ? "Wortarten: Alle"
+        : `Wortarten: ${selectedTypeNames.join(", ") || "—"}`;
+    };
+    syncSettingsSummary();
+    document.addEventListener("click", (event) => {
+      if (event.target.closest?.(".difficulty-panel button, #subcategoryButtons button")) syncSettingsSummary();
+    });
+    document.addEventListener("input", (event) => {
+      if (event.target.matches?.("#sessionSizeSlider")) syncSettingsSummary();
+    });
+    const subcategoryContainer = document.querySelector("#subcategoryButtons");
+    if (subcategoryContainer && typeof window.MutationObserver === "function") {
+      new window.MutationObserver(syncSettingsSummary).observe(subcategoryContainer, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["class", "aria-pressed"],
+      });
+    }
+  }
+
   const titleHome = {
     parent: elements.title?.parentNode || null,
     nextSibling: elements.title?.nextSibling || null,
@@ -219,6 +308,7 @@ export function createFirstRunTour({
   let promotedTitle = false;
 
   let state = "idle";
+  let isLaunchingWelcome = false;
   let titleProgress = 0;
   const titleSequence = "germancro";
   let stepIndex = -1;
@@ -461,8 +551,16 @@ export function createFirstRunTour({
     return WELCOME_COPY[tutorialLanguage]?.[key] || WELCOME_COPY.hr[key] || "";
   }
 
+  const clickPointer = window.matchMedia?.("(hover: hover) and (pointer: fine)");
+  function syncPrimaryButtonHint() {
+    if (primaryButtonHint) {
+      primaryButtonHint.textContent = welcomeText(clickPointer?.matches ? "click" : "press");
+    }
+  }
+
   function syncLanguageButtons() {
     dialog.setAttribute("lang", tutorialLanguage);
+    syncPrimaryButtonHint();
     const activeLearningMode = normalizeTutorialLanguage(getLearningMode?.()) || "de";
     syncBrandAccent(activeLearningMode);
     if (state === "welcome" && elements.title) {
@@ -486,9 +584,11 @@ export function createFirstRunTour({
     });
     if (state === "welcome" && elements.primaryButton) {
       const language = tutorialTranslate(`onboarding.languages.${activeLearningMode}`);
-      elements.primaryButton.textContent = welcomeText("play").replace("{language}", language);
+      primaryButtonLabel.textContent = welcomeText("play").replace("{language}", language);
     }
   }
+
+  clickPointer?.addEventListener?.("change", syncPrimaryButtonHint);
 
   function syncTitleProgress() {
     elements.title?.querySelectorAll(".site-title-letter").forEach((letter, index) => {
@@ -655,7 +755,7 @@ export function createFirstRunTour({
       elements.settingsButton.setAttribute("aria-label", settingsLabel);
     }
     if (elements.primaryButton) {
-      elements.primaryButton.textContent = welcomeText("play");
+      primaryButtonLabel.textContent = welcomeText("play");
     }
     promoteWelcomeTitle();
     syncCardStartHeight();
@@ -733,7 +833,7 @@ export function createFirstRunTour({
       elements.skipButton.textContent = tutorialTranslate("onboarding.controls.skip");
     }
     if (elements.primaryButton) {
-      elements.primaryButton.textContent = tutorialTranslate(
+      primaryButtonLabel.textContent = tutorialTranslate(
         stepIndex === TOUR_STEPS.length - 1
           ? "onboarding.controls.start"
           : "onboarding.controls.next"
@@ -931,7 +1031,20 @@ export function createFirstRunTour({
 
   elements.primaryButton?.addEventListener("click", () => {
     if (state === "welcome") {
-      playFromWelcome();
+      if (isLaunchingWelcome) return;
+      isLaunchingWelcome = true;
+      const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      if (reduceMotion) {
+        isLaunchingWelcome = false;
+        playFromWelcome();
+        return;
+      }
+      elements.primaryButton.classList.add("is-launching");
+      window.setTimeout(() => {
+        elements.primaryButton.classList.remove("is-launching");
+        isLaunchingWelcome = false;
+        playFromWelcome();
+      }, 210);
       return;
     }
     advanceTour();

@@ -3634,7 +3634,6 @@ async function initApp() {
   renderStaticUi();
   buildTopicPanel();
   hasBootstrappedApp = true;
-  await recoverPlayableSession("init-app", SESSION_SIZE);
   initPageScrollAssist({
     targets: () => [
       { element: heroStageEl },
@@ -3643,8 +3642,9 @@ async function initApp() {
       { element: searchPanelEl },
       { element: factsPanelEl, requiresLoadedContent: true, isLoaded: () => factsController.isLoaded },
     ],
-    shouldPause: () => onboardingPending || firstRunTour?.isOpen(),
+    shouldPause: () => onboardingPending || firstRunTour?.isOpen() || Boolean(onboardingDialogEl?.open),
   });
+  await recoverPlayableSession("init-app", SESSION_SIZE);
   if (onboardingPending) {
     firstRunTour?.open();
   }
