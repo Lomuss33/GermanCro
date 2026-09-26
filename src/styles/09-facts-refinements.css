@@ -972,11 +972,6 @@ body.layout-phone-portrait #mainCard.is-session-ended {
   flex: 1 1 auto;
 }
 
-/* Completion content follows the onboarding panel's compact, fixed rhythm. */
-#mainCard.is-session-ended > .session-end {
-  overflow: clip;
-}
-
 #mainCard.is-session-ended .session-end-header {
   display: flex;
   align-items: flex-start;

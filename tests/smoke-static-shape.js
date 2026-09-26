@@ -135,8 +135,13 @@ assert(
 assert(
   normalizedOnboardingCss.includes(".onboarding-dialog.is-card-start.is-welcome .onboarding-panel {\n  position: absolute;") &&
     normalizedOnboardingCss.includes("overflow-y: auto;") &&
-    normalizedOnboardingCss.includes("overscroll-behavior: contain;"),
-  "The welcome panel must allow vertical scrolling instead of clipping controls on short viewports",
+    normalizedOnboardingCss.includes("overscroll-behavior-y: auto;"),
+  "Welcome-panel scrolling must chain to the page at its boundaries instead of trapping vertical gestures",
+);
+const resultStyles = await readText("src/styles/09-facts-refinements.css");
+assert(
+  !/#mainCard\.is-session-ended\s*>\s*\.session-end\s*\{[^}]*overflow:\s*clip/s.test(resultStyles),
+  "Session results must not clip content that needs scrolling",
 );
 assert(
   tourSource.includes('else if (reason !== "settings")') &&

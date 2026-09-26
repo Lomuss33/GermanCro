@@ -986,7 +986,7 @@ body.layout-phone-portrait .cat-panel-toolbar > .tutorial-replay-btn {
   overflow-x: hidden;
   overflow-y: auto;
   transform: none;
-  overscroll-behavior: contain;
+  overscroll-behavior-y: auto;
   touch-action: pan-y;
   scrollbar-width: none;
 }
