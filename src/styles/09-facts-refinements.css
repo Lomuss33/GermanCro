@@ -814,6 +814,16 @@ body.layout-phone-portrait .facts-grid {
 .facts-card:not(.featured) .facts-card-label,
 .facts-list-title { font-size: clamp(11px, calc(12px * var(--type-scale-body)), 13px); font-weight: 820; letter-spacing: 0.08em; }
 .facts-card:not(.featured) .facts-card-value { font-size: clamp(14px, calc(16px * var(--type-scale-body)), 18px); line-height: 1.16; }
+#factsContent .facts-grid > .facts-card.facts-card--dense .facts-card-value {
+  font-size: clamp(12px, calc(13px * var(--type-scale-body)), 15px);
+  line-height: 1.26;
+  word-break: normal;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+#factsContent .facts-grid > .facts-card.facts-card--very-dense .facts-card-value {
+  font-size: clamp(11px, calc(12px * var(--type-scale-body)), 13px);
+}
 .facts-card.featured .facts-card-value { font-size: clamp(14px, calc(15px * var(--type-scale-body)), 17px); line-height: 1.25; }
 .facts-card-link:hover, .facts-card-link:focus-visible { box-shadow: 0 0 14px color-mix(in srgb, var(--card-accent) 18%, transparent); }
 .facts-chip { padding: 4px 7px; border-radius: 6px; font-size: clamp(12px, calc(13px * var(--type-scale-body)), 14px); }

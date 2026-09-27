@@ -659,7 +659,10 @@
       "area_km2": "17.098.246 km2",
       "currency": "Russian ruble (RUB)",
       "language": "Russisch",
-      "time_zone": "UTC+03:00, UTC+04:00, UTC+06:00, UTC+07:00, UTC+08:00, UTC+09:00, UTC+10:00, UTC+11:00, UTC+12:00",
+      "time_zone": "UTC+02:00, UTC+03:00, UTC+04:00, UTC+05:00, UTC+06:00, UTC+07:00, UTC+08:00, UTC+09:00, UTC+10:00, UTC+11:00, UTC+12:00",
+      "sources": {
+        "time_zone": "https://www.timeanddate.com/time/zone/russia"
+      },
       "calling_code": "+7",
       "internet_tld": ".ru, .su, .рф",
       "landlocked": "Nein",
@@ -686,8 +689,10 @@
         "Russisch"
       ],
       "timezones_list": [
+        "UTC+02:00",
         "UTC+03:00",
         "UTC+04:00",
+        "UTC+05:00",
         "UTC+06:00",
         "UTC+07:00",
         "UTC+08:00",

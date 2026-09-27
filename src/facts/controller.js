@@ -1,4 +1,5 @@
 import { COUNTRY_NOTABLE_PEOPLE } from "./notable-people.js";
+import { summarizeTimeZone } from "./time-zone.js";
 import {
   FACTS_IMAGE_ROOT,
   FACTS_STATE_IMAGE_OVERRIDES,
@@ -654,6 +655,12 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     const unavailable = Array.isArray(field) && field[3] === true;
     const card = document.createElement(featured || unavailable ? "div" : "a");
     card.className = "facts-card";
+    if (!featured && String(value).length > 38) {
+      card.classList.add("facts-card--dense");
+    }
+    if (!featured && String(value).length > 64) {
+      card.classList.add("facts-card--very-dense");
+    }
     if (unavailable) {
       card.classList.add("facts-card--unavailable");
     }
@@ -1033,7 +1040,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.statesCount"), countryData.states_count],
         [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
         [t("facts.fields.language"), translateFactScalar(countryData.language)],
-        [t("facts.fields.timeZone"), countryData.time_zone],
+        [t("facts.fields.timeZone"), summarizeTimeZone(countryData.time_zone)],
         [t("facts.fields.callingCode"), countryData.calling_code],
         [t("facts.fields.internetTld"), countryData.internet_tld],
         [t("facts.fields.bordersCount"), countryData.bordering_countries_count],
@@ -1073,7 +1080,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.currency"), translateFactScalar(unionData.currency)],
         [t("facts.fields.euroAreaMembers"), `${unionData.euro_area_members}/${unionData.states_count}`],
         [t("facts.fields.officialLanguages"), unionData.language],
-        [t("facts.fields.timeZone"), unionData.time_zone],
+        [t("facts.fields.timeZone"), summarizeTimeZone(unionData.time_zone)],
         [t("facts.fields.internetTld"), unionData.internet_tld],
         [t("facts.fields.gdp"), unionData.gdp_nominal],
         {
@@ -1141,7 +1148,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.area"), stateData.area_km2],
         [t("facts.fields.currency"), translateFactScalar(parentCountry.currency)],
         [t("facts.fields.language"), translateFactScalar(parentCountry.language)],
-        [t("facts.fields.timeZone"), parentCountry.time_zone],
+        [t("facts.fields.timeZone"), summarizeTimeZone(parentCountry.time_zone)],
         [t("facts.fields.callingCode"), parentCountry.calling_code],
         [t("facts.fields.internetTld"), parentCountry.internet_tld],
         [t("facts.fields.bordersCount"), Array.isArray(stateData.bordering_countries) ? stateData.bordering_countries.length : 0],
@@ -1178,7 +1185,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.area"), countryData.area_km2],
         [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
         [t("facts.fields.language"), translateFactScalar(countryData.language)],
-        [t("facts.fields.timeZone"), countryData.time_zone],
+        [t("facts.fields.timeZone"), summarizeTimeZone(countryData.time_zone)],
         [t("facts.fields.callingCode"), countryData.calling_code],
         [t("facts.fields.internetTld"), countryData.internet_tld],
         [countryData.id === "england" ? t("facts.fields.neighboringPartsCount") : t("facts.fields.bordersCount"), Array.isArray(countryData.neighboring_countries) ? countryData.neighboring_countries.length : undefined],
@@ -1213,7 +1220,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.area"), countryData.area_km2],
         [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
         [t("facts.fields.language"), translateFactScalar(countryData.language)],
-        [t("facts.fields.timeZone"), countryData.time_zone],
+        [t("facts.fields.timeZone"), summarizeTimeZone(countryData.time_zone)],
         [t("facts.fields.callingCode"), countryData.calling_code],
         [t("facts.fields.internetTld"), countryData.internet_tld],
         [t("facts.fields.bordersCount"), Array.isArray(countryData.neighboring_countries) ? countryData.neighboring_countries.length : undefined],
