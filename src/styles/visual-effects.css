@@ -1085,11 +1085,12 @@ body .facts-panel .state-picker {
   gap: clamp(6px, calc(8px * var(--type-scale-control)), 10px);
 }
 
+body .facts-panel .facts-mode-switch .facts-switch-btn,
 body .facts-panel #statePicker .state-picker-btn {
-  border: 2px solid #fff !important;
+  border: 1px solid #fff !important;
 }
 
-/* Draw the flag pills' white edge over the image, leaving only the left open. */
+/* The flag sits inside the same fine outline; its left side remains open. */
 body .facts-panel #statePicker .state-picker-btn.has-flag {
   display: flex;
   position: relative;
@@ -1106,9 +1107,9 @@ body .facts-panel .state-picker-btn.has-flag::after {
   position: absolute;
   inset: 0;
   z-index: 2;
-  border-top: 2px solid #fff;
-  border-right: 2px solid #fff;
-  border-bottom: 2px solid #fff;
+  border-top: 1px solid #fff;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
   border-radius: 0 10px 10px 0;
   pointer-events: none;
 }
@@ -1122,11 +1123,11 @@ body .facts-panel .state-picker-btn.has-flag .state-picker-btn-copy {
 
 body .facts-panel .state-picker-btn.has-flag .state-picker-btn-flag {
   position: absolute;
-  top: -1px;
-  bottom: -1px;
+  top: 1px;
+  bottom: 1px;
   left: 0;
   width: auto;
-  height: calc(100% + 2px);
+  height: calc(100% - 2px);
   min-height: 0;
   max-width: none;
   border-radius: 0;
@@ -1135,4 +1136,53 @@ body .facts-panel .state-picker-btn.has-flag .state-picker-btn-flag {
 
 body .facts-panel .state-picker-btn.has-flag .state-picker-btn-label {
   align-self: center;
+}
+
+/* Mode choices mirror the picker flags: square, open artwork on the right. */
+body .facts-panel .facts-mode-switch .facts-switch-btn {
+  --mode-emblem-width: clamp(30px, 31%, 58px);
+  display: flex;
+  position: relative;
+  align-items: center;
+  container-type: inline-size;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0 !important;
+  border-radius: 10px 0 0 10px;
+}
+
+body .facts-panel .facts-mode-switch .facts-switch-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-radius: 10px 0 0 10px;
+  pointer-events: none;
+}
+
+body .facts-panel .facts-mode-switch .facts-switch-btn-label {
+  display: block;
+  width: calc(100% - var(--mode-emblem-width));
+  min-width: 0;
+  padding-inline: 4px;
+  font-size: clamp(8px, calc(1px + 6cqi), 13px);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body .facts-panel .facts-mode-switch .facts-switch-btn-emblem {
+  position: absolute;
+  top: 1px;
+  right: 0;
+  bottom: 1px;
+  width: var(--mode-emblem-width);
+  height: calc(100% - 2px);
+  object-fit: cover;
+  border-radius: 0;
 }

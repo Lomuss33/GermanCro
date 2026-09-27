@@ -405,7 +405,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
 
     return t("facts.values.europeOverviewText", {
       memberStates: unionData.states_count,
-      capital: translateFactScalar(unionData.capital),
+      institutionSeats: translateFactScalar(unionData.institution_seats),
       institutions: joinLocalizedList(translateFactList(unionData.institutions)),
     });
   }
@@ -551,9 +551,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       ...normalized.union,
       name: "EU",
       official_name: "Europaeische Union",
-      capital: "Bruessel",
       largest_city: "Berlin",
-      population: "452.162.974 (2026)",
       states_count: "27",
       currency: "EUR",
       language: "24",
@@ -630,26 +628,15 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       .join(" ");
   }
 
-  const SHARED_FACT_FIELD_KEYS = [
-    "capital", "largestCity", "anthem", "founded", "stateForm", "nationalDay",
-    "population", "area", "statesCount", "currency", "language", "officialLanguages",
-    "timeZone", "callingCode", "internetTld", "bordersCount", "gdp", "euSince",
-    "abbreviation", "stateType", "region", "joined", "headOfGovernment",
-    "landlocked", "headquarters", "memberStates", "secretaryGeneral",
-  ];
-
-  const FACT_VALUE_MISSING = { de: "Keine Angabe", en: "Not available", hr: "Nema podataka" };
-
-  function completeFactsFields(fields) {
-    const byLabel = new Map(fields.filter((field) => !normalizeFactsField(field)?.featured)
-      .map((field) => [normalizeFactsField(field)?.label, field]));
-    return SHARED_FACT_FIELD_KEYS.map((key) => {
-      const label = t(`facts.fields.${key}`);
-      const field = byLabel.get(label);
-      const value = normalizeFactsField(field)?.value;
-      return isNonEmptyValue(value)
-        ? field
-        : [label, FACT_VALUE_MISSING[getLocale()] || FACT_VALUE_MISSING.de, false, true];
+  function selectAvailableFactsFields(fields) {
+    const seenLabels = new Set();
+    return fields.filter((field) => {
+      const normalized = normalizeFactsField(field);
+      if (!normalized || normalized.featured || !isNonEmptyValue(normalized.value) || seenLabels.has(normalized.label)) {
+        return false;
+      }
+      seenLabels.add(normalized.label);
+      return true;
     });
   }
 
@@ -962,7 +949,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
 
     const grid = document.createElement("div");
     grid.className = "facts-grid";
-    const orderedFields = completeFactsFields(fields);
+    const orderedFields = selectAvailableFactsFields(fields);
     orderedFields.forEach((fieldData) => {
       if (normalizeFactsField(fieldData)?.featured) {
         return;
@@ -1075,15 +1062,16 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         "",
         EUROPE_FLAG_IMAGE,
       [
-        [t("facts.fields.capital"), translateFactScalar(unionData.capital)],
+        [t("facts.fields.institutionSeats"), translateFactScalar(unionData.institution_seats)],
         [t("facts.fields.anthem"), unionData.anthem],
         [t("facts.fields.founded"), unionData.founded],
-        [t("facts.fields.stateForm"), translateFactScalar(unionData.state_form)],
-        [t("facts.fields.nationalDay"), unionData.national_day],
+        [t("facts.fields.organizationType"), translateFactScalar(unionData.state_form)],
+        [t("facts.fields.europeDay"), unionData.national_day],
         [t("facts.fields.population"), unionData.population],
         [t("facts.fields.area"), unionData.area_km2],
-        [t("facts.fields.statesCount"), unionData.states_count],
+        [t("facts.fields.euMemberStates"), unionData.states_count],
         [t("facts.fields.currency"), translateFactScalar(unionData.currency)],
+        [t("facts.fields.euroAreaMembers"), `${unionData.euro_area_members}/${unionData.states_count}`],
         [t("facts.fields.officialLanguages"), unionData.language],
         [t("facts.fields.timeZone"), unionData.time_zone],
         [t("facts.fields.internetTld"), unionData.internet_tld],
@@ -1114,8 +1102,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       [
         [t("facts.fields.headquarters"), unionData.headquarters],
         [t("facts.fields.founded"), unionData.founded],
-        [t("facts.fields.stateForm"), translateFactScalar(unionData.state_form)],
-        [t("facts.fields.nationalDay"), unionData.national_day],
+        [t("facts.fields.organizationType"), translateFactScalar(unionData.state_form)],
+        [t("facts.fields.unDay"), unionData.national_day],
         [t("facts.fields.memberStates"), unionData.member_states],
         [t("facts.fields.officialLanguages"), translateFactScalar(unionData.language)],
         [t("facts.fields.secretaryGeneral"), unionData.secretary_general],
@@ -1156,9 +1144,9 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.timeZone"), parentCountry.time_zone],
         [t("facts.fields.callingCode"), parentCountry.calling_code],
         [t("facts.fields.internetTld"), parentCountry.internet_tld],
-        [t("facts.fields.bordersCount"), Array.isArray(stateData.bordering_countries) ? stateData.bordering_countries.length : undefined],
+        [t("facts.fields.bordersCount"), Array.isArray(stateData.bordering_countries) ? stateData.bordering_countries.length : 0],
         [t("facts.fields.joined"), stateData.joined_or_founded],
-        [t("facts.fields.headOfGovernment"), stateData.minister_president || stateData.state_head],
+        [t("facts.fields.parliament"), stateData.parliament],
         {
           label: t("facts.featured.overview"),
           value: buildStateOverview(stateData),
@@ -1193,7 +1181,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.timeZone"), countryData.time_zone],
         [t("facts.fields.callingCode"), countryData.calling_code],
         [t("facts.fields.internetTld"), countryData.internet_tld],
-        [t("facts.fields.bordersCount"), Array.isArray(countryData.neighboring_countries) ? countryData.neighboring_countries.length : undefined],
+        [countryData.id === "england" ? t("facts.fields.neighboringPartsCount") : t("facts.fields.bordersCount"), Array.isArray(countryData.neighboring_countries) ? countryData.neighboring_countries.length : undefined],
         [t("facts.fields.landlocked"), translateFactScalar(countryData.landlocked)],
         {
           label: t("facts.featured.overview"),
@@ -1202,7 +1190,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         },
       ],
       [
-        [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries), "neighbors"],
+        [countryData.id === "england" ? t("facts.lists.neighboringParts") : t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries), "neighbors"],
         [t("facts.lists.languages"), translateFactList(countryData.languages_list)],
         [t("facts.lists.timezones"), countryData.timezones_list],
         ],

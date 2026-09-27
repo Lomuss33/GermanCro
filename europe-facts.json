@@ -2,16 +2,23 @@
   "union": {
     "name": "EU",
     "official_name": "Europäische Union",
-      "capital": "Brüssel",
+    "institution_seats": "Brüssel, Straßburg, Luxemburg",
+    "sources": {
+      "institution_seats": "https://european-union.europa.eu/institutions-law-budget/institutions-and-bodies/types-institutions-and-bodies_en",
+      "population": "https://ec.europa.eu/eurostat/en/web/products-eurostat-news/w/ddn-20260710-3",
+      "euro_area_members": "https://european-union.europa.eu/institutions-law-budget/euro/countries-using-euro_en",
+      "national_day": "https://european-union.europa.eu/principles-countries-history/europe-day_en"
+    },
     "largest_city": "Berlin",
     "anthem": "Ode an die Freude",
     "founded": "1993 (Europäische Union)",
     "state_form": "Staatenverbund",
     "national_day": "9. Mai",
-    "population": "452.162.974 (2026)",
+    "population": "ca. 452,0 Mio. (1.1.2026)",
     "area_km2": "ca. 4.233.000 km2 in der EU",
     "states_count": "27",
     "currency": "Euro (EUR)",
+    "euro_area_members": 21,
     "language": "24",
     "time_zone": "UTC+00:00 bis UTC+02:00",
     "internet_tld": ".eu",
@@ -138,8 +145,13 @@
       "capital": "London",
       "region": "Westeuropa",
       "state_form": "Landesteil des Vereinigten Königreichs",
-      "population": "",
-      "area_km2": "",
+      "population": "58.834.800 (Mitte 2025)",
+      "area_km2": "130.278 km2",
+      "sources": {
+        "population": "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/populationestimatesforenglandandwales/latest",
+        "area_km2": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/404607/rdpe-england-2014-2020.pdf",
+        "flag_image": "https://commons.wikimedia.org/wiki/File:Flag_of_England.svg"
+      },
       "currency": "Pfund Sterling (GBP)",
       "language": "Englisch",
       "time_zone": "UTC+00:00",
@@ -159,7 +171,7 @@
       "timezones_list": [
         "UTC+00:00"
       ],
-      "flag_image": "https://flagcdn.com/gb.svg"
+      "flag_image": "assets/flags/england.svg"
     },
     {
       "id": "schweden",
@@ -505,7 +517,10 @@
       "state_form": "Souveraener Staat",
       "population": "6.437.360",
       "area_km2": "110.879 km2",
-      "currency": "Bulgarian lev (BGN)",
+      "currency": "Euro (EUR)",
+      "sources": {
+        "currency": "https://european-union.europa.eu/institutions-law-budget/euro/countries-using-euro_en"
+      },
       "language": "Bulgarisch",
       "time_zone": "UTC+02:00",
       "calling_code": "+359",

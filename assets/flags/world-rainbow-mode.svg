@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 42">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#10294c"/><stop offset=".7" stop-color="#426998"/><stop offset="1" stop-color="#b3c8d6"/></linearGradient>
+    <radialGradient id="promise"><stop stop-color="#fffde5"/><stop offset=".2" stop-color="#ffe89a" stop-opacity=".95"/><stop offset=".52" stop-color="#ffcf62" stop-opacity=".58"/><stop offset="1" stop-color="#ffe59c" stop-opacity="0"/></radialGradient>
+    <linearGradient id="cloud" x2="0" y2="1"><stop stop-color="#fffdf3"/><stop offset="1" stop-color="#cbdde9"/></linearGradient>
+  </defs>
+  <rect width="60" height="42" fill="url(#sky)"/>
+  <!-- Light breaking through the clouds, behind the covenant bow. -->
+  <circle cx="30" cy="24" r="22" fill="url(#promise)"/>
+  <g fill="none" stroke="#ffe8a2" stroke-width=".55" opacity=".74">
+    <path d="M30 8v-6M30 36v5M12 24H5m50 0h-7M16 11l-4-4m32 4 4-4M13 36l-4 3m38-3 4 3"/>
+  </g>
+  <!-- Seven curved colours: a rainbow in the clouds, not a flag. -->
+  <g fill="none" stroke-width="2.05" stroke-linecap="round">
+    <path d="M-6 37C-4 16 10 4 30 3 50 4 64 16 66 37" stroke="#ef5060"/>
+    <path d="M-4 38C-2 18 11 6 30 5.2 49 6 62 18 64 38" stroke="#ff9747"/>
+    <path d="M-2 39C0 20 12 8 30 7.4 48 8 60 20 62 39" stroke="#ffe56b"/>
+    <path d="M0 40C2 22 13 10 30 9.6 47 10 58 22 60 40" stroke="#6edb83"/>
+    <path d="M2 41C4 24 14 12 30 11.8 46 12 56 24 58 41" stroke="#69c8f6"/>
+    <path d="M4 42C6 26 15 14 30 14 45 14 54 26 56 42" stroke="#5d7fe9"/>
+    <path d="M6 43C8 28 16 16 30 16.2 44 16 52 28 54 43" stroke="#ba80e8"/>
+  </g>
+  <circle cx="30" cy="24" r="7" fill="url(#promise)"/>
+  <circle cx="30" cy="24" r="1.6" fill="#fffbea"/>
+  <path d="M30 18v-2m0 16v-2m-6-6h-2m16 0h-2m-10.2-4.2-1.4-1.4m11.2 11.2-1.4-1.4m0-8.4 1.4-1.4m-11.2 11.2 1.4-1.4" stroke="#fff9da" stroke-width=".75" stroke-linecap="round" opacity=".92"/>
+  <g fill="url(#cloud)">
+    <path d="M0 35c2-3 5-4 8-2 2-4 8-4 10 0 3-2 7-1 8 3 4-2 8 0 9 3H0Z"/>
+    <path d="M32 39c2-4 6-5 9-2 2-4 7-4 10-1 4-3 8-1 9 2v4H32Z"/>
+  </g>
+  <path d="M0 40c8-2 14-1 21 1m18-1c8-2 14-1 21 0" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width=".6"/>
+</svg>

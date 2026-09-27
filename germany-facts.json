@@ -1,4 +1,7 @@
 {
+  "sources": {
+    "state_parliaments": "https://www.bundestag.de/services/links/parlamente/parl_pde-244688"
+  },
   "country": {
     "name": "Deutschland",
     "official_name": "Bundesrepublik Deutschland",
@@ -49,6 +52,7 @@
   "states": [
     {
       "id": "baden-wuerttemberg",
+      "parliament": "Landtag von Baden-Württemberg",
       "name": "Baden-W\u00fcrttemberg",
       "abbreviation": "BW",
       "state_type": "Fl\u00e4chenland",
@@ -78,6 +82,7 @@
     },
     {
       "id": "bayern",
+      "parliament": "Bayerischer Landtag",
       "name": "Bayern",
       "abbreviation": "BY",
       "state_type": "Fl\u00e4chenland",
@@ -107,6 +112,7 @@
     },
     {
       "id": "berlin",
+      "parliament": "Abgeordnetenhaus von Berlin",
       "name": "Berlin",
       "abbreviation": "BE",
       "state_type": "Stadtstaat",
@@ -129,6 +135,7 @@
     },
     {
       "id": "brandenburg",
+      "parliament": "Landtag Brandenburg",
       "name": "Brandenburg",
       "abbreviation": "BB",
       "state_type": "Fl\u00e4chenland",
@@ -158,6 +165,7 @@
     },
     {
       "id": "bremen",
+      "parliament": "Bremische Bürgerschaft",
       "name": "Bremen",
       "abbreviation": "HB",
       "state_type": "Stadtstaat",
@@ -180,6 +188,7 @@
     },
     {
       "id": "hamburg",
+      "parliament": "Hamburgische Bürgerschaft",
       "name": "Hamburg",
       "abbreviation": "HH",
       "state_type": "Stadtstaat",
@@ -203,6 +212,7 @@
     },
     {
       "id": "hessen",
+      "parliament": "Hessischer Landtag",
       "name": "Hessen",
       "abbreviation": "HE",
       "state_type": "Fl\u00e4chenland",
@@ -230,6 +240,7 @@
     },
     {
       "id": "mecklenburg-vorpommern",
+      "parliament": "Landtag Mecklenburg-Vorpommern",
       "name": "Mecklenburg-Vorpommern",
       "abbreviation": "MV",
       "state_type": "Fl\u00e4chenland",
@@ -257,6 +268,7 @@
     },
     {
       "id": "niedersachsen",
+      "parliament": "Niedersächsischer Landtag",
       "name": "Niedersachsen",
       "abbreviation": "NI",
       "state_type": "Fl\u00e4chenland",
@@ -290,6 +302,7 @@
     },
     {
       "id": "nordrhein-westfalen",
+      "parliament": "Landtag Nordrhein-Westfalen",
       "name": "Nordrhein-Westfalen",
       "abbreviation": "NRW",
       "state_type": "Fl\u00e4chenland",
@@ -318,6 +331,7 @@
     },
     {
       "id": "rheinland-pfalz",
+      "parliament": "Landtag Rheinland-Pfalz",
       "name": "Rheinland-Pfalz",
       "abbreviation": "RLP",
       "state_type": "Fl\u00e4chenland",
@@ -348,6 +362,7 @@
     },
     {
       "id": "saarland",
+      "parliament": "Landtag des Saarlandes",
       "name": "Saarland",
       "abbreviation": "SL",
       "state_type": "Fl\u00e4chenland",
@@ -374,6 +389,7 @@
     },
     {
       "id": "sachsen",
+      "parliament": "Sächsischer Landtag",
       "name": "Sachsen",
       "abbreviation": "SN",
       "state_type": "Fl\u00e4chenland",
@@ -403,6 +419,7 @@
     },
     {
       "id": "sachsen-anhalt",
+      "parliament": "Landtag von Sachsen-Anhalt",
       "name": "Sachsen-Anhalt",
       "abbreviation": "ST",
       "state_type": "Fl\u00e4chenland",
@@ -428,6 +445,7 @@
     },
     {
       "id": "schleswig-holstein",
+      "parliament": "Schleswig-Holsteinischer Landtag",
       "name": "Schleswig-Holstein",
       "abbreviation": "SH",
       "state_type": "Fl\u00e4chenland",
@@ -455,6 +473,7 @@
     },
     {
       "id": "thueringen",
+      "parliament": "Thüringer Landtag",
       "name": "Th\u00fcringen",
       "abbreviation": "TH",
       "state_type": "Fl\u00e4chenland",

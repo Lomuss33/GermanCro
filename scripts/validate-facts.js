@@ -11,6 +11,7 @@ function validateGermanyFacts(data) {
     assert(state && typeof state === "object", `germany-facts.json.states[${index}] must be an object`);
     assert(state.id, `germany-facts.json.states[${index}].id is required`);
     assert(state.name, `germany-facts.json.states[${index}].name is required`);
+    assert(state.parliament, `germany-facts.json.states[${index}].parliament is required`);
   });
   validateLocalizedOverviews(records, "germany-facts.json");
   visitStrings(data, (value, path) => {
@@ -32,6 +33,10 @@ function validateUnionFacts(data, label) {
     assert(country.id, `${label}.countries[${index}].id is required`);
     assert(country.name, `${label}.countries[${index}].name is required`);
     assert(!countryIds.has(country.id), `${label}.countries contains duplicate id ${country.id}`);
+    for (const field of ["official_name", "capital", "region", "state_form", "population", "area_km2", "currency", "language", "time_zone", "calling_code", "internet_tld", "flag_image"]) {
+      assert(typeof country[field] === "string" && country[field].trim(), `${label}.countries[${index}].${field} is required`);
+    }
+    assert(Array.isArray(country.neighboring_countries), `${label}.countries[${index}].neighboring_countries must be an array`);
     countryIds.add(country.id);
   });
   visitStrings(data, (value, path) => {
@@ -71,6 +76,9 @@ const worldFacts = await readJson("world-facts.json");
 validateGermanyFacts(germanyFacts);
 validateUnionFacts(europeFacts, "europe-facts.json");
 validateUnionFacts(worldFacts, "world-facts.json");
+assert(europeFacts.union.institution_seats, "The EU's institution seats are required; it has no single capital");
+assert(Number.isInteger(europeFacts.union.euro_area_members), "EU euro-area membership must be a number");
+assert(europeFacts.union.euro_area_members <= Number(europeFacts.union.states_count), "Euro-area members cannot exceed EU members");
 validateCountryNotablePeople(["germany", "europe", "world", ...europeFacts.countries.map((country) => country.id), ...worldFacts.countries.map((country) => country.id)]);
 
 console.log("validate:facts passed");

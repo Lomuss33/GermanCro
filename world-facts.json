@@ -7,7 +7,11 @@
     "anthem": "",
     "founded": "1945 (Vereinte Nationen)",
     "state_form": "Globale Staatenorganisation",
-    "national_day": "24. Oktober (Tag der Vereinten Nationen)",
+    "national_day": "24. Oktober",
+    "sources": {
+      "member_states": "https://www.un.org/en/about-us",
+      "national_day": "https://www.un.org/en/global-ceasefire/united-nations-day"
+    },
     "population": "ca. 8,2 Milliarden",
     "area_km2": "ca. 148.940.000 km2 Landfläche",
     "member_states": "193",

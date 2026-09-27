@@ -1533,9 +1533,9 @@ function renderStaticUi() {
   fillAuthoringSelects();
   setLocalizedText(factsPanelTitleEl, "facts.panelTitle");
   setLocalizedText(factsPanelSubtitleEl, "facts.panelSubtitle");
-  setLocalizedText(factsCountryBtn, "facts.tabs.germany");
-  setLocalizedText(factsStatesBtn, "facts.tabs.europe");
-  setLocalizedText(factsWorldBtn, "facts.tabs.world");
+  setLocalizedText(factsCountryBtn?.querySelector(".facts-switch-btn-label"), "facts.tabs.germany");
+  setLocalizedText(factsStatesBtn?.querySelector(".facts-switch-btn-label"), "facts.tabs.europe");
+  setLocalizedText(factsWorldBtn?.querySelector(".facts-switch-btn-label"), "facts.tabs.world");
   setLocalizedText(siteFooterLinkEl, "footer");
   renderGrammarSection();
   scheduleCardTopbarLayoutSync();
