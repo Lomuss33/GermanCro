@@ -411,6 +411,11 @@ body .facts-panel .facts-switch-btn:not(.active):is(:hover, :focus-visible) {
   background: linear-gradient(135deg, rgba(34, 211, 238, .2), rgba(24, 48, 83, .96)), rgba(8, 19, 43, .96) !important;
   box-shadow: 0 0 0 1px rgba(125, 211, 252, .2), 0 0 14px rgba(34, 211, 238, .16);
 }
+body .facts-panel .facts-controls .state-picker-btn-label {
+  font-size: clamp(7px, calc(6px + .8vw), 10px);
+  font-size: clamp(7px, calc(1px + 7cqi), 10px);
+  text-align: center;
+}
 /* Floating dialogs need more tint; embedded dialogs already sit on glass. */
 body #onboardingDialog.onboarding-dialog .onboarding-panel {
   background: var(--glass-sheen), var(--glass-popup) !important;

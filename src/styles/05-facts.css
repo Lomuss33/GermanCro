@@ -59,11 +59,23 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   gap: 8px;
   min-width: 0;
 }
 
 .facts-view-name {
+  display: grid;
+  --facts-title-flag-slot: clamp(64px, 12vw, 104px);
+  --facts-title-side-gap: clamp(8px, 1.8vw, 18px);
+  --facts-title-side-inset: clamp(8px, 2.4vw, 22px);
+  grid-template-columns: minmax(0, 1fr) var(--facts-title-flag-slot) minmax(0, 1fr);
+  column-gap: var(--facts-title-side-gap);
+  align-items: center;
+  width: 100%;
+  min-height: clamp(45px, 7vw, 60px);
+  box-sizing: border-box;
+  padding-inline: var(--facts-title-side-inset);
   font-size: calc(clamp(26px, 5vw, 36px) * var(--type-scale-display));
   font-weight: 800;
   line-height: 1.1;
@@ -71,6 +83,33 @@
   max-width: 100%;
   min-width: 0;
 }
+
+.facts-view-name-half {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--facts-title-half-size, 1em);
+  text-shadow: inherit;
+}
+
+.facts-view-name.is-full-name-sides .facts-view-name-half {
+  white-space: nowrap;
+}
+
+.facts-view-name-half--left { text-align: right; }
+.facts-view-name-half--right { text-align: left; }
+
+body .facts-title-row .facts-view-name > .facts-flag-wrap {
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+  max-width: 104px;
+  aspect-ratio: 5 / 3;
+  justify-self: center;
+  align-self: center;
+}
+
+.facts-view-name-half--left { grid-column: 1; grid-row: 1; }
+.facts-view-name-half--right { grid-column: 3; grid-row: 1; }
 
 .facts-title-links {
   display: flex;
@@ -698,4 +737,3 @@
   box-shadow: 0 5px 14px rgba(132, 204, 22, 0.16);
   transform: translateY(-2px);
 }
-

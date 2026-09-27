@@ -1187,14 +1187,19 @@
 }
 
 .state-picker-btn {
+  container-type: inline-size;
   width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   font-size: calc(12px * var(--type-scale-body));
   min-height: calc(34px * var(--type-scale-control));
   padding: calc(6px * var(--type-scale-control)) calc(7px * var(--type-scale-control));
   line-height: 1.1;
   text-align: center;
   text-wrap: balance;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: auto;
   border-radius: calc(9px * var(--type-scale-control));
 }
 
@@ -1205,7 +1210,7 @@
 .state-picker-btn-copy {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: calc(6px * var(--type-scale-control));
   width: 100%;
   min-width: 0;
@@ -1222,11 +1227,15 @@
 }
 
 .state-picker-btn-label {
+  display: block;
   flex: 1 1 auto;
   min-width: 0;
+  max-width: 100%;
   line-height: 1.1;
   overflow-wrap: break-word;
+  word-break: normal;
   hyphens: auto;
+  text-wrap: pretty;
 }
 
 .facts-content {

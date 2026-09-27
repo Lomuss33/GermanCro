@@ -39,6 +39,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
   let selectedWorldCountryId = null;
 
   let factsPickerRenderKey = "";
+  let countryTitleObserver = null;
 
   const factsPickerButtons = new Map();
 
@@ -775,6 +776,29 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     return section;
   }
 
+  function splitCountryTitle(title) {
+    const text = String(title ?? "").trim();
+    if (text === "Deutschland") return ["Deutsch", "land"];
+
+    const words = text.split(/\s+/);
+    if (words.length > 1) {
+      let bestIndex = 1;
+      let bestDistance = Infinity;
+      for (let index = 1; index < words.length; index += 1) {
+        const distance = Math.abs(words.slice(0, index).join(" ").length - text.length / 2);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestIndex = index;
+        }
+      }
+      return [words.slice(0, bestIndex).join(" "), words.slice(bestIndex).join(" ")];
+    }
+
+    const letters = Array.from(text);
+    const midpoint = Math.ceil(letters.length / 2);
+    return [letters.slice(0, midpoint).join(""), letters.slice(midpoint).join("")];
+  }
+
   function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = "", officialUrl = "", notablePeople = []) {
     factsContentEl.innerHTML = "";
 
@@ -812,7 +836,6 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     }
 
     flagWrap.appendChild(flagEl);
-    titleRow.appendChild(flagWrap);
 
     const titleCopy = document.createElement("div");
     titleCopy.className = "facts-title-copy";
@@ -822,7 +845,19 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
 
     const nameEl = document.createElement("div");
     nameEl.className = "facts-view-name";
-    nameEl.textContent = title;
+    const [leftTitle, rightTitle] = splitCountryTitle(title);
+    const leftTitleEl = document.createElement("span");
+    leftTitleEl.className = "facts-view-name-half facts-view-name-half--left";
+    leftTitleEl.setAttribute("aria-hidden", "true");
+    leftTitleEl.textContent = leftTitle;
+    const rightTitleEl = document.createElement("span");
+    rightTitleEl.className = "facts-view-name-half facts-view-name-half--right";
+    rightTitleEl.setAttribute("aria-hidden", "true");
+    rightTitleEl.textContent = rightTitle;
+    const accessibleTitleEl = document.createElement("span");
+    accessibleTitleEl.className = "visually-hidden";
+    accessibleTitleEl.textContent = title;
+    nameEl.append(leftTitleEl, flagWrap, rightTitleEl, accessibleTitleEl);
     titleBar.appendChild(nameEl);
 
     if (isNonEmptyValue(tourismUrl) || isNonEmptyValue(officialUrl)) {
@@ -931,6 +966,41 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     }
 
     factsContentEl.appendChild(view);
+
+    countryTitleObserver?.disconnect();
+    const titleMeasureContext = document.createElement("canvas").getContext("2d");
+    const syncCountryTitleLayout = () => {
+      if (!nameEl.isConnected) return;
+      const nameStyle = window.getComputedStyle(nameEl);
+      if (!titleMeasureContext || !nameEl.clientWidth) return;
+
+      const maxFontSize = Math.min(Number.parseFloat(nameStyle.fontSize) || 24, 24);
+      titleMeasureContext.font = `${nameStyle.fontStyle} ${nameStyle.fontWeight} ${maxFontSize}px ${nameStyle.fontFamily}`;
+      const letterSpacing = Number.parseFloat(nameStyle.letterSpacing) || 0;
+      const titleLength = Array.from(String(title)).length;
+      const titleWidth = titleMeasureContext.measureText(String(title)).width + Math.max(0, titleLength - 1) * letterSpacing;
+      const leftWidth = titleMeasureContext.measureText(leftTitle).width + Math.max(0, Array.from(leftTitle).length - 1) * letterSpacing;
+      const rightWidth = titleMeasureContext.measureText(rightTitle).width + Math.max(0, Array.from(rightTitle).length - 1) * letterSpacing;
+      const horizontalPadding = (Number.parseFloat(nameStyle.paddingLeft) || 0) + (Number.parseFloat(nameStyle.paddingRight) || 0);
+      const flagWidth = flagWrap.getBoundingClientRect().width;
+      const columnGap = Number.parseFloat(nameStyle.columnGap) || 0;
+      const sideWidth = (nameEl.clientWidth - horizontalPadding - flagWidth - columnGap * 2) / 2;
+      const showFullName = sideWidth >= titleWidth + 8;
+      const splitTextWidth = Math.max(leftWidth, rightWidth);
+      const splitFontSize = Math.min(maxFontSize, maxFontSize * Math.max(0, sideWidth - 4) / Math.max(1, splitTextWidth));
+
+      nameEl.classList.toggle("is-full-name-sides", showFullName);
+      nameEl.style.setProperty("--facts-title-half-size", `${showFullName ? maxFontSize : splitFontSize}px`);
+      leftTitleEl.textContent = showFullName ? title : leftTitle;
+      rightTitleEl.textContent = showFullName ? title : rightTitle;
+    };
+
+    if (typeof ResizeObserver === "function") {
+      countryTitleObserver = new ResizeObserver(syncCountryTitleLayout);
+      countryTitleObserver.observe(nameEl);
+    }
+    syncCountryTitleLayout();
+    document.fonts?.ready.then(syncCountryTitleLayout);
   }
 
   function renderCountryFacts(countryData) {
@@ -1300,7 +1370,10 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         copy.appendChild(label);
         button.appendChild(copy);
       } else {
-        button.textContent = item.label;
+        const label = document.createElement("span");
+        label.className = "state-picker-btn-label";
+        label.textContent = item.label;
+        button.appendChild(label);
       }
       button.setAttribute("aria-label", item.ariaLabel);
       button.addEventListener("click", item.onClick);
