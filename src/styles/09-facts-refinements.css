@@ -746,6 +746,17 @@ body.layout-phone-portrait .facts-grid {
 .facts-grid > .facts-card:nth-child(8n + 7) { --card-accent: #ff5c7a; }
 .facts-grid > .facts-card:nth-child(8n) { --card-accent: #60a5fa; }
 
+.facts-grid > .facts-card--unavailable {
+  --card-accent: rgba(160, 184, 210, 0.35);
+  border-color: rgba(160, 184, 210, 0.18);
+  box-shadow: none;
+}
+
+.facts-grid > .facts-card--unavailable .facts-card-value {
+  color: rgba(205, 220, 240, 0.68);
+  font-size: clamp(11px, 1.6vw, 14px);
+}
+
 .facts-grid > .facts-card:not(.featured) {
   background: linear-gradient(135deg, color-mix(in srgb, var(--card-accent) 10%, transparent), transparent 58%), rgba(8, 15, 42, 0.62);
 }

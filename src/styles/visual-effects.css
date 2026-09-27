@@ -918,9 +918,44 @@ body #catPanel .category-selection .subcategory-btn:not(.subcategory-btn-all).ac
   transition-duration: .001ms !important;
   scroll-behavior: auto !important;
 }
-:root[data-effects="reduced"] { --glass-panel: #101d32; --glass-popup: #101d32; }
+:root[data-effects="reduced"] {
+  --glass-sheen: linear-gradient(145deg, rgba(180, 210, 255, .035), transparent 65%);
+}
+:root[data-transparency="reduced"] {
+  --glass-panel: #101d32;
+  --glass-popup: #101d32;
+  --glass-inset: #101d32;
+  --glass-control: #101d32;
+}
 @media (prefers-reduced-transparency: reduce) {
-  :root { --glass-panel: #101d32; --glass-popup: #101d32; }
+  :root {
+    --glass-panel: #101d32;
+    --glass-popup: #101d32;
+    --glass-inset: #101d32;
+    --glass-control: #101d32;
+  }
+}
+
+/* Keep the palette and focus cues, but remove non-essential lighting. */
+:root[data-effects="reduced"] body #mainCard::after,
+:root[data-effects="reduced"] body .site-title,
+:root[data-effects="reduced"] body .site-title-letter,
+:root[data-effects="reduced"] body #catPanel #catButtons .cat-btn,
+:root[data-effects="reduced"] body #catPanel .difficulty-panel button,
+:root[data-effects="reduced"] body .search-link,
+:root[data-effects="reduced"] body .facts-card,
+:root[data-effects="reduced"] body .facts-chip-link {
+  text-shadow: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+:root[data-effects="reduced"] body #mainCard::after {
+  filter: none !important;
+}
+
+:root[data-effects="reduced"] body.has-promoted-onboarding-title #heroStage > .site-title-row > #onboardingTitle.site-title::before {
+  display: none;
 }
 
 /* The science and art cards are intentionally static on hover; their links remain usable. */
@@ -941,4 +976,163 @@ body #catPanel .category-selection .subcategory-btn:not(.subcategory-btn-all).ac
   filter: none !important;
   animation: none !important;
   transition: none !important;
+}
+
+/* Category emoji stay on a consistent left rail at every button width. */
+body #catPanel .category-selection > #catButtons .cat-btn {
+  --category-icon-size: clamp(22px, calc(26px * var(--type-scale-control)), 28px);
+  --category-side-pad: clamp(7px, 1vw, 12px);
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  padding-inline: var(--category-side-pad);
+}
+
+body #catPanel .category-selection > #catButtons .cat-btn-icon {
+  display: grid;
+  position: absolute;
+  left: var(--category-side-pad);
+  top: 50%;
+  width: var(--category-icon-size);
+  height: var(--category-icon-size);
+  place-items: center;
+  font-size: clamp(17px, calc(20px * var(--type-scale-control)), 22px);
+  line-height: 1;
+  opacity: 1;
+  transform: translateY(-50%);
+}
+
+body #catPanel .category-selection > #catButtons .cat-btn-icon-glyph {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  line-height: 1;
+  transform: translateY(-1px);
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .28));
+}
+
+body #catPanel .category-selection > #catButtons .cat-btn-label {
+  flex: 1 1 100%;
+  min-width: 0;
+  padding-inline: calc(var(--category-icon-size) + 2px);
+  text-align: center;
+  overflow-wrap: normal;
+}
+
+/* The full-width "all topics" action keeps its emoji beside the centered title. */
+body #catPanel .category-selection > #catButtons .cat-btn.mixed {
+  gap: 7px;
+}
+
+body #catPanel .category-selection > #catButtons .cat-btn.mixed .cat-btn-icon {
+  position: static;
+  flex: 0 0 var(--category-icon-size);
+  transform: none;
+}
+
+body #catPanel .category-selection > #catButtons .cat-btn.mixed .cat-btn-label {
+  flex: 0 1 auto;
+  width: auto;
+  padding-inline: 0;
+}
+
+/* Individual word types: fixed left emoji, label centered in the whole pill. */
+body #catPanel .category-selection #subcategoryButtons .subcategory-btn:not(.subcategory-btn-all) {
+  position: relative;
+  gap: 0;
+}
+
+body #catPanel .category-selection #subcategoryButtons .subcategory-btn:not(.subcategory-btn-all) .subcategory-btn-icon {
+  position: absolute;
+  left: clamp(5px, .8vw, 9px);
+  top: 50%;
+  width: 20px;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+body #catPanel .category-selection #subcategoryButtons .subcategory-btn:not(.subcategory-btn-all) .subcategory-btn-label {
+  flex: 1 1 100%;
+  padding-inline: 23px;
+  text-align: center;
+  font-size: clamp(9px, 1.75vw, 12px);
+  text-overflow: clip;
+}
+
+@media (max-width: 700px) {
+  body #catPanel .category-selection > #catButtons .cat-btn {
+    --category-icon-size: 22px;
+  }
+  body #catPanel .category-selection > #catButtons .cat-btn-icon {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 360px) {
+  body #catPanel .category-selection > #catButtons .cat-btn {
+    --category-icon-size: 20px;
+  }
+  body #catPanel .category-selection > #catButtons .cat-btn-icon {
+    font-size: 16px;
+  }
+}
+
+/* A little more air between geography choices, without changing column count. */
+body .facts-panel .state-picker {
+  gap: clamp(6px, calc(8px * var(--type-scale-control)), 10px);
+}
+
+body .facts-panel #statePicker .state-picker-btn {
+  border: 2px solid #fff !important;
+}
+
+/* Draw the flag pills' white edge over the image, leaving only the left open. */
+body .facts-panel #statePicker .state-picker-btn.has-flag {
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding-block: 0;
+  overflow: hidden;
+  border: 0 !important;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+body .facts-panel .state-picker-btn.has-flag::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  border-radius: 0 10px 10px 0;
+  pointer-events: none;
+}
+
+body .facts-panel .state-picker-btn.has-flag .state-picker-btn-copy {
+  display: flex;
+  align-items: center;
+  min-height: 0;
+  padding-left: clamp(48px, calc(59px * var(--type-scale-control)), 68px);
+}
+
+body .facts-panel .state-picker-btn.has-flag .state-picker-btn-flag {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: 0;
+  width: auto;
+  height: calc(100% + 2px);
+  min-height: 0;
+  max-width: none;
+  border-radius: 0;
+  object-fit: contain;
+}
+
+body .facts-panel .state-picker-btn.has-flag .state-picker-btn-label {
+  align-self: center;
 }

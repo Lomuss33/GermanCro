@@ -230,6 +230,13 @@
   font-size: 14px;
   border-radius: 14px;
   transition: transform 160ms ease, box-shadow 160ms ease;
+  justify-content: center;
+  text-align: center;
+}
+#catPanel #catButtons .cat-btn .cat-btn-label {
+  flex: 0 1 auto;
+  max-width: 100%;
+  text-align: center;
 }
 #catPanel #catButtons .cat-btn:not(.active) {
   background: linear-gradient(145deg, color-mix(in srgb, var(--cat-color) 25%, #101b35), rgba(8,16,38,.88)) !important;
@@ -714,9 +721,29 @@ body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
 #factsContent .facts-notable-people-group .facts-chip {
   width: 100%;
   min-width: 0;
+  box-sizing: border-box;
   justify-content: center;
   padding: 7px 8px;
   text-align: center;
+}
+#factsContent .facts-notable-people-group .facts-chip-link {
+  container-type: inline-size;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  gap: 6px;
+}
+#factsContent .facts-notable-people-group .facts-chip-label {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  font-size: clamp(9px, calc(6px + 4cqi), 13px);
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+  text-wrap: pretty;
 }
 @media (max-width: 600px) {
   #factsContent .facts-notable-people-groups {

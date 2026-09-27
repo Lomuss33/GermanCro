@@ -1,3 +1,5 @@
+import { prefersReducedEffects } from "./effects-preference.js";
+
 const PANEL_SNAP_FRACTION = 0.2;
 const PANEL_SNAP_MAX_DISTANCE = 180;
 const SCROLL_IDLE_DELAY = 420;
@@ -74,7 +76,7 @@ export function initPageScrollAssist({ targets, shouldPause = () => false }) {
     snapReleaseTimer = window.setTimeout(() => { isSnapping = false; }, 1000);
     const scrollOptions = {
       top: target.position,
-      behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth",
+      behavior: prefersReducedEffects() ? "instant" : "smooth",
     };
     const scrollRoot = document.scrollingElement || document.documentElement;
     if (scrollRoot !== document.documentElement && typeof scrollRoot.scrollTo === "function") {

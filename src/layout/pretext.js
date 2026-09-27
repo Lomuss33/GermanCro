@@ -1,15 +1,8 @@
 import { layoutWithLines, prepareWithSegments } from "../../vendor/pretext/dist/layout.js";
 import { BoundedCache } from "../core/bounded-cache.js";
+import { prefersReducedEffects } from "../ui/effects-preference.js";
 
 const preparedCache = new BoundedCache(256);
-const reduceMotionQuery =
-  typeof window !== "undefined" && typeof window.matchMedia === "function"
-    ? window.matchMedia("(prefers-reduced-motion: reduce)")
-    : null;
-
-function prefersReducedMotion() {
-  return Boolean(reduceMotionQuery?.matches);
-}
 
 function getPrepared(text, font, whiteSpace = "normal") {
   const key = `${whiteSpace}\n${font}\n${text}`;
@@ -129,7 +122,7 @@ export function renderPretextLines({
   }
 
   const fragment = document.createDocumentFragment();
-  const shouldAnimate = animate && !prefersReducedMotion();
+  const shouldAnimate = animate && !prefersReducedEffects();
   let globalCharIndex = 0;
 
   element.replaceChildren();

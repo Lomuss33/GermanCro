@@ -18,6 +18,7 @@ import {
 } from "../ui/dom.js";
 import { fetchJson } from "../core/http.js";
 import { joinLocalizedList } from "../core/text.js";
+import { prefersReducedEffects } from "../ui/effects-preference.js";
 
 export function createFactsController({ t, getLocale, getLocaleBundle, getTargetLanguage }) {
   let germanyFacts = null;
@@ -629,6 +630,29 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       .join(" ");
   }
 
+  const SHARED_FACT_FIELD_KEYS = [
+    "capital", "largestCity", "anthem", "founded", "stateForm", "nationalDay",
+    "population", "area", "statesCount", "currency", "language", "officialLanguages",
+    "timeZone", "callingCode", "internetTld", "bordersCount", "gdp", "euSince",
+    "abbreviation", "stateType", "region", "joined", "headOfGovernment",
+    "landlocked", "headquarters", "memberStates", "secretaryGeneral",
+  ];
+
+  const FACT_VALUE_MISSING = { de: "Keine Angabe", en: "Not available", hr: "Nema podataka" };
+
+  function completeFactsFields(fields) {
+    const byLabel = new Map(fields.filter((field) => !normalizeFactsField(field)?.featured)
+      .map((field) => [normalizeFactsField(field)?.label, field]));
+    return SHARED_FACT_FIELD_KEYS.map((key) => {
+      const label = t(`facts.fields.${key}`);
+      const field = byLabel.get(label);
+      const value = normalizeFactsField(field)?.value;
+      return isNonEmptyValue(value)
+        ? field
+        : [label, FACT_VALUE_MISSING[getLocale()] || FACT_VALUE_MISSING.de, false, true];
+    });
+  }
+
   function createFactsField(field, contextName = "") {
     const normalized = normalizeFactsField(field);
     if (!normalized) {
@@ -640,11 +664,15 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       return null;
     }
 
-    const card = document.createElement(featured ? "div" : "a");
+    const unavailable = Array.isArray(field) && field[3] === true;
+    const card = document.createElement(featured || unavailable ? "div" : "a");
     card.className = "facts-card";
+    if (unavailable) {
+      card.classList.add("facts-card--unavailable");
+    }
     if (featured) {
       card.classList.add("featured");
-    } else {
+    } else if (!unavailable) {
       const searchTerm = getFactsSearchTerm(label, value, contextName);
       card.classList.add("facts-card-link");
       card.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
@@ -708,7 +736,10 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         chip.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
         chip.target = "_blank";
         chip.rel = "noopener noreferrer";
-        chip.textContent = itemText;
+        const chipLabel = document.createElement("span");
+        chipLabel.className = "facts-chip-label";
+        chipLabel.textContent = itemText;
+        chip.appendChild(chipLabel);
         chip.title = t("facts.values.googleSearchAria", { item: searchTerm });
         chip.setAttribute("aria-label", t("facts.values.googleSearchAria", { item: searchTerm }));
         list.appendChild(chip);
@@ -931,12 +962,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
 
     const grid = document.createElement("div");
     grid.className = "facts-grid";
-    const stateFormLabel = t("facts.fields.stateForm");
-    const orderedFields = [...fields].sort((left, right) => {
-      const leftIsStateForm = normalizeFactsField(left)?.label === stateFormLabel;
-      const rightIsStateForm = normalizeFactsField(right)?.label === stateFormLabel;
-      return Number(leftIsStateForm) - Number(rightIsStateForm);
-    });
+    const orderedFields = completeFactsFields(fields);
     orderedFields.forEach((fieldData) => {
       if (normalizeFactsField(fieldData)?.featured) {
         return;
@@ -1112,6 +1138,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     }
 
   function renderStateFacts(stateData) {
+    const parentCountry = germanyFacts?.country || {};
     renderFactsView(
         stateData.name || "Bundesland",
         "",
@@ -1124,6 +1151,12 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.largestCity"), stateData.largest_city],
         [t("facts.fields.population"), stateData.population],
         [t("facts.fields.area"), stateData.area_km2],
+        [t("facts.fields.currency"), translateFactScalar(parentCountry.currency)],
+        [t("facts.fields.language"), translateFactScalar(parentCountry.language)],
+        [t("facts.fields.timeZone"), parentCountry.time_zone],
+        [t("facts.fields.callingCode"), parentCountry.calling_code],
+        [t("facts.fields.internetTld"), parentCountry.internet_tld],
+        [t("facts.fields.bordersCount"), Array.isArray(stateData.bordering_countries) ? stateData.bordering_countries.length : undefined],
         [t("facts.fields.joined"), stateData.joined_or_founded],
         [t("facts.fields.headOfGovernment"), stateData.minister_president || stateData.state_head],
         {
@@ -1160,6 +1193,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.timeZone"), countryData.time_zone],
         [t("facts.fields.callingCode"), countryData.calling_code],
         [t("facts.fields.internetTld"), countryData.internet_tld],
+        [t("facts.fields.bordersCount"), Array.isArray(countryData.neighboring_countries) ? countryData.neighboring_countries.length : undefined],
         [t("facts.fields.landlocked"), translateFactScalar(countryData.landlocked)],
         {
           label: t("facts.featured.overview"),
@@ -1194,6 +1228,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         [t("facts.fields.timeZone"), countryData.time_zone],
         [t("facts.fields.callingCode"), countryData.calling_code],
         [t("facts.fields.internetTld"), countryData.internet_tld],
+        [t("facts.fields.bordersCount"), Array.isArray(countryData.neighboring_countries) ? countryData.neighboring_countries.length : undefined],
         [t("facts.fields.landlocked"), translateFactScalar(countryData.landlocked)],
         {
           label: t("facts.featured.overview"),
@@ -1462,7 +1497,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         }
 
         const targetTop = Math.max(0, window.scrollY + targetEl.getBoundingClientRect().top - offset);
-        window.scrollTo({ top: targetTop, behavior: "smooth" });
+        window.scrollTo({ top: targetTop, behavior: prefersReducedEffects() ? "instant" : "smooth" });
       });
     });
   }

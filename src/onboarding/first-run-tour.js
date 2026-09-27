@@ -2,6 +2,7 @@ import { expandRect, getUnionRect, placeTourPanel } from "./tour-geometry.js";
 import { LANGUAGE_TITLES } from "../config/languages.js";
 import { renderSiteTitleLineContent } from "../ui/site-title.js";
 import { normalizeTutorialLanguage, resolveTutorialLanguage } from "./tutorial-language.js";
+import { prefersReducedEffects } from "../ui/effects-preference.js";
 
 export const ONBOARDING_STORAGE_KEY = "germancro.onboarding.v2";
 
@@ -645,7 +646,7 @@ export function createFirstRunTour({
     }
     titleProgress += 1;
     syncTitleProgress();
-    if (titleProgress === titleSequence.length && !reduceMotionQuery?.matches) {
+    if (titleProgress === titleSequence.length && !prefersReducedEffects()) {
       elements.title?.querySelectorAll(".site-title-letter").forEach((letter, index) => {
         letter.animate([
           { transform: "translateY(0)", filter: "brightness(1)" },
@@ -1033,7 +1034,7 @@ export function createFirstRunTour({
     if (state === "welcome") {
       if (isLaunchingWelcome) return;
       isLaunchingWelcome = true;
-      const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      const reduceMotion = prefersReducedEffects();
       if (reduceMotion) {
         isLaunchingWelcome = false;
         playFromWelcome();

@@ -1,5 +1,6 @@
 import { createWordGridRenderer, describeWordGrid } from "../game/word-grid.js";
 import { initVisualEffects } from "../ui/visual-effects.js";
+import { prefersReducedEffects } from "../ui/effects-preference.js";
 import { createFactsController } from "../facts/controller.js";
 import { renderSiteTitleLineContent } from "../ui/site-title.js";
 import {
@@ -2299,6 +2300,13 @@ function showFeedbackBurst(kind, isBig = false) {
     return;
   }
 
+  if (prefersReducedEffects()) {
+    clearTimeout(feedbackBurstTimer);
+    resetFeedbackBurstPieces();
+    feedbackBurstEl.className = "feedback-burst";
+    return;
+  }
+
   clearTimeout(feedbackBurstTimer);
   feedbackBurstEl.className = `feedback-burst is-${kind}${isBig ? " is-big" : ""}`;
 
@@ -2430,7 +2438,7 @@ function formatEnterBurstTime(ms) {
 }
 
 function showEnterTimeBurst() {
-  if (!roundTimerEl || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+  if (!roundTimerEl || prefersReducedEffects()) {
     return;
   }
 
@@ -2506,7 +2514,7 @@ function renderRoundProgress({ reset = false, empty = false } = {}) {
   const to = `inset(0 ${100 - percent}% 0 0)`;
   progFill.style.removeProperty("width");
   progFill.style.clipPath = to;
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduceMotion = prefersReducedEffects();
   if (!reset && !reduceMotion) {
     progFill.animate([{ clipPath: from }, { clipPath: to }], {
       duration: 420, easing: "cubic-bezier(0.22, 1, 0.36, 1)",
@@ -2653,7 +2661,7 @@ async function startSession(size) {
 
   const scrollTarget = heroStageEl || mainCard;
   scrollTarget.scrollIntoView({
-    behavior: "smooth",
+    behavior: prefersReducedEffects() ? "instant" : "smooth",
     block: "start",
   });
 }
@@ -2769,7 +2777,7 @@ function updateStats({ event = "update" } = {}) {
 
   const previous = previousStatsSnapshot;
   previousStatsSnapshot = nextSnapshot;
-  if (!previous || window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+  if (!previous || prefersReducedEffects()) {
     return;
   }
 
@@ -2823,7 +2831,7 @@ function animateStatsOnStart() {
 
   const remainingEl = document.getElementById("remainingVal");
   const target = Number.parseInt(remainingEl?.textContent || "", 10);
-  if (remainingEl && Number.isFinite(target) && target > 0 && !window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+  if (remainingEl && Number.isFinite(target) && target > 0 && !prefersReducedEffects()) {
     const startedAt = performance.now();
     const duration = 720;
     const tick = (now) => {
@@ -3137,7 +3145,7 @@ function initFirstRunTour() {
       if (reason === "settings") {
         const settingsPanel = document.getElementById("catPanel");
         settingsPanel?.scrollIntoView({
-          behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth",
+          behavior: prefersReducedEffects() ? "instant" : "smooth",
           block: "start",
           inline: "nearest",
         });
@@ -3327,7 +3335,7 @@ function initInputEvents() {
   });
   sessionSettingsBtnEl?.addEventListener("click", () => {
     document.getElementById("catPanel")?.scrollIntoView({
-      behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? "auto" : "smooth",
+      behavior: prefersReducedEffects() ? "instant" : "smooth",
       block: "start",
       inline: "nearest",
     });
@@ -3378,7 +3386,7 @@ function initInputEvents() {
     if (!button) continue;
     let cornerPulse;
     button.addEventListener("click", () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (prefersReducedEffects()) return;
       cornerPulse?.cancel();
       cornerPulse = button.animate(
         [
