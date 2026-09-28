@@ -280,12 +280,12 @@
   border: 1px solid color-mix(in srgb, var(--card-accent) 55%, transparent);
   border-top: 2px solid var(--card-accent);
   border-radius: 12px;
-  padding: 14px;
+  padding: 7px 8px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 0 14px color-mix(in srgb, var(--card-accent) 9%, transparent);
 }
 .facts-panel .facts-grid > .facts-card .facts-card-label {
-  font-size: clamp(10px, calc(9px + .5vw), 12px);
-  line-height: 1.35;
+  font-size: clamp(9px, calc(8px + .35vw), 11px);
+  line-height: 1.2;
   letter-spacing: .035em;
 }
 .facts-panel .facts-grid > .facts-card:not(.featured) .facts-card-value {
@@ -298,7 +298,7 @@
   min-height: 0;
   text-align: center;
 }
-.facts-panel .facts-grid > .facts-card .facts-card-value { font-size: 18px; line-height: 1.45; color: #fff; }
+.facts-panel .facts-grid > .facts-card .facts-card-value { font-size: 14px; line-height: 1.2; color: #fff; }
 .facts-panel .facts-head-overview .facts-card-value { font-size: 16px; line-height: 1.65; }
 .facts-panel .facts-chip-link { font-size: 14px; line-height: 1.5; padding: 7px 10px; }
 .facts-panel .facts-notable-people-groups > .facts-notable-people-group {
@@ -378,7 +378,7 @@ body > .facts-panel::after, body .author-panel::after {
 #searchPanel .grammar-slider-table-row:first-child { background: rgba(140,181,238,.1); }
 #catPanel #catButtons .cat-btn { font-size: 13px; }
 #catPanel #catButtons .cat-btn-label { word-break: normal; overflow-wrap: normal; hyphens: auto; }
-.facts-panel .facts-grid > .facts-card .facts-card-value { font-size: 16px; overflow-wrap: anywhere; }
+.facts-panel .facts-grid > .facts-card .facts-card-value { font-size: 14px; overflow-wrap: anywhere; }
 
 /* Structural wrappers carry no extra tint: avoid stacking opaque layers. */
 body .facts-panel :is(.facts-view, .facts-content, .facts-grid, .facts-notable-people-groups),
@@ -1010,3 +1010,282 @@ body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
     align-self: stretch;
   }
 }
+
+/* Compact reference cards: keep every value visible, with less empty space. */
+#factsContent > .facts-view > .facts-grid {
+  gap: 4px;
+  padding: 4px;
+}
+#factsContent .facts-grid > .facts-card:not(.featured) {
+  gap: 2px;
+  padding: 6px 7px;
+}
+#factsContent .facts-grid > .facts-card:not(.featured) .facts-card-value {
+  font-size: clamp(12px, calc(13px * var(--type-scale-body)), 14px);
+  line-height: 1.18;
+}
+
+/* The general section gap is too large on both sides of the compact context row. */
+#factsContent > .facts-view > .facts-context-strip {
+  margin-block: -11px;
+  margin-inline: calc(-1 * var(--facts-overview-inline-bleed));
+  width: calc(100% + var(--facts-overview-inline-bleed) + var(--facts-overview-inline-bleed));
+  max-width: none;
+  align-self: center;
+  padding: 3px var(--facts-overview-inline-bleed);
+  position: relative;
+  gap: 4px 10px;
+  border: 0;
+  background:
+    linear-gradient(90deg, #22d3ee, #a78bfa 50%, #39ff88) top / 100% 1px no-repeat,
+    linear-gradient(90deg, rgba(34, 211, 238, .35), rgba(167, 139, 250, .25) 50%, rgba(57, 255, 136, .35)) bottom / 100% 1px no-repeat;
+  box-shadow: none;
+}
+#factsContent .facts-context-chip {
+  --context-accent: #7dd3fc;
+  position: relative;
+  flex: 1 1 0;
+  justify-content: center;
+  min-width: max-content;
+  min-height: 23px;
+  padding: 3px 5px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: color-mix(in srgb, var(--context-accent) 72%, white 28%);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--context-accent) 15%, transparent);
+  box-shadow: none;
+  transition: color 180ms ease, text-shadow 180ms ease;
+}
+#factsContent .facts-context-chip::after {
+  content: "";
+  position: absolute;
+  inset-inline: 25%;
+  bottom: 0;
+  height: 1px;
+  background: var(--context-accent);
+  opacity: .62;
+  transition: inset 180ms ease, opacity 180ms ease;
+}
+#factsContent .facts-context-chip:nth-child(5n + 2) { --context-accent: #b7f87c; }
+#factsContent .facts-context-chip:nth-child(5n + 3) { --context-accent: #ffd68a; }
+#factsContent .facts-context-chip:nth-child(5n + 4) { --context-accent: #e9a8fa; }
+#factsContent .facts-context-chip:nth-child(5n) { --context-accent: #7ee8d6; }
+#factsContent a.facts-context-chip:hover,
+#factsContent a.facts-context-chip:focus-visible {
+  color: #fff;
+  text-shadow: 0 0 12px var(--context-accent);
+}
+#factsContent a.facts-context-chip:hover::after,
+#factsContent a.facts-context-chip:focus-visible::after {
+  inset-inline: 8%;
+  opacity: 1;
+}
+#factsContent a.facts-context-chip:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  #factsContent .facts-context-chip,
+  #factsContent .facts-context-chip::after { transition: none; }
+}
+:root[data-effects="reduced"] #factsContent .facts-context-chip,
+:root[data-effects="reduced"] #factsContent .facts-context-chip::after { transition: none; }
+
+/* Open data rows, with the grid's rails bleeding to the panel edges. */
+#factsContent > .facts-view > .facts-grid {
+  position: relative;
+  margin-inline: calc(-1 * var(--facts-overview-inline-bleed));
+  width: calc(100% + var(--facts-overview-inline-bleed) + var(--facts-overview-inline-bleed));
+  max-width: none;
+  align-self: center;
+  padding-inline: var(--facts-overview-inline-bleed);
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none;
+}
+#factsContent > .facts-view > .facts-grid::before,
+#factsContent > .facts-view > .facts-grid::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(34, 211, 238, .52), rgba(167, 139, 250, .62) 50%, rgba(57, 255, 136, .52));
+}
+#factsContent > .facts-view > .facts-grid::before { top: 0; }
+#factsContent > .facts-view > .facts-grid::after { bottom: 0; }
+#factsContent .facts-grid > .facts-card:not(.featured) {
+  position: relative;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--card-accent) 48%, transparent) 50%, transparent) bottom / 100% 1px no-repeat !important;
+  box-shadow: none;
+}
+#factsContent .facts-grid > .facts-card:not(.featured)::before {
+  content: none;
+}
+#factsContent .facts-grid > .facts-card:not(.featured) .facts-card-label {
+  color: color-mix(in srgb, var(--card-accent) 82%, white 18%);
+  text-shadow: 0 0 9px color-mix(in srgb, var(--card-accent) 22%, transparent);
+}
+#factsContent .facts-grid > a.facts-card:not(.featured):hover,
+#factsContent .facts-grid > a.facts-card:not(.featured):focus-visible {
+  transform: none;
+  background: linear-gradient(90deg, transparent, var(--card-accent) 50%, transparent) bottom / 100% 2px no-repeat !important;
+  box-shadow: none;
+}
+
+/* Open, full-bleed fact chapters: the title orientation gives each chapter its own cue. */
+#factsContent > .facts-view > .facts-list-section {
+  width: calc(100% + var(--facts-overview-inline-bleed) + var(--facts-overview-inline-bleed));
+  max-width: none;
+  margin-inline: calc(-1 * var(--facts-overview-inline-bleed));
+  align-self: center;
+  gap: 7px;
+  padding: 8px var(--facts-overview-inline-bleed) 10px;
+  border: 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#factsContent > .facts-view > .facts-list-section::before,
+#factsContent > .facts-view > .facts-list-section::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--list-accent) 70%, transparent), color-mix(in srgb, var(--list-accent) 25%, transparent) 50%, color-mix(in srgb, var(--list-accent) 70%, transparent));
+  pointer-events: none;
+}
+#factsContent > .facts-view > .facts-list-section::before { top: 0; }
+#factsContent > .facts-view > .facts-list-section::after { bottom: 0; opacity: .48; }
+#factsContent > .facts-view > .facts-list-section .facts-list-title {
+  color: color-mix(in srgb, var(--list-accent) 82%, white 18%);
+  font-size: clamp(12px, calc(13px * var(--type-scale-body)), 15px);
+  line-height: 1.25;
+  gap: 10px;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--list-accent) 22%, transparent);
+}
+#factsContent > .facts-view > .facts-list-section:nth-of-type(1) .facts-list-title {
+  justify-content: flex-start;
+  text-align: left;
+}
+#factsContent > .facts-view > .facts-list-section:nth-of-type(1) .facts-list-title::before { content: none; }
+#factsContent > .facts-view > .facts-list-section:nth-of-type(3) .facts-list-title {
+  justify-content: flex-end;
+  text-align: right;
+}
+#factsContent > .facts-view > .facts-list-section:nth-of-type(3) .facts-list-title::after { content: none; }
+#factsContent > .facts-view > .facts-list-section .facts-chip-list {
+  gap: 4px 8px;
+  padding: 0;
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip {
+  min-height: 32px;
+  padding: 5px 6px;
+  border: 0 !important;
+  border-radius: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--list-accent) 45%, transparent) 50%, transparent) bottom / 100% 1px no-repeat !important;
+  box-shadow: none !important;
+  font-size: clamp(12px, calc(13px * var(--type-scale-body)), 14px);
+  line-height: 1.25;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:hover,
+#factsContent > .facts-view > .facts-list-section .facts-chip-link:focus-visible {
+  color: #fff !important;
+  background: linear-gradient(90deg, transparent, var(--list-accent) 50%, transparent) bottom / 100% 2px no-repeat !important;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--list-accent) 38%, transparent);
+  box-shadow: none !important;
+}
+
+/* People remain a distinct index, but its groups and names no longer sit in boxes. */
+#factsContent > .facts-view > .facts-notable-people {
+  width: calc(100% + var(--facts-overview-inline-bleed) + var(--facts-overview-inline-bleed));
+  max-width: none;
+  margin: 0 calc(-1 * var(--facts-overview-inline-bleed));
+  padding: 11px var(--facts-overview-inline-bleed) 4px;
+  border: 0;
+  align-self: center;
+  background: linear-gradient(90deg, #22d3ee, #e8ff47 50%, #ff8ad8) top / 100% 1px no-repeat;
+}
+#factsContent .facts-notable-people-groups {
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#factsContent .facts-notable-people-groups > .facts-notable-people-group,
+#factsContent .facts-notable-people-groups > .facts-notable-people-group:nth-child(even),
+#factsContent .facts-notable-people-groups > .facts-notable-people-group:hover {
+  position: relative;
+  padding: 8px 0 10px 16px;
+  border: 0 !important;
+  border-left: 1px solid color-mix(in srgb, var(--list-accent) 48%, transparent) !important;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#factsContent .facts-notable-people-groups > .facts-notable-people-group:last-child {
+  border-left-color: transparent !important;
+}
+#factsContent .facts-notable-people-group::before,
+#factsContent .facts-notable-people-group:nth-child(even)::before {
+  top: 18px;
+  left: -5px;
+  width: 9px;
+  height: 2px;
+  border: 0;
+  border-radius: 0;
+  background: var(--list-accent);
+  box-shadow: 0 0 9px color-mix(in srgb, var(--list-accent) 55%, transparent);
+}
+#factsContent .facts-notable-people-group .facts-chip-list { gap: 4px 8px; }
+#factsContent .facts-notable-people-group .facts-chip-link {
+  min-height: 32px;
+  padding: 5px 7px;
+  border: 0 !important;
+  border-radius: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--list-accent) 45%, transparent) 50%, transparent) bottom / 100% 1px no-repeat !important;
+  box-shadow: none !important;
+  font-size: clamp(12px, calc(13px * var(--type-scale-body)), 14px);
+  line-height: 1.25;
+}
+#factsContent .facts-notable-people-group .facts-chip-link:hover,
+#factsContent .facts-notable-people-group .facts-chip-link:focus-visible {
+  color: #fff;
+  border: 0 !important;
+  background: linear-gradient(90deg, transparent, var(--list-accent) 50%, transparent) bottom / 100% 2px no-repeat !important;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--list-accent) 38%, transparent);
+  box-shadow: none !important;
+}
+@media (max-width: 600px) {
+  #factsContent > .facts-view > .facts-list-section,
+  #factsContent > .facts-view > .facts-notable-people {
+    padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));
+  }
+  #factsContent > .facts-view > .facts-list-section .facts-chip-list,
+  #factsContent > .facts-view > .facts-list-section .facts-chip-list[data-count="7"],
+  #factsContent > .facts-view > .facts-list-section .facts-chip-list[data-count="8"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #factsContent > .facts-view > .facts-list-section .facts-chip-list[data-count="1"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 350px) {
+  #factsContent > .facts-view > .facts-list-section .facts-chip-list,
+  #factsContent > .facts-view > .facts-list-section .facts-chip-list[data-count] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #factsContent > .facts-view > .facts-list-section .facts-chip,
+  #factsContent .facts-notable-people-group .facts-chip-link { transition: none; }
+}
+:root[data-effects="reduced"] #factsContent > .facts-view > .facts-list-section .facts-chip,
+:root[data-effects="reduced"] #factsContent .facts-notable-people-group .facts-chip-link { transition: none; }

@@ -1,5 +1,6 @@
 import { COUNTRY_NOTABLE_PEOPLE } from "./notable-people.js";
 import { summarizeTimeZone } from "./time-zone.js";
+import { createNumericalInsights, factsInsightCopy, getPlaceContext } from "./insights.js";
 import {
   FACTS_IMAGE_ROOT,
   FACTS_STATE_IMAGE_OVERRIDES,
@@ -824,7 +825,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     return [letters.slice(0, midpoint).join(""), letters.slice(midpoint).join("")];
   }
 
-  function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = "", officialUrl = "", notablePeople = []) {
+  function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = "", officialUrl = "", notablePeople = [], place = {}) {
     factsContentEl.innerHTML = "";
 
     const view = document.createElement("div");
@@ -954,19 +955,42 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     head.appendChild(titleRow);
     view.appendChild(head);
 
+    const locale = getLocale();
+    const copy = factsInsightCopy(locale);
+    const context = getPlaceContext(place.kind, place.id, locale);
+    if (context.length) {
+      const strip = document.createElement("div");
+      strip.className = "facts-context-strip";
+      strip.setAttribute("aria-label", copy.context);
+      context.forEach(({ label, url }) => {
+        const chip = document.createElement(url ? "a" : "span");
+        chip.className = "facts-context-chip";
+        chip.textContent = label;
+        if (url) {
+          chip.href = url;
+          chip.target = "_blank";
+          chip.rel = "noopener noreferrer";
+        }
+        strip.appendChild(chip);
+      });
+      view.appendChild(strip);
+    }
+
     const grid = document.createElement("div");
     grid.className = "facts-grid";
     const orderedFields = selectAvailableFactsFields(fields);
-    orderedFields.forEach((fieldData) => {
+    const addField = (fieldData) => {
       if (normalizeFactsField(fieldData)?.featured) {
         return;
       }
-
       const field = createFactsField(fieldData, title);
-      if (field) {
-        grid.appendChild(field);
-      }
-    });
+      if (field) grid.appendChild(field);
+    };
+    orderedFields.forEach(addField);
+    if (place.population && place.area) {
+      createNumericalInsights(place.population, place.area, germanyFacts?.country?.area_km2, locale)
+        .forEach(addField);
+    }
 
     if (grid.children.length) {
       view.appendChild(grid);
@@ -1059,7 +1083,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         ],
         TOURISM_LINKS.germany,
         OFFICIAL_LINKS.germany,
-        getCountryPeopleLists("germany")
+        getCountryPeopleLists("germany"),
+        { kind: "germany", id: "germany", population: countryData.population, area: countryData.area_km2 }
       );
     }
 
@@ -1097,7 +1122,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         ],
         "",
         "",
-        getCountryPeopleLists("europe")
+        getCountryPeopleLists("europe"),
+        { kind: "eu" }
       );
     }
 
@@ -1128,7 +1154,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         ],
         "",
         OFFICIAL_LINKS.world,
-        getCountryPeopleLists("world")
+        getCountryPeopleLists("world"),
+        { kind: "world" }
       );
     }
 
@@ -1168,7 +1195,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         ],
         TOURISM_LINKS.states[stateData.id] || "",
         OFFICIAL_LINKS.states[stateData.id] || "",
-        getStatePeopleLists(stateData.id)
+        getStatePeopleLists(stateData.id),
+        { kind: "state", id: stateData.id, population: stateData.population, area: stateData.area_km2 }
       );
     }
 
@@ -1203,7 +1231,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         ],
         TOURISM_LINKS.countries[countryData.id] || "",
         OFFICIAL_LINKS.countries[countryData.id] || "",
-        getCountryPeopleLists(countryData.id)
+        getCountryPeopleLists(countryData.id),
+        { kind: "country", id: countryData.id, population: countryData.population, area: countryData.area_km2 }
       );
     }
 
@@ -1238,7 +1267,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
         ],
         TOURISM_LINKS.countries[countryData.id] || "",
         OFFICIAL_LINKS.countries[countryData.id] || "",
-        getCountryPeopleLists(countryData.id)
+        getCountryPeopleLists(countryData.id),
+        { kind: "country", id: countryData.id, population: countryData.population, area: countryData.area_km2 }
       );
     }
 

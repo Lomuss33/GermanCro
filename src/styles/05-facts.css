@@ -308,7 +308,6 @@ body .facts-title-row .facts-view-name > .facts-flag-wrap {
 .facts-card:not(.featured) .facts-card-label {
   display: inline-flex;
   align-items: center;
-  gap: calc(6px * var(--type-scale-control));
   font-size: calc(12px * var(--type-scale-body));
   font-weight: 800;
   letter-spacing: 0.11em;
@@ -318,20 +317,6 @@ body .facts-title-row .facts-view-name > .facts-flag-wrap {
   min-width: 0;
   overflow-wrap: anywhere;
   hyphens: auto;
-}
-
-.facts-card:not(.featured) .facts-card-label::before {
-  content: "";
-  width: calc(6px * var(--type-scale-control));
-  height: calc(6px * var(--type-scale-control));
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background: #ffce00;
-  box-shadow: 0 0 0 3px rgba(255, 206, 0, 0.12);
-}
-
-.facts-card:not(.featured):nth-child(even) .facts-card-label {
-  flex-direction: row-reverse;
 }
 
 .facts-card:not(.featured) .facts-card-value {

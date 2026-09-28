@@ -103,7 +103,6 @@
 .facts-card:nth-child(even) { border-left: 1px solid rgba(255, 255, 255, 0.14); border-right: 3px solid var(--card-accent); }
 .facts-card:not(.featured)::after { display: none; }
 .facts-card:not(.featured) .facts-card-label { color: var(--card-accent); text-shadow: 0 0 10px color-mix(in srgb, var(--card-accent) 28%, transparent); }
-.facts-card:not(.featured) .facts-card-label::before { background: var(--card-accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--card-accent) 18%, transparent), 0 0 10px var(--card-accent); }
 .facts-card:not(.featured) .facts-card-value { color: #fff; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.42); }
 .facts-card.featured { border-color: rgba(232, 255, 71, 0.32); background: linear-gradient(135deg, rgba(232, 255, 71, 0.11), rgba(34, 211, 238, 0.045)), rgba(8, 15, 42, 0.7); }
 
@@ -1377,4 +1376,24 @@ body.layout-phone-portrait #mainCard.is-session-ended:has(> #onboardingDialog.is
   filter: none !important;
   animation: none !important;
   transition: none !important;
+}
+
+/* Keep the main reading path short without hiding the full reference data. */
+.facts-context-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  padding: 2px 6px;
+}
+.facts-context-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 9px;
+  color: #e5f7ff;
+  font-size: 11px;
+  font-weight: 750;
+  text-decoration: none;
+  white-space: nowrap;
 }
