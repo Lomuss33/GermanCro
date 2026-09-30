@@ -13,7 +13,11 @@ for(const [,file] of [...scripts,...styles]) {
   assert.match(file,/^static\/.+-[A-Z0-9]{8}\.(js|css)$/);
   const source=await fs.readFile(path.join(root,file),"utf8");
   assert.ok(source.length > 1000);
-  if(file.endsWith(".css")) assert.doesNotMatch(source,/@import\s/);
+  if(file.endsWith(".css")) {
+    assert.doesNotMatch(source,/@import\s/);
+    assert.match(source,/#factsContent\s+\.facts-notable-people-groups\s*>\s*\.facts-people-engineering\s*\{/,
+      "Production CSS must include the final people-directory overrides");
+  }
 }
 for(const file of ["cards.json","cards.user.json","locales.json","germany-facts.json","europe-facts.json","world-facts.json","api/capabilities"]) {
   assert.equal(await fs.readFile(path.join(root,file),"utf8"),await fs.readFile(path.join(repoRoot,file),"utf8"));

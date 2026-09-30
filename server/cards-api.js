@@ -3,6 +3,7 @@ import { cardKey, sanitizeCard } from "../shared/card-schema.js";
 import { sendJson, getRequestBody } from "./http.js";
 
 export function createCardsApi(USER_CARDS_FILE) {
+  let pendingSave = Promise.resolve();
   async function readUserCards() {
     try {
       const raw = await fs.readFile(USER_CARDS_FILE, "utf8");
@@ -18,6 +19,12 @@ export function createCardsApi(USER_CARDS_FILE) {
 
   async function writeUserCards(cards) {
     await fs.writeFile(USER_CARDS_FILE, `${JSON.stringify(cards, null, 2)}\n`, "utf8");
+  }
+
+  function serializeSave(action) {
+    const result = pendingSave.then(action);
+    pendingSave = result.catch(() => {});
+    return result;
   }
 
   async function handleApi(req, res, pathname) {
@@ -40,15 +47,15 @@ export function createCardsApi(USER_CARDS_FILE) {
           return true;
         }
   
-        const cards = await readUserCards();
-        if (cards.some((existing) => cardKey(existing) === cardKey(card))) {
-          sendJson(res, 409, { error: "Card already exists." });
+        const saved = await serializeSave(async () => {
+          const cards = await readUserCards();
+          if (cards.some((existing) => cardKey(existing) === cardKey(card))) return false;
+          cards.push(card);
+          await writeUserCards(cards);
           return true;
-        }
-  
-        cards.push(card);
-        await writeUserCards(cards);
-        sendJson(res, 201, { ok: true, card });
+        });
+        if (!saved) sendJson(res, 409, { error: "Card already exists." });
+        else sendJson(res, 201, { ok: true, card });
         return true;
       } catch (error) {
         sendJson(res, 500, { error: "Could not save card." });

@@ -16,6 +16,10 @@ npm run preview  # serve build/ with compression and caching, localhost:3001
 contents of `build/`. Static hosting cannot persist newly authored cards; the existing
 session/export fallback remains available.
 
+The Node server binds to `127.0.0.1` by default. `HOST` can opt into another
+interface, but the persistent card API is unauthenticated and must not be exposed
+to an untrusted network. Concurrent writes within one server process are serialized.
+
 ## Ownership
 
 ```text
@@ -26,6 +30,7 @@ src/
   config/                 app limits, language metadata, category presentation
   core/                   HTTP, text, randomization, bounded layout cache
   game/answer-analysis.js  pure tokenization and typing-feedback rules
+  game/card-pool.js        pure category, scope and language-eligibility rules
   facts/                  facts controller, data/configuration, notable people
   grammar/table.js         responsive interactive grammar tables
   layout/                 text measurement and responsive type/density profiles
@@ -106,7 +111,9 @@ segmentation does not add production stylesheet requests.
   grows indefinitely in these application-owned caches.
 - Facts still load eagerly **outside** the critical startup promise. Content uses native scrolling; dynamic panels still do not use `content-visibility: auto`.
 - `npm run check` validates JSON contracts, runs behavior/server tests, checks unresolved
-  module references and CSS syntax, builds the site, and verifies generated assets/data.
+  module references and CSS syntax, builds the site, verifies generated assets/data,
+  and smoke-tests production startup in Chrome or Edge when installed. Set
+  `REQUIRE_BROWSER_SMOKE=1` in browser-equipped CI to make absence of a browser fail.
 
 The refactor was browser-checked at 390, 591 and 1,440 CSS pixels: startup, hints, skips,
 grammar rendering and Germany/Europe/world selection worked without horizontal overflow.

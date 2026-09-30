@@ -50,4 +50,17 @@ test("server supports compression, validators, HEAD, malformed URLs and persiste
   const cards=await fetch(`${base}/cards.user.json`);
   assert.equal(cards.headers.get("cache-control"),"no-store");
   assert.equal((await cards.json()).length,1);
+
+  const concurrentCards=["Zweites Haus","Drittes Haus"].map(de=>({...card,de}));
+  const concurrent=await Promise.all([
+    ...concurrentCards.map(item=>fetch(`${base}/api/cards`,{
+      method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(item)
+    })),
+    save()
+  ]);
+  assert.deepEqual(concurrent.map(response=>response.status),[201,201,409]);
+  await Promise.all(concurrent.map(response=>response.text()));
+  const persisted=await fs.readFile(userCardsFile,"utf8");
+  assert.deepEqual(JSON.parse(persisted).map(item=>item.de).sort(),
+    [card.de,...concurrentCards.map(item=>item.de)].sort());
 });

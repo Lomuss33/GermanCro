@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Grammar reference browser check</title>
+<div id="searchPanel"><div id="grammarGrid"></div></div>
+<script type="module">
+  import { renderGrammarReference } from "../src/grammar/reference-view.js";
+
+  try {
+    const locales = await (await fetch("../locales.json")).json();
+    const root = document.getElementById("grammarGrid");
+    for (const language of ["en", "hr"]) {
+      root.replaceChildren();
+      renderGrammarReference(root, locales[language].grammar.cards, language);
+      const toggle = root.querySelector(".grammar-reference-toggle");
+      const topics = root.querySelector(".grammar-reference-topics");
+      const lessons = [...topics.querySelectorAll("details.grammar-card")];
+      if (!toggle || !topics.hidden || toggle.getAttribute("aria-expanded") !== "false" ||
+          lessons.length !== locales[language].grammar.cards.length || lessons.some(lesson => lesson.open)) {
+        throw new Error(`${language}: lessons should start inside a closed topic list`);
+      }
+      toggle.click();
+      if (topics.hidden || toggle.getAttribute("aria-expanded") !== "true") {
+        throw new Error(`${language}: topic button did not open the list`);
+      }
+      lessons[0].querySelector("summary").click();
+      await new Promise(resolve => setTimeout(resolve, 30));
+      if (!lessons[0].open || !lessons[0].querySelector(".grammar-slider-mount")?.children.length) {
+        throw new Error(`${language}: first lesson did not expand and initialize`);
+      }
+      toggle.click();
+      if (!topics.hidden || toggle.getAttribute("aria-expanded") !== "false") {
+        throw new Error(`${language}: topic button did not close the list`);
+      }
+    }
+    root.replaceChildren();
+    renderGrammarReference(root, locales.de.grammar.cards, "de");
+    if (root.querySelector(".grammar-reference-toggle")) {
+      throw new Error("German level filters were replaced by the topic toggle");
+    }
+    const aFilter = root.querySelector('.grammar-reference-filter[data-band="A"]');
+    aFilter?.click();
+    if (!aFilter || root.querySelectorAll(".grammar-card:not([hidden])").length !== 9) {
+      throw new Error("German A1–A2 filter no longer reveals its lessons");
+    }
+    document.body.dataset.testResult = "pass";
+  } catch (error) {
+    document.body.dataset.testResult = `fail: ${error.message}`;
+  }
+</script>
+</html>

@@ -18,17 +18,24 @@ export function renderGrammarReference(root, baseCards, language) {
     en: {
       title: "English grammar for everyday use",
       description: "Clear rules, examples, and practice for your English learning goals.",
+      topicsLabel: "Explore grammar topics",
+      cardAction: "Rules & examples",
     },
     hr: {
       title: "Hrvatska gramatika za svakodnevnu uporabu",
       description: "Jasna pravila, primjeri i vježbe za sigurniju uporabu hrvatskog jezika.",
+      topicsLabel: "Otvori gramatičke teme",
+      cardAction: "Pravila i primjeri",
     },
   }[language] || {
     title: "Grammar for everyday use",
     description: "Clear rules, examples, and practice for your learning goals.",
+    topicsLabel: "Explore grammar topics",
+    cardAction: "Rules & examples",
   };
   let filterBar;
   let resultStatus;
+  let topics;
   root.classList.add("grammar-grid--reference");
   const intro = element("header", "grammar-reference-intro");
   intro.append(element("h2", "grammar-reference-title", introCopy.title));
@@ -66,21 +73,36 @@ export function renderGrammarReference(root, baseCards, language) {
     resultStatus.setAttribute("role", "status");
     // Keep filter-result announcements for screen readers without repeating the UI.
     intro.append(filterBar, resultStatus);
+  } else {
+    const toggle = element("button", "grammar-reference-filter grammar-reference-toggle", introCopy.topicsLabel);
+    toggle.type = "button";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", "grammarReferenceTopics");
+    topics = element("div", "grammar-reference-topics");
+    topics.id = "grammarReferenceTopics";
+    topics.hidden = true;
+    toggle.addEventListener("click", () => {
+      topics.hidden = !topics.hidden;
+      toggle.setAttribute("aria-expanded", String(!topics.hidden));
+    });
+    intro.append(toggle);
   }
   root.append(intro);
+  if (topics) root.append(topics);
 
   cards.forEach((card, index) => {
-    const section = element(card.collapsed ? "details" : "section", "grammar-card");
-    section.classList.toggle("grammar-lesson", german);
+    const collapsible = Boolean(card.collapsed || !german);
+    const section = element(collapsible ? "details" : "section", "grammar-card");
+    section.classList.add("grammar-lesson");
     section.dataset.band = card.band || "";
     if (german) section.hidden = true;
     sections.push(section);
     if (german) section.style.setProperty("--reference-accent", ["#7dd3fc", "#ff8ad8", "#bca2ff", "#84ead0", "#e8ff47", "#ffbd85"][index % 6]);
-    if (card.collapsed) section.classList.add("grammar-lesson--expandable");
-    const heading = card.collapsed ? element("summary", "grammar-lesson-summary") : element("header", "grammar-lesson-heading");
+    if (collapsible) section.classList.add("grammar-lesson--expandable");
+    const heading = collapsible ? element("summary", "grammar-lesson-summary") : element("header", "grammar-lesson-heading");
     if (card.level) heading.append(element("p", "grammar-lesson-level", `${String(index + 1).padStart(2, "0")} / ${card.level}`));
     heading.append(element("h3", "grammar-card-title", card.title));
-    if (card.collapsed) heading.append(element("span", "grammar-lesson-action", "Regel & Beispiele"));
+    if (collapsible) heading.append(element("span", "grammar-lesson-action", german ? "Regel & Beispiele" : introCopy.cardAction));
     section.append(heading);
     const body = element("div", "grammar-lesson-body");
     if (card.description) body.append(element("p", "grammar-lesson-description", card.description));
@@ -115,11 +137,11 @@ export function renderGrammarReference(root, baseCards, language) {
       body.append(source);
     }
     section.append(body);
-    root.append(section);
+    (topics || root).append(section);
 
     let initialized = false;
     const initialize = () => {
-      if (initialized || !section.isConnected || (card.collapsed && !section.open)) return;
+      if (initialized || !section.isConnected || (collapsible && !section.open)) return;
       initialized = true;
       if (card.interaction?.mode === "fixed_first_slider") {
         section.classList.add("grammar-card--interactive");
@@ -141,7 +163,7 @@ export function renderGrammarReference(root, baseCards, language) {
         table.append(head, tbody); wrap.append(table); mount.append(wrap);
       }
     };
-    if (card.collapsed) section.addEventListener("toggle", initialize);
+    if (collapsible) section.addEventListener("toggle", initialize);
     else initialize();
   });
   return controllers;

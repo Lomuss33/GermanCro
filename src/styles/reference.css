@@ -3,7 +3,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: center;
-  gap: 10px;
+  gap: 5px;
+  padding-block: 6px;
 }
 #searchToolsPanel .search-tools-label {
   position: relative;
@@ -47,7 +48,7 @@
   #searchToolsPanel {
     grid-template-columns: 1fr;
     align-items: stretch;
-    gap: 9px;
+    gap: 5px;
   }
   #searchToolsPanel .search-tools-label {
     justify-self: center;
@@ -289,7 +290,7 @@
   bottom: 9px;
   transform: rotate(45deg) translate(2px, 2px);
 }
-#searchPanel .grammar-reference-filter[aria-pressed="true"] {
+#searchPanel .grammar-reference-filter:is([aria-pressed="true"], [aria-expanded="true"]) {
   background:
     radial-gradient(circle at 88% 16%, color-mix(in srgb, var(--filter-accent) 45%, transparent), transparent 48%),
     linear-gradient(145deg, color-mix(in srgb, var(--filter-accent) 76%, white), var(--filter-accent));
@@ -297,7 +298,7 @@
   color: #08131f;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .58), 0 0 25px color-mix(in srgb, var(--filter-accent) 32%, transparent);
 }
-#searchPanel .grammar-reference-filter[aria-pressed="true"]::before {
+#searchPanel .grammar-reference-filter:is([aria-pressed="true"], [aria-expanded="true"])::before {
   border-color: color-mix(in srgb, var(--filter-accent) 70%, #08131f);
   background: color-mix(in srgb, var(--filter-accent) 25%, white);
   box-shadow:
@@ -306,7 +307,7 @@
     -10px 10px 0 -1px color-mix(in srgb, var(--filter-accent) 76%, white),
     -10px 10px 0 0 color-mix(in srgb, var(--filter-accent) 48%, #08131f);
 }
-#searchPanel .grammar-reference-filter[aria-pressed="true"]::after {
+#searchPanel .grammar-reference-filter:is([aria-pressed="true"], [aria-expanded="true"])::after {
   border-color: #08131f;
 }
 #searchPanel .grammar-reference-filter:focus-visible {
@@ -347,9 +348,30 @@
   row-gap: 6px;
   width: 100%;
   min-width: 0;
-  padding: 1px 4px 2px;
+  padding: 4px 8px 7px;
   text-align: left;
+  background: radial-gradient(ellipse 70% 95% at 50% 0, rgba(125, 211, 252, .09), transparent);
+  border-bottom: 1px solid rgba(125, 211, 252, .18);
 }
+#searchPanel .grammar-reference-intro > .grammar-reference-filter.grammar-reference-toggle {
+  --filter-accent: #7dd3fc;
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: 8px;
+  padding-right: 48px;
+}
+#searchPanel .grammar-reference-toggle[aria-expanded="true"]::after {
+  bottom: 9px;
+  transform: rotate(225deg);
+}
+#searchPanel .grammar-reference-topics {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+}
+#searchPanel .grammar-reference-topics[hidden] { display: none; }
+#searchPanel .grammar-reference-topics .grammar-lesson:not([open]) > :not(summary) { display: none; }
 #searchPanel .grammar-lesson-level {
   margin: 0 0 8px;
   color: var(--reference-accent, #7dd3fc);
@@ -363,9 +385,12 @@
   width: 100%;
   min-width: 0;
   max-width: none;
-  font-size: clamp(14px, 1.35vw, 18px);
+  font-size: clamp(13px, 3.1cqw, 18px);
+  font-weight: 800;
   line-height: 1.2;
-  color: #f4f7ff;
+  letter-spacing: .01em;
+  color: #f2fbff;
+  text-shadow: 0 0 12px rgba(72, 229, 255, .42), 0 1px 0 rgba(4, 16, 38, .8);
   margin: 0;
   text-align: center;
   white-space: nowrap;
@@ -496,7 +521,7 @@
 }
 @media (max-width: 700px) {
   #searchPanel .grammar-reference-intro {
-    padding: 1px 12px 2px;
+    padding: 4px 12px 7px;
   }
   #searchPanel .grammar-lesson {
     padding: 16px max(12px, env(safe-area-inset-left)) 16px max(12px, env(safe-area-inset-right));
@@ -510,6 +535,7 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-auto-rows: max-content;
   align-content: start;
+  gap: 4px;
   min-height: 0;
   height: auto;
 }
@@ -518,9 +544,9 @@
   position: relative;
   grid-template-columns: minmax(0, 1fr);
   align-items: center;
-  height: clamp(36px, calc(36px * var(--type-scale-control)), 42px);
+  height: clamp(34px, calc(34px * var(--type-scale-control)), 38px);
   min-height: 0;
-  padding: 3px 15px 3px 7px;
+  padding: 2px 15px 2px 7px;
   border-radius: clamp(9px, .8vw, 13px);
   text-align: center;
 }

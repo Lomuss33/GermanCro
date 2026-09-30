@@ -6,6 +6,26 @@ import { repoRoot } from "./shared-utils.js";
 
 // A separate output directory preserves the historical, hand-edited dist snapshot.
 export const outputRoot = path.join(repoRoot, "build");
+const staticOutputRoot = path.join(outputRoot, "static");
+if (path.relative(repoRoot, staticOutputRoot) !== path.join("build", "static")) {
+  throw new Error("Unexpected static build target");
+}
+try {
+  if ((await fs.lstat(outputRoot)).isSymbolicLink()) {
+    throw new Error("Refusing to write through a symlinked build directory");
+  }
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
+try {
+  if ((await fs.lstat(staticOutputRoot)).isSymbolicLink()) {
+    throw new Error("Refusing to replace a symlinked static build target");
+  }
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
+// This directory contains only generated, content-hashed assets. Remove stale versions.
+await fs.rm(staticOutputRoot, { recursive: true, force: true });
 const result = await build({
   absWorkingDir: repoRoot,
   entryPoints: { app: "app.js", styles: "src/styles/index.css" },

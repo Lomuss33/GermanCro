@@ -1,8 +1,15 @@
 import { createWordGridRenderer, describeWordGrid } from "../game/word-grid.js";
+import {
+  filterCardsBySelection,
+  filterRenderableCards,
+  getPromptLanguagesForTarget as getPoolPromptLanguages,
+  isCardRenderable,
+} from "../game/card-pool.js";
 import { initVisualEffects } from "../ui/visual-effects.js";
 import { prefersReducedEffects } from "../ui/effects-preference.js";
 import { createFactsController } from "../facts/controller.js";
 import { renderSiteTitleLineContent } from "../ui/site-title.js";
+import { detectInstallGuideContext } from "../ui/install-guide-context.js";
 import {
   SESSION_SIZE,
   MAX_SESSION_SKIPS,
@@ -902,10 +909,6 @@ function getCurrentScopeMode() {
   return MODE_SCOPE_MAP[getTargetLanguage()] || "all";
 }
 
-function isCardScopeCompatible(card) {
-  return Boolean(card) && (card.scope === "all" || card.scope === getCurrentScopeMode());
-}
-
 function getTopicColor(topic) {
   return TOPIC_CONFIG[topic]?.color || "#888";
 }
@@ -1290,13 +1293,7 @@ function getTargetValue(card) {
 }
 
 function getPromptLanguagesForTarget(language = getTargetLanguage()) {
-  const activeIndex = LANGUAGE_SEQUENCE.indexOf(language);
-  const promptLanguages = [
-    LANGUAGE_SEQUENCE[(activeIndex + 1) % LANGUAGE_SEQUENCE.length],
-    LANGUAGE_SEQUENCE[(activeIndex + 2) % LANGUAGE_SEQUENCE.length],
-  ];
-
-  return isPromptOrderSwapped ? promptLanguages.reverse() : promptLanguages;
+  return getPoolPromptLanguages(language, isPromptOrderSwapped);
 }
 
 function getPromptLanguages() {
@@ -1304,17 +1301,13 @@ function getPromptLanguages() {
 }
 
 function isRenderableCard(card, language = getTargetLanguage()) {
-  if (!card) {
-    return false;
-  }
-
   const targetLanguage = LANGUAGE_SEQUENCE.includes(language) ? language : getTargetLanguage();
-  const promptLanguages = getPromptLanguagesForTarget(targetLanguage);
-  return [targetLanguage, ...promptLanguages].every((currentLanguage) => getCardValue(card, currentLanguage));
+  return isCardRenderable(card, targetLanguage);
 }
 
 function getRenderablePool(cards, language = getTargetLanguage()) {
-  return (Array.isArray(cards) ? cards : []).filter((card) => isRenderableCard(card, language));
+  const targetLanguage = LANGUAGE_SEQUENCE.includes(language) ? language : getTargetLanguage();
+  return filterRenderableCards(cards, targetLanguage);
 }
 
 function cycleLearningMode() {
@@ -1922,13 +1915,11 @@ function buildSubcategoryPanel() {
 }
 
 function getPool() {
-  const topicFiltered = selectedTopics === null
-    ? allCards
-    : allCards.filter((card) => selectedTopics.has(card.topic));
-  const subcategoryFiltered = selectedSubcategories === null
-    ? topicFiltered
-    : topicFiltered.filter((card) => selectedSubcategories.has(card.subcategory));
-  return subcategoryFiltered.filter(isCardScopeCompatible);
+  return filterCardsBySelection(allCards, {
+    topics: selectedTopics,
+    subcategories: selectedSubcategories,
+    scope: getCurrentScopeMode(),
+  });
 }
 
 searchLinksEl?.addEventListener("click", (event) => {
@@ -2892,80 +2883,12 @@ function isStandaloneMode() {
   );
 }
 
-function detectInstallGuideContext() {
-  const ua = navigator.userAgent || "";
-  const isIOS = /iPad|iPhone|iPod/i.test(ua);
-  const isAndroid = /Android/i.test(ua);
-  const isMobile = isIOS || isAndroid;
-  const isDesktop = !isMobile;
-  const isSamsung = /SamsungBrowser/i.test(ua);
-  const isFirefox = /Firefox|FxiOS/i.test(ua);
-  const isEdgeAndroid = /EdgA/i.test(ua);
-  const isEdgeIOS = /EdgiOS/i.test(ua);
-  const isEdgeDesktop = /Edg/i.test(ua) && !isEdgeAndroid && !isEdgeIOS;
-  const isEdge = isEdgeAndroid || isEdgeIOS || isEdgeDesktop;
-  const isOperaTouch = /OPT/i.test(ua);
-  const isOpera = /OPR|Opera/i.test(ua) || isOperaTouch;
-  const isChromeIOS = /CriOS/i.test(ua);
-  const isChromeDesktopOrAndroid = /Chrome/i.test(ua) && !isSamsung && !isFirefox && !isEdge && !isOpera;
-  const isChrome = isChromeIOS || isChromeDesktopOrAndroid;
-  const isSafari = /Safari/i.test(ua) && !isChrome && !isFirefox && !isEdge && !isOpera && !isSamsung;
-  const isFirefoxIOS = /FxiOS/i.test(ua);
-  const isFirefoxDesktop = isFirefox && !isMobile;
-  const isFirefoxMobile = isFirefox && isMobile;
-
-  let browserLabel = t("installGuide.fallbackBrowser");
-  let installPathKey = "default";
-
-  if (isIOS && isSafari) {
-    browserLabel = "Safari";
-    installPathKey = "iosShare";
-  } else if (isEdgeIOS) {
-    browserLabel = "Edge iPhone";
-    installPathKey = "iosShare";
-  } else if (isIOS && isChromeIOS) {
-    browserLabel = "Chrome iOS";
-    installPathKey = "iosShare";
-  } else if (isFirefoxIOS) {
-    browserLabel = "Firefox iPhone";
-    installPathKey = "iosShare";
-  } else if (isAndroid && isSamsung) {
-    browserLabel = "Samsung";
-    installPathKey = "samsung";
-  } else if (isEdgeAndroid) {
-    browserLabel = "Edge Android";
-    installPathKey = "edgeAndroid";
-  } else if (isAndroid && isOperaTouch) {
-    browserLabel = "Opera Touch";
-    installPathKey = "opera";
-  } else if (isAndroid && isOpera) {
-    browserLabel = "Opera";
-    installPathKey = "opera";
-  } else if (isFirefoxMobile) {
-    browserLabel = "Firefox";
-    installPathKey = "firefoxMobile";
-  } else if (isAndroid && isChromeDesktopOrAndroid) {
-    browserLabel = "Chrome";
-    installPathKey = "chromeAndroid";
-  } else if (isEdgeDesktop) {
-    browserLabel = "Edge";
-    installPathKey = "edgeDesktop";
-  } else if (isDesktop && isOpera) {
-    browserLabel = "Opera";
-    installPathKey = "default";
-  } else if (isDesktop && isChromeDesktopOrAndroid) {
-    browserLabel = "Chrome";
-    installPathKey = "chromeDesktop";
-  } else if (isFirefoxDesktop) {
-    browserLabel = "Firefox";
-    installPathKey = "firefoxDesktop";
-  } else if (isDesktop) {
-    browserLabel = t("installGuide.fallbackDesktop");
-  } else if (isMobile) {
-    browserLabel = t("installGuide.fallbackMobile");
-  }
-
-  return { isMobile, isDesktop, browserLabel, installPathKey };
+function getInstallGuideContext() {
+  return detectInstallGuideContext(navigator.userAgent, {
+    fallbackBrowser: t("installGuide.fallbackBrowser"),
+    fallbackDesktop: t("installGuide.fallbackDesktop"),
+    fallbackMobile: t("installGuide.fallbackMobile"),
+  });
 }
 
 function renderInstallGuide() {
@@ -2973,7 +2896,7 @@ function renderInstallGuide() {
     return;
   }
 
-  const context = detectInstallGuideContext();
+  const context = getInstallGuideContext();
   const localizedPath = t(`installGuide.paths.${context.installPathKey}`);
   const resolvedPath = localizedPath === `installGuide.paths.${context.installPathKey}`
     ? t("installGuide.paths.default")
@@ -3019,7 +2942,7 @@ function applyInstallGuideLayout() {
     return;
   }
 
-  const context = detectInstallGuideContext();
+  const context = getInstallGuideContext();
   if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
     hideInstallGuide();
     return;
@@ -3056,7 +2979,7 @@ function maybeShowInstallGuide() {
     return;
   }
 
-  const context = detectInstallGuideContext();
+  const context = getInstallGuideContext();
   if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
     hideInstallGuide();
     return;

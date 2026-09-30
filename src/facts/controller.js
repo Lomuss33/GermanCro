@@ -1,5 +1,6 @@
 import { COUNTRY_NOTABLE_PEOPLE } from "./notable-people.js";
 import { summarizeTimeZone } from "./time-zone.js";
+import { factFieldSearchQuery, factListSearchQuery } from "./search-query.js";
 import { createNumericalInsights, factsInsightCopy, getPlaceContext } from "./insights.js";
 import {
   FACTS_IMAGE_ROOT,
@@ -622,14 +623,6 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     return null;
   }
 
-  function getFactsSearchTerm(label, value, contextName = "") {
-    const valueText = String(value ?? "").trim();
-    const isNumericValue = valueText !== "" && (/^\d/.test(valueText) || /^[\d\s.,%+\-€$£]+$/.test(valueText));
-    return [label, isNumericValue ? "" : valueText, contextName]
-      .filter(isNonEmptyValue)
-      .join(" ");
-  }
-
   function selectAvailableFactsFields(fields) {
     const seenLabels = new Set();
     return fields.filter((field) => {
@@ -668,7 +661,11 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     if (featured) {
       card.classList.add("featured");
     } else if (!unavailable) {
-      const searchTerm = getFactsSearchTerm(label, value, contextName);
+      const locale = getLocale();
+      const comparisonPlace = label === factsInsightCopy(locale).size
+        ? { de: "Deutschland", en: "Germany", hr: "Njemačka" }[locale] || "Deutschland"
+        : "";
+      const searchTerm = factFieldSearchQuery(contextName, label, comparisonPlace);
       card.classList.add("facts-card-link");
       card.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
       card.target = "_blank";
@@ -723,9 +720,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       .filter((item) => isNonEmptyValue(item))
       .forEach((item) => {
       const itemText = String(item);
-      const searchTerm = ["neighbors", "borders"].includes(variant)
-        ? `${itemText} border ${contextName}`.trim()
-        : itemText;
+      const searchTerm = factListSearchQuery(contextName, label, itemText);
         const chip = document.createElement("a");
         chip.className = "facts-chip facts-chip-link";
         chip.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
@@ -767,7 +762,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     ];
   }
 
-  function createNotablePeopleSection(groups) {
+  function createNotablePeopleSection(groups, contextName) {
     const peopleGroups = groups
       .map(([label, values, variant]) => ({ label, variant, values: Array.isArray(values) ? values.filter(isNonEmptyValue) : [] }))
       .filter(({ values }) => values.length);
@@ -787,7 +782,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     const groupsEl = document.createElement("div");
     groupsEl.className = "facts-notable-people-groups";
     peopleGroups.forEach(({ label, variant, values }) => {
-      const group = createFactsList(label, values, variant, "");
+      const group = createFactsList(label, values, variant, contextName);
       if (group) {
         group.classList.add("facts-notable-people-group");
         groupsEl.appendChild(group);
@@ -1004,7 +999,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       }
     });
 
-    const peopleSection = createNotablePeopleSection(notablePeople);
+    const peopleSection = createNotablePeopleSection(notablePeople, title);
     if (peopleSection) {
       view.appendChild(peopleSection);
     }

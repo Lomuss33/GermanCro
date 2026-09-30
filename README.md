@@ -6,6 +6,10 @@ Run `npm ci`, then `npm start` for development. Use `npm run check` for all vali
 and tests, `npm run build` to generate the optimized site in `build/`, and
 `npm run preview` to inspect it at `http://localhost:3001`.
 
+The Node server binds to `127.0.0.1` by default. Set `HOST` explicitly to allow
+connections from another device; the card-writing API has no authentication, so do
+not expose that mode to an untrusted network.
+
 See [the architecture guide](docs/ARCHITECTURE.md) for source ownership, CSS ordering,
 performance safeguards and deployment. `dist/` is a preserved historical snapshot;
 new releases should use the generated `build/` directory.
