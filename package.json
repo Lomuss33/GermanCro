@@ -3,6 +3,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "dev": "node server.js",
     "start": "node server.js",
     "build": "node scripts/build.js",
     "preview": "node server.js --production",
