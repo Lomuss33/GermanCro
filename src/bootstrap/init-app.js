@@ -1,4 +1,3 @@
-import { createWordGridRenderer, describeWordGrid } from "../game/word-grid.js";
 import {
   filterCardsBySelection,
   filterRenderableCards,
@@ -7,11 +6,15 @@ import {
 } from "../game/card-pool.js";
 import {
   createCategoryPanelController,
-  getRequestedSessionSize,
-  getTopicColor,
   resolveSessionSize,
   syncSessionSizeLabel,
 } from "../game/category-panel.js";
+import { createAnswerGuideController } from "../game/answer-guide-ui.js";
+import {
+  createGameInputController,
+  focusAnswerInputWithoutScroll,
+} from "../game/input-controller.js";
+import { createWeakCardTracker } from "../game/weak-cards.js";
 import { initVisualEffects } from "../ui/visual-effects.js";
 import { prefersReducedEffects } from "../ui/effects-preference.js";
 import {
@@ -25,6 +28,14 @@ import {
 } from "../ui/feedback-effects.js";
 import { createInstallGuideController } from "../ui/install-guide.js";
 import {
+  renderCardBadge as renderCardBadgeView,
+  renderSiteTitle as renderSiteTitleView,
+  renderStaticLabels,
+  scheduleCardTopbarLayoutSync,
+  updateLanguageDock as updateLanguageDockView,
+  updateSearchLinks,
+} from "../ui/static-ui.js";
+import {
   createCardAuthoringController,
   loadSessionAuthoringCards,
 } from "../authoring/card-authoring.js";
@@ -34,7 +45,6 @@ import {
   SESSION_SIZE,
   MAX_SESSION_SKIPS,
   AUTO_SUBMIT_DELAY_MS,
-  AUTOFILL_TRAILING_PUNCT,
   EMERGENCY_FALLBACK_CARD,
   LEARNING_MODE_STORAGE_KEY,
   PROMPT_ORDER_STORAGE_KEY,
@@ -42,32 +52,19 @@ import {
 import { shuffle } from "../core/random.js";
 import { getByPath, formatTemplate, getCardValue, formatRoundTime } from "../core/text.js";
 import { fetchJson, detectCapabilities } from "../core/http.js";
-import {
-  getCorrectPrefixLength,
-  getGuideSeparatorKind,
-  getGuideWordTokens,
-  getGuideWordTokenAt,
-  getGuidePreviousWordToken,
-  getFreshCorrectIndexes,
-  getFreshWrongIndexes,
-  isExactTypedMatch,
-} from "../game/answer-analysis.js";
+import { isExactTypedMatch } from "../game/answer-analysis.js";
 import {
   calculateWpmMetrics,
-  countInsertedTypingUnits,
   countTypingUnits,
   formatWpm,
 } from "../game/typing-metrics.js";
 import {
-  answerGuideSizingState,
   createViewportProfileController,
   getCurrentGameDensity,
   getPromptAvailableHeight,
   getPromptFitProfile,
   getSiteTitleFitProfile,
   initAnswerGuideResizeObserver,
-  isTouchKeyboardEnvironment,
-  scheduleAnswerGuideMeasure,
 } from "../layout/viewport-controller.js";
 import {
   promptEl,
@@ -77,98 +74,35 @@ import {
   inputFlagEl,
   siteTitleEl,
   heroStageEl,
-  languageDockButtons,
-  arrowDockEl,
-  arrowDockButtons,
-  arrowDockLabelEls,
   appLoaderEl,
   appLoaderSpinnerEl,
   onboardingDialogEl,
-  statLabelStreakEl,
-  statLabelRemainingEl,
-  statLabelAccuracyEl,
-  statLabelWpmEl,
-  cardLegendEl,
-  cardTopbarEl,
-  legendCorrectEl,
-  legendNextEl,
-  legendWrongEl,
   skipCardBtnEl,
-  skipCardBtnLabelEl,
   skipCounterEl,
   enterKeyBtnEl,
-  promptHeadTitleEl,
   inputEl,
-  wordGrid,
-  answerTerminalStatusRowEl,
-  answerTerminalStatusEl,
-  answerGuideEl,
   roundTimerEl,
   finalTimeEl,
-  answerGuideLabelEl,
-  answerGuideStatusEl,
-  answerGuideNoteEl,
-  categoryEl,
   gameArea,
   sessionEndEl,
   mainCard,
   progressTrackEl,
   statsBarEl,
-  catCountEl,
-  catButtonsLabelEl,
-  subcategoryFilterLabelEl,
-  settingsPanelTitleTextEl,
   tutorialReplayBtnEl,
-  catPanelTitleEl,
-  difficultyHardBtn,
-  difficultyMediumBtn,
-  difficultyEasyBtn,
-  sessionSizeSliderEl,
-  newGameBtn,
   searchPanelEl,
-  searchPanelTitleEl,
-  searchPanelSubtitleEl,
-  grammarSectionTitleEl,
   grammarGridEl,
   searchLinksEl,
   authorPanelEl,
-  authorToggleBtn,
-  authorPanelTitleEl,
-  addCardDeEl,
-  addCardHrEl,
-  addCardEnEl,
-  authorLabelDeEl,
-  authorLabelTopicEl,
-  authorLabelSubcategoryEl,
-  authorLabelScopeEl,
-  authorLabelHrEl,
-  authorLabelEnEl,
-  factsPanelTitleEl,
-  factsPanelSubtitleEl,
-  factsCountryBtn,
-  factsStatesBtn,
-  factsWorldBtn,
   factsPanelEl,
   hintBtnEl,
-  enterHintLabelEl,
-  sessionEndLabelEl,
-  finalCorrectLabelEl,
-  finalSkippedLabelEl,
-  finalStreakLabelEl,
-  finalWpmLabelEl,
-  finalTimeLabelEl,
-  restartBtnEl,
-  sessionSettingsBtnEl,
   finalCorrectEl,
   finalSkippedEl,
   finalStreakEl,
   finalWpmEl,
-  siteFooterLinkEl,
 } from "../ui/dom.js";
 import { setLanguageFlagIcon } from "../ui/language-flags.js";
-import { LANGUAGE_SEQUENCE, LANGUAGE_DOCK_LABELS, LANGUAGE_TITLES } from "../config/languages.js";
-import { DEFAULT_SUBCATEGORIES, SUBCATEGORY_COLORS } from "../config/categories.js";
-import { searchSites } from "../search/sites.js";
+import { LANGUAGE_SEQUENCE } from "../config/languages.js";
+import { DEFAULT_SUBCATEGORIES } from "../config/categories.js";
 import { createPretextBlockController } from "../layout/pretext.js";
 import { renderGrammarReference } from "../grammar/reference-view.js";
 import { createFirstRunTour } from "../onboarding/first-run-tour.js";
@@ -176,7 +110,6 @@ import { initPageScrollAssist } from "../ui/page-scroll-assist.js";
 
 import {
   MODE_SCOPE_MAP,
-  SUBCATEGORY_OPTIONS,
   createCardDuplicateIndex,
   mergeCards,
   normalizeAnswer,
@@ -198,6 +131,7 @@ let bundledCards = [];
 let persistentCards = [];
 let sessionOnlyCards = [];
 const cardDuplicateIndex = createCardDuplicateIndex();
+const weakCardTracker = createWeakCardTracker();
 let selectedTopics = null;
 let extendedRoundSize = false;
 let selectedSubcategories = new Set(DEFAULT_SUBCATEGORIES);
@@ -226,10 +160,7 @@ let autoSubmitTimer = 0;
 let scoredCardEvents = new WeakSet();
 let difficulty = "easy";
 let previousTypedValue = "";
-let answerGuideCompleteTimer = null;
-let enterKeyPulseTimer = 0;
 let currentCardShownAt = 0;
-let cardTopbarLayoutRaf = 0;
 let learningMode = "de";
 let isPromptOrderSwapped = false;
 
@@ -266,41 +197,6 @@ function syncPromptOrderControls() {
   });
 }
 
-function activateTouchInputWithoutScroll(event) {
-  if (!isTouchKeyboardEnvironment() || !inputEl || document.activeElement === inputEl) {
-    return;
-  }
-
-  event.preventDefault();
-  focusAnswerInputAtEnd();
-}
-
-function focusAnswerInputWithoutScroll() {
-  if (!inputEl) {
-    return;
-  }
-
-  try {
-    inputEl.focus({ preventScroll: true });
-  } catch {
-    inputEl.focus();
-  }
-}
-
-function focusAnswerInputAtEnd() {
-  if (!inputEl) {
-    return;
-  }
-
-  focusAnswerInputWithoutScroll();
-  const caretPosition = inputEl.value.length;
-  try {
-    inputEl.setSelectionRange(caretPosition, caretPosition);
-  } catch {
-    // ignore inputs that do not support selection APIs
-  }
-}
-
 function isAnswerFocusBlocked() {
   return Boolean(
     onboardingPending ||
@@ -316,60 +212,6 @@ function hasActivePlayableCard() {
 
 function canConvenienceFocusAnswerInput() {
   return Boolean(inputEl && hasActivePlayableCard() && !isAnswerFocusBlocked());
-}
-
-function shouldCaptureTypingForAnswer(event) {
-  if (!canConvenienceFocusAnswerInput()) {
-    return false;
-  }
-
-  if (event.defaultPrevented || event.isComposing || event.ctrlKey || event.metaKey || event.altKey) {
-    return false;
-  }
-
-  if (event.key.length !== 1) {
-    return false;
-  }
-
-  const activeElement = document.activeElement;
-  if (!activeElement || activeElement === document.body || activeElement === document.documentElement) {
-    return true;
-  }
-
-  return false;
-}
-
-function insertTextIntoAnswerInput(text) {
-  if (!inputEl || !text) {
-    return;
-  }
-
-  const start = typeof inputEl.selectionStart === "number" ? inputEl.selectionStart : inputEl.value.length;
-  const end = typeof inputEl.selectionEnd === "number" ? inputEl.selectionEnd : inputEl.value.length;
-
-  if (typeof inputEl.setRangeText === "function") {
-    inputEl.setRangeText(text, start, end, "end");
-  } else {
-    inputEl.value = `${inputEl.value.slice(0, start)}${text}${inputEl.value.slice(end)}`;
-  }
-
-  inputEl.dispatchEvent(new Event("input", { bubbles: true }));
-}
-
-function shouldTapFocusAnswerInput(target) {
-  if (!canConvenienceFocusAnswerInput() || !(target instanceof Element)) {
-    return false;
-  }
-
-  if (!mainCard?.contains(target)) {
-    return false;
-  }
-
-  if (target.closest("button, a, input, textarea, select, label")) {
-    return false;
-  }
-
-  return true;
 }
 
 function setExternalLookupInert(inert) {
@@ -551,14 +393,14 @@ function getSubcategoryLabel(subcategory) {
   return t(`categories.${subcategory}`);
 }
 
-function getSubcategoryColor(subcategory) {
-  const index = SUBCATEGORY_OPTIONS.indexOf(subcategory);
-  return index >= 0 ? SUBCATEGORY_COLORS[index] : "#ffffff";
-}
-
 function getScopeLabel(scope) {
   return t(`scopes.${scope}`);
 }
+
+const answerGuideController = createAnswerGuideController({
+  translate: t,
+  getDifficulty: () => difficulty,
+});
 
 const installGuideController = createInstallGuideController({
   translate: t,
@@ -618,7 +460,7 @@ const viewportController = createViewportProfileController({
     if (sessionCards.length && sessionCards[sessionIndex]) {
       promptController?.relayout();
       promptSubController?.relayout();
-      buildWordGrid(getTargetValue(sessionCards[sessionIndex]), inputEl.value);
+      answerGuideController.buildWordGrid(getTargetValue(sessionCards[sessionIndex]), inputEl.value);
     }
   },
   onTopbarSync: () => {
@@ -633,87 +475,7 @@ const viewportController = createViewportProfileController({
 });
 
 function renderCardBadge(card) {
-  if (!categoryEl) {
-    return;
-  }
-
-  categoryEl.innerHTML = "";
-
-  if (!card) {
-    categoryEl.style.removeProperty("color");
-    categoryEl.style.removeProperty("--category-color");
-    categoryEl.style.removeProperty("border-color");
-    categoryEl.style.removeProperty("background");
-    scheduleCardTopbarLayoutSync();
-    return;
-  }
-
-  const color = getTopicColor(card.topic);
-
-  const topicEl = document.createElement("span");
-  topicEl.className = "category-badge-main";
-  topicEl.textContent = getTopicLabel(card.topic);
-
-  const metaEl = document.createElement("span");
-  metaEl.className = "category-badge-meta";
-  metaEl.textContent = getSubcategoryLabel(card.subcategory);
-  metaEl.style.setProperty("--subcategory-color", getSubcategoryColor(card.subcategory));
-
-  categoryEl.append(metaEl, topicEl);
-  categoryEl.style.color = color;
-  categoryEl.style.setProperty("--category-color", color);
-  categoryEl.style.removeProperty("border-color");
-  categoryEl.style.removeProperty("background");
-  scheduleCardTopbarLayoutSync();
-}
-
-function syncCardTopbarLayout() {
-  cardTopbarLayoutRaf = 0;
-  if (!cardTopbarEl || !cardLegendEl || !categoryEl) {
-    return;
-  }
-
-  if (!categoryEl.textContent.trim() || cardTopbarEl.clientWidth <= 0) {
-    cardTopbarEl.classList.remove("is-legend-stacked");
-    return;
-  }
-
-  const legendItems = Array.from(cardLegendEl.querySelectorAll(".card-legend-item"));
-  const topbarStyles = window.getComputedStyle(cardTopbarEl);
-  const legendStyles = window.getComputedStyle(cardLegendEl);
-  const topbarGap = Number.parseFloat(topbarStyles.columnGap || topbarStyles.gap) || 0;
-  const legendGap = Number.parseFloat(legendStyles.columnGap || legendStyles.gap) || 0;
-  const legendWidth = legendItems.reduce((width, item) => width + item.getBoundingClientRect().width, 0)
-    + Math.max(0, legendItems.length - 1) * legendGap;
-  const categoryWidth = Math.max(categoryEl.scrollWidth, categoryEl.getBoundingClientRect().width);
-  const comfortSpace = 12;
-  const shouldStack = categoryWidth + topbarGap + legendWidth + comfortSpace > cardTopbarEl.clientWidth;
-
-  cardTopbarEl.classList.toggle("is-legend-stacked", shouldStack);
-}
-
-function scheduleCardTopbarLayoutSync() {
-  if (cardTopbarLayoutRaf) {
-    return;
-  }
-
-  cardTopbarLayoutRaf = window.requestAnimationFrame(syncCardTopbarLayout);
-}
-
-function setTextContent(element, value) {
-  if (element) {
-    element.textContent = value;
-  }
-}
-
-function setLocalizedText(element, path, params) {
-  setTextContent(element, t(path, params));
-}
-
-function setLocalizedAriaLabel(element, path, params) {
-  if (element) {
-    element.setAttribute("aria-label", t(path, params));
-  }
+  renderCardBadgeView(card, { getTopicLabel, getSubcategoryLabel });
 }
 
 function canSkipCurrentCard() {
@@ -822,6 +584,7 @@ function skipCurrentCard() {
   sessionSkipsUsed += 1;
   sessionSkippedCards.add(card);
   incrementCardSkipCount(card);
+  weakCardTracker.recordMistake(card, 1);
   streak = 0;
   updateStats({ event: "skip" });
 
@@ -851,33 +614,6 @@ function updateSkipCardButtonState() {
   skipCounterEl.classList.toggle("is-depleted", remainingSkips === 0);
   skipCounterEl.setAttribute("aria-label", remainingLabel);
   skipCounterEl.title = remainingLabel;
-}
-
-function renderHintButtonLabel() {
-  if (!hintBtnEl) {
-    return;
-  }
-
-  const textEl = hintBtnEl.querySelector(".hint-btn-text");
-  const hintLabel = t("messages.actions.hint");
-  hintBtnEl.setAttribute("aria-label", hintLabel);
-  if (textEl && hintBtnEl.querySelector(".button-icon-emoji")) {
-    textEl.textContent = hintLabel;
-    return;
-  }
-
-  hintBtnEl.replaceChildren();
-
-  const iconEl = document.createElement("span");
-  iconEl.className = "button-icon button-icon-emoji";
-  iconEl.setAttribute("aria-hidden", "true");
-  iconEl.textContent = String.fromCodePoint(0x1F4A1);
-
-  const labelEl = document.createElement("span");
-  labelEl.className = "hint-btn-text";
-  labelEl.textContent = hintLabel;
-
-  hintBtnEl.append(iconEl, document.createTextNode(" "), labelEl);
 }
 
 function getTargetLanguage() {
@@ -911,68 +647,17 @@ function cycleLearningMode() {
   return LANGUAGE_SEQUENCE[(currentIndex + 1) % LANGUAGE_SEQUENCE.length];
 }
 
-function renderSiteTitle(language) {
-  if (!siteTitleEl) {
-    return;
-  }
-
-  const title = LANGUAGE_TITLES[language] || LANGUAGE_TITLES.de;
-  siteTitleEl.setAttribute("aria-label", title);
-  if (siteTitleController) {
-    siteTitleController.setText(title, { animate: true });
-    return;
-  }
-
-  siteTitleEl.textContent = title;
-}
-
-function updateLanguageDock() {
-  const languageDock = document.getElementById("languageDock");
-  if (languageDock) {
-    languageDock.setAttribute("aria-label", t("messages.languageDockAria"));
-  }
-  languageDockButtons.forEach((button) => {
-    const language = button.dataset.lang;
-    const labelEl = button.querySelector(".language-dock-label");
-    if (labelEl) {
-      labelEl.textContent = LANGUAGE_DOCK_LABELS[language] || "";
-    }
-    button.classList.toggle("is-active", language === getTargetLanguage());
-    button.setAttribute("aria-pressed", String(language === getTargetLanguage()));
-    button.setAttribute("aria-label", t(`messages.languageNames.${language}`));
-  });
-  if (arrowDockEl) {
-    arrowDockEl.setAttribute("aria-label", t("messages.arrowDockAria"));
-  }
-  Object.entries(arrowDockLabelEls).forEach(([direction, labelEl]) => {
-    if (labelEl) {
-      labelEl.textContent = t(`messages.arrowActions.${direction}`);
-    }
-  });
-  const arrowDirections = {
-    ArrowUp: "up",
-    ArrowLeft: "left",
-    ArrowDown: "down",
-    ArrowRight: "right",
-  };
-  arrowDockButtons.forEach((button) => {
-    const direction = arrowDirections[button.dataset.arrow];
-    if (direction) {
-      button.setAttribute("aria-label", t(`messages.arrowActions.${direction}`));
-    }
-  });
-}
-
 function applyLearningTheme() {
-  document.body.dataset.learningMode = getTargetLanguage();
-  document.documentElement.lang = getLocaleBundle()?.meta?.htmlLang || getTargetLanguage();
-  updateLanguageDock();
-  renderSiteTitle(getTargetLanguage());
+  const targetLanguage = getTargetLanguage();
+  document.body.dataset.learningMode = targetLanguage;
+  document.documentElement.lang = getLocaleBundle()?.meta?.htmlLang || targetLanguage;
+  updateLanguageDockView({ translate: t, targetLanguage });
+  renderSiteTitleView(targetLanguage, siteTitleController);
 }
 
 function renderGrammarSection() {
   if (!grammarGridEl) return;
-  grammarSliderControllers.forEach(controller => controller?.destroy?.());
+  grammarSliderControllers.forEach((controller) => controller?.destroy?.());
   grammarGridEl.replaceChildren();
   grammarSliderControllers = renderGrammarReference(
     grammarGridEl, getLocaleBundle()?.grammar?.cards || [], getLocale()
@@ -980,85 +665,14 @@ function renderGrammarSection() {
 }
 
 function renderStaticUi() {
-  visualEffects?.sync();
-  setLocalizedText(statLabelStreakEl, "messages.stats.streak");
-  setLocalizedText(statLabelRemainingEl, "messages.stats.remaining");
-  setLocalizedText(statLabelAccuracyEl, "messages.stats.accuracy");
-  setLocalizedText(statLabelWpmEl, "messages.stats.wpm");
-  if (statsBarEl) {
-    const remainingLabelLength = (statLabelRemainingEl?.textContent || "").trim().length;
-    statsBarEl.dataset.remainingLabel = remainingLabelLength > 6 ? "long" : "short";
-  }
-  setLocalizedAriaLabel(cardLegendEl, "messages.legend.aria");
-  setLocalizedText(legendCorrectEl, "messages.legend.correct");
-  setLocalizedText(legendNextEl, "messages.legend.next");
-  setLocalizedText(legendWrongEl, "messages.legend.wrong");
-  setLocalizedText(skipCardBtnLabelEl, "messages.actions.skip");
-  if (skipCardBtnEl) {
-    skipCardBtnEl.setAttribute("aria-label", t("messages.actions.skip"));
-    skipCardBtnEl.setAttribute("title", t("messages.actions.skipTitle"));
-  }
-  if (enterKeyBtnEl) {
-    const enterActionLabel = t("messages.actions.enterHint");
-    const enterButtonLabel = `Enter ${enterActionLabel}`;
-    enterKeyBtnEl.setAttribute("aria-label", enterButtonLabel);
-    enterKeyBtnEl.setAttribute("title", enterButtonLabel);
-  }
-  setLocalizedText(promptHeadTitleEl, "messages.prompt.card");
-  if (inputEl) {
-    inputEl.placeholder = t("messages.prompt.placeholder");
-  }
-  setLocalizedText(answerGuideLabelEl, "messages.guide.label");
-  renderHintButtonLabel();
-  setLocalizedText(enterHintLabelEl, "messages.actions.enterHint");
-  setLocalizedText(sessionEndLabelEl, "messages.session.finished");
-  setLocalizedText(finalCorrectLabelEl, "messages.session.correct");
-  setLocalizedText(finalSkippedLabelEl, "messages.session.skipped");
-  setLocalizedText(finalStreakLabelEl, "messages.session.bestStreak");
-  setLocalizedText(finalWpmLabelEl, "messages.session.wpm");
-  setLocalizedText(finalTimeLabelEl, "messages.session.time");
-  setLocalizedText(sessionSettingsBtnEl, "messages.actions.settings");
-  setLocalizedText(restartBtnEl, "messages.session.newRound");
-  setLocalizedText(settingsPanelTitleTextEl, "messages.actions.settings");
-  setLocalizedText(tutorialReplayBtnEl, "onboarding.controls.replay");
-  setLocalizedText(catPanelTitleEl, "messages.categories.title");
-  setLocalizedText(catButtonsLabelEl, "messages.categories.select");
-  setLocalizedText(subcategoryFilterLabelEl, "messages.categories.classSelect");
-  setLocalizedText(newGameBtn, "messages.categories.newGame");
-  syncPromptOrderControls();
-  setLocalizedText(difficultyEasyBtn, "difficulty.easy");
-  setLocalizedText(difficultyMediumBtn, "difficulty.medium");
-  setLocalizedText(difficultyHardBtn, "difficulty.hard");
-  setLocalizedText(searchPanelTitleEl, "messages.search.title");
-  setLocalizedText(searchPanelSubtitleEl, "messages.search.subtitle");
-  setLocalizedText(authorToggleBtn, "messages.search.authorToggle");
-  setLocalizedText(grammarSectionTitleEl, "grammar.title");
-  setLocalizedText(authorPanelTitleEl, "messages.authoring.title");
-  setLocalizedText(authorLabelDeEl, "messages.authoring.labels.de");
-  setLocalizedText(authorLabelTopicEl, "messages.authoring.labels.topic");
-  setLocalizedText(authorLabelSubcategoryEl, "messages.authoring.labels.subcategory");
-  setLocalizedText(authorLabelScopeEl, "messages.authoring.labels.scope");
-  setLocalizedText(authorLabelHrEl, "messages.authoring.labels.hr");
-  setLocalizedText(authorLabelEnEl, "messages.authoring.labels.en");
-  if (addCardDeEl) {
-    addCardDeEl.placeholder = t("messages.authoring.placeholders.de");
-  }
-  if (addCardHrEl) {
-    addCardHrEl.placeholder = t("messages.authoring.placeholders.hr");
-  }
-  if (addCardEnEl) {
-    addCardEnEl.placeholder = t("messages.authoring.placeholders.en");
-  }
-  cardAuthoringController.fillSelects();
-  setLocalizedText(factsPanelTitleEl, "facts.panelTitle");
-  setLocalizedText(factsPanelSubtitleEl, "facts.panelSubtitle");
-  setLocalizedText(factsCountryBtn?.querySelector(".facts-switch-btn-label"), "facts.tabs.germany");
-  setLocalizedText(factsStatesBtn?.querySelector(".facts-switch-btn-label"), "facts.tabs.europe");
-  setLocalizedText(factsWorldBtn?.querySelector(".facts-switch-btn-label"), "facts.tabs.world");
-  setLocalizedText(siteFooterLinkEl, "footer");
-  renderGrammarSection();
-  scheduleCardTopbarLayoutSync();
-  firstRunTour?.refreshCopy();
+  renderStaticLabels({
+    translate: t,
+    syncPromptOrderControls,
+    fillAuthoringSelects: cardAuthoringController.fillSelects,
+    renderGrammarSection,
+    visualEffects,
+    firstRunTour,
+  });
 }
 
 function switchLearningMode(nextLanguage) {
@@ -1178,256 +792,6 @@ searchLinksEl?.addEventListener("click", (event) => {
   event.stopPropagation();
 });
 
-function updateSearchLinks(card) {
-  if (!searchLinksEl) {
-    return;
-  }
-
-  searchLinksEl.innerHTML = "";
-  const query = String(card?.de || card?.en || promptEl?.textContent || "Deutsch").trim();
-
-  searchSites.forEach((site) => {
-    const link = document.createElement("a");
-    link.className = "search-link";
-    link.href = site.url(query);
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.setAttribute("aria-label", `${site.name} – open in a new tab`);
-    link.title = `Open ${site.name} in a new tab`;
-    link.innerHTML =
-      `<span class="search-link-main"><span class="search-link-name">${site.name}</span></span>` +
-      `<span class="search-link-arrow" aria-hidden="true">&#8599;</span>`;
-    searchLinksEl.appendChild(link);
-  });
-}
-
-function getHintRevealStep() {
-  if (difficulty === "easy") {
-    return 3;
-  }
-  if (difficulty === "medium") {
-    return 2;
-  }
-  return 1;
-}
-
-function getHintRevealValue(target, typed) {
-  const nextLength = Math.min(target.length, getCorrectPrefixLength(target, typed) + getHintRevealStep());
-  return target.slice(0, nextLength);
-}
-
-function getGuideSeparatorLabel(char, { overflow = false } = {}) {
-  const kind = getGuideSeparatorKind(char);
-
-  if (kind === "space") {
-    return t(overflow ? "messages.guide.extraSeparator" : "messages.guide.separator");
-  }
-
-  return char;
-}
-
-function getGuideStatusForSeparator(char, word, total) {
-  const kind = getGuideSeparatorKind(char);
-
-  if (kind === "space") {
-    return t("messages.guide.statusSpace", { word, total });
-  }
-
-  return "";
-}
-
-function getCharMeta(target) {
-  const hints = new Set();
-  const autofill = new Set();
-  const hintCountPerWord =
-    difficulty === "easy" ? 3 :
-    difficulty === "medium" ? 1 :
-    0;
-
-  getGuideWordTokens(target).forEach((wordToken) => {
-    const word = wordToken.text;
-
-    for (let i = 0; i < hintCountPerWord && i < word.length; i += 1) {
-      hints.add(wordToken.start + i);
-    }
-
-    let tail = wordToken.end - 1;
-    while (tail > wordToken.start && AUTOFILL_TRAILING_PUNCT.test(target[tail])) {
-      autofill.add(tail);
-      tail -= 1;
-    }
-  });
-
-  return { hints, autofill };
-}
-
-function initDifficultyControls() {
-  document.querySelectorAll(".difficulty-panel button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      difficulty = btn.dataset.diff;
-
-      document.querySelectorAll(".difficulty-panel button").forEach((button) => {
-        button.classList.remove("active");
-      });
-
-      btn.classList.add("active");
-
-      if (sessionCards.length) {
-        const target = getTargetValue(sessionCards[sessionIndex]);
-        buildWordGrid(target, inputEl.value);
-        updateAnswerGuide(target, inputEl.value);
-      }
-    });
-  });
-}
-
-function getGuideProgress(target, typed) {
-  const correctPrefixLen = getCorrectPrefixLength(target, typed);
-  const wordTokens = getGuideWordTokens(target);
-  const totalWords = Math.max(wordTokens.length, 1);
-  const hasExtraChars = typed.length > target.length && correctPrefixLen >= target.length;
-  const hasWrongChar = typed.length > correctPrefixLen && !hasExtraChars;
-
-  if (hasExtraChars) {
-    return {
-      state: "error",
-      statusText: t("messages.guide.statusTooLong"),
-      noteText: t("messages.guide.noteTooLong")
-    };
-  }
-
-  if (hasWrongChar) {
-    const expectedChar = target[correctPrefixLen];
-    const separatorStatus = getGuideStatusForSeparator(
-      expectedChar,
-      getGuidePreviousWordToken(wordTokens, correctPrefixLen)?.wordNumber || 1,
-      totalWords,
-    );
-
-    if (separatorStatus) {
-      return {
-        state: "error",
-        statusText: separatorStatus,
-        noteText: t("messages.guide.noteWrong")
-      };
-    }
-
-    const currentWordToken =
-      getGuideWordTokenAt(wordTokens, correctPrefixLen) ||
-      getGuidePreviousWordToken(wordTokens, correctPrefixLen) ||
-      wordTokens[0];
-
-    return {
-      state: "error",
-      statusText: t("messages.guide.statusWrong", {
-        word: currentWordToken?.wordNumber || 1,
-        total: totalWords,
-        char: currentWordToken ? (correctPrefixLen - currentWordToken.start + 1) : 1,
-      }),
-      noteText: t("messages.guide.noteWrong")
-    };
-  }
-
-  if (correctPrefixLen >= target.length) {
-    return {
-      state: "success",
-      statusText: t("messages.guide.statusDone", { total: totalWords }),
-      noteText: ""
-    };
-  }
-
-  const nextChar = target[correctPrefixLen];
-  const separatorStatus = getGuideStatusForSeparator(
-    nextChar,
-    getGuidePreviousWordToken(wordTokens, correctPrefixLen)?.wordNumber || 1,
-    totalWords,
-  );
-
-  if (separatorStatus) {
-    return {
-      state: "progress",
-      statusText: separatorStatus,
-      noteText: ""
-    };
-  }
-
-  const currentWordToken =
-    getGuideWordTokenAt(wordTokens, correctPrefixLen) ||
-    wordTokens[wordTokens.length - 1] ||
-    null;
-
-  return {
-    state: "progress",
-    statusText: t("messages.guide.statusProgress", {
-      word: currentWordToken?.wordNumber || 1,
-      total: totalWords,
-      char: currentWordToken ? (correctPrefixLen - currentWordToken.start + 1) : 1,
-      length: currentWordToken?.text.length || 1,
-    }),
-    noteText: ""
-  };
-}
-
-function updateAnswerGuide(target, typed) {
-  if (!answerGuideEl || !answerGuideStatusEl || !answerGuideNoteEl) {
-    return;
-  }
-
-  if (!target) {
-    answerGuideEl.classList.remove("is-success", "is-error");
-    answerGuideStatusEl.classList.remove("is-success", "is-error");
-    answerGuideStatusEl.textContent = "";
-    answerGuideNoteEl.textContent = "";
-    return;
-  }
-
-  const { state, statusText, noteText } = getGuideProgress(target, typed);
-  answerGuideEl.classList.toggle("is-success", state === "success");
-  answerGuideEl.classList.toggle("is-error", state === "error");
-  answerGuideStatusEl.classList.toggle("is-success", state === "success");
-  answerGuideStatusEl.classList.toggle("is-error", state === "error");
-  answerGuideStatusEl.textContent = statusText;
-  answerGuideNoteEl.textContent = noteText;
-}
-
-function playAnswerGuideCompleteHit() {
-  if (!answerGuideEl) {
-    return;
-  }
-
-  clearTimeout(answerGuideCompleteTimer);
-  answerGuideEl.classList.remove("is-complete-hit");
-  void answerGuideEl.offsetWidth;
-  answerGuideEl.classList.add("is-complete-hit");
-  answerGuideCompleteTimer = setTimeout(() => {
-    answerGuideEl.classList.remove("is-complete-hit");
-  }, 360);
-}
-
-function updateAnswerTerminalStatus(target, typed, terminalHit = null) {
-  if (!answerTerminalStatusRowEl || !answerTerminalStatusEl) {
-    return;
-  }
-
-  const showTerminalStatus = Boolean(target) && typed.length >= target.length;
-  answerTerminalStatusRowEl.classList.toggle("is-visible", showTerminalStatus);
-  answerTerminalStatusEl.className = "answer-terminal-status-badge";
-
-  if (!showTerminalStatus) {
-    answerTerminalStatusEl.textContent = "";
-    return;
-  }
-
-  const terminalStatusKind = isExactTypedMatch(target, typed) ? "success" : "error";
-  answerTerminalStatusEl.classList.add("is-visible", `is-${terminalStatusKind}`);
-
-  if (terminalHit && terminalHit === terminalStatusKind) {
-    answerTerminalStatusEl.classList.add(`is-hit-${terminalHit}`);
-  }
-
-  answerTerminalStatusEl.textContent = terminalStatusKind === "success" ? "\u2665" : "\u2715";
-}
-
 function submitCurrentAnswer({ finishNow = false } = {}) {
   if (pendingFinishAt) {
     if (finishNow) showSessionEnd();
@@ -1455,6 +819,7 @@ function submitCurrentAnswer({ finishNow = false } = {}) {
       if (!forceCorrection) {
         totalCorrect += 1;
         streak += 1;
+        weakCardTracker.recordMastery(card);
         if (streak > bestStreak) {
           bestStreak = streak;
         }
@@ -1492,33 +857,11 @@ function submitCurrentAnswer({ finishNow = false } = {}) {
     scoredCardEvents.add(card);
     totalAttempts += 1;
     streak = 0;
+    weakCardTracker.recordMistake(card, 2);
   }
   inputEl.className = "wrong";
   forceCorrection = true;
   updateStats({ event: "error" });
-}
-
-const renderWordGrid = createWordGridRenderer(wordGrid);
-
-function buildWordGrid(
-  target,
-  typed,
-  {
-    freshCorrectIndexes = new Set(),
-    freshWrongIndexes = new Set(),
-    terminalHit = null,
-  } = {}
-) {
-  renderWordGrid(target, describeWordGrid(target, typed, {
-    ...getCharMeta(target), difficulty, separatorLabel: getGuideSeparatorLabel,
-    freshCorrectIndexes, freshWrongIndexes,
-  }));
-
-  answerGuideSizingState.target = String(target ?? "");
-  answerGuideSizingState.typed = String(typed ?? "");
-  scheduleAnswerGuideMeasure("build-word-grid");
-  updateAnswerTerminalStatus(target, typed, terminalHit);
-  updateAnswerGuide(target, typed);
 }
 
 function updateRoundTimer() {
@@ -1624,12 +967,11 @@ function clearSessionUi() {
   inputEl.value = "";
   inputEl.className = "";
   previousTypedValue = "";
-  clearTimeout(answerGuideCompleteTimer);
-  answerGuideEl?.classList.remove("is-complete-hit");
+  answerGuideController.clearCompleteHit();
   forceCorrection = false;
   renderCardBadge(null);
   updateSearchLinks(null);
-  buildWordGrid("", "");
+  answerGuideController.buildWordGrid("", "");
   updateSkipCardButtonState();
 }
 
@@ -1668,7 +1010,7 @@ async function recoverPlayableSession(reason = "unknown", requestedSize = SESSIO
       return false;
     }
 
-    sessionCards = shuffle(renderablePool).slice(0, Math.min(nextSessionSize, renderablePool.length));
+    sessionCards = weakCardTracker.selectSessionCards(renderablePool, nextSessionSize);
     resetSessionProgress();
     updateStats();
     loadCard({ allowRecovery: false });
@@ -1716,7 +1058,7 @@ async function startSession(size) {
   const count = resolveSessionSize(size);
 
   if (renderablePool.length) {
-    sessionCards = shuffle(renderablePool).slice(0, Math.min(count, renderablePool.length));
+    sessionCards = weakCardTracker.selectSessionCards(renderablePool, count);
     resetSessionProgress();
     updateStats();
     loadCard();
@@ -1757,7 +1099,7 @@ function loadCard(options = {}) {
   inputEl.value = restoredTypedValue;
   previousTypedValue = savedState?.previousTypedValue || restoredTypedValue;
   forceCorrection = Boolean(savedState?.forceCorrection);
-  buildWordGrid(getTargetValue(card), restoredTypedValue);
+  answerGuideController.buildWordGrid(getTargetValue(card), restoredTypedValue);
   updateSearchLinks(card);
 
   if (focusInput && !isAnswerFocusBlocked()) {
@@ -1975,286 +1317,39 @@ function triggerEnterTimeBurst() {
   });
 }
 
-function initInputEvents() {
-  sessionSizeSliderEl?.addEventListener("input", syncSessionSizeLabel);
-  catCountEl?.addEventListener("click", () => {
+const gameInputController = createGameInputController({
+  canConvenienceFocusAnswerInput,
+  isOnboardingBlocked: () => onboardingPending || firstRunTour?.isOpen(),
+  getFirstRunTour: () => firstRunTour,
+  getSessionCards: () => sessionCards,
+  getSessionIndex: () => sessionIndex,
+  getPendingFinishAt: () => pendingFinishAt,
+  isRoundTimerStarted: () => roundTimerStarted,
+  startRoundTimer,
+  isRenderableCard,
+  recoverPlayableSession,
+  getTargetValue,
+  getPreviousTypedValue: () => previousTypedValue,
+  setPreviousTypedValue: (nextValue) => { previousTypedValue = nextValue; },
+  addTypingUnits: (units) => { totalTypingUnits += units; },
+  answerGuideController,
+  scheduleAutoSubmit,
+  cancelAutoSubmit,
+  submitCurrentAnswer,
+  showSessionEnd,
+  skipCurrentCard,
+  goBackToPreviousCard,
+  switchLearningMode,
+  cycleLearningMode,
+  togglePromptOrder,
+  toggleExtendedRoundSize: () => {
     extendedRoundSize = !extendedRoundSize;
     categoryPanelController.updateRoundSizeControl(getPool().length);
-  });
-  newGameBtn?.addEventListener("click", () => {
-    if (firstRunTour?.playFromWelcome()) {
-      return;
-    }
-    startSession(getRequestedSessionSize());
-  });
-  restartBtnEl?.addEventListener("click", () => {
-    startSession(getRequestedSessionSize());
-  });
-  sessionSettingsBtnEl?.addEventListener("click", () => {
-    document.getElementById("catPanel")?.scrollIntoView({
-      behavior: prefersReducedEffects() ? "instant" : "smooth",
-      block: "start",
-      inline: "nearest",
-    });
-  });
-
-  languageDockButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      switchLearningMode(button.dataset.lang);
-    });
-  });
-
-  const arrowActions = {
-    ArrowRight: () => skipCurrentCard(),
-    ArrowLeft: () => goBackToPreviousCard(),
-    ArrowUp: () => switchLearningMode(cycleLearningMode()),
-    ArrowDown: () => hintBtnEl?.click(),
-  };
-
-  let arrowPressTimer = 0;
-  const lightArrowButton = (key) => {
-    const button = arrowDockButtons.find((candidate) => candidate.dataset.arrow === key);
-    if (!button) {
-      return;
-    }
-
-    button.classList.remove("is-pressed");
-    void button.offsetWidth;
-    button.classList.add("is-pressed");
-    window.clearTimeout(arrowPressTimer);
-    arrowPressTimer = window.setTimeout(() => {
-      button.classList.remove("is-pressed");
-    }, 180);
-  };
-
-  arrowDockButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const action = arrowActions[button.dataset.arrow];
-      if (!action) {
-        return;
-      }
-      lightArrowButton(button.dataset.arrow);
-      action();
-    });
-  });
-
-  for (const button of [skipCardBtnEl, hintBtnEl]) {
-    if (!button) continue;
-    let cornerPulse;
-    button.addEventListener("click", () => {
-      if (prefersReducedEffects()) return;
-      cornerPulse?.cancel();
-      cornerPulse = button.animate(
-        [
-          { transform: "scale(1)", offset: 0 },
-          { transform: "scale(0.97)", offset: 0.28 },
-          { transform: "scale(1.06)", offset: 0.62 },
-          { transform: "scale(1)", offset: 1 }
-        ],
-        { duration: 300, easing: "cubic-bezier(0.22, 0.9, 0.3, 1.18)" }
-      );
-    });
-  }
-
-  if (skipCardBtnEl) {
-    skipCardBtnEl.addEventListener("click", () => {
-      skipCurrentCard();
-    });
-  }
-
-  function pulseEnterKeyBadge() {
-    if (!enterKeyBtnEl) {
-      return;
-    }
-    window.clearTimeout(enterKeyPulseTimer);
-    enterKeyBtnEl.classList.remove("is-key-pressed");
-    void enterKeyBtnEl.offsetWidth;
-    enterKeyBtnEl.classList.add("is-key-pressed");
-    enterKeyPulseTimer = window.setTimeout(() => {
-      enterKeyBtnEl.classList.remove("is-key-pressed");
-      enterKeyPulseTimer = 0;
-    }, 300);
-  }
-
-  enterKeyBtnEl?.addEventListener("click", () => {
-    if (!sessionCards.length) {
-      return;
-    }
-    pulseEnterKeyBadge();
-    triggerEnterTimeBurst();
-    submitCurrentAnswer({ finishNow: true });
-    if (!mainCard.classList.contains("is-session-ended")) focusAnswerInputAtEnd();
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (
-      event.defaultPrevented ||
-      event.repeat ||
-      event.altKey ||
-      event.ctrlKey ||
-      event.metaKey ||
-      onboardingPending ||
-      firstRunTour?.isOpen()
-    ) {
-      return;
-    }
-
-    const action = arrowActions[event.key];
-    if (!action) {
-      return;
-    }
-
-    event.preventDefault();
-    lightArrowButton(event.key);
-    action();
-  });
-
-  [promptPrimaryFlagEl, promptSecondaryFlagEl].forEach((button) => {
-    button?.addEventListener("click", () => {
-      togglePromptOrder();
-    });
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (!shouldCaptureTypingForAnswer(event)) {
-      return;
-    }
-
-    event.preventDefault();
-    focusAnswerInputAtEnd();
-    insertTextIntoAnswerInput(event.key);
-  });
-
-  mainCard?.addEventListener("click", (event) => {
-    if (!shouldTapFocusAnswerInput(event.target)) {
-      return;
-    }
-
-    focusAnswerInputAtEnd();
-  });
-
-  inputEl.addEventListener("input", () => {
-    if (!sessionCards.length) {
-      return;
-    }
-
-    if (!roundTimerStarted && inputEl.value.length > 0) {
-      startRoundTimer();
-    }
-
-    if (!isRenderableCard(sessionCards[sessionIndex])) {
-      void recoverPlayableSession("input-invalid-card", sessionCards.length || SESSION_SIZE);
-      return;
-    }
-
-    const target = getTargetValue(sessionCards[sessionIndex]);
-    const typedValue = inputEl.value;
-    const addedTypingUnits = countInsertedTypingUnits(previousTypedValue, typedValue);
-    if (addedTypingUnits > 0) {
-      totalTypingUnits += addedTypingUnits;
-    }
-    const previousPrefix = getCorrectPrefixLength(target, previousTypedValue);
-    const currentPrefix = getCorrectPrefixLength(target, typedValue);
-    const previousExact = isExactTypedMatch(target, previousTypedValue);
-    const currentExact = isExactTypedMatch(target, typedValue);
-    const previousAtOrPastEnd = previousTypedValue.length >= target.length;
-    const currentAtOrPastEnd = typedValue.length >= target.length;
-    const reachedTerminalSuccess = !previousExact && currentExact;
-    const reachedTerminalError = currentAtOrPastEnd && !currentExact && (!previousAtOrPastEnd || previousExact);
-    const freshCorrectIndexes = getFreshCorrectIndexes(
-      target,
-      previousTypedValue,
-      typedValue
-    );
-    const freshWrongIndexes = getFreshWrongIndexes(
-      target,
-      previousTypedValue,
-      typedValue
-    );
-
-    buildWordGrid(target, typedValue, {
-      freshCorrectIndexes,
-      freshWrongIndexes,
-      terminalHit:
-        reachedTerminalSuccess ? "success" :
-        reachedTerminalError ? "error" :
-        null,
-    });
-
-    if (reachedTerminalSuccess) {
-      playAnswerGuideCompleteHit();
-      showFeedbackBurst("success", false);
-    } else if (
-      reachedTerminalError ||
-      (previousExact && !currentExact && typedValue.length > previousTypedValue.length) ||
-      (typedValue.length > previousTypedValue.length && currentPrefix < typedValue.length && currentPrefix <= previousPrefix)
-    ) {
-      showFeedbackBurst("error", false);
-    }
-
-    previousTypedValue = typedValue;
-
-    if (currentExact) {
-      scheduleAutoSubmit(target, sessionCards[sessionIndex]);
-    } else {
-      cancelAutoSubmit();
-    }
-  });
-
-  hintBtnEl?.addEventListener("click", () => {
-    if (!sessionCards.length) {
-      return;
-    }
-
-    if (!isRenderableCard(sessionCards[sessionIndex])) {
-      void recoverPlayableSession("hint-invalid-card", sessionCards.length || SESSION_SIZE);
-      return;
-    }
-
-    const target = getTargetValue(sessionCards[sessionIndex]);
-    const reveal = getHintRevealValue(target, inputEl.value);
-    inputEl.value = reveal;
-    inputEl.className = "";
-    buildWordGrid(target, reveal, {
-      terminalHit: isExactTypedMatch(target, reveal) ? "success" : null,
-    });
-    if (isExactTypedMatch(target, reveal)) {
-      playAnswerGuideCompleteHit();
-    }
-    previousTypedValue = reveal;
-    focusAnswerInputAtEnd();
-  });
-
-  inputEl.addEventListener("touchstart", activateTouchInputWithoutScroll, { passive: false });
-
-  inputEl.addEventListener("pointerdown", (event) => {
-    if (event.pointerType === "touch") {
-      activateTouchInputWithoutScroll(event);
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (!pendingFinishAt || event.key !== "Enter" || event.repeat ||
-        event.isComposing || event.ctrlKey || event.altKey || event.metaKey ||
-        firstRunTour?.isOpen()) return;
-    event.preventDefault();
-    event.stopPropagation();
-    pulseEnterKeyBadge();
-    triggerEnterTimeBurst();
-    showSessionEnd();
-  }, { capture: true });
-
-  inputEl.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" || !sessionCards.length) {
-      return;
-    }
-    event.preventDefault();
-    if (event.repeat || event.isComposing) return;
-    pulseEnterKeyBadge();
-    triggerEnterTimeBurst();
-    submitCurrentAnswer();
-  });
-}
+  },
+  startSession,
+  triggerEnterTimeBurst,
+  setDifficulty: (nextDifficulty) => { difficulty = nextDifficulty; },
+});
 
 let visualEffects = null;
 
@@ -2279,8 +1374,8 @@ async function initApp() {
   categoryPanelController.initPreviewObserver();
   initFirstRunTour();
   installGuideController.init();
-  initDifficultyControls();
-  initInputEvents();
+  gameInputController.initDifficultyControls();
+  gameInputController.initInputEvents();
   initAnswerGuideResizeObserver();
   cardAuthoringController.init();
   capabilities = currentCapabilities;

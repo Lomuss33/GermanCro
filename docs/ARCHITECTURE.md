@@ -23,31 +23,37 @@ to an untrusted network. Concurrent writes within one server process are seriali
 ## Ownership
 
 ```text
-app.js                     browser entry
-index.html                 accessible page structure and stable element IDs
+app.js                         browser entry
+index.html                     accessible page structure and stable element IDs
 src/
-  bootstrap/init-app.js    startup and stateful gameplay/UI coordination
-  config/                 app limits, language metadata, category presentation
-  core/                   HTTP, text, randomization, bounded layout cache
-  game/answer-analysis.js  pure tokenization and typing-feedback rules
-  game/card-pool.js        pure category, scope and language-eligibility rules
-  facts/                  facts controller, data/configuration, notable people
-  grammar/table.js         responsive interactive grammar tables
-  layout/                 text measurement and responsive type/density profiles
-  onboarding/             welcome/tour controller, geometry and tutorial language
-  search/sites.js          dictionary/search destinations
-  ui/                     cached DOM references and language-flag rendering
-  styles/                 ordered CSS modules, onboarding styles, glass/neon theme
+  authoring/card-authoring.js  card authoring form, session fallback, JSON export
+  bootstrap/init-app.js        startup and stateful gameplay/UI coordination
+  config/                      app limits, language metadata, category presentation
+  core/                        HTTP, text, randomization, bounded layout cache
+  game/answer-analysis.js      pure tokenization and typing-feedback rules
+  game/answer-guide-ui.js      word-grid rendering, hint reveal, terminal hit badges
+  game/card-pool.js            pure category, scope and language-eligibility rules
+  game/category-panel.js       topic/subcategory filter buttons and round-size controls
+  game/input-controller.js     keyboard, touch, and arrow-dock input bindings
+  game/typing-metrics.js       gross/accepted WPM calculation
+  game/weak-cards.js           adaptive weak-card tracking and session blending
+  facts/                       facts controller, idle-staged loading, localization, view renderer
+  grammar/                     responsive interactive grammar reference and tables
+  layout/                      text measurement, viewport controller, and responsive type profiles
+  onboarding/                  welcome/tour controller, copy renderer, card anchor, geometry
+  search/sites.js              dictionary/search destinations
+  ui/                          DOM refs, static UI, feedback effects, install guide, flags
+  styles/                      ordered CSS modules, onboarding styles, glass/neon theme
 server/
-  application.js          HTTP routing; injectable roots for isolated tests
-  cards-api.js            existing persistent-card API and validation
-  static.js               static files, gzip, conditional requests, bounded asset cache
-  http.js                 response/body helpers
-shared/card-schema.js     shared client/server vocabulary contract
-tests/                    behavior, server, onboarding, static shape and build tests
-scripts/                  build, validation and maintenance tools
-assets/, vendor/          static images and vendored text-layout dependency
-build/                    generated deployable site (ignored by Git)
+  application.js               HTTP routing; injectable roots for isolated tests
+  cards-api.js                 persistent-card API with stat-validated O(1) duplicate index
+  static.js                    static files, gzip, conditional requests, bounded asset cache
+  http.js                      response/body helpers
+shared/card-schema.js          shared client/server vocabulary contract + O(1) duplicate index
+tests/                         behavior, server, onboarding, static shape and build tests
+scripts/                       build, validation and maintenance tools
+assets/, vendor/               static images and vendored text-layout dependency
+build/                         generated deployable site (ignored by Git)
 ```
 
 The root JSON files stay in place deliberately: they are public fetch URLs, validator
@@ -63,11 +69,11 @@ No hosting configuration or live deployment was changed by this refactor.
 
 - `core/`, game answer analysis, and layout profiles have no application-state dependencies.
 - `ui/dom.js` queries stable elements once, when the HTML module script executes.
-- The facts controller owns its datasets, loading promise and picker state. Locale access
+- The facts controller owns its datasets, idle-staged loading promise and picker state. Locale access
   is injected as functions, so a language switch cannot capture a stale locale.
 - The bootstrap coordinates the remaining stateful gameplay. Avoid importing it from
   feature modules: this keeps the dependency graph acyclic.
-- Keep card normalization in `shared/card-schema.js`, not separate client/server copies.
+- Keep card normalization and duplicate indexing in `shared/card-schema.js`, not separate client/server copies.
 
 ## CSS and visual compatibility
 
@@ -98,26 +104,6 @@ segmentation does not add production stylesheet requests.
 - `ui/visual-effects.js` immediately settles fragments when the window loses focus
   or the document is hidden. The localized Reduced effects toggle persists locally;
   system reduced motion/transparency preferences take priority. `visual-effects.css`
-  is included by both the root compatibility stylesheet and production CSS entry.
-- `game/word-grid.js` retains letter nodes between keystrokes and updates changed
-  feedback only. A new target resets its cache; removed overflow nodes are released.
-- esbuild bundles/minifies JavaScript and CSS, produces content-hashed filenames and
-  external source maps. No application framework or runtime dependency was added.
-- The Node server gzips text, caches at most 16 small text assets, supports ETags/HEAD,
-  and marks hashed production assets immutable. Development files revalidate;
-  `cards.user.json` is never browser-cached and is served from the live source file.
-- Text measurement caches use LRU limits: 256 prompt preparations, 512 grammar
-  preparations and 1,024 grammar line layouts. Resize/long-session memory no longer
-  grows indefinitely in these application-owned caches.
-- Facts still load eagerly **outside** the critical startup promise. Content uses native scrolling; dynamic panels still do not use `content-visibility: auto`.
-- `npm run check` validates JSON contracts, runs behavior/server tests, checks unresolved
-  module references and CSS syntax, builds the site, verifies generated assets/data,
-  and smoke-tests production startup in Chrome or Edge when installed. Set
-  `REQUIRE_BROWSER_SMOKE=1` in browser-equipped CI to make absence of a browser fail.
-
-The refactor was browser-checked at 390, 591 and 1,440 CSS pixels: startup, hints, skips,
-grammar rendering and Germany/Europe/world selection worked without horizontal overflow.
-Bundle sizes measure delivered code, not a claim about a particular device's frame rate.
-
-The original edited source files were retained locally in `.refactor-baseline/` during
-extraction. This directory is ignored by Git and is not part of the production build.
+  contains all motion/effect overrides.
+- `npm run check` runs data validation, unit tests, static module checks, static-shape
+  and browser smoke tests, and production build verification.

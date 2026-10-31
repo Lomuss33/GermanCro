@@ -21,6 +21,9 @@ const visualEffectsCss = (await readText("src/styles/visual-effects.css")).repla
 const appSource = (await Promise.all([
   "src/bootstrap/init-app.js",
   "src/game/category-panel.js",
+  "src/game/answer-guide-ui.js",
+  "src/game/input-controller.js",
+  "src/game/weak-cards.js",
   "src/facts/controller.js",
   "src/facts/localization.js",
   "src/facts/view-renderer.js",
@@ -28,10 +31,15 @@ const appSource = (await Promise.all([
   "src/ui/language-flags.js",
   "src/ui/feedback-effects.js",
   "src/ui/install-guide.js",
+  "src/ui/static-ui.js",
   "src/authoring/card-authoring.js",
   "src/layout/viewport-controller.js",
 ].map(readText))).join("\n");
-const tourSource = await readText("src/onboarding/first-run-tour.js");
+const tourSource = (await Promise.all([
+  "src/onboarding/first-run-tour.js",
+  "src/onboarding/tour-copy.js",
+  "src/onboarding/welcome-card-anchor.js",
+].map(readText))).join("\n");
 
 for (const id of [
   "heroStage",

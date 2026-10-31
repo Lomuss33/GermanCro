@@ -3,125 +3,20 @@ import { LANGUAGE_TITLES } from "../config/languages.js";
 import { renderSiteTitleLineContent } from "../ui/site-title.js";
 import { normalizeTutorialLanguage, resolveTutorialLanguage } from "./tutorial-language.js";
 import { prefersReducedEffects } from "../ui/effects-preference.js";
+import {
+  ONBOARDING_STORAGE_KEY,
+  TOUR_STEPS,
+  WELCOME_COPY,
+  createOnboardingCopyRenderer,
+  getBrowserLanguagePreferences,
+  resolveBrowserStorage,
+  safelyReadSeenState,
+  safelyWriteSeenState,
+  setupPrimaryButtonContent,
+} from "./tour-copy.js";
+import { createWelcomeCardAnchor } from "./welcome-card-anchor.js";
 
-export const ONBOARDING_STORAGE_KEY = "germancro.onboarding.v2";
-
-const TOUR_STEPS = Object.freeze([
-  Object.freeze({
-    id: "prompts",
-    targets: Object.freeze([
-      '[data-onboarding-target="prompt-main"]',
-      '[data-onboarding-target="prompt-secondary"]',
-    ]),
-    titleKey: "onboarding.steps.prompts.title",
-    bodyKey: "onboarding.steps.prompts.body",
-  }),
-  Object.freeze({
-    id: "input",
-    targets: Object.freeze(['[data-onboarding-target="answer-input"]']),
-    titleKey: "onboarding.steps.input.title",
-    bodyKey: "onboarding.steps.input.body",
-  }),
-  Object.freeze({
-    id: "feedback",
-    targets: Object.freeze([
-      '[data-onboarding-target="answer-guide"]',
-      '[data-onboarding-target="answer-actions"]',
-    ]),
-    titleKey: "onboarding.steps.feedback.title",
-    bodyKey: "onboarding.steps.feedback.body",
-    showFeedbackKey: true,
-  }),
-  Object.freeze({
-    id: "settings",
-    targets: Object.freeze([
-      '[data-onboarding-target="round-settings"]',
-      '[data-onboarding-target="category-preview"]',
-    ]),
-    titleKey: "onboarding.steps.settings.title",
-    bodyKey: "onboarding.steps.settings.body",
-  }),
-]);
-
-const WELCOME_COPY = Object.freeze({
-  de: Object.freeze({
-    body: "",
-    languageLabel: "Welche Sprache m\u00f6chtest du \u00fcben?",
-    play: "{language} \u00fcben",
-    click: "Klicke hier, um",
-    press: "Dr\u00fccke hier, um",
-    tour: "Kurze Einf\u00fchrung",
-    settings: "Runde anpassen",
-  }),
-  hr: Object.freeze({
-    body: "",
-    languageLabel: "Koji jezik \u017eeli\u0161 vje\u017ebati?",
-    play: "Vje\u017ebaj: {language}",
-    click: "Klikni ovdje za",
-    press: "Pritisni za",
-    tour: "Kratki vodi\u010d",
-    settings: "Prilagodi krug",
-  }),
-  en: Object.freeze({
-    body: "",
-    languageLabel: "Which language do you want to practise?",
-    play: "Practise {language}",
-    click: "Click here to",
-    press: "Press here to",
-    tour: "Quick tour",
-    settings: "Customise round",
-  }),
-});
-
-function safelyReadSeenState(storage) {
-  try {
-    const value = storage?.getItem(ONBOARDING_STORAGE_KEY);
-    if (!value) {
-      return false;
-    }
-    const parsed = JSON.parse(value);
-    return parsed?.seen === true;
-  } catch {
-    return false;
-  }
-}
-
-function safelyWriteSeenState(storage, completedTour) {
-  try {
-    storage?.setItem(ONBOARDING_STORAGE_KEY, JSON.stringify({
-      seen: true,
-      completedTour: Boolean(completedTour),
-      dismissedAt: new Date().toISOString(),
-    }));
-  } catch {
-    // Storage can be unavailable in private or restricted browsing contexts.
-  }
-}
-
-function resolveBrowserStorage(storage) {
-  if (storage) {
-    return storage;
-  }
-  try {
-    return globalThis.localStorage;
-  } catch {
-    return null;
-  }
-}
-
-function getBrowserLanguagePreferences(preferredLanguages) {
-  if (Array.isArray(preferredLanguages) || typeof preferredLanguages === "string") {
-    return preferredLanguages;
-  }
-  try {
-    if (Array.isArray(globalThis.navigator?.languages) && globalThis.navigator.languages.length) {
-      return globalThis.navigator.languages;
-    }
-    return globalThis.navigator?.language ? [globalThis.navigator.language] : [];
-  } catch {
-    return [];
-  }
-}
+export { ONBOARDING_STORAGE_KEY };
 
 function nextAnimationFrame() {
   return new Promise((resolve) => {
@@ -219,99 +114,11 @@ export function createFirstRunTour({
     replayNote: dialog.querySelector("#onboardingReplayNote"),
   };
 
-  const primaryButtonIcon = elements.primaryButton
-    ? document.createElement("span")
-    : null;
-  const primaryButtonLabel = elements.primaryButton
-    ? document.createElement("span")
-    : null;
-  const primaryButtonCopy = elements.primaryButton
-    ? document.createElement("span")
-    : null;
-  const primaryButtonHint = elements.primaryButton
-    ? document.createElement("span")
-    : null;
-  if (primaryButtonIcon) {
-    primaryButtonIcon.className = "onboarding-primary-icon";
-    primaryButtonIcon.setAttribute("aria-hidden", "true");
-  }
-  if (primaryButtonLabel) {
-    primaryButtonLabel.className = "onboarding-primary-label";
-    primaryButtonCopy.className = "onboarding-primary-copy";
-    primaryButtonHint.className = "onboarding-primary-hint";
-    primaryButtonCopy.append(primaryButtonHint, primaryButtonLabel);
-    elements.primaryButton.replaceChildren(primaryButtonIcon, primaryButtonCopy);
-  }
-  const primarySettingsSummary = elements.primaryButton
-    ? document.createElement("span")
-    : null;
-  if (primarySettingsSummary) {
-    const wordTypeText = document.createElement("span");
-    const difficultyText = document.createElement("span");
-    const roundText = document.createElement("span");
-    primarySettingsSummary.className = "onboarding-primary-settings";
-    primarySettingsSummary.setAttribute("aria-hidden", "true");
-    wordTypeText.className = "onboarding-primary-settings-types";
-    difficultyText.className = "onboarding-primary-settings-difficulty";
-    roundText.className = "onboarding-primary-settings-rounds";
-    primarySettingsSummary.append(wordTypeText, difficultyText, roundText);
-    elements.primaryButton.append(primarySettingsSummary);
-
-    const syncSettingsSummary = () => {
-      const activeTypes = Array.from(document.querySelectorAll("#subcategoryButtons button.active"));
-      const allTypesSelected = activeTypes.some((button) => button.dataset.subcategory === "all");
-      const selectedTypeNames = allTypesSelected
-        ? []
-        : activeTypes
-          .map((button) => button.querySelector(".subcategory-btn-label")?.textContent?.trim())
-          .filter(Boolean);
-      const activeDifficulty = document.querySelector(".difficulty-panel button.active");
-      const slider = document.querySelector("#sessionSizeSlider");
-      const sliderValue = document.querySelector("#sliderLabel");
-      const sliderUnit = document.querySelector("#sliderUnitLabel")?.textContent
-        ?.replace(/:\s*$/, "")
-        .trim();
-      difficultyText.textContent = activeDifficulty?.textContent?.trim() || "";
-      const rounds = sliderValue?.textContent?.trim() || slider?.value || "";
-      roundText.textContent = [rounds, sliderUnit].filter(Boolean).join(" ");
-      const visibleTypes = allTypesSelected
-        ? "Alle"
-        : selectedTypeNames.length > 2
-          ? `${selectedTypeNames.slice(0, 2).join(", ")} +${selectedTypeNames.length - 2}`
-          : selectedTypeNames.join(", ") || "—";
-      wordTypeText.textContent = `Wortarten: ${visibleTypes}`;
-      wordTypeText.title = allTypesSelected
-        ? "Wortarten: Alle"
-        : `Wortarten: ${selectedTypeNames.join(", ") || "—"}`;
-    };
-    syncSettingsSummary();
-    document.addEventListener("click", (event) => {
-      if (event.target.closest?.(".difficulty-panel button, #subcategoryButtons button")) syncSettingsSummary();
-    });
-    document.addEventListener("input", (event) => {
-      if (event.target.matches?.("#sessionSizeSlider")) syncSettingsSummary();
-    });
-    const subcategoryContainer = document.querySelector("#subcategoryButtons");
-    if (subcategoryContainer && typeof window.MutationObserver === "function") {
-      new window.MutationObserver(syncSettingsSummary).observe(subcategoryContainer, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        attributeFilter: ["class", "aria-pressed"],
-      });
-    }
-  }
-
-  const titleHome = {
-    parent: elements.title?.parentNode || null,
-    nextSibling: elements.title?.nextSibling || null,
-  };
-  let promotedTitle = false;
+  const { primaryButtonLabel, primaryButtonHint } = setupPrimaryButtonContent(elements);
+  const { renderLanguageLabel, renderReplayNote } = createOnboardingCopyRenderer(elements);
 
   let state = "idle";
   let isLaunchingWelcome = false;
-  let titleProgress = 0;
-  const titleSequence = "germancro";
   let stepIndex = -1;
   let replay = false;
   let layoutFrame = 0;
@@ -324,6 +131,28 @@ export function createFirstRunTour({
   let sessionSeen = safelyReadSeenState(browserStorage);
   const tutorialLanguage = resolveTutorialLanguage(getBrowserLanguagePreferences(preferredLanguages));
   const reduceMotionQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)") || null;
+
+  function isOpen() {
+    return dialog.open && state !== "idle";
+  }
+
+  const {
+    syncCardStartHeight,
+    refreshCardStartHeight,
+    clearWelcomeAnchorMetrics,
+    syncTitleProgress,
+    resetTitleProgress,
+    promoteWelcomeTitle,
+    restoreWelcomeTitle,
+  } = createWelcomeCardAnchor({
+    dialog,
+    cardHost,
+    elements,
+    isCardStart,
+    isOpen,
+    getState: () => state,
+  });
+
   const resizeObserver = typeof ResizeObserver === "function"
     ? new ResizeObserver(() => {
       if (state === "welcome" && isCardStart()) {
@@ -333,84 +162,6 @@ export function createFirstRunTour({
       scheduleLayout();
     })
     : null;
-
-  function isOpen() {
-    return dialog.open && state !== "idle";
-  }
-
-  function syncCardStartHeight() {
-    if (!cardHost || !isCardStart()) {
-      return;
-    }
-    const height = `${Math.ceil(cardHost.getBoundingClientRect().height)}px`;
-    dialog.style.setProperty("--onboarding-card-height", height);
-    cardHost.style.setProperty("--onboarding-card-height", height);
-    syncWelcomeAnchorMetrics();
-  }
-
-  function refreshCardStartHeight() {
-    cardHost?.style.removeProperty("--onboarding-card-height");
-    clearWelcomeAnchorMetrics();
-    syncCardStartHeight();
-  }
-
-  function setWelcomeMetric(name, value) {
-    if (dialog.style.getPropertyValue(name) !== value) {
-      dialog.style.setProperty(name, value);
-    }
-    if (cardHost?.style.getPropertyValue(name) !== value) {
-      cardHost?.style.setProperty(name, value);
-    }
-  }
-
-  function clearWelcomeAnchorMetrics() {
-    [
-      "--onboarding-input-left",
-      "--onboarding-input-top",
-      "--onboarding-input-width",
-      "--onboarding-input-height",
-      "--onboarding-guide-left",
-      "--onboarding-guide-top",
-      "--onboarding-guide-width",
-      "--onboarding-guide-height",
-      "--onboarding-language-top",
-      "--onboarding-language-height",
-    ].forEach((name) => {
-      dialog.style.removeProperty(name);
-      cardHost?.style.removeProperty(name);
-    });
-  }
-
-  function syncWelcomeAnchorMetrics() {
-    const input = document.getElementById("answer")?.closest(".input-shell");
-    const guide = document.getElementById("answerGuide");
-    const panel = elements.panel;
-    if (!cardHost || !panel || !input || !guide) {
-      clearWelcomeAnchorMetrics();
-      return;
-    }
-    const panelRect = panel.getBoundingClientRect();
-    const inputRect = input.getBoundingClientRect();
-    const guideRect = guide.getBoundingClientRect();
-    if (panelRect.width <= 0 || panelRect.height <= 0 || inputRect.height <= 0 || guideRect.height <= 0) {
-      clearWelcomeAnchorMetrics();
-      return;
-    }
-    const inputTop = Math.max(0, inputRect.top - panelRect.top);
-    const bottomBuffer = Math.max(8, Math.min(24, panelRect.bottom - guideRect.bottom));
-    const languageTop = bottomBuffer;
-    const languageHeight = Math.max(92, inputTop - languageTop - 14);
-    setWelcomeMetric("--onboarding-input-left", `${Math.max(0, inputRect.left - panelRect.left)}px`);
-    setWelcomeMetric("--onboarding-input-top", `${inputTop}px`);
-    setWelcomeMetric("--onboarding-input-width", `${Math.max(0, inputRect.width)}px`);
-    setWelcomeMetric("--onboarding-input-height", `${Math.max(0, inputRect.height)}px`);
-    setWelcomeMetric("--onboarding-guide-left", `${Math.max(0, guideRect.left - panelRect.left)}px`);
-    setWelcomeMetric("--onboarding-guide-top", `${Math.max(0, guideRect.top - panelRect.top)}px`);
-    setWelcomeMetric("--onboarding-guide-width", `${Math.max(0, guideRect.width)}px`);
-    setWelcomeMetric("--onboarding-guide-height", `${Math.max(0, guideRect.height)}px`);
-    setWelcomeMetric("--onboarding-language-top", `${languageTop}px`);
-    setWelcomeMetric("--onboarding-language-height", `${languageHeight}px`);
-  }
 
   function shouldShow() {
     // The welcome state can act as the app's launch gate when enabled by the host.
@@ -559,6 +310,14 @@ export function createFirstRunTour({
     }
   }
 
+  function syncBrandAccent(activeLanguage) {
+    const normalizedLanguage = normalizeTutorialLanguage(activeLanguage) || "de";
+    elements.brandSegments.forEach((segment) => {
+      const segmentLanguage = normalizeTutorialLanguage(segment.dataset.brandSegment);
+      segment.classList.toggle("is-accent", segmentLanguage === normalizedLanguage);
+    });
+  }
+
   function syncLanguageButtons() {
     dialog.setAttribute("lang", tutorialLanguage);
     syncPrimaryButtonHint();
@@ -591,80 +350,6 @@ export function createFirstRunTour({
 
   clickPointer?.addEventListener?.("change", syncPrimaryButtonHint);
 
-  function syncTitleProgress() {
-    elements.title?.querySelectorAll(".site-title-letter").forEach((letter, index) => {
-      letter.classList.toggle("is-title-filled", index < titleProgress);
-      letter.classList.toggle("is-title-next", index === titleProgress);
-    });
-  }
-
-  function promoteWelcomeTitle() {
-    if (!isCardStart() || !elements.title) {
-      restoreWelcomeTitle();
-      return;
-    }
-    const titleRow = document.querySelector("#heroStage > .site-title-row");
-    const appTitle = titleRow?.querySelector(".site-title:not(#onboardingTitle)");
-    if (!titleRow || !appTitle) {
-      restoreWelcomeTitle();
-      return;
-    }
-    const appTitleStyles = window.getComputedStyle(appTitle);
-    titleRow.style.setProperty("--promoted-title-font-size", appTitleStyles.fontSize);
-    titleRow.style.setProperty("--promoted-title-line-height", appTitleStyles.lineHeight);
-    if (elements.title.parentElement !== titleRow) {
-      appTitle.after(elements.title);
-    }
-    promotedTitle = true;
-    document.body.classList.add("has-promoted-onboarding-title");
-  }
-
-  function restoreWelcomeTitle() {
-    if (!promotedTitle && elements.title?.parentNode === titleHome.parent) {
-      return;
-    }
-    if (titleHome.parent && elements.title) {
-      if (titleHome.nextSibling?.parentNode === titleHome.parent) {
-        titleHome.parent.insertBefore(elements.title, titleHome.nextSibling);
-      } else {
-        titleHome.parent.append(elements.title);
-      }
-    }
-    promotedTitle = false;
-    document.body.classList.remove("has-promoted-onboarding-title");
-    document.querySelector("#heroStage > .site-title-row")?.style.removeProperty("--promoted-title-font-size");
-    document.querySelector("#heroStage > .site-title-row")?.style.removeProperty("--promoted-title-line-height");
-  }
-
-  window.addEventListener("keydown", (event) => {
-    if (!isOpen() || state !== "welcome" || !isCardStart() ||
-        event.repeat || event.isComposing || event.ctrlKey || event.metaKey || event.altKey ||
-        titleProgress >= titleSequence.length ||
-        event.target?.closest?.("input, textarea, select, [contenteditable]:not([contenteditable='false'])") ||
-        event.key.toLowerCase() !== titleSequence[titleProgress]) {
-      return;
-    }
-    titleProgress += 1;
-    syncTitleProgress();
-    if (titleProgress === titleSequence.length && !prefersReducedEffects()) {
-      elements.title?.querySelectorAll(".site-title-letter").forEach((letter, index) => {
-        letter.animate([
-          { transform: "translateY(0)", filter: "brightness(1)" },
-          { transform: "translateY(-7px)", filter: "brightness(1.2)", offset: 0.4 },
-          { transform: "translateY(0)", filter: "brightness(1)" },
-        ], { duration: 650, delay: index * 65, easing: "ease-in-out" });
-      });
-    }
-  }, { capture: true });
-
-  function syncBrandAccent(activeLanguage) {
-    const normalizedLanguage = normalizeTutorialLanguage(activeLanguage) || "de";
-    elements.brandSegments.forEach((segment) => {
-      const segmentLanguage = normalizeTutorialLanguage(segment.dataset.brandSegment);
-      segment.classList.toggle("is-accent", segmentLanguage === normalizedLanguage);
-    });
-  }
-
   function renderFeedbackKey() {
     if (elements.feedbackCorrect) {
       elements.feedbackCorrect.textContent = tutorialTranslate("onboarding.feedback.correct");
@@ -675,49 +360,6 @@ export function createFirstRunTour({
     if (elements.feedbackWrong) {
       elements.feedbackWrong.textContent = tutorialTranslate("onboarding.feedback.wrong");
     }
-  }
-
-  function renderLanguageLabel(label) {
-    const labelText = String(label || "");
-    if (elements.languageLabelText) {
-      elements.languageLabelText.textContent = labelText;
-    }
-    if (!elements.languageLabelLetters) {
-      if (elements.languageLabel) {
-        elements.languageLabel.textContent = labelText;
-      }
-      return;
-    }
-
-    elements.languageLabelLetters.textContent = labelText;
-  }
-
-  function renderReplayNote(note) {
-    if (!elements.replayNote) {
-      return;
-    }
-
-    const noteText = String(note || "");
-    const tokenPattern = /\[\[(lead|pink)\]\]([\s\S]*?)\[\[\/\1\]\]/g;
-    const fragment = document.createDocumentFragment();
-    let cursor = 0;
-    let match;
-
-    while ((match = tokenPattern.exec(noteText))) {
-      if (match.index > cursor) {
-        fragment.append(document.createTextNode(noteText.slice(cursor, match.index)));
-      }
-      const span = document.createElement("span");
-      span.className = `onboarding-replay-note-${match[1]}`;
-      span.textContent = match[2];
-      fragment.append(span);
-      cursor = tokenPattern.lastIndex;
-    }
-
-    if (cursor < noteText.length) {
-      fragment.append(document.createTextNode(noteText.slice(cursor)));
-    }
-    elements.replayNote.replaceChildren(fragment);
   }
 
   function renderWelcome({ focusTitle = false } = {}) {
@@ -956,7 +598,7 @@ export function createFirstRunTour({
       return;
     }
     replay = Boolean(isReplay);
-    titleProgress = 0;
+    resetTitleProgress();
     previouslyFocusedElement = document.activeElement;
     openingScrollX = window.scrollX;
     openingScrollY = window.scrollY;
