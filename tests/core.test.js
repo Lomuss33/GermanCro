@@ -6,6 +6,12 @@ import { getSecureRandomInt, shuffle } from "../src/core/random.js";
 import { getCorrectPrefixLength, getGuideTokens, getGuideWordTokens, getGuideWordTokenAt, getGuidePreviousWordToken, getFreshCorrectIndexes, getFreshWrongIndexes, isExactTypedMatch } from "../src/game/answer-analysis.js";
 import { calculateWpmMetrics, countInsertedTypingUnits, countTypingUnits, formatWpm, getInsertedText } from "../src/game/typing-metrics.js";
 import { computeResponsiveTypeProfile, getGameDensityProfile, getNextDenserDensity } from "../src/layout/type-profiles.js";
+import { cardKey, createCardDuplicateIndex } from "../shared/card-schema.js";
+import { createCardsApi } from "../server/cards-api.js";
+import { Readable } from "node:stream";
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 
 test("layout cache is bounded and retains recently used entries", () => {
   const cache = new BoundedCache(2);
@@ -84,4 +90,53 @@ test("shuffle preserves its input and random values stay in range", () => {
   assert.deepEqual(input, [1,2,3,4,5]);
   for(let i=0;i<100;i++) assert.ok(getSecureRandomInt(7) >= 0 && getSecureRandomInt(7) < 7);
   assert.equal(getSecureRandomInt(0), 0);
+});
+test("duplicate card index performs O(1) NFC-normalized and punctuation-insensitive checks", () => {
+  const baseCard = {
+    de: "die Übung".normalize("NFD"),
+    hr: "vježba".normalize("NFD"),
+    en: "exercise",
+    topic: "basics",
+    subcategory: "Nomen",
+    scope: "all",
+  };
+  const index = createCardDuplicateIndex([baseCard]);
+  assert.equal(index.size, 1);
+  assert.equal(index.has({
+    de: "  DIE ÜBUNG! ",
+    hr: "VJEŽBA.",
+    en: "workout",
+    topic: "basics",
+    subcategory: "Nomen",
+    scope: "shared",
+  }), true);
+  assert.equal(cardKey(baseCard), cardKey(baseCard));
+});
+test("cards API blocks bundled and user duplicates in O(1) and writes atomically", async (t) => {
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), "germancro-api-"));
+  t.after(() => fs.rm(dir, { recursive: true, force: true }));
+  const bundledFile = path.join(dir, "cards.json");
+  const userFile = path.join(dir, "cards.user.json");
+  const bundledCard = { de: "das Auto", hr: "auto", en: "car", topic: "vehicles", subcategory: "Nomen", scope: "all" };
+  await fs.writeFile(bundledFile, JSON.stringify([bundledCard]), "utf8");
+  await fs.writeFile(userFile, "[]", "utf8");
+  const handleApi = createCardsApi(userFile, bundledFile);
+
+  const post = async (payload) => {
+    const req = Readable.from([JSON.stringify(payload)]);
+    req.method = "POST";
+    let status = 0;
+    let body = "";
+    const res = {
+      writeHead(code) { status = code; },
+      end(chunk = "") { body = chunk; },
+    };
+    await handleApi(req, res, "/api/cards");
+    return { status, body: JSON.parse(body) };
+  };
+
+  assert.equal((await post(bundledCard)).status, 409);
+  const newCard = { de: "der Zug", hr: "vlak", en: "train", topic: "vehicles", subcategory: "Nomen", scope: "all" };
+  assert.equal((await post(newCard)).status, 201);
+  assert.equal((await post(newCard)).status, 409);
 });

@@ -15,10 +15,13 @@ test("static paths cannot escape into sibling directories", () => {
 test("server supports compression, validators, HEAD, malformed URLs and persistent cards", async t => {
   const root=await fs.mkdtemp(path.join(os.tmpdir(),"germancro-test-"));
   const userCardsFile=path.join(root,"cards.user.json");
+  const bundledCardsFile=path.join(root,"cards.json");
+  const bundledCard={de:"Bundled Haus",hr:"kuća",en:"house",topic:"basics",subcategory:"Nomen",scope:"all"};
   await fs.writeFile(path.join(root,"index.html"),"<!doctype html>"+"hello ".repeat(500));
   await fs.writeFile(path.join(root,"app-ABCDEFGH.js"),"/* script */"+" ".repeat(2000));
+  await fs.writeFile(bundledCardsFile,JSON.stringify([bundledCard]));
   await fs.writeFile(userCardsFile,"[]");
-  const server=createApplicationServer({root,userCardsFile,production:true});
+  const server=createApplicationServer({root,userCardsFile,bundledCardsFile,production:true});
   await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
   t.after(async()=>{
     await new Promise(resolve=>server.close(resolve));
@@ -47,6 +50,8 @@ test("server supports compression, validators, HEAD, malformed URLs and persiste
   assert.equal(saved.status,201); await saved.text();
   const duplicate=await save();
   assert.equal(duplicate.status,409); await duplicate.text();
+  const bundledDuplicate=await fetch(`${base}/api/cards`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(bundledCard)});
+  assert.equal(bundledDuplicate.status,409); await bundledDuplicate.text();
   const cards=await fetch(`${base}/cards.user.json`);
   assert.equal(cards.headers.get("cache-control"),"no-store");
   assert.equal((await cards.json()).length,1);

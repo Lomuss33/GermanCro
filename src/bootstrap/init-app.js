@@ -5,22 +5,41 @@ import {
   getPromptLanguagesForTarget as getPoolPromptLanguages,
   isCardRenderable,
 } from "../game/card-pool.js";
+import {
+  createCategoryPanelController,
+  getRequestedSessionSize,
+  getTopicColor,
+  resolveSessionSize,
+  syncSessionSizeLabel,
+} from "../game/category-panel.js";
 import { initVisualEffects } from "../ui/visual-effects.js";
 import { prefersReducedEffects } from "../ui/effects-preference.js";
+import {
+  animateStatsOnStart,
+  renderRoundProgressBar,
+  replayStatsClass,
+  showCombo,
+  showEnterTimeBurst,
+  showFeedbackBurst,
+  showToast,
+} from "../ui/feedback-effects.js";
+import { createInstallGuideController } from "../ui/install-guide.js";
+import {
+  createCardAuthoringController,
+  loadSessionAuthoringCards,
+} from "../authoring/card-authoring.js";
 import { createFactsController } from "../facts/controller.js";
 import { renderSiteTitleLineContent } from "../ui/site-title.js";
-import { detectInstallGuideContext } from "../ui/install-guide-context.js";
 import {
   SESSION_SIZE,
   MAX_SESSION_SKIPS,
   AUTO_SUBMIT_DELAY_MS,
-  SESSION_STORAGE_KEY,
   AUTOFILL_TRAILING_PUNCT,
   EMERGENCY_FALLBACK_CARD,
   LEARNING_MODE_STORAGE_KEY,
   PROMPT_ORDER_STORAGE_KEY,
 } from "../config/app.js";
-import { getSecureRandomRange, shuffle } from "../core/random.js";
+import { shuffle } from "../core/random.js";
 import { getByPath, formatTemplate, getCardValue, formatRoundTime } from "../core/text.js";
 import { fetchJson, detectCapabilities } from "../core/http.js";
 import {
@@ -40,20 +59,16 @@ import {
   formatWpm,
 } from "../game/typing-metrics.js";
 import {
-  clampNumber,
-  getScaledFontPx,
-  computeResponsiveTypeProfile,
-  hasResponsiveTypeProfileChanged,
-  DEFAULT_TYPE_PROFILE,
-  clampGameDensity,
-  getNextDenserDensity,
-  getGameDensityProfile,
-  getNextAnswerGuideSizingTier,
-  getAnswerGuideLengthBucket,
-  PROMPT_FIT_PROFILES,
-  ANSWER_GUIDE_SIZE_PROFILES,
-  ANSWER_GUIDE_HEIGHT_BUDGETS,
-} from "../layout/type-profiles.js";
+  answerGuideSizingState,
+  createViewportProfileController,
+  getCurrentGameDensity,
+  getPromptAvailableHeight,
+  getPromptFitProfile,
+  getSiteTitleFitProfile,
+  initAnswerGuideResizeObserver,
+  isTouchKeyboardEnvironment,
+  scheduleAnswerGuideMeasure,
+} from "../layout/viewport-controller.js";
 import {
   promptEl,
   promptSub,
@@ -61,10 +76,7 @@ import {
   promptSecondaryFlagEl,
   inputFlagEl,
   siteTitleEl,
-  siteTitleRowEl,
   heroStageEl,
-  phoneGuideBarEl,
-  languageDockEl,
   languageDockButtons,
   arrowDockEl,
   arrowDockButtons,
@@ -72,10 +84,6 @@ import {
   appLoaderEl,
   appLoaderSpinnerEl,
   onboardingDialogEl,
-  installGuidePanelEl,
-  installGuideBrowserPanelEl,
-  installGuideBrowserEl,
-  installGuideStepsEl,
   statLabelStreakEl,
   statLabelRemainingEl,
   statLabelAccuracyEl,
@@ -95,18 +103,12 @@ import {
   answerTerminalStatusRowEl,
   answerTerminalStatusEl,
   answerGuideEl,
-  answerGuideBodyEl,
-  answerGuideTrailFlagEl,
-  answerGuideActionRowEl,
   roundTimerEl,
   finalTimeEl,
   answerGuideLabelEl,
   answerGuideStatusEl,
   answerGuideNoteEl,
-  feedbackBurstEl,
-  progFill,
   categoryEl,
-  comboPop,
   gameArea,
   sessionEndEl,
   mainCard,
@@ -115,7 +117,6 @@ import {
   catCountEl,
   catButtonsLabelEl,
   subcategoryFilterLabelEl,
-  subcategoryButtonsEl,
   settingsPanelTitleTextEl,
   tutorialReplayBtnEl,
   catPanelTitleEl,
@@ -123,7 +124,6 @@ import {
   difficultyMediumBtn,
   difficultyEasyBtn,
   sessionSizeSliderEl,
-  sliderLabelEl,
   newGameBtn,
   searchPanelEl,
   searchPanelTitleEl,
@@ -134,23 +134,15 @@ import {
   authorPanelEl,
   authorToggleBtn,
   authorPanelTitleEl,
-  addCardForm,
   addCardDeEl,
   addCardHrEl,
   addCardEnEl,
-  addCardTopicEl,
-  addCardSubcategoryEl,
-  addCardScopeEl,
   authorLabelDeEl,
   authorLabelTopicEl,
   authorLabelSubcategoryEl,
   authorLabelScopeEl,
   authorLabelHrEl,
   authorLabelEnEl,
-  addCardSaveBtn,
-  exportCardsBtn,
-  addCardStatusEl,
-  authorModeEl,
   factsPanelTitleEl,
   factsPanelSubtitleEl,
   factsCountryBtn,
@@ -175,7 +167,7 @@ import {
 } from "../ui/dom.js";
 import { setLanguageFlagIcon } from "../ui/language-flags.js";
 import { LANGUAGE_SEQUENCE, LANGUAGE_DOCK_LABELS, LANGUAGE_TITLES } from "../config/languages.js";
-import { DEFAULT_SUBCATEGORIES, SUBCATEGORY_COLORS, SUBCATEGORY_ICONS } from "../config/categories.js";
+import { DEFAULT_SUBCATEGORIES, SUBCATEGORY_COLORS } from "../config/categories.js";
 import { searchSites } from "../search/sites.js";
 import { createPretextBlockController } from "../layout/pretext.js";
 import { renderGrammarReference } from "../grammar/reference-view.js";
@@ -183,12 +175,9 @@ import { createFirstRunTour } from "../onboarding/first-run-tour.js";
 import { initPageScrollAssist } from "../ui/page-scroll-assist.js";
 
 import {
-  CARD_SCOPE_OPTIONS,
   MODE_SCOPE_MAP,
   SUBCATEGORY_OPTIONS,
-  TOPIC_CONFIG,
-  TOPIC_OPTIONS,
-  cardKey,
+  createCardDuplicateIndex,
   mergeCards,
   normalizeAnswer,
   sanitizeCard,
@@ -208,12 +197,10 @@ let allCards = [];
 let bundledCards = [];
 let persistentCards = [];
 let sessionOnlyCards = [];
+const cardDuplicateIndex = createCardDuplicateIndex();
 let selectedTopics = null;
 let extendedRoundSize = false;
-
 let selectedSubcategories = new Set(DEFAULT_SUBCATEGORIES);
-
-let mixedTopicFeedbackTimer = 0;
 let capabilities = { persistentSave: false };
 
 let sessionCards = [];
@@ -239,14 +226,9 @@ let autoSubmitTimer = 0;
 let scoredCardEvents = new WeakSet();
 let difficulty = "easy";
 let previousTypedValue = "";
-let feedbackBurstTimer = null;
 let answerGuideCompleteTimer = null;
 let enterKeyPulseTimer = 0;
 let currentCardShownAt = 0;
-let feedbackBurstPieces = [];
-let answerGuideMeasureFrame = 0;
-let answerGuideResizeObserver = null;
-let onboardingCategoryPreviewResizeObserver = null;
 let cardTopbarLayoutRaf = 0;
 let learningMode = "de";
 let isPromptOrderSwapped = false;
@@ -267,158 +249,7 @@ document.addEventListener("visibilitychange", () => {
 
 let appLoaderStartedAt = Date.now();
 let grammarSliderControllers = [];
-let languageDockZoomFrame = 0;
-let installGuideLayoutFrame = 0;
-let statsAnimationFrame = 0;
-let statsAnimationToken = 0;
 let previousStatsSnapshot = null;
-const statsAnimationTimers = new WeakMap();
-const viewportProfile = {
-  width: 0,
-  height: 0,
-  maxObservedWidth: 0,
-  maxObservedHeight: 0,
-  isPhonePortrait: false,
-  gameDensity: "regular",
-  typeProfile: null,
-  initialized: false,
-  syncFrame: 0,
-};
-const answerGuideSizingState = {
-  target: "",
-  typed: "",
-  width: 0,
-  baseDensity: "regular",
-  targetBucket: -1,
-  typedBucket: -1,
-  lastTier: "",
-  lastMeasuredHeight: 0,
-};
-
-const FEEDBACK_BURST_SYMBOLS = Object.freeze({
-  success: Object.freeze({
-    big: Object.freeze(["\u{1F389}", "\u2728", "\u2B50", "\u{1F4A5}", "\u{1F38A}", "\u2728", "\u2B50", "\u{1F389}", "\u{1F4AB}", "\u2728"]),
-    small: Object.freeze(["\u2728", "\u2B50", "\u{1F4AB}", "\u2728", "\u2B50", "\u2728"]),
-  }),
-  error: Object.freeze(["\u2716", "\u26A1", "\u2715", "\u26A0", "\u2716", "\u26A1"]),
-});
-
-function getResponsiveTypeProfile() {
-  return viewportProfile.typeProfile || DEFAULT_TYPE_PROFILE;
-}
-
-function applyResponsiveTypeProfile(profile) {
-  if (!profile) {
-    return;
-  }
-
-  const rootStyle = document.documentElement?.style;
-  if (!rootStyle) {
-    return;
-  }
-
-  rootStyle.setProperty("--type-scale-body", String(profile.bodyScale));
-  rootStyle.setProperty("--type-scale-micro", String(profile.microScale));
-  rootStyle.setProperty("--type-scale-display", String(profile.displayScale));
-  rootStyle.setProperty("--type-scale-control", String(profile.controlScale));
-  rootStyle.setProperty("--type-scale-icon", String(profile.iconScale));
-  rootStyle.setProperty("--game-text-scale", String(profile.gameTextScale));
-  rootStyle.setProperty("--type-height-scale", String(profile.heightScale));
-  rootStyle.setProperty("--type-content-width", `${profile.contentWidth}px`);
-  viewportProfile.typeProfile = profile;
-}
-
-function isPhonePortraitLayoutActive() {
-  return viewportProfile.isPhonePortrait;
-}
-
-function isTouchKeyboardEnvironment() {
-  return Boolean(
-    window.matchMedia?.("(pointer: coarse)").matches ||
-    window.matchMedia?.("(hover: none)").matches ||
-    "ontouchstart" in window
-  );
-}
-
-function getCurrentGameDensity() {
-  return clampGameDensity(document.body?.dataset?.gameDensity);
-}
-
-function getPromptAvailableHeight(element) {
-  const row = element?.closest?.(".prompt-row");
-  if (!row) {
-    return Number.POSITIVE_INFINITY;
-  }
-
-  const rowStyle = window.getComputedStyle(row);
-  const verticalPadding =
-    Number.parseFloat(rowStyle.paddingTop || "0") +
-    Number.parseFloat(rowStyle.paddingBottom || "0");
-
-  return Math.max(1, row.clientHeight - verticalPadding - 4);
-}
-
-function getPromptFitProfile({ text, width, height, density, kind }) {
-  const trimmedText = String(text ?? "").trim();
-  const promptKind = kind === "secondary" ? "secondary" : "main";
-  const bumpThreshold = promptKind === "secondary" ? 46 : 38;
-  let effectiveDensity = clampGameDensity(density);
-
-  if (Array.from(trimmedText).length > bumpThreshold) {
-    effectiveDensity = getNextDenserDensity(effectiveDensity);
-  }
-
-  const profileGroup = PROMPT_FIT_PROFILES[promptKind] || PROMPT_FIT_PROFILES.main;
-  const baseProfile = profileGroup[effectiveDensity] || profileGroup.regular;
-  const { bodyScale } = getResponsiveTypeProfile();
-  const widthScale = clampNumber(width / 390, 0.72, 1.45);
-  const promptScale = Math.min(bodyScale, widthScale);
-  const minFontPx = getScaledFontPx(baseProfile.minFontPx, promptScale);
-  const maxFontPx = getScaledFontPx(baseProfile.maxFontPx, promptScale);
-  const heightLineLimit = Number.isFinite(height)
-    ? Math.max(1, Math.floor(height / Math.max(1, minFontPx * baseProfile.lineHeightRatio)))
-    : baseProfile.maxLines;
-
-  return {
-    ...baseProfile,
-    minFontPx,
-    maxFontPx,
-    maxLines: Math.max(baseProfile.maxLines, Math.min(14, heightLineLimit)),
-    maxHeight: height,
-  };
-}
-
-function getSiteTitleFitProfile() {
-  const hasGuides = siteTitleRowEl?.classList.contains("has-install-guides");
-  const viewportWidth = Math.max(0, window.innerWidth || document.documentElement.clientWidth || 0);
-  const guidedMaxFontPx = viewportWidth >= 900 ? 38 : 37;
-  return {
-    maxLines: 1,
-    minFontPx: hasGuides ? 10 : 16,
-    maxFontPx: hasGuides ? guidedMaxFontPx : viewportWidth >= 900 ? 38 : 28,
-  };
-}
-
-function getAnswerGuideVerticalBudget(density) {
-  const baseBudget = ANSWER_GUIDE_HEIGHT_BUDGETS[clampGameDensity(density)] || ANSWER_GUIDE_HEIGHT_BUDGETS.regular;
-  return Math.round(baseBudget * getResponsiveTypeProfile().controlScale);
-}
-
-function setAnswerGuideResponsiveVars(tier) {
-  if (!answerGuideEl) {
-    return;
-  }
-
-  const profile = ANSWER_GUIDE_SIZE_PROFILES[tier] || ANSWER_GUIDE_SIZE_PROFILES.regular;
-  const { controlScale } = getResponsiveTypeProfile();
-  answerGuideEl.style.setProperty("--answer-guide-text-scale", String(profile.textScale));
-  answerGuideEl.style.setProperty("--answer-guide-meta-scale", String(profile.metaScale));
-  answerGuideEl.style.setProperty("--answer-guide-token-gap", `${Math.round(profile.tokenGap * controlScale)}px`);
-  answerGuideEl.style.setProperty("--answer-guide-char-gap", `${Math.round(profile.charGap * controlScale)}px`);
-  answerGuideEl.style.setProperty("--answer-guide-separator-min-width", `${Math.round(profile.separatorMinWidth * controlScale)}px`);
-  answerGuideEl.style.setProperty("--answer-guide-space-separator-gap", `${Math.round(profile.spaceSeparatorGap * controlScale)}px`);
-  answerGuideEl.dataset.answerGuideScale = tier;
-}
 
 function syncPromptOrderControls() {
   const swapAria = t("messages.actions.switchPromptAria");
@@ -433,123 +264,6 @@ function syncPromptOrderControls() {
     button.setAttribute("aria-pressed", String(isPromptOrderSwapped));
     button.classList.toggle("is-swapped", isPromptOrderSwapped);
   });
-}
-
-function measureAnswerGuideBodyHeight() {
-  if (!answerGuideBodyEl) {
-    return 0;
-  }
-
-  const height = Math.max(
-    answerGuideBodyEl.scrollHeight || 0,
-    Math.ceil(answerGuideBodyEl.getBoundingClientRect().height || 0),
-    wordGrid?.scrollHeight || 0,
-  );
-  answerGuideSizingState.lastMeasuredHeight = height;
-  return height;
-}
-
-function syncAnswerGuideTrailPosition() {
-  if (!answerGuideTrailFlagEl || !answerGuideBodyEl || !answerGuideActionRowEl || !skipCardBtnEl) {
-    return;
-  }
-
-  const skipRect = skipCardBtnEl.getBoundingClientRect();
-  const actionRect = answerGuideActionRowEl.getBoundingClientRect();
-  const bodyRect = answerGuideBodyEl.getBoundingClientRect();
-  const midpoint = (skipRect.bottom + actionRect.bottom) / 2;
-  const relativeTop = midpoint - bodyRect.top;
-
-  if ([skipRect.bottom, actionRect.bottom, bodyRect.top, relativeTop].every(Number.isFinite)) {
-    answerGuideTrailFlagEl.style.setProperty("--answer-guide-trail-top", `${relativeTop}px`);
-  }
-}
-
-function scheduleAnswerGuideMeasure(reason) {
-  void reason;
-  if (answerGuideMeasureFrame || !answerGuideEl || !answerGuideBodyEl || !wordGrid) {
-    return;
-  }
-
-  answerGuideMeasureFrame = window.requestAnimationFrame(() => {
-    answerGuideMeasureFrame = 0;
-    measureAnswerGuideBodyHeight();
-    applyAnswerGuideResponsiveSizing();
-    syncAnswerGuideTrailPosition();
-  });
-}
-
-function initAnswerGuideResizeObserver() {
-  if (!answerGuideEl || !answerGuideBodyEl || typeof window.ResizeObserver !== "function") {
-    return;
-  }
-
-  answerGuideResizeObserver?.disconnect();
-  answerGuideResizeObserver = new window.ResizeObserver(() => {
-    scheduleAnswerGuideMeasure("answer-guide-resize");
-  });
-  answerGuideResizeObserver.observe(answerGuideEl);
-  answerGuideResizeObserver.observe(answerGuideBodyEl);
-}
-
-function applyAnswerGuideResponsiveSizing() {
-  if (!answerGuideEl || !answerGuideBodyEl || !wordGrid) {
-    return;
-  }
-
-  const baseDensity = getCurrentGameDensity();
-  const budget = getAnswerGuideVerticalBudget(baseDensity);
-  const targetLength = Array.from(String(answerGuideSizingState.target ?? "")).length;
-  const typedLength = Array.from(String(answerGuideSizingState.typed ?? "")).length;
-  const width = Math.round(answerGuideBodyEl.clientWidth || answerGuideEl.clientWidth || 0);
-  const targetBucket = getAnswerGuideLengthBucket(targetLength);
-  const typedBucket = getAnswerGuideLengthBucket(typedLength);
-  let tier = baseDensity;
-
-  if (targetLength > 72 || typedLength > 72) {
-    tier = getNextDenserDensity(tier);
-  }
-
-  const sameSizingInputs =
-    answerGuideSizingState.width === width &&
-    answerGuideSizingState.baseDensity === baseDensity &&
-    answerGuideSizingState.targetBucket === targetBucket &&
-    answerGuideSizingState.typedBucket === typedBucket &&
-    answerGuideSizingState.lastTier === tier;
-
-  setAnswerGuideResponsiveVars(tier);
-
-  if (sameSizingInputs && answerGuideSizingState.lastMeasuredHeight <= budget) {
-    document.body.classList.remove("has-expanded-answer-guide");
-    return;
-  }
-
-  if (measureAnswerGuideBodyHeight() > budget) {
-    tier = getNextAnswerGuideSizingTier(tier);
-    setAnswerGuideResponsiveVars(tier);
-  }
-
-  document.body.classList.toggle(
-    "has-expanded-answer-guide",
-    measureAnswerGuideBodyHeight() > budget
-  );
-
-  answerGuideSizingState.width = width;
-  answerGuideSizingState.baseDensity = baseDensity;
-  answerGuideSizingState.targetBucket = targetBucket;
-  answerGuideSizingState.typedBucket = typedBucket;
-  answerGuideSizingState.lastTier = tier;
-}
-
-function setStableViewportCssVars(viewport) {
-  if (!viewport) {
-    return;
-  }
-
-  const width = Math.max(0, Math.round(viewport.width || 0));
-  const height = Math.max(0, Math.round(viewport.height || 0));
-  document.documentElement.style.setProperty("--app-stable-viewport-width", `${width}px`);
-  document.documentElement.style.setProperty("--app-stable-viewport-height", `${height}px`);
 }
 
 function activateTouchInputWithoutScroll(event) {
@@ -658,35 +372,7 @@ function shouldTapFocusAnswerInput(target) {
   return true;
 }
 
-function getViewportSize() {
-  const width = window.innerWidth || document.documentElement.clientWidth || 0;
-  const height = window.innerHeight || document.documentElement.clientHeight || 0;
-
-  return {
-    width: Math.max(0, Math.round(width)),
-    height: Math.max(0, Math.round(height)),
-  };
-}
-
-function renderPhoneInstallGuide(browserText, stepsText) {
-  if (!phoneGuideBarEl) {
-    return;
-  }
-
-  const browserLine = document.createElement("span");
-  browserLine.className = "phone-guide-bar-browser";
-  browserLine.textContent = browserText;
-
-  const stepsLine = document.createElement("span");
-  stepsLine.className = "phone-guide-bar-steps";
-  stepsLine.textContent = stepsText;
-
-  phoneGuideBarEl.replaceChildren(browserLine, stepsLine);
-}
-
 function setExternalLookupInert(inert) {
-  // Settings and reference panels stay usable behind onboarding/session-end
-  // surfaces; only external navigation is paused while those surfaces are up.
   const searchToolsPanel = document.getElementById("searchToolsPanel");
   if (searchToolsPanel) {
     searchToolsPanel.setAttribute("aria-disabled", String(inert));
@@ -707,114 +393,6 @@ function setGameSurfaceMode(showSessionEnd) {
   sessionEndEl.style.display = showSessionEnd ? "flex" : "none";
   mainCard?.classList.toggle("is-session-ended", showSessionEnd);
   setExternalLookupInert(showSessionEnd);
-}
-
-function syncViewportProfile() {
-  viewportProfile.syncFrame = 0;
-
-  const measuredViewport = getViewportSize();
-  const shouldIgnoreHeightOnlyChange =
-    isTouchKeyboardEnvironment() &&
-    viewportProfile.width > 0 &&
-    viewportProfile.height > 0 &&
-    Math.abs(measuredViewport.width - viewportProfile.width) <= 2;
-  const nextViewport = shouldIgnoreHeightOnlyChange
-    ? {
-        width: viewportProfile.width,
-        height: viewportProfile.height,
-      }
-    : measuredViewport;
-
-  viewportProfile.maxObservedWidth = Math.max(viewportProfile.maxObservedWidth, nextViewport.width);
-  viewportProfile.maxObservedHeight = Math.max(viewportProfile.maxObservedHeight, nextViewport.height);
-  setStableViewportCssVars(nextViewport);
-  const nextTypeProfile = computeResponsiveTypeProfile({
-    viewportWidth: nextViewport.width,
-    viewportHeight: nextViewport.height,
-    heroWidth: heroStageEl?.clientWidth || 0,
-    cardWidth: mainCard?.clientWidth || 0,
-  });
-  const typeProfileChanged = hasResponsiveTypeProfileChanged(viewportProfile.typeProfile, nextTypeProfile);
-  applyResponsiveTypeProfile(nextTypeProfile);
-
-  const widthRatio = viewportProfile.maxObservedWidth > 0
-    ? nextViewport.width / viewportProfile.maxObservedWidth
-    : 1;
-  const heightRatio = viewportProfile.maxObservedHeight > 0
-    ? nextViewport.height / viewportProfile.maxObservedHeight
-    : 1;
-  updateLanguageDockZoom(Math.min(widthRatio, heightRatio), nextViewport);
-
-  const nextPhonePortrait = nextViewport.width <= 700;
-  const nextGameDensity = getGameDensityProfile({
-    viewportWidth: nextViewport.width,
-    viewportHeight: nextViewport.height,
-    cardWidth: mainCard?.clientWidth || 0,
-  });
-  const layoutChanged = viewportProfile.isPhonePortrait !== nextPhonePortrait;
-  const densityChanged = viewportProfile.gameDensity !== nextGameDensity;
-  const sizeChanged =
-    viewportProfile.width !== nextViewport.width ||
-    viewportProfile.height !== nextViewport.height;
-
-  viewportProfile.width = nextViewport.width;
-  viewportProfile.height = nextViewport.height;
-  viewportProfile.isPhonePortrait = nextPhonePortrait;
-  viewportProfile.gameDensity = nextGameDensity;
-
-  document.body.classList.toggle("layout-phone-portrait", nextPhonePortrait);
-  document.body.dataset.gameDensity = nextGameDensity;
-  setGameSurfaceMode(isSessionEndVisible());
-
-  if (sizeChanged || typeProfileChanged) {
-    siteTitleController?.relayout();
-    grammarSliderControllers.forEach((controller) => controller?.rerender?.());
-  }
-
-  if (sizeChanged || layoutChanged) {
-    maybeShowInstallGuide();
-  }
-
-  if ((sizeChanged || densityChanged || typeProfileChanged) && sessionCards.length && sessionCards[sessionIndex]) {
-    promptController?.relayout();
-    promptSubController?.relayout();
-    buildWordGrid(getTargetValue(sessionCards[sessionIndex]), inputEl.value);
-  }
-
-  scheduleCardTopbarLayoutSync();
-}
-
-function scheduleViewportProfileSync() {
-  if (viewportProfile.syncFrame) {
-    return;
-  }
-
-  viewportProfile.syncFrame = window.requestAnimationFrame(syncViewportProfile);
-}
-
-function initViewportProfile() {
-  if (!viewportProfile.initialized) {
-    viewportProfile.initialized = true;
-    if ("virtualKeyboard" in navigator && navigator.virtualKeyboard) {
-      navigator.virtualKeyboard.overlaysContent = true;
-    }
-    window.addEventListener("load", scheduleViewportProfileSync, { passive: true });
-    window.addEventListener("pageshow", () => {
-      syncViewportProfile();
-      if (hasBootstrappedApp) {
-        void recoverPlayableSession("pageshow", sessionCards.length || SESSION_SIZE);
-      }
-    }, { passive: true });
-    window.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
-    window.addEventListener("orientationchange", scheduleViewportProfileSync, { passive: true });
-  }
-
-  if (viewportProfile.syncFrame) {
-    window.cancelAnimationFrame(viewportProfile.syncFrame);
-    viewportProfile.syncFrame = 0;
-  }
-
-  syncViewportProfile();
 }
 
 const siteTitleController = createPretextBlockController({
@@ -909,15 +487,11 @@ function getCurrentScopeMode() {
   return MODE_SCOPE_MAP[getTargetLanguage()] || "all";
 }
 
-function getTopicColor(topic) {
-  return TOPIC_CONFIG[topic]?.color || "#888";
-}
-
 function loadLearningMode() {
   try {
     const saved = localStorage.getItem(LEARNING_MODE_STORAGE_KEY);
     return LANGUAGE_SEQUENCE.includes(saved) ? saved : "de";
-  } catch (error) {
+  } catch {
     return "de";
   }
 }
@@ -925,7 +499,7 @@ function loadLearningMode() {
 function loadPromptOrderPreference() {
   try {
     return localStorage.getItem(PROMPT_ORDER_STORAGE_KEY) === "true";
-  } catch (error) {
+  } catch {
     return false;
   }
 }
@@ -933,7 +507,7 @@ function loadPromptOrderPreference() {
 function saveLearningMode() {
   try {
     localStorage.setItem(LEARNING_MODE_STORAGE_KEY, learningMode);
-  } catch (error) {
+  } catch {
     // Ignore storage failures and keep the in-memory preference.
   }
 }
@@ -941,7 +515,7 @@ function saveLearningMode() {
 function savePromptOrderPreference() {
   try {
     localStorage.setItem(PROMPT_ORDER_STORAGE_KEY, String(isPromptOrderSwapped));
-  } catch (error) {
+  } catch {
     // Ignore storage failures and keep the in-memory preference.
   }
 }
@@ -985,6 +559,78 @@ function getSubcategoryColor(subcategory) {
 function getScopeLabel(scope) {
   return t(`scopes.${scope}`);
 }
+
+const installGuideController = createInstallGuideController({
+  translate: t,
+  siteTitleController,
+  showToast,
+});
+
+const categoryPanelController = createCategoryPanelController({
+  translate: t,
+  getTopicLabel,
+  getSubcategoryLabel,
+  getSelectedTopics: () => selectedTopics,
+  setSelectedTopics: (nextTopics) => { selectedTopics = nextTopics; },
+  getSelectedSubcategories: () => selectedSubcategories,
+  setSelectedSubcategories: (nextSubcategories) => { selectedSubcategories = nextSubcategories; },
+  getExtendedRoundSize: () => extendedRoundSize,
+  getPool,
+});
+
+function hasDuplicate(card) {
+  return cardDuplicateIndex.has(card);
+}
+
+function addCardToRuntime(card) {
+  if (!cardDuplicateIndex.add(card)) {
+    return;
+  }
+  allCards.push(card);
+  categoryPanelController.buildTopicPanel();
+}
+
+const cardAuthoringController = createCardAuthoringController({
+  translate: t,
+  getTopicLabel,
+  getSubcategoryLabel,
+  getScopeLabel,
+  getCapabilities: () => capabilities,
+  getPersistentCards: () => persistentCards,
+  setPersistentCards: (nextCards) => { persistentCards = nextCards; },
+  getSessionOnlyCards: () => sessionOnlyCards,
+  setSessionOnlyCards: (nextCards) => { sessionOnlyCards = nextCards; },
+  hasDuplicateCard: hasDuplicate,
+  addCardToRuntime,
+  showToast,
+});
+
+const viewportController = createViewportProfileController({
+  onRelayoutTextAndGrammar: () => {
+    siteTitleController?.relayout();
+    grammarSliderControllers.forEach((controller) => controller?.rerender?.());
+  },
+  onLayoutChanged: () => {
+    installGuideController.maybeShow();
+  },
+  onCardRelayout: () => {
+    setGameSurfaceMode(isSessionEndVisible());
+    if (sessionCards.length && sessionCards[sessionIndex]) {
+      promptController?.relayout();
+      promptSubController?.relayout();
+      buildWordGrid(getTargetValue(sessionCards[sessionIndex]), inputEl.value);
+    }
+  },
+  onTopbarSync: () => {
+    setGameSurfaceMode(isSessionEndVisible());
+    scheduleCardTopbarLayoutSync();
+  },
+  onPageshowRecover: () => {
+    if (hasBootstrappedApp) {
+      void recoverPlayableSession("pageshow", sessionCards.length || SESSION_SIZE);
+    }
+  },
+});
 
 function renderCardBadge(card) {
   if (!categoryEl) {
@@ -1152,14 +798,6 @@ function goBackToPreviousCard() {
   return navigateToCardIndex(sessionIndex - 1);
 }
 
-function goForwardToNextCard() {
-  if (sessionIndex >= sessionCards.length - 1) {
-    return false;
-  }
-
-  return navigateToCardIndex(sessionIndex + 1);
-}
-
 function incrementCardSkipCount(card) {
   const currentCount = sessionSkipCounts.get(card) || 0;
   sessionSkipCounts.set(card, currentCount + 1);
@@ -1240,48 +878,6 @@ function renderHintButtonLabel() {
   labelEl.textContent = hintLabel;
 
   hintBtnEl.append(iconEl, document.createTextNode(" "), labelEl);
-}
-
-function resolveSessionSize(size, fallback = SESSION_SIZE) {
-  const parsed = Number(size);
-  if (!Number.isFinite(parsed) || parsed <= 0) {
-    return fallback;
-  }
-  return Math.max(1, Math.floor(parsed));
-}
-
-function getRequestedSessionSize() {
-  return resolveSessionSize(sessionSizeSliderEl?.value, SESSION_SIZE);
-}
-
-function syncSessionSizeLabel() {
-  if (sliderLabelEl && sessionSizeSliderEl) {
-    sliderLabelEl.textContent = sessionSizeSliderEl.value;
-  }
-}
-
-function updateRoundSizeControl(availableCount) {
-  const available = Math.max(0, Math.floor(Number(availableCount) || 0));
-  const sliderMax = extendedRoundSize ? Math.max(5, available) : 50;
-  if (sessionSizeSliderEl) {
-    sessionSizeSliderEl.min = "5";
-    sessionSizeSliderEl.max = String(sliderMax);
-    sessionSizeSliderEl.step = extendedRoundSize ? "1" : "5";
-    const currentValue = Number(sessionSizeSliderEl.value) || 5;
-    sessionSizeSliderEl.value = String(Math.max(5, Math.min(sliderMax, currentValue)));
-    syncSessionSizeLabel();
-  }
-
-  if (catCountEl) {
-    const unit = t("messages.categories.unit");
-    const action = t(extendedRoundSize
-      ? "messages.categories.roundLimitLock"
-      : "messages.categories.roundLimitUnlock");
-    catCountEl.textContent = `${available} ${unit}`;
-    catCountEl.setAttribute("aria-pressed", String(extendedRoundSize));
-    catCountEl.setAttribute("aria-label", `${available} ${unit}. ${action}`);
-    catCountEl.title = action;
-  }
 }
 
 function getTargetLanguage() {
@@ -1365,76 +961,6 @@ function updateLanguageDock() {
       button.setAttribute("aria-label", t(`messages.arrowActions.${direction}`));
     }
   });
-}
-
-function getLanguageDockZoomScale(dockViewportRatio) {
-  const ratio = Number.isFinite(dockViewportRatio) ? dockViewportRatio : 1;
-
-  if (ratio >= 0.9) {
-    return 1;
-  }
-
-  if (ratio >= 0.72) {
-    return Math.max(0.82, Math.min(1, 0.82 + ((ratio - 0.72) / 0.18) * 0.18));
-  }
-
-  if (ratio >= 0.52) {
-    return Math.max(0.64, Math.min(0.82, 0.64 + ((ratio - 0.52) / 0.2) * 0.18));
-  }
-
-  return 0.64;
-}
-
-function cancelLanguageDockZoomFrame() {
-  if (!languageDockZoomFrame) {
-    return;
-  }
-
-  window.cancelAnimationFrame(languageDockZoomFrame);
-  languageDockZoomFrame = 0;
-}
-
-function applyLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
-  languageDockZoomFrame = 0;
-
-  if (!languageDockEl) {
-    return;
-  }
-
-  const ratio = Number.isFinite(dockViewportRatio) ? dockViewportRatio : 1;
-  const scale = getLanguageDockZoomScale(ratio);
-  const viewportWidth = Math.max(0, Math.round(nextViewport?.width || 0));
-  const viewportHeight = Math.max(0, Math.round(nextViewport?.height || 0));
-
-  languageDockEl.style.setProperty("--language-dock-zoom-scale", String(scale));
-  arrowDockEl?.style.setProperty("--language-dock-zoom-scale", String(scale));
-  const dockRect = languageDockEl.getBoundingClientRect();
-  const isTooLarge =
-    viewportWidth < 280 ||
-    dockRect.width > viewportWidth * 0.24 ||
-    dockRect.height > viewportHeight * 0.16;
-  const isHidden = ratio < 0.52 && isTooLarge;
-  languageDockEl.classList.toggle("is-zoom-hidden", isHidden);
-  arrowDockEl?.classList.toggle("is-zoom-hidden", isHidden);
-}
-
-function scheduleLanguageDockZoomLayout(dockViewportRatio, nextViewport) {
-  if (!languageDockEl) {
-    return;
-  }
-
-  cancelLanguageDockZoomFrame();
-  const scheduledViewport = {
-    width: Math.max(0, Math.round(nextViewport?.width || 0)),
-    height: Math.max(0, Math.round(nextViewport?.height || 0)),
-  };
-  languageDockZoomFrame = window.requestAnimationFrame(() => {
-    applyLanguageDockZoomLayout(dockViewportRatio, scheduledViewport);
-  });
-}
-
-function updateLanguageDockZoom(dockViewportRatio, nextViewport) {
-  scheduleLanguageDockZoomLayout(dockViewportRatio, nextViewport);
 }
 
 function applyLearningTheme() {
@@ -1523,7 +1049,7 @@ function renderStaticUi() {
   if (addCardEnEl) {
     addCardEnEl.placeholder = t("messages.authoring.placeholders.en");
   }
-  fillAuthoringSelects();
+  cardAuthoringController.fillSelects();
   setLocalizedText(factsPanelTitleEl, "facts.panelTitle");
   setLocalizedText(factsPanelSubtitleEl, "facts.panelSubtitle");
   setLocalizedText(factsCountryBtn?.querySelector(".facts-switch-btn-label"), "facts.tabs.germany");
@@ -1561,9 +1087,9 @@ function switchLearningMode(nextLanguage) {
     saveLearningMode();
     applyLearningTheme();
     renderStaticUi();
-    maybeShowInstallGuide();
-    renderAuthoringMode();
-    buildTopicPanel();
+    installGuideController.maybeShow();
+    cardAuthoringController.renderMode();
+    categoryPanelController.buildTopicPanel();
     updateStats();
     factsController.render();
     if (isRenderableCard(sessionCards[sessionIndex], nextLanguage)) {
@@ -1616,7 +1142,6 @@ function renderPrompt(card) {
   setLanguageFlagIcon(promptSecondaryFlagEl, secondaryLanguage);
   setLanguageFlagIcon(inputFlagEl, getTargetLanguage());
   syncPromptOrderControls();
-  return;
 }
 
 function togglePromptOrder() {
@@ -1633,285 +1158,6 @@ function togglePromptOrder() {
 
 async function loadLocales() {
   return fetchJson("locales.json?v=2026-08-21-onboarding4", null);
-}
-
-function loadSessionCards() {
-  try {
-    const raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
-    if (!raw) {
-      return [];
-    }
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.map(sanitizeCard).filter(Boolean) : [];
-  } catch (error) {
-    return [];
-  }
-}
-
-function saveSessionCards() {
-  sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(sessionOnlyCards, null, 2));
-}
-
-function getExtraCardsForExport() {
-  return mergeCards(persistentCards, sessionOnlyCards);
-}
-
-function setAuthoringFeedback(message, isError) {
-  addCardStatusEl.textContent = message;
-  addCardStatusEl.classList.toggle("is-error", Boolean(isError));
-}
-
-function setAuthoringBusy(isBusy) {
-  addCardSaveBtn.disabled = isBusy;
-  exportCardsBtn.disabled = isBusy;
-  addCardSaveBtn.textContent = isBusy
-    ? t("messages.authoring.saveBusy")
-    : capabilities.persistentSave
-      ? t("messages.authoring.savePersistent")
-      : t("messages.authoring.saveSession");
-  exportCardsBtn.textContent = t("messages.authoring.export");
-}
-
-function renderAuthoringMode() {
-  if (capabilities.persistentSave) {
-    authorModeEl.classList.add("persistent");
-    setAuthoringFeedback(t("messages.authoring.modePersistent"), false);
-  } else {
-    authorModeEl.classList.remove("persistent");
-    setAuthoringFeedback(t("messages.authoring.modeSession"), false);
-  }
-  setAuthoringBusy(false);
-}
-
-function fillSelectOptions(selectEl, values, getLabel, fallbackValue) {
-  if (!selectEl) {
-    return;
-  }
-
-  const currentValue = selectEl.value;
-  selectEl.innerHTML = "";
-
-  values.forEach((value) => {
-    const option = document.createElement("option");
-    option.value = value;
-    option.textContent = getLabel(value);
-    selectEl.appendChild(option);
-  });
-
-  const nextValue = values.includes(currentValue) ? currentValue : fallbackValue;
-  if (nextValue) {
-    selectEl.value = nextValue;
-  }
-}
-
-function fillAuthoringSelects() {
-  fillSelectOptions(addCardTopicEl, TOPIC_OPTIONS, getTopicLabel, TOPIC_OPTIONS[0]);
-  fillSelectOptions(addCardSubcategoryEl, SUBCATEGORY_OPTIONS, getSubcategoryLabel, SUBCATEGORY_OPTIONS[0]);
-  fillSelectOptions(addCardScopeEl, CARD_SCOPE_OPTIONS, getScopeLabel, CARD_SCOPE_OPTIONS[0]);
-}
-
-function setTopicButtonContent(button, label, icon = "•") {
-  const iconEl = document.createElement("span");
-  iconEl.className = "cat-btn-icon";
-  iconEl.setAttribute("aria-hidden", "true");
-
-  const glyphEl = document.createElement("span");
-  glyphEl.className = "cat-btn-icon-glyph";
-  glyphEl.textContent = icon;
-  iconEl.appendChild(glyphEl);
-
-  const labelEl = document.createElement("span");
-  labelEl.className = "cat-btn-label";
-  labelEl.textContent = label;
-
-  button.replaceChildren(iconEl, labelEl);
-}
-
-function playMixedTopicReselectFeedback() {
-  const button = document.querySelector("#catButtons .cat-btn.mixed.active");
-  if (!button) {
-    return;
-  }
-
-  window.clearTimeout(mixedTopicFeedbackTimer);
-  button.classList.remove("is-reselecting");
-  void button.offsetWidth;
-  button.classList.add("is-reselecting");
-  mixedTopicFeedbackTimer = window.setTimeout(() => {
-    button.classList.remove("is-reselecting");
-    mixedTopicFeedbackTimer = 0;
-  }, 220);
-}
-
-function updateOnboardingCategoryPreviewTarget() {
-  const container = document.getElementById("catButtons");
-  const target = container?.querySelector('[data-onboarding-target="category-preview"]');
-  if (!container || !target) {
-    return;
-  }
-
-  const containerRect = container.getBoundingClientRect();
-  const rows = [];
-  Array.from(container.children)
-    .filter((button) => button.classList.contains("cat-btn"))
-    .forEach((button) => {
-      const rect = button.getBoundingClientRect();
-      if (rect.width <= 0 || rect.height <= 0) {
-        return;
-      }
-
-      const currentRow = rows[rows.length - 1];
-      if (!currentRow || Math.abs(rect.top - currentRow.top) > 1) {
-        rows.push({ top: rect.top, bottom: rect.bottom });
-      } else {
-        currentRow.bottom = Math.max(currentRow.bottom, rect.bottom);
-      }
-    });
-
-  const previewRows = rows.slice(0, 3);
-  if (!previewRows.length) {
-    target.style.height = "0px";
-    return;
-  }
-
-  const previewTop = previewRows[0].top - containerRect.top;
-  const previewBottom = previewRows[previewRows.length - 1].bottom - containerRect.top;
-  target.style.top = `${Math.max(0, previewTop)}px`;
-  target.style.height = `${Math.max(0, previewBottom - previewTop)}px`;
-}
-
-function initOnboardingCategoryPreviewTarget() {
-  updateOnboardingCategoryPreviewTarget();
-  window.addEventListener("resize", updateOnboardingCategoryPreviewTarget, { passive: true });
-  window.addEventListener("orientationchange", updateOnboardingCategoryPreviewTarget, { passive: true });
-
-  const container = document.getElementById("catButtons");
-  if (container && typeof ResizeObserver === "function") {
-    onboardingCategoryPreviewResizeObserver = new ResizeObserver(updateOnboardingCategoryPreviewTarget);
-    onboardingCategoryPreviewResizeObserver.observe(container);
-  }
-}
-
-function buildTopicPanel() {
-  const container = document.getElementById("catButtons");
-  container.innerHTML = "";
-
-  const previewTarget = document.createElement("span");
-  previewTarget.className = "onboarding-category-preview-target";
-  previewTarget.dataset.onboardingTarget = "category-preview";
-  previewTarget.setAttribute("aria-hidden", "true");
-  container.appendChild(previewTarget);
-
-  const mixBtn = document.createElement("button");
-  mixBtn.type = "button";
-  mixBtn.className = `cat-btn mixed${selectedTopics === null ? " active" : ""}`;
-  mixBtn.style.setProperty("--cat-color", "#e8ff47");
-  mixBtn.setAttribute("aria-pressed", String(selectedTopics === null));
-  setTopicButtonContent(mixBtn, t("messages.categories.mixed"), "🧩");
-  mixBtn.onclick = () => {
-    const wasAlreadySelected = selectedTopics === null;
-    selectedTopics = null;
-    buildTopicPanel();
-    if (wasAlreadySelected) {
-      playMixedTopicReselectFeedback();
-    }
-  };
-  container.appendChild(mixBtn);
-
-  TOPIC_OPTIONS.forEach((topic) => {
-    const color = getTopicColor(topic);
-    const isActive = selectedTopics !== null && selectedTopics.has(topic);
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = `cat-btn${isActive ? " active" : ""}`;
-    btn.dataset.topic = topic;
-    btn.setAttribute("aria-pressed", String(isActive));
-    setTopicButtonContent(btn, getTopicLabel(topic), TOPIC_CONFIG[topic]?.icon);
-    btn.style.setProperty("--cat-color", color);
-    btn.style.borderColor = `${color}70`;
-    btn.style.color = isActive ? "#07101b" : "#fff";
-    btn.style.background = isActive
-      ? color
-      : `linear-gradient(135deg, ${color}b8, ${color}52), linear-gradient(180deg, rgba(18, 28, 64, 0.88), rgba(8, 14, 34, 0.94))`;
-    const iconEl = btn.querySelector(".cat-btn-icon");
-    if (iconEl) {
-      iconEl.style.color = isActive ? "#07101b" : color;
-    }
-    btn.onclick = () => {
-      if (selectedTopics === null) {
-        selectedTopics = new Set();
-      }
-
-      if (selectedTopics.has(topic)) {
-        selectedTopics.delete(topic);
-        if (selectedTopics.size === 0) {
-          selectedTopics = null;
-        }
-      } else {
-        selectedTopics.add(topic);
-      }
-
-      buildTopicPanel();
-    };
-    container.appendChild(btn);
-  });
-
-  updateOnboardingCategoryPreviewTarget();
-
-  buildSubcategoryPanel();
-
-  const pool = getPool();
-  updateRoundSizeControl(pool.length);
-  newGameBtn.disabled = pool.length === 0;
-}
-
-function buildSubcategoryPanel() {
-  if (!subcategoryButtonsEl) {
-    return;
-  }
-
-  subcategoryButtonsEl.replaceChildren();
-  const options = [null, ...SUBCATEGORY_OPTIONS];
-  options.forEach((subcategory, index) => {
-    const isActive = subcategory === null
-      ? selectedSubcategories === null
-      : selectedSubcategories?.has(subcategory) === true;
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = `subcategory-btn${subcategory === null ? " subcategory-btn-all" : ""}${isActive ? " active" : ""}`;
-    if (subcategory) {
-      button.style.setProperty("--subcategory-color", SUBCATEGORY_COLORS[index - 1]);
-    }
-    button.dataset.subcategory = subcategory || "all";
-    button.setAttribute("aria-pressed", String(isActive));
-    const icon = document.createElement("span");
-    icon.className = "subcategory-btn-icon";
-    icon.setAttribute("aria-hidden", "true");
-    icon.textContent = SUBCATEGORY_ICONS[subcategory || "all"];
-    const label = document.createElement("span");
-    label.className = "subcategory-btn-label";
-    label.textContent = subcategory ? getSubcategoryLabel(subcategory) : t("messages.categories.classAll");
-    button.replaceChildren(icon, label);
-    button.addEventListener("click", () => {
-      if (subcategory === null) {
-        selectedSubcategories = null;
-      } else {
-        if (selectedSubcategories === null) {
-          selectedSubcategories = new Set();
-        }
-        if (selectedSubcategories.has(subcategory)) {
-          selectedSubcategories.delete(subcategory);
-          if (selectedSubcategories.size === 0) {
-            selectedSubcategories = null;
-          }
-        } else {
-          selectedSubcategories.add(subcategory);
-        }
-      }
-      buildTopicPanel();
-    });
-    subcategoryButtonsEl.appendChild(button);
-  });
 }
 
 function getPool() {
@@ -1938,8 +1184,6 @@ function updateSearchLinks(card) {
   }
 
   searchLinksEl.innerHTML = "";
-  // Keep all four lookup actions available between cards and before the first
-  // round. A missing active card should never make the whole control row vanish.
   const query = String(card?.de || card?.en || promptEl?.textContent || "Deutsch").trim();
 
   searchSites.forEach((site) => {
@@ -2214,7 +1458,7 @@ function submitCurrentAnswer({ finishNow = false } = {}) {
         if (streak > bestStreak) {
           bestStreak = streak;
         }
-        showCombo();
+        showCombo(streak, t);
         showToast(getEncouragement(streak));
       }
     }
@@ -2252,103 +1496,6 @@ function submitCurrentAnswer({ finishNow = false } = {}) {
   inputEl.className = "wrong";
   forceCorrection = true;
   updateStats({ event: "error" });
-}
-
-function ensureFeedbackBurstPieces(count) {
-  if (!feedbackBurstEl) {
-    return [];
-  }
-
-  while (feedbackBurstPieces.length < count) {
-    const piece = document.createElement("span");
-    piece.className = "burst-piece";
-    piece.hidden = true;
-    feedbackBurstEl.appendChild(piece);
-    feedbackBurstPieces.push(piece);
-  }
-
-  return feedbackBurstPieces;
-}
-
-function getFeedbackBurstSymbols(kind, isBig) {
-  if (kind === "success") {
-    return isBig ? FEEDBACK_BURST_SYMBOLS.success.big : FEEDBACK_BURST_SYMBOLS.success.small;
-  }
-
-  return FEEDBACK_BURST_SYMBOLS.error;
-}
-
-function resetFeedbackBurstPieces() {
-  feedbackBurstPieces.forEach((piece) => {
-    piece.hidden = true;
-    piece.textContent = "";
-    piece.style.animation = "none";
-  });
-}
-
-function showFeedbackBurst(kind, isBig = false) {
-  if (!feedbackBurstEl) {
-    return;
-  }
-
-  if (prefersReducedEffects()) {
-    clearTimeout(feedbackBurstTimer);
-    resetFeedbackBurstPieces();
-    feedbackBurstEl.className = "feedback-burst";
-    return;
-  }
-
-  clearTimeout(feedbackBurstTimer);
-  feedbackBurstEl.className = `feedback-burst is-${kind}${isBig ? " is-big" : ""}`;
-
-  const pieces = getFeedbackBurstSymbols(kind, isBig);
-  const baseDistance = isBig ? 164 : 116;
-  const distanceJitter = isBig ? 42 : 30;
-  const startAngle = getSecureRandomRange(0, 359);
-  const angleStep = 360 / Math.max(pieces.length, 1);
-  const midpointPull = kind === "success" ? (isBig ? 20 : 14) : 8;
-  const burstPieces = ensureFeedbackBurstPieces(pieces.length);
-
-  burstPieces.forEach((piece, index) => {
-    piece.hidden = true;
-    piece.style.animation = "none";
-    if (index >= pieces.length) {
-      piece.textContent = "";
-      return;
-    }
-
-    const symbol = pieces[index];
-    const angleDegrees = startAngle + (angleStep * index) + getSecureRandomRange(-12, 12);
-    const angle = angleDegrees * (Math.PI / 180);
-    const distance = baseDistance + getSecureRandomRange(-distanceJitter, distanceJitter);
-    const dx = Math.round(Math.cos(angle) * distance);
-    const dy = Math.round(Math.sin(angle) * distance);
-    const mx = Math.round(dx * 0.52);
-    const my = Math.round(dy * 0.4 - midpointPull);
-
-    piece.textContent = symbol;
-    piece.style.setProperty("--dx", `${dx}px`);
-    piece.style.setProperty("--dy", `${dy}px`);
-    const rotation = getSecureRandomRange(-44, 44);
-    piece.style.setProperty("--mx", `${mx}px`);
-    piece.style.setProperty("--my", `${my}px`);
-    piece.style.setProperty("--rot-mid", `${Math.round(rotation * 0.45)}deg`);
-    piece.style.setProperty("--rot", `${rotation}deg`);
-    piece.style.animationDelay = `${index * 18}ms`;
-    piece.hidden = false;
-  });
-
-  void feedbackBurstEl.offsetWidth;
-  burstPieces.forEach((piece, index) => {
-    if (index < pieces.length) {
-      piece.style.animation = "";
-    }
-  });
-
-  feedbackBurstTimer = setTimeout(() => {
-    resetFeedbackBurstPieces();
-    feedbackBurstEl.className = "feedback-burst";
-  }, isBig ? 980 : 760);
 }
 
 const renderWordGrid = createWordGridRenderer(wordGrid);
@@ -2419,36 +1566,6 @@ function getSessionTypingMetrics(referenceTime = Date.now()) {
   });
 }
 
-function formatEnterBurstTime(ms) {
-  const safeMs = Math.max(0, Number(ms) || 0);
-  const totalSeconds = Math.floor(safeMs / 1000);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  const tenths = Math.floor((safeMs % 1000) / 100);
-  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${tenths}`;
-}
-
-function showEnterTimeBurst() {
-  if (!roundTimerEl || prefersReducedEffects()) {
-    return;
-  }
-
-  const pressedAt = Date.now();
-  const roundTimeMs = getSessionTypingElapsedMs(pressedAt);
-  const cardTimeMs = currentCardShownAt ? pressedAt - currentCardShownAt : roundTimeMs;
-
-  const createBurst = (text, className, removeAfter = 2800) => {
-    const burst = document.createElement("span");
-    burst.className = `enter-time-burst ${className}`;
-    burst.textContent = text;
-    roundTimerEl.appendChild(burst);
-    window.setTimeout(() => burst.remove(), removeAfter);
-  };
-
-  createBurst(formatEnterBurstTime(cardTimeMs), "enter-time-burst-card");
-  createBurst(formatEnterBurstTime(roundTimeMs), "enter-time-burst-total", 3200);
-}
-
 function startRoundTimer() {
   if (roundTimerStarted) {
     return;
@@ -2471,56 +1588,13 @@ function stopRoundTimer() {
 }
 
 function renderRoundProgress({ reset = false, empty = false } = {}) {
-  const track = progFill?.parentElement;
-  if (!track) return;
-  const total = empty ? 0 : sessionCards.length;
-  const completed = empty ? 0 : sessionCards.reduce(
-    (count, card) => count + Number(scoredCardEvents.has(card)), 0,
-  );
-  const percent = total ? Math.min(100, completed / total * 100) : 0;
-  const previous = Number(track.dataset.completed || 0);
-  const changed = reset || track.dataset.completed !== String(completed) ||
-    track.dataset.total !== String(total);
-  const valueText = total
-    ? t("messages.roundProgress.value", { completed, total, percent: Math.round(percent) })
-    : t("messages.roundProgress.empty");
-
-  track.setAttribute("aria-label", t("messages.roundProgress.label"));
-  track.setAttribute("aria-valuemax", String(total || 1));
-  track.setAttribute("aria-valuenow", String(completed));
-  track.setAttribute("aria-valuetext", valueText);
-  track.title = valueText;
-  track.classList.toggle("is-complete", total > 0 && completed === total);
-  track.classList.toggle("is-empty", completed === 0);
-  track.style.setProperty("--progress-percent", `${percent}%`);
-  // Large rounds use quarter marks rather than unreadably dense card divisions.
-  track.style.setProperty("--progress-step", `${100 / (total > 20 ? 4 : Math.max(1, total))}%`);
-  track.dataset.completed = String(completed);
-  track.dataset.total = String(total);
-  if (!changed) return;
-
-  const from = getComputedStyle(progFill).clipPath;
-  progFill.getAnimations().forEach((animation) => animation.cancel());
-  track.getAnimations().forEach((animation) => animation.cancel());
-  const to = `inset(0 ${100 - percent}% 0 0)`;
-  progFill.style.removeProperty("width");
-  progFill.style.clipPath = to;
-  const reduceMotion = prefersReducedEffects();
-  if (!reset && !reduceMotion) {
-    progFill.animate([{ clipPath: from }, { clipPath: to }], {
-      duration: 420, easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-    });
-    if (completed > previous) {
-      progFill.animate([
-        { backgroundPosition: "-50% 0%, 0% 0%" },
-        { backgroundPosition: "150% 0%, 0% 0%" },
-      ], { duration: 850, delay: 120, easing: "ease-in-out" });
-      track.animate([
-        { boxShadow: "0 0 0 1px rgba(232,255,71,0.4), -3px 0 12px rgba(34,211,238,0.22), 3px 0 12px rgba(255,122,200,0.25)" },
-        { boxShadow: "0 0 0 1px rgba(232,255,71,0), -3px 0 12px rgba(34,211,238,0), 3px 0 12px rgba(255,122,200,0)" },
-      ], { duration: completed === total ? 900 : 550, easing: "ease-out" });
-    }
-  }
+  renderRoundProgressBar({
+    sessionCards,
+    scoredCardEvents,
+    translate: t,
+    reset,
+    empty,
+  });
 }
 
 function resetSessionProgress() {
@@ -2570,11 +1644,13 @@ async function loadCriticalCardsWithRetry() {
     ? retriedBundledCards.map(sanitizeCard).filter(Boolean)
     : [];
   allCards = mergeCards(bundledCards, persistentCards, sessionOnlyCards);
-  buildTopicPanel();
+  cardDuplicateIndex.rebuild(allCards);
+  categoryPanelController.buildTopicPanel();
   return allCards;
 }
 
 async function recoverPlayableSession(reason = "unknown", requestedSize = SESSION_SIZE) {
+  void reason;
   const recoveryNonce = ++sessionRecoveryNonce;
   const nextSessionSize = resolveSessionSize(requestedSize, sessionCards.length || SESSION_SIZE);
   clearSessionUi();
@@ -2605,7 +1681,7 @@ async function recoverPlayableSession(reason = "unknown", requestedSize = SESSIO
 
   if (selectedTopics !== null) {
     selectedTopics = null;
-    buildTopicPanel();
+    categoryPanelController.buildTopicPanel();
     if (rebuildSessionFromCards(getPool())) {
       return true;
     }
@@ -2613,7 +1689,7 @@ async function recoverPlayableSession(reason = "unknown", requestedSize = SESSIO
 
   if (selectedSubcategories !== null) {
     selectedSubcategories = new Set(DEFAULT_SUBCATEGORIES);
-    buildTopicPanel();
+    categoryPanelController.buildTopicPanel();
     if (rebuildSessionFromCards(getPool())) {
       return true;
     }
@@ -2687,27 +1763,6 @@ function loadCard(options = {}) {
   if (focusInput && !isAnswerFocusBlocked()) {
     focusAnswerInputWithoutScroll();
   }
-}
-
-function replayStatsClass(element, className, duration = 720) {
-  if (!element) {
-    return;
-  }
-
-  const currentTimer = statsAnimationTimers.get(element);
-  if (currentTimer) {
-    window.clearTimeout(currentTimer);
-  }
-  ["is-rise", "is-drop", "is-improving", "is-declining", "is-count-change", "is-event-success", "is-event-error", "is-event-skip"].forEach((transientClass) => {
-    element.classList.remove(transientClass);
-  });
-  element.classList.remove(className);
-  void element.offsetWidth;
-  element.classList.add(className);
-  statsAnimationTimers.set(element, window.setTimeout(() => {
-    element.classList.remove(className);
-    statsAnimationTimers.delete(element);
-  }, duration));
 }
 
 function updateStats({ event = "update" } = {}) {
@@ -2797,229 +1852,9 @@ function updateStats({ event = "update" } = {}) {
   }
 }
 
-function animateStatsOnStart() {
-  if (!statsBarEl) {
-    return;
-  }
-
-  const animationToken = ++statsAnimationToken;
-  if (statsAnimationFrame) {
-    window.cancelAnimationFrame(statsAnimationFrame);
-    statsAnimationFrame = 0;
-  }
-
-  statsBarEl.classList.remove("is-starting");
-  statsBarEl.querySelectorAll(".stat").forEach((stat) => stat.classList.remove("is-starting"));
-
-  // Force a style boundary so pressing START twice reliably replays the
-  // entrance animation instead of leaving the stats in their final state.
-  void statsBarEl.offsetWidth;
-  statsBarEl.classList.add("is-starting");
-  statsBarEl.querySelectorAll(".stat").forEach((stat, index) => {
-    stat.style.setProperty("--stat-delay", `${index * 90}ms`);
-    stat.classList.add("is-starting");
-  });
-
-  const remainingEl = document.getElementById("remainingVal");
-  const target = Number.parseInt(remainingEl?.textContent || "", 10);
-  if (remainingEl && Number.isFinite(target) && target > 0 && !prefersReducedEffects()) {
-    const startedAt = performance.now();
-    const duration = 720;
-    const tick = (now) => {
-      if (animationToken !== statsAnimationToken) {
-        return;
-      }
-      const progress = Math.min(1, (now - startedAt) / duration);
-      const eased = 1 - ((1 - progress) ** 3);
-      remainingEl.textContent = String(Math.max(1, Math.round(target * eased)));
-      if (progress < 1) {
-        statsAnimationFrame = window.requestAnimationFrame(tick);
-      } else {
-        statsAnimationFrame = 0;
-      }
-    };
-    statsAnimationFrame = window.requestAnimationFrame(tick);
-  }
-
-  window.setTimeout(() => {
-    if (animationToken === statsAnimationToken) {
-      statsBarEl.classList.remove("is-starting");
-      statsBarEl.querySelectorAll(".stat").forEach((stat) => {
-        stat.classList.remove("is-starting");
-        stat.style.removeProperty("--stat-delay");
-      });
-    }
-  }, 1500);
-}
-
-function showCombo() {
-  if (streak < 3) {
-    return;
-  }
-
-  comboPop.textContent = t(`combo.${Math.min(streak, 8)}`) || `x${streak}`;
-  comboPop.classList.remove("animate");
-  void comboPop.offsetWidth;
-  comboPop.classList.add("animate");
-}
-
-let toastTimer;
-function showToast(message) {
-  if (!message) {
-    return;
-  }
-
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 1400);
-}
-
-function isStandaloneMode() {
-  return Boolean(
-    window.matchMedia?.("(display-mode: standalone)").matches ||
-    window.navigator.standalone === true
-  );
-}
-
-function getInstallGuideContext() {
-  return detectInstallGuideContext(navigator.userAgent, {
-    fallbackBrowser: t("installGuide.fallbackBrowser"),
-    fallbackDesktop: t("installGuide.fallbackDesktop"),
-    fallbackMobile: t("installGuide.fallbackMobile"),
-  });
-}
-
-function renderInstallGuide() {
-  if (!installGuideBrowserEl || !installGuideStepsEl) {
-    return;
-  }
-
-  const context = getInstallGuideContext();
-  const localizedPath = t(`installGuide.paths.${context.installPathKey}`);
-  const resolvedPath = localizedPath === `installGuide.paths.${context.installPathKey}`
-    ? t("installGuide.paths.default")
-    : localizedPath;
-  const browserPrefix = t("installGuide.browserPrefix");
-  const browserText = browserPrefix === "installGuide.browserPrefix"
-    ? `${context.browserLabel}: ${resolvedPath}`
-    : `${browserPrefix} ${context.browserLabel}: ${resolvedPath}`;
-  const stepsText = t("installGuide.cta");
-
-  if (installGuideBrowserEl.textContent !== browserText) installGuideBrowserEl.textContent = browserText;
-  if (installGuideStepsEl.textContent !== stepsText) installGuideStepsEl.textContent = stepsText;
-  renderPhoneInstallGuide(browserText, stepsText);
-}
-
-function setDesktopInstallGuideShellVisible(isVisible) {
-  const wasVisible = siteTitleRowEl?.classList.contains("has-install-guides") || false;
-  siteTitleRowEl?.classList.toggle("has-install-guides", isVisible);
-  if (wasVisible !== isVisible) {
-    siteTitleController?.relayout();
-  }
-}
-
-function setInstallGuidePillVisible(element, isVisible) {
-  element?.classList.toggle("is-hidden", !isVisible);
-}
-
-
-function cancelInstallGuideLayoutFrame() {
-  if (!installGuideLayoutFrame) {
-    return;
-  }
-
-  window.cancelAnimationFrame(installGuideLayoutFrame);
-  installGuideLayoutFrame = 0;
-}
-
-
-function applyInstallGuideLayout() {
-  installGuideLayoutFrame = 0;
-
-  if (!installGuidePanelEl || !installGuideBrowserPanelEl || !phoneGuideBarEl) {
-    return;
-  }
-
-  const context = getInstallGuideContext();
-  if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
-    hideInstallGuide();
-    return;
-  }
-
-  renderInstallGuide();
-
-  const width = siteTitleRowEl?.clientWidth || 0;
-  const rootSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-  siteTitleRowEl?.classList.toggle("has-roomy-guides", width >= 46 * rootSize);
-  phoneGuideBarEl.classList.add("is-hidden");
-  setDesktopInstallGuideShellVisible(true);
-  setInstallGuidePillVisible(installGuideBrowserPanelEl, true);
-  setInstallGuidePillVisible(installGuidePanelEl, true);
-
-  siteTitleController?.relayout();
-}
-
-function scheduleInstallGuideLayout() {
-  cancelInstallGuideLayoutFrame();
-  installGuideLayoutFrame = window.requestAnimationFrame(applyInstallGuideLayout);
-}
-
-function hideInstallGuide() {
-  cancelInstallGuideLayoutFrame();
-  setDesktopInstallGuideShellVisible(false);
-  setInstallGuidePillVisible(installGuideBrowserPanelEl, false);
-  setInstallGuidePillVisible(installGuidePanelEl, false);
-  phoneGuideBarEl?.classList.add("is-hidden");
-}
-
-function maybeShowInstallGuide() {
-  if (!installGuidePanelEl || !installGuideBrowserPanelEl || !phoneGuideBarEl) {
-    return;
-  }
-
-  const context = getInstallGuideContext();
-  if ((!context.isMobile && !context.isDesktop) || isStandaloneMode()) {
-    hideInstallGuide();
-    return;
-  }
-
-  scheduleInstallGuideLayout();
-}
-
-function initInstallGuide() {
-  if (!installGuidePanelEl || !installGuideBrowserPanelEl) {
-    return;
-  }
-
-  window.addEventListener("appinstalled", () => {
-    hideInstallGuide();
-    showToast(t("messages.toasts.install"));
-  });
-
-  // Observe width, not height: wrapping must not trigger a layout feedback loop.
-  if (typeof ResizeObserver === "function" && siteTitleRowEl) {
-    let previousMetrics = "";
-    const observer = new ResizeObserver(() => {
-      const metrics = `${siteTitleRowEl.clientWidth}:${getComputedStyle(document.documentElement).fontSize}`;
-      if (metrics === previousMetrics) return;
-      previousMetrics = metrics;
-      scheduleInstallGuideLayout();
-    });
-    observer.observe(siteTitleRowEl);
-    observer.observe(document.documentElement);
-  }
-  window.addEventListener("resize", scheduleInstallGuideLayout, { passive: true });
-  document.fonts?.ready.then(scheduleInstallGuideLayout);
-  document.fonts?.addEventListener("loadingdone", scheduleInstallGuideLayout);
-  maybeShowInstallGuide();
-}
-
 function initFirstRunTour() {
   let restoreSessionEndAfterReplay = false;
 
-  // Keep the launch screen owned by the learning card, even for older cached HTML.
   if (mainCard && onboardingDialogEl?.parentElement !== mainCard) {
     mainCard.prepend(onboardingDialogEl);
   }
@@ -3045,7 +1880,7 @@ function initFirstRunTour() {
       gameArea?.setAttribute("inert", "");
       sessionEndEl?.setAttribute("inert", "");
       setExternalLookupInert(true);
-      maybeShowInstallGuide();
+      installGuideController.maybeShow();
     },
     onClose: ({ replay, reason }) => {
       const onboardingDuration = onboardingOpenedAt
@@ -3075,7 +1910,7 @@ function initFirstRunTour() {
         settingsPanel?.querySelector("button:not(:disabled), input:not(:disabled)")?.focus({ preventScroll: true });
       }
       updateStats();
-      window.setTimeout(maybeShowInstallGuide, 0);
+      window.setTimeout(installGuideController.maybeShow, 0);
     },
   });
 
@@ -3133,119 +1968,18 @@ function showSessionEnd() {
     t("messages.session.emojiPractice");
 }
 
-function hasDuplicate(card) {
-  const key = cardKey(card);
-  return allCards.some((existing) => cardKey(existing) === key);
-}
-
-function addCardToRuntime(card) {
-  allCards = mergeCards(allCards, [card]);
-  buildTopicPanel();
-}
-
-function downloadCardsUserJson() {
-  const cards = getExtraCardsForExport();
-  if (!cards.length) {
-    setAuthoringFeedback(t("messages.authoring.exportEmpty"), true);
-    return;
-  }
-
-  const blob = new Blob([`${JSON.stringify(cards, null, 2)}\n`], {
-    type: "application/json",
+function triggerEnterTimeBurst() {
+  showEnterTimeBurst({
+    currentCardShownAt,
+    getElapsedMs: getSessionTypingElapsedMs,
   });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "cards.user.json";
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-
-  setAuthoringFeedback(t("messages.authoring.exportDone"), false);
-}
-
-async function handleAddCardSubmit(event) {
-  event.preventDefault();
-
-  const card = sanitizeCard({
-    topic: addCardTopicEl.value,
-    subcategory: addCardSubcategoryEl.value,
-    scope: addCardScopeEl.value,
-    de: addCardDeEl.value,
-    hr: addCardHrEl.value,
-    en: addCardEnEl.value,
-  });
-
-  if (!card) {
-    setAuthoringFeedback(t("messages.authoring.invalid"), true);
-    return;
-  }
-
-  if (hasDuplicate(card)) {
-    setAuthoringFeedback(t("messages.authoring.duplicate"), true);
-    return;
-  }
-
-  setAuthoringBusy(true);
-
-  try {
-    if (capabilities.persistentSave) {
-    const response = await fetch("./api/cards", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(card),
-      });
-
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(payload.error || t("messages.authoring.saveFailed"));
-      }
-
-      const savedCard = payload.card || card;
-      persistentCards = mergeCards(persistentCards, [savedCard]);
-      addCardToRuntime(savedCard);
-      setAuthoringFeedback(t("messages.authoring.savedPersistent"), false);
-    } else {
-      sessionOnlyCards = mergeCards(sessionOnlyCards, [card]);
-      saveSessionCards();
-      addCardToRuntime(card);
-      setAuthoringFeedback(t("messages.authoring.savedSession"), false);
-    }
-
-    addCardForm.reset();
-    fillAuthoringSelects();
-    addCardTopicEl.value = TOPIC_OPTIONS[0];
-    addCardSubcategoryEl.value = SUBCATEGORY_OPTIONS[0];
-    addCardScopeEl.value = CARD_SCOPE_OPTIONS[0];
-    showToast(t("messages.toasts.cardSaved"));
-  } catch (error) {
-    setAuthoringFeedback(error.message || t("messages.authoring.saveFailed"), true);
-  } finally {
-    setAuthoringBusy(false);
-  }
-}
-
-function initAuthoringForm() {
-  fillAuthoringSelects();
-  addCardForm.addEventListener("submit", handleAddCardSubmit);
-  exportCardsBtn.addEventListener("click", downloadCardsUserJson);
-
-  if (authorToggleBtn && authorPanelEl) {
-    authorToggleBtn.addEventListener("click", () => {
-      const isOpen = !authorPanelEl.classList.contains("is-hidden");
-      authorPanelEl.classList.toggle("is-hidden", isOpen);
-      authorToggleBtn.classList.toggle("active", !isOpen);
-      authorToggleBtn.setAttribute("aria-expanded", String(!isOpen));
-    });
-  }
 }
 
 function initInputEvents() {
   sessionSizeSliderEl?.addEventListener("input", syncSessionSizeLabel);
   catCountEl?.addEventListener("click", () => {
     extendedRoundSize = !extendedRoundSize;
-    updateRoundSizeControl(getPool().length);
+    categoryPanelController.updateRoundSizeControl(getPool().length);
   });
   newGameBtn?.addEventListener("click", () => {
     if (firstRunTour?.playFromWelcome()) {
@@ -3304,7 +2038,6 @@ function initInputEvents() {
     });
   });
 
-  // Grow inward from the shared frame corner; never translate the attached edges.
   for (const button of [skipCardBtnEl, hintBtnEl]) {
     if (!button) continue;
     let cornerPulse;
@@ -3348,7 +2081,7 @@ function initInputEvents() {
       return;
     }
     pulseEnterKeyBadge();
-    showEnterTimeBurst();
+    triggerEnterTimeBurst();
     submitCurrentAnswer({ finishNow: true });
     if (!mainCard.classList.contains("is-session-ended")) focusAnswerInputAtEnd();
   });
@@ -3507,7 +2240,7 @@ function initInputEvents() {
     event.preventDefault();
     event.stopPropagation();
     pulseEnterKeyBadge();
-    showEnterTimeBurst();
+    triggerEnterTimeBurst();
     showSessionEnd();
   }, { capture: true });
 
@@ -3518,7 +2251,7 @@ function initInputEvents() {
     event.preventDefault();
     if (event.repeat || event.isComposing) return;
     pulseEnterKeyBadge();
-    showEnterTimeBurst();
+    triggerEnterTimeBurst();
     submitCurrentAnswer();
   });
 }
@@ -3543,13 +2276,13 @@ async function initApp() {
   visualEffects = initVisualEffects({
     button: document.getElementById("visualEffectsBtn"), getLanguage: getLocale,
   });
-  initOnboardingCategoryPreviewTarget();
+  categoryPanelController.initPreviewObserver();
   initFirstRunTour();
-  initInstallGuide();
+  installGuideController.init();
   initDifficultyControls();
   initInputEvents();
   initAnswerGuideResizeObserver();
-  initAuthoringForm();
+  cardAuthoringController.init();
   capabilities = currentCapabilities;
   bundledCards = Array.isArray(baseCards)
     ? baseCards.map(sanitizeCard).filter(Boolean)
@@ -3557,13 +2290,14 @@ async function initApp() {
   persistentCards = Array.isArray(loadedPersistentCards)
     ? loadedPersistentCards.map(sanitizeCard).filter(Boolean)
     : [];
-  sessionOnlyCards = capabilities.persistentSave ? [] : loadSessionCards();
+  sessionOnlyCards = capabilities.persistentSave ? [] : loadSessionAuthoringCards();
   allCards = mergeCards(bundledCards, persistentCards, sessionOnlyCards);
+  cardDuplicateIndex.rebuild(allCards);
 
-  renderAuthoringMode();
+  cardAuthoringController.renderMode();
   factsController.init();
   renderStaticUi();
-  buildTopicPanel();
+  categoryPanelController.buildTopicPanel();
   hasBootstrappedApp = true;
   initPageScrollAssist({
     targets: () => [
@@ -3579,13 +2313,12 @@ async function initApp() {
   if (onboardingPending) {
     firstRunTour?.open();
   }
-
 }
 
 const factsController = createFactsController({ t, getLocale, getLocaleBundle, getTargetLanguage });
 
 window.startSession = startSession;
-initViewportProfile();
+viewportController.init();
 initAppLoader();
 initApp()
   .catch((error) => {

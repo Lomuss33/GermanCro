@@ -100,12 +100,15 @@ That enables `POST /api/cards` and writes to `cards.user.json`.
 
 ```text
 index.html        App structure and form controls
-style.css         Visual design and responsive layout
-app.js            Session flow, filters, authoring UI, and card validation
+app.js            Browser entry point
+src/              Modular application, game, facts, layout, UI, and CSS sources
+server/           HTTP routing, static asset handler, and persistent card API
+shared/           Shared client/server card taxonomy and O(1) duplicate index
+tests/            Unit, integration, static-shape, and browser smoke tests
+scripts/          Build, module boundary, and JSON dataset validators
 cards.json        Main vocabulary dataset
 cards.user.json   Optional local extension dataset
 locales.json      UI labels for topics, subcategories, and scopes
-server.js         Local editable server and save API
 MAINTAINING.md    Maintainer workflow and change checklist
 USER_GUIDE.md     End-user guide for the interface
 ```
@@ -163,7 +166,7 @@ If the new taxonomy value does not exist in all three places, cards using it wil
 ## Notes
 
 - Static hosting stays read-only.
-- There is no automated test suite or CI yet.
+- Run `npm run check` (also executed in GitHub Actions CI) for dataset validation, unit/server tests, module checks, production build verification, and browser smoke tests.
 - Keep JSON files UTF-8 encoded so German and Croatian diacritics stay intact.
 
 ## Screenshot

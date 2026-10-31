@@ -62,7 +62,7 @@ export function normalizeScope(scope) {
 }
 
 export function normalizeField(value) {
-  const raw = String(value || "");
+  const raw = String(value || "").normalize("NFC");
   let normalized = "";
   let sawSpace = false;
 
@@ -101,14 +101,43 @@ export function normalizeAnswer(value) {
   return normalized.slice(0, end).toLowerCase();
 }
 
+const CARD_KEY_CACHE = new WeakMap();
+
 export function cardKey(card) {
-  return [
+  if (!card || typeof card !== "object") {
+    return "";
+  }
+
+  const cached = CARD_KEY_CACHE.get(card);
+  if (
+    cached &&
+    cached.de === card.de &&
+    cached.hr === card.hr &&
+    cached.topic === card.topic &&
+    cached.subcategory === card.subcategory &&
+    cached.scope === card.scope
+  ) {
+    return cached.key;
+  }
+
+  const key = [
     normalizeAnswer(card.de),
     normalizeAnswer(card.hr),
     normalizeTopic(card.topic),
     normalizeSubcategory(card.subcategory),
     normalizeScope(card.scope),
   ].join("::");
+
+  CARD_KEY_CACHE.set(card, {
+    de: card.de,
+    hr: card.hr,
+    topic: card.topic,
+    subcategory: card.subcategory,
+    scope: card.scope,
+    key,
+  });
+
+  return key;
 }
 
 export function sanitizeCard(raw) {
@@ -137,6 +166,56 @@ export function sanitizeCard(raw) {
   }
 
   return card;
+}
+
+export function createCardDuplicateIndex(...groups) {
+  const keys = new Set();
+
+  function addCard(rawCard) {
+    const card = sanitizeCard(rawCard);
+    if (!card) {
+      return false;
+    }
+    const key = cardKey(card);
+    if (keys.has(key)) {
+      return false;
+    }
+    keys.add(key);
+    return true;
+  }
+
+  function addAll(cards) {
+    if (!Array.isArray(cards)) {
+      return;
+    }
+    for (let i = 0; i < cards.length; i += 1) {
+      addCard(cards[i]);
+    }
+  }
+
+  function rebuild(...nextGroups) {
+    keys.clear();
+    for (let i = 0; i < nextGroups.length; i += 1) {
+      addAll(nextGroups[i]);
+    }
+  }
+
+  rebuild(...groups);
+
+  return {
+    get size() {
+      return keys.size;
+    },
+    has(card) {
+      if (!card || typeof card !== "object") {
+        return false;
+      }
+      return keys.has(cardKey(card));
+    },
+    add: addCard,
+    addAll,
+    rebuild,
+  };
 }
 
 export function mergeCards(...groups) {

@@ -1,10 +1,11 @@
 import http from "node:http";
+import path from "node:path";
 import { createCardsApi } from "./cards-api.js";
 import { createStaticHandler } from "./static.js";
 import { sendText } from "./http.js";
 
-export function createApplicationServer({ root, userCardsFile, production = false }) {
-  const handleApi = createCardsApi(userCardsFile);
+export function createApplicationServer({ root, userCardsFile, bundledCardsFile = path.join(root, "cards.json"), production = false }) {
+  const handleApi = createCardsApi(userCardsFile, bundledCardsFile);
   const serveStatic = createStaticHandler(root, { production, userCardsFile });
   return http.createServer(async (req, res) => {
     let pathname;

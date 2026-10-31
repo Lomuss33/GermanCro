@@ -1,15 +1,3 @@
-import { COUNTRY_NOTABLE_PEOPLE } from "./notable-people.js";
-import { summarizeTimeZone } from "./time-zone.js";
-import { factFieldSearchQuery, factListSearchQuery } from "./search-query.js";
-import { createNumericalInsights, factsInsightCopy, getPlaceContext } from "./insights.js";
-import {
-  FACTS_IMAGE_ROOT,
-  FACTS_STATE_IMAGE_OVERRIDES,
-  TOURISM_LINKS,
-  OFFICIAL_LINKS,
-  EUROPE_FLAG_IMAGE,
-  STATE_NOTABLE_PEOPLE,
-} from "./config.js";
 import {
   factsContentEl,
   factsCountryBtn,
@@ -20,475 +8,52 @@ import {
   statePickerWrap,
 } from "../ui/dom.js";
 import { fetchJson } from "../core/http.js";
-import { joinLocalizedList } from "../core/text.js";
 import { prefersReducedEffects } from "../ui/effects-preference.js";
+import { createFactsTranslator, isNonEmptyFactValue } from "./localization.js";
+import { createFactsViewRenderer, getStateFlagPath } from "./view-renderer.js";
+
+function waitForIdleTurn() {
+  return new Promise((resolve) => {
+    if (typeof window.scheduler?.postTask === "function") {
+      window.scheduler.postTask(resolve, { priority: "background" }).catch(resolve);
+      return;
+    }
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(() => resolve(), { timeout: 900 });
+      return;
+    }
+    window.setTimeout(resolve, 16);
+  });
+}
 
 export function createFactsController({ t, getLocale, getLocaleBundle, getTargetLanguage }) {
   let germanyFacts = null;
-
   let europeFacts = null;
-
   let worldFacts = null;
 
+  let germanyLoadPromise = null;
+  let europeLoadPromise = null;
+  let worldLoadPromise = null;
   let factsLoadPromise = null;
-
   let factsLoaded = false;
 
   let factsMode = "germany";
-
   let selectedStateId = null;
-
   let selectedEuropeCountryId = null;
-
   let selectedWorldCountryId = null;
 
   let factsPickerRenderKey = "";
-  let countryTitleObserver = null;
-
   const factsPickerButtons = new Map();
 
-  let lastFactsPaletteHue = -1;
+  const translator = createFactsTranslator({ t, getLocale, getLocaleBundle });
+  const { getLocalizedCountryNameById } = translator;
 
-  function getRandomFactsPalette(colorCount = 3) {
-    let hue = Math.floor(Math.random() * 360);
-    if (lastFactsPaletteHue >= 0 && Math.abs(hue - lastFactsPaletteHue) < 42) {
-      hue = (hue + 137) % 360;
-    }
-    lastFactsPaletteHue = hue;
-    return Array.from({ length: colorCount }, (_, index) =>
-      `hsl(${(hue + index * 137) % 360} ${96 - (index % 3) * 2}% ${62 + (index % 2) * 3}%)`
-    );
-  }
-
-  const FACT_LANGUAGE_MAP = {
-    Deutsch: { de: "Deutsch", hr: "njemački", en: "German" },
-    Englisch: { de: "Englisch", hr: "engleski", en: "English" },
-    Kroatisch: { de: "Kroatisch", hr: "hrvatski", en: "Croatian" },
-    "Französisch": { de: "Französisch", hr: "francuski", en: "French" },
-    Spanisch: { de: "Spanisch", hr: "španjolski", en: "Spanish" },
-    Katalanisch: { de: "Katalanisch", hr: "katalonski", en: "Catalan" },
-    Baskisch: { de: "Baskisch", hr: "baskijski", en: "Basque" },
-    Galicisch: { de: "Galicisch", hr: "galicijski", en: "Galician" },
-    Schwedisch: { de: "Schwedisch", hr: "švedski", en: "Swedish" },
-    Polnisch: { de: "Polnisch", hr: "poljski", en: "Polish" },
-    Ungarisch: { de: "Ungarisch", hr: "mađarski", en: "Hungarian" },
-    Portugiesisch: { de: "Portugiesisch", hr: "portugalski", en: "Portuguese" },
-    Italienisch: { de: "Italienisch", hr: "talijanski", en: "Italian" },
-    "Rätoromanisch": { de: "Rätoromanisch", hr: "retoromanski", en: "Romansh" },
-    Latein: { de: "Latein", hr: "latinski", en: "Latin" },
-    Arabisch: { de: "Arabisch", hr: "arapski", en: "Arabic" },
-    Chinesisch: { de: "Chinesisch", hr: "kineski", en: "Chinese" },
-    Russisch: { de: "Russisch", hr: "ruski", en: "Russian" },
-    Hindi: { de: "Hindi", hr: "hindski", en: "Hindi" },
-    Persisch: { de: "Persisch", hr: "perzijski", en: "Persian" },
-    Indonesisch: { de: "Indonesisch", hr: "indonezijski", en: "Indonesian" },
-    Mongolisch: { de: "Mongolisch", hr: "mongolski", en: "Mongolian" },
-    Montenegrinisch: { de: "Montenegrinisch", hr: "crnogorski", en: "Montenegrin" },
-    Luxemburgisch: { de: "Luxemburgisch", hr: "luksemburski", en: "Luxembourgish" },
-    Japanisch: { de: "Japanisch", hr: "japanski", en: "Japanese" },
-    Koreanisch: { de: "Koreanisch", hr: "korejski", en: "Korean" },
-    Urdu: { de: "Urdu", hr: "urdu", en: "Urdu" },
-    Bengalisch: { de: "Bengalisch", hr: "bengalski", en: "Bengali" },
-    Amharisch: { de: "Amharisch", hr: "amharski", en: "Amharic" },
-    Kasachisch: { de: "Kasachisch", hr: "kazaški", en: "Kazakh" },
-    Thai: { de: "Thai", hr: "tajlandski", en: "Thai" },
-    Vietnamesisch: { de: "Vietnamesisch", hr: "vijetnamski", en: "Vietnamese" },
-    Bosnisch: { de: "Bosnisch", hr: "bosanski", en: "Bosnian" },
-    Serbisch: { de: "Serbisch", hr: "srpski", en: "Serbian" },
-    Mazedonisch: { de: "Mazedonisch", hr: "makedonski", en: "Macedonian" },
-    Albanisch: { de: "Albanisch", hr: "albanski", en: "Albanian" },
-    Griechisch: { de: "Griechisch", hr: "grčki", en: "Greek" },
-    Bulgarisch: { de: "Bulgarisch", hr: "bugarski", en: "Bulgarian" },
-    "Türkisch": { de: "Türkisch", hr: "turski", en: "Turkish" },
-    "Rumänisch": { de: "Rumänisch", hr: "rumunjski", en: "Romanian" },
-    Ukrainisch: { de: "Ukrainisch", hr: "ukrajinski", en: "Ukrainian" },
-    Belarussisch: { de: "Belarussisch", hr: "bjeloruski", en: "Belarusian" },
-    Tschechisch: { de: "Tschechisch", hr: "češki", en: "Czech" },
-    Slowakisch: { de: "Slowakisch", hr: "slovački", en: "Slovak" },
-    Slowenisch: { de: "Slowenisch", hr: "slovenski", en: "Slovene" },
-    "Niederländisch": { de: "Niederländisch", hr: "nizozemski", en: "Dutch" },
-    "Dänisch": { de: "Dänisch", hr: "danski", en: "Danish" },
-    Finnisch: { de: "Finnisch", hr: "finski", en: "Finnish" },
-    Irisch: { de: "Irisch", hr: "irski", en: "Irish" },
-    "Norwegisch (Nynorsk)": { de: "Norwegisch (Nynorsk)", hr: "norveški (nynorsk)", en: "Norwegian (Nynorsk)" },
-    "Norwegisch (Bokmål)": { de: "Norwegisch (Bokmål)", hr: "norveški (bokmål)", en: "Norwegian (Bokmål)" },
-    smi: { de: "Sami", hr: "sami", en: "Sami" },
-  };
-
-  FACT_LANGUAGE_MAP.Franzoesisch = FACT_LANGUAGE_MAP["Französisch"];
-  FACT_LANGUAGE_MAP.Raetoromanisch = FACT_LANGUAGE_MAP["Rätoromanisch"];
-  FACT_LANGUAGE_MAP.Tuerkisch = FACT_LANGUAGE_MAP["Türkisch"];
-  FACT_LANGUAGE_MAP.Rumaenisch = FACT_LANGUAGE_MAP["Rumänisch"];
-  FACT_LANGUAGE_MAP.Niederlaendisch = FACT_LANGUAGE_MAP["Niederländisch"];
-  FACT_LANGUAGE_MAP.Daenisch = FACT_LANGUAGE_MAP["Dänisch"];
-  FACT_LANGUAGE_MAP["Norwegisch (Bokmal)"] = FACT_LANGUAGE_MAP["Norwegisch (Bokmål)"];
-
-  const EXTRA_FACT_LABEL_MAP = {
-    Monaco: { de: "Monaco", hr: "Monako", en: "Monaco" },
-    Gibraltar: { de: "Gibraltar", hr: "Gibraltar", en: "Gibraltar" },
-    Marokko: { de: "Marokko", hr: "Maroko", en: "Morocco" },
-    Schottland: { de: "Schottland", hr: "Skotska", en: "Scotland" },
-    Wales: { de: "Wales", hr: "Wales", en: "Wales" },
-    Litauen: { de: "Litauen", hr: "Litva", en: "Lithuania" },
-    Moldawien: { de: "Moldawien", hr: "Moldavija", en: "Moldova" },
-    Afghanistan: { de: "Afghanistan", hr: "Afganistan", en: "Afghanistan" },
-    Armenien: { de: "Armenien", hr: "Armenija", en: "Armenia" },
-    Aserbaidschan: { de: "Aserbaidschan", hr: "Azerbajdzan", en: "Azerbaijan" },
-    Angola: { de: "Angola", hr: "Angola", en: "Angola" },
-    Belize: { de: "Belize", hr: "Belize", en: "Belize" },
-    Bolivien: { de: "Bolivien", hr: "Bolivija", en: "Bolivia" },
-    Guatemala: { de: "Guatemala", hr: "Gvatemala", en: "Guatemala" },
-    Guyana: { de: "Guyana", hr: "Gvajana", en: "Guyana" },
-    Irak: { de: "Irak", hr: "Irak", en: "Iraq" },
-    Israel: { de: "Israel", hr: "Izrael", en: "Israel" },
-    Jemen: { de: "Jemen", hr: "Jemen", en: "Yemen" },
-    Jordanien: { de: "Jordanien", hr: "Jordan", en: "Jordan" },
-    Kambodscha: { de: "Kambodscha", hr: "Kambodza", en: "Cambodia" },
-    Kamerun: { de: "Kamerun", hr: "Kamerun", en: "Cameroon" },
-    Kenia: { de: "Kenia", hr: "Kenija", en: "Kenya" },
-    Kirgisistan: { de: "Kirgisistan", hr: "Kirgistan", en: "Kyrgyzstan" },
-    Laos: { de: "Laos", hr: "Laos", en: "Laos" },
-    Lettland: { de: "Lettland", hr: "Latvija", en: "Latvia" },
-    Malaysia: { de: "Malaysia", hr: "Malezija", en: "Malaysia" },
-    Mali: { de: "Mali", hr: "Mali", en: "Mali" },
-    Nepal: { de: "Nepal", hr: "Nepal", en: "Nepal" },
-    Niger: { de: "Niger", hr: "Niger", en: "Niger" },
-    Nordkorea: { de: "Nordkorea", hr: "Sjeverna Koreja", en: "North Korea" },
-    Panama: { de: "Panama", hr: "Panama", en: "Panama" },
-    "Papua-Neuguinea": { de: "Papua-Neuguinea", hr: "Papua Nova Gvineja", en: "Papua New Guinea" },
-    Paraguay: { de: "Paraguay", hr: "Paragvaj", en: "Paraguay" },
-    "Republik Kongo": { de: "Republik Kongo", hr: "Republika Kongo", en: "Republic of the Congo" },
-    Ruanda: { de: "Ruanda", hr: "Ruanda", en: "Rwanda" },
-    "San Marino": { de: "San Marino", hr: "San Marino", en: "San Marino" },
-    Simbabwe: { de: "Simbabwe", hr: "Zimbabve", en: "Zimbabwe" },
-    Somalia: { de: "Somalia", hr: "Somalija", en: "Somalia" },
-    Suedsudan: { de: "Südsudan", hr: "Južni Sudan", en: "South Sudan" },
-    Syrien: { de: "Syrien", hr: "Sirija", en: "Syria" },
-    "Timor-Leste": { de: "Timor-Leste", hr: "Timor-Leste", en: "Timor-Leste" },
-    Tschad: { de: "Tschad", hr: "Čad", en: "Chad" },
-    Tunesien: { de: "Tunesien", hr: "Tunis", en: "Tunisia" },
-    Turkmenistan: { de: "Turkmenistan", hr: "Turkmenistan", en: "Turkmenistan" },
-    Uganda: { de: "Uganda", hr: "Uganda", en: "Uganda" },
-    Uruguay: { de: "Uruguay", hr: "Urugvaj", en: "Uruguay" },
-    Usbekistan: { de: "Usbekistan", hr: "Uzbekistan", en: "Uzbekistan" },
-    "Vereinigte Arabische Emirate": { de: "Vereinigte Arabische Emirate", hr: "Ujedinjeni Arapski Emirati", en: "United Arab Emirates" },
-    Atlantik: { de: "Atlantik", hr: "Atlantik", en: "Atlantic Ocean" },
-    Mittelmeer: { de: "Mittelmeer", hr: "Sredozemno more", en: "Mediterranean Sea" },
-    Nordsee: { de: "Nordsee", hr: "Sjeverno more", en: "North Sea" },
-    Ostsee: { de: "Ostsee", hr: "Baltičko more", en: "Baltic Sea" },
-    "Schwarzes Meer": { de: "Schwarzes Meer", hr: "Crno more", en: "Black Sea" },
-    Pazifik: { de: "Pazifik", hr: "Tihi ocean", en: "Pacific Ocean" },
-    "Indischer Ozean": { de: "Indischer Ozean", hr: "Indijski ocean", en: "Indian Ocean" },
-    "Arktischer Ozean": { de: "Arktischer Ozean", hr: "Arktički ocean", en: "Arctic Ocean" },
-    "Suedlicher Ozean": { de: "Südlicher Ozean", hr: "Južni ocean", en: "Southern Ocean" },
-    "Europaeisches Parlament": { de: "Europäisches Parlament", hr: "Europski parlament", en: "European Parliament" },
-    "Europaeische Kommission": { de: "Europäische Kommission", hr: "Europska komisija", en: "European Commission" },
-    "Europaeischer Rat": { de: "Europäischer Rat", hr: "Europsko vijeće", en: "European Council" },
-    "UN-Generalversammlung": { de: "UN-Generalversammlung", hr: "Glavna skupština UN-a", en: "UN General Assembly" },
-    "UN-Sicherheitsrat": { de: "UN-Sicherheitsrat", hr: "Vijeće sigurnosti UN-a", en: "UN Security Council" },
-    "UN-Sekretariat": { de: "UN-Sekretariat", hr: "Tajništvo UN-a", en: "UN Secretariat" },
-    "Internationaler Gerichtshof": { de: "Internationaler Gerichtshof", hr: "Međunarodni sud pravde", en: "International Court of Justice" },
-    Bruessel: { de: "Brüssel", hr: "Bruxelles", en: "Brussels" },
-    Strassburg: { de: "Straßburg", hr: "Strasbourg", en: "Strasbourg" },
-    Genf: { de: "Genf", hr: "Ženeva", en: "Geneva" },
-    Wien: { de: "Wien", hr: "Beč", en: "Vienna" }
-  };
-
-  function normalizeFactLookupKey(value) {
-    return String(value || "")
-      .replace(/Ä/g, "Ae")
-      .replace(/Ö/g, "Oe")
-      .replace(/Ü/g, "Ue")
-      .replace(/ä/g, "ae")
-      .replace(/ö/g, "oe")
-      .replace(/ü/g, "ue")
-      .replace(/ß/g, "ss");
-  }
-
-  function lookupFactMap(map, value) {
-    if (!map || !value) {
-      return null;
-    }
-    return map[value] || map[normalizeFactLookupKey(value)] || null;
-  }
-
-  function getFactsBundle() {
-    return getLocaleBundle()?.facts || getLocaleBundle("de")?.facts || {};
-  }
-
-  function getLocalizedCountryNameById(id, fallback = "") {
-    return getFactsBundle().names?.countries?.[id] || fallback;
-  }
-
-  const EUROPE_STATE_FORMS = Object.freeze({
-    frankreich: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
-    spanien: ["Parlamentarische Monarchie", "parlamentarna monarhija", "parliamentary monarchy"],
-    england: ["Teil des Vereinigten Königreichs", "dio Ujedinjenog Kraljevstva", "part of the United Kingdom"],
-    schweden: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
-    polen: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    oesterreich: ["Bundesstaatliche parlamentarische Republik", "savezna parlamentarna republika", "federal parliamentary republic"],
-    ungarn: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    kroatien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    "bosnien-herzegowina": ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    serbien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    nordmazedonien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    albanien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    griechenland: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    bulgarien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    tuerkei: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    rumaenien: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
-    ukraine: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
-    russland: ["Föderale semipräsidentielle Republik", "savezna polupredsjednička republika", "federal semi-presidential republic"],
-    weissrussland: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    tschechien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    slowakei: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    slowenien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    italien: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    niederlande: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
-    belgien: ["Föderale konstitutionelle Monarchie", "savezna ustavna monarhija", "federal constitutional monarchy"],
-    daenemark: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
-    finnland: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    norwegen: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
-    irland: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    schweiz: ["Föderale direktoriale Republik", "savezna direktorialna republika", "federal directorial republic"],
-    vatikanstadt: ["Wahlmonarchie", "izborna monarhija", "elective monarchy"],
-    portugal: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
-    montenegro: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    luxemburg: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
-    liechtenstein: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
-    andorra: ["Parlamentarisches Kofürstentum", "parlamentarna suvladavina knezova", "parliamentary co-principality"],
+  const viewRenderer = createFactsViewRenderer({
+    t,
+    getLocale,
+    translator,
+    getGermanyAreaKm2: () => germanyFacts?.country?.area_km2,
   });
-
-  function getEuropeanStateForm(countryId, fallback = "") {
-    const forms = EUROPE_STATE_FORMS[countryId];
-    if (!forms) {
-      return translateFactScalar(fallback);
-    }
-    return forms[{ de: 0, hr: 1, en: 2 }[getLocale()] ?? 0];
-  }
-
-  const WORLD_STATE_FORMS = Object.freeze({
-    kanada: ["Föderale parlamentarische konstitutionelle Monarchie", "savezna parlamentarna ustavna monarhija", "federal parliamentary constitutional monarchy"],
-    usa: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
-    china: ["Kommunistisch geführter Staat", "država pod vodstvom Komunističke partije", "communist party-led state"],
-    brasilien: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
-    australien: ["Föderale parlamentarische konstitutionelle Monarchie", "savezna parlamentarna ustavna monarhija", "federal parliamentary constitutional monarchy"],
-    indien: ["Föderale parlamentarische Republik", "savezna parlamentarna republika", "federal parliamentary republic"],
-    argentinien: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
-    algerien: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    "dr-kongo": ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
-    "saudi-arabien": ["Absolute Monarchie", "apsolutna monarhija", "absolute monarchy"],
-    mexiko: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
-    indonesien: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    sudan: ["Militärisch geführte Übergangsregierung", "vojno vođena prijelazna vlada", "military-led transitional government"],
-    libyen: ["Übergangsregierung", "prijelazna vlada", "transitional government"],
-    iran: ["Theokratische Republik", "teokratska republika", "theocratic republic"],
-    mongolei: ["Semipräsidentielle Republik", "polupredsjednička republika", "semi-presidential republic"],
-    japan: ["Parlamentarische konstitutionelle Monarchie", "parlamentarna ustavna monarhija", "parliamentary constitutional monarchy"],
-    suedkorea: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    pakistan: ["Föderale parlamentarische Republik", "savezna parlamentarna republika", "federal parliamentary republic"],
-    bangladesch: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    nigeria: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
-    aethiopien: ["Föderale parlamentarische Republik", "savezna parlamentarna republika", "federal parliamentary republic"],
-    aegypten: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    suedafrika: ["Parlamentarische Republik", "parlamentarna republika", "parliamentary republic"],
-    kasachstan: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    peru: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    kolumbien: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    chile: ["Präsidentielle Republik", "predsjednička republika", "presidential republic"],
-    venezuela: ["Föderale präsidentielle Republik", "savezna predsjednička republika", "federal presidential republic"],
-    neuseeland: ["Parlamentarische konstitutionelle Monarchie", "parlamentarna ustavna monarhija", "parliamentary constitutional monarchy"],
-    thailand: ["Konstitutionelle Monarchie", "ustavna monarhija", "constitutional monarchy"],
-    vietnam: ["Kommunistisch geführter Staat", "država pod vodstvom Komunističke partije", "communist party-led state"],
-  });
-
-  function getWorldStateForm(countryId, fallback = "") {
-    const forms = WORLD_STATE_FORMS[countryId];
-    if (!forms) {
-      return translateFactScalar(fallback);
-    }
-    return forms[{ de: 0, hr: 1, en: 2 }[getLocale()] ?? 0];
-  }
-
-  function translateCountryOrRegionName(value) {
-    const factsBundle = getFactsBundle();
-    const normalizedValue = normalizeFactLookupKey(value);
-    if (value === "Deutschland") {
-      return factsBundle.names?.germany || value;
-    }
-    if (value === "Europa") {
-      return factsBundle.names?.europe || value;
-    }
-    if (value === "Welt") {
-      return factsBundle.names?.world || value;
-    }
-    const countryEntries = Object.entries(getLocaleBundle("de")?.facts?.names?.countries || {});
-    for (const [id, name] of countryEntries) {
-      if (name === value || normalizeFactLookupKey(name) === normalizedValue) {
-        return getLocalizedCountryNameById(id, value);
-      }
-    }
-    const extraLabel = lookupFactMap(EXTRA_FACT_LABEL_MAP, value);
-    if (extraLabel) {
-      return extraLabel[getLocale()] || extraLabel.de;
-    }
-    return lookupFactMap(factsBundle.regions, value) || value;
-  }
-
-  function translateFactScalar(value) {
-    if (!value || typeof value !== "string") {
-      return value;
-    }
-
-    const factsBundle = getFactsBundle();
-    const trimmed = value.trim();
-    if (!trimmed) {
-      return trimmed;
-    }
-
-    if (trimmed === "Ja") {
-      return factsBundle.values?.yes || trimmed;
-    }
-    if (trimmed === "Nein") {
-      return factsBundle.values?.no || trimmed;
-    }
-
-    const stateTypeLabel = lookupFactMap(factsBundle.stateTypes, trimmed);
-    if (stateTypeLabel) {
-      return stateTypeLabel;
-    }
-    const stateFormLabel = lookupFactMap(factsBundle.stateForms, trimmed);
-    if (stateFormLabel) {
-      return stateFormLabel;
-    }
-    const regionLabel = lookupFactMap(factsBundle.regions, trimmed);
-    if (regionLabel) {
-      return regionLabel;
-    }
-    const languageLabel = lookupFactMap(FACT_LANGUAGE_MAP, trimmed);
-    if (languageLabel) {
-      return languageLabel[getLocale()] || languageLabel.de;
-    }
-    if (trimmed.includes(",")) {
-      return trimmed
-        .split(",")
-        .map((part) => translateFactScalar(part.trim()))
-        .join(", ");
-    }
-    return translateCountryOrRegionName(trimmed);
-  }
-
-  function translateFactList(values) {
-    if (!Array.isArray(values)) {
-      return [];
-    }
-    return values.map((value) => translateFactScalar(value));
-  }
-
-  function getLocalizedFactsOverview(factsData) {
-    if (!factsData || !isNonEmptyValue(factsData.overview)) {
-      return "";
-    }
-
-    const localizedOverview = factsData[`overview_${getLocale()}`];
-    return isNonEmptyValue(localizedOverview)
-      ? String(localizedOverview)
-      : String(factsData.overview);
-  }
-
-  function buildGermanyOverview(countryData) {
-    return getLocalizedFactsOverview(countryData) || t("facts.values.germanyOverviewText");
-  }
-
-  function buildEuropeOverview(unionData) {
-    const overview = getLocalizedFactsOverview(unionData);
-    if (overview) {
-      return overview;
-    }
-
-    return t("facts.values.europeOverviewText", {
-      memberStates: unionData.states_count,
-      institutionSeats: translateFactScalar(unionData.institution_seats),
-      institutions: joinLocalizedList(translateFactList(unionData.institutions)),
-    });
-  }
-
-  function buildWorldOverview(unionData) {
-    const overview = getLocalizedFactsOverview(unionData);
-    if (overview) {
-      return overview;
-    }
-
-    return t("facts.values.worldOverviewText", {
-      memberStates: unionData.member_states,
-      headquarters: unionData.headquarters,
-      institutions: joinLocalizedList(translateFactList(unionData.institutions)),
-    });
-  }
-
-  function buildStateLocationSummary(stateData) {
-    return t("facts.values.stateLocationText", {
-      name: stateData.name,
-      region: translateFactScalar(stateData.region),
-      capital: stateData.capital,
-    });
-  }
-
-  function buildStateProfileSummary(stateData) {
-    return t("facts.values.stateProfileText", {
-      name: stateData.name,
-      knownFor: joinLocalizedList(translateFactList(stateData.known_for)),
-    });
-  }
-
-  function buildStateOverview(stateData) {
-    const overview = getLocalizedFactsOverview(stateData);
-    if (overview) {
-      return overview;
-    }
-
-    const location = buildStateLocationSummary(stateData);
-    const profile = buildStateProfileSummary(stateData);
-    if (!location) {
-      return profile;
-    }
-    if (!profile) {
-      return location;
-    }
-    return `${location} ${profile}`;
-  }
-
-  function buildCountryOverview(countryData) {
-    const overview = getLocalizedFactsOverview(countryData);
-    if (overview) {
-      return overview;
-    }
-
-    const name = getLocalizedCountryNameById(countryData.id, countryData.name);
-    const region = translateFactScalar(countryData.region);
-    const capital = countryData.capital;
-
-    if (getLocale() === "hr") {
-      return `${name} se nalazi u ${region}. Glavni grad je ${capital}.`;
-    }
-    if (getLocale() === "en") {
-      return `${name} is in ${region}. Its capital is ${capital}.`;
-    }
-    return `${name} liegt in ${region}. Hauptstadt ist ${capital}.`;
-  }
-
-  function isNonEmptyValue(value) {
-    if (value === null || value === undefined) {
-      return false;
-    }
-    if (Array.isArray(value)) {
-      return value.length > 0;
-    }
-    if (typeof value === "string") {
-      return value.trim().length > 0;
-    }
-    return true;
-  }
 
   function normalizeFactsCollection(raw) {
     if (!raw || typeof raw !== "object") {
@@ -498,11 +63,11 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     const country = raw.country && typeof raw.country === "object" ? raw.country : null;
     const states = Array.isArray(raw.states) ? raw.states.filter((state) => state && typeof state === "object") : [];
 
-    if (!country || !isNonEmptyValue(country.name) || states.length === 0) {
+    if (!country || !isNonEmptyFactValue(country.name) || states.length === 0) {
       return null;
     }
 
-    const validStates = states.filter((state) => isNonEmptyValue(state.id) && isNonEmptyValue(state.name));
+    const validStates = states.filter((state) => isNonEmptyFactValue(state.id) && isNonEmptyFactValue(state.name));
     if (!validStates.length) {
       return null;
     }
@@ -511,11 +76,6 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       country,
       states: validStates,
     };
-  }
-
-  async function loadGermanyFacts() {
-    const raw = await fetchJson("germany-facts.json", null);
-    return normalizeFactsCollection(raw);
   }
 
   function normalizeEuropeFacts(raw) {
@@ -528,11 +88,11 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       ? raw.countries.filter((country) => country && typeof country === "object")
       : [];
 
-    if (!union || !isNonEmptyValue(union.name) || !countries.length) {
+    if (!union || !isNonEmptyFactValue(union.name) || !countries.length) {
       return null;
     }
 
-    const validCountries = countries.filter((country) => isNonEmptyValue(country.id) && isNonEmptyValue(country.name));
+    const validCountries = countries.filter((country) => isNonEmptyFactValue(country.id) && isNonEmptyFactValue(country.name));
     if (!validCountries.length) {
       return null;
     }
@@ -543,736 +103,58 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     };
   }
 
-  async function loadEuropeFacts() {
-    const raw = await fetchJson("europe-facts.json", null);
-    const normalized = normalizeEuropeFacts(raw);
-    if (!normalized) {
-      return normalized;
-    }
-
-    normalized.union = {
-      ...normalized.union,
-      name: "EU",
-      official_name: "Europaeische Union",
-      largest_city: "Berlin",
-      states_count: "27",
-      currency: "EUR",
-      language: "24",
-    };
-
-    return normalized;
-  }
-
-  async function loadWorldFacts() {
-    const raw = await fetchJson("world-facts.json", null);
-    const normalized = normalizeEuropeFacts(raw);
-    if (!normalized) {
-      return normalized;
-    }
-
-    normalized.union = {
-      ...normalized.union,
-      name: "UN",
-      official_name: "Vereinte Nationen",
-      largest_city: "Jakarta (41.9m, 2025)",
-      founded: "1945",
-      member_states: "193",
-      secretary_general: "Antonio Guterres",
-    };
-
-    return normalized;
-  }
-
-  function getFactsImagePath(type, stateId) {
-    if (type === "country") {
-      return "https://flagcdn.com/de.svg";
-    }
-
-    if (type === "state" && isNonEmptyValue(stateId)) {
-      if (FACTS_STATE_IMAGE_OVERRIDES[stateId]) {
-        return FACTS_STATE_IMAGE_OVERRIDES[stateId];
-      }
-
-      return `${FACTS_IMAGE_ROOT}/states/${stateId}.webp`;
-    }
-
-    return "";
-  }
-
-  function getStateFlagPath(stateId) {
-    return isNonEmptyValue(stateId) ? `${FACTS_IMAGE_ROOT}/states/${stateId}.webp` : "";
-  }
-
-  function normalizeFactsField(field) {
-    if (Array.isArray(field)) {
-      return {
-        label: field[0],
-        value: field[1],
-        featured: false,
-      };
-    }
-
-    if (field && typeof field === "object") {
-      return {
-        label: field.label,
-        value: field.value,
-        featured: Boolean(field.featured),
-      };
-    }
-
-    return null;
-  }
-
-  function selectAvailableFactsFields(fields) {
-    const seenLabels = new Set();
-    return fields.filter((field) => {
-      const normalized = normalizeFactsField(field);
-      if (!normalized || normalized.featured || !isNonEmptyValue(normalized.value) || seenLabels.has(normalized.label)) {
-        return false;
-      }
-      seenLabels.add(normalized.label);
-      return true;
-    });
-  }
-
-  function createFactsField(field, contextName = "") {
-    const normalized = normalizeFactsField(field);
-    if (!normalized) {
-      return null;
-    }
-
-    const { label, value, featured } = normalized;
-    if (!isNonEmptyValue(value)) {
-      return null;
-    }
-
-    const unavailable = Array.isArray(field) && field[3] === true;
-    const card = document.createElement(featured || unavailable ? "div" : "a");
-    card.className = "facts-card";
-    if (!featured && String(value).length > 38) {
-      card.classList.add("facts-card--dense");
-    }
-    if (!featured && String(value).length > 64) {
-      card.classList.add("facts-card--very-dense");
-    }
-    if (unavailable) {
-      card.classList.add("facts-card--unavailable");
-    }
-    if (featured) {
-      card.classList.add("featured");
-    } else if (!unavailable) {
-      const locale = getLocale();
-      const comparisonPlace = label === factsInsightCopy(locale).size
-        ? { de: "Deutschland", en: "Germany", hr: "Njemačka" }[locale] || "Deutschland"
-        : "";
-      const searchTerm = factFieldSearchQuery(contextName, label, comparisonPlace);
-      card.classList.add("facts-card-link");
-      card.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
-      card.title = t("facts.values.googleCardSearchAria", { search: searchTerm });
-      card.setAttribute("aria-label", t("facts.values.googleCardSearchAria", { search: searchTerm }));
-    }
-
-    const cardLabel = document.createElement("div");
-    cardLabel.className = "facts-card-label";
-    cardLabel.textContent = label;
-
-    const cardValue = document.createElement("div");
-    cardValue.className = "facts-card-value";
-    cardValue.textContent = String(value);
-
-    card.appendChild(cardLabel);
-    card.appendChild(cardValue);
-    return card;
-  }
-
-  function splitFactsOverviewSentences(value) {
-    const protectedOrdinals = String(value || "")
-      .trim()
-      .replace(/\b(\d{1,2})\.(?=\s+\p{L})/gu, "$1\u0000");
-
-    return protectedOrdinals
-      .split(/(?<=[.!?])\s+(?=[\p{Lu}\p{N}])/u)
-      .map((sentence) => sentence.replace(/\u0000/g, ".").trim())
-      .filter(Boolean);
-  }
-
-  function createFactsList(label, items, variant = "", contextName = "") {
-    if (!Array.isArray(items) || !items.length) {
-      return null;
-    }
-
-    const section = document.createElement("section");
-    section.className = "facts-list-section";
-    if (variant) {
-      section.classList.add(`facts-${variant}`);
-    }
-
-    const title = document.createElement("div");
-    title.className = "facts-list-title";
-    title.textContent = label;
-
-    const list = document.createElement("div");
-    list.className = "facts-chip-list";
-
-    items
-      .filter((item) => isNonEmptyValue(item))
-      .forEach((item) => {
-      const itemText = String(item);
-      const searchTerm = factListSearchQuery(contextName, label, itemText);
-        const chip = document.createElement("a");
-        chip.className = "facts-chip facts-chip-link";
-        chip.href = `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
-        chip.target = "_blank";
-        chip.rel = "noopener noreferrer";
-        const chipLabel = document.createElement("span");
-        chipLabel.className = "facts-chip-label";
-        chipLabel.textContent = itemText;
-        chip.appendChild(chipLabel);
-        chip.title = t("facts.values.googleSearchAria", { item: searchTerm });
-        chip.setAttribute("aria-label", t("facts.values.googleSearchAria", { item: searchTerm }));
-        list.appendChild(chip);
+  function loadGermanyFacts() {
+    if (!germanyLoadPromise) {
+      germanyLoadPromise = fetchJson("germany-facts.json", null).then((raw) => {
+        germanyFacts = normalizeFactsCollection(raw);
+        return germanyFacts;
       });
-
-    if (!list.children.length) {
-      return null;
     }
-    list.dataset.count = String(list.children.length);
-
-    section.appendChild(title);
-    section.appendChild(list);
-    return section;
+    return germanyLoadPromise;
   }
 
-  function getStatePeopleLists(stateId) {
-    return getNotablePeopleLists(STATE_NOTABLE_PEOPLE[stateId]);
-  }
-
-  function getCountryPeopleLists(countryId) {
-    return getNotablePeopleLists(COUNTRY_NOTABLE_PEOPLE[countryId]);
-  }
-
-  function getNotablePeopleLists(notablePeople = {}) {
-    return [
-      [t("facts.lists.science"), notablePeople.science, "people-science"],
-      [t("facts.lists.engineering"), notablePeople.engineering, "people-engineering"],
-      [t("facts.lists.art"), notablePeople.art, "people-art"],
-      [t("facts.lists.politics"), notablePeople.politics, "people-politics"],
-    ];
-  }
-
-  function createNotablePeopleSection(groups, contextName) {
-    const peopleGroups = groups
-      .map(([label, values, variant]) => ({ label, variant, values: Array.isArray(values) ? values.filter(isNonEmptyValue) : [] }))
-      .filter(({ values }) => values.length);
-
-    if (!peopleGroups.length) {
-      return null;
-    }
-
-    const section = document.createElement("section");
-    section.className = "facts-notable-people";
-
-    const title = document.createElement("div");
-    title.className = "facts-notable-people-title";
-    title.textContent = t("facts.lists.notablePeople");
-    section.appendChild(title);
-
-    const groupsEl = document.createElement("div");
-    groupsEl.className = "facts-notable-people-groups";
-    peopleGroups.forEach(({ label, variant, values }) => {
-      const group = createFactsList(label, values, variant, contextName);
-      if (group) {
-        group.classList.add("facts-notable-people-group");
-        groupsEl.appendChild(group);
-      }
-    });
-
-    if (!groupsEl.children.length) {
-      return null;
-    }
-
-    section.appendChild(groupsEl);
-    return section;
-  }
-
-  function splitCountryTitle(title) {
-    const text = String(title ?? "").trim();
-    if (text === "Deutschland") return ["Deutsch", "land"];
-
-    const words = text.split(/\s+/);
-    if (words.length > 1) {
-      let bestIndex = 1;
-      let bestDistance = Infinity;
-      for (let index = 1; index < words.length; index += 1) {
-        const distance = Math.abs(words.slice(0, index).join(" ").length - text.length / 2);
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          bestIndex = index;
+  function loadEuropeFacts() {
+    if (!europeLoadPromise) {
+      europeLoadPromise = fetchJson("europe-facts.json", null).then((raw) => {
+        const normalized = normalizeEuropeFacts(raw);
+        if (normalized) {
+          normalized.union = {
+            ...normalized.union,
+            name: "EU",
+            official_name: "Europaeische Union",
+            largest_city: "Berlin",
+            states_count: "27",
+            currency: "EUR",
+            language: "24",
+          };
         }
-      }
-      return [words.slice(0, bestIndex).join(" "), words.slice(bestIndex).join(" ")];
-    }
-
-    const letters = Array.from(text);
-    const midpoint = Math.ceil(letters.length / 2);
-    return [letters.slice(0, midpoint).join(""), letters.slice(midpoint).join("")];
-  }
-
-  function renderFactsView(title, subtitle, imageSrc, fields, lists, tourismUrl = "", officialUrl = "", notablePeople = [], place = {}) {
-    factsContentEl.innerHTML = "";
-
-    const view = document.createElement("div");
-    view.className = "facts-view";
-    const factsPalette = getRandomFactsPalette(Math.max(3, lists.length));
-    view.style.setProperty("--facts-color-a", factsPalette[0]);
-    view.style.setProperty("--facts-color-b", factsPalette[1]);
-    view.style.setProperty("--facts-color-c", factsPalette[2]);
-
-    const head = document.createElement("div");
-    head.className = "facts-view-head";
-
-    const titleRow = document.createElement("div");
-    titleRow.className = "facts-title-row";
-
-    const flagWrap = document.createElement("div");
-    flagWrap.className = "facts-flag-wrap";
-
-    const flagEl = document.createElement("img");
-    flagEl.className = "facts-flag";
-    flagEl.alt = `${title} flag`;
-    flagEl.loading = "lazy";
-    flagEl.decoding = "async";
-    flagEl.addEventListener("error", () => {
-      flagWrap.classList.add("is-fallback");
-      flagEl.hidden = true;
-    });
-
-    if (isNonEmptyValue(imageSrc)) {
-      flagEl.src = imageSrc;
-    } else {
-      flagWrap.classList.add("is-fallback");
-      flagEl.hidden = true;
-    }
-
-    flagWrap.appendChild(flagEl);
-
-    const titleCopy = document.createElement("div");
-    titleCopy.className = "facts-title-copy";
-
-    const titleBar = document.createElement("div");
-    titleBar.className = "facts-title-bar";
-
-    const nameEl = document.createElement("div");
-    nameEl.className = "facts-view-name";
-    const [leftTitle, rightTitle] = splitCountryTitle(title);
-    const leftTitleEl = document.createElement("span");
-    leftTitleEl.className = "facts-view-name-half facts-view-name-half--left";
-    leftTitleEl.setAttribute("aria-hidden", "true");
-    leftTitleEl.textContent = leftTitle;
-    const rightTitleEl = document.createElement("span");
-    rightTitleEl.className = "facts-view-name-half facts-view-name-half--right";
-    rightTitleEl.setAttribute("aria-hidden", "true");
-    rightTitleEl.textContent = rightTitle;
-    const accessibleTitleEl = document.createElement("span");
-    accessibleTitleEl.className = "visually-hidden";
-    accessibleTitleEl.textContent = title;
-    nameEl.append(leftTitleEl, flagWrap, rightTitleEl, accessibleTitleEl);
-    titleBar.appendChild(nameEl);
-
-    if (isNonEmptyValue(tourismUrl) || isNonEmptyValue(officialUrl)) {
-      const linksEl = document.createElement("div");
-      linksEl.className = "facts-title-links";
-
-      if (isNonEmptyValue(tourismUrl)) {
-        const tourismEl = document.createElement("a");
-        tourismEl.className = "facts-title-link facts-title-link--tourism";
-        tourismEl.href = tourismUrl;
-        tourismEl.target = "_blank";
-        tourismEl.rel = "noopener noreferrer";
-        tourismEl.textContent = t("facts.links.tourism");
-        tourismEl.setAttribute("aria-label", t("facts.values.tourismAria", { name: title }));
-        linksEl.appendChild(tourismEl);
-      }
-
-      if (isNonEmptyValue(officialUrl)) {
-        if (isNonEmptyValue(tourismUrl)) {
-          const websitesLabelEl = document.createElement("span");
-          websitesLabelEl.className = "facts-title-link-separator";
-          websitesLabelEl.textContent = t("facts.links.websites");
-          linksEl.appendChild(websitesLabelEl);
-        }
-
-        const officialEl = document.createElement("a");
-        officialEl.className = "facts-title-link facts-title-link--official";
-        officialEl.href = officialUrl;
-        officialEl.target = "_blank";
-        officialEl.rel = "noopener noreferrer";
-        officialEl.textContent = t("facts.links.official");
-        officialEl.setAttribute("aria-label", t("facts.values.officialSiteAria", { name: title }));
-        linksEl.appendChild(officialEl);
-      }
-
-      titleBar.appendChild(linksEl);
-    }
-
-    titleCopy.appendChild(titleBar);
-
-    const featuredFieldData = fields.find((fieldData) => normalizeFactsField(fieldData)?.featured);
-    const featuredField = createFactsField(featuredFieldData);
-    if (featuredField) {
-      featuredField.classList.add("facts-head-overview");
-
-      const overviewValueEl = featuredField.querySelector(".facts-card-value");
-      const overviewSentences = splitFactsOverviewSentences(overviewValueEl?.textContent);
-      if (overviewValueEl && overviewSentences.length > 1) {
-        overviewValueEl.replaceChildren();
-        overviewSentences.forEach((sentence) => {
-          const sentenceEl = document.createElement("span");
-          sentenceEl.className = "facts-overview-sentence";
-          sentenceEl.textContent = sentence;
-          overviewValueEl.appendChild(sentenceEl);
-        });
-      }
-
-      titleCopy.appendChild(featuredField);
-    }
-
-    if (isNonEmptyValue(subtitle)) {
-      const subtitleEl = document.createElement("div");
-      subtitleEl.className = "facts-view-subtitle";
-      subtitleEl.textContent = String(subtitle);
-      titleCopy.appendChild(subtitleEl);
-    }
-
-    titleRow.appendChild(titleCopy);
-    head.appendChild(titleRow);
-    view.appendChild(head);
-
-    const locale = getLocale();
-    const copy = factsInsightCopy(locale);
-    const context = getPlaceContext(place.kind, place.id, locale);
-    if (context.length) {
-      const strip = document.createElement("div");
-      strip.className = "facts-context-strip";
-      strip.setAttribute("aria-label", copy.context);
-      context.forEach(({ label, url }) => {
-        const chip = document.createElement(url ? "a" : "span");
-        chip.className = "facts-context-chip";
-        chip.textContent = label;
-        if (url) {
-          chip.href = url;
-          chip.target = "_blank";
-          chip.rel = "noopener noreferrer";
-        }
-        strip.appendChild(chip);
+        europeFacts = normalized;
+        return europeFacts;
       });
-      view.appendChild(strip);
     }
-
-    const grid = document.createElement("div");
-    grid.className = "facts-grid";
-    const orderedFields = selectAvailableFactsFields(fields);
-    const addField = (fieldData) => {
-      if (normalizeFactsField(fieldData)?.featured) {
-        return;
-      }
-      const field = createFactsField(fieldData, title);
-      if (field) grid.appendChild(field);
-    };
-    orderedFields.forEach(addField);
-    if (place.population && place.area) {
-      createNumericalInsights(place.population, place.area, germanyFacts?.country?.area_km2, locale)
-        .forEach(addField);
-    }
-
-    if (grid.children.length) {
-      view.appendChild(grid);
-    }
-
-    lists.forEach(([label, values, variant], listIndex) => {
-      const list = createFactsList(label, values, variant, title);
-      if (list) {
-        list.style.setProperty("--list-accent", factsPalette[listIndex]);
-        view.appendChild(list);
-      }
-    });
-
-    const peopleSection = createNotablePeopleSection(notablePeople, title);
-    if (peopleSection) {
-      view.appendChild(peopleSection);
-    }
-
-    factsContentEl.appendChild(view);
-
-    countryTitleObserver?.disconnect();
-    const titleMeasureContext = document.createElement("canvas").getContext("2d");
-    const syncCountryTitleLayout = () => {
-      if (!nameEl.isConnected) return;
-      const nameStyle = window.getComputedStyle(nameEl);
-      if (!titleMeasureContext || !nameEl.clientWidth) return;
-
-      const maxFontSize = Math.min(Number.parseFloat(nameStyle.fontSize) || 24, 24);
-      titleMeasureContext.font = `${nameStyle.fontStyle} ${nameStyle.fontWeight} ${maxFontSize}px ${nameStyle.fontFamily}`;
-      const letterSpacing = Number.parseFloat(nameStyle.letterSpacing) || 0;
-      const titleLength = Array.from(String(title)).length;
-      const titleWidth = titleMeasureContext.measureText(String(title)).width + Math.max(0, titleLength - 1) * letterSpacing;
-      const leftWidth = titleMeasureContext.measureText(leftTitle).width + Math.max(0, Array.from(leftTitle).length - 1) * letterSpacing;
-      const rightWidth = titleMeasureContext.measureText(rightTitle).width + Math.max(0, Array.from(rightTitle).length - 1) * letterSpacing;
-      const horizontalPadding = (Number.parseFloat(nameStyle.paddingLeft) || 0) + (Number.parseFloat(nameStyle.paddingRight) || 0);
-      const flagWidth = flagWrap.getBoundingClientRect().width;
-      const columnGap = Number.parseFloat(nameStyle.columnGap) || 0;
-      const sideWidth = (nameEl.clientWidth - horizontalPadding - flagWidth - columnGap * 2) / 2;
-      const showFullName = sideWidth >= titleWidth + 8;
-      const splitTextWidth = Math.max(leftWidth, rightWidth);
-      const splitFontSize = Math.min(maxFontSize, maxFontSize * Math.max(0, sideWidth - 4) / Math.max(1, splitTextWidth));
-
-      nameEl.classList.toggle("is-full-name-sides", showFullName);
-      nameEl.style.setProperty("--facts-title-half-size", `${showFullName ? maxFontSize : splitFontSize}px`);
-      leftTitleEl.textContent = showFullName ? title : leftTitle;
-      rightTitleEl.textContent = showFullName ? title : rightTitle;
-    };
-
-    if (typeof ResizeObserver === "function") {
-      countryTitleObserver = new ResizeObserver(syncCountryTitleLayout);
-      countryTitleObserver.observe(nameEl);
-    }
-    syncCountryTitleLayout();
-    document.fonts?.ready.then(syncCountryTitleLayout);
+    return europeLoadPromise;
   }
 
-  function renderCountryFacts(countryData) {
-    renderFactsView(
-        t("facts.names.germany"),
-        "",
-        getFactsImagePath("country"),
-      [
-        [t("facts.fields.capital"), countryData.capital],
-        [t("facts.fields.largestCity"), countryData.largest_city],
-        [t("facts.fields.anthem"), countryData.anthem],
-        [t("facts.fields.founded"), countryData.founded],
-        [t("facts.fields.stateForm"), translateFactScalar(countryData.state_form)],
-        [t("facts.fields.nationalDay"), countryData.national_day],
-        [t("facts.fields.population"), countryData.population],
-        [t("facts.fields.area"), countryData.area_km2],
-        [t("facts.fields.statesCount"), countryData.states_count],
-        [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
-        [t("facts.fields.language"), translateFactScalar(countryData.language)],
-        [t("facts.fields.timeZone"), summarizeTimeZone(countryData.time_zone)],
-        [t("facts.fields.callingCode"), countryData.calling_code],
-        [t("facts.fields.internetTld"), countryData.internet_tld],
-        [t("facts.fields.bordersCount"), countryData.bordering_countries_count],
-        [t("facts.fields.gdp"), countryData.gdp_nominal],
-        [t("facts.fields.euSince"), countryData.eu_member_since],
-        {
-          label: t("facts.featured.germanyOverview"),
-          value: buildGermanyOverview(countryData),
-          featured: true,
-        },
-      ],
-      [
-        [t("facts.lists.nature"), translateFactList(countryData.nature)],
-        [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries), "neighbors"],
-        [t("facts.lists.highlights"), translateFactList(countryData.highlights)],
-        ],
-        TOURISM_LINKS.germany,
-        OFFICIAL_LINKS.germany,
-        getCountryPeopleLists("germany"),
-        { kind: "germany", id: "germany", population: countryData.population, area: countryData.area_km2 }
-      );
+  function loadWorldFacts() {
+    if (!worldLoadPromise) {
+      worldLoadPromise = fetchJson("world-facts.json", null).then((raw) => {
+        const normalized = normalizeEuropeFacts(raw);
+        if (normalized) {
+          normalized.union = {
+            ...normalized.union,
+            name: "UN",
+            official_name: "Vereinte Nationen",
+            largest_city: "Jakarta (41.9m, 2025)",
+            founded: "1945",
+            member_states: "193",
+            secretary_general: "Antonio Guterres",
+          };
+        }
+        worldFacts = normalized;
+        return worldFacts;
+      });
     }
-
-  function renderEuropeOverview(unionData) {
-    renderFactsView(
-        t("facts.names.europe"),
-        "",
-        EUROPE_FLAG_IMAGE,
-      [
-        [t("facts.fields.institutionSeats"), translateFactScalar(unionData.institution_seats)],
-        [t("facts.fields.anthem"), unionData.anthem],
-        [t("facts.fields.founded"), unionData.founded],
-        [t("facts.fields.organizationType"), translateFactScalar(unionData.state_form)],
-        [t("facts.fields.europeDay"), unionData.national_day],
-        [t("facts.fields.population"), unionData.population],
-        [t("facts.fields.area"), unionData.area_km2],
-        [t("facts.fields.euMemberStates"), unionData.states_count],
-        [t("facts.fields.currency"), translateFactScalar(unionData.currency)],
-        [t("facts.fields.euroAreaMembers"), `${unionData.euro_area_members}/${unionData.states_count}`],
-        [t("facts.fields.officialLanguages"), unionData.language],
-        [t("facts.fields.timeZone"), summarizeTimeZone(unionData.time_zone)],
-        [t("facts.fields.internetTld"), unionData.internet_tld],
-        [t("facts.fields.gdp"), unionData.gdp_nominal],
-        {
-          label: t("facts.featured.europeOverview"),
-          value: buildEuropeOverview(unionData),
-          featured: true,
-        },
-      ],
-      [
-        [t("facts.lists.institutions"), translateFactList(unionData.institutions)],
-        [t("facts.lists.highlights"), translateFactList(unionData.highlights)],
-        [t("facts.lists.nature"), translateFactList(unionData.nature)],
-        [t("facts.lists.seas"), translateFactList(unionData.neighboring_countries)],
-        ],
-        "",
-        "",
-        getCountryPeopleLists("europe"),
-        { kind: "eu" }
-      );
-    }
-
-  function renderWorldOverview(unionData) {
-    renderFactsView(
-        t("facts.names.world"),
-        "",
-        unionData.flag_image || "",
-      [
-        [t("facts.fields.headquarters"), unionData.headquarters],
-        [t("facts.fields.founded"), unionData.founded],
-        [t("facts.fields.organizationType"), translateFactScalar(unionData.state_form)],
-        [t("facts.fields.unDay"), unionData.national_day],
-        [t("facts.fields.memberStates"), unionData.member_states],
-        [t("facts.fields.officialLanguages"), translateFactScalar(unionData.language)],
-        [t("facts.fields.secretaryGeneral"), unionData.secretary_general],
-        {
-          label: t("facts.featured.worldOverview"),
-          value: buildWorldOverview(unionData),
-          featured: true,
-        },
-      ],
-      [
-        [t("facts.lists.institutions"), translateFactList(unionData.institutions)],
-        [t("facts.lists.highlights"), translateFactList(unionData.highlights)],
-        [t("facts.lists.nature"), translateFactList(unionData.nature)],
-        [t("facts.lists.seas"), translateFactList(unionData.neighboring_countries)],
-        ],
-        "",
-        OFFICIAL_LINKS.world,
-        getCountryPeopleLists("world"),
-        { kind: "world" }
-      );
-    }
-
-  function renderStateFacts(stateData) {
-    const parentCountry = germanyFacts?.country || {};
-    renderFactsView(
-        stateData.name || "Bundesland",
-        "",
-        getFactsImagePath("state", stateData.id),
-      [
-        [t("facts.fields.abbreviation"), stateData.abbreviation],
-        [t("facts.fields.stateType"), translateFactScalar(stateData.state_type)],
-        [t("facts.fields.region"), translateFactScalar(stateData.region)],
-        [t("facts.fields.capital"), stateData.capital],
-        [t("facts.fields.largestCity"), stateData.largest_city],
-        [t("facts.fields.population"), stateData.population],
-        [t("facts.fields.area"), stateData.area_km2],
-        [t("facts.fields.currency"), translateFactScalar(parentCountry.currency)],
-        [t("facts.fields.language"), translateFactScalar(parentCountry.language)],
-        [t("facts.fields.timeZone"), summarizeTimeZone(parentCountry.time_zone)],
-        [t("facts.fields.callingCode"), parentCountry.calling_code],
-        [t("facts.fields.internetTld"), parentCountry.internet_tld],
-        [t("facts.fields.bordersCount"), Array.isArray(stateData.bordering_countries) ? stateData.bordering_countries.length : 0],
-        [t("facts.fields.joined"), stateData.joined_or_founded],
-        [t("facts.fields.parliament"), stateData.parliament],
-        {
-          label: t("facts.featured.overview"),
-          value: buildStateOverview(stateData),
-          featured: true,
-        },
-      ],
-      [
-        [t("facts.lists.neighborStates"), translateFactList(stateData.neighboring_states), "neighbors"],
-        [t("facts.lists.borders"), translateFactList(stateData.bordering_countries), "borders"],
-        [t("facts.lists.knownFor"), translateFactList(stateData.known_for)],
-        [t("facts.lists.nature"), translateFactList(stateData.nature)],
-        ],
-        TOURISM_LINKS.states[stateData.id] || "",
-        OFFICIAL_LINKS.states[stateData.id] || "",
-        getStatePeopleLists(stateData.id),
-        { kind: "state", id: stateData.id, population: stateData.population, area: stateData.area_km2 }
-      );
-    }
-
-  function renderEuropeanCountryFacts(countryData) {
-    renderFactsView(
-        getLocalizedCountryNameById(countryData.id, countryData.name || "Land"),
-        "",
-        countryData.flag_image || "",
-      [
-        [t("facts.fields.capital"), countryData.capital],
-        [t("facts.fields.region"), translateFactScalar(countryData.region)],
-        [t("facts.fields.stateForm"), getEuropeanStateForm(countryData.id, countryData.state_form)],
-        [t("facts.fields.population"), countryData.population],
-        [t("facts.fields.area"), countryData.area_km2],
-        [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
-        [t("facts.fields.language"), translateFactScalar(countryData.language)],
-        [t("facts.fields.timeZone"), summarizeTimeZone(countryData.time_zone)],
-        [t("facts.fields.callingCode"), countryData.calling_code],
-        [t("facts.fields.internetTld"), countryData.internet_tld],
-        [countryData.id === "england" ? t("facts.fields.neighboringPartsCount") : t("facts.fields.bordersCount"), Array.isArray(countryData.neighboring_countries) ? countryData.neighboring_countries.length : undefined],
-        [t("facts.fields.landlocked"), translateFactScalar(countryData.landlocked)],
-        {
-          label: t("facts.featured.overview"),
-          value: buildCountryOverview(countryData),
-          featured: true,
-        },
-      ],
-      [
-        [countryData.id === "england" ? t("facts.lists.neighboringParts") : t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries), "neighbors"],
-        [t("facts.lists.languages"), translateFactList(countryData.languages_list)],
-        [t("facts.lists.timezones"), countryData.timezones_list],
-        ],
-        TOURISM_LINKS.countries[countryData.id] || "",
-        OFFICIAL_LINKS.countries[countryData.id] || "",
-        getCountryPeopleLists(countryData.id),
-        { kind: "country", id: countryData.id, population: countryData.population, area: countryData.area_km2 }
-      );
-    }
-
-  function renderWorldCountryFacts(countryData) {
-    renderFactsView(
-        getLocalizedCountryNameById(countryData.id, countryData.name || "Land"),
-        "",
-        countryData.flag_image || "",
-      [
-        [t("facts.fields.capital"), countryData.capital],
-        [t("facts.fields.region"), translateFactScalar(countryData.region)],
-        [t("facts.fields.stateForm"), getWorldStateForm(countryData.id, countryData.state_form)],
-        [t("facts.fields.population"), countryData.population],
-        [t("facts.fields.area"), countryData.area_km2],
-        [t("facts.fields.currency"), translateFactScalar(countryData.currency)],
-        [t("facts.fields.language"), translateFactScalar(countryData.language)],
-        [t("facts.fields.timeZone"), summarizeTimeZone(countryData.time_zone)],
-        [t("facts.fields.callingCode"), countryData.calling_code],
-        [t("facts.fields.internetTld"), countryData.internet_tld],
-        [t("facts.fields.bordersCount"), Array.isArray(countryData.neighboring_countries) ? countryData.neighboring_countries.length : undefined],
-        [t("facts.fields.landlocked"), translateFactScalar(countryData.landlocked)],
-        {
-          label: t("facts.featured.overview"),
-          value: buildCountryOverview(countryData),
-          featured: true,
-        },
-      ],
-      [
-        [t("facts.lists.neighbors"), translateFactList(countryData.neighboring_countries), "neighbors"],
-        [t("facts.lists.languages"), translateFactList(countryData.languages_list)],
-        [t("facts.lists.timezones"), countryData.timezones_list],
-        ],
-        TOURISM_LINKS.countries[countryData.id] || "",
-        OFFICIAL_LINKS.countries[countryData.id] || "",
-        getCountryPeopleLists(countryData.id),
-        { kind: "country", id: countryData.id, population: countryData.population, area: countryData.area_km2 }
-      );
-    }
-
-  function renderFactsError() {
-    factsContentEl.innerHTML = "";
-    const error = document.createElement("div");
-    error.className = "facts-error";
-    error.textContent = t("facts.errors.loadFailed");
-    factsContentEl.appendChild(error);
+    return worldLoadPromise;
   }
 
   function updateFactsModeButtons() {
@@ -1295,11 +177,9 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     if (factsMode === "germany" || factsMode === "state") {
       return "germany";
     }
-
     if (factsMode === "world" || factsMode === "world-country") {
       return "world";
     }
-
     return "europe";
   }
 
@@ -1381,7 +261,6 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     const pickerKey = `${pickerMode}|${getTargetLanguage()}|${items.map((item) => item.id).join(",")}`;
 
     statePickerEl.dataset.pickerMode = pickerMode;
-
     statePickerEl.setAttribute(
       "aria-label",
       pickerMode === "germany" ? t("facts.picker.statesAria") : t("facts.picker.countriesAria")
@@ -1445,53 +324,45 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
 
     if (isGermanyMode) {
       if (!germanyFacts) {
-        renderFactsError();
+        viewRenderer.renderFactsError();
         return;
       }
 
       const activeState = germanyFacts.states.find((state) => state.id === selectedStateId) || null;
       if (factsMode === "state" && activeState) {
-        renderStateFacts(activeState);
+        viewRenderer.renderStateFacts(activeState, germanyFacts.country);
       } else {
-        renderCountryFacts(germanyFacts.country);
+        viewRenderer.renderCountryFacts(germanyFacts.country);
       }
     } else if (isWorldMode) {
       if (!worldFacts) {
-        renderFactsError();
+        viewRenderer.renderFactsError();
         return;
       }
 
       const activeCountry = worldFacts.countries.find((country) => country.id === selectedWorldCountryId) || null;
       if (factsMode === "world-country" && activeCountry) {
-        renderWorldCountryFacts(activeCountry);
+        viewRenderer.renderWorldCountryFacts(activeCountry);
       } else {
-        renderWorldOverview(worldFacts.union);
+        viewRenderer.renderWorldOverview(worldFacts.union);
       }
     } else {
       if (!europeFacts) {
-        renderFactsError();
+        viewRenderer.renderFactsError();
         return;
       }
 
       const activeCountry = europeFacts.countries.find((country) => country.id === selectedEuropeCountryId) || null;
       if (factsMode === "europe-country" && activeCountry) {
-        renderEuropeanCountryFacts(activeCountry);
+        viewRenderer.renderEuropeanCountryFacts(activeCountry);
       } else {
-        renderEuropeOverview(europeFacts.union);
+        viewRenderer.renderEuropeOverview(europeFacts.union);
       }
     }
 
     updateFactsModeButtons();
     buildFactsPicker();
     updateStatePickerVisibility();
-  }
-
-  function scrollFactsContentIntoView() {
-    scheduleFactsScroll(() =>
-      factsContentEl?.querySelector(".facts-view-head, .facts-error, .facts-view") ||
-      factsContentEl ||
-      factsPanelEl
-    );
   }
 
   function shouldScrollFactsTargetIntoView(targetEl, offset = 10) {
@@ -1522,6 +393,14 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     });
   }
 
+  function scrollFactsContentIntoView() {
+    scheduleFactsScroll(() =>
+      factsContentEl?.querySelector(".facts-view-head, .facts-error, .facts-view") ||
+      factsContentEl ||
+      factsPanelEl
+    );
+  }
+
   function scrollFactsPanelTopIntoView() {
     scheduleFactsScroll(factsPanelEl);
   }
@@ -1538,7 +417,7 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     if (!hasGermanyFacts && !hasEuropeFacts && !hasWorldFacts) {
       updateFactsModeButtons();
       updateStatePickerVisibility();
-      renderFactsError();
+      viewRenderer.renderFactsError();
       return;
     }
 
@@ -1558,24 +437,29 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
       return;
     }
     if (!factsLoadPromise) {
-      factsLoadPromise = Promise.all([
-        loadGermanyFacts(),
-        loadEuropeFacts(),
-        loadWorldFacts(),
-      ]).then(([loadedGermanyFacts, loadedEuropeFacts, loadedWorldFacts]) => {
-        germanyFacts = loadedGermanyFacts;
-        europeFacts = loadedEuropeFacts;
-        worldFacts = loadedWorldFacts;
+      factsLoadPromise = (async () => {
+        await waitForIdleTurn();
+        await loadGermanyFacts();
+        refreshFactsPanelData();
+
+        await waitForIdleTurn();
+        await loadEuropeFacts();
+        if (factsMode === "europe" || factsMode === "europe-country") {
+          refreshFactsPanelData();
+        }
+
+        await waitForIdleTurn();
+        await loadWorldFacts();
         factsLoaded = true;
         refreshFactsPanelData();
-      });
+      })();
     }
     await factsLoadPromise;
   }
 
   function initFactsPanel() {
     factsCountryBtn.addEventListener("click", async () => {
-      await loadFactsOnDemand();
+      await loadGermanyFacts();
       factsMode = "germany";
       selectedStateId = null;
       renderFactsSelection();
@@ -1583,9 +467,9 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     });
 
     factsStatesBtn.addEventListener("click", async () => {
-      await loadFactsOnDemand();
+      await loadEuropeFacts();
       if (!europeFacts || !europeFacts.countries.length) {
-        renderFactsError();
+        viewRenderer.renderFactsError();
         return;
       }
 
@@ -1596,9 +480,9 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     });
 
     factsWorldBtn.addEventListener("click", async () => {
-      await loadFactsOnDemand();
+      await loadWorldFacts();
       if (!worldFacts || !worldFacts.countries.length) {
-        renderFactsError();
+        viewRenderer.renderFactsError();
         return;
       }
 
@@ -1609,9 +493,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     });
 
     refreshFactsPanelData();
-    // Start this optional request during the loader's minimum display time.
-    // It remains outside the critical bootstrap Promise, but normally settles
-    // before a user can reach the facts panel.
+    // Start staged background warmup outside the critical bootstrap Promise:
+    // Germany loads first in an idle turn, followed by Europe and World between frames.
     void loadFactsOnDemand();
   }
 
@@ -1619,6 +502,8 @@ export function createFactsController({ t, getLocale, getLocaleBundle, getTarget
     init: initFactsPanel,
     render: renderFactsSelection,
     load: loadFactsOnDemand,
-    get isLoaded() { return factsLoaded; },
+    get isLoaded() {
+      return Boolean(germanyFacts || factsLoaded);
+    },
   };
 }

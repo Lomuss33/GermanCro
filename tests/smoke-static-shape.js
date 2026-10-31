@@ -19,7 +19,17 @@ const onboardingCss = await readStyles("onboarding.css");
 const normalizedOnboardingCss = onboardingCss.replace(/\r\n/g, "\n");
 const visualEffectsCss = (await readText("src/styles/visual-effects.css")).replace(/\r\n/g, "\n");
 const appSource = (await Promise.all([
-  "src/bootstrap/init-app.js", "src/facts/controller.js", "src/config/app.js", "src/ui/language-flags.js",
+  "src/bootstrap/init-app.js",
+  "src/game/category-panel.js",
+  "src/facts/controller.js",
+  "src/facts/localization.js",
+  "src/facts/view-renderer.js",
+  "src/config/app.js",
+  "src/ui/language-flags.js",
+  "src/ui/feedback-effects.js",
+  "src/ui/install-guide.js",
+  "src/authoring/card-authoring.js",
+  "src/layout/viewport-controller.js",
 ].map(readText))).join("\n");
 const tourSource = await readText("src/onboarding/first-run-tour.js");
 
