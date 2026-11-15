@@ -178,6 +178,8 @@ assert(
     appSource.includes("window.visualViewport?.addEventListener(\"resize\", scheduleKeyboardViewportSync") &&
     appSource.includes("navigator.virtualKeyboard?.addEventListener?.(\"geometrychange\", scheduleKeyboardViewportSync)") &&
     appSource.includes("getVirtualKeyboardInset(layoutHeight)") &&
+    appSource.includes("keyboard-viewport-reset") &&
+    normalizedCss.includes("height: max(0px, calc(var(--app-visible-viewport-height) - var(--first-screen-chrome)))") &&
     appSource.includes("revealGameSurfaceForKeyboard();") &&
     appSource.includes("scrollScrollableElementBy(gameArea, delta, behavior)") &&
     appSource.includes("scrollScrollableElementBy(document.scrollingElement || document.documentElement, remainingDelta, behavior)"),

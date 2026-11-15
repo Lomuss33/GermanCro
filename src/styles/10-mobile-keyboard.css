@@ -13,9 +13,9 @@ body.layout-phone-portrait.is-keyboard-visible {
 }
 
 body.layout-phone-portrait.is-keyboard-visible #heroStage {
-  height: calc(var(--app-visible-viewport-height) - var(--first-screen-chrome));
+  height: max(0px, calc(var(--app-visible-viewport-height) - var(--first-screen-chrome)));
   min-height: 0;
-  max-height: calc(var(--app-visible-viewport-height) - var(--first-screen-chrome));
+  max-height: max(0px, calc(var(--app-visible-viewport-height) - var(--first-screen-chrome)));
 }
 
 body.layout-phone-portrait.is-keyboard-visible .stats-bar {

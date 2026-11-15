@@ -320,7 +320,13 @@ function getVirtualKeyboardInset(layoutHeight) {
   const rect = navigator.virtualKeyboard?.boundingRect;
   const top = Number(rect?.top);
   const height = Number(rect?.height);
-  if (!Number.isFinite(top) || !Number.isFinite(height) || height <= 0) {
+  if (
+    !Number.isFinite(top) ||
+    !Number.isFinite(height) ||
+    height <= 0 ||
+    top <= 0 ||
+    top >= layoutHeight
+  ) {
     return 0;
   }
 
@@ -401,6 +407,7 @@ function setKeyboardViewportCssVar(name, value) {
 }
 
 function resetKeyboardViewportState() {
+  const wasOpen = keyboardViewport.isOpen || document.body?.classList.contains("is-keyboard-visible");
   keyboardViewport.baselineHeight = 0;
   keyboardViewport.isOpen = false;
   if (keyboardRevealTimer) {
@@ -408,6 +415,9 @@ function resetKeyboardViewportState() {
     keyboardRevealTimer = 0;
   }
   document.body?.classList.remove("is-keyboard-visible");
+  if (wasOpen) {
+    scheduleAnswerGuideMeasure("keyboard-viewport-reset");
+  }
 }
 
 function scheduleKeyboardViewportSync() {
