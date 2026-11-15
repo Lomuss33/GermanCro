@@ -173,6 +173,13 @@ assert(
   "Completing a session must expose and focus the results region",
 );
 assert(
+  normalizedCss.includes("body.layout-phone-portrait.is-keyboard-visible #gameArea") &&
+    normalizedCss.includes("grid-template-rows: auto auto auto minmax(0, 1fr);") &&
+    appSource.includes("window.visualViewport?.addEventListener(\"resize\", scheduleKeyboardViewportSync") &&
+    appSource.includes("revealGameSurfaceForKeyboard();"),
+  "Mobile keyboard mode must preserve both prompt rows and reveal the answer surface",
+);
+assert(
   tourSource.includes('else if (reason !== "settings")') &&
     appSource.includes('settingsPanel?.querySelector("button:not(:disabled), input:not(:disabled)")?.focus({ preventScroll: true });'),
   "Opening settings from onboarding must keep focus in settings rather than returning to the game input",

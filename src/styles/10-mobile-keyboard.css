@@ -1,0 +1,105 @@
+/* Mobile keyboard mode keeps the game surface compact instead of letting the
+   virtual keyboard cover the prompt and input. The normal game layout remains
+   the source of truth; this only changes its vertical distribution while the
+   answer field owns focus. */
+:root {
+  --app-visible-viewport-height: var(--app-stable-viewport-height);
+  --keyboard-visible-bottom: var(--app-visible-viewport-height);
+  --keyboard-inset: 0px;
+}
+
+body.layout-phone-portrait.is-keyboard-visible {
+  --top-screen-search-peek: 0px;
+}
+
+body.layout-phone-portrait.is-keyboard-visible #heroStage {
+  height: calc(var(--app-visible-viewport-height) - var(--first-screen-chrome));
+  min-height: 0;
+  max-height: calc(var(--app-visible-viewport-height) - var(--first-screen-chrome));
+  transition: height 180ms cubic-bezier(0.22, 0.8, 0.28, 1);
+}
+
+body.layout-phone-portrait.is-keyboard-visible .stats-bar {
+  display: none;
+}
+
+body.layout-phone-portrait.is-keyboard-visible #mainCard {
+  min-height: 0;
+  overflow: hidden;
+  padding-block: 8px;
+  transition: padding 180ms cubic-bezier(0.22, 0.8, 0.28, 1);
+}
+
+body.layout-phone-portrait.is-keyboard-visible .progress-track {
+  margin-bottom: 6px;
+}
+
+body.layout-phone-portrait.is-keyboard-visible .card-topbar {
+  min-height: 0;
+  margin-bottom: 8px;
+}
+
+body.layout-phone-portrait.is-keyboard-visible #gameArea {
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  align-content: start;
+  gap: 4px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-padding-block: 8px 12px;
+}
+
+body.layout-phone-portrait.is-keyboard-visible #gameArea > .prompt-row {
+  min-height: 0;
+  margin-bottom: 0;
+}
+
+body.layout-phone-portrait.is-keyboard-visible .prompt-copy {
+  padding-top: 1px;
+  padding-bottom: 3px;
+}
+
+body.layout-phone-portrait.is-keyboard-visible .prompt-text,
+body.layout-phone-portrait.is-keyboard-visible .prompt-sub {
+  line-height: 1.14;
+}
+
+body.layout-phone-portrait.is-keyboard-visible .prompt-text {
+  font-size: clamp(14px, 4.5vw, 20px);
+}
+
+body.layout-phone-portrait.is-keyboard-visible .prompt-sub {
+  font-size: clamp(13px, 4vw, 18px);
+}
+
+body.layout-phone-portrait.is-keyboard-visible .input-shell {
+  margin-block: 2px;
+}
+
+body.layout-phone-portrait.is-keyboard-visible .answer-guide {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
+@media (max-width: 360px) {
+  body.layout-phone-portrait.is-keyboard-visible .prompt-text {
+    font-size: clamp(13px, 4.25vw, 17px);
+  }
+
+  body.layout-phone-portrait.is-keyboard-visible .prompt-sub {
+    font-size: clamp(12px, 3.75vw, 16px);
+  }
+
+  body.layout-phone-portrait.is-keyboard-visible .card-topbar {
+    margin-bottom: 5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.layout-phone-portrait.is-keyboard-visible #heroStage,
+  body.layout-phone-portrait.is-keyboard-visible #mainCard {
+    transition: none;
+  }
+}

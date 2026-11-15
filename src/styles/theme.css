@@ -427,11 +427,15 @@ body .facts-panel .facts-controls .state-picker-btn-label {
 body #onboardingDialog.onboarding-dialog .onboarding-panel {
   background: var(--glass-sheen), var(--glass-popup) !important;
 }
-body #onboardingDialog.onboarding-dialog.is-card-start .onboarding-panel,
-body #mainCard .session-end {
+body #onboardingDialog.onboarding-dialog.is-card-start .onboarding-panel {
   background: var(--glass-sheen), var(--glass-control) !important;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+body #mainCard .session-end {
+  background: transparent !important;
+  backdrop-filter: none;
+  box-shadow: none;
 }
 body :is(.onboarding-scrim, .onboarding-welcome-scrim) {
   background: rgba(var(--glass-blue), .32);
