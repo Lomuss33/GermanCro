@@ -176,6 +176,8 @@ assert(
   normalizedCss.includes("body.layout-phone-portrait.is-keyboard-visible #gameArea") &&
     normalizedCss.includes("grid-template-rows: auto auto auto minmax(0, 1fr);") &&
     appSource.includes("window.visualViewport?.addEventListener(\"resize\", scheduleKeyboardViewportSync") &&
+    appSource.includes("navigator.virtualKeyboard?.addEventListener?.(\"geometrychange\", scheduleKeyboardViewportSync)") &&
+    appSource.includes("getVirtualKeyboardInset(layoutHeight)") &&
     appSource.includes("revealGameSurfaceForKeyboard();") &&
     appSource.includes("scrollScrollableElementBy(gameArea, delta, behavior)") &&
     appSource.includes("scrollScrollableElementBy(document.scrollingElement || document.documentElement, remainingDelta, behavior)"),

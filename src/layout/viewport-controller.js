@@ -316,27 +316,59 @@ function getVisualViewportSize() {
   };
 }
 
+function getVirtualKeyboardInset(layoutHeight) {
+  const rect = navigator.virtualKeyboard?.boundingRect;
+  const top = Number(rect?.top);
+  const height = Number(rect?.height);
+  if (!Number.isFinite(top) || !Number.isFinite(height) || height <= 0) {
+    return 0;
+  }
+
+  return Math.max(0, Math.min(layoutHeight, layoutHeight - top));
+}
+
+function getKeyboardVisibleViewport(layoutHeight) {
+  const visualViewport = getVisualViewportSize();
+  const virtualKeyboardInset = getVirtualKeyboardInset(layoutHeight);
+  const visualBottom = visualViewport.top + visualViewport.height;
+  const virtualKeyboardBottom = layoutHeight - virtualKeyboardInset;
+  const bottom = Math.max(
+    visualViewport.top,
+    Math.min(visualBottom, virtualKeyboardInset > 0 ? virtualKeyboardBottom : visualBottom),
+  );
+
+  return {
+    top: visualViewport.top,
+    height: Math.max(0, bottom - visualViewport.top),
+    bottom,
+    virtualKeyboardInset,
+  };
+}
+
 function syncKeyboardViewport() {
   keyboardViewportFrame = 0;
 
-  const visualViewport = getVisualViewportSize();
   const layoutHeight = Math.max(
     viewportProfile.height,
     window.innerHeight || 0,
     document.documentElement.clientHeight || 0,
   );
+  const visibleViewport = getKeyboardVisibleViewport(layoutHeight);
   const inputFocused = inputEl && document.activeElement === inputEl;
 
   if (!keyboardViewport.baselineHeight || !inputFocused) {
-    keyboardViewport.baselineHeight = Math.max(layoutHeight, visualViewport.height);
+    keyboardViewport.baselineHeight = Math.max(layoutHeight, visibleViewport.height);
   }
 
-  const visibleBottom = visualViewport.top + visualViewport.height;
-  const keyboardInset = Math.max(0, keyboardViewport.baselineHeight - visibleBottom);
+  const visibleBottom = visibleViewport.bottom;
+  const keyboardInset = Math.max(
+    visibleViewport.virtualKeyboardInset,
+    keyboardViewport.baselineHeight - visibleBottom,
+  );
   const keyboardThreshold = Math.max(100, Math.round(keyboardViewport.baselineHeight * 0.16));
   const isOpen = Boolean(inputFocused && isTouchKeyboardEnvironment() && keyboardInset >= keyboardThreshold);
 
-  setKeyboardViewportCssVar("--app-visible-viewport-height", visualViewport.height);
+  setKeyboardViewportCssVar("--app-visible-viewport-height", visibleViewport.height);
   setKeyboardViewportCssVar("--keyboard-visible-bottom", visibleBottom);
   setKeyboardViewportCssVar("--keyboard-inset", keyboardInset);
   if (document.body.classList.contains("is-keyboard-visible") !== isOpen) {
@@ -368,6 +400,16 @@ function setKeyboardViewportCssVar(name, value) {
   }
 }
 
+function resetKeyboardViewportState() {
+  keyboardViewport.baselineHeight = 0;
+  keyboardViewport.isOpen = false;
+  if (keyboardRevealTimer) {
+    window.clearTimeout(keyboardRevealTimer);
+    keyboardRevealTimer = 0;
+  }
+  document.body?.classList.remove("is-keyboard-visible");
+}
+
 function scheduleKeyboardViewportSync() {
   if (keyboardViewportFrame) {
     return;
@@ -381,9 +423,14 @@ function revealGameSurfaceForKeyboard() {
     return;
   }
 
-  const visualViewport = getVisualViewportSize();
-  const top = visualViewport.top + 8;
-  const bottom = visualViewport.top + visualViewport.height - 12;
+  const layoutHeight = Math.max(
+    viewportProfile.height,
+    window.innerHeight || 0,
+    document.documentElement.clientHeight || 0,
+  );
+  const visibleViewport = getKeyboardVisibleViewport(layoutHeight);
+  const top = visibleViewport.top + 8;
+  const bottom = visibleViewport.bottom - 12;
   const promptRects = [promptEl, promptSub]
     .map((element) => element?.closest?.(".prompt-row")?.getBoundingClientRect())
     .filter(Boolean);
@@ -602,19 +649,28 @@ export function createViewportProfileController({
       }
       window.addEventListener("load", scheduleViewportProfileSync, { passive: true });
       window.addEventListener("pageshow", () => {
+        resetKeyboardViewportState();
         syncViewportProfile();
         onPageshowRecover();
+        scheduleKeyboardViewportSync();
       }, { passive: true });
       window.addEventListener("resize", scheduleViewportProfileSync, { passive: true });
       window.addEventListener("orientationchange", scheduleViewportProfileSync, { passive: true });
       window.addEventListener("resize", scheduleKeyboardViewportSync, { passive: true });
       window.visualViewport?.addEventListener("resize", scheduleKeyboardViewportSync, { passive: true });
       window.visualViewport?.addEventListener("scroll", scheduleKeyboardViewportSync, { passive: true });
+      navigator.virtualKeyboard?.addEventListener?.("geometrychange", scheduleKeyboardViewportSync);
       inputEl?.addEventListener("focus", scheduleKeyboardViewportSync, { passive: true });
       inputEl?.addEventListener("blur", scheduleKeyboardViewportSync, { passive: true });
       window.addEventListener("orientationchange", () => {
-        keyboardViewport.baselineHeight = 0;
+        resetKeyboardViewportState();
         scheduleKeyboardViewportSync();
+      }, { passive: true });
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) {
+          resetKeyboardViewportState();
+          scheduleKeyboardViewportSync();
+        }
       }, { passive: true });
     }
 
