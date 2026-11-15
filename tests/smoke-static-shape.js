@@ -175,6 +175,7 @@ assert(
 assert(
   normalizedCss.includes("body.layout-phone-portrait.is-keyboard-visible #gameArea") &&
     normalizedCss.includes("grid-template-rows: auto auto auto minmax(0, 1fr);") &&
+    normalizedCss.includes("flex: 1 1 0;") &&
     appSource.includes("window.visualViewport?.addEventListener(\"resize\", scheduleKeyboardViewportSync") &&
     appSource.includes("navigator.virtualKeyboard?.addEventListener?.(\"geometrychange\", scheduleKeyboardViewportSync)") &&
     appSource.includes("getVirtualKeyboardInset(layoutHeight)") &&
