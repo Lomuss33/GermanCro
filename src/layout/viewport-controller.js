@@ -279,6 +279,7 @@ export function initAnswerGuideResizeObserver() {
   answerGuideResizeObserver?.disconnect();
   answerGuideResizeObserver = new window.ResizeObserver(() => {
     scheduleAnswerGuideMeasure("answer-guide-resize");
+    scheduleKeyboardReveal(32);
   });
   answerGuideResizeObserver.observe(answerGuideEl);
   answerGuideResizeObserver.observe(answerGuideBodyEl);
@@ -387,11 +388,7 @@ function syncKeyboardViewport() {
   }
 
   if (isOpen) {
-    window.clearTimeout(keyboardRevealTimer);
-    keyboardRevealTimer = window.setTimeout(() => {
-      keyboardRevealTimer = 0;
-      revealGameSurfaceForKeyboard();
-    }, 80);
+    scheduleKeyboardReveal(80);
   } else if (keyboardRevealTimer) {
     window.clearTimeout(keyboardRevealTimer);
     keyboardRevealTimer = 0;
@@ -418,6 +415,18 @@ function resetKeyboardViewportState() {
   if (wasOpen) {
     scheduleAnswerGuideMeasure("keyboard-viewport-reset");
   }
+}
+
+function scheduleKeyboardReveal(delay = 80) {
+  if (!keyboardViewport.isOpen) {
+    return;
+  }
+
+  window.clearTimeout(keyboardRevealTimer);
+  keyboardRevealTimer = window.setTimeout(() => {
+    keyboardRevealTimer = 0;
+    revealGameSurfaceForKeyboard();
+  }, delay);
 }
 
 function scheduleKeyboardViewportSync() {
@@ -675,6 +684,10 @@ export function createViewportProfileController({
       navigator.virtualKeyboard?.addEventListener?.("geometrychange", scheduleKeyboardViewportSync);
       inputEl?.addEventListener("focus", scheduleKeyboardViewportSync, { passive: true });
       inputEl?.addEventListener("blur", scheduleKeyboardViewportSync, { passive: true });
+      inputEl?.addEventListener("input", () => {
+        scheduleKeyboardViewportSync();
+        scheduleKeyboardReveal(32);
+      }, { passive: true });
       window.addEventListener("orientationchange", () => {
         resetKeyboardViewportState();
         scheduleKeyboardViewportSync();

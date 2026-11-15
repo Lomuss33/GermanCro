@@ -180,6 +180,8 @@ assert(
     appSource.includes("navigator.virtualKeyboard?.addEventListener?.(\"geometrychange\", scheduleKeyboardViewportSync)") &&
     appSource.includes("getVirtualKeyboardInset(layoutHeight)") &&
     appSource.includes("keyboard-viewport-reset") &&
+    appSource.includes('inputEl?.addEventListener("input"') &&
+    appSource.includes("scheduleKeyboardReveal(32);") &&
     normalizedCss.includes("height: max(0px, calc(var(--app-visible-viewport-height) - var(--first-screen-chrome)))") &&
     appSource.includes("revealGameSurfaceForKeyboard();") &&
     appSource.includes("scrollScrollableElementBy(gameArea, delta, behavior)") &&
