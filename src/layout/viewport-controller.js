@@ -461,8 +461,11 @@ function revealGameSurfaceForKeyboard() {
     } else if (contentBottom > bottom) {
       delta = contentBottom - bottom;
     }
-  } else if (contentBottom > bottom) {
-    delta = contentBottom - bottom;
+  } else {
+    // When the keyboard leaves less room than the prompt/input group needs,
+    // keep both translations as the anchor. Showing the input alone is less
+    // useful because it hides the sentence the player is answering.
+    delta = contentTop - top;
   }
 
   if (Math.abs(delta) < 2) {
