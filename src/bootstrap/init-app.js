@@ -1308,6 +1308,10 @@ function showSessionEnd() {
     pct >= 80 ? t("messages.session.emojiStrong") :
     pct >= 60 ? t("messages.session.emojiGood") :
     t("messages.session.emojiPractice");
+
+  // Move keyboard and screen-reader focus to the completed session instead of
+  // leaving it on the now-hidden answer field.
+  sessionEndEl?.focus({ preventScroll: true });
 }
 
 function triggerEnterTimeBurst() {

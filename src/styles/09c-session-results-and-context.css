@@ -1,0 +1,546 @@
+/* Session completion owns the whole card, exactly like the onboarding panel.
+   This prevents the HUD, card chrome, or a still-open welcome dialog from
+   showing around the result surface. */
+#mainCard.is-session-ended > .session-end {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  flex: none;
+  align-self: stretch;
+  padding: 20px;
+  border-radius: 24px;
+  overflow: auto;
+}
+
+#mainCard.is-session-ended > .stats-bar,
+#mainCard.is-session-ended > .progress-track,
+#mainCard.is-session-ended > .card-topbar,
+#mainCard.is-session-ended > #onboardingDialog {
+  display: none !important;
+}
+
+@media (max-width: 420px) {
+  #mainCard.is-session-ended > .session-end {
+    padding: 20px;
+    border-radius: 20px;
+  }
+}
+
+/* Absolute overlays do not contribute intrinsic height. Preserve the learning
+   window while the completion panel owns the card at every breakpoint. */
+#mainCard.is-session-ended {
+  height: clamp(360px, 52vh, 620px);
+  min-height: clamp(360px, 52vh, 620px);
+}
+
+/* This matches the welcome dialog's :has() specificity, which otherwise
+   leaves the card at its tiny launch height after a viewport change. */
+#mainCard.is-session-ended:has(> #onboardingDialog.is-card-start.is-welcome) {
+  height: clamp(360px, 52vh, 620px);
+  min-height: clamp(360px, 52vh, 620px);
+}
+
+body.layout-phone-portrait #mainCard.is-session-ended {
+  height: auto;
+  min-height: calc(86dvh - 10px);
+  flex: 1 1 auto;
+}
+
+#mainCard.is-session-ended .session-end-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 24px;
+  margin-bottom: 8px;
+}
+
+#mainCard.is-session-ended .session-end-header .score-label {
+  flex: 1 1 auto;
+  align-self: center;
+}
+
+#mainCard.is-session-ended .session-end-header .session-end-emoji {
+  flex: 0 1 44%;
+  align-self: flex-start;
+  max-width: 44%;
+  font-size: clamp(13px, 2vw, 16px);
+  line-height: 1.25;
+  text-align: right;
+}
+
+#mainCard.is-session-ended .big-score {
+  align-self: flex-start;
+  font-size: clamp(52px, 9vw, 86px);
+  line-height: 0.95;
+}
+
+#mainCard.is-session-ended .session-end-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#mainCard.is-session-ended .session-end-metric {
+  min-height: 62px;
+  gap: 5px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.035));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 7px 18px rgba(0, 0, 0, 0.13);
+}
+
+#mainCard.is-session-ended .session-end-metric span {
+  font-size: clamp(8px, 1.15vw, 11px);
+}
+
+#mainCard.is-session-ended .session-end-metric strong {
+  font-size: clamp(17px, 2.4vw, 24px);
+}
+
+#mainCard.is-session-ended .session-end-actions {
+  margin-top: 14px;
+}
+
+#mainCard.is-session-ended .session-end-actions .restart-btn {
+  min-height: 48px;
+  margin-top: 0;
+}
+
+@media (max-height: 560px) {
+  #mainCard.is-session-ended > .session-end {
+    padding: 15px 20px;
+  }
+
+  #mainCard.is-session-ended .big-score {
+    font-size: 54px;
+  }
+
+  #mainCard.is-session-ended .session-end-metrics {
+    margin-top: 8px;
+    padding: 7px;
+  }
+
+  #mainCard.is-session-ended .session-end-metric {
+    min-height: 54px;
+    padding: 6px;
+  }
+
+  #mainCard.is-session-ended .session-end-actions {
+    margin-top: 10px;
+  }
+
+  #mainCard.is-session-ended .session-end-actions .restart-btn {
+    min-height: 44px;
+    margin-top: 0;
+  }
+}
+
+body.layout-phone-portrait #mainCard.is-session-ended:has(> #onboardingDialog.is-card-start.is-welcome) {
+  height: auto;
+  min-height: calc(86dvh - 10px);
+}
+
+@media (max-width: 420px) {
+  body.layout-phone-portrait #mainCard.is-session-ended > .session-end {
+    padding: 16px;
+  }
+
+  body.layout-phone-portrait .session-end-header {
+    margin-bottom: 8px;
+  }
+
+  body.layout-phone-portrait .session-end .big-score {
+    font-size: clamp(48px, 14vw, 70px);
+  }
+
+  body.layout-phone-portrait .session-end-metrics {
+    margin-top: 10px;
+    gap: 6px;
+  }
+
+  body.layout-phone-portrait .session-end-metric {
+    min-height: 54px;
+    padding: 6px;
+    gap: 5px;
+  }
+
+  body.layout-phone-portrait .session-end .restart-btn {
+    min-height: 44px;
+    margin-top: 12px;
+  }
+}
+
+/* UX pass: make the results feel like one composed dashboard, not five tiny
+   cards. The score is the focal point; metrics support it with open spacing. */
+#mainCard.is-session-ended > .session-end {
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 4vw, 32px) clamp(20px, 5vw, 48px);
+  text-align: center;
+}
+
+#mainCard.is-session-ended .session-end-header {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 0;
+  margin-bottom: 6px;
+  text-align: center;
+  animation: sessionEndRise 520ms cubic-bezier(0.2, 0.85, 0.25, 1.1) both;
+}
+
+#mainCard.is-session-ended .session-end-header .score-label {
+  position: relative;
+  flex: none;
+  align-self: auto;
+  padding-bottom: 8px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(11px, 2vw, 14px);
+  letter-spacing: 0.18em;
+}
+
+#mainCard.is-session-ended .session-end-header .score-label::after {
+  content: "";
+  position: absolute;
+  right: 12%;
+  bottom: 0;
+  left: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  box-shadow: 0 0 10px rgba(232, 255, 71, 0.4);
+}
+
+#mainCard.is-session-ended .session-end-header .session-end-emoji {
+  flex: none;
+  max-width: 100%;
+  align-self: auto;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(13px, 2vw, 16px);
+  line-height: 1.25;
+  text-align: center;
+}
+
+#mainCard.is-session-ended .big-score {
+  position: relative;
+  align-self: center;
+  margin: 4px 0 2px;
+  font-size: clamp(68px, 10vw, 104px);
+  font-weight: 900;
+  letter-spacing: -0.075em;
+  line-height: 0.88;
+  background: linear-gradient(135deg, #f5ff8a 0%, #e8ff47 38%, #7cf7c8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.28));
+  animation: sessionEndScore 700ms cubic-bezier(0.16, 1, 0.3, 1) 80ms both;
+}
+
+#mainCard.is-session-ended .big-score::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 18% 12% -24%;
+  border-radius: 50%;
+  background: rgba(232, 255, 71, 0.3);
+  filter: blur(24px);
+  opacity: 0.55;
+}
+
+#mainCard.is-session-ended .session-end-metrics {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  animation: sessionEndRise 600ms cubic-bezier(0.2, 0.85, 0.25, 1) 160ms both;
+}
+
+#mainCard.is-session-ended .session-end-metric {
+  position: relative;
+  min-height: 62px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+#mainCard.is-session-ended .session-end-metric:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 14%;
+  right: 0;
+  bottom: 14%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+}
+
+#mainCard.is-session-ended .session-end-metric:hover {
+  transform: none;
+  filter: brightness(1.06);
+}
+
+#mainCard.is-session-ended .session-end-metric span {
+  color: rgba(234, 240, 252, 0.62);
+  font-size: clamp(9px, 1.4vw, 12px);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1.1;
+  text-align: center;
+}
+
+#mainCard.is-session-ended .session-end-metric strong {
+  color: #fff;
+  font-size: clamp(21px, 3vw, 31px);
+  font-weight: 850;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+}
+
+#mainCard.is-session-ended .session-end-metric:nth-child(1) strong { color: #b8ffcf; }
+#mainCard.is-session-ended .session-end-metric:nth-child(2) strong { color: #ffb1c8; }
+#mainCard.is-session-ended .session-end-metric:nth-child(3) strong { color: #f5ff8a; }
+#mainCard.is-session-ended .session-end-metric:nth-child(4) strong { color: #9cecff; }
+#mainCard.is-session-ended .session-end-metric:nth-child(5) strong { color: #d4c4ff; }
+
+#mainCard.is-session-ended .session-end-actions {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 12px;
+  margin-top: clamp(16px, 3vw, 24px);
+  animation: sessionEndRise 600ms cubic-bezier(0.2, 0.85, 0.25, 1) 260ms both;
+}
+
+#mainCard.is-session-ended .session-end-actions > :is(.session-settings-btn, .restart-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 52px;
+  margin: 0 !important;
+  padding: 12px 14px;
+  font-family: var(--font-display, inherit);
+  font-size: clamp(13px, 1.6vw, 15px);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
+}
+
+#mainCard.is-session-ended .session-end-actions > .session-settings-btn {
+  border: 1px solid rgba(125, 211, 252, .72);
+  background: linear-gradient(145deg, rgba(72, 229, 255, .18), rgba(13, 28, 56, .72));
+  color: #dcf8ff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 5px 16px rgba(72, 229, 255, .08);
+}
+
+#mainCard.is-session-ended .session-end .restart-btn {
+  position: relative;
+  min-height: 52px;
+  margin-top: 0 !important;
+  overflow: hidden;
+  border: 1px solid rgba(232, 255, 71, 0.9);
+  border-radius: 15px;
+  background: linear-gradient(180deg, #f2ff69 0%, #d6f034 100%);
+  box-shadow:
+    0 5px 0 #94ae1d,
+    0 10px 24px rgba(232, 255, 71, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  color: #101706;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  animation: none;
+}
+
+#mainCard.is-session-ended .session-end .restart-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -35%;
+  width: 28%;
+  transform: skewX(-18deg);
+  background: rgba(255, 255, 255, 0.4);
+  animation: sessionEndShine 3.8s ease-in-out 1.1s 1 both;
+}
+
+#mainCard.is-session-ended .session-end-actions > :is(.session-settings-btn, .restart-btn):hover {
+  transform: translateY(-2px);
+}
+
+#mainCard.is-session-ended .session-end-actions > .session-settings-btn:hover {
+  border-color: #9beeff;
+  background: linear-gradient(145deg, rgba(72, 229, 255, .28), rgba(13, 28, 56, .86));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 0 18px rgba(72, 229, 255, .16);
+}
+
+#mainCard.is-session-ended .session-end-actions > .restart-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 7px 0 #94ae1d,
+    0 12px 24px rgba(232, 255, 71, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+#mainCard.is-session-ended .session-end-actions > :is(.session-settings-btn, .restart-btn):active {
+  transform: translateY(1px);
+}
+
+#mainCard.is-session-ended .session-end-actions > .restart-btn:active {
+  box-shadow: 0 2px 0 #94ae1d, 0 6px 14px rgba(232, 255, 71, 0.18);
+}
+
+#mainCard.is-session-ended .session-end-actions > :is(.session-settings-btn, .restart-btn):focus-visible {
+  outline: 3px solid rgba(196, 246, 255, .9);
+  outline-offset: 3px;
+}
+
+@media (hover: none) {
+  #mainCard.is-session-ended .session-end-metric:hover {
+    filter: none;
+  }
+}
+
+@keyframes sessionEndRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sessionEndScore {
+  from { opacity: 0; transform: scale(0.72) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes sessionEndShine {
+  0%, 62% { transform: translateX(0) skewX(-18deg); opacity: 0; }
+  70% { opacity: 1; }
+  82%, 100% { transform: translateX(520%) skewX(-18deg); opacity: 0; }
+}
+
+@media (max-width: 600px) {
+  #mainCard.is-session-ended > .session-end {
+    padding: 20px;
+  }
+
+  #mainCard.is-session-ended .session-end-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 18px;
+    padding: 10px 0;
+  }
+
+  #mainCard.is-session-ended .session-end-metric {
+    min-height: 58px;
+    padding: 7px 4px;
+  }
+
+  #mainCard.is-session-ended .session-end-metric:nth-child(2)::after,
+  #mainCard.is-session-ended .session-end-metric:nth-child(4)::after {
+    display: none;
+  }
+
+  #mainCard.is-session-ended .session-end-metric:nth-child(odd)::after {
+    display: block;
+  }
+
+  #mainCard.is-session-ended .session-end-metric-time {
+    grid-column: 1 / -1;
+  }
+
+  #mainCard.is-session-ended .session-end-actions {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  #mainCard.is-session-ended .session-end-actions {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  #mainCard.is-session-ended .session-end-actions > :is(.session-settings-btn, .restart-btn) {
+    min-height: 48px;
+  }
+}
+
+@media (max-height: 560px) {
+  #mainCard.is-session-ended .session-end-actions > :is(.session-settings-btn, .restart-btn) {
+    min-height: 48px;
+    padding-block: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mainCard.is-session-ended .session-end-header,
+  #mainCard.is-session-ended .big-score,
+  #mainCard.is-session-ended .session-end-metrics,
+  #mainCard.is-session-ended .session-end-actions,
+  #mainCard.is-session-ended .session-end .restart-btn::before {
+    animation: none;
+  }
+}
+
+/* Wissenschaftler and Künstler stay completely still under the pointer. */
+.facts-notable-people-groups > .facts-people-science,
+.facts-notable-people-groups > .facts-people-art,
+.facts-notable-people-groups > .facts-people-science:hover,
+.facts-notable-people-groups > .facts-people-art:hover {
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  transition: none !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 18px color-mix(in srgb, var(--list-accent) 10%, transparent) !important;
+}
+.facts-people-science .facts-chip-link,
+.facts-people-art .facts-chip-link,
+.facts-people-science .facts-chip-link:hover,
+.facts-people-art .facts-chip-link:hover,
+.facts-people-science .facts-chip-link:focus-visible,
+.facts-people-art .facts-chip-link:focus-visible {
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Keep the main reading path short without hiding the full reference data. */
+.facts-context-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  padding: 2px 6px;
+}
+.facts-context-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 9px;
+  color: #e5f7ff;
+  font-size: 11px;
+  font-weight: 750;
+  text-decoration: none;
+  white-space: nowrap;
+}

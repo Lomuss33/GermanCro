@@ -156,10 +156,21 @@ assert(
     normalizedOnboardingCss.includes("overscroll-behavior-y: auto;"),
   "Welcome-panel scrolling must chain to the page at its boundaries instead of trapping vertical gestures",
 );
-const resultStyles = await readText("src/styles/09-facts-refinements.css");
+const resultStyles = await readStyles("src/styles/09-facts-refinements.css");
 assert(
   !/#mainCard\.is-session-ended\s*>\s*\.session-end\s*\{[^}]*overflow:\s*clip/s.test(resultStyles),
   "Session results must not clip content that needs scrolling",
+);
+assert(
+  resultStyles.includes(".session-end-actions > :is(.session-settings-btn, .restart-btn)") &&
+    resultStyles.includes("margin: 0 !important;") &&
+    resultStyles.includes("grid-template-columns: minmax(0, 1fr);"),
+  "Session-end actions must align consistently and stack safely on narrow screens",
+);
+assert(
+  html.includes('role="region" aria-labelledby="sessionEndLabel"') &&
+    appSource.includes("sessionEndEl?.focus({ preventScroll: true });"),
+  "Completing a session must expose and focus the results region",
 );
 assert(
   tourSource.includes('else if (reason !== "settings")') &&

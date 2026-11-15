@@ -1,0 +1,631 @@
+.onboarding-dialog {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  overscroll-behavior: contain;
+  z-index: 20;
+}
+
+.onboarding-dialog::backdrop {
+  background: transparent;
+}
+
+/* Guided tutorial mode keeps its original full-viewport modal geometry. */
+.onboarding-dialog.is-global {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Never let a mode class override the native closed-dialog state. */
+.onboarding-dialog:not([open]) {
+  display: none !important;
+}
+
+html.has-onboarding-open {
+  scrollbar-width: none;
+}
+
+html.has-onboarding-open::-webkit-scrollbar {
+  display: none;
+}
+
+.onboarding-dialog .is-hidden {
+  display: none !important;
+}
+
+.onboarding-welcome-scrim,
+.onboarding-scrim,
+.onboarding-spotlight {
+  position: fixed;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.onboarding-welcome-scrim,
+.onboarding-scrim {
+  background: rgba(1, 4, 15, 0.84);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.onboarding-welcome-scrim {
+  inset: -4px;
+}
+
+.onboarding-welcome-scrim.is-visible,
+.onboarding-scrim.is-visible,
+.onboarding-spotlight.is-visible {
+  opacity: 1;
+}
+
+.onboarding-spotlight {
+  z-index: 1;
+  border: 2px solid var(--accent);
+  border-radius: 17px;
+  background: rgba(232, 255, 71, 0.035);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 0 28px rgba(232, 255, 71, 0.3),
+    inset 0 0 22px rgba(232, 255, 71, 0.08);
+}
+
+.onboarding-panel {
+  position: fixed;
+  z-index: 2;
+  box-sizing: border-box;
+  left: 50%;
+  top: 50%;
+  width: min(430px, calc(100% - 36px));
+  max-height: calc(100dvh - 36px);
+  padding: 26px;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(232, 255, 71, 0.12), transparent 34%),
+    linear-gradient(145deg, rgba(18, 29, 67, 0.985), rgba(5, 10, 29, 0.99));
+  box-shadow:
+    0 32px 90px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translate(-50%, -50%);
+  color: var(--text);
+  text-align: left;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
+}
+
+.onboarding-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.onboarding-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.onboarding-panel::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  background-clip: padding-box;
+}
+
+.onboarding-panel *,
+.onboarding-panel *::before,
+.onboarding-panel *::after {
+  box-sizing: border-box;
+}
+
+.onboarding-dialog[open].is-welcome {
+  display: grid;
+  place-items: center;
+  padding:
+    14px
+    14px
+    20px
+    14px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-panel {
+  position: relative;
+  inset: auto;
+  width: min(480px, 100%);
+  max-height: calc(100dvh - 28px);
+  transform: none;
+}
+
+/* The welcome state is the launch screen for the current learning card. */
+.onboarding-dialog.is-welcome .onboarding-panel {
+  padding: clamp(20px, 4vw, 30px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* The card is a fixed learning window: keep its launch state fully visible. */
+.onboarding-dialog.is-welcome .onboarding-replay-note {
+  display: none;
+}
+
+.onboarding-dialog.is-welcome .onboarding-panel h2 {
+  font-size: clamp(22px, 6vw, 28px);
+}
+
+.onboarding-dialog.is-welcome .onboarding-panel > p:not(.onboarding-replay-note) {
+  margin-top: 9px;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.onboarding-dialog.is-welcome .onboarding-language-group {
+  margin-top: 12px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-language-label {
+  margin-bottom: 6px;
+  padding-bottom: 5px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-language-btn {
+  min-height: 58px;
+  padding: 6px 4px;
+  gap: 4px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-language-flag.language-flag-icon {
+  width: 38px;
+  height: 25px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-actions {
+  margin-top: 12px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-secondary-btn {
+  min-height: 58px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-primary-btn {
+  min-height: 78px;
+}
+
+.onboarding-dialog.is-tour .onboarding-panel {
+  width: min(410px, calc(100% - 36px));
+  padding: 14px 22px 20px;
+  transform: none;
+}
+
+.onboarding-panel-meta {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 25px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-panel-meta {
+  display: none;
+}
+
+.onboarding-dialog.is-tour .onboarding-panel-meta {
+  margin-bottom: 8px;
+}
+
+.onboarding-progress {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.onboarding-skip-btn {
+  min-height: 34px;
+  padding: 4px 7px;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.onboarding-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: start;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 14px;
+  gap: clamp(12px, 3vw, 24px);
+}
+
+.onboarding-dialog.is-tour .onboarding-heading {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.onboarding-brand {
+  grid-column: 2;
+  grid-row: 1;
+  width: auto;
+  min-width: 0;
+  margin: 0;
+  align-self: start;
+  justify-self: end;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 4vw, 24px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  text-align: right;
+  white-space: nowrap;
+  transform: translateY(-3px);
+}
+
+.onboarding-brand span {
+  color: #fff;
+  transition: color 180ms ease;
+}
+
+.onboarding-brand span.is-accent {
+  color: var(--accent);
+}
+
+.onboarding-dialog.is-welcome .onboarding-brand {
+  margin: 0;
+}
+
+.onboarding-panel h2 {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 4.5vw, 32px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  outline: none;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.onboarding-panel > p:not(.onboarding-replay-note) {
+  width: 100%;
+  min-width: 0;
+  max-width: 60ch;
+  margin: 13px 0 0;
+  color: rgba(246, 248, 255, 0.82);
+  font-size: 16px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.onboarding-feedback-key {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  column-gap: clamp(6px, 2.8vw, 15px);
+  row-gap: 8px;
+  margin-top: 18px;
+  padding: 13px clamp(8px, 2.8vw, 14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.onboarding-feedback-key > span {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 12px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.onboarding-feedback-key > span:nth-child(2) {
+  justify-content: center;
+  text-align: center;
+}
+
+.onboarding-feedback-key > span:nth-child(3) {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.onboarding-feedback-key > span > span {
+  min-width: 0;
+  max-width: calc(100% - 16px);
+  overflow-wrap: anywhere;
+}
+
+.onboarding-feedback-key i {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 999px;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.onboarding-feedback-key i.is-correct { color: var(--green); background: var(--green); }
+.onboarding-feedback-key i.is-next { color: var(--accent); background: var(--accent); }
+.onboarding-feedback-key i.is-wrong { color: var(--accent2); background: var(--accent2); }
+
+.onboarding-language-group {
+  width: 100%;
+  min-width: 0;
+  margin-top: 22px;
+}
+
+.onboarding-language-label {
+  display: block;
+  width: min(100%, 85%);
+  min-width: 0;
+  margin: 0 auto 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(125, 211, 252, 0.28);
+  color: #7dd3fc;
+  font-size: clamp(11px, 3.1vw, 13px);
+  font-weight: 900;
+  line-height: 1.1;
+  text-shadow: 0 0 12px rgba(125, 211, 252, 0.18);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.onboarding-language-label-letters {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  justify-content: space-between;
+}
+
+.onboarding-language-label-letter {
+  flex: 0 0 auto;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+.onboarding-language-label-letter.is-space {
+  width: 0.63em;
+  flex-basis: 0.63em;
+}
+
+.cat-buttons {
+  position: relative;
+}
+
+.onboarding-category-preview-target {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.onboarding-language-options {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  justify-self: stretch;
+  margin-inline: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+/* In the promoted welcome layout, keep all three choices on the same full
+   inner width as the action buttons rather than inheriting the input width. */
+body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-language-group {
+  left: 0;
+  right: 0;
+  width: auto;
+  padding-inline: max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-right));
+  box-sizing: border-box;
+}
+
+body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-language-options {
+  width: 100%;
+  max-width: none;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+body.has-promoted-onboarding-title #onboardingDialog.is-card-start.is-welcome .onboarding-language-btn {
+  width: 100%;
+  min-width: 0;
+}
+
+.onboarding-language-btn {
+  display: grid;
+  min-width: 0;
+  min-height: 86px;
+  padding: 10px 6px 12px;
+  grid-template-rows: auto auto;
+  place-items: center;
+  align-content: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.035));
+  color: rgba(250, 251, 255, 0.88);
+  font: inherit;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 7px 18px rgba(0, 0, 0, 0.13);
+  cursor: pointer;
+}
+
+.onboarding-language-flag.language-flag-icon {
+  display: block;
+  width: 48px;
+  height: 32px;
+  max-width: 100%;
+  font-size: 0;
+  line-height: 1;
+  letter-spacing: 0;
+  border-radius: 4px;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.32));
+  pointer-events: auto;
+}
+
+.onboarding-language-name {
+  display: block;
+  max-width: 100%;
+  color: inherit;
+  font-size: clamp(11px, 3.15vw, 13px);
+  font-weight: 850;
+  line-height: 1.08;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+}
+
+.onboarding-language-btn.active {
+  border-color: var(--accent);
+  background:
+    linear-gradient(180deg, rgba(232, 255, 71, 0.2), rgba(232, 255, 71, 0.095));
+  color: var(--accent);
+  box-shadow:
+    inset 0 0 0 1px rgba(232, 255, 71, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 9px 22px rgba(232, 255, 71, 0.09);
+}
+
+.onboarding-replay-note {
+  width: 100%;
+  min-width: 0;
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.onboarding-replay-note-lead {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 750;
+}
+
+.onboarding-replay-note-pink {
+  color: #ff96b8;
+  font-weight: 850;
+}
+
+.onboarding-actions {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-actions {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.onboarding-dialog.is-welcome .onboarding-settings-btn {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 72px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-secondary-btn {
+  grid-column: 1;
+  grid-row: 2;
+  min-height: 72px;
+}
+
+.onboarding-dialog.is-welcome .onboarding-primary-btn {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  min-height: 96px;
+  height: 100%;
+  align-self: stretch;
+}
+
+.onboarding-dialog.is-tour .onboarding-back-btn.is-hidden ~ .onboarding-primary-btn {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.onboarding-actions button {
+  min-width: 0;
+  min-height: 48px;
+  padding: 11px 16px;
+  border-radius: 14px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  cursor: pointer;
+}
+
+.onboarding-primary-btn {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #070a14;
+  box-shadow: 0 9px 24px rgba(232, 255, 71, 0.16);
+}
+
+.onboarding-secondary-btn {
+  border: 1px solid rgba(255, 150, 184, 0.72);
+  background: linear-gradient(180deg, rgba(255, 150, 184, 0.25), rgba(255, 150, 184, 0.13));
+  color: var(--accent);
+  box-shadow: 0 8px 20px rgba(255, 120, 160, 0.1);
+}
+
+.onboarding-settings-btn,
+.onboarding-back-btn {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+}
+
+.onboarding-dialog button:focus-visible,
+.tutorial-replay-btn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.onboarding-dialog button:hover {
+  filter: brightness(1.08);
+}
