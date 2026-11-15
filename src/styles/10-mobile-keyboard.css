@@ -16,7 +16,6 @@ body.layout-phone-portrait.is-keyboard-visible #heroStage {
   height: calc(var(--app-visible-viewport-height) - var(--first-screen-chrome));
   min-height: 0;
   max-height: calc(var(--app-visible-viewport-height) - var(--first-screen-chrome));
-  transition: height 180ms cubic-bezier(0.22, 0.8, 0.28, 1);
 }
 
 body.layout-phone-portrait.is-keyboard-visible .stats-bar {
@@ -27,7 +26,6 @@ body.layout-phone-portrait.is-keyboard-visible #mainCard {
   min-height: 0;
   overflow: hidden;
   padding-block: 8px;
-  transition: padding 180ms cubic-bezier(0.22, 0.8, 0.28, 1);
 }
 
 body.layout-phone-portrait.is-keyboard-visible .progress-track {
@@ -94,12 +92,5 @@ body.layout-phone-portrait.is-keyboard-visible .answer-guide {
 
   body.layout-phone-portrait.is-keyboard-visible .card-topbar {
     margin-bottom: 5px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body.layout-phone-portrait.is-keyboard-visible #heroStage,
-  body.layout-phone-portrait.is-keyboard-visible #mainCard {
-    transition: none;
   }
 }

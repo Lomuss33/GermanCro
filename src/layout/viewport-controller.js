@@ -336,10 +336,12 @@ function syncKeyboardViewport() {
   const keyboardThreshold = Math.max(100, Math.round(keyboardViewport.baselineHeight * 0.16));
   const isOpen = Boolean(inputFocused && isTouchKeyboardEnvironment() && keyboardInset >= keyboardThreshold);
 
-  document.documentElement.style.setProperty("--app-visible-viewport-height", `${visualViewport.height}px`);
-  document.documentElement.style.setProperty("--keyboard-visible-bottom", `${visibleBottom}px`);
-  document.documentElement.style.setProperty("--keyboard-inset", `${keyboardInset}px`);
-  document.body.classList.toggle("is-keyboard-visible", isOpen);
+  setKeyboardViewportCssVar("--app-visible-viewport-height", visualViewport.height);
+  setKeyboardViewportCssVar("--keyboard-visible-bottom", visibleBottom);
+  setKeyboardViewportCssVar("--keyboard-inset", keyboardInset);
+  if (document.body.classList.contains("is-keyboard-visible") !== isOpen) {
+    document.body.classList.toggle("is-keyboard-visible", isOpen);
+  }
 
   if (keyboardViewport.isOpen !== isOpen) {
     keyboardViewport.isOpen = isOpen;
@@ -349,8 +351,20 @@ function syncKeyboardViewport() {
   if (isOpen) {
     window.clearTimeout(keyboardRevealTimer);
     keyboardRevealTimer = window.setTimeout(() => {
+      keyboardRevealTimer = 0;
       revealGameSurfaceForKeyboard();
-    }, 90);
+    }, 80);
+  } else if (keyboardRevealTimer) {
+    window.clearTimeout(keyboardRevealTimer);
+    keyboardRevealTimer = 0;
+  }
+}
+
+function setKeyboardViewportCssVar(name, value) {
+  const nextValue = `${Math.max(0, Math.round(value))}px`;
+  const rootStyle = document.documentElement.style;
+  if (rootStyle.getPropertyValue(name) !== nextValue) {
+    rootStyle.setProperty(name, nextValue);
   }
 }
 
@@ -398,18 +412,30 @@ function revealGameSurfaceForKeyboard() {
     return;
   }
 
-  const scrollRoot = document.scrollingElement || document.documentElement;
-  const currentScroll = scrollRoot.scrollTop || window.scrollY || 0;
-  const maxScroll = Math.max(0, scrollRoot.scrollHeight - window.innerHeight);
-  const targetScroll = Math.min(maxScroll, Math.max(0, currentScroll + delta));
-  if (Math.abs(targetScroll - currentScroll) < 2) {
+  const behavior = prefersReducedMotion() ? "auto" : "smooth";
+  const remainingDelta = scrollScrollableElementBy(gameArea, delta, behavior);
+  if (Math.abs(remainingDelta) < 2) {
     return;
   }
 
-  scrollRoot.scrollTo({
-    top: targetScroll,
-    behavior: prefersReducedMotion() ? "auto" : "smooth",
-  });
+  scrollScrollableElementBy(document.scrollingElement || document.documentElement, remainingDelta, behavior);
+}
+
+function scrollScrollableElementBy(element, delta, behavior) {
+  if (!element || !Number.isFinite(delta)) {
+    return delta;
+  }
+
+  const currentScroll = element.scrollTop || 0;
+  const maxScroll = Math.max(0, element.scrollHeight - element.clientHeight);
+  const targetScroll = Math.min(maxScroll, Math.max(0, currentScroll + delta));
+  const appliedDelta = targetScroll - currentScroll;
+  if (Math.abs(appliedDelta) < 2) {
+    return delta;
+  }
+
+  element.scrollTo({ top: targetScroll, behavior });
+  return delta - appliedDelta;
 }
 
 function prefersReducedMotion() {
